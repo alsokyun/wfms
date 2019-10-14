@@ -366,7 +366,6 @@ namespace GTI.WFMS.Main.View
         /// <summary>
         /// 핑 체크 (유효한 ip 범위로 넘겨줘야함)
         /// 핑 관련 클래스를 통해 핑 체크를 시도한다.
-        /// 파라미터로 넘겨주는 ip는 반드시 유효한 ip 주소 범위로 전달되야 하며 아닐시 익셉션 처리됨.
         /// </summary>
         /// <param name="strip"></param>
         /// <returns></returns>
