@@ -121,6 +121,9 @@
     </Compile>
     <Compile Include="Bootstrapper.cs" />
     <Compile Include="ViewModels\MainWinViewModel.cs" />
+    <Compile Include="View\DBManagement.xaml.cs">
+      <DependentUpon>DBManagement.xaml</DependentUpon>
+    </Compile>
     <Compile Include="View\Login.xaml.cs">
       <DependentUpon>Login.xaml</DependentUpon>
     </Compile>
@@ -146,6 +149,10 @@
     <Page Include="Styles\Default\Labels.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
+    </Page>
+    <Page Include="View\DBManagement.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="View\Login.xaml">
       <SubType>Designer</SubType>
@@ -207,6 +214,22 @@
     <Resource Include="Resources\Images\Image\btn_question.png" />
     <Resource Include="Resources\Images\Image\btn_quick_close.png" />
     <Resource Include="Resources\Images\Image\btn_quick_open.png" />
+    <Resource Include="Resources\Images\Image\btn_X_close.png" />
+    <Resource Include="Resources\Images\Image\btn_X_close_on.png" />
+    <Resource Include="Resources\Images\Image\login_logo.png" />
+    <Resource Include="Resources\Images\Image\btn_login.png" />
+    <Resource Include="Resources\Images\Image\btn_login_on.png" />
+    <Resource Include="Resources\Images\Image\login_alram_abnormal.png" />
+    <Resource Include="Resources\Images\Image\login_alram_normal.png" />
+    <Resource Include="Resources\Images\Image\btn_database_setting.png" />
+    <Resource Include="Resources\Images\Image\btn_database_setting_on.png" />
+    <Resource Include="Resources\Images\Image\greentech_logo.png" />
+    <Resource Include="Resources\Images\Image\btn_popup_save.png" />
+    <Resource Include="Resources\Images\Image\btn_popup_save_on.png" />
+    <Resource Include="Resources\Images\Image\btn_conn_test.png" />
+    <Resource Include="Resources\Images\Image\btn_conn_test_on.png" />
+    <Resource Include="Resources\Images\Image\btn_popup_close.png" />
+    <Resource Include="Resources\Images\Image\btn_popup_close_on.png" />
     <Content Include="Styles\Fonts\malgun.ttf">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>

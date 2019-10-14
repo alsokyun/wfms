@@ -3,22 +3,22 @@
   <Profiles />
   <Settings>
     <Setting Name="strIP" Type="System.String" Scope="User">
-      <Value Profile="(Default)">1.221.243.162</Value>
+      <Value Profile="(Default)">172.16.0.4</Value>
     </Setting>
     <Setting Name="strPort" Type="System.String" Scope="User">
-      <Value Profile="(Default)">1521</Value>
+      <Value Profile="(Default)">8629</Value>
     </Setting>
     <Setting Name="strID" Type="System.String" Scope="User">
-      <Value Profile="(Default)">ulsan_dwm</Value>
+      <Value Profile="(Default)">infouser</Value>
     </Setting>
     <Setting Name="strPWD" Type="System.String" Scope="User">
-      <Value Profile="(Default)">ulsan_dwm</Value>
+      <Value Profile="(Default)">infouser</Value>
     </Setting>
     <Setting Name="strSID" Type="System.String" Scope="User">
-      <Value Profile="(Default)">SMCS</Value>
+      <Value Profile="(Default)">tibero</Value>
     </Setting>
     <Setting Name="RES_DB_INS_DEFAULT" Type="System.String" Scope="User">
-      <Value Profile="(Default)">ORACLEConfig</Value>
+      <Value Profile="(Default)">TIBEROConfig</Value>
     </Setting>
   </Settings>
 </SettingsFile>

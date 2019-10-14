@@ -38,5 +38,25 @@ namespace GTI.WFMS.Models.Main.Dao
         {
             return DBManager.QueryForTable("Select_MNU_LIST", conditions);
         }
+
+        internal DataTable SelectBaseSiteInfo(Hashtable conditions)
+        {
+            return DBManager.QueryForTable("SelectBaseSiteInfo", conditions);
+        }
+
+        internal DataTable SelectDBInfo(Hashtable conditions)
+        {
+            return DBManager.QueryForTable("SelectDBInfo", conditions);
+        }
+
+        internal DataTable LoginCheck(Hashtable htconditions)
+        {
+            return DBManager.QueryForTable("LoginCheck", htconditions);
+        }
+
+        internal DataTable Select_LoginUser_Permission(Hashtable htconditions)
+        {
+            return DBManager.QueryForTable("Select_LoginUser_Permission", htconditions);
+        }
     }
 }

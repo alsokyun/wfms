@@ -38,5 +38,25 @@ namespace GTI.WFMS.Models.Main.Work
         {
             return dao.Select_MNU_LIST(conditions);
         }
+
+        public DataTable SelectBaseSiteInfo(Hashtable conditions)
+        {
+            return dao.SelectBaseSiteInfo(conditions);
+        }
+
+        public DataTable SelectDBInfo(Hashtable conditions)
+        {
+            return dao.SelectDBInfo(conditions);
+        }
+
+        public DataTable LoginCheck(Hashtable htconditions)
+        {
+            return dao.LoginCheck(htconditions);
+        }
+
+        public DataTable Select_LoginUser_Permission(Hashtable htconditions)
+        {
+            return dao.Select_LoginUser_Permission(htconditions);
+        }
     }
 }

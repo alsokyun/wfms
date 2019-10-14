@@ -254,7 +254,7 @@ namespace GTI.WFMS.Main
 
 
                 htconditions.Clear();
-                htconditions.Add("SYS_CD", "000003");
+                htconditions.Add("SYS_CD", "000007");
 
                 dtMenuList = work.Select_MNU_LIST(htconditions);
 

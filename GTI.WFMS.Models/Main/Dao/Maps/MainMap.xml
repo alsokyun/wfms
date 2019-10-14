@@ -2,6 +2,12 @@
 <sqlMap namespace="Main" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://ibatis.apache.org/mapping">
   <statements>
 
+    <!--DataBase 연결 테스트-->
+    <select id="Select_SYSDATE" resultClass="Hashtable">
+      SELECT SYSDATE
+      FROM DUAL
+    </select>
+
 
     <!--인포매니저 DB의 접속 IP 조회-->
     <select id ="SelectDBInfo" parameterClass="Hashtable" resultClass ="Hashtable">
@@ -11,6 +17,19 @@
       WHERE A.SITE_CD = #SITE_CD#
       AND B.SYS_CD = #SYS_CD#
       AND B.SITE_CD = A.SITE_CD
+    </select>
+
+    
+    
+    <!--사이트 정보 조회(로그인 화면에서 사용)-->
+    <select id ="SelectBaseSiteInfo" parameterClass="Hashtable" resultClass ="Hashtable">
+      SELECT SITE_CD
+      ,SITE_NM
+      ,EDT_DT
+      FROM BASE_SITE_INFO
+      <isNotNull prepend ="WHERE" property="SITE_CD">
+        SITE_CD = #SITE_CD#
+      </isNotNull>
     </select>
 
 
@@ -36,7 +55,69 @@
 
 
 
-
+    <!--로그인 사용자 권한확인-->
+    <select id ="Select_LoginUser_Permission" parameterClass="Hashtable" resultClass ="Hashtable">
+      SELECT USER_ID
+	          ,SYS_CD
+	          ,MNU_CD
+	          ,MNU_NM
+	          ,MNU_DESC
+	          ,MNU_PATH
+	          ,MNU_IMG
+	          ,UPPER_CD
+	          ,MNU_STEP
+	          ,ORD
+	          ,DECODE(MIN(MNU_AUTH_ORD), '1', 'N', '2', 'W', '3', 'R') MNU_AUTH
+	      FROM
+	      (
+		        SELECT USER_MAP.USER_ID
+		              ,GRP_MAP.SYS_CD
+		              ,GRP_MAP.MNU_CD
+		              ,GRP_MAP.MNU_NM
+		              ,GRP_MAP.MNU_DESC
+		              ,GRP_MAP.MNU_PATH
+		              ,GRP_MAP.MNU_IMG
+		              ,GRP_MAP.UPPER_CD
+		              ,GRP_MAP.MNU_STEP
+		              ,GRP_MAP.ORD
+		              ,GRP_MAP.GRP_ID
+		              ,GRP_MAP.MNU_AUTH
+		              ,DECODE(GRP_MAP.MNU_AUTH, 'N', 1, 'W', 2, 'R', 3) MNU_AUTH_ORD
+		          FROM 
+		          (
+			            SELECT A.USER_ID, B.SYS_CD, GRP_ID
+			              FROM SYS_USER_INFO A
+			                  ,SYS_USER_MAP B
+			                  ,SYS_GRP_USER_MAP C
+			             WHERE A.USER_ID = #USER_ID#
+			               AND A.USE_YN = 'Y'
+			               AND A.DEL_YN = 'N'
+			               AND B.SYS_CD = #SYS_CD#
+			               AND B.USER_ID = A.USER_ID
+			               AND B.DEPT_CD = A.DEPT_CD
+			               AND C.USER_ID = A.USER_ID
+			               AND C.SYS_CD = B.SYS_CD
+		          ) USER_MAP
+		         ,(
+			            SELECT A.SYS_CD, A.MNU_CD, A.MNU_NM, A.MNU_DESC, A.MNU_PATH, A.MNU_IMG, A.UPPER_CD, A.MNU_STEP, A.ORD, B.GRP_ID, B.MNU_AUTH
+			              FROM SYS_MNU_INFO A
+			  	              ,SYS_MNU_GRP_MAP B
+			  	              ,SYS_GRP_INFO C
+			             WHERE A.SYS_CD = #SYS_CD#
+			               AND A.DEL_YN = 'N'
+			               AND C.DEL_YN = 'N'
+			               AND C.USE_YN = 'Y'
+			               AND B.SYS_CD = A.SYS_CD
+			               AND B.MNU_CD = A.MNU_CD
+			               AND C.GRP_ID = B.GRP_ID
+			               AND C.SYS_CD = A.SYS_CD
+		          ) GRP_MAP
+		         WHERE GRP_MAP.SYS_CD = USER_MAP.SYS_CD
+		           AND GRP_MAP.GRP_ID = USER_MAP.GRP_ID
+	      )
+	      GROUP BY USER_ID, SYS_CD, MNU_CD, MNU_NM, MNU_DESC,MNU_PATH, MNU_IMG, UPPER_CD, MNU_STEP, ORD
+    </select>
+    
 
 
 

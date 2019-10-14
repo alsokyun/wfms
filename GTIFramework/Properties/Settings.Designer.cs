@@ -25,7 +25,7 @@ namespace GTIFramework.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("1.221.243.162")]
+        [global::System.Configuration.DefaultSettingValueAttribute("172.16.0.4")]
         public string strIP {
             get {
                 return ((string)(this["strIP"]));
@@ -37,7 +37,7 @@ namespace GTIFramework.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("1521")]
+        [global::System.Configuration.DefaultSettingValueAttribute("8629")]
         public string strPort {
             get {
                 return ((string)(this["strPort"]));
@@ -49,7 +49,7 @@ namespace GTIFramework.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("ulsan_dwm")]
+        [global::System.Configuration.DefaultSettingValueAttribute("infouser")]
         public string strID {
             get {
                 return ((string)(this["strID"]));
@@ -61,7 +61,7 @@ namespace GTIFramework.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("ulsan_dwm")]
+        [global::System.Configuration.DefaultSettingValueAttribute("infouser")]
         public string strPWD {
             get {
                 return ((string)(this["strPWD"]));
@@ -73,7 +73,7 @@ namespace GTIFramework.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("SMCS")]
+        [global::System.Configuration.DefaultSettingValueAttribute("tibero")]
         public string strSID {
             get {
                 return ((string)(this["strSID"]));
@@ -85,7 +85,7 @@ namespace GTIFramework.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("ORACLEConfig")]
+        [global::System.Configuration.DefaultSettingValueAttribute("TIBEROConfig")]
         public string RES_DB_INS_DEFAULT {
             get {
                 return ((string)(this["RES_DB_INS_DEFAULT"]));
