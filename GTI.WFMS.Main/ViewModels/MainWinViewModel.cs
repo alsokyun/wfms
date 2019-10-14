@@ -293,7 +293,7 @@ namespace GTI.WFMS.Main
 
 
         /// <summary>
-        ///  메인화면 ContentRendered 이벤트 핸들러 - 첫번째 탑메뉴크릭
+        ///  메인화면 ContentRendered 이벤트 핸들러 - 첫번째 탑메뉴클릭
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
