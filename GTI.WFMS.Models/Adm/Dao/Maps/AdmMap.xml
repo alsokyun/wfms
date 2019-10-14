@@ -1,0 +1,166 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<sqlMap namespace="Main" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://ibatis.apache.org/mapping">
+  <statements>
+
+    <!--사용자조회-->
+    <select id="selectUsrList" parameterClass="Hashtable" resultClass="Hashtable">
+      SELECT rownum rn
+      , U.USER_ID AS USER_ID
+      , U.USER_NM
+      , U.USER_TEL
+      , C.CD_NM AS OFC_NM
+      , C2.CD_NM AS DEPT_NM
+      , C3.CD_NM AS POS_NM
+      , U.ETC
+      , DECODE(U.USE_YN,'N','N','Y') AS USE_YN
+      , U.USER_PWD
+      FROM SYS_USER_INFO U
+      LEFT JOIN CD_DTL_INFO C ON C.DTL_CD = U.OFC_CD
+      LEFT JOIN CD_DTL_INFO C2 ON C2.DTL_CD = U.DEPT_CD
+      LEFT JOIN CD_DTL_INFO C3 ON C3.DTL_CD = U.POS_CD
+      WHERE U.DEL_YN = 'N'
+
+      <isEqual property="GBN" compareValue="*">
+        AND ( U.USER_NM LIKE '%'||#WORD#||'%' OR U.USER_ID LIKE '%'||#WORD#||'%' )
+      </isEqual>
+      <isEqual property="GBN" compareValue="NM">
+        AND U.USER_NM LIKE '%'||#WORD#||'%'
+      </isEqual>
+      <isEqual property="GBN" compareValue="ID">
+        AND U.USER_ID LIKE '%'||#WORD#||'%'
+      </isEqual>
+
+      ORDER BY U.REG_DT DESC
+    </select>
+
+    <!--사용자확인-->
+    <select id ="Select_SYS_USER_INFO_Check" parameterClass="Hashtable" resultClass ="Hashtable">
+      SELECT *
+      FROM SYS_USER_INFO
+      WHERE USER_ID = #USER_ID#
+    </select>
+
+    <!--사용자추가-->
+    <insert id ="Insert_SYS_USER_INFO" parameterClass="Hashtable" resultClass ="Hashtable">
+      INSERT INTO SYS_USER_INFO
+      (USER_ID, DEPT_CD, USER_NM, USER_TEL, USER_PWD, POS_CD, ETC, USE_YN, DEL_YN, EDT_ID, EDT_DT)
+      VALUES
+      (#USER_ID#, #DEPT_CD#, #USER_NM#, #USER_TEL#, #USER_PWD#, #POS_CD#, #ETC#, #USE_YN#, 'N', #EDT_ID#, SYSDATE)
+    </insert>
+
+    <!--사용자수정-->
+    <update id ="Update_SYS_USER_INFO" parameterClass="Hashtable" resultClass ="Hashtable">
+      UPDATE SYS_USER_INFO
+      SET DEPT_CD = #DEPT_CD#
+      ,USER_NM = #USER_NM#
+      ,USER_TEL = #USER_TEL#
+      <isNotNull property="USER_PWD">
+        ,USER_PWD = #USER_PWD#
+      </isNotNull>
+      ,POS_CD = #POS_CD#
+      ,ETC = #ETC#
+      ,USE_YN = #USE_YN#
+      ,EDT_ID = #EDT_ID#
+      ,EDT_DT = SYSDATE
+      WHERE USER_ID = #USER_ID#
+    </update>
+
+
+
+    <!--사용자삭제-->
+    <update id ="Delete_SYS_USER_INFO" parameterClass="Hashtable" resultClass ="Hashtable">
+      UPDATE SYS_USER_INFO
+      SET DEL_YN = #DEL_YN#
+      ,EDT_ID = #EDT_ID#
+      ,EDT_DT = SYSDATE
+      WHERE USER_ID = #USER_ID#
+    </update>
+
+
+
+    
+    
+
+
+    <!-- 코드마스터 목록  -->
+    <select id="selectMstCdList" parameterClass="Hashtable" resultClass="Hashtable">
+      SELECT rownum rn
+      ,MST_CD, CD_NM, ETC, ORD, decode(USE_YN,'Y','Y','N') as USE_YN
+      ,null as CHK
+      FROM CD_MST_INFO
+      WHERE 1=1
+      AND (MST_CD LIKE '%' || #SEARCH_WORD# || '%' OR CD_NM LIKE '%' || #SEARCH_WORD# || '%')
+      
+      ORDER BY ORD, MST_CD
+    </select>
+
+    <!-- 코드상세 목록 -->
+    <select id="selectDtlCdList" parameterClass="Hashtable" resultClass="Hashtable">
+      SELECT rownum rn
+      , MST_CD
+      , (select CD_NM FROM CD_MST_INFO  WHERE MST_CD = D.MST_CD ) as MST_NM
+      , DTL_CD, CD_NM, ETC, ORD, decode(USE_YN,'Y','Y','N') as USE_YN
+      ,null as CHK
+
+      FROM CD_DTL_INFO D
+      WHERE 1=1
+      AND MST_CD = #MST_CD#
+      
+      ORDER BY ORD, MST_CD, DTL_CD
+    </select>
+
+
+
+    <!-- 코드마스터 저장 -->
+    <update id="saveMstCd" parameterClass="Hashtable">
+      MERGE INTO CD_MST_INFO
+      USING DUAL ON (MST_CD = #MST_CD#)
+      WHEN MATCHED THEN
+      UPDATE SET
+      CD_NM = #CD_NM#
+      , ETC = #ETC#
+      , ORD = #ORD#
+      , EDT_ID = #EDT_ID#
+      , EDT_DT = sysdate
+      , USE_YN = decode(#USE_YN#,'Y','Y','N')
+
+      WHEN NOT MATCHED THEN
+      INSERT (MST_CD, CD_NM, ETC, ORD, USE_YN, EDT_ID, EDT_DT)
+      VALUES (#MST_CD#, #CD_NM#, #ETC#,#ORD#, DECODE(#USE_YN#,'Y','Y','N'), #EDT_ID#, sysdate)
+    </update>
+
+    <!--마스터삭제-->
+    <update id="deleteMstCd" parameterClass="Hashtable">
+      DELETE CD_MST_INFO
+      WHERE MST_CD = #MST_CD#
+    </update>
+
+      <!-- 코드상세 저장  -->
+    <update id="saveDtlCd" parameterClass="Hashtable">
+      MERGE INTO CD_DTL_INFO
+      USING DUAL ON (MST_CD = #MST_CD# and DTL_CD = #DTL_CD#)
+      WHEN MATCHED THEN
+      UPDATE SET
+      CD_NM = #CD_NM#
+      , ETC = #ETC#
+      , ORD = #ORD#
+      , USE_YN = decode(#USE_YN#,'Y','Y','N')
+      , EDT_ID = #EDT_ID#
+      , EDT_DT = sysdate
+
+      WHEN NOT MATCHED THEN
+      INSERT (MST_CD, DTL_CD, CD_NM, ETC, ORD, USE_YN, EDT_ID, EDT_DT)
+      VALUES (#MST_CD#, #DTL_CD#, #CD_NM#, #ETC#,#ORD#, DECODE(#USE_YN#,'Y','Y','N'), #EDT_ID#, sysdate)
+    </update>
+
+    <!--상세코드삭제-->
+    <update id="deleteDtlCd" parameterClass="Hashtable">
+      DELETE CD_DTL_INFO
+      WHERE MST_CD = #MST_CD#
+      AND DTL_CD = #DTL_CD#
+    </update>
+
+
+
+  </statements>
+</sqlMap>

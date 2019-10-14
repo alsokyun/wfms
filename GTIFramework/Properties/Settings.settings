@@ -1,0 +1,24 @@
+﻿<?xml version='1.0' encoding='utf-8'?>
+<SettingsFile xmlns="http://schemas.microsoft.com/VisualStudio/2004/01/settings" CurrentProfile="(Default)" GeneratedClassNamespace="GTIFramework.Properties" GeneratedClassName="Settings">
+  <Profiles />
+  <Settings>
+    <Setting Name="strIP" Type="System.String" Scope="User">
+      <Value Profile="(Default)">1.221.243.162</Value>
+    </Setting>
+    <Setting Name="strPort" Type="System.String" Scope="User">
+      <Value Profile="(Default)">1521</Value>
+    </Setting>
+    <Setting Name="strID" Type="System.String" Scope="User">
+      <Value Profile="(Default)">ulsan_dwm</Value>
+    </Setting>
+    <Setting Name="strPWD" Type="System.String" Scope="User">
+      <Value Profile="(Default)">ulsan_dwm</Value>
+    </Setting>
+    <Setting Name="strSID" Type="System.String" Scope="User">
+      <Value Profile="(Default)">SMCS</Value>
+    </Setting>
+    <Setting Name="RES_DB_INS_DEFAULT" Type="System.String" Scope="User">
+      <Value Profile="(Default)">ORACLEConfig</Value>
+    </Setting>
+  </Settings>
+</SettingsFile>

@@ -1,0 +1,57 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<sqlMap namespace="Main" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://ibatis.apache.org/mapping">
+  <statements>
+
+
+    <!--인포매니저 DB의 접속 IP 조회-->
+    <select id ="SelectDBInfo" parameterClass="Hashtable" resultClass ="Hashtable">
+      SELECT B.IP_ADDR, B.PORT_NO, B.SID_NM, B.CONN_ID, B.CONN_PWD
+      FROM BASE_SITE_INFO A
+      ,BASE_CONN_INFO B
+      WHERE A.SITE_CD = #SITE_CD#
+      AND B.SYS_CD = #SYS_CD#
+      AND B.SITE_CD = A.SITE_CD
+    </select>
+
+
+    <!--로그인체크-->
+    <select id ="LoginCheck" parameterClass="Hashtable" resultClass ="Hashtable">
+      SELECT US.USER_ID, US.USER_PWD
+      ,DECODE((
+      SELECT SYS_CD
+      FROM SYS_USER_MAP UM
+      WHERE US.USER_ID = UM.USER_ID
+      AND US.DEPT_CD = UM.DEPT_CD
+      AND UM.SYS_CD = #SYS_CD#
+      ), NULL, 0 , 1) SYS_CD
+      FROM BASE_SITE_INFO BS
+      ,SITE_DEPT_INFO DE
+      ,SYS_USER_INFO US
+      WHERE BS.SITE_CD = DE.SITE_CD
+      AND DE.DEPT_CD = US.DEPT_CD
+      AND US.USER_ID = #USER_ID#
+      AND BS.SITE_CD = #SITE_CD#
+    </select>
+
+
+
+
+
+
+
+
+
+    <!--DataBase 연결 테스트-->
+    <select id="Select_SYSDATE" resultClass="Hashtable">
+      SELECT SYSDATE as DT
+      FROM DUAL
+    </select>
+
+    <!--DataBase 연결 테스트 Oracle-->
+    <select id="Select_SYSDATE2" resultClass="Hashtable">
+      SELECT to_char(SYSDATE,'yyyymmdd hh:mi:ss') as DT
+      FROM DUAL
+    </select>
+
+  </statements>
+</sqlMap>
