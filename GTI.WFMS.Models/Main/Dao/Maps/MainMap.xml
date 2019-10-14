@@ -41,17 +41,5 @@
 
 
 
-    <!--DataBase 연결 테스트-->
-    <select id="Select_SYSDATE" resultClass="Hashtable">
-      SELECT SYSDATE as DT
-      FROM DUAL
-    </select>
-
-    <!--DataBase 연결 테스트 Oracle-->
-    <select id="Select_SYSDATE2" resultClass="Hashtable">
-      SELECT to_char(SYSDATE,'yyyymmdd hh:mi:ss') as DT
-      FROM DUAL
-    </select>
-
   </statements>
 </sqlMap>
