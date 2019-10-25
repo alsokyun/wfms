@@ -337,15 +337,20 @@ namespace GTI.WFMS.Main
                             if (!dr[0]["MNU_PATH"].ToString().Equals(""))
                             {
                                 /*
-                                    Label lbTitle = mainwin.FindName("lbTitle") as Label;
-                                    lbTitle.Content = dr[0]["MNU_NM"].ToString();
-
-                                    Grid gridtitle = mainwin.FindName("gridtitle") as Grid;
-                                    gridtitle.RowDefinitions[0].Height = new GridLength(40, GridUnitType.Pixel);
-
-                                    regionManager.Regions["ContentRegion"].RemoveAll();
-                                    regionManager.RequestNavigate("ContentRegion", new Uri(dr[0]["MNU_PATH"].ToString(), UriKind.Relative));
                                  */
+
+                                //Label lbTitle = mainwin.FindName("lbTitle") as Label;
+                                //lbTitle.Content = dr[0]["MNU_NM"].ToString();
+
+                                //Grid gridtitle = mainwin.FindName("gridtitle") as Grid;
+                                //gridtitle.RowDefinitions[0].Height = new GridLength(40, GridUnitType.Pixel);
+
+                                //regionManager.Regions["ContentRegion"].RemoveAll();
+                                //regionManager.RequestNavigate("ContentRegion", new Uri(dr[0]["MNU_PATH"].ToString(), UriKind.Relative));
+
+
+
+
 
 
 
