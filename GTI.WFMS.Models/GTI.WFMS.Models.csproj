@@ -52,8 +52,13 @@
     </Content>
     <Content Include="Cmm\Dao\Maps\CmmMap.xml">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      <SubType>Designer</SubType>
     </Content>
     <Content Include="Main\Dao\Maps\MainMap.xml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      <SubType>Designer</SubType>
+    </Content>
+    <Content Include="Pipe\Dao\Maps\PipeMap.xml">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
       <SubType>Designer</SubType>
     </Content>
@@ -65,21 +70,24 @@
     <Compile Include="Cmm\Work\CmmWork.cs" />
     <Compile Include="Main\Dao\MainDao.cs" />
     <Compile Include="Main\Work\MainWork.cs" />
+    <Compile Include="Pipe\Dao\PipeDao.cs" />
+    <Compile Include="Pipe\Work\PipeWork.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\GTIFramework\GTIFramework.csproj">
-      <Project>{A4514546-40CD-4B24-9835-91D18DD9469A}</Project>
+      <Project>{a4514546-40cd-4b24-9835-91d18dd9469a}</Project>
       <Name>GTIFramework</Name>
     </ProjectReference>
   </ItemGroup>
-  <ItemGroup>
-    <Content Include="DBConfig\ORACLEConfig.config">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="DBConfig\TIBEROConfig.config">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-  </ItemGroup>
   <ItemGroup />
+  <ItemGroup>
+    <None Include="..\GTI.WFMS.Main\bin\Debug\DBConfig\ORACLEConfig.config">
+      <Link>DBConfig\ORACLEConfig.config</Link>
+    </None>
+    <None Include="..\GTI.WFMS.Main\bin\Debug\DBConfig\TIBEROConfig.config">
+      <SubType>Designer</SubType>
+      <Link>DBConfig\TIBEROConfig.config</Link>
+    </None>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

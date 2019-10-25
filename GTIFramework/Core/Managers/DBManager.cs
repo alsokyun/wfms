@@ -1,13 +1,10 @@
 ﻿using System;
 using System.IO;
-using System.Linq;
-using System.Text;
 using System.Data;
 using System.Data.Common;
 using System.Resources;
 using System.Collections;
 using System.Diagnostics;
-using System.Threading.Tasks;
 using System.Collections.Generic;
 
 using log4net;
@@ -23,10 +20,6 @@ using GTIFramework.Common.Log;
 using GTIFramework.Common.ConfigClass;
 using Oracle.DataAccess.Client;
 using Tibero.DbAccess;
-using System.Data.OleDb;
-using System.Runtime.InteropServices;
-using System.Data.SqlClient;
-using System.Windows.Forms;
 
 namespace GTIFramework.Core.Managers
 {
@@ -54,6 +47,7 @@ namespace GTIFramework.Core.Managers
                 {
                     throw new Exception(Messages.MAPPER_DEFINE_ERROR + " [" + datasourceCode + "]");
                 }
+
 
                 ISqlMapper mapper = builder.Configure(manager.GetString(datasourceCode));
 

@@ -316,6 +316,19 @@
                             </i:EventTrigger>
                         </i:Interaction.Triggers>
                     </Button>
+                    <Button x:Name="btnDtl" Style="{StaticResource ResourceKey=DelButton}">
+                        <i:Interaction.Triggers>
+                            <i:EventTrigger EventName="Click">
+                                <i:InvokeCommandAction Command="{Binding btnDtlClickCommnad}">
+                                    <i:InvokeCommandAction.CommandParameter>
+                                        <MultiBinding Converter="{StaticResource multiValueConverter}">
+                                        </MultiBinding>
+                                    </i:InvokeCommandAction.CommandParameter>
+                                </i:InvokeCommandAction>
+                            </i:EventTrigger>
+                        </i:Interaction.Triggers>
+                    </Button>
+                    
                 </StackPanel>
 
             </StackPanel>

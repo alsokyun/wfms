@@ -2,7 +2,6 @@
 using System.Windows;
 using Prism.Unity;
 using Unity;
-using GTI.WFMS.Modules.Main;
 using GTI.WFMS.Modules.Adm;
 
 namespace GTI.WFMS.Main
@@ -16,8 +15,6 @@ namespace GTI.WFMS.Main
         {
             base.ConfigureContainer();
 
-            Container.RegisterTypeForNavigation<UcCRUDView>("UcCRUDView");
-            Container.RegisterTypeForNavigation<UcTestView>("UcTestView");
             Container.RegisterTypeForNavigation<UcUserMngView>("UcUserMngView");
             Container.RegisterTypeForNavigation<UcCodeMngView>("UcCodeMngView");
         }

@@ -120,6 +120,7 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Bootstrapper.cs" />
+    <Compile Include="Settings.cs" />
     <Compile Include="ViewModels\MainWinViewModel.cs" />
     <Compile Include="View\DBManagement.xaml.cs">
       <DependentUpon>DBManagement.xaml</DependentUpon>
@@ -230,6 +231,8 @@
     <Resource Include="Resources\Images\Image\btn_conn_test_on.png" />
     <Resource Include="Resources\Images\Image\btn_popup_close.png" />
     <Resource Include="Resources\Images\Image\btn_popup_close_on.png" />
+    <Resource Include="Resources\Images\Image\btn_init.png" />
+    <Resource Include="Resources\Images\Image\btn_init_on.png" />
     <Content Include="Styles\Fonts\malgun.ttf">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>

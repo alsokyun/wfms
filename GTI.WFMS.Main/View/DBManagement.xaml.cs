@@ -104,7 +104,7 @@ namespace GTI.WFMS.Main.View
 
             //티베로 DB 추가
             DataRow drTibero = dtDBCAT.NewRow();
-            drTibero["DTL_CD"] = "000001";
+            drTibero["DTL_CD"] = "000007";
             drTibero["NM"] = "Tibero";
             dtDBCAT.Rows.Add(drTibero);
 
@@ -130,7 +130,7 @@ namespace GTI.WFMS.Main.View
             if (cbDBCAT.EditValue != null)
             {
                 //Tibero
-                if (cbDBCAT.EditValue.Equals("000001"))
+               if (cbDBCAT.EditValue.Equals("000007"))
                 {
                     Logs.setDBConfig("TIBEROConfig");
                 }
@@ -218,7 +218,7 @@ namespace GTI.WFMS.Main.View
                         GTIFramework.Properties.Settings.Default.strID = txtConnID.EditValue.ToString();
                         GTIFramework.Properties.Settings.Default.strPWD = pwdConnPW.EditValue.ToString();
 
-                        if (cbDBCAT.EditValue.Equals("000001"))
+                        if (cbDBCAT.EditValue.Equals("000007"))
                         {
                             GTIFramework.Properties.Settings.Default.RES_DB_INS_DEFAULT = "TIBEROConfig";
                         }

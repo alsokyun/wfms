@@ -12,8 +12,8 @@
     <!--인포매니저 DB의 접속 IP 조회-->
     <select id ="SelectDBInfo" parameterClass="Hashtable" resultClass ="Hashtable">
       SELECT B.IP_ADDR, B.PORT_NO, B.SID_NM, B.CONN_ID, B.CONN_PWD
-      FROM BASE_SITE_INFO A
-      ,BASE_CONN_INFO B
+      FROM INFOUSER.BASE_SITE_INFO A
+      ,INFOUSER.BASE_CONN_INFO B
       WHERE A.SITE_CD = #SITE_CD#
       AND B.SYS_CD = #SYS_CD#
       AND B.SITE_CD = A.SITE_CD
@@ -26,7 +26,7 @@
       SELECT SITE_CD
       ,SITE_NM
       ,EDT_DT
-      FROM BASE_SITE_INFO
+      FROM INFOUSER.BASE_SITE_INFO
       <isNotNull prepend ="WHERE" property="SITE_CD">
         SITE_CD = #SITE_CD#
       </isNotNull>
@@ -38,14 +38,14 @@
       SELECT US.USER_ID, US.USER_PWD
       ,DECODE((
       SELECT SYS_CD
-      FROM SYS_USER_MAP UM
+      FROM INFOUSER.SYS_USER_MAP UM
       WHERE US.USER_ID = UM.USER_ID
       AND US.DEPT_CD = UM.DEPT_CD
       AND UM.SYS_CD = #SYS_CD#
       ), NULL, 0 , 1) SYS_CD
-      FROM BASE_SITE_INFO BS
-      ,SITE_DEPT_INFO DE
-      ,SYS_USER_INFO US
+      FROM INFOUSER.BASE_SITE_INFO BS
+      ,INFOUSER.SITE_DEPT_INFO DE
+      ,INFOUSER.SYS_USER_INFO US
       WHERE BS.SITE_CD = DE.SITE_CD
       AND DE.DEPT_CD = US.DEPT_CD
       AND US.USER_ID = #USER_ID#
@@ -58,64 +58,64 @@
     <!--로그인 사용자 권한확인-->
     <select id ="Select_LoginUser_Permission" parameterClass="Hashtable" resultClass ="Hashtable">
       SELECT USER_ID
-	          ,SYS_CD
-	          ,MNU_CD
-	          ,MNU_NM
-	          ,MNU_DESC
-	          ,MNU_PATH
-	          ,MNU_IMG
-	          ,UPPER_CD
-	          ,MNU_STEP
-	          ,ORD
-	          ,DECODE(MIN(MNU_AUTH_ORD), '1', 'N', '2', 'W', '3', 'R') MNU_AUTH
-	      FROM
-	      (
-		        SELECT USER_MAP.USER_ID
-		              ,GRP_MAP.SYS_CD
-		              ,GRP_MAP.MNU_CD
-		              ,GRP_MAP.MNU_NM
-		              ,GRP_MAP.MNU_DESC
-		              ,GRP_MAP.MNU_PATH
-		              ,GRP_MAP.MNU_IMG
-		              ,GRP_MAP.UPPER_CD
-		              ,GRP_MAP.MNU_STEP
-		              ,GRP_MAP.ORD
-		              ,GRP_MAP.GRP_ID
-		              ,GRP_MAP.MNU_AUTH
-		              ,DECODE(GRP_MAP.MNU_AUTH, 'N', 1, 'W', 2, 'R', 3) MNU_AUTH_ORD
-		          FROM 
-		          (
-			            SELECT A.USER_ID, B.SYS_CD, GRP_ID
-			              FROM SYS_USER_INFO A
-			                  ,SYS_USER_MAP B
-			                  ,SYS_GRP_USER_MAP C
-			             WHERE A.USER_ID = #USER_ID#
-			               AND A.USE_YN = 'Y'
-			               AND A.DEL_YN = 'N'
-			               AND B.SYS_CD = #SYS_CD#
-			               AND B.USER_ID = A.USER_ID
-			               AND B.DEPT_CD = A.DEPT_CD
-			               AND C.USER_ID = A.USER_ID
-			               AND C.SYS_CD = B.SYS_CD
-		          ) USER_MAP
-		         ,(
-			            SELECT A.SYS_CD, A.MNU_CD, A.MNU_NM, A.MNU_DESC, A.MNU_PATH, A.MNU_IMG, A.UPPER_CD, A.MNU_STEP, A.ORD, B.GRP_ID, B.MNU_AUTH
-			              FROM SYS_MNU_INFO A
-			  	              ,SYS_MNU_GRP_MAP B
-			  	              ,SYS_GRP_INFO C
-			             WHERE A.SYS_CD = #SYS_CD#
-			               AND A.DEL_YN = 'N'
-			               AND C.DEL_YN = 'N'
-			               AND C.USE_YN = 'Y'
-			               AND B.SYS_CD = A.SYS_CD
-			               AND B.MNU_CD = A.MNU_CD
-			               AND C.GRP_ID = B.GRP_ID
-			               AND C.SYS_CD = A.SYS_CD
-		          ) GRP_MAP
-		         WHERE GRP_MAP.SYS_CD = USER_MAP.SYS_CD
-		           AND GRP_MAP.GRP_ID = USER_MAP.GRP_ID
-	      )
-	      GROUP BY USER_ID, SYS_CD, MNU_CD, MNU_NM, MNU_DESC,MNU_PATH, MNU_IMG, UPPER_CD, MNU_STEP, ORD
+      ,SYS_CD
+      ,MNU_CD
+      ,MNU_NM
+      ,MNU_DESC
+      ,MNU_PATH
+      ,MNU_IMG
+      ,UPPER_CD
+      ,MNU_STEP
+      ,ORD
+      ,DECODE(MIN(MNU_AUTH_ORD), '1', 'N', '2', 'W', '3', 'R') MNU_AUTH
+      FROM
+      (
+      SELECT USER_MAP.USER_ID
+      ,GRP_MAP.SYS_CD
+      ,GRP_MAP.MNU_CD
+      ,GRP_MAP.MNU_NM
+      ,GRP_MAP.MNU_DESC
+      ,GRP_MAP.MNU_PATH
+      ,GRP_MAP.MNU_IMG
+      ,GRP_MAP.UPPER_CD
+      ,GRP_MAP.MNU_STEP
+      ,GRP_MAP.ORD
+      ,GRP_MAP.GRP_ID
+      ,GRP_MAP.MNU_AUTH
+      ,DECODE(GRP_MAP.MNU_AUTH, 'N', 1, 'W', 2, 'R', 3) MNU_AUTH_ORD
+      FROM
+      (
+      SELECT A.USER_ID, B.SYS_CD, GRP_ID
+      FROM INFOUSER.SYS_USER_INFO A
+      ,INFOUSER.SYS_USER_MAP B
+      ,INFOUSER.SYS_GRP_USER_MAP C
+      WHERE A.USER_ID = #USER_ID#
+      AND A.USE_YN = 'Y'
+      AND A.DEL_YN = 'N'
+      AND B.SYS_CD = #SYS_CD#
+      AND B.USER_ID = A.USER_ID
+      AND B.DEPT_CD = A.DEPT_CD
+      AND C.USER_ID = A.USER_ID
+      AND C.SYS_CD = B.SYS_CD
+      ) USER_MAP
+      ,(
+      SELECT A.SYS_CD, A.MNU_CD, A.MNU_NM, A.MNU_DESC, A.MNU_PATH, A.MNU_IMG, A.UPPER_CD, A.MNU_STEP, A.ORD, B.GRP_ID, B.MNU_AUTH
+      FROM INFOUSER.SYS_MNU_INFO A
+      ,INFOUSER.SYS_MNU_GRP_MAP B
+      ,INFOUSER.SYS_GRP_INFO C
+      WHERE A.SYS_CD = #SYS_CD#
+      AND A.DEL_YN = 'N'
+      AND C.DEL_YN = 'N'
+      AND C.USE_YN = 'Y'
+      AND B.SYS_CD = A.SYS_CD
+      AND B.MNU_CD = A.MNU_CD
+      AND C.GRP_ID = B.GRP_ID
+      AND C.SYS_CD = A.SYS_CD
+      ) GRP_MAP
+      WHERE GRP_MAP.SYS_CD = USER_MAP.SYS_CD
+      AND GRP_MAP.GRP_ID = USER_MAP.GRP_ID
+      )
+      GROUP BY USER_ID, SYS_CD, MNU_CD, MNU_NM, MNU_DESC,MNU_PATH, MNU_IMG, UPPER_CD, MNU_STEP, ORD
     </select>
     
 

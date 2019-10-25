@@ -4,21 +4,33 @@
 
     <!--공통코드 콤보-->
     <select id ="Select_CODE_LIST" parameterClass="Hashtable" resultClass ="Hashtable">
-      SELECT A.MST_CD, A.CD_NM MST_NM, B.DTL_CD, B.CD_NM DTL_NM, B.ETC DTL_ETC
-      FROM CD_MST_INFO A
-      ,CD_DTL_INFO B
+      SELECT X.* FROM (
+      
+      SELECT A.MST_CD, A.NM MST_NM, B.DTL_CD, B.NM, B.ETC DTL_ETC, B.ORD
+      FROM INFOUSER.CD_MST_INFO A
+      ,INFOUSER.CD_DTL_INFO B
       WHERE A.MST_CD = #MST_CD#
       AND B.MST_CD = A.MST_CD
       AND A.USE_YN = 'Y'
       AND B.USE_YN = 'Y'
-      ORDER BY B.ORD ASC
+
+     <!--전체옵션-->
+      <isNotEmpty prepend="UNION ALL" property="ALL">
+        <isEqual property="ALL" compareValue="Y">
+          SELECT '' AS MST_CD, NULL AS MST_NM, ' ' AS DTL_CD, '전체' AS NM, NULL AS DTL_ETC, NULL AS ORD
+          FROM DUAL
+        </isEqual>
+      </isNotEmpty>
+
+      ) X
+      ORDER BY X.ORD ASC, X.DTL_CD 
     </select>
 
 
     <!--메뉴 바인딩을 위한 메뉴 조회-->
     <select id ="Select_MNU_LIST" parameterClass="Hashtable" resultClass ="Hashtable">
       SELECT MNU_CD, SYS_CD, MNU_NM, MNU_DESC, MNU_PATH, MNU_IMG, UPPER_CD, MNU_STEP, ORD, DEL_YN, EDT_ID, EDT_DT
-      FROM SYS_MNU_INFO
+      FROM INFOUSER.SYS_MNU_INFO
       WHERE SYS_CD = #SYS_CD#
       AND DEL_YN = 'N'
       ORDER BY ORD ASC
@@ -28,7 +40,7 @@
     <!--메뉴 바인딩을 위한 메뉴 조회-->
     <select id ="Select_MNU_LIST2" parameterClass="Hashtable" resultClass ="Hashtable">
       SELECT MNU_CD, SYS_CD, MNU_NM, MNU_DESC, MNU_PATH, MNU_IMG, UPPER_CD, MNU_STEP, ORD, DEL_YN, EDT_ID, EDT_DT
-      FROM SYS_MNU_INFO
+      FROM INFOUSER.SYS_MNU_INFO
       WHERE SYS_CD = #SYS_CD#
       AND MNU_STEP = #MNU_STEP#
       AND DEL_YN = 'N'
@@ -39,6 +51,12 @@
     </select>
 
 
+    <!--행정구역코드-->
+    <select id ="Select_ADAR_LIST" parameterClass="Hashtable" resultClass ="Hashtable">
+      SELECT 	HJD_CDE, HJD_NAM, HJD_EXP
+      FROM 	INFOFMS.CMT_ADAR_MA
+      ORDER BY HJD_CDE
+    </select>
 
   </statements>
 </sqlMap>

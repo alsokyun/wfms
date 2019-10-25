@@ -1,6 +1,8 @@
 ﻿using DevExpress.Xpf.Accordion;
 using DevExpress.Xpf.Core;
+using GTI.WFMS.Main.View;
 using GTI.WFMS.Models.Main.Work;
+using GTI.WFMS.Modules.Main;
 using GTIFramework.Common.Log;
 using GTIFramework.Common.MessageBox;
 using GTIFramework.Common.Utils.ViewEffect;
@@ -334,14 +336,27 @@ namespace GTI.WFMS.Main
                         {
                             if (!dr[0]["MNU_PATH"].ToString().Equals(""))
                             {
-                                Label lbTitle = mainwin.FindName("lbTitle") as Label;
-                                lbTitle.Content = dr[0]["MNU_NM"].ToString();
+                                /*
+                                    Label lbTitle = mainwin.FindName("lbTitle") as Label;
+                                    lbTitle.Content = dr[0]["MNU_NM"].ToString();
 
-                                Grid gridtitle = mainwin.FindName("gridtitle") as Grid;
-                                gridtitle.RowDefinitions[0].Height = new GridLength(40, GridUnitType.Pixel);
+                                    Grid gridtitle = mainwin.FindName("gridtitle") as Grid;
+                                    gridtitle.RowDefinitions[0].Height = new GridLength(40, GridUnitType.Pixel);
 
-                                regionManager.Regions["ContentRegion"].RemoveAll();
-                                regionManager.RequestNavigate("ContentRegion", new Uri(dr[0]["MNU_PATH"].ToString(), UriKind.Relative));
+                                    regionManager.Regions["ContentRegion"].RemoveAll();
+                                    regionManager.RequestNavigate("ContentRegion", new Uri(dr[0]["MNU_PATH"].ToString(), UriKind.Relative));
+                                 */
+
+
+
+                                /*
+                                 * ContentsRegion표시하지않고 팝업윈도우를 호출
+                                 */
+
+                                PopWin pwin = new PopWin(dr[0]["MNU_PATH"].ToString());
+
+                                bool? ret = pwin.ShowDialog();
+
                             }
                             else
                             {

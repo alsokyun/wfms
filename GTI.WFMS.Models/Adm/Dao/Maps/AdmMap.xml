@@ -8,16 +8,14 @@
       , U.USER_ID AS USER_ID
       , U.USER_NM
       , U.USER_TEL
-      , C.CD_NM AS OFC_NM
-      , C2.CD_NM AS DEPT_NM
-      , C3.CD_NM AS POS_NM
+      , C2.NM AS DEPT_NM
+      , C3.NM AS POS_NM
       , U.ETC
       , DECODE(U.USE_YN,'N','N','Y') AS USE_YN
       , U.USER_PWD
-      FROM SYS_USER_INFO U
-      LEFT JOIN CD_DTL_INFO C ON C.DTL_CD = U.OFC_CD
-      LEFT JOIN CD_DTL_INFO C2 ON C2.DTL_CD = U.DEPT_CD
-      LEFT JOIN CD_DTL_INFO C3 ON C3.DTL_CD = U.POS_CD
+      FROM INFOUSER.SYS_USER_INFO U
+      LEFT JOIN INFOUSER.CD_DTL_INFO C2 ON C2.DTL_CD = U.DEPT_CD
+      LEFT JOIN INFOUSER.CD_DTL_INFO C3 ON C3.DTL_CD = U.POS_CD
       WHERE U.DEL_YN = 'N'
 
       <isEqual property="GBN" compareValue="*">
@@ -30,19 +28,19 @@
         AND U.USER_ID LIKE '%'||#WORD#||'%'
       </isEqual>
 
-      ORDER BY U.REG_DT DESC
+      ORDER BY U.EDT_DT DESC
     </select>
 
     <!--사용자확인-->
     <select id ="Select_SYS_USER_INFO_Check" parameterClass="Hashtable" resultClass ="Hashtable">
       SELECT *
-      FROM SYS_USER_INFO
+      FROM INFOUSER.SYS_USER_INFO
       WHERE USER_ID = #USER_ID#
     </select>
 
     <!--사용자추가-->
     <insert id ="Insert_SYS_USER_INFO" parameterClass="Hashtable" resultClass ="Hashtable">
-      INSERT INTO SYS_USER_INFO
+      INSERT INTO INFOUSER.SYS_USER_INFO
       (USER_ID, DEPT_CD, USER_NM, USER_TEL, USER_PWD, POS_CD, ETC, USE_YN, DEL_YN, EDT_ID, EDT_DT)
       VALUES
       (#USER_ID#, #DEPT_CD#, #USER_NM#, #USER_TEL#, #USER_PWD#, #POS_CD#, #ETC#, #USE_YN#, 'N', #EDT_ID#, SYSDATE)
@@ -50,7 +48,7 @@
 
     <!--사용자수정-->
     <update id ="Update_SYS_USER_INFO" parameterClass="Hashtable" resultClass ="Hashtable">
-      UPDATE SYS_USER_INFO
+      UPDATE INFOUSER.SYS_USER_INFO
       SET DEPT_CD = #DEPT_CD#
       ,USER_NM = #USER_NM#
       ,USER_TEL = #USER_TEL#
@@ -69,7 +67,7 @@
 
     <!--사용자삭제-->
     <update id ="Delete_SYS_USER_INFO" parameterClass="Hashtable" resultClass ="Hashtable">
-      UPDATE SYS_USER_INFO
+      UPDATE INFOUSER.SYS_USER_INFO
       SET DEL_YN = #DEL_YN#
       ,EDT_ID = #EDT_ID#
       ,EDT_DT = SYSDATE
@@ -85,12 +83,12 @@
     <!-- 코드마스터 목록  -->
     <select id="selectMstCdList" parameterClass="Hashtable" resultClass="Hashtable">
       SELECT rownum rn
-      ,MST_CD, CD_NM, ETC, ORD, decode(USE_YN,'Y','Y','N') as USE_YN
+      ,MST_CD, NM, ETC, ORD, decode(USE_YN,'Y','Y','N') as USE_YN
       ,null as CHK
-      FROM CD_MST_INFO
+      FROM INFOUSER.CD_MST_INFO
       WHERE 1=1
-      AND (MST_CD LIKE '%' || #SEARCH_WORD# || '%' OR CD_NM LIKE '%' || #SEARCH_WORD# || '%')
-      
+      AND (MST_CD LIKE '%' || #SEARCH_WORD# || '%' OR NM LIKE '%' || #SEARCH_WORD# || '%')
+
       ORDER BY ORD, MST_CD
     </select>
 
@@ -98,14 +96,14 @@
     <select id="selectDtlCdList" parameterClass="Hashtable" resultClass="Hashtable">
       SELECT rownum rn
       , MST_CD
-      , (select CD_NM FROM CD_MST_INFO  WHERE MST_CD = D.MST_CD ) as MST_NM
-      , DTL_CD, CD_NM, ETC, ORD, decode(USE_YN,'Y','Y','N') as USE_YN
+      , (select NM FROM CD_MST_INFO  WHERE MST_CD = D.MST_CD ) as MST_NM
+      , DTL_CD, NM, ETC, ORD, decode(USE_YN,'Y','Y','N') as USE_YN
       ,null as CHK
 
-      FROM CD_DTL_INFO D
+      FROM INFOUSER.CD_DTL_INFO D
       WHERE 1=1
       AND MST_CD = #MST_CD#
-      
+
       ORDER BY ORD, MST_CD, DTL_CD
     </select>
 
@@ -117,7 +115,7 @@
       USING DUAL ON (MST_CD = #MST_CD#)
       WHEN MATCHED THEN
       UPDATE SET
-      CD_NM = #CD_NM#
+      NM = #CD_NM#
       , ETC = #ETC#
       , ORD = #ORD#
       , EDT_ID = #EDT_ID#
@@ -125,7 +123,7 @@
       , USE_YN = decode(#USE_YN#,'Y','Y','N')
 
       WHEN NOT MATCHED THEN
-      INSERT (MST_CD, CD_NM, ETC, ORD, USE_YN, EDT_ID, EDT_DT)
+      INSERT (MST_CD, NM, ETC, ORD, USE_YN, EDT_ID, EDT_DT)
       VALUES (#MST_CD#, #CD_NM#, #ETC#,#ORD#, DECODE(#USE_YN#,'Y','Y','N'), #EDT_ID#, sysdate)
     </update>
 
@@ -141,7 +139,7 @@
       USING DUAL ON (MST_CD = #MST_CD# and DTL_CD = #DTL_CD#)
       WHEN MATCHED THEN
       UPDATE SET
-      CD_NM = #CD_NM#
+      NM = #CD_NM#
       , ETC = #ETC#
       , ORD = #ORD#
       , USE_YN = decode(#USE_YN#,'Y','Y','N')
@@ -149,7 +147,7 @@
       , EDT_DT = sysdate
 
       WHEN NOT MATCHED THEN
-      INSERT (MST_CD, DTL_CD, CD_NM, ETC, ORD, USE_YN, EDT_ID, EDT_DT)
+      INSERT (MST_CD, DTL_CD, NM, ETC, ORD, USE_YN, EDT_ID, EDT_DT)
       VALUES (#MST_CD#, #DTL_CD#, #CD_NM#, #ETC#,#ORD#, DECODE(#USE_YN#,'Y','Y','N'), #EDT_ID#, sysdate)
     </update>
 
@@ -159,6 +157,87 @@
       WHERE MST_CD = #MST_CD#
       AND DTL_CD = #DTL_CD#
     </update>
+
+
+
+    <!--상수관로-->
+    <select id ="SelectWtlPipeList2" parameterClass="Hashtable" resultClass ="Hashtable">
+      /* SelectWtlPipeList 상수관로 목록*/
+      SELECT * FROM (
+      SELECT X.*, ROWNUM RNUM FROM (
+
+      SELECT 	A.FTR_CDE	,F.FTR_NAM
+      , A.FTR_IDN
+      , A.HJD_CDE	,H.HJD_NAM
+      , A.SHT_NUM
+      , A.MNG_CDE	,C.NM AS MNG_NAM
+      , A.IST_YMD
+      , A.SAA_CDE
+      , A.MOP_CDE	,C3.NM AS MOP_NAM
+      , A.JHT_CDE	,C2.NM AS JHT_NAM
+      , A.LOW_DEP
+      , A.HGH_DEP
+      , A.CNT_NUM
+      , A.SYS_CHK
+      , A.PIP_LBL
+      , A.PIP_DIP	/*구경*/
+      , A.PIP_LEN
+      , CASE WHEN ST_ISVALID(A.GEOM) = 1 THEN 'Y' ELSE 'N' END AS IS_GEOMETRY
+      FROM INFOFMS.WTL_PIPE_LM A
+      LEFT JOIN INFOFMS.V_FTR_CDE F ON A.FTR_CDE = F.FTR_CDE
+      LEFT JOIN INFOFMS.BML_HADM_AS H ON A.HJD_CDE = H.HJD_CDE
+      LEFT JOIN INFOUSER.CD_DTL_INFO C ON C.MST_CD = 'MNG_CDE' AND C.DTL_CD = A.MNG_CDE
+      LEFT JOIN INFOUSER.CD_DTL_INFO C2 ON C2.MST_CD = 'JHT_CDE' AND C2.DTL_CD = A.MNG_CDE
+      LEFT JOIN INFOUSER.CD_DTL_INFO C3 ON C3.MST_CD = 'MOP_CDE' AND C3.DTL_CD = A.MNG_CDE
+
+      WHERE 1=1
+      <isNotEmpty prepend="AND" property="MNG_CDE">
+        A.MNG_CDE like #MNG_CDE# || '%'
+      </isNotEmpty>
+
+      <isNotEmpty prepend="AND" property="FTR_IDN">
+        A.FTR_IDN like #FTR_IDN# || '%'
+      </isNotEmpty>
+
+      <isNotEmpty prepend="AND" property="HJD_CDE">
+        A.HJD_CDE like #HJD_CDE# || '%'
+      </isNotEmpty>
+
+      <isNotEmpty prepend="AND" property="CNT_NUM">
+        A.CNT_NUM like #CNT_NUM#  || '%'
+      </isNotEmpty>
+
+      <isNotEmpty prepend="AND" property="SHT_NUM">
+        A.SHT_NUM like #SHT_NUM#  || '%'
+      </isNotEmpty>
+
+      <isNotEmpty prepend="AND" property="IST_YMD_FROM">
+        A.IST_YMD <![CDATA[>=]]> decode(length(#IST_YMD_FROM#), 10, to_char(to_date(#IST_YMD_FROM#, 'yyyy-MM-dd'), 'yyyyMMdd'), '10000101')
+      </isNotEmpty>
+
+      <isNotEmpty prepend="AND" property="IST_YMD_TO">
+        A.IST_YMD <![CDATA[<=]]> decode(length(#IST_YMD_TO#), 10, to_char(to_date(#IST_YMD_TO#, 'yyyy-MM-dd'), 'yyyyMMdd'), '30000101')
+      </isNotEmpty>
+
+      <isNotEmpty prepend="AND" property="MOP_CDE">
+        A.MOP_CDE like #MOP_CDE# || '%'
+      </isNotEmpty>
+
+      <isNotEmpty prepend="AND" property="JHT_CDE">
+        A.JHT_CDE like #JHT_CDE# || '%'
+      </isNotEmpty>
+
+      <isNotEmpty prepend="AND" property="PIP_DIP">
+        A.PIP_DIP like #PIP_DIP# || '%'
+      </isNotEmpty>
+
+      ORDER BY A.FTR_IDN DESC
+
+
+      ) X WHERE ROWNUM <![CDATA[<=]]> #lastIndex#
+      )WHERE RNUM <![CDATA[>]]> #firstIndex#
+
+    </select>
 
 
 

@@ -43,6 +43,8 @@ namespace GTI.WFMS.Modules.Adm
         /// btnDel 이벤트
         /// </summary>
         public DelegateCommand<object> btnDelClickCommnad { get; set; }
+      
+        public DelegateCommand<object> btnDtlClickCommnad { get; set; }
 
         #endregion
 
@@ -58,6 +60,12 @@ namespace GTI.WFMS.Modules.Adm
             btnAddClickCommnad = new DelegateCommand<object>(btnAddClickAction);
             btnSaveClickCommnad = new DelegateCommand<object>(btnSaveClickAction);
             btnDelClickCommnad = new DelegateCommand<object>(btnDelClickAction);
+            btnDtlClickCommnad = new DelegateCommand<object>(btnDtlClickAction);
+        }
+
+        private void btnDtlClickAction(object obj)
+        {
+            //NavigationService.Navigate(new Uri("/Page1.xaml"), UriKind.Relative);
         }
 
 
@@ -380,7 +388,7 @@ namespace GTI.WFMS.Modules.Adm
                     Hashtable conditions = new Hashtable();
 
                     // 직급콤보 MSTCD = 000004
-                    conditions.Add("MST_CD", "POSI");
+                    conditions.Add("MST_CD", "000004");
                     dtcbRank = cmmWork.Select_CODE_LIST(conditions);
                     cbRank.ItemsSource = dtcbRank;
 

@@ -1,0 +1,87 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<sqlMap namespace="Main" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://ibatis.apache.org/mapping">
+  <statements>
+
+    <!--상수관로-->
+    <select id ="SelectWtlPipeList" parameterClass="Hashtable" resultClass ="Hashtable">
+      /* SelectWtlPipeList 상수관로 목록*/
+      SELECT * FROM (
+      SELECT X.*, ROWNUM RNUM FROM (
+
+      SELECT 	A.FTR_CDE	,F.FTR_NAM
+      , A.FTR_IDN
+      , A.HJD_CDE	,H.HJD_NAM
+      , A.SHT_NUM
+      , A.MNG_CDE	,C.NM AS MNG_NAM
+      , A.IST_YMD
+      , A.SAA_CDE
+      , A.MOP_CDE	,C3.NM AS MOP_NAM
+      , A.JHT_CDE	,C2.NM AS JHT_NAM
+      , A.LOW_DEP
+      , A.HGH_DEP
+      , A.CNT_NUM
+      , A.SYS_CHK
+      , A.PIP_LBL
+      , A.PIP_DIP	/*구경*/
+      , A.PIP_LEN
+      , CASE WHEN ST_ISVALID(A.GEOM) = 1 THEN 'Y' ELSE 'N' END AS IS_GEOMETRY
+      FROM INFOFMS.WTL_PIPE_LM A
+      LEFT JOIN INFOFMS.V_FTR_CDE F ON A.FTR_CDE = F.FTR_CDE
+      LEFT JOIN INFOFMS.BML_HADM_AS H ON A.HJD_CDE = H.HJD_CDE
+      LEFT JOIN INFOUSER.CD_DTL_INFO C ON C.MST_CD = 'MNG_CDE' AND C.DTL_CD = A.MNG_CDE
+      LEFT JOIN INFOUSER.CD_DTL_INFO C2 ON C2.MST_CD = 'JHT_CDE' AND C2.DTL_CD = A.MNG_CDE
+      LEFT JOIN INFOUSER.CD_DTL_INFO C3 ON C3.MST_CD = 'MOP_CDE' AND C3.DTL_CD = A.MNG_CDE
+
+      WHERE 1=1
+      <isNotEmpty prepend="AND" property="MNG_CDE">
+        A.MNG_CDE like #MNG_CDE# || '%'
+      </isNotEmpty>
+
+      <isNotEmpty prepend="AND" property="FTR_IDN">
+        A.FTR_IDN like #FTR_IDN# || '%'
+      </isNotEmpty>
+
+      <isNotEmpty prepend="AND" property="HJD_CDE">
+        A.HJD_CDE like #HJD_CDE# || '%'
+      </isNotEmpty>
+
+      <isNotEmpty prepend="AND" property="CNT_NUM">
+        A.CNT_NUM like #CNT_NUM#  || '%'
+      </isNotEmpty>
+
+      <isNotEmpty prepend="AND" property="SHT_NUM">
+        A.SHT_NUM like #SHT_NUM#  || '%'
+      </isNotEmpty>
+
+      <isNotEmpty prepend="AND" property="IST_YMD_FROM">
+        A.IST_YMD <![CDATA[>=]]> decode(length(#IST_YMD_FROM#), 10, to_char(to_date(#IST_YMD_FROM#, 'yyyy-MM-dd'), 'yyyyMMdd'), '10000101')
+      </isNotEmpty>
+
+      <isNotEmpty prepend="AND" property="IST_YMD_TO">
+        A.IST_YMD <![CDATA[<=]]> decode(length(#IST_YMD_TO#), 10, to_char(to_date(#IST_YMD_TO#, 'yyyy-MM-dd'), 'yyyyMMdd'), '30000101')
+      </isNotEmpty>
+
+      <isNotEmpty prepend="AND" property="MOP_CDE">
+        A.MOP_CDE like #MOP_CDE# || '%'
+      </isNotEmpty>
+
+      <isNotEmpty prepend="AND" property="JHT_CDE">
+        A.JHT_CDE like #JHT_CDE# || '%'
+      </isNotEmpty>
+
+      <isNotEmpty prepend="AND" property="PIP_DIP">
+        A.PIP_DIP like #PIP_DIP# || '%'
+      </isNotEmpty>
+
+      ORDER BY A.FTR_IDN DESC
+
+
+      ) X WHERE ROWNUM <![CDATA[<=]]> #lastIndex#
+      )WHERE RNUM <![CDATA[>]]> #firstIndex#
+
+    </select>
+
+
+
+  </statements>
+</sqlMap>

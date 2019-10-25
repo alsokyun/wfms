@@ -18,5 +18,11 @@ namespace GTI.WFMS.Models.Cmm.Work
             return dao.Select_CODE_LIST(conditions);
         }
 
+        
+        public DataTable Select_ADAR_LIST(Hashtable conditions)
+        {
+            return dao.Select_ADAR_LIST(conditions);
+        }
+
     }
 }

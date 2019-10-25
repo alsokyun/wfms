@@ -3,6 +3,7 @@ using System.Data;
 using System.Collections;
 
 using GTIFramework.Core.Managers;
+using System;
 
 namespace GTI.WFMS.Models.Cmm.Dao
 {
@@ -18,5 +19,9 @@ namespace GTI.WFMS.Models.Cmm.Dao
             return DBManager.QueryForTable("Select_CODE_LIST", conditions);
         }
 
+        internal DataTable Select_ADAR_LIST(Hashtable conditions)
+        {
+            return DBManager.QueryForTable("Select_ADAR_LIST", conditions);
+        }
     }
 }
