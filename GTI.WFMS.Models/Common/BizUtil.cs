@@ -95,7 +95,7 @@ namespace GTI.WFMS.Models.Common
                 dt.Rows.InsertAt(dr, 0);
             }
 
-            // combo객체 Code/Name 필드매핑
+            // combo객체 Cd/Nm 필드매핑
             cmb.DisplayMember = DisplayMember;
             cmb.ValueMember = ValueMember;
 
