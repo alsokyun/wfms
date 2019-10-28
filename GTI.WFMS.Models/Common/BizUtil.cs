@@ -56,7 +56,7 @@ namespace GTI.WFMS.Models.Common
                 dt.Rows.InsertAt(dr, 0);
             }
 
-            // combo code/value 필드매핑
+            // combo Cd/Nm 필드매핑
             cmb.DisplayMember = "NM";
             cmb.ValueMember = "DTL_CD";
 
