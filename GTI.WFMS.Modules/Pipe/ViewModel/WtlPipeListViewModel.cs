@@ -2,17 +2,14 @@
 using DevExpress.Xpf.Grid;
 using GTI.WFMS.Models.Cmm.Work;
 using GTI.WFMS.Models.Pipe.Work;
+using GTI.WFMS.Models.Common;
 using GTI.WFMS.Modules.Pipe.View;
 using GTIFramework.Common.Log;
 using GTIFramework.Common.MessageBox;
 using Prism.Commands;
 using System;
 using System.Collections;
-using System.Collections.Generic;
 using System.Data;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 
 namespace GTI.WFMS.Modules.Pipe.ViewModel
@@ -131,7 +128,7 @@ namespace GTI.WFMS.Modules.Pipe.ViewModel
                 conditions.Add("HJD_CDE", cbHJD_CDE.EditValue.ToString().Trim());
                 conditions.Add("MOP_CDE", cbMOP_CDE.EditValue.ToString().Trim());
                 conditions.Add("JHT_CDE", cbJHT_CDE.EditValue.ToString().Trim());
-                conditions.Add("FTR_IDN", txtFTR_IDN.EditValue);
+                conditions.Add("FTR_IDN", FmsUtil.Trim(txtFTR_IDN.EditValue));
                 conditions.Add("CNT_NUM", txtCNT_NUM.Text.Trim());
                 conditions.Add("SHT_NUM", txtSHT_NUM.Text.Trim());
                 conditions.Add("PIP_DIP", txtPIP_DIP.Text.Trim());
@@ -145,7 +142,9 @@ namespace GTI.WFMS.Modules.Pipe.ViewModel
                 conditions.Add("firstIndex", 0);
                 conditions.Add("lastIndex", 1000);
 
-                dtresult = pipeWork.SelectWtlPipeList(conditions);
+                //dtresult = pipeWork.SelectWtlPipeList(conditions);
+                conditions.Add("sqlId", "SelectWtlPipeList");
+                dtresult = BizUtil.SelectList(conditions);
                 grid.ItemsSource = dtresult;
             }
             catch (Exception ex)
@@ -166,43 +165,17 @@ namespace GTI.WFMS.Modules.Pipe.ViewModel
         private void InitDataBinding()
         {
             try { 
-                //조건맵
-                Hashtable conditions = new Hashtable();
-
                 // cbMNG_CDE
-                conditions.Add("MST_CD", "MNG_CDE");
-                conditions.Add("ALL", "Y");
-                dtMNG_CDE = cmmWork.Select_CODE_LIST(conditions);
-                cbMNG_CDE.ItemsSource = dtMNG_CDE;
-                cbMNG_CDE.SelectedIndex = 0;
+                BizUtil.SetCmbCode(cbMNG_CDE, "MNG_CDE", true);
 
                 // cbHJD_CDE 행정동
-                dtHJD_CDE = cmmWork.Select_ADAR_LIST(null);
-                cbHJD_CDE.ItemsSource = dtHJD_CDE;
-                cbHJD_CDE.SelectedIndex = 0;
+                BizUtil.SetCombo(cbHJD_CDE, "Select_ADAR_LIST", "HJD_CDE", "HJD_NAM", true);
 
                 // cbMOP_CDE
-                conditions.Clear();
-                conditions.Add("MST_CD", "MOP_CDE");
-                conditions.Add("ALL", "Y");
-                dtMOP_CDE = cmmWork.Select_CODE_LIST(conditions);
-                cbMOP_CDE.ItemsSource = dtMOP_CDE;
-                cbMOP_CDE.SelectedIndex = 0;
+                BizUtil.SetCmbCode(cbMOP_CDE, "MOP_CDE", true);
 
                 // cbJHT_CDE
-                conditions.Clear();
-                conditions.Add("MST_CD", "JHT_CDE");
-                conditions.Add("ALL", "Y");
-                dtJHT_CDE = cmmWork.Select_CODE_LIST(conditions);
-                /* 전체추가
-                dr = dtJHT_CDE.NewRow();
-                dr["DTL_CD"] = "";
-                dr["NM"] = "전체";
-                dtJHT_CDE.Rows.InsertAt(dr, 0);
-                 */
-                cbJHT_CDE.ItemsSource = dtJHT_CDE;
-                cbJHT_CDE.SelectedIndex = 0;
-
+                BizUtil.SetCmbCode(cbJHT_CDE, "JHT_CDE", true);
             }
             catch (Exception ex)
             {

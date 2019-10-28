@@ -1,6 +1,5 @@
 ﻿using DevExpress.Xpf.Accordion;
 using DevExpress.Xpf.Core;
-using GTI.WFMS.Main.View;
 using GTI.WFMS.Models.Main.Work;
 using GTI.WFMS.Modules.Main;
 using GTIFramework.Common.Log;
@@ -178,7 +177,7 @@ namespace GTI.WFMS.Main
                 try
                 {
                     //중메뉴 권한 필터링 (N)인경우 NO
-                    ///if (!Logs.htPermission[r["MNU_CD"].ToString()].ToString().Equals("N"))
+                    if (!Logs.htPermission[r["MNU_CD"].ToString()].ToString().Equals("N"))
                     {
                         AccordionItem acctwoitem = new AccordionItem
                         {
@@ -200,7 +199,7 @@ namespace GTI.WFMS.Main
                             try
                             {
                                 //소메뉴 권한 필터링 (N)인경우 NO
-                                ///if (!Logs.htPermission[drthree["MNU_CD"].ToString()].ToString().Equals("N"))
+                                if (!Logs.htPermission[drthree["MNU_CD"].ToString()].ToString().Equals("N"))
                                 {
                                     AccordionItem accthreeitem = new AccordionItem
                                     {
@@ -264,7 +263,7 @@ namespace GTI.WFMS.Main
                 {
                     try
                     {
-                        ///if (!Logs.htPermission[r["MNU_CD"].ToString()].ToString().Equals("N"))
+                        if (!Logs.htPermission[r["MNU_CD"].ToString()].ToString().Equals("N"))
                         {
                             Button btnMenu = new Button
                             {
@@ -332,7 +331,7 @@ namespace GTI.WFMS.Main
 
                     if (dr.Length == 1)
                     {
-                        //if (!Logs.htPermission[strSelectMenu].ToString().Equals("N"))
+                        if (!Logs.htPermission[strSelectMenu].ToString().Equals("N"))
                         {
                             if (!dr[0]["MNU_PATH"].ToString().Equals(""))
                             {
@@ -350,8 +349,8 @@ namespace GTI.WFMS.Main
 
 
 
-
-
+                                // 선택된 메뉴를 세션에 저장
+                                Logs.strFocusMNU_CD = accitemSelect.Name.Split('_')[1].ToString();
 
 
                                 /*

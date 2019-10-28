@@ -6,7 +6,8 @@
         xmlns:prism="http://prismlibrary.com/"
         xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
         xmlns:cm="clr-namespace:GTIFramework.Common.Utils.Converters;assembly=GTIFramework"
-        xmlns:dxa="http://schemas.devexpress.com/winfx/2008/xaml/accordion" x:Class="GTI.WFMS.Main.MainWin"
+        xmlns:dxa="http://schemas.devexpress.com/winfx/2008/xaml/accordion" 
+        x:Class="GTI.WFMS.Main.MainWin"
         prism:ViewModelLocator.AutoWireViewModel="True"
         mc:Ignorable="d"
     
