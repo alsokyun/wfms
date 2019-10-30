@@ -2,6 +2,8 @@
 using DevExpress.Xpf.Grid;
 using GTI.WFMS.Models.Adm.Work;
 using GTI.WFMS.Models.Cmm.Work;
+using GTI.WFMS.Models.Cmm.Dao;
+using GTI.WFMS.Models.Common;
 using GTI.WFMS.Modules.Adm.Model;
 using GTIFramework.Common.Log;
 using GTIFramework.Common.MessageBox;
@@ -21,10 +23,11 @@ namespace GTI.WFMS.Modules.Adm
 {
     class UcPageViewModel:INotifyPropertyChanged
     {
+
         #region ==========  페이징관련 INotifyPropertyChanged  ==========
 
         public event PropertyChangedEventHandler PropertyChanged;
-
+        
 
         /// 조회결과 리스트데이터
         public ObservableCollection<List<SelectUser>> PagedCollection { get; set; }
@@ -64,9 +67,6 @@ namespace GTI.WFMS.Modules.Adm
                 handler(this, new PropertyChangedEventArgs(propertyName));
             }
         }
-
-
-
 
         #endregion
 
@@ -123,14 +123,21 @@ namespace GTI.WFMS.Modules.Adm
 
             // 프로퍼티변경이벤트 처리핸들러 등록
             PropertyChanged += changeHandler;
+
         }
-        // 프로퍼티변경이벤트 처리핸들
+
+
+        // 프로퍼티변경이벤트 처리핸들러
         private void changeHandler(object sender, PropertyChangedEventArgs e)
         {
             switch (e.PropertyName)
             {
                 case "PageIndex":
-                    if(PageIndex > -1) //초기이벤트 걸른다
+                    if(PageIndex <0) //초기이벤트는 걸른다
+                    {
+                        this.pageIndex = 0;
+                    }
+                    else
                     {
                         SearchAction(null); 
                     }
@@ -245,18 +252,22 @@ namespace GTI.WFMS.Modules.Adm
                 //if (treeList.FocusedNode == null) return;
 
                 DataTable dtresult = new DataTable();
-
                 Hashtable conditions = new Hashtable();
                 conditions.Add("WORD", txtWord.Text.Replace(" ", ""));
                 conditions.Add("GBN", cbGBN.EditValue);
 
 
-                //초기에 pageIndex -1 이어서 0으로 세팅
-                if (this.pageIndex < 0) this.pageIndex = 0; 
+                //dtresult = admWork.selectUsrList(conditions);
+                conditions.Add("sqlId", "selectUsrList");
 
-                conditions.Add("page", this.pageIndex);
-                conditions.Add("rows", 20);
-                dtresult = admWork.selectUsrList(conditions);
+                /*
+                    조회후 페이징소스 업데이트
+                 */
+                BizUtil.dele_callback callback = delegate(DataTable dt) {
+                    this.PagedCollection.Clear();
+                    this.PagedCollection.Add(SetPagingList(dt));
+                };
+                BizUtil.SelectListPage(conditions, this.pageIndex, callback);
 
                 foreach (DataRow dr in dtresult.Rows)
                 {
@@ -264,9 +275,8 @@ namespace GTI.WFMS.Modules.Adm
                 }
 
                 //grid.ItemsSource = dtresult;
-
-                //SetPagingList_OLD(dtresult, 20);
-                SetPagingList(dtresult);
+                //this.PagedCollection.Clear();
+                //this.PagedCollection.Add(SetPagingList(dtresult)); 
 
             }
             catch (Exception ex)
@@ -275,25 +285,25 @@ namespace GTI.WFMS.Modules.Adm
             }
         }
 
+
+
         /// <summary>
         /// 페이징된조회데이터테이블 -> 페이지소스로 변환
         /// </summary>
-        /// <param name="dtresult"></param>
-        private void SetPagingList(DataTable dtresult)
+        /// <param name="dt"></param>
+        private List<SelectUser> SetPagingList(DataTable dt)
         {
             // TotalCnt 설정
             try {
-                //double tot = Convert.ToInt16(dtresult.Rows[0]["ROWCNT"]) / 20;
-                this.TotalCnt = (int)Math.Ceiling((double)Convert.ToInt16(dtresult.Rows[0]["ROWCNT"]) / 20) ;
+                this.TotalCnt = (int)Math.Ceiling((double)Convert.ToInt16(dt.Rows[0]["ROWCNT"]) / FmsUtil.PageSize) ;
             } catch (Exception e) {
                 this.TotalCnt = 0;
             }
 
-            this.PagedCollection.Clear();
             List<SelectUser> ret = new List<SelectUser>();
 
 
-            foreach (DataRow dr in dtresult.Rows)
+            foreach (DataRow dr in dt.Rows)
             {
                 SelectUser user = new SelectUser();
 
@@ -308,51 +318,25 @@ namespace GTI.WFMS.Modules.Adm
 
                 ret.Add(user);
             }
-            this.PagedCollection.Add(ret);
-
+            return ret;
         }
 
-        /// <summary>
-        /// 전체데이터테이블 -> 페이지소스로 변환&추가
-        /// </summary>
-        /// <param name="dtresult"></param>
-        /// <param name="pageSize"></param>
-        private void SetPagingList_OLD(DataTable dtresult, int pageSize)
-        {
-            this.PagedCollection.Clear();
-            List<SelectUser> ret = new List<SelectUser>();
-            int cnt = 1;
+        
 
-            foreach (DataRow dr in dtresult.Rows)
-            {
-                SelectUser user = new SelectUser();
 
-                user.RN = Convert.ToInt32(dr["RN"]);
-                user.USER_ID = dr["USER_ID"].ToString();
-                user.USER_NM = dr["USER_NM"].ToString();
-                user.USER_TEL = dr["USER_TEL"].ToString();
-                user.DEPT_NM = dr["DEPT_NM"].ToString();
-                user.POS_NM = dr["POS_NM"].ToString();
-                user.ETC = dr["ETC"].ToString();
-                user.USER_PWD = dr["USER_PWD"].ToString();
 
-                ret.Add(user);
 
-                // 페이지사이즈별로 번들생성
-                if (cnt % pageSize == 0)
-                {
-                    this.PagedCollection.Add(ret);
-                    ret = new List<SelectUser>();
-                }
-                // 마직막 데이터이면 짜투리번들 추가
-                if (cnt == dtresult.Rows.Count)
-                {
-                    this.PagedCollection.Add(ret);
-                }
-                cnt++;
-            }
 
-        }
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -602,7 +586,9 @@ namespace GTI.WFMS.Modules.Adm
 
 
 
-    
+
+
+
 
     }
 }

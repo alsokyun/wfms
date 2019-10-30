@@ -13,7 +13,8 @@ namespace GTI.WFMS.Models.Common
         public static readonly DependencyProperty SourcesProperty
             = DependencyProperty.Register("Sources", typeof(IList), typeof(SourcesBehavior),
             new PropertyMetadata(null, (d, e) => ((SourcesBehavior)d).OnSourcesChanged((IList)e.NewValue)));
-        
+
+        // 뷰모델의 TotalCnt와 바인딩하기위해 DependencyProperty 추가
         public static readonly DependencyProperty TotalCntProperty
             = DependencyProperty.Register("TotalCnt", typeof(int), typeof(SourcesBehavior), null);
 
@@ -36,21 +37,21 @@ namespace GTI.WFMS.Models.Common
         }
 
 
-
-
-
-
+        // 뷰의 DataPager 객체
         public DataPager DataPager { get { return AssociatedObject; } }
 
 
 
+
+
+        #region ============ Behavior DataPager 상속메소드 ============ 
+
+        // Sources 연결 이벤트
         protected override void OnAttached()
         {
             base.OnAttached();
-            //DataPager.PageSize = Sources.Count;
-            DataPager.ItemCount = TotalCnt;
-            //UpdateActualSrc();
-            //UpdateActualSource(DataPager.PageIndex);
+
+            DataPager.ItemCount = TotalCnt; //페이징 Item버튼의 갯수
             SubsribeSourcesColletion(Sources);
             SubscribeDataPager();
         }
@@ -75,6 +76,11 @@ namespace GTI.WFMS.Models.Common
             }
             SubscribeDataPager();
         }
+        #endregion
+
+
+
+        #region =========== 내부 이벤트핸들러 ===============
         void UnsubsribeSourcesColletion(IList sources)
         {
             if (sources is INotifyCollectionChanged)
@@ -112,6 +118,11 @@ namespace GTI.WFMS.Models.Common
             //}
         }
 
+        #endregion
+
+
+
+        #region ========= 내부함수 =============
 
         // 전체데이터중에 그리드데이터 표시 - 사용안함
         void UpdateActualSource(int index)
@@ -137,6 +148,9 @@ namespace GTI.WFMS.Models.Common
         {
             //UpdateActualSource(e.NewValue); 전체모드인 경우에 페이지변경시 그리드조회 - 사용안함
         }
+        #endregion
+
+
 
     }
 }

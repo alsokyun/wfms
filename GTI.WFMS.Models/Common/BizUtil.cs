@@ -1,5 +1,6 @@
 ﻿using DevExpress.Xpf.Editors;
 using GTI.WFMS.Models.Cmm.Dao;
+using System;
 using System.Collections;
 using System.Data;
 
@@ -19,6 +20,21 @@ namespace GTI.WFMS.Models.Common
         public static DataTable SelectList(Hashtable conditions)
         {
             return dao.SelectLIST(conditions);
+        }
+
+        public delegate void dele_callback(DataTable dt);
+        /// <summary>
+        /// 페이징 그리드조회
+        /// </summary>
+        /// <param name="conditions"></param>
+        /// <param name="pageIndex"></param>
+        /// <returns></returns>
+        public static void SelectListPage(Hashtable conditions, int pageIndex, dele_callback dele)
+        {
+            conditions.Add("page", pageIndex);
+            conditions.Add("rows", FmsUtil.PageSize);
+            //return dao.SelectLIST(conditions);
+            dele(dao.SelectLIST(conditions));
         }
 
 
@@ -108,5 +124,5 @@ namespace GTI.WFMS.Models.Common
         }
 
 
-        }
     }
+}

@@ -11,11 +11,60 @@ using System;
 using System.Collections;
 using System.Data;
 using System.Windows;
+using System.ComponentModel;
 
 namespace GTI.WFMS.Modules.Pipe.ViewModel
 {
-    class WtlPipeListViewModel
+    class WtlPipeListViewModel : INotifyPropertyChanged
     {
+        #region ==========  페이징관련 INotifyPropertyChanged  ==========
+
+        public event PropertyChangedEventHandler PropertyChanged;
+
+
+        /// 조회결과 리스트데이터
+        //public ObservableCollection<List<SelectUser>> PagedCollection { get; set; }
+
+        // 페이징인덱스 뷰와동기화처리를 위한 이벤트설정
+        int pageIndex = 1;
+        public int PageIndex
+        {
+            get { return pageIndex; }
+            set
+            {
+                if (value == pageIndex) return;
+                pageIndex = value;
+                OnPropertyChanged("PageIndex");
+            }
+        }
+
+        // 총건수 뷰와동기화처리를 위한 이벤트설정
+        int totalCnt = 0;
+        public int TotalCnt
+        {
+            get { return totalCnt; }
+            set
+            {
+                if (value == totalCnt) return;
+                totalCnt = value;
+                OnPropertyChanged("TotalCnt");
+            }
+        }
+
+        // pageIndex가 변경될때 이벤트연동
+        protected void OnPropertyChanged(string propertyName)
+        {
+            PropertyChangedEventHandler handler = PropertyChanged;
+            if (handler != null)
+            {
+                handler(this, new PropertyChangedEventArgs(propertyName));
+            }
+        }
+
+        #endregion
+
+
+
         #region ==========  Properties 정의 ==========
         /// <summary>
         /// Loaded Event

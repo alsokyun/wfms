@@ -73,6 +73,7 @@ namespace GTI.WFMS.Modules.Adm
         #region ========== Members 정의 ==========
         AdmWork admWork = new AdmWork();
         CmmWork cmmWork = new CmmWork();
+        
 
         UcUserMngView ucUserMngView;
         TextEdit txtWord;

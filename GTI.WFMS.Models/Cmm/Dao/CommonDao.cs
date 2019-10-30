@@ -7,7 +7,7 @@ using System;
 
 namespace GTI.WFMS.Models.Cmm.Dao
 {
-    class CommonDao
+    public class CommonDao
     {
         /// <summary>
         /// 데이터 조회

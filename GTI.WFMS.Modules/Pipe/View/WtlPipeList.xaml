@@ -13,6 +13,7 @@
         xmlns:ei="http://schemas.microsoft.com/expression/2010/interactions"
         xmlns:vm="clr-namespace:GTI.WFMS.Modules.Pipe.ViewModel"
         xmlns:cm="clr-namespace:GTIFramework.Common.Utils.Converters;assembly=GTIFramework"
+        xmlns:common="clr-namespace:GTI.WFMS.Models.Common;assembly=GTI.WFMS.Models"
         x:Name="wtlPipeList"
 
       >
@@ -301,10 +302,18 @@
             </Button>
         </StackPanel>
 
-        
-        
 
-        <Button Grid.Row="2" Grid.Column="1" Content="클릭이벤트 메소드연결" Width="200" Height="30">
+        <Grid Grid.Row="2">
+            <dxe:DataPager x:Name="DataPager" Grid.Row="1" HorizontalAlignment="Left" PageIndex="{Binding PageIndex, Mode=TwoWay}" >
+                <i:Interaction.Behaviors>
+                    <common:SourcesBehavior x:Name="DataPagerSource" Sources="{Binding PagedCollection}" TotalCnt="{Binding TotalCnt}"/>
+                </i:Interaction.Behaviors>
+            </dxe:DataPager>
+        </Grid>
+
+
+
+        <Button Grid.Row="2" Grid.Column="1" Content="메소드" Width="50" Height="30" HorizontalAlignment="Right">
             <i:Interaction.Triggers>
                 <i:EventTrigger EventName="Click">
                     <i:InvokeCommandAction Command="{Binding btnCmd}" />

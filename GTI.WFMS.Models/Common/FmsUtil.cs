@@ -8,6 +8,11 @@ namespace GTI.WFMS.Models.Common
 {
     public class FmsUtil
     {
+        /// <summary>
+        /// 전역변수 설정
+        /// </summary>
+        public static int PageSize = 10; //페이지의 row 수
+
 
 
         /// <summary>
