@@ -338,8 +338,6 @@ namespace GTI.WFMS.Main
                                 /*
                                  */
 
-                                //Label lbTitle = mainwin.FindName("lbTitle") as Label;
-                                //lbTitle.Content = dr[0]["MNU_NM"].ToString();
 
                                 //Grid gridtitle = mainwin.FindName("gridtitle") as Grid;
                                 //gridtitle.RowDefinitions[0].Height = new GridLength(40, GridUnitType.Pixel);
@@ -356,8 +354,10 @@ namespace GTI.WFMS.Main
                                 /*
                                  * ContentsRegion표시하지않고 팝업윈도우를 호출
                                  */
-
                                 PopWin pwin = new PopWin(dr[0]["MNU_PATH"].ToString());
+
+                                Label lbTitle = pwin.FindName("lbTitle") as Label;//화면타이틀
+                                lbTitle.Content = dr[0]["MNU_NM"].ToString();
 
                                 bool? ret = pwin.ShowDialog();
 

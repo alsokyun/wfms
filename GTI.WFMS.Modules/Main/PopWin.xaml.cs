@@ -2,6 +2,7 @@
 using System;
 using System.Reflection;
 using System.Windows;
+using System.Windows.Input;
 
 namespace GTI.WFMS.Modules.Main
 {
@@ -35,6 +36,37 @@ namespace GTI.WFMS.Modules.Main
             this.srcFrm.Source = new Uri(path, UriKind.Relative);
             //this.srcFrm.Source = new Uri("pack://application:,,,/GTI.WFMS.Modules;component/Adm/View/UcPageView.xaml", UriKind.Absolute);
 
+
+            /* 이벤트등록 */
+            //닫기버튼
+            btnXSignClose.Click += BtnClose_Click;
+
+            //윈도우창이동
+            bdTitle.PreviewMouseDown += BdTitle_PreviewMouseDown;
+
+
+        }
+
+        //윈도우창이동
+        private void BdTitle_PreviewMouseDown(object sender, MouseButtonEventArgs e)
+        {
+            if (Mouse.LeftButton == MouseButtonState.Pressed)
+            {
+                if (this.WindowState == WindowState.Maximized)
+                {
+                    this.Top = Mouse.GetPosition(this).Y - System.Windows.Forms.Cursor.Position.Y - 6;
+                    this.Left = System.Windows.Forms.Cursor.Position.X - Mouse.GetPosition(this).X + 20;
+
+                    this.WindowState = WindowState.Normal;
+                }
+                this.DragMove();
+            }
+        }
+
+        //닫기버튼
+        private void BtnClose_Click(object sender, RoutedEventArgs e)
+        {
+            this.Close();
         }
     }
 }

@@ -32,7 +32,10 @@
 
         <Label Grid.Row="1" Grid.Column="1" Content="화면타이틀" FontSize="18" FontWeight="Bold" Foreground="White" 
                HorizontalAlignment="Left" VerticalAlignment="Center" Padding="10 0 0 0"
+               x:Name="lbTitle"
                />
+        <Button x:Name="btnXSignClose" Grid.Row="1" Grid.Column="1" Style="{StaticResource XSignCloseButton}" 
+                Margin="0 15 15 0"/>
 
         <Frame Grid.Row="2" Grid.Column="1" NavigationUIVisibility="Hidden" x:Name="srcFrm"></Frame>
     </Grid>

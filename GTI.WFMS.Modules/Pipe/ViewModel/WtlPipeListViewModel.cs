@@ -12,18 +12,20 @@ using System.Collections;
 using System.Data;
 using System.Windows;
 using System.ComponentModel;
+using System.Collections.ObjectModel;
 
 namespace GTI.WFMS.Modules.Pipe.ViewModel
 {
     class WtlPipeListViewModel : INotifyPropertyChanged
     {
+
         #region ==========  페이징관련 INotifyPropertyChanged  ==========
 
         public event PropertyChangedEventHandler PropertyChanged;
 
 
         /// 조회결과 리스트데이터
-        //public ObservableCollection<List<SelectUser>> PagedCollection { get; set; }
+        public ObservableCollection<DataTable> PagedCollection { get; set; }
 
         // 페이징인덱스 뷰와동기화처리를 위한 이벤트설정
         int pageIndex = 1;
@@ -38,7 +40,20 @@ namespace GTI.WFMS.Modules.Pipe.ViewModel
             }
         }
 
-        // 총건수 뷰와동기화처리를 위한 이벤트설정
+        // 총페이지개수 : 뷰와동기화처리를 위한 이벤트설정
+        int itemCnt = 0;
+        public int ItemCnt
+        {
+            get { return itemCnt; }
+            set
+            {
+                if (value == itemCnt) return;
+                itemCnt = value;
+                OnPropertyChanged("ItemCnt");
+            }
+        }
+
+        // 총페이지개수 : 뷰와동기화처리를 위한 이벤트설정
         int totalCnt = 0;
         public int TotalCnt
         {
@@ -50,6 +65,7 @@ namespace GTI.WFMS.Modules.Pipe.ViewModel
                 OnPropertyChanged("TotalCnt");
             }
         }
+
 
         // pageIndex가 변경될때 이벤트연동
         protected void OnPropertyChanged(string propertyName)
@@ -119,7 +135,33 @@ namespace GTI.WFMS.Modules.Pipe.ViewModel
 
             btnCmd = new DelegateCommand<object>(btnMethod);
 
+
+            // 조회데이터 초기화
+            this.PagedCollection = new ObservableCollection<DataTable>();
+            // 프로퍼티변경이벤트 처리핸들러 등록
+            PropertyChanged += delegate (object sender, PropertyChangedEventArgs e)
+            {
+                switch (e.PropertyName)
+                {
+                    case "PageIndex":
+                        if (PageIndex < 0) //초기이벤트는 걸른다
+                        {
+                            this.pageIndex = 0;
+                        }
+                        else
+                        {
+                            SearchAction(PageIndex);
+                        }
+                        break;
+                    default:
+                        break;
+                }
+            };
+
         }
+
+
+
 
 
 
@@ -195,8 +237,41 @@ namespace GTI.WFMS.Modules.Pipe.ViewModel
 
                 //dtresult = pipeWork.SelectWtlPipeList(conditions);
                 conditions.Add("sqlId", "SelectWtlPipeList");
-                dtresult = BizUtil.SelectList(conditions);
-                grid.ItemsSource = dtresult;
+                //dtresult = BizUtil.SelectList(conditions);
+                //grid.ItemsSource = dtresult;
+
+                /*
+                    조회후 페이징소스 업데이트
+                 */
+                int page_idx = 0;
+                //페이지버튼으로 조회
+                if (obj is int)
+                {
+                    page_idx = (int)obj;
+                }
+                //조회버튼으로 조회는 버튼위치(PageIndex) 초기화
+                else
+                {
+                    PageIndex = -1; 
+                }
+                BizUtil.SelectListPage(conditions, page_idx, delegate (DataTable dt) {
+                    // TotalCnt 설정
+                    try
+                    {
+                        this.TotalCnt = Convert.ToInt16(dt.Rows[0]["ROWCNT"]);
+                        this.ItemCnt = (int)Math.Ceiling((double)this.TotalCnt / FmsUtil.PageSize);
+                    }
+                    catch (Exception e)
+                    {
+                        this.ItemCnt = 0;
+                    }
+
+                    this.PagedCollection.Clear();
+                    this.PagedCollection.Add(dt);
+                });
+
+
+
             }
             catch (Exception ex)
             {

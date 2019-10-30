@@ -173,11 +173,12 @@
         <!--그리드영역-->
         <StackPanel Grid.Row="0" Grid.Column="1" Orientation="Horizontal">
             <Image Style="{StaticResource TitleCircle}"/>
-            <Label Content="목록(77건)" Style="{StaticResource ResourceKey=CircleTitleLabel}"/>
+            <Label Content="{Binding TotalCnt, Mode=OneWay}" ContentStringFormat="목록 ({0}건)" Style="{StaticResource ResourceKey=CircleTitleLabel}"/>
         </StackPanel>
 
         <Border  Grid.Row="1" Grid.Column="1"  BorderBrush="#2071a6" BorderThickness="1"/>
-        <dxg:GridControl Grid.Row="1" Grid.Column="1" x:Name="grid" VerticalAlignment="Stretch" HorizontalAlignment="Stretch">
+        <dxg:GridControl Grid.Row="1" Grid.Column="1" x:Name="grid" VerticalAlignment="Stretch" HorizontalAlignment="Stretch"
+                         ItemsSource="{Binding ElementName=DataPagerSource, Path=ActualSource}" >
 
             <i:Interaction.Triggers>
                 <i:EventTrigger EventName="SelectedItemChanged">
@@ -197,7 +198,7 @@
                                        
                                        AllowPerPixelScrolling="True"  
                                        ShowHorizontalLines="True"
-                                       AllowPaging="True"
+                                       AllowPaging="False"
                                        
                                        ShowIndicator="False" 
                                        ShowGroupPanel="False" 
@@ -303,14 +304,12 @@
         </StackPanel>
 
 
-        <Grid Grid.Row="2">
-            <dxe:DataPager x:Name="DataPager" Grid.Row="1" HorizontalAlignment="Left" PageIndex="{Binding PageIndex, Mode=TwoWay}" >
-                <i:Interaction.Behaviors>
-                    <common:SourcesBehavior x:Name="DataPagerSource" Sources="{Binding PagedCollection}" TotalCnt="{Binding TotalCnt}"/>
-                </i:Interaction.Behaviors>
-            </dxe:DataPager>
-        </Grid>
-
+        <dxe:DataPager x:Name="DataPager" Grid.Row="2" Grid.Column="1"  HorizontalAlignment="Center" NumericButtonCount="10"
+                           PageIndex="{Binding PageIndex, Mode=TwoWay}" >
+            <i:Interaction.Behaviors>
+                <common:SourcesBehavior x:Name="DataPagerSource" Sources="{Binding PagedCollection}" ItemCnt="{Binding ItemCnt}"/>
+            </i:Interaction.Behaviors>
+        </dxe:DataPager>
 
 
         <Button Grid.Row="2" Grid.Column="1" Content="메소드" Width="50" Height="30" HorizontalAlignment="Right">

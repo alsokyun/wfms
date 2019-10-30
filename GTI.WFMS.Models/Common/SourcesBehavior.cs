@@ -14,9 +14,9 @@ namespace GTI.WFMS.Models.Common
             = DependencyProperty.Register("Sources", typeof(IList), typeof(SourcesBehavior),
             new PropertyMetadata(null, (d, e) => ((SourcesBehavior)d).OnSourcesChanged((IList)e.NewValue)));
 
-        // 뷰모델의 TotalCnt와 바인딩하기위해 DependencyProperty 추가
-        public static readonly DependencyProperty TotalCntProperty
-            = DependencyProperty.Register("TotalCnt", typeof(int), typeof(SourcesBehavior), null);
+        // 뷰모델의 ItemCnt와 바인딩하기위해 DependencyProperty 추가
+        public static readonly DependencyProperty ItemCntProperty
+            = DependencyProperty.Register("ItemCnt", typeof(int), typeof(SourcesBehavior), null);
 
 
         public object ActualSource
@@ -30,10 +30,10 @@ namespace GTI.WFMS.Models.Common
             set { SetValue(SourcesProperty, value); }
         }
         //데이터의 총건수 - 바인딩된 뷰모델에서 연결됨
-        public int TotalCnt
+        public int ItemCnt
         {
-            get { return (int)GetValue(TotalCntProperty); }
-            set { SetValue(TotalCntProperty, value); }
+            get { return (int)GetValue(ItemCntProperty); }
+            set { SetValue(ItemCntProperty, value); }
         }
 
 
@@ -50,8 +50,8 @@ namespace GTI.WFMS.Models.Common
         protected override void OnAttached()
         {
             base.OnAttached();
-
-            DataPager.ItemCount = TotalCnt; //페이징 Item버튼의 갯수
+            //DataPager.PageSize = 10;
+            DataPager.ItemCount = ItemCnt; //페이징 Item버튼의 갯수
             SubsribeSourcesColletion(Sources);
             SubscribeDataPager();
         }
@@ -66,7 +66,7 @@ namespace GTI.WFMS.Models.Common
             if (DataPager == null) return;
             UpdateActualSrc();
             //UpdateActualSource(DataPager.PageIndex);
-            if (Sources != null) DataPager.ItemCount = TotalCnt;
+            if (Sources != null) DataPager.ItemCount = ItemCnt;
             UnsubsribeSourcesColletion(oldSources);
             SubsribeSourcesColletion(Sources);
             if (ActualSource != null)
@@ -108,7 +108,7 @@ namespace GTI.WFMS.Models.Common
         {
             if (Sources != null && Sources.Count > 0)
             {
-                DataPager.ItemCount = TotalCnt;
+                DataPager.ItemCount = ItemCnt;
                 UpdateActualSrc(); //소스변경되면 무조건 그리드변경
             }
             //소스전체처리하는 경우에 초기 그리드데이터 처리하는부분

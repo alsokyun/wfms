@@ -30,7 +30,7 @@ namespace GTI.WFMS.Modules.Adm
         
 
         /// 조회결과 리스트데이터
-        public ObservableCollection<List<SelectUser>> PagedCollection { get; set; }
+        public ObservableCollection<DataTable> PagedCollection { get; set; }
 
         // 페이징인덱스 뷰와동기화처리를 위한 이벤트설정
         int pageIndex = 1;
@@ -46,15 +46,15 @@ namespace GTI.WFMS.Modules.Adm
         }
 
         // 총건수 뷰와동기화처리를 위한 이벤트설정
-        int totalCnt = 0;
-        public int TotalCnt
+        int itemCnt = 0;
+        public int ItemCnt
         {
-            get { return totalCnt; }
+            get { return itemCnt; }
             set
             {
-                if (value == totalCnt) return;
-                totalCnt = value;
-                OnPropertyChanged("TotalCnt");
+                if (value == itemCnt) return;
+                itemCnt = value;
+                OnPropertyChanged("ItemCnt");
             }
         }
 
@@ -119,34 +119,32 @@ namespace GTI.WFMS.Modules.Adm
             btnDtlClickCommnad = new DelegateCommand<object>(btnDtlClickAction);
 
             // 조회데이터 초기화
-            this.PagedCollection = new ObservableCollection<List<SelectUser>>();
+            this.PagedCollection = new ObservableCollection<DataTable>();
 
             // 프로퍼티변경이벤트 처리핸들러 등록
-            PropertyChanged += changeHandler;
-
-        }
-
-
-        // 프로퍼티변경이벤트 처리핸들러
-        private void changeHandler(object sender, PropertyChangedEventArgs e)
-        {
-            switch (e.PropertyName)
+            PropertyChanged += delegate (object sender, PropertyChangedEventArgs e)
             {
-                case "PageIndex":
-                    if(PageIndex <0) //초기이벤트는 걸른다
-                    {
-                        this.pageIndex = 0;
-                    }
-                    else
-                    {
-                        SearchAction(null); 
-                    }
-                    break;
-                default:
-                    break;
-            }
+                switch (e.PropertyName)
+                {
+                    case "PageIndex":
+                        if (PageIndex < 0) //초기이벤트는 걸른다
+                        {
+                            this.pageIndex = 0;
+                        }
+                        else
+                        {
+                            SearchAction(null);
+                        }
+                        break;
+                    default:
+                        break;
+                }
+            };
+
         }
 
+
+      
         private void btnDtlClickAction(object obj)
         {
             //NavigationService.Navigate(new Uri("/Page1.xaml"), UriKind.Relative);
@@ -262,12 +260,37 @@ namespace GTI.WFMS.Modules.Adm
 
                 /*
                     조회후 페이징소스 업데이트
-                 */
+                */
+                /*
                 BizUtil.dele_callback callback = delegate(DataTable dt) {
+                    // TotalCnt 설정
+                    try
+                    {
+                        this.ItemCnt = (int)Math.Ceiling((double)Convert.ToInt16(dt.Rows[0]["ROWCNT"]) / FmsUtil.PageSize);
+                    }
+                    catch (Exception e)
+                    {
+                        this.ItemCnt = 0;
+                    }
+
                     this.PagedCollection.Clear();
-                    this.PagedCollection.Add(SetPagingList(dt));
+                    this.PagedCollection.Add(dt);
                 };
-                BizUtil.SelectListPage(conditions, this.pageIndex, callback);
+                 */
+                BizUtil.SelectListPage(conditions, this.pageIndex, delegate (DataTable dt) {
+                    // TotalCnt 설정
+                    try
+                    {
+                        this.ItemCnt = (int)Math.Ceiling((double)Convert.ToInt16(dt.Rows[0]["ROWCNT"]) / FmsUtil.PageSize);
+                    }
+                    catch (Exception e)
+                    {
+                        this.ItemCnt = 0;
+                    }
+
+                    this.PagedCollection.Clear();
+                    this.PagedCollection.Add(dt);
+                });
 
                 foreach (DataRow dr in dtresult.Rows)
                 {
@@ -295,9 +318,9 @@ namespace GTI.WFMS.Modules.Adm
         {
             // TotalCnt 설정
             try {
-                this.TotalCnt = (int)Math.Ceiling((double)Convert.ToInt16(dt.Rows[0]["ROWCNT"]) / FmsUtil.PageSize) ;
+                this.ItemCnt = (int)Math.Ceiling((double)Convert.ToInt16(dt.Rows[0]["ROWCNT"]) / FmsUtil.PageSize) ;
             } catch (Exception e) {
-                this.TotalCnt = 0;
+                this.ItemCnt = 0;
             }
 
             List<SelectUser> ret = new List<SelectUser>();

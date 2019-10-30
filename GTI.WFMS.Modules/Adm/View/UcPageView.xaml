@@ -175,7 +175,7 @@
                 <dxe:DataPager x:Name="DataPager" Grid.Row="1" HorizontalAlignment="Left"
                        PageIndex="{Binding PageIndex, Mode=TwoWay}" >
                     <i:Interaction.Behaviors>
-                        <common:SourcesBehavior x:Name="DataPagerSource" Sources="{Binding PagedCollection}" TotalCnt="{Binding TotalCnt}"/>
+                        <common:SourcesBehavior x:Name="DataPagerSource" Sources="{Binding PagedCollection}" ItemCnt="{Binding ItemCnt}"/>
                     </i:Interaction.Behaviors>
                 </dxe:DataPager>
 

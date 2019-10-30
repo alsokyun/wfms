@@ -29,12 +29,12 @@ namespace GTI.WFMS.Models.Common
         /// <param name="conditions"></param>
         /// <param name="pageIndex"></param>
         /// <returns></returns>
-        public static void SelectListPage(Hashtable conditions, int pageIndex, dele_callback dele)
+        public static void SelectListPage(Hashtable conditions, int pageIndex, dele_callback callback)
         {
             conditions.Add("page", pageIndex);
             conditions.Add("rows", FmsUtil.PageSize);
             //return dao.SelectLIST(conditions);
-            dele(dao.SelectLIST(conditions));
+            callback(dao.SelectLIST(conditions));
         }
 
 
