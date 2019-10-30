@@ -12,6 +12,9 @@
              xmlns:dxg="http://schemas.devexpress.com/winfx/2008/xaml/grid" 
              xmlns:prism="http://prismlibrary.com/"
              prism:ViewModelLocator.AutoWireViewModel="True"
+      
+             xmlns:local="clr-namespace:GTI.WFMS.Models.Common;assembly=GTI.WFMS.Models"
+            xmlns:vm="clr-namespace:GTI.WFMS.Modules.Adm"               
 
              x:Name="ucPageView"
              >
@@ -24,8 +27,11 @@
         </ResourceDictionary>
     </Page.Resources>
 
-    <Grid>
+    <Page.DataContext>
+        <vm:UcPageViewModel/>
+    </Page.DataContext>
 
+    <Grid>
 
         <Grid Grid.Row="0" Grid.Column="1">
             <Grid.RowDefinitions>
@@ -87,18 +93,9 @@
 
 
             <Border Grid.Row="3" BorderBrush="#2071a6" BorderThickness="1">
-                <dxg:GridControl Grid.Row="3" x:Name="grid" VerticalAlignment="Stretch" HorizontalAlignment="Stretch">
+                <dxg:GridControl Grid.Row="3" x:Name="grid" VerticalAlignment="Stretch" HorizontalAlignment="Stretch"
+                                 ItemsSource="{Binding ElementName=DataPagerSource, Path=ActualSource}" >
 
-                    <i:Interaction.Triggers>
-                        <i:EventTrigger EventName="SelectedItemChanged">
-                            <i:InvokeCommandAction Command="{Binding gridSelectedItemChangedCommand}">
-                                <i:InvokeCommandAction.CommandParameter>
-                                    <MultiBinding Converter="{StaticResource multiValueConverter}">
-                                    </MultiBinding>
-                                </i:InvokeCommandAction.CommandParameter>
-                            </i:InvokeCommandAction>
-                        </i:EventTrigger>
-                    </i:Interaction.Triggers>
 
 
                     <dxg:GridControl.View>
@@ -118,6 +115,7 @@
                                        >
                         </dxg:TableView>
                     </dxg:GridControl.View>
+
 
                     <dxg:GridColumn Header="순번" Width="1*" FieldName="RN" HorizontalHeaderContentAlignment="Center">
                         <dxg:GridColumn.EditSettings>
@@ -168,114 +166,20 @@
                     </dxg:GridColumn>
 
 
+
                 </dxg:GridControl>
             </Border>
 
             <Grid Grid.Row="6">
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="*"/>
-                    <RowDefinition Height="*"/>
-                    <RowDefinition Height="*"/>
-                    <RowDefinition Height="0"/>
-                </Grid.RowDefinitions>
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="160"/>
-                    <ColumnDefinition Width="*"/>
-                    <ColumnDefinition Width="160"/>
-                    <ColumnDefinition Width="*"/>
-                    <ColumnDefinition Width="160"/>
-                    <ColumnDefinition Width="*"/>
-                </Grid.ColumnDefinitions>
 
-                <!--바깥선-->
-                <Border Grid.Row="0" Grid.RowSpan="3" Grid.Column="0" Grid.ColumnSpan="6" BorderThickness="1" BorderBrush="#227ab4"/>
+                <dxe:DataPager x:Name="DataPager" Grid.Row="1" HorizontalAlignment="Left"
+                       PageIndex="{Binding PageIndex, Mode=TwoWay}" >
+                    <i:Interaction.Behaviors>
+                        <local:SourcesBehavior x:Name="DataPagerSource" Sources="{Binding PagedCollection}" TotalCnt="{Binding TotalCnt}"/>
+                    </i:Interaction.Behaviors>
+                </dxe:DataPager>
 
-                <!--좌측 상단 라벨영역 Border Setting-->
-                <Border Grid.Row="0" Grid.Column="0" BorderThickness="0,1,0,0" BorderBrush="#ff79c0f2" Background="#57a2d7" Margin="1,1,0,0"/>
-                <Border Grid.Row="0" Grid.Column="0" BorderThickness="0,0,1,1" BorderBrush="#ff227ab4" Margin="1,0,0,0"/>
-                <!--좌측 중단 라벨영역 Border Setting-->
-                <Border Grid.Row="1" Grid.Column="0" BorderThickness="0,1,0,0" BorderBrush="#ff79c0f2" Background="#57a2d7" Margin="1,0,0,0"/>
-                <Border Grid.Row="1" Grid.Column="0" BorderThickness="0,0,1,1" BorderBrush="#ff227ab4" Margin="0"/>
-                <!--좌측 하단 라벨영역 Border Setting-->
-                <Border Grid.Row="2" Grid.Column="0" BorderThickness="0,1,0,0" BorderBrush="#ff79c0f2" Background="#57a2d7" Margin="1,0,0,0"/>
-                <Border Grid.Row="2" Grid.Column="0" BorderThickness="0,0,1,1" BorderBrush="#ff227ab4" Margin="1,0,0,0"/>
 
-                <!--상단 컨트롤영역 Border Setting-->
-                <Border Grid.Row="0" Grid.Column="1" BorderThickness="0,0,0,1" Background="White" BorderBrush="#ffc9e1f2" Margin="1,1,0,0"/>
-                <!--중단 컨트롤영역 Border Setting-->
-                <Border Grid.Row="1" Grid.Column="1" BorderThickness="0,0,0,1" Background="White" BorderBrush="#ffc9e1f2" Margin="1,0,0,0"/>
-                <!--하단 컨트롤영역 Border Setting-->
-                <Border Grid.Row="2" Grid.Column="1" BorderThickness="0,0,0,1" Background="White" Margin="1,0,0,0"/>
-
-                <!--상단 라벨영역 Border Setting-->
-                <Border Grid.Row="0" Grid.Column="2" BorderThickness="0,1,0,0" BorderBrush="#ff79c0f2" Background="#57a2d7" Margin="1,1,0,0"/>
-                <Border Grid.Row="0" Grid.Column="2" BorderThickness="1,0,1,1" BorderBrush="#ff227ab4" Margin="1,0,0,0"/>
-                <!--중단 라벨영역 Border Setting-->
-                <Border Grid.Row="1" Grid.Column="2" BorderThickness="0,1,0,0" BorderBrush="#ff79c0f2" Background="#57a2d7" Margin="1,0,0,0"/>
-                <Border Grid.Row="1" Grid.Column="2" BorderThickness="1,0,1,1" BorderBrush="#ff227ab4" Margin="1,0,0,0"/>
-                <!--하단 라벨영역 Border Setting-->
-                <Border Grid.Row="2" Grid.Column="2" BorderThickness="0,1,0,0" BorderBrush="#ff79c0f2" Background="#57a2d7" Margin="1,0,0,0"/>
-                <Border Grid.Row="2" Grid.Column="2" BorderThickness="1,0,1,1" BorderBrush="#ff227ab4" Margin="1,0,0,0"/>
-
-                <!--상단 컨트롤영역 Border Setting-->
-                <Border Grid.Row="0" Grid.Column="3" BorderThickness="0,0,0,1" Background="White" BorderBrush="#ffc9e1f2" Margin="1,1,0,0"/>
-                <!--중단 컨트롤영역 Border Setting-->
-                <Border Grid.Row="1" Grid.Column="3" BorderThickness="0,0,0,1" Background="White" BorderBrush="#ffc9e1f2" Margin="1,0,0,0"/>
-                <!--하단 컨트롤영역 Border Setting-->
-                <Border Grid.Row="2" Grid.Column="3" BorderThickness="0,0,0,1" Background="White" Margin="1,0,0,0"/>
-
-                <!--상단 라벨영역 Border Setting-->
-                <Border Grid.Row="0" Grid.Column="4" BorderThickness="0,1,0,0" BorderBrush="#ff79c0f2" Background="#57a2d7" Margin="1,1,0,0"/>
-                <Border Grid.Row="0" Grid.Column="4" BorderThickness="1,0,1,1" BorderBrush="#ff227ab4" Margin="1,0,0,0"/>
-                <!--중단 라벨영역 Border Setting-->
-                <Border Grid.Row="1" Grid.Column="4" BorderThickness="0,1,0,0" BorderBrush="#ff79c0f2" Background="#57a2d7" Margin="1,0,0,0"/>
-                <Border Grid.Row="1" Grid.Column="4" BorderThickness="1,0,1,1" BorderBrush="#ff227ab4" Margin="1,0,0,0"/>
-                <!--하단 라벨영역 Border Setting-->
-                <Border Grid.Row="2" Grid.Column="4" BorderThickness="0,1,0,0" BorderBrush="#ff79c0f2" Background="#57a2d7" Margin="1,0,0,0"/>
-                <Border Grid.Row="2" Grid.Column="4" BorderThickness="1,0,1,1" BorderBrush="#ff227ab4" Margin="1,0,0,0"/>
-
-                <!--우측 상단 컨트롤영역 Border Setting-->
-                <Border Grid.Row="0" Grid.Column="5" BorderThickness="0,0,0,1" Background="White" BorderBrush="#ffc9e1f2" Margin="1,1,1,0"/>
-                <!--우측 중단 컨트롤영역 Border Setting-->
-                <Border Grid.Row="1" Grid.Column="5" BorderThickness="0,0,0,1" Background="White" BorderBrush="#ffc9e1f2" Margin="1,0,1,0"/>
-                <!--우측 하단 컨트롤영역 Border Setting-->
-                <Border Grid.Row="2" Grid.Column="5" BorderThickness="0,0,0,1" Background="White" Margin="1,0,1,0"/>
-
-                <Label Content="아이디" Grid.Row="0" Grid.Column="0" Style="{StaticResource GridLabel}"/>
-                <dxe:TextEdit x:Name="txtID" Grid.Row="0" Grid.Column="1" Style="{StaticResource ResourceKey=GridTextEdit}"
-                              Text="{Binding SelectedItem.USER_ID, ElementName=grid, Mode=OneWay}" IsEnabled="False" MaxLength="8"/>
-
-                <Label Content="이름" Grid.Row="0" Grid.Column="2" Style="{StaticResource GridLabel}"/>
-                <dxe:TextEdit x:Name="txtName" Grid.Row="0" Grid.Column="3" Style="{StaticResource ResourceKey=GridTextEdit}"
-                              Text="{Binding SelectedItem.USER_NM, ElementName=grid, Mode=OneWay}" MaxLength="8"/>
-
-                <Label Content="비밀번호" Grid.Row="0" Grid.Column="4" Style="{StaticResource GridLabel}"/>
-                <dxe:PasswordBoxEdit x:Name="pwPW" Grid.Row="0" Grid.Column="5" Style="{StaticResource ResourceKey=GirdPasswordBox}"
-                                     Text="{Binding SelectedItem.USER_PWD, ElementName=grid, Mode=OneWay}"/>
-
-                <Label Content="부서" Grid.Row="1" Grid.Column="0" Style="{StaticResource GridLabel}"/>
-                <dxe:ComboBoxEdit Name="cbDept" Grid.Row="1" Grid.Column="1" DisplayMember="DTL_NM" ValueMember="DTL_CD" Style="{StaticResource GridComboBox}"
-                                Text="{Binding SelectedItem.DEPT_NM, ElementName=grid, Mode=OneWay}">
-                </dxe:ComboBoxEdit>
-
-                <Label Content="직급" Grid.Row="1" Grid.Column="2" Style="{StaticResource GridLabel}"/>
-                <dxe:ComboBoxEdit x:Name="cbRank" Grid.Row="1" Grid.Column="3" Style="{StaticResource GridComboBox}" 
-                                  DisplayMember="DTL_NM" ValueMember="DTL_CD" Text="{Binding SelectedItem.POS_NM, ElementName=grid, Mode=OneWay}"/>
-
-                <Label Content="연락처" Grid.Row="1" Grid.Column="4" Style="{StaticResource GridLabel}"/>
-                <dxe:TextEdit x:Name="txtTelNum" Grid.Row="1" Grid.Column="5" Style="{StaticResource ResourceKey=GridTextEdit}"
-                              Text="{Binding SelectedItem.USER_TEL, ElementName=grid, Mode=OneWay}" MaskType="RegEx" Mask="\d{0,12}" MaskUseAsDisplayFormat="True"/>
-
-                <Label Content="사용여부" Grid.Row="2" Grid.Column="0" Style="{StaticResource GridLabel}"/>
-                <dxe:ToggleSwitch x:Name="tgUse" Grid.Row="2" Grid.Column="1" Style="{StaticResource InputToggle}" 
-                                  CheckedStateContent="사용" UncheckedStateContent="미사용" ContentPlacement="Inside" 
-                                  IsChecked="{Binding SelectedItem.USE_YN, ElementName=grid, Converter={StaticResource toggleConverter}}"
-                                  />
-
-                <Label Content="비고" Grid.Row="2" Grid.Column="2" Style="{StaticResource GridLabel}"/>
-                <dxe:TextEdit x:Name="txtRemark" Grid.Row="2" Grid.Column="3" Style="{StaticResource ResourceKey=GridTextEdit}" Text="{Binding SelectedItem.ETC, ElementName=grid, Mode=OneWay}"
-                              MaxLength="32"/>
-                <Label Content="" Grid.Row="2" Grid.Column="4" Style="{StaticResource GridLabel}"/>
             </Grid>
 
             <StackPanel Grid.Row="8" Orientation="Horizontal" HorizontalAlignment="Right">

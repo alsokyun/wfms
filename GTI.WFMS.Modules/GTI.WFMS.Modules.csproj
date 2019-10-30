@@ -115,6 +115,7 @@
     </Page>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Adm\Model\SelectUser.cs" />
     <Compile Include="Adm\ViewModel\UcCodeMngViewModel.cs" />
     <Compile Include="Adm\ViewModel\UcPageViewModel.cs" />
     <Compile Include="Adm\View\Page1.xaml.cs">

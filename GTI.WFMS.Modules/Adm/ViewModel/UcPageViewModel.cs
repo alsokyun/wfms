@@ -2,6 +2,7 @@
 using DevExpress.Xpf.Grid;
 using GTI.WFMS.Models.Adm.Work;
 using GTI.WFMS.Models.Cmm.Work;
+using GTI.WFMS.Modules.Adm.Model;
 using GTIFramework.Common.Log;
 using GTIFramework.Common.MessageBox;
 using GTIFramework.Common.Utils.Converters;
@@ -9,17 +10,72 @@ using Prism.Commands;
 using Prism.Mvvm;
 using System;
 using System.Collections;
+using System.Collections.Generic;
+using System.Collections.ObjectModel;
+using System.ComponentModel;
 using System.Data;
 using System.Windows;
 using System.Windows.Controls;
 
 namespace GTI.WFMS.Modules.Adm
 {
-    class UcPageViewModel: BindableBase
+    class UcPageViewModel:INotifyPropertyChanged
     {
+        #region ==========  페이징관련 INotifyPropertyChanged  ==========
+
+        public event PropertyChangedEventHandler PropertyChanged;
+
+
+        /// 조회결과 리스트데이터
+        public ObservableCollection<List<SelectUser>> PagedCollection { get; set; }
+
+        // 페이징인덱스 뷰와동기화처리를 위한 이벤트설정
+        int pageIndex = 1;
+        public int PageIndex
+        {
+            get { return pageIndex; }
+            set
+            {
+                if (value == pageIndex) return;
+                pageIndex = value;
+                OnPropertyChanged("PageIndex");
+            }
+        }
+
+        // 총건수 뷰와동기화처리를 위한 이벤트설정
+        int totalCnt = 0;
+        public int TotalCnt
+        {
+            get { return totalCnt; }
+            set
+            {
+                if (value == totalCnt) return;
+                totalCnt = value;
+                OnPropertyChanged("TotalCnt");
+            }
+        }
+
+        // pageIndex가 변경될때 이벤트연동
+        protected void OnPropertyChanged(string propertyName)
+        {
+            PropertyChangedEventHandler handler = PropertyChanged;
+            if (handler != null)
+            {
+                handler(this, new PropertyChangedEventArgs(propertyName));
+            }
+        }
+
+
+
+
+        #endregion
+
 
 
         #region ==========  Properties 정의 ==========
+
+
+
         /// <summary>
         /// Loaded Event
         /// </summary>
@@ -61,6 +117,27 @@ namespace GTI.WFMS.Modules.Adm
             btnSaveClickCommnad = new DelegateCommand<object>(btnSaveClickAction);
             btnDelClickCommnad = new DelegateCommand<object>(btnDelClickAction);
             btnDtlClickCommnad = new DelegateCommand<object>(btnDtlClickAction);
+
+            // 조회데이터 초기화
+            this.PagedCollection = new ObservableCollection<List<SelectUser>>();
+
+            // 프로퍼티변경이벤트 처리핸들러 등록
+            PropertyChanged += changeHandler;
+        }
+        // 프로퍼티변경이벤트 처리핸들
+        private void changeHandler(object sender, PropertyChangedEventArgs e)
+        {
+            switch (e.PropertyName)
+            {
+                case "PageIndex":
+                    if(PageIndex > -1) //초기이벤트 걸른다
+                    {
+                        SearchAction(null); 
+                    }
+                    break;
+                default:
+                    break;
+            }
         }
 
         private void btnDtlClickAction(object obj)
@@ -98,6 +175,7 @@ namespace GTI.WFMS.Modules.Adm
         Button btnAdd;
         Button btnDel;
         Button btnSave;
+
         #endregion
 
         #endregion
@@ -129,14 +207,14 @@ namespace GTI.WFMS.Modules.Adm
                 txtWord = ucPageView.txtWord;
                 grid = ucPageView.grid;
 
-                txtID = ucPageView.txtID;
-                txtName = ucPageView.txtName;
-                pwPW = ucPageView.pwPW;
-                cbDept = ucPageView.cbDept;
-                cbRank = ucPageView.cbRank;
-                txtTelNum = ucPageView.txtTelNum;
-                tgUse = ucPageView.tgUse;
-                txtRemark = ucPageView.txtRemark;
+                //txtID = ucPageView.txtID;
+                //txtName = ucPageView.txtName;
+                //pwPW = ucPageView.pwPW;
+                //cbDept = ucPageView.cbDept;
+                //cbRank = ucPageView.cbRank;
+                //txtTelNum = ucPageView.txtTelNum;
+                //tgUse = ucPageView.tgUse;
+                //txtRemark = ucPageView.txtRemark;
 
                 btnAdd = ucPageView.btnAdd;
                 btnDel = ucPageView.btnDel;
@@ -146,6 +224,8 @@ namespace GTI.WFMS.Modules.Adm
                 InitDataBinding();
 
                 //3.권한처리
+
+
 
             }
             catch (Exception ex)
@@ -170,6 +250,12 @@ namespace GTI.WFMS.Modules.Adm
                 conditions.Add("WORD", txtWord.Text.Replace(" ", ""));
                 conditions.Add("GBN", cbGBN.EditValue);
 
+
+                //초기에 pageIndex -1 이어서 0으로 세팅
+                if (this.pageIndex < 0) this.pageIndex = 0; 
+
+                conditions.Add("page", this.pageIndex);
+                conditions.Add("rows", 20);
                 dtresult = admWork.selectUsrList(conditions);
 
                 foreach (DataRow dr in dtresult.Rows)
@@ -177,13 +263,97 @@ namespace GTI.WFMS.Modules.Adm
                     dr["USER_PWD"] = EncryptionConvert.Base64Decoding(dr["USER_PWD"].ToString());
                 }
 
-                grid.ItemsSource = dtresult;
+                //grid.ItemsSource = dtresult;
+
+                //SetPagingList_OLD(dtresult, 20);
+                SetPagingList(dtresult);
+
             }
             catch (Exception ex)
             {
                 Messages.ShowErrMsgBoxLog(ex);
             }
         }
+
+        /// <summary>
+        /// 페이징된조회데이터테이블 -> 페이지소스로 변환
+        /// </summary>
+        /// <param name="dtresult"></param>
+        private void SetPagingList(DataTable dtresult)
+        {
+            // TotalCnt 설정
+            try {
+                //double tot = Convert.ToInt16(dtresult.Rows[0]["ROWCNT"]) / 20;
+                this.TotalCnt = (int)Math.Ceiling((double)Convert.ToInt16(dtresult.Rows[0]["ROWCNT"]) / 20) ;
+            } catch (Exception e) {
+                this.TotalCnt = 0;
+            }
+
+            this.PagedCollection.Clear();
+            List<SelectUser> ret = new List<SelectUser>();
+
+
+            foreach (DataRow dr in dtresult.Rows)
+            {
+                SelectUser user = new SelectUser();
+
+                user.RN = Convert.ToInt32(dr["RN"]);
+                user.USER_ID = dr["USER_ID"].ToString();
+                user.USER_NM = dr["USER_NM"].ToString();
+                user.USER_TEL = dr["USER_TEL"].ToString();
+                user.DEPT_NM = dr["DEPT_NM"].ToString();
+                user.POS_NM = dr["POS_NM"].ToString();
+                user.ETC = dr["ETC"].ToString();
+                user.USER_PWD = dr["USER_PWD"].ToString();
+
+                ret.Add(user);
+            }
+            this.PagedCollection.Add(ret);
+
+        }
+
+        /// <summary>
+        /// 전체데이터테이블 -> 페이지소스로 변환&추가
+        /// </summary>
+        /// <param name="dtresult"></param>
+        /// <param name="pageSize"></param>
+        private void SetPagingList_OLD(DataTable dtresult, int pageSize)
+        {
+            this.PagedCollection.Clear();
+            List<SelectUser> ret = new List<SelectUser>();
+            int cnt = 1;
+
+            foreach (DataRow dr in dtresult.Rows)
+            {
+                SelectUser user = new SelectUser();
+
+                user.RN = Convert.ToInt32(dr["RN"]);
+                user.USER_ID = dr["USER_ID"].ToString();
+                user.USER_NM = dr["USER_NM"].ToString();
+                user.USER_TEL = dr["USER_TEL"].ToString();
+                user.DEPT_NM = dr["DEPT_NM"].ToString();
+                user.POS_NM = dr["POS_NM"].ToString();
+                user.ETC = dr["ETC"].ToString();
+                user.USER_PWD = dr["USER_PWD"].ToString();
+
+                ret.Add(user);
+
+                // 페이지사이즈별로 번들생성
+                if (cnt % pageSize == 0)
+                {
+                    this.PagedCollection.Add(ret);
+                    ret = new List<SelectUser>();
+                }
+                // 마직막 데이터이면 짜투리번들 추가
+                if (cnt == dtresult.Rows.Count)
+                {
+                    this.PagedCollection.Add(ret);
+                }
+                cnt++;
+            }
+
+        }
+
 
 
         /// <summary>
@@ -429,6 +599,10 @@ namespace GTI.WFMS.Modules.Adm
 
         #endregion
 
+
+
+
+    
 
     }
 }

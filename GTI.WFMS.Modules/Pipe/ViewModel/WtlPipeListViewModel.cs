@@ -36,6 +36,9 @@ namespace GTI.WFMS.Modules.Pipe.ViewModel
         PipeWork pipeWork = new PipeWork();
         CmmWork cmmWork = new CmmWork();
 
+        DataTable dtresult = new DataTable(); //조회결과 데이터
+
+
         WtlPipeList wtlPipeList;
         ComboBoxEdit cbMNG_CDE; DataTable dtMNG_CDE = new DataTable();
         ComboBoxEdit cbHJD_CDE; DataTable dtHJD_CDE = new DataTable();
@@ -121,7 +124,6 @@ namespace GTI.WFMS.Modules.Pipe.ViewModel
             try
             {
                 //if (treeList.FocusedNode == null) return;
-                DataTable dtresult = new DataTable();
 
                 Hashtable conditions = new Hashtable();
                 conditions.Add("MNG_CDE", cbMNG_CDE.EditValue.ToString().Trim());
