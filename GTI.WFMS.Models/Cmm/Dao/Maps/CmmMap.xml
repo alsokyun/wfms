@@ -5,16 +5,22 @@
     <!--공통코드 콤보-->
     <select id ="Select_CODE_LIST" parameterClass="Hashtable" resultClass ="Hashtable">
       SELECT X.* FROM (
-      
+
       SELECT A.MST_CD, A.NM MST_NM, B.DTL_CD, B.NM, B.ETC DTL_ETC, B.ORD
       FROM INFOUSER.CD_MST_INFO A
       ,INFOUSER.CD_DTL_INFO B
-      WHERE A.MST_CD = #MST_CD#
+      WHERE 1=1
       AND B.MST_CD = A.MST_CD
       AND A.USE_YN = 'Y'
       AND B.USE_YN = 'Y'
+      <isNotEmpty prepend="AND" property="MST_CD">
+        A.MST_CD = #MST_CD#
+      </isNotEmpty>
+      <isNotEmpty prepend="AND" property="ETC">
+        A.ETC = #ETC#
+      </isNotEmpty>
 
-     <!--전체옵션-->
+      <!--전체옵션-->
       <isNotEmpty prepend="UNION ALL" property="ALL">
         <isEqual property="ALL" compareValue="Y">
           SELECT '' AS MST_CD, NULL AS MST_NM, ' ' AS DTL_CD, '전체' AS NM, NULL AS DTL_ETC, NULL AS ORD

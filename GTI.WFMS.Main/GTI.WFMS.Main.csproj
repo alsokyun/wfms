@@ -233,6 +233,8 @@
     <Resource Include="Resources\Images\Image\btn_popup_close_on.png" />
     <Resource Include="Resources\Images\Image\btn_init.png" />
     <Resource Include="Resources\Images\Image\btn_init_on.png" />
+    <Resource Include="Resources\Images\Image\btn_send.png" />
+    <Resource Include="Resources\Images\Image\btn_send_on.png" />
     <Content Include="Styles\Fonts\malgun.ttf">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>

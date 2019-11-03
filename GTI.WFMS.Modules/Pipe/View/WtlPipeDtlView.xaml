@@ -1,0 +1,349 @@
+﻿<Page xmlns:dxe="http://schemas.devexpress.com/winfx/2008/xaml/editors"  xmlns:dx="http://schemas.devexpress.com/winfx/2008/xaml/core"  x:Class="GTI.WFMS.Modules.Pipe.View.WtlPipeDtlView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:GTI.WFMS.Modules.Pipe.View"
+             mc:Ignorable="d" 
+             d:DesignHeight="550" d:DesignWidth="950"
+      
+            xmlns:dxci="http://schemas.devexpress.com/winfx/2008/xaml/core/internal"
+            xmlns:uccontent="clr-namespace:GTI.WFMS.Modules.Cmm.View"
+            xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
+            xmlns:cm="clr-namespace:GTIFramework.Common.Utils.Converters;assembly=GTIFramework"
+            xmlns:vm="clr-namespace:GTI.WFMS.Modules.Pipe.ViewModel"
+            x:Name="wtlPipeDtl"
+      
+      >
+
+    <!--뷰와 뷰모델 바인딩-->
+    <Page.DataContext>
+        <vm:WtlPipeDtlViewModel />
+    </Page.DataContext>
+    
+
+    <!--페이지내 리소스정의-->
+    <Page.Resources>
+        <ResourceDictionary>
+
+            <cm:MultiValueConverter x:Key="multiValueConverter"/>
+            <cm:Toggle2Converter x:Key="toggleConverter" />
+
+            <dx:BoolToObjectConverter x:Key="foregroundConverter">
+                <dx:BoolToObjectConverter.TrueValue>
+                    <SolidColorBrush Color="White"/>
+                </dx:BoolToObjectConverter.TrueValue>
+                <dx:BoolToObjectConverter.FalseValue>
+                    <SolidColorBrush Color="White"/>
+                </dx:BoolToObjectConverter.FalseValue>
+            </dx:BoolToObjectConverter>
+
+
+            <DataTemplate x:Key="TabItemNormalBackground">
+                <dxci:TabBorder ViewInfo="{Binding}" BorderBackground="#5190BC" BorderBrush="#AA434343" BorderCornerRadius="5,5,0,0"
+                                BackgroundMode="BorderBackground" BorderMode="BorderBrush" BorderThickness="0,0,0,5" BorderMargin="0,0,1,0" HoldBorderThickness="2" HoldBorderMargin="5,0,0,0"/>
+            </DataTemplate>
+            <DataTemplate x:Key="TabItemSelectedBackground">
+                <dxci:TabBorder ViewInfo="{Binding}" BorderBackground="Transparent" BorderBrush="#434343" BorderCornerRadius="5,5,0,0"
+                                BackgroundMode="BorderBackground" BorderMode="BorderBrush" BorderThickness="0,0,0,5" BorderMargin="0,0,1,0" HoldBorderThickness="2" HoldBorderMargin="5,0,0,0"/>
+            </DataTemplate>
+            <DataTemplate x:Key="TabItemFocusedBackground" >
+                <dxci:TabBorder ViewInfo="{Binding}"  BorderBackground="Transparent" BorderBrush="#434343" BorderCornerRadius="5,5,0,0"
+                                BackgroundMode="BorderBackground" BorderMode="BorderBrush" BorderThickness="0,0,0,5" BorderMargin="0,0,1,0" HoldBorderThickness="2" HoldBorderMargin="5,0,0,0" />
+            </DataTemplate>
+            <DataTemplate x:Key="TabItemHoverBackground">
+                <dxci:TabBorder ViewInfo="{Binding}" BorderBackground="Transparent" BorderBrush="#434343" BorderCornerRadius="5,5,0,0"
+                                BackgroundMode="BorderBackground" BorderMode="BorderBrush" BorderThickness="0,0,0,5" BorderMargin="0,0,1,0" HoldBorderThickness="2" HoldBorderMargin="0,0,2,2"/>
+            </DataTemplate>
+
+
+        </ResourceDictionary>
+    </Page.Resources>
+
+    
+    
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="40" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="40" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+
+
+        <StackPanel Grid.Row="0" Orientation="Horizontal">
+            <StackPanel  Orientation="Horizontal">
+                <Image Style="{StaticResource TitleCircle}"/>
+                <Label Content="일반정보" Style="{StaticResource ResourceKey=CircleTitleLabel}"/>
+            </StackPanel>
+        </StackPanel>
+        <StackPanel Grid.Row="0" Orientation="Horizontal" HorizontalAlignment="Right">
+            <Button x:Name="btnPrint" Style="{StaticResource ResourceKey=SendButton}"  >
+                <i:Interaction.Triggers>
+                    <i:EventTrigger EventName="Click">
+                        <i:InvokeCommandAction Command="{Binding SearchCommand}">
+                        </i:InvokeCommandAction>
+                    </i:EventTrigger>
+                </i:Interaction.Triggers>
+            </Button>
+            <Button x:Name="btnDelete" Style="{StaticResource ResourceKey=DelButton}"  >
+                <i:Interaction.Triggers>
+                    <i:EventTrigger EventName="Click">
+                        <i:InvokeCommandAction Command="{Binding SearchCommand}">
+                        </i:InvokeCommandAction>
+                    </i:EventTrigger>
+                </i:Interaction.Triggers>
+            </Button>
+            <Button x:Name="btnSave" Style="{StaticResource ResourceKey=SaveButton}"  >
+                <i:Interaction.Triggers>
+                    <i:EventTrigger EventName="Click">
+                        <i:InvokeCommandAction Command="{Binding SearchCommand}">
+                        </i:InvokeCommandAction>
+                    </i:EventTrigger>
+                </i:Interaction.Triggers>
+            </Button>
+            <Button x:Name="btnBack" Style="{StaticResource ResourceKey=PopupCloseButton}"  >
+                <i:Interaction.Triggers>
+                    <i:EventTrigger EventName="Click">
+                        <i:InvokeCommandAction Command="{Binding SearchCommand}">
+                        </i:InvokeCommandAction>
+                    </i:EventTrigger>
+                </i:Interaction.Triggers>
+            </Button>
+        </StackPanel>
+
+
+        <!--일반정보박스영역-->
+        <Grid Grid.Row="1">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="100"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="100"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="100"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="100"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="40" />
+                <RowDefinition Height="40" />
+            </Grid.RowDefinitions>
+
+
+            <Border Grid.Row="0" Grid.Column="0"  Style="{StaticResource ResourceKey=DtlHeaderBorder}" />
+            <Label Grid.Row="0" Grid.Column="0" Content="관리번호" Style="{StaticResource ResourceKey=GridLabel}"/>
+            <!--키값으로 사용 : 부모페이지로부터 뷰생성자로 전달되고, 뷰에서 변경되면 뷰모델로 전달된다.-->
+            <dxe:TextEdit Grid.Row="0" Grid.Column="1" Style="{StaticResource ResourceKey=GridTextEdit}"   
+                        x:Name="txtFTR_IDN" EditValue="{Binding FTR_IDN, UpdateSourceTrigger=PropertyChanged}" />
+            <dxe:TextEdit Visibility="Hidden" 
+                        x:Name="txtFTR_CDE" EditValue="{Binding FTR_CDE, UpdateSourceTrigger=PropertyChanged}" />
+
+
+
+            <Border Grid.Row="0" Grid.Column="2"  Style="{StaticResource ResourceKey=DtlHeaderBorder}" />
+            <Label Grid.Row="0" Grid.Column="2" Content="행정동" Style="{StaticResource ResourceKey=GridLabel}"/>
+            <dxe:ComboBoxEdit Grid.Row="0" Grid.Column="3" Style="{StaticResource ResourceKey=GridComboBox}"  
+                              x:Name="cbHJD_CDE" EditValue="{Binding HJD_CDE,Mode=TwoWay}" />
+
+
+            <Border Grid.Row="0" Grid.Column="4"  Style="{StaticResource ResourceKey=DtlHeaderBorder}" />
+            <Label Grid.Row="0" Grid.Column="4" Content="공사번호" Style="{StaticResource ResourceKey=GridLabel}"/>
+            <dxe:TextEdit Grid.Row="0" Grid.Column="5" Style="{StaticResource ResourceKey=GridTextEdit}"  
+                          x:Name="txtCNT_NUM" EditValue="{Binding CNT_NUM}"/>
+
+
+            <Border Grid.Row="0" Grid.Column="6"  Style="{StaticResource ResourceKey=DtlHeaderBorder}" />
+            <Label Grid.Row="0" Grid.Column="6" Content="관리기관" Style="{StaticResource ResourceKey=GridLabel}"/>
+            <dxe:ComboBoxEdit Grid.Row="0" Grid.Column="7" Style="{StaticResource ResourceKey=GridComboBox}"  
+                              x:Name="cbMNG_CDE" EditValue="{Binding MNG_CDE}" />
+
+            <Border Grid.Row="1" Grid.Column="0"  Style="{StaticResource ResourceKey=DtlHeaderBorder}" />
+            <Label Grid.Row="1" Grid.Column="0" Content="도엽번호" Style="{StaticResource ResourceKey=GridLabel}"/>
+            <dxe:TextEdit Grid.Row="1" Grid.Column="1" Style="{StaticResource ResourceKey=GridTextEdit}"  
+                          x:Name="txtSHT_NUM" EditValue="{Binding SHT_NUM}"/>
+
+
+            <Border Grid.Row="1" Grid.Column="2"  Style="{StaticResource ResourceKey=DtlHeaderBorder}" />
+            <Label Grid.Row="1" Grid.Column="2" Content="설치일자" Style="{StaticResource ResourceKey=GridLabel}"/>
+            <dxe:DateEdit Grid.Row="1" Grid.Column="3" Style="{StaticResource ResourceKey=GridDateEdit}"  
+                          x:Name="dtIST_YMD" EditValue="{Binding IST_YMD}"  />
+
+
+
+            <Border Grid.Row="1" Grid.Column="4"  Style="{StaticResource ResourceKey=DtlHeaderBorder}" />
+            <Label Grid.Row="1" Grid.Column="4" Content="" Style="{StaticResource ResourceKey=GridLabel}"/>
+
+            <Border Grid.Row="1" Grid.Column="6"  Style="{StaticResource ResourceKey=DtlHeaderBorder}" />
+            <Label Grid.Row="1" Grid.Column="6" Content="" Style="{StaticResource ResourceKey=GridLabel}"/>
+
+        </Grid>
+
+
+
+        <StackPanel Grid.Row="2" Orientation="Horizontal">
+            <StackPanel Orientation="Horizontal">
+                <Image Style="{StaticResource TitleCircle}"/>
+                <Label Content="시설물현황 정보" Style="{StaticResource ResourceKey=CircleTitleLabel}"/>
+            </StackPanel>
+        </StackPanel>
+
+        <!--시설물현황정보 박스영역-->
+        <Grid Grid.Row="3">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="100"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="100"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="100"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="100"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="40" />
+                <RowDefinition Height="40" />
+                <RowDefinition Height="40" />
+            </Grid.RowDefinitions>
+
+
+            <Border Grid.Row="0" Grid.Column="0"  Style="{StaticResource ResourceKey=DtlHeaderBorder}" />
+            <Label Grid.Row="0" Grid.Column="0" Content="관용도" Style="{StaticResource ResourceKey=GridLabel}"/>
+            <dxe:ComboBoxEdit Grid.Row="0" Grid.Column="1" x:Name="cbSAA_CDE"  Style="{StaticResource ResourceKey=GridComboBox}" 
+                               />
+
+            <Border Grid.Row="0" Grid.Column="2"  Style="{StaticResource ResourceKey=DtlHeaderBorder}" />
+            <Label Grid.Row="0" Grid.Column="2" Content="접합종류" Style="{StaticResource ResourceKey=GridLabel}"/>
+            <dxe:ComboBoxEdit Grid.Row="0" Grid.Column="3"  Style="{StaticResource ResourceKey=GridComboBox}"  
+                              x:Name="cbMOP_CDE" EditValue="{Binding MOP_CDE}"/>
+
+
+            <Border Grid.Row="0" Grid.Column="4"  Style="{StaticResource ResourceKey=DtlHeaderBorder}" />
+            <Label Grid.Row="0" Grid.Column="4" Content="관재질" Style="{StaticResource ResourceKey=GridLabel}"/>
+            <dxe:ComboBoxEdit Grid.Row="0" Grid.Column="5" Style="{StaticResource ResourceKey=GridComboBox}"  
+                              x:Name="cbJHT_CDE"  EditValue="{Binding JHT_CDE}"/>
+
+            <Border Grid.Row="0" Grid.Column="6"  Style="{StaticResource ResourceKey=DtlHeaderBorder}" />
+            <Label Grid.Row="0" Grid.Column="6" Content="최저깊이(m)" Style="{StaticResource ResourceKey=GridLabel}"/>
+            <dxe:TextEdit Grid.Row="0" Grid.Column="7" Style="{StaticResource ResourceKey=GridTextEdit}"  MaskType="Numeric" 
+                          x:Name="txtLOW_DEP" EditValue="{Binding LOW_DEP}"/>
+
+
+            <Border Grid.Row="1" Grid.Column="0"  Style="{StaticResource ResourceKey=DtlHeaderBorder}" />
+            <Label Grid.Row="1" Grid.Column="0" Content="구경" Style="{StaticResource ResourceKey=GridLabel}"/>
+            <dxe:TextEdit Grid.Row="1" Grid.Column="1" Style="{StaticResource ResourceKey=GridTextEdit}"  MaskType="Numeric" 
+                          x:Name="txtPIP_DIP"  EditValue="{Binding PIP_DIP}"/>
+
+
+            <Border Grid.Row="1" Grid.Column="2"  Style="{StaticResource ResourceKey=DtlHeaderBorder}" />
+            <Label Grid.Row="1" Grid.Column="2" Content="최고깊이(m)" Style="{StaticResource ResourceKey=GridLabel}"/>
+            <dxe:TextEdit Grid.Row="1" Grid.Column="3" Style="{StaticResource ResourceKey=GridTextEdit}"  MaskType="Numeric" 
+                          x:Name="txtHGH_DEP" EditValue="{Binding HGH_DEP}"/>
+
+
+            <Border Grid.Row="1" Grid.Column="4"  Style="{StaticResource ResourceKey=DtlHeaderBorder}" />
+            <Label Grid.Row="1" Grid.Column="4" Content="연장(m)" Style="{StaticResource ResourceKey=GridLabel}"/>
+            <dxe:TextEdit Grid.Row="1" Grid.Column="5" Style="{StaticResource ResourceKey=GridTextEdit}"  MaskType="Numeric" 
+                          x:Name="txtPIP_LEN" EditValue="{Binding PIP_LEN}"/>
+
+
+            <Border Grid.Row="1" Grid.Column="6"  Style="{StaticResource ResourceKey=DtlHeaderBorder}" />
+            <Label Grid.Row="1" Grid.Column="6" Content="관라벨" Style="{StaticResource ResourceKey=GridLabel}"/>
+            <dxe:TextEdit Grid.Row="1" Grid.Column="7" Style="{StaticResource ResourceKey=GridTextEdit}"  
+                           x:Name="txtPIP_LBL" EditValue="{Binding PIP_LBL}"/>
+
+            <Border Grid.Row="2" Grid.Column="0"  Style="{StaticResource ResourceKey=DtlHeaderBorder}" />
+            <Label Grid.Row="2" Grid.Column="0" Content="대장초기화" Style="{StaticResource ResourceKey=GridLabel}"/>
+            <dxe:ToggleSwitch Grid.Row="2" Grid.Column="1" Style="{StaticResource InputToggle}" Width="70" HorizontalAlignment="Center" 
+                                  CheckedStateContent="유" UncheckedStateContent="무" ContentPlacement="Inside" 
+                                  x:Name="tgSYS_CHK" IsChecked="{Binding SYS_CHK, Converter={StaticResource toggleConverter}}" />
+            <!--<dxe:ComboBoxEdit Grid.Row="0" Grid.Column="5" x:Name="cbSYS_CHK"  Style="{StaticResource ResourceKey=GridComboBox}" 
+                               />-->
+
+            
+            <Border Grid.Row="2" Grid.Column="2"  Style="{StaticResource ResourceKey=DtlHeaderBorder}" />
+            <Label Grid.Row="2" Grid.Column="2" Content="" Style="{StaticResource ResourceKey=GridLabel}"/>
+
+            <Border Grid.Row="2" Grid.Column="4"  Style="{StaticResource ResourceKey=DtlHeaderBorder}" />
+            <Label Grid.Row="2" Grid.Column="4" Content="" Style="{StaticResource ResourceKey=GridLabel}"/>
+
+            <Border Grid.Row="2" Grid.Column="6"  Style="{StaticResource ResourceKey=DtlHeaderBorder}" />
+            <Label Grid.Row="2" Grid.Column="6" Content="" Style="{StaticResource ResourceKey=GridLabel}"/>
+
+        </Grid>
+
+
+        <!--탭모듈-->
+        <dx:DXTabControl Grid.Row="4" x:Name="tabSubMenu" TabContentCacheMode="CacheAllTabs" Padding="0" BorderBrush="#333333" Margin="0 10 0 0">
+
+            <dx:DXTabControl.View >
+                <dx:TabControlScrollView HeaderLocation="Top"/>
+            </dx:DXTabControl.View>
+
+            <!--탭헤더내부정의-->
+            <dx:DXTabControl.ItemHeaderTemplate>
+                <DataTemplate>
+                    <TextBlock Text="{Binding}" 
+                        Foreground="{Binding Path=IsSelected, Mode=OneWay, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type dx:DXTabItem}}, Converter={StaticResource foregroundConverter}}"/>
+                </DataTemplate>
+            </dx:DXTabControl.ItemHeaderTemplate>
+
+            <!--탭헤더스타일-->
+            <dx:DXTabControl.ItemContainerStyle>
+                <Style TargetType="dx:DXTabItem">
+                    <Setter Property="NormalBackgroundTemplate" Value="{StaticResource TabItemNormalBackground}"/>
+                    <Setter Property="SelectedBackgroundTemplate" Value="{StaticResource TabItemSelectedBackground}"/>
+                    <Setter Property="FocusedBackgroundTemplate" Value="{StaticResource TabItemFocusedBackground}"/>
+                    <Setter Property="HoverBackgroundTemplate" Value="{StaticResource TabItemHoverBackground}"/>
+                    <Setter Property="Width" Value="130"/>
+                    <Setter Property="Height" Value="30"/>
+                    <Setter Property="FontSize" Value="12"/>
+                    <Setter Property="HorizontalContentAlignment" Value="Center"/>
+                    <Setter Property="Padding" Value="0"/>
+                    <Setter Property="Margin" Value="0"/>
+                </Style>
+            </dx:DXTabControl.ItemContainerStyle>
+
+
+            <!--탭컨텐츠영역배경-->
+            <dx:DXTabControl.BackgroundTemplate>
+                <DataTemplate>
+                    <dxci:TabBorder BorderThickness="1" BorderBrush="LightGray" BorderBackground="Transparent" ViewInfo="{Binding}"/>
+                </DataTemplate>
+            </dx:DXTabControl.BackgroundTemplate>
+
+
+            <dx:DXTabItem Header="유지보수">
+                <uccontent:ChscResSubListView/>
+            </dx:DXTabItem>
+            <dx:DXTabItem Header="사진첨부">
+                <uccontent:ChscResSubListView/>
+            </dx:DXTabItem>
+            <dx:DXTabItem Header="참조자료">
+                <uccontent:ChscResSubListView/>
+            </dx:DXTabItem>
+            <dx:DXTabItem Header="누수지점 및 복구내역">
+                <uccontent:ChscResSubListView/>
+            </dx:DXTabItem>
+
+
+        </dx:DXTabControl>
+    </Grid>
+
+
+
+    <!--뷰와 연결된 뷰모델로 Loaded 이벤트전파-->
+    <i:Interaction.Triggers>
+        <i:EventTrigger EventName="Loaded">
+            <i:InvokeCommandAction Command="{Binding LoadedCommand}">
+                <i:InvokeCommandAction.CommandParameter>
+                    <MultiBinding Converter="{StaticResource multiValueConverter}">
+                        <Binding ElementName="wtlPipeDtl"/>
+                    </MultiBinding>
+                </i:InvokeCommandAction.CommandParameter>
+            </i:InvokeCommandAction>
+        </i:EventTrigger>
+    </i:Interaction.Triggers>
+
+</Page>

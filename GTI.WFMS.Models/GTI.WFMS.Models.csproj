@@ -101,6 +101,7 @@
     <Compile Include="Main\Dao\MainDao.cs" />
     <Compile Include="Main\Work\MainWork.cs" />
     <Compile Include="Pipe\Dao\PipeDao.cs" />
+    <Compile Include="Pipe\Model\PipeDtl.cs" />
     <Compile Include="Pipe\Work\PipeWork.cs" />
   </ItemGroup>
   <ItemGroup>

@@ -25,7 +25,7 @@ namespace GTIFramework.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("172.16.0.234")]
+        [global::System.Configuration.DefaultSettingValueAttribute("211.105.28.40")]
         public string strIP {
             get {
                 return ((string)(this["strIP"]));

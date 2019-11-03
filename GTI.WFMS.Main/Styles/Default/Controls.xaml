@@ -97,9 +97,9 @@
             </Setter.Value>
         </Setter>
         <Setter Property="dx:ThemeManager.ThemeName" Value="None"/>
-        <Setter Property="Width" Value="180"/>
+        <Setter Property="Width" Value="Auto"/>
         <Setter Property="Height" Value="27"/>
-        <Setter Property="HorizontalAlignment" Value="Left"/>
+        <Setter Property="HorizontalAlignment" Value="Stretch"/>
         <Setter Property="VerticalAlignment" Value="Center"/>
         <Setter Property="Margin" Value="10,0,10,0"/>
         <Setter Property="ShowBorder" Value="False"/>
@@ -266,9 +266,9 @@
 
     <!--그리드 내 TextEdit (inner shadow)-->
     <Style TargetType="{x:Type dxe:TextEdit}" x:Key="GridTextEdit">
-        <Setter Property="Width" Value="200"/>
+        <Setter Property="Width" Value="Auto"/>
         <Setter Property="Height" Value="27"/>
-        <Setter Property="HorizontalAlignment" Value="Left"/>
+        <Setter Property="HorizontalAlignment" Value="Stretch"/>
         <Setter Property="VerticalAlignment" Value="Center"/>
         <Setter Property="Margin" Value="10,0,10,0"/>
         <Setter Property="ShowBorder" Value="False"/>
@@ -450,9 +450,9 @@
             </ControlTemplate>
         </Style.Resources>
         <Setter Property="dx:ThemeManager.ThemeName" Value="None"/>
-        <Setter Property="Width" Value="200"/>
+        <Setter Property="Width" Value="Auto"/>
         <Setter Property="Height" Value="27"/>
-        <Setter Property="HorizontalAlignment" Value="Left"/>
+        <Setter Property="HorizontalAlignment" Value="Stretch"/>
         <Setter Property="VerticalAlignment" Value="Center"/>
         <Setter Property="Margin" Value="10,0,10,0"/>
         <Setter Property="ShowBorder" Value="False"/>
@@ -867,6 +867,15 @@
         <Setter Property="BorderThickness" Value="2"/>
         <Setter Property="BorderBrush" Value="#3213202e"/>
     </Style>
+
+
+    <!--상세 헤더 Border-->
+    <Style TargetType="{x:Type Border}" x:Key="DtlHeaderBorder">
+        <Setter Property="Background" Value="#57a2d7"/>
+        <Setter Property="BorderThickness" Value="2"/>
+        <Setter Property="BorderBrush" Value="#3213202e"/>
+    </Style>
+
 
     <!--총괄수량수지 헤더 Border-->
     <Style TargetType="{x:Type Border}" x:Key="TotalVolHeadBorder">

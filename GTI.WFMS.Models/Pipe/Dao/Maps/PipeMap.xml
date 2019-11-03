@@ -80,9 +80,9 @@
       FROM INFOFMS.WTL_PIPE_LM A
       LEFT JOIN INFOFMS.V_FTR_CDE F ON A.FTR_CDE = F.FTR_CDE
       LEFT JOIN INFOFMS.BML_HADM_AS H ON A.HJD_CDE = H.HJD_CDE
-      LEFT JOIN INFOUSER.CD_DTL_INFO C ON C.MST_CD = 'MNG_CDE' AND C.DTL_CD = A.MNG_CDE
-      LEFT JOIN INFOUSER.CD_DTL_INFO C2 ON C2.MST_CD = 'JHT_CDE' AND C2.DTL_CD = A.MNG_CDE
-      LEFT JOIN INFOUSER.CD_DTL_INFO C3 ON C3.MST_CD = 'MOP_CDE' AND C3.DTL_CD = A.MNG_CDE
+      LEFT JOIN INFOUSER.CD_DTL_INFO C ON C.MST_CD = (SELECT MST_CD FROM INFOUSER.CD_MST_INFO WHERE ETC = 'MNG_CDE') AND C.DTL_CD = A.MNG_CDE
+      LEFT JOIN INFOUSER.CD_DTL_INFO C2 ON C2.MST_CD = (SELECT MST_CD FROM INFOUSER.CD_MST_INFO WHERE ETC = 'JHT_CDE') AND C2.DTL_CD = A.JHT_CDE
+      LEFT JOIN INFOUSER.CD_DTL_INFO C3 ON C3.MST_CD = '250102' AND C3.DTL_CD = A.MOP_CDE
 
       WHERE 1=1
       <isNotEmpty prepend="AND" property="MNG_CDE">
@@ -134,5 +134,71 @@
 
 
 
+    <!--상수관로 상세-->
+    <select id ="SelectWtlPipeDtl" parameterClass="Hashtable" resultClass ="Hashtable">
+      /* SelectWtlPipeList 상수관로 상세*/
+      SELECT A.FTR_CDE	,F.FTR_NAM
+      , A.FTR_IDN
+      , A.HJD_CDE,	H.HJD_NAM
+      , A.SHT_NUM
+      , A.MNG_CDE	,C.NM AS MNG_NAM
+      , decode(length(nvl(IST_YMD, '')), 8, to_char(to_date(IST_YMD, 'yyyyMMdd'), 'yyyy-MM-dd'), '') AS IST_YMD
+      , A.SAA_CDE	,C2.NM AS SAA_NAM
+      , A.MOP_CDE	,C3.NM AS MOP_NAM
+      , A.JHT_CDE	,C4.NM AS JHT_NAM
+      , A.LOW_DEP
+      , A.HGH_DEP
+      , A.CNT_NUM
+      , A.SYS_CHK
+      , decode(SYS_CHK,'1','유','무') as SYS_CHK_NAM
+      , A.PIP_LBL
+      , A.PIP_DIP
+      , A.PIP_LEN
+      FROM INFOFMS.WTL_PIPE_LM A
+      LEFT JOIN INFOFMS.V_FTR_CDE F ON A.FTR_CDE = F.FTR_CDE
+      LEFT JOIN INFOUSER.CD_DTL_INFO C ON C.DTL_CD LIKE 'MNG%' AND C.DTL_CD = A.MNG_CDE
+      LEFT JOIN INFOFMS.CMT_ADAR_MA H ON H.HJD_CDE = A.HJD_CDE
+      LEFT JOIN INFOUSER.CD_DTL_INFO C2 ON C2.DTL_CD LIKE 'SAA%' AND C2.DTL_CD = A.SAA_CDE
+      LEFT JOIN INFOUSER.CD_DTL_INFO C3 ON C3.DTL_CD LIKE 'MOP%' AND C3.MST_CD = '250102' AND C3.DTL_CD = A.MOP_CDE
+      LEFT JOIN INFOUSER.CD_DTL_INFO C4 ON C4.DTL_CD LIKE 'JHT%' AND C4.DTL_CD = A.JHT_CDE
+      WHERE 1=1
+      AND a.FTR_CDE = #FTR_CDE#
+      AND a.FTR_IDN = #FTR_IDN#
+    </select>  
+    
+        
+    <!--상수관로 상세 클래스-->
+    <select id ="SelectWtlPipeDtl2" parameterClass="Hashtable" resultClass ="GTI.WFMS.Models.Pipe.Model.PipeDtl">
+      /* SelectWtlPipeList 상수관로 상세 클래스*/
+      SELECT A.FTR_CDE	,F.FTR_NAM
+      , A.FTR_IDN
+      , A.HJD_CDE,	H.HJD_NAM
+      , A.SHT_NUM
+      , A.MNG_CDE	,C.NM AS MNG_NAM
+      , decode(length(nvl(IST_YMD, '')), 8, to_char(to_date(IST_YMD, 'yyyyMMdd'), 'yyyy-MM-dd'), '') AS IST_YMD
+      , A.SAA_CDE	,C2.NM AS SAA_NAM
+      , A.MOP_CDE	,C3.NM AS MOP_NAM
+      , A.JHT_CDE	,C4.NM AS JHT_NAM
+      , A.LOW_DEP
+      , A.HGH_DEP
+      , A.CNT_NUM
+      , A.SYS_CHK
+      , decode(SYS_CHK,'1','유','무') as SYS_CHK_NAM
+      , A.PIP_LBL
+      , A.PIP_DIP
+      , A.PIP_LEN
+      FROM INFOFMS.WTL_PIPE_LM A
+      LEFT JOIN INFOFMS.V_FTR_CDE F ON A.FTR_CDE = F.FTR_CDE
+      LEFT JOIN INFOUSER.CD_DTL_INFO C ON C.DTL_CD LIKE 'MNG%' AND C.DTL_CD = A.MNG_CDE
+      LEFT JOIN INFOFMS.CMT_ADAR_MA H ON H.HJD_CDE = A.HJD_CDE
+      LEFT JOIN INFOUSER.CD_DTL_INFO C2 ON C2.DTL_CD LIKE 'SAA%' AND C2.DTL_CD = A.SAA_CDE
+      LEFT JOIN INFOUSER.CD_DTL_INFO C3 ON C3.DTL_CD LIKE 'MOP%' AND C3.MST_CD = '250102' AND C3.DTL_CD = A.MOP_CDE
+      LEFT JOIN INFOUSER.CD_DTL_INFO C4 ON C4.DTL_CD LIKE 'JHT%' AND C4.DTL_CD = A.JHT_CDE
+      WHERE 1=1
+      AND a.FTR_CDE = #FTR_CDE#
+      AND a.FTR_IDN = #FTR_IDN#
+    </select>    
+
+    
   </statements>
 </sqlMap>

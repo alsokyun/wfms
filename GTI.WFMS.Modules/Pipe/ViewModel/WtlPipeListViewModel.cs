@@ -13,6 +13,7 @@ using System.Data;
 using System.Windows;
 using System.ComponentModel;
 using System.Collections.ObjectModel;
+using System.Windows.Navigation;
 
 namespace GTI.WFMS.Modules.Pipe.ViewModel
 {
@@ -298,7 +299,7 @@ namespace GTI.WFMS.Modules.Pipe.ViewModel
                 BizUtil.SetCombo(cbHJD_CDE, "Select_ADAR_LIST", "HJD_CDE", "HJD_NAM", true);
 
                 // cbMOP_CDE
-                BizUtil.SetCmbCode(cbMOP_CDE, "MOP_CDE", true);
+                BizUtil.SetCmbCode(cbMOP_CDE, "MOP_CDE", true, "250102");
 
                 // cbJHT_CDE
                 BizUtil.SetCmbCode(cbJHT_CDE, "JHT_CDE", true);
@@ -339,9 +340,100 @@ namespace GTI.WFMS.Modules.Pipe.ViewModel
 
 
 
+
+
+
+
+        /// <summary>
+        /// SQL DataRow -> 모델클래스 생성기
+        /// </summary>
+        /// <param name="obj"></param>
         private void btnMethod(object obj)
         {
-            MessageBox.Show("btn01Method");
+
+
+            string name_space = "GTI.WFMS.Modules.Pipe.Model";
+            string class_name = "PipeDtl";
+            
+            Hashtable param = new Hashtable();
+            param.Add("sqlId", "SelectWtlPipeDtl");
+            param.Add("FTR_CDE", "SA001");
+            param.Add("FTR_IDN", "39857");
+            DataTable dt = BizUtil.SelectList(param);
+            DataRow dr = dt.Rows[0];
+
+            String sb = "";
+            sb += "name_space " + name_space + "\r\n";
+            sb += "{ " + "\r\n";
+            sb += " class " + class_name + ":INotifyPropertyChanged" + "\r\n";
+            sb += " { " + "\r\n";
+            sb += "     /// <summary>" + "\r\n";
+            sb += "     /// 인터페이스 구현부분" + "\r\n";
+            sb += "     /// </summary>" + "\r\n";
+            sb += "     public event PropertyChangedEventHandler PropertyChanged;" + "\r\n";
+            sb += "     protected void OnPropertyChanged(string propertyName)" + "\r\n";
+            sb += "         { " + "\r\n";
+            sb += "             if (PropertyChanged != null)" + "\r\n";
+            sb += "             { " + "\r\n";
+            sb += "                 PropertyChanged(this, new PropertyChangedEventArgs(propertyName));" + "\r\n";           
+            sb += "             } " + "\r\n";
+            sb += "         } " + "\r\n";
+
+            sb += "\r\n";
+            sb += "\r\n";
+            sb += "\r\n";
+
+            sb += "     /// <summary>" + "\r\n";
+            sb += "     /// 프로퍼티 부분" + "\r\n";
+            sb += "     /// </summary>" + "\r\n";
+            foreach (DataColumn col in dt.Columns)
+            {
+                string value = dr[col].ToString();
+
+                //type 결정
+                string type_name = "string";
+                switch (dr[col].GetType().Name.ToLower())
+                {
+                    case "string":
+                        type_name = "string";
+                        break;
+                    case "int":
+                        type_name = "int";
+                        break;
+                    case "decimal":
+                        type_name = "int";
+                        break;
+                    case "double":
+                        type_name = "double";
+                        break;
+                    default:
+                        break;
+                }
+
+
+                sb += "     private " + type_name + " __" + col + ";" + "\r\n";
+                sb += "     public " + type_name + " " + col + "\r\n";
+                sb += "     { " + "\r\n";
+                sb += "         get { return __" + col + "; }" + "\r\n";
+                sb += "         set " + "\r\n";
+                sb += "         { " + "\r\n";
+                sb += "         this.__" + col + " = value;" + "\r\n";
+                sb += "         OnPropertyChanged(\"" + col + "\"); " + "\r\n";
+                sb += "         } " + "\r\n";
+                sb += "     } " + "\r\n";
+            }
+
+            sb += " } " + "\r\n";
+            sb += "} " + "\r\n";
+
+
+            Console.WriteLine("=========class string===========");
+            Console.Write(sb);
+            Console.WriteLine("=========class string===========");
+
+
+            MessageBox.Show("모델생성 -> Console 확인");
+
         }
         #endregion
 

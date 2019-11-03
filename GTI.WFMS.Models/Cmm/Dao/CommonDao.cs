@@ -21,6 +21,28 @@ namespace GTI.WFMS.Models.Cmm.Dao
         }
 
         /// <summary>
+        /// 데이터 조회 - 클래스
+        /// </summary>
+        /// <param name="conditions"></param>
+        /// <returns></returns>
+        public ArrayList SelectLIST2(Hashtable conditions)
+        {
+            string sqlId = conditions["sqlId"].ToString();
+            return DBManager.QueryForList(sqlId, conditions);
+        }
+
+        /// <summary>
+        /// 데이터 조회 - Object
+        /// </summary>
+        /// <param name="conditions"></param>
+        /// <returns></returns>
+        public object SelectObject(Hashtable conditions)
+        {
+            string sqlId = conditions["sqlId"].ToString();
+            return DBManager.QueryForObject(sqlId, conditions);
+        }
+
+        /// <summary>
         /// 데이터 업데이트 단건
         /// </summary>
         /// <param name="conditions"></param>

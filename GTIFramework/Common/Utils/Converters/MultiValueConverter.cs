@@ -155,5 +155,33 @@ namespace GTIFramework.Common.Utils.Converters
         }
     }
 
+    /// <summary>
+    /// 토글스위치 매핑컨버터 (1/0)- alsokyun
+    /// </summary>
+    public class Toggle2Converter : IValueConverter
+    {
+        public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
+        {
+            if ("1".Equals(value) )
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
+
+        public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
+        {
+            bool val = (bool)value;
+            if (val)
+                return "1";
+            else
+                return "0";
+
+        }
+    }
+
 
 }
