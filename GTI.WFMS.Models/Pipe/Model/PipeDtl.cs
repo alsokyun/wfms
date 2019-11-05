@@ -109,7 +109,10 @@ namespace GTI.WFMS.Models.Pipe.Model
         private string __IST_YMD;
         public string IST_YMD
         {
-            get { return __IST_YMD; }
+            get 
+            {
+                return Convert.ToDateTime(__IST_YMD).ToString("yyyy-MM-dd");
+            }
             set
             {
                 this.__IST_YMD = value;
@@ -236,8 +239,8 @@ namespace GTI.WFMS.Models.Pipe.Model
                 OnPropertyChanged("PIP_LBL");
             }
         }
-        private string __PIP_DIP;
-        public string PIP_DIP
+        private int __PIP_DIP;
+        public int PIP_DIP
         {
             get { return __PIP_DIP; }
             set
@@ -246,8 +249,8 @@ namespace GTI.WFMS.Models.Pipe.Model
                 OnPropertyChanged("PIP_DIP");
             }
         }
-        private string __PIP_LEN;
-        public string PIP_LEN
+        private int __PIP_LEN;
+        public int PIP_LEN
         {
             get { return __PIP_LEN; }
             set

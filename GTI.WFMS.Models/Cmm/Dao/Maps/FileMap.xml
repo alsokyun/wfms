@@ -1,0 +1,31 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<sqlMap namespace="Main" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://ibatis.apache.org/mapping">
+  <statements>
+
+
+
+    <!-- 업무파일정보 목록	 -->
+    <select id="selectFileMapList"  resultClass="Hashtable">
+      SELECT
+        M.BIZ_ID
+      , M.FIL_SEQ
+      , M.TIT_NAM
+      , M.GRP_TYP
+      , M.CRE_USR, U.USER_NM
+      ,case when length(M.CRE_YMD) = 8 then substr(M.CRE_YMD,1,4) || '-' || substr(M.CRE_YMD,5,2) || '-' || substr(M.CRE_YMD,7,2) else '' end  as CRE_YMD
+      , M.UPD_USR
+      , M.UPD_YMD
+      , M.CTNT
+      FROM FMS_FILE_MAP M
+      LEFT JOIN INFOUSER.SYS_USER_INFO U ON M.CRE_USR = U.USER_ID
+      WHERE 1=1
+      AND M.BIZ_ID = #BIZ_ID#
+      <isNotEmpty property="GRP_TYP">
+        AND M.GRP_TYP = #GRP_TYP#
+      </isNotEmpty>
+      ORDER BY M.FIL_SEQ
+    </select>
+
+
+  </statements>
+</sqlMap>

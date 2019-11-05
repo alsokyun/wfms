@@ -3,16 +3,16 @@
   <Profiles />
   <Settings>
     <Setting Name="strIP" Type="System.String" Scope="User">
-      <Value Profile="(Default)">211.105.28.40</Value>
+      <Value Profile="(Default)">172.16.0.4</Value>
     </Setting>
     <Setting Name="strPort" Type="System.String" Scope="User">
       <Value Profile="(Default)">8629</Value>
     </Setting>
     <Setting Name="strID" Type="System.String" Scope="User">
-      <Value Profile="(Default)">infofms</Value>
+      <Value Profile="(Default)">infouser</Value>
     </Setting>
     <Setting Name="strPWD" Type="System.String" Scope="User">
-      <Value Profile="(Default)">infofms</Value>
+      <Value Profile="(Default)">infouser</Value>
     </Setting>
     <Setting Name="strSID" Type="System.String" Scope="User">
       <Value Profile="(Default)">tibero</Value>

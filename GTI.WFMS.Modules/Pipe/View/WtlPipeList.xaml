@@ -172,8 +172,14 @@
         <!--그리드영역-->
         <StackPanel Grid.Row="0" Grid.Column="1" Orientation="Horizontal">
             <Image Style="{StaticResource TitleCircle}"/>
-            <Label Content="{Binding TotalCnt, Mode=OneWay}" ContentStringFormat="목록 ({0}건)" Style="{StaticResource ResourceKey=CircleTitleLabel}"/>
+            <Label Content="{Binding TotalCnt, Mode=OneWay}" ContentStringFormat="목록 ({0:N0}건)" Style="{StaticResource ResourceKey=CircleTitleLabel}"/>
         </StackPanel>
+
+        <StackPanel Grid.Row="0" Grid.Column="1" Orientation="Horizontal" HorizontalAlignment="Right">
+            <Button x:Name="btnAdd" Style="{StaticResource ResourceKey=AddButton}" Click="BtnAdd_Click" />
+            <Button x:Name="btnExcel" Style="{StaticResource ResourceKey=ExcelDownButton}"  />
+        </StackPanel>
+
 
         <Border  Grid.Row="1" Grid.Column="1"  BorderBrush="#2071a6" BorderThickness="1"/>
         <dxg:GridControl Grid.Row="1" Grid.Column="1" x:Name="grid" VerticalAlignment="Stretch" HorizontalAlignment="Stretch"
@@ -194,20 +200,20 @@
 
             <dxg:GridControl.View>
                 <dxg:TableView NavigationStyle="Row" 
-                                       HeaderPanelMinHeight="30" 
+                                HeaderPanelMinHeight="30" 
                                        
-                                       AllowPerPixelScrolling="True"  
-                                       ShowHorizontalLines="True"
-                                       AllowPaging="False"
+                                AllowPerPixelScrolling="True"  
+                                ShowHorizontalLines="True"
+                                AllowPaging="False"
                                        
-                                       ShowIndicator="False" 
-                                       ShowGroupPanel="False" 
-                                       AllowBandMultiRow="False" 
-                                       AllowSorting="False" 
-                                       AllowColumnFiltering="False"
-                                       IsColumnMenuEnabled="False" 
-                                       AllowMoveColumnToDropArea="False" 
-                                       >
+                                ShowIndicator="False" 
+                                ShowGroupPanel="False" 
+                                AllowBandMultiRow="False" 
+                                AllowSorting="False" 
+                                AllowColumnFiltering="False"
+                                IsColumnMenuEnabled="False" 
+                                AllowMoveColumnToDropArea="False" 
+                                >
                 </dxg:TableView>
             </dxg:GridControl.View>
 
@@ -288,7 +294,7 @@
             <Button x:Name="btnReset" Style="{StaticResource ResourceKey=InitButton}">
                 <i:Interaction.Triggers>
                     <i:EventTrigger EventName="Click">
-                        <i:InvokeCommandAction Command="{Binding SearchCommand}">
+                        <i:InvokeCommandAction Command="{Binding ResetCommand}">
                         </i:InvokeCommandAction>
                     </i:EventTrigger>
                 </i:Interaction.Triggers>

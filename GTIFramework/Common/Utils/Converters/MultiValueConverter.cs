@@ -162,7 +162,7 @@ namespace GTIFramework.Common.Utils.Converters
     {
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            if ("1".Equals(value) )
+            if ("1".Equals(value))
             {
                 return true;
             }
@@ -180,6 +180,22 @@ namespace GTIFramework.Common.Utils.Converters
             else
                 return "0";
 
+        }
+    }
+
+    /// <summary>
+    /// Rownumber 컨버터 - alsokyun
+    /// </summary>
+    public class RownumConverter : IValueConverter
+    {
+        public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
+        {
+            return (int)value + 1;
+        }
+
+        public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
+        {
+            return value;
         }
     }
 

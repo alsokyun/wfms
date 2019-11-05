@@ -105,11 +105,15 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="Cmm\View\ChscResSubListView.xaml">
-      <SubType>Designer</SubType>
+    <Page Include="Link\View\ChscResSubListView.xaml">
       <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
     </Page>
     <Page Include="Main\PopWin.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Pipe\View\WtlPipeAddView.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
@@ -142,14 +146,19 @@
       <DependentUpon>UcUserMngView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Adm\ViewModel\UcUserMngViewModel.cs" />
-    <Compile Include="Cmm\View\ChscResSubListView.xaml.cs">
+    <Compile Include="Link\ViewModel\ChscResSubListViewModel.cs" />
+    <Compile Include="Link\View\ChscResSubListView.xaml.cs">
       <DependentUpon>ChscResSubListView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Main\PopWin.xaml.cs">
       <DependentUpon>PopWin.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Pipe\ViewModel\WtlPipeAddViewModel.cs" />
     <Compile Include="Pipe\ViewModel\WtlPipeDtlViewModel.cs" />
     <Compile Include="Pipe\ViewModel\WtlPipeListViewModel.cs" />
+    <Compile Include="Pipe\View\WtlPipeAddView.xaml.cs">
+      <DependentUpon>WtlPipeAddView.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Pipe\View\WtlPipeDtlView.xaml.cs">
       <DependentUpon>WtlPipeDtlView.xaml</DependentUpon>
     </Compile>
@@ -174,8 +183,6 @@
   <ItemGroup>
     <EmbeddedResource Include="Properties\Licenses.licx" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Cmm\ViewModel\" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

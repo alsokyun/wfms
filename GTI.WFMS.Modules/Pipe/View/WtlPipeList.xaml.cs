@@ -35,12 +35,27 @@ namespace GTI.WFMS.Modules.Pipe.View
             int FTR_IDN = 0;
 
             GridControl gc = sender as GridControl;
-            FTR_CDE = ((DataRowView)gc.CurrentItem).Row["FTR_CDE"].ToString();
-            FTR_IDN = Convert.ToInt32(((DataRowView)gc.CurrentItem).Row["FTR_IDN"])  ;
+
+            try
+            {
+                FTR_CDE = ((DataRowView)gc.CurrentItem).Row["FTR_CDE"].ToString();
+                FTR_IDN = Convert.ToInt32(((DataRowView)gc.CurrentItem).Row["FTR_IDN"])  ;
+
+                ///페이지이동 - 뷰생성자로 파라미터키 전달 
+                ///=> 뷰모델과바인딩된 객체값을 변경해서 뷰모델로 최종적으로 파라미터 전달
+                NavigationService.Navigate(new WtlPipeDtlView(FTR_CDE, FTR_IDN));
+            }
+            catch (Exception)
+            {
+                return; //throw;
+            }
             
-            ///페이지이동 - 뷰생성자로 파라미터키 전달 
-            ///=> 뷰모델과바인딩된 객체값을 변경해서 뷰모델로 최종적으로 파라미터 전달
-            NavigationService.Navigate(new WtlPipeDtlView(FTR_CDE, FTR_IDN));
+        }
+
+        // 등록 팝업
+        private void BtnAdd_Click(object sender, RoutedEventArgs e)
+        {
+            NavigationService.Navigate(new WtlPipeAddView());
         }
     }
 }

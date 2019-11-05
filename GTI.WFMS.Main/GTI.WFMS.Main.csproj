@@ -235,6 +235,8 @@
     <Resource Include="Resources\Images\Image\btn_init_on.png" />
     <Resource Include="Resources\Images\Image\btn_send.png" />
     <Resource Include="Resources\Images\Image\btn_send_on.png" />
+    <Resource Include="Resources\Images\Image\btn_excel_down.png" />
+    <Resource Include="Resources\Images\Image\btn_excel_down_on.png" />
     <Content Include="Styles\Fonts\malgun.ttf">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>

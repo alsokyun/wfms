@@ -88,11 +88,9 @@ namespace GTI.WFMS.Modules.Pipe.ViewModel
         /// </summary>
         public DelegateCommand<object> LoadedCommand { get; set; }
 
-        /// <summary>
-        /// btnSearch 이벤트
-        /// </summary>
         public DelegateCommand<object> SearchCommand { get; set; }
-
+        public DelegateCommand<object> ResetCommand { get; set; }
+        
         public DelegateCommand<object> btnCmd { get; set; }
         #endregion
 
@@ -133,7 +131,8 @@ namespace GTI.WFMS.Modules.Pipe.ViewModel
 
             LoadedCommand = new DelegateCommand<object>(OnLoaded);
             SearchCommand = new DelegateCommand<object>(SearchAction);
-
+            ResetCommand = new DelegateCommand<object>(ResetAction);
+            
             btnCmd = new DelegateCommand<object>(btnMethod);
 
 
@@ -192,8 +191,8 @@ namespace GTI.WFMS.Modules.Pipe.ViewModel
             dtIST_YMD_TO = wtlPipeList.dtIST_YMD_TO;
             dtIST_YMD_FROM.DisplayFormatString = "yyyy-MM-dd";
             dtIST_YMD_TO.DisplayFormatString = "yyyy-MM-dd";
-            dtIST_YMD_FROM.EditValue = DateTime.Today.AddYears(-3);
-            dtIST_YMD_TO.EditValue = DateTime.Today;
+            //dtIST_YMD_FROM.EditValue = DateTime.Today.AddYears(-10);
+            //dtIST_YMD_TO.EditValue = DateTime.Today;
 
             grid = wtlPipeList.grid;
 
@@ -204,6 +203,10 @@ namespace GTI.WFMS.Modules.Pipe.ViewModel
 
             //3.권한처리
             permissionApply();
+
+
+            //4.초기조회
+            SearchAction(null);
         }
 
 
@@ -228,8 +231,8 @@ namespace GTI.WFMS.Modules.Pipe.ViewModel
                 conditions.Add("PIP_DIP", txtPIP_DIP.Text.Trim());
                 try
                 {
-                    conditions.Add("IST_YMD_FROM", Convert.ToDateTime(dtIST_YMD_FROM.EditValue).ToString("yyyy-MM-dd"));
-                    conditions.Add("IST_YMD_TO", Convert.ToDateTime(dtIST_YMD_TO.EditValue).ToString("yyyy-MM-dd"));
+                    conditions.Add("IST_YMD_FROM", dtIST_YMD_FROM.EditValue == null ? null : Convert.ToDateTime(dtIST_YMD_FROM.EditValue).ToString("yyyy-MM-dd"));
+                    conditions.Add("IST_YMD_TO", dtIST_YMD_TO.EditValue == null ? null : Convert.ToDateTime(dtIST_YMD_TO.EditValue).ToString("yyyy-MM-dd"));
                 }
                 catch (Exception e) { }
 
@@ -259,11 +262,12 @@ namespace GTI.WFMS.Modules.Pipe.ViewModel
                     // TotalCnt 설정
                     try
                     {
-                        this.TotalCnt = Convert.ToInt16(dt.Rows[0]["ROWCNT"]);
+                        this.TotalCnt = Convert.ToInt32(dt.Rows[0]["ROWCNT"]);
                         this.ItemCnt = (int)Math.Ceiling((double)this.TotalCnt / FmsUtil.PageSize);
                     }
                     catch (Exception e)
                     {
+                        this.TotalCnt = 0;
                         this.ItemCnt = 0;
                     }
 
@@ -278,6 +282,29 @@ namespace GTI.WFMS.Modules.Pipe.ViewModel
             {
                 Messages.ShowErrMsgBoxLog(ex);
             }
+        }
+
+        
+        /// <summary>
+        /// 초기화
+        /// </summary>
+        /// <param name="obj"></param>
+        private void ResetAction(object obj)
+        {
+            cbMNG_CDE.SelectedIndex = 0;
+            cbHJD_CDE.SelectedIndex = 0;
+            cbMOP_CDE.SelectedIndex = 0;
+            cbJHT_CDE.SelectedIndex = 0;
+            txtFTR_IDN.Text = "";
+            txtCNT_NUM.Text = "";
+            txtSHT_NUM.Text = "";
+            txtPIP_DIP.Text = "";
+
+            //dtIST_YMD_FROM.EditValue = DateTime.Today.AddYears(-10);
+            //dtIST_YMD_TO.EditValue = DateTime.Today;
+            dtIST_YMD_FROM.EditValue = null;
+            dtIST_YMD_TO.EditValue = null;
+
         }
 
         #endregion

@@ -12,6 +12,8 @@ namespace GTI.WFMS.Models.Common
         static CmmDao cmmDao = new CmmDao();
 
 
+        #region =========== 조회함수 =========== 
+
         /// <summary>
         /// 데이터 조회
         /// </summary>
@@ -20,6 +22,16 @@ namespace GTI.WFMS.Models.Common
         public static DataTable SelectList(Hashtable conditions)
         {
             return dao.SelectLIST(conditions);
+        }
+
+        /// <summary>
+        /// 데이터 조회 - 복수SQL
+        /// </summary>
+        /// <param name="conditions"></param>
+        /// <returns></returns>
+        public static Hashtable SelectLists(Hashtable conditions)
+        {
+            return dao.SelectLISTS(conditions); ;
         }
 
         public delegate void dele_callback(DataTable dt);
@@ -39,7 +51,7 @@ namespace GTI.WFMS.Models.Common
 
 
         /// <summary>
-        /// 데이터 조회 - 클래스
+        /// 데이터 조회 - Object
         /// </summary>
         /// <param name="conditions"></param>
         /// <returns></returns>
@@ -59,6 +71,12 @@ namespace GTI.WFMS.Models.Common
         }
 
 
+        #endregion
+
+
+
+        #region =========== 저장함수 =========== 
+
 
 
         /// <summary>
@@ -70,6 +88,24 @@ namespace GTI.WFMS.Models.Common
             dao.Update(conditions);
         }
 
+        /// <summary>
+        /// 데이터 업데이트 - Object
+        /// </summary>
+        /// <param name="obj"></param>
+        public static void Update2(object  obj, string sqlId)
+        {
+            dao.Update2(obj, sqlId);
+        }
+
+
+
+        #endregion
+
+
+
+
+
+        #region =========== 객체생성 함수 =========== 
 
         /// <summary>
         /// 공통코드 콤보 데이터바인딩
@@ -150,6 +186,10 @@ namespace GTI.WFMS.Models.Common
         {
             SetCombo(cmb, sqlId, ValueMember, DisplayMember, false);
         }
+
+        #endregion
+
+
 
 
     }

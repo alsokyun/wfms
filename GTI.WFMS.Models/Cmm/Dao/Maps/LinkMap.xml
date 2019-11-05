@@ -1,0 +1,72 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<sqlMap namespace="Main" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://ibatis.apache.org/mapping">
+  <statements>
+
+
+
+
+    <!--유지보수상세내역-->
+    <select id="selectChscResSubList" resultClass="Hashtable">
+      /* selectChscResSubList - 유지보수(점검시설 결과) */
+      SELECT
+          A.SCL_NUM
+          , A.FTR_CDE, F.FTR_NAM
+          , A.FTR_IDN
+          , A.RPR_YMD
+          , decode(length(A.RPR_YMD), 8, to_char(to_date(A.RPR_YMD, 'yyyyMMdd'), 'yyyy-MM-dd'), '') AS RPR_YMD_FMT
+          , A.RPR_CAT_CDE   /*보수구분*/
+          , C.NM AS RPR_CAT_NAM
+          , A.RPR_CUZ_CDE   /*보수사유*/
+          , C2.NM AS RPR_CUZ_NAM
+          , A.RPR_USR_NM    /*시공자명*/
+          , A.RPR_CTNT      /*보수내용*/
+          , A.FILE_SEQ
+      FROM FMS_CHSC_FTR_RES A
+      LEFT JOIN INFOFMS.V_FTR_CDE F ON A.FTR_CDE = F.FTR_CDE
+      LEFT JOIN INFOUSER.CD_DTL_INFO C ON C.MST_CD = (SELECT MST_CD FROM INFOUSER.CD_MST_INFO WHERE ETC = 'RPR_CAT_CDE') AND C.DTL_CD = A.RPR_CAT_CDE
+      LEFT JOIN INFOUSER.CD_DTL_INFO C2 ON C2.MST_CD = (SELECT MST_CD FROM INFOUSER.CD_MST_INFO WHERE ETC = 'RPR_CUZ_CDE') AND C2.DTL_CD = A.RPR_CUZ_CDE
+      WHERE 1=1
+      <!-- 조건1. 지형지물 -->
+      <isNotEmpty prepend="AND" property="FTR_CDE">
+        A.FTR_CDE = #FTR_CDE#
+      </isNotEmpty>
+      <!-- 조건2. 관리번호 -->
+      <isNotEmpty prepend="AND" property="FTR_IDN">
+        A.FTR_IDN = #FTR_IDN#
+      </isNotEmpty>
+    </select>
+
+
+
+    <select id="selectWtlLeakSubList" resultClass="Hashtable">
+      /* selectWtlLeakSubList - 누수지점 서브 목록 화면 */
+      SELECT
+      FTR_CDE
+      , FTR_IDN
+      , HJD_CDE
+      , SHT_NUM
+      , RCV_NUM
+      , decode(length(LEK_YMD), 8, to_char(to_date(LEK_YMD, 'yyyyMMdd'), 'yyyy-MM-dd'), '') AS LEK_YMD
+      , LEK_LOC
+      , PIP_CDE
+      , PIP_IDN
+      , LRS_CDE
+      , LEP_CDE
+      , REP_YMD
+      , REP_EXP
+      , MAT_DES
+      , REP_NAM
+      , SYS_CHK
+      , LEK_EXP
+      , MOP_CDE
+      , PIP_DIP	/*관구경*/
+      FROM WTL_LEAK_PS
+      WHERE 1=1
+      AND FTR_CDE = #FTR_CDE#
+      AND FTR_IDN = #FTR_IDN#
+      ORDER BY  FTR_CDE DESC , FTR_IDN DESC;
+    </select>
+
+
+  </statements>
+</sqlMap>

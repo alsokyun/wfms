@@ -73,6 +73,14 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
       <SubType>Designer</SubType>
     </Content>
+    <Content Include="Cmm\Dao\Maps\FileMap.xml">
+      <SubType>Designer</SubType>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Cmm\Dao\Maps\LinkMap.xml">
+      <SubType>Designer</SubType>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Content Include="Cmm\Dao\Maps\CmmMap.xml">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
       <SubType>Designer</SubType>
@@ -123,6 +131,7 @@
     <None Include="..\GTI.WFMS.Main\bin\Debug\DBConfig\TIBEROConfig.config">
       <SubType>Designer</SubType>
       <Link>DBConfig\TIBEROConfig.config</Link>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Include="app.config" />
     <None Include="packages.config" />

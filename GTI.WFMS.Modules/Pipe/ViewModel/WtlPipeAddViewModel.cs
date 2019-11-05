@@ -19,7 +19,7 @@ using System.Windows.Controls;
 
 namespace GTI.WFMS.Modules.Pipe.ViewModel
 {
-    class WtlPipeDtlViewModel : PipeDtl
+    class WtlPipeAddViewModel : PipeDtl
     {
 
 
@@ -29,7 +29,6 @@ namespace GTI.WFMS.Modules.Pipe.ViewModel
         /// </summary>
         public DelegateCommand<object> LoadedCommand { get; set; }
         public DelegateCommand<object> SaveCommand { get; set; }
-        public DelegateCommand<object> DeleteCommand { get; set; }
         public DelegateCommand<object> BackCommand { get; set; }
 
 
@@ -37,14 +36,13 @@ namespace GTI.WFMS.Modules.Pipe.ViewModel
 
 
         #region ==========  Member 정의 ==========
-        WtlPipeDtlView wtlPipeDtlView;
+        WtlPipeAddView wtlPipeAddView;
         ComboBoxEdit cbMNG_CDE; DataTable dtMNG_CDE = new DataTable();
         ComboBoxEdit cbHJD_CDE; DataTable dtHJD_CDE = new DataTable();
         ComboBoxEdit cbMOP_CDE; DataTable dtMOP_CDE = new DataTable();
         ComboBoxEdit cbJHT_CDE; DataTable dtJHT_CDE = new DataTable();
         ComboBoxEdit cbSAA_CDE; DataTable dtSAA_CDE = new DataTable();
         Button btnBack;
-        Button btnDelete;
         Button btnSave;
         
         #endregion
@@ -53,11 +51,10 @@ namespace GTI.WFMS.Modules.Pipe.ViewModel
 
 
         /// 생성자
-        public WtlPipeDtlViewModel()
+        public WtlPipeAddViewModel()
         {
             this.LoadedCommand = new DelegateCommand<object>(OnLoaded);
             this.SaveCommand = new DelegateCommand<object>(OnSave);
-            this.DeleteCommand = new DelegateCommand<object>(OnDelete);
             this.BackCommand = new DelegateCommand<object>(OnBack);
             
         }
@@ -80,15 +77,14 @@ namespace GTI.WFMS.Modules.Pipe.ViewModel
             if (obj == null) return;
             var values = (object[])obj;
 
-            wtlPipeDtlView = values[0] as WtlPipeDtlView;
-            cbMNG_CDE = wtlPipeDtlView.cbMNG_CDE;
-            cbHJD_CDE = wtlPipeDtlView.cbHJD_CDE;
-            cbMOP_CDE = wtlPipeDtlView.cbMOP_CDE;
-            cbJHT_CDE = wtlPipeDtlView.cbJHT_CDE;
-            cbSAA_CDE = wtlPipeDtlView.cbSAA_CDE;
-            btnBack = wtlPipeDtlView.btnBack;
-            btnDelete = wtlPipeDtlView.btnDelete;
-            btnSave = wtlPipeDtlView.btnSave;
+            wtlPipeAddView = values[0] as WtlPipeAddView;
+            cbMNG_CDE = wtlPipeAddView.cbMNG_CDE;
+            cbHJD_CDE = wtlPipeAddView.cbHJD_CDE;
+            cbMOP_CDE = wtlPipeAddView.cbMOP_CDE;
+            cbJHT_CDE = wtlPipeAddView.cbJHT_CDE;
+            cbSAA_CDE = wtlPipeAddView.cbSAA_CDE;
+            btnBack = wtlPipeAddView.btnBack;
+            btnSave = wtlPipeAddView.btnSave;
             
 
             //2.화면데이터객체 초기화
@@ -101,38 +97,19 @@ namespace GTI.WFMS.Modules.Pipe.ViewModel
 
 
 
-            // 4.초기조회
+            // 4.초기조회 - 신규관리번호 채번
             //DataTable dt = new DataTable();
             Hashtable param = new Hashtable();
-            param.Add("sqlId", "SelectWtlPipeDtl2");
-            param.Add("FTR_CDE", this.FTR_CDE);
-            param.Add("FTR_IDN", this.FTR_IDN);
+            param.Add("sqlId", "SelectWtlPipeFTR_IDN");
+            param.Add("FTR_CDE", "SA001");
 
             PipeDtl result = new PipeDtl();
             result = BizUtil.SelectObject(param) as PipeDtl;
 
-
-
-            //결과를 뷰모델멤버로 매칭
-            Type dbmodel = result.GetType();
-            Type model = this.GetType();
-
-            //모델프로퍼티 순회
-            foreach (PropertyInfo prop in model.GetProperties())
-            {
-                string propName = prop.Name;
-                //db프로퍼티 순회
-                foreach (PropertyInfo dbprop in dbmodel.GetProperties())
-                {
-                    string colName = dbprop.Name;
-                    var colValue = dbprop.GetValue(result, null);
-                    if (colName.Equals(propName))
-                    {
-                        prop.SetValue(this, Convert.ChangeType(colValue, prop.PropertyType));
-                    }
-                }
-               Console.WriteLine(propName + " - " + prop.GetValue(this,null));
-            }
+            //채번결과 매칭
+            this.FTR_IDN = result.FTR_IDN;
+            this.FTR_CDE = "SA001";
+            this.IST_YMD = Convert.ToDateTime(DateTime.Today).ToString("yyyy-MM-dd");
 
         }
 
@@ -151,7 +128,7 @@ namespace GTI.WFMS.Modules.Pipe.ViewModel
 
             try
             {
-                BizUtil.Update2(this, "saveWtlPipeDtl");
+                BizUtil.Update2(this, "insertWtlPipeDtl");
             }
             catch (Exception e)
             {
@@ -160,79 +137,11 @@ namespace GTI.WFMS.Modules.Pipe.ViewModel
             }
             Messages.ShowOkMsgBox();
 
+
+            BackCommand.Execute(null); //닫기
         }
 
-        /// <summary>
-        /// 삭제처리
-        /// </summary>
-        /// <param name="obj"></param>
-        private void OnDelete(object obj)
-        {
-            //0.삭제전 체크
-            Hashtable param = new Hashtable();
-            param.Add("sqlId", "selectChscResSubList");
-            param.Add("sqlId2", "selectFileMapList");
-            param.Add("sqlId3", "selectWtlLeakSubList");
-            param.Add("FTR_CDE", this.FTR_CDE);
-            param.Add("FTR_IDN", this.FTR_IDN);
-            param.Add("BIZ_ID", string.Concat(this.FTR_CDE , this.FTR_IDN) );
 
-            Hashtable result = BizUtil.SelectLists(param);
-            DataTable dt = new DataTable();
-            DataTable dt2 = new DataTable();
-            DataTable dt3 = new DataTable();
-
-            try
-            {
-                dt = result["dt"] as DataTable;
-                if (dt.Rows.Count > 0)
-                {
-                    Messages.ShowErrMsgBox("유지보수내역이 존재합니다.");
-                    return;
-                }
-            }
-            catch (Exception) { }
-            try
-            {
-                dt2 = result["dt2"] as DataTable;
-                if (dt2.Rows.Count > 0)
-                {
-                    Messages.ShowErrMsgBox("파일첨부내역이 존재합니다.");
-                    return;
-                }
-            }
-            catch (Exception) { }
-            try
-            {
-                dt3 = result["dt3"] as DataTable;
-                if (dt3.Rows.Count > 0)
-                {
-                    Messages.ShowErrMsgBox("누수지점내역이 존재합니다.");
-                    return;
-                }
-            }
-            catch (Exception) { }
-
-
-
-            // 1.삭제처리
-            if (Messages.ShowYesNoMsgBox("상수관로를 삭제하시겠습니까?") != MessageBoxResult.Yes) return;
-            try
-            {
-                BizUtil.Update2(this, "deleteWtlPipeDtl");
-            }
-            catch (Exception e)
-            {
-                Messages.ShowErrMsgBox("삭제 처리중 오류가 발생하였습니다.");
-                return;
-            }
-            Messages.ShowOkMsgBox();
-
-
-
-            BackCommand.Execute(null);
-
-        }
 
         /// <summary>
         /// 뒤로가기처리
@@ -297,7 +206,6 @@ namespace GTI.WFMS.Modules.Pipe.ViewModel
                     case "W":
                         break;
                     case "R":
-                        btnDelete.Visibility = Visibility.Collapsed;
                         btnSave.Visibility = Visibility.Collapsed;
                         break;
                     case "N":

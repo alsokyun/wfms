@@ -21,6 +21,40 @@ namespace GTI.WFMS.Models.Cmm.Dao
         }
 
         /// <summary>
+        /// 데이터 조회 - 복수sql
+        /// </summary>
+        /// <param name="conditions"></param>
+        /// <returns></returns>
+        public Hashtable SelectLISTS(Hashtable conditions)
+        {
+            Hashtable result = new Hashtable();
+            DataTable ret = new DataTable();
+            try
+            {
+                string sqlId = conditions["sqlId"].ToString();
+                ret = DBManager.QueryForTable(sqlId, conditions);
+                result.Add("dt", ret);
+            }
+            catch (Exception e) { }
+            try
+            {
+                string sqlId = conditions["sqlId2"].ToString();
+                ret = DBManager.QueryForTable(sqlId, conditions);
+                result.Add("dt2", ret);
+            }
+            catch (Exception e) { }
+            try
+            {
+                string sqlId = conditions["sqlId3"].ToString();
+                ret = DBManager.QueryForTable(sqlId, conditions);
+                result.Add("dt3", ret);
+            }
+            catch (Exception e) { }
+
+            return result;
+        }
+
+        /// <summary>
         /// 데이터 조회 - 클래스
         /// </summary>
         /// <param name="conditions"></param>
@@ -52,6 +86,13 @@ namespace GTI.WFMS.Models.Cmm.Dao
             DBManager.QueryForUpdate("sqlId", conditions);
         }
 
-
+        /// <summary>
+        /// 데이터 업데이트 단건 Object
+        /// </summary>
+        /// <param name="obj"></param>
+        internal void Update2(object obj, string sqlId)
+        {
+            DBManager.QueryForUpdate(sqlId, obj);
+        }
     }
 }
