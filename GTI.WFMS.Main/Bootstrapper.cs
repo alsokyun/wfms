@@ -3,6 +3,7 @@ using System.Windows;
 using Prism.Unity;
 using Unity;
 using GTI.WFMS.Modules.Adm;
+using GTI.WFMS.GIS;
 
 namespace GTI.WFMS.Main
 {
@@ -15,8 +16,8 @@ namespace GTI.WFMS.Main
         {
             base.ConfigureContainer();
 
-            Container.RegisterTypeForNavigation<UcUserMngView>("UcUserMngView");
-            Container.RegisterTypeForNavigation<UcCodeMngView>("UcCodeMngView");
+            //Container.RegisterTypeForNavigation<UcUserMngView>("UcUserMngView");
+            Container.RegisterTypeForNavigation<MapMainView>("MapMainView");
         }
 
         /// <summary>

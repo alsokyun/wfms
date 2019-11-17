@@ -94,5 +94,17 @@ namespace GTIFramework.Properties {
                 this["RES_DB_INS_DEFAULT"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("D:\\DEVGTI\\GTI.WFMS\\shape")]
+        public string SHAPE {
+            get {
+                return ((string)(this["SHAPE"]));
+            }
+            set {
+                this["SHAPE"] = value;
+            }
+        }
     }
 }

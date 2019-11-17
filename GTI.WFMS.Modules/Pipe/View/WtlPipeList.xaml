@@ -46,7 +46,7 @@
 
         <StackPanel Grid.Row="0" Grid.Column="0" Orientation="Horizontal">
             <Image Style="{StaticResource TitleCircle}"/>
-            <Label Content="검색항목" Style="{StaticResource ResourceKey=CircleTitleLabel}"/>
+            <Label Content="검색항목" Style="{StaticResource CircleTitleLabel}"/>
         </StackPanel>
 
 

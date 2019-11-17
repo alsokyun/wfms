@@ -13,22 +13,16 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace pjt01.Adm.View
+namespace GTI.WFMS.GIS
 {
     /// <summary>
-    /// Page2.xaml에 대한 상호 작용 논리
+    /// Map2View.xaml에 대한 상호 작용 논리
     /// </summary>
-    public partial class Page2 : Page
+    public partial class Map2View : UserControl
     {
-        public Page2()
+        public Map2View()
         {
             InitializeComponent();
-        }
-
-        private void Button_Click(object sender, RoutedEventArgs e)
-        {
-            NavigationService.GoBack();
-
         }
     }
 }

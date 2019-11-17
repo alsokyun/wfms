@@ -163,9 +163,9 @@
                     <Button Style="{StaticResource QuestionButton}" Command="{Binding QuestionCommand}" CommandParameter="{Binding RelativeSource={RelativeSource AncestorType={x:Type Window}, Mode=FindAncestor}}"/>
                 </StackPanel>
 
-                <ContentControl x:Name="ContentRegion" Grid.Row="1" prism:RegionManager.RegionName="ContentRegion">
-                    
-                </ContentControl>
+                <ContentControl x:Name="ContentRegion" Grid.Row="1" prism:RegionManager.RegionName="ContentRegion" />
+
+
             </Grid>
         </Grid>
 

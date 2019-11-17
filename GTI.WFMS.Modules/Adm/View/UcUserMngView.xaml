@@ -18,7 +18,6 @@
 
     <UserControl.Resources>
         <ResourceDictionary>
-
             <cm:MultiValueConverter x:Key="multiValueConverter"/>
             <cm:ToggleConverter x:Key="toggleConverter" />
         </ResourceDictionary>

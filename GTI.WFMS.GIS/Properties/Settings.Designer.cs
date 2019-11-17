@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace pjt01.Properties
+namespace GTI.WFMS.GIS.Properties
 {
 
 

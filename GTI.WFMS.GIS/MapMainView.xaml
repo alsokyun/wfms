@@ -1,0 +1,109 @@
+﻿<UserControl x:Class="GTI.WFMS.GIS.MapMainView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:GTI.WFMS.GIS"
+             mc:Ignorable="d" 
+             d:DesignHeight="450" d:DesignWidth="800"
+             
+            xmlns:esri="http://schemas.esri.com/arcgis/runtime/2013"
+            xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
+
+             >
+
+    <UserControl.DataContext>
+        <local:MapMainViewModel/>
+    </UserControl.DataContext>
+    <Grid>
+        <esri:MapView Map="{Binding Map}" x:Name="mapView"/>
+        
+        <esri:Compass Margin="30" AutoHide="False" DataContext="{Binding Map}"/>
+        
+        <Grid VerticalAlignment="Top" Height="30" Width="Auto" HorizontalAlignment="Right" >
+            <esri:MeasureToolbar MapView="{Binding ElementName=mapView}" />
+        </Grid>
+
+        <Grid VerticalAlignment="Top" HorizontalAlignment="Left" Height="30" Width="Auto" >
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Left">
+                <Button Content="SA100" Name="WTL_MANH_PS">
+                    <i:Interaction.Triggers>
+                        <i:EventTrigger EventName="Click">
+                            <i:InvokeCommandAction Command="{Binding btnCmd}" CommandParameter="{Binding ElementName=WTL_MANH_PS}" >
+                            </i:InvokeCommandAction>
+                        </i:EventTrigger>
+                    </i:Interaction.Triggers>
+                </Button>
+                <Button Content="SA117" Name="WTL_FLOW_PS">
+                    <i:Interaction.Triggers>
+                        <i:EventTrigger EventName="Click">
+                            <i:InvokeCommandAction Command="{Binding btnCmd}"  CommandParameter="{Binding ElementName=WTL_FLOW_PS}">
+                            </i:InvokeCommandAction>
+                        </i:EventTrigger>
+                    </i:Interaction.Triggers>
+                </Button>
+                <Button Content="SA119" Name="WTL_FIRE_PS">
+                    <i:Interaction.Triggers>
+                        <i:EventTrigger EventName="Click">
+                            <i:InvokeCommandAction Command="{Binding btnCmd}" CommandParameter="{Binding ElementName=WTL_FIRE_PS}" >
+                            </i:InvokeCommandAction>
+                        </i:EventTrigger>
+                    </i:Interaction.Triggers>
+                </Button>
+                <Button Content="SA121" Name="WTL_PRGA_PS">
+                    <i:Interaction.Triggers>
+                        <i:EventTrigger EventName="Click">
+                            <i:InvokeCommandAction Command="{Binding btnCmd}"  CommandParameter="{Binding ElementName=WTL_PRGA_PS}">
+                            </i:InvokeCommandAction>
+                        </i:EventTrigger>
+                    </i:Interaction.Triggers>
+                </Button>
+                <Button Content="SA122" Name="WTL_META_PS">
+                    <i:Interaction.Triggers>
+                        <i:EventTrigger EventName="Click">
+                            <i:InvokeCommandAction Command="{Binding btnCmd}"  CommandParameter="{Binding ElementName=WTL_META_PS}">
+                            </i:InvokeCommandAction>
+                        </i:EventTrigger>
+                    </i:Interaction.Triggers>
+                </Button>
+
+                <Button Content="SA113" Name="WTL_PURI_AS">
+                    <i:Interaction.Triggers>
+                        <i:EventTrigger EventName="Click">
+                            <i:InvokeCommandAction Command="{Binding btnCmd}" CommandParameter="{Binding ElementName=WTL_PURI_AS}" >
+                            </i:InvokeCommandAction>
+                        </i:EventTrigger>
+                    </i:Interaction.Triggers>
+                </Button>
+
+                <Button Content="SA001" Name="WTL_PIPE_LM">
+                    <i:Interaction.Triggers>
+                        <i:EventTrigger EventName="Click">
+                            <i:InvokeCommandAction Command="{Binding btnCmd}" CommandParameter="{Binding ElementName=WTL_PIPE_LM}" >
+                            </i:InvokeCommandAction>
+                        </i:EventTrigger>
+                    </i:Interaction.Triggers>
+                </Button>
+            </StackPanel>
+        </Grid>
+
+        <Grid VerticalAlignment="Bottom" Height="30" Width="500" >
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
+                <esri:ScaleLine MapView="{Binding ElementName=mapView}"/>
+            </StackPanel>
+        </Grid>
+    </Grid>
+
+
+    <i:Interaction.Triggers>
+        <i:EventTrigger EventName="Loaded">
+            <i:InvokeCommandAction Command="{Binding loadedCmd}" >
+                <i:InvokeCommandAction.CommandParameter>
+                    <Binding ElementName="mapView" />
+                </i:InvokeCommandAction.CommandParameter>
+            </i:InvokeCommandAction>
+        </i:EventTrigger>
+    </i:Interaction.Triggers>
+
+
+</UserControl>

@@ -127,12 +127,11 @@ namespace GTI.WFMS.Main
 
 
 
-                /* 임시화면로딩
-                    regionManager.Regions["ContentRegion"].RemoveAll();
-                    //regionManager.RequestNavigate("ContentRegion", new Uri("UcCRUDView", UriKind.Relative));
-                    //regionManager.RequestNavigate("ContentRegion", new Uri("UcUserMngView", UriKind.Relative));
-                    regionManager.RequestNavigate("ContentRegion", new Uri("UcCodeMngView", UriKind.Relative));
+                /* ArcGis 2D-MapView 로딩
                  */
+                //regionManager.Regions["ContentRegion"].RemoveAll();
+                regionManager.RequestNavigate("ContentRegion", new Uri("MapMainView", UriKind.Relative));
+                //regionManager.RequestNavigate("ContentRegion", new Uri("MainWindow", UriKind.Relative));
 
 
             }

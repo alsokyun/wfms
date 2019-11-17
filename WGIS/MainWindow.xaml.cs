@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Esri.ArcGISRuntime.UI;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -13,23 +14,18 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace pjt01.Adm.View
+namespace WGIS
 {
     /// <summary>
-    /// Page1.xaml에 대한 상호 작용 논리
+    /// Interaction logic for MainWindow.xaml
     /// </summary>
-    public partial class Page1 : Page
+    public partial class MainWindow : Window
     {
-        public Page1()
+        public MainWindow()
         {
             InitializeComponent();
         }
 
-        private void Button_Click(object sender, RoutedEventArgs e)
-        {
-            //NavigationService.Navigate(new Uri("/Page2.xaml", UriKind.Relative));
-            NavigationService.Navigate(new Page2());
-        }
-
+        // Map initialization logic is contained in MapViewModel.cs
     }
 }

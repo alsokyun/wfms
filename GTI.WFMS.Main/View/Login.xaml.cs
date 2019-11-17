@@ -336,6 +336,8 @@ namespace GTI.WFMS.Main.View
             {
                 Messages.ShowErrMsgBoxLog(ex);
             }
+
+            txtID.Focus();
         }
 
 
