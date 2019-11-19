@@ -4,7 +4,5 @@
              xmlns:local="clr-namespace:GTI.WFMS.GIS"
              Startup="Application_Startup"
              StartupUri="MainWindow.xaml">
-	<Application.Resources>
-         
-	</Application.Resources>
+
 </Application>

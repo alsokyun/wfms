@@ -89,6 +89,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Styles\GisStyles.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs">
@@ -137,6 +141,14 @@
       <Project>{a4514546-40cd-4b24-9835-91d18dd9469a}</Project>
       <Name>GTIFramework</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\image\btn_send.png" />
+    <Resource Include="Resources\image\btn_send_on.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\image\btn_popup_close.png" />
+    <Resource Include="Resources\image\btn_popup_close_on.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

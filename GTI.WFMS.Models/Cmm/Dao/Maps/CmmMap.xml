@@ -29,7 +29,21 @@
       </isNotEmpty>
 
       ) X
-      ORDER BY X.ORD ASC, X.DTL_CD 
+      ORDER BY X.ORD ASC, X.DTL_CD
+    </select>
+
+    <!--공통코드명-->
+    <select id ="Select_CODE_NAME" parameterClass="Hashtable" resultClass ="Hashtable">
+
+      SELECT A.MST_CD, A.NM MST_NM, B.DTL_CD, B.NM, B.ETC DTL_ETC, B.ORD
+      FROM INFOUSER.CD_MST_INFO A
+      ,INFOUSER.CD_DTL_INFO B
+      WHERE 1=1
+      AND B.MST_CD = A.MST_CD
+      AND A.USE_YN = 'Y'
+      AND B.USE_YN = 'Y'
+      AND A.MST_CD = #MST_CD#
+      AND B.DTL_CD = #DTL_CD#
     </select>
 
 
@@ -62,6 +76,20 @@
       SELECT 	HJD_CDE, HJD_NAM, HJD_EXP
       FROM 	INFOFMS.CMT_ADAR_MA
       ORDER BY HJD_CDE
+    </select>
+
+    <!--행정구역명-->
+    <select id ="Select_ADAR_NM" parameterClass="Hashtable" resultClass ="Hashtable">
+      SELECT 	HJD_CDE, HJD_NAM AS NAME, HJD_EXP
+      FROM 	INFOFMS.CMT_ADAR_MA
+      WHERE HJD_CDE = #CODE#
+      ORDER BY HJD_CDE
+    </select>
+
+    <!--시설물코드 명칭-->
+    <select id ="Select_FTR_NM" parameterClass="Hashtable" resultClass ="Hashtable">
+      SELECT FTR_CDE, FTR_NAM AS NAME FROM V_FTR_CDE
+      WHERE FTR_CDE = #CODE#
     </select>
 
   </statements>

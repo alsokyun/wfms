@@ -150,6 +150,32 @@ namespace GTI.WFMS.Models.Common
 
 
         /// <summary>
+        /// 공통코드명
+        /// </summary>
+        /// <param name="MST_CD"></param>
+        /// <param name="DTL_CD "></param>
+        public static string GetCdNm(string MST_CD, string DTL_CD )
+        {
+            Hashtable conditions = new Hashtable();
+            DataTable dt = new DataTable(MST_CD);
+
+            
+            conditions.Add("sqlId", "Select_CODE_NAME");
+            conditions.Add("MST_CD", MST_CD);
+            conditions.Add("DTL_CD", DTL_CD);
+            dt = dao.SelectLIST(conditions);
+
+            string nm = "";
+            try
+            {
+                nm = dt.Rows[0]["NM"].ToString();
+            }
+            catch (Exception){}
+            return nm;
+        }
+
+
+        /// <summary>
         /// 일반콤보 데이터바이딩
         /// </summary>
         /// <param name="cmb"></param>
@@ -186,6 +212,32 @@ namespace GTI.WFMS.Models.Common
         {
             SetCombo(cmb, sqlId, ValueMember, DisplayMember, false);
         }
+
+
+        /// <summary>
+        /// 일반코드명
+        /// </summary>
+        /// <param name="sqlId"></param>
+        /// <param name="DTL_CD "></param>
+        public static string GetCodeNm(string sqlId, string CODE)
+        {
+            Hashtable conditions = new Hashtable();
+            DataTable dt = new DataTable();
+
+
+            conditions.Add("sqlId", sqlId);
+            conditions.Add("CODE", CODE);
+            dt = dao.SelectLIST(conditions);
+
+            string nm = "";
+            try
+            {
+                nm = dt.Rows[0]["NAME"].ToString();
+            }
+            catch (Exception) { }
+            return nm;
+        }
+
 
         #endregion
 

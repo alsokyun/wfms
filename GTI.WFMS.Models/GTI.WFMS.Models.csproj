@@ -102,6 +102,7 @@
     <Compile Include="Adm\Work\AdmWork.cs" />
     <Compile Include="Cmm\Dao\CommonDao.cs" />
     <Compile Include="Cmm\Dao\CmmDao.cs" />
+    <Compile Include="Cmm\Model\FctDtl.cs" />
     <Compile Include="Cmm\Work\CmmWork.cs" />
     <Compile Include="Common\BizUtil.cs" />
     <Compile Include="Common\FmsUtil.cs" />

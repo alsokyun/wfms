@@ -9,13 +9,42 @@
              
             xmlns:esri="http://schemas.esri.com/arcgis/runtime/2013"
             xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
+            xmlns:cm="clr-namespace:GTIFramework.Common.Utils.Converters;assembly=GTIFramework"
 
              >
 
     <UserControl.DataContext>
         <local:MapMainViewModel/>
     </UserControl.DataContext>
-    <Grid>
+
+
+
+    <UserControl.Resources>
+        <ResourceDictionary>
+            
+            <cm:Str2ImgConverter x:Key="imgConverter" />
+        
+            <!--트리내부 아이템 템플릿 -->
+            <ControlTemplate x:Key="dockTemplate" TargetType="Button">
+                <DockPanel>
+                    <CheckBox Name="chkLayer"/>
+                    <Image Source="{TemplateBinding ToolTip, Converter={StaticResource imgConverter}}"/>
+                    <TextBlock Margin="5" Foreground="Brown" FontSize="12" Text="{TemplateBinding Content}" />
+                </DockPanel>
+            </ControlTemplate>
+            
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="Styles/GisStyles.xaml" />
+            </ResourceDictionary.MergedDictionaries>
+            
+        </ResourceDictionary>
+
+
+
+    </UserControl.Resources>
+
+
+    <Grid x:Name="divGrid">
         <esri:MapView Map="{Binding Map}" x:Name="mapView"/>
         
         <esri:Compass Margin="30" AutoHide="False" DataContext="{Binding Map}"/>
@@ -24,74 +53,298 @@
             <esri:MeasureToolbar MapView="{Binding ElementName=mapView}" />
         </Grid>
 
-        <Grid VerticalAlignment="Top" HorizontalAlignment="Left" Height="30" Width="Auto" >
-            <StackPanel Orientation="Horizontal" HorizontalAlignment="Left">
-                <Button Content="SA100" Name="WTL_MANH_PS">
-                    <i:Interaction.Triggers>
-                        <i:EventTrigger EventName="Click">
-                            <i:InvokeCommandAction Command="{Binding btnCmd}" CommandParameter="{Binding ElementName=WTL_MANH_PS}" >
-                            </i:InvokeCommandAction>
-                        </i:EventTrigger>
-                    </i:Interaction.Triggers>
-                </Button>
-                <Button Content="SA117" Name="WTL_FLOW_PS">
-                    <i:Interaction.Triggers>
-                        <i:EventTrigger EventName="Click">
-                            <i:InvokeCommandAction Command="{Binding btnCmd}"  CommandParameter="{Binding ElementName=WTL_FLOW_PS}">
-                            </i:InvokeCommandAction>
-                        </i:EventTrigger>
-                    </i:Interaction.Triggers>
-                </Button>
-                <Button Content="SA119" Name="WTL_FIRE_PS">
-                    <i:Interaction.Triggers>
-                        <i:EventTrigger EventName="Click">
-                            <i:InvokeCommandAction Command="{Binding btnCmd}" CommandParameter="{Binding ElementName=WTL_FIRE_PS}" >
-                            </i:InvokeCommandAction>
-                        </i:EventTrigger>
-                    </i:Interaction.Triggers>
-                </Button>
-                <Button Content="SA121" Name="WTL_PRGA_PS">
-                    <i:Interaction.Triggers>
-                        <i:EventTrigger EventName="Click">
-                            <i:InvokeCommandAction Command="{Binding btnCmd}"  CommandParameter="{Binding ElementName=WTL_PRGA_PS}">
-                            </i:InvokeCommandAction>
-                        </i:EventTrigger>
-                    </i:Interaction.Triggers>
-                </Button>
-                <Button Content="SA122" Name="WTL_META_PS">
-                    <i:Interaction.Triggers>
-                        <i:EventTrigger EventName="Click">
-                            <i:InvokeCommandAction Command="{Binding btnCmd}"  CommandParameter="{Binding ElementName=WTL_META_PS}">
-                            </i:InvokeCommandAction>
-                        </i:EventTrigger>
-                    </i:Interaction.Triggers>
-                </Button>
+        
+        
+        <!--시설물레이어div-->
+        <Popup x:Name="divLayer"  Width="170" Height="Auto" HorizontalAlignment="Right" IsOpen="True" 
+               PlacementTarget="{Binding ElementName=divGrid}" Placement="Right" HorizontalOffset="-170" VerticalOffset="30" >
+            
+            <StackPanel>
+                <DockPanel Background="SkyBlue" x:Name="docDiv" Height="30" >
+                    <TextBlock Foreground="Blue" >시설물레이어</TextBlock>
+                    <Button>
+                        <Button.Template>
+                            <ControlTemplate>
+                                <Image Source="file:///D:/DEVGTI/style_img/icon_layer_close.png" Height="20" Width="20" HorizontalAlignment="Right"/>
+                            </ControlTemplate>
+                        </Button.Template>
+                        <i:Interaction.Triggers>
+                            <i:EventTrigger EventName="Click">
+                                <i:InvokeCommandAction Command="{Binding toggleCmd}"  CommandParameter="{Binding ElementName=divLayer}" >
+                                </i:InvokeCommandAction>
+                            </i:EventTrigger>
+                        </i:Interaction.Triggers>
+                    </Button>
+                </DockPanel>
 
-                <Button Content="SA113" Name="WTL_PURI_AS">
-                    <i:Interaction.Triggers>
-                        <i:EventTrigger EventName="Click">
-                            <i:InvokeCommandAction Command="{Binding btnCmd}" CommandParameter="{Binding ElementName=WTL_PURI_AS}" >
-                            </i:InvokeCommandAction>
-                        </i:EventTrigger>
-                    </i:Interaction.Triggers>
-                </Button>
 
-                <Button Content="SA001" Name="WTL_PIPE_LM">
-                    <i:Interaction.Triggers>
-                        <i:EventTrigger EventName="Click">
-                            <i:InvokeCommandAction Command="{Binding btnCmd}" CommandParameter="{Binding ElementName=WTL_PIPE_LM}" >
-                            </i:InvokeCommandAction>
-                        </i:EventTrigger>
-                    </i:Interaction.Triggers>
-                </Button>
+                <StackPanel x:Name="spLayer">
+                    <Border Width="120" Height="2" BorderBrush="Green" Background="Green" HorizontalAlignment="Center" ></Border>
+                    
+                    <TreeView>
+                        <Button  Tag="WTL_STPI_PS"  Content="스탠드파이프" ToolTip="file:///D:/DEVGTI/style_img/SA003.gif" Template="{StaticResource ResourceKey=dockTemplate}">
+                            <i:Interaction.Triggers>
+                                <i:EventTrigger EventName="Click">
+                                    <i:InvokeCommandAction Command="{Binding chkCmd}"  CommandParameter="{Binding RelativeSource={RelativeSource AncestorType={x:Type Button}}}" >
+                                    </i:InvokeCommandAction>
+                                </i:EventTrigger>
+                            </i:Interaction.Triggers>
+                        </Button>
+                        <Button  Tag="WTL_MANH_PS"  Content="상수맨홀" ToolTip="file:///D:/DEVGTI/style_img/SA100.gif" Template="{StaticResource ResourceKey=dockTemplate}">
+                            <i:Interaction.Triggers>
+                                <i:EventTrigger EventName="Click">
+                                    <i:InvokeCommandAction Command="{Binding chkCmd}"  CommandParameter="{Binding RelativeSource={RelativeSource AncestorType={x:Type Button}}}" >
+                                    </i:InvokeCommandAction>
+                                </i:EventTrigger>
+                            </i:Interaction.Triggers>
+                        </Button>
+                        <Button  Tag="WTL_HEAD_PS"  Content="수원지" ToolTip="file:///D:/DEVGTI/style_img/SA110.gif" Template="{StaticResource ResourceKey=dockTemplate}">
+                            <i:Interaction.Triggers>
+                                <i:EventTrigger EventName="Click">
+                                    <i:InvokeCommandAction Command="{Binding chkCmd}"  CommandParameter="{Binding RelativeSource={RelativeSource AncestorType={x:Type Button}}}" >
+                                    </i:InvokeCommandAction>
+                                </i:EventTrigger>
+                            </i:Interaction.Triggers>
+                        </Button>
+                        <Button  Tag="WTL_GAIN_PS"  Content="취수장" ToolTip="file:///D:/DEVGTI/style_img/SA112.gif" Template="{StaticResource ResourceKey=dockTemplate}">
+                            <i:Interaction.Triggers>
+                                <i:EventTrigger EventName="Click">
+                                    <i:InvokeCommandAction Command="{Binding chkCmd}"  CommandParameter="{Binding RelativeSource={RelativeSource AncestorType={x:Type Button}}}" >
+                                    </i:InvokeCommandAction>
+                                </i:EventTrigger>
+                            </i:Interaction.Triggers>
+                        </Button>
+                        <Button  Tag="WTL_SERV_PS"  Content="배수지" ToolTip="file:///D:/DEVGTI/style_img/SA114.gif" Template="{StaticResource ResourceKey=dockTemplate}">
+                            <i:Interaction.Triggers>
+                                <i:EventTrigger EventName="Click">
+                                    <i:InvokeCommandAction Command="{Binding chkCmd}"  CommandParameter="{Binding RelativeSource={RelativeSource AncestorType={x:Type Button}}}" >
+                                    </i:InvokeCommandAction>
+                                </i:EventTrigger>
+                            </i:Interaction.Triggers>
+                        </Button>
+                        <Button  Tag="WTL_FLOW_PS" Content="유량계" ToolTip="file:///D:/DEVGTI/style_img/SA117.gif" Template="{StaticResource ResourceKey=dockTemplate}">
+                            <i:Interaction.Triggers>
+                                <i:EventTrigger EventName="Click">
+                                    <i:InvokeCommandAction Command="{Binding chkCmd}"  CommandParameter="{Binding RelativeSource={RelativeSource AncestorType={x:Type Button}}}" >
+                                    </i:InvokeCommandAction>
+                                </i:EventTrigger>
+                            </i:Interaction.Triggers>
+                        </Button>
+                        <TreeViewItem Header="소방시설" IsExpanded="True">
+                            <TreeViewItem.Items>
+                                <Button  Tag="WTL_FIRE_PS,FTR_CDE='SA118'" Content="급수탑" ToolTip="file:///D:/DEVGTI/style_img/SA118.gif" Template="{StaticResource ResourceKey=dockTemplate}">
+                                    <i:Interaction.Triggers>
+                                        <i:EventTrigger EventName="Click">
+                                            <i:InvokeCommandAction Command="{Binding chkCmd}"  CommandParameter="{Binding RelativeSource={RelativeSource AncestorType={x:Type Button}}}" >
+                                            </i:InvokeCommandAction>
+                                        </i:EventTrigger>
+                                    </i:Interaction.Triggers>
+                                </Button>
+
+                                <Button  Tag="WTL_FIRE_PS,FTR_CDE='SA119'" Content="소화전" ToolTip="file:///D:/DEVGTI/style_img/SA119.gif" Template="{StaticResource ResourceKey=dockTemplate}">
+                                    <i:Interaction.Triggers>
+                                        <i:EventTrigger EventName="Click">
+                                            <i:InvokeCommandAction Command="{Binding chkCmd}"  CommandParameter="{Binding RelativeSource={RelativeSource AncestorType={x:Type Button}}}" >
+                                            </i:InvokeCommandAction>
+                                        </i:EventTrigger>
+                                    </i:Interaction.Triggers>
+                                </Button>
+                            </TreeViewItem.Items>
+                        </TreeViewItem>
+                        <TreeViewItem Header="변류시설" IsExpanded="True">
+                            <TreeViewItem.Items>
+                                <Button  Tag="WTL_VALV_PS,FTR_CDE='SA200'" Content="제수변" ToolTip="file:///D:/DEVGTI/style_img/SA200.gif" Template="{StaticResource ResourceKey=dockTemplate}">
+                                    <i:Interaction.Triggers>
+                                        <i:EventTrigger EventName="Click">
+                                            <i:InvokeCommandAction Command="{Binding chkCmd}"  CommandParameter="{Binding RelativeSource={RelativeSource AncestorType={x:Type Button}}}" >
+                                            </i:InvokeCommandAction>
+                                        </i:EventTrigger>
+                                    </i:Interaction.Triggers>
+                                </Button>
+                                <Button  Tag="WTL_VALV_PS,FTR_CDE='SA201'" Content="역지변" ToolTip="file:///D:/DEVGTI/style_img/SA201.gif" Template="{StaticResource ResourceKey=dockTemplate}">
+                                    <i:Interaction.Triggers>
+                                        <i:EventTrigger EventName="Click">
+                                            <i:InvokeCommandAction Command="{Binding chkCmd}"  CommandParameter="{Binding RelativeSource={RelativeSource AncestorType={x:Type Button}}}" >
+                                            </i:InvokeCommandAction>
+                                        </i:EventTrigger>
+                                    </i:Interaction.Triggers>
+                                </Button>
+                                <Button  Tag="WTL_VALV_PS,FTR_CDE='SA202'" Content="이토변" ToolTip="file:///D:/DEVGTI/style_img/SA202.gif" Template="{StaticResource ResourceKey=dockTemplate}">
+                                    <i:Interaction.Triggers>
+                                        <i:EventTrigger EventName="Click">
+                                            <i:InvokeCommandAction Command="{Binding chkCmd}"  CommandParameter="{Binding RelativeSource={RelativeSource AncestorType={x:Type Button}}}" >
+                                            </i:InvokeCommandAction>
+                                        </i:EventTrigger>
+                                    </i:Interaction.Triggers>
+                                </Button>
+                                <Button  Tag="WTL_VALV_PS,FTR_CDE='SA203'" Content="배기변" ToolTip="file:///D:/DEVGTI/style_img/SA203.gif" Template="{StaticResource ResourceKey=dockTemplate}">
+                                    <i:Interaction.Triggers>
+                                        <i:EventTrigger EventName="Click">
+                                            <i:InvokeCommandAction Command="{Binding chkCmd}"  CommandParameter="{Binding RelativeSource={RelativeSource AncestorType={x:Type Button}}}" >
+                                            </i:InvokeCommandAction>
+                                        </i:EventTrigger>
+                                    </i:Interaction.Triggers>
+                                </Button>
+                                <Button  Tag="WTL_VALV_PS,FTR_CDE='SA204'" Content="감압변" ToolTip="file:///D:/DEVGTI/style_img/SA204.gif" Template="{StaticResource ResourceKey=dockTemplate}">
+                                    <i:Interaction.Triggers>
+                                        <i:EventTrigger EventName="Click">
+                                            <i:InvokeCommandAction Command="{Binding chkCmd}"  CommandParameter="{Binding RelativeSource={RelativeSource AncestorType={x:Type Button}}}" >
+                                            </i:InvokeCommandAction>
+                                        </i:EventTrigger>
+                                    </i:Interaction.Triggers>
+                                </Button>
+                                <Button  Tag="WTL_VALV_PS,FTR_CDE='SA205'" Content="안전변" ToolTip="file:///D:/DEVGTI/style_img/SA205.gif" Template="{StaticResource ResourceKey=dockTemplate}">
+                                    <i:Interaction.Triggers>
+                                        <i:EventTrigger EventName="Click">
+                                            <i:InvokeCommandAction Command="{Binding chkCmd}"  CommandParameter="{Binding RelativeSource={RelativeSource AncestorType={x:Type Button}}}" >
+                                            </i:InvokeCommandAction>
+                                        </i:EventTrigger>
+                                    </i:Interaction.Triggers>
+                                </Button>
+                                <Button  Tag="WTL_VALV_PS,FTR_CDE='SA206'" Content="소화전" ToolTip="file:///D:/DEVGTI/style_img/SA206.gif" Template="{StaticResource ResourceKey=dockTemplate}">
+                                    <i:Interaction.Triggers>
+                                        <i:EventTrigger EventName="Click">
+                                            <i:InvokeCommandAction Command="{Binding chkCmd}"  CommandParameter="{Binding RelativeSource={RelativeSource AncestorType={x:Type Button}}}" >
+                                            </i:InvokeCommandAction>
+                                        </i:EventTrigger>
+                                    </i:Interaction.Triggers>
+                                </Button>
+                            </TreeViewItem.Items>
+                        </TreeViewItem>
+
+                        <Button  Tag="WTL_RSRV_PS" Content="저수조" ToolTip="file:///D:/DEVGTI/style_img/SA120.gif" Template="{StaticResource ResourceKey=dockTemplate}">
+                            <i:Interaction.Triggers>
+                                <i:EventTrigger EventName="Click">
+                                    <i:InvokeCommandAction Command="{Binding chkCmd}"  CommandParameter="{Binding RelativeSource={RelativeSource AncestorType={x:Type Button}}}" >
+                                    </i:InvokeCommandAction>
+                                </i:EventTrigger>
+                            </i:Interaction.Triggers>
+                        </Button>
+                        <Button  Tag="WTL_PRGA_PS" Content="수압계" ToolTip="file:///D:/DEVGTI/style_img/SA121.gif" Template="{StaticResource ResourceKey=dockTemplate}">
+                            <i:Interaction.Triggers>
+                                <i:EventTrigger EventName="Click">
+                                    <i:InvokeCommandAction Command="{Binding chkCmd}"  CommandParameter="{Binding RelativeSource={RelativeSource AncestorType={x:Type Button}}}" >
+                                    </i:InvokeCommandAction>
+                                </i:EventTrigger>
+                            </i:Interaction.Triggers>
+                        </Button>
+                        <Button  Tag="WTL_META_PS" Content="계량기" ToolTip="file:///D:/DEVGTI/style_img/SA122.gif" Template="{StaticResource ResourceKey=dockTemplate}">
+                            <i:Interaction.Triggers>
+                                <i:EventTrigger EventName="Click">
+                                    <i:InvokeCommandAction Command="{Binding chkCmd}"  CommandParameter="{Binding RelativeSource={RelativeSource AncestorType={x:Type Button}}}" >
+                                    </i:InvokeCommandAction>
+                                </i:EventTrigger>
+                            </i:Interaction.Triggers>
+                        </Button>
+                        <Button  Tag="WTL_LEAK_PS" Content="누수지점" ToolTip="file:///D:/DEVGTI/style_img/SA300.gif" Template="{StaticResource ResourceKey=dockTemplate}">
+                            <i:Interaction.Triggers>
+                                <i:EventTrigger EventName="Click">
+                                    <i:InvokeCommandAction Command="{Binding chkCmd}"  CommandParameter="{Binding RelativeSource={RelativeSource AncestorType={x:Type Button}}}" >
+                                    </i:InvokeCommandAction>
+                                </i:EventTrigger>
+                            </i:Interaction.Triggers>
+                        </Button>
+                        <Button  Tag="WTL_PIPE_LM" Content="상수관로" ToolTip="file:///D:/DEVGTI/style_img/SA001.gif" Template="{StaticResource ResourceKey=dockTemplate}">
+                            <i:Interaction.Triggers>
+                                <i:EventTrigger EventName="Click">
+                                    <i:InvokeCommandAction Command="{Binding chkCmd}"  CommandParameter="{Binding RelativeSource={RelativeSource AncestorType={x:Type Button}}}" >
+                                    </i:InvokeCommandAction>
+                                </i:EventTrigger>
+                            </i:Interaction.Triggers>
+                        </Button>
+                        <Button  Tag="WTL_SPLY_LS" Content="급수관로" ToolTip="file:///D:/DEVGTI/style_img/SA002.gif" Template="{StaticResource ResourceKey=dockTemplate}">
+                            <i:Interaction.Triggers>
+                                <i:EventTrigger EventName="Click">
+                                    <i:InvokeCommandAction Command="{Binding chkCmd}"  CommandParameter="{Binding RelativeSource={RelativeSource AncestorType={x:Type Button}}}" >
+                                    </i:InvokeCommandAction>
+                                </i:EventTrigger>
+                            </i:Interaction.Triggers>
+                        </Button>
+                        <Button  Tag="WTL_PURI_AS" Content="정수장" ToolTip="file:///D:/DEVGTI/style_img/SA113.gif" Template="{StaticResource ResourceKey=dockTemplate}">
+                            <i:Interaction.Triggers>
+                                <i:EventTrigger EventName="Click">
+                                    <i:InvokeCommandAction Command="{Binding chkCmd}"  CommandParameter="{Binding RelativeSource={RelativeSource AncestorType={x:Type Button}}}" >
+                                    </i:InvokeCommandAction>
+                                </i:EventTrigger>
+                            </i:Interaction.Triggers>
+                        </Button>
+
+
+                    </TreeView>
+
+                </StackPanel>
+
             </StackPanel>
-        </Grid>
 
-        <Grid VerticalAlignment="Bottom" Height="30" Width="500" >
-            <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
-                <esri:ScaleLine MapView="{Binding ElementName=mapView}"/>
+        </Popup>
+
+
+        <!--시설물상세div-->
+        <Popup x:Name="divLayerInfo"  Width="250" Height="Auto" HorizontalAlignment="Right" IsOpen="False" 
+               PlacementTarget="{Binding ElementName=divGrid}" Placement="Left" HorizontalOffset="250" VerticalOffset="30" >
+            <StackPanel Background="White">
+                <Grid >
+                    <Label Background="#144873" Foreground="White" Margin="5">시설물정보</Label>
+                    <Button x:Name="btnClose" Content="닫기" HorizontalAlignment="Right" Margin="5">
+                        <i:Interaction.Triggers>
+                            <i:EventTrigger EventName="Click">
+                                <i:InvokeCommandAction Command="{Binding closeCmd}"  CommandParameter="{Binding ElementName=divLayerInfo}" >
+                                </i:InvokeCommandAction>
+                            </i:EventTrigger>
+                        </i:Interaction.Triggers>
+                    </Button>
+
+                </Grid>
+
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="100"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="30" />
+                        <RowDefinition Height="30" />
+                        <RowDefinition Height="30" />
+                        <RowDefinition Height="30" />
+                        <RowDefinition Height="30" />
+                        <RowDefinition Height="30" />
+                    </Grid.RowDefinitions>
+
+                    <Border Grid.Row="0" Grid.Column="0"  Style="{StaticResource ResourceKey=DtlHeaderBorder}" />
+                    <Label Grid.Row="0" Grid.Column="0" Content="시설물종류" Style="{StaticResource ResourceKey=GridLabel}"/>
+                    <TextBox Grid.Row="0" Grid.Column="1" Text="{Binding FctDtl.FTR_NAM}" Style="{StaticResource ResourceKey=GridTextBox}" />
+
+                    <Border Grid.Row="1" Grid.Column="0"  Style="{StaticResource ResourceKey=DtlHeaderBorder}" />
+                    <Label Grid.Row="1" Grid.Column="0" Content="관리번호" Style="{StaticResource ResourceKey=GridLabel}"/>
+                    <TextBox Grid.Row="1" Grid.Column="1" Text="{Binding FctDtl.FTR_IDN}" Style="{StaticResource ResourceKey=GridTextBox}" />
+
+                    <Border Grid.Row="2" Grid.Column="0"  Style="{StaticResource ResourceKey=DtlHeaderBorder}" />
+                    <Label Grid.Row="2" Grid.Column="0" Content="관리기관" Style="{StaticResource ResourceKey=GridLabel}"/>
+                    <TextBox Grid.Row="2" Grid.Column="1" Text="{Binding FctDtl.MNG_NAM}" Style="{StaticResource ResourceKey=GridTextBox}" />
+
+                    <Border Grid.Row="3" Grid.Column="0"  Style="{StaticResource ResourceKey=DtlHeaderBorder}" />
+                    <Label Grid.Row="3" Grid.Column="0" Content="행정기관" Style="{StaticResource ResourceKey=GridLabel}"/>
+                    <TextBox Grid.Row="3" Grid.Column="1" Text="{Binding FctDtl.HJD_NAM}" Style="{StaticResource ResourceKey=GridTextBox}" />
+
+                    <Border Grid.Row="4" Grid.Column="0"  Style="{StaticResource ResourceKey=DtlHeaderBorder}" />
+                    <Label Grid.Row="4" Grid.Column="0" Content="설치일자" Style="{StaticResource ResourceKey=GridLabel}"/>
+                    <TextBox Grid.Row="4" Grid.Column="1" Text="{Binding FctDtl.IST_YMD}" Style="{StaticResource ResourceKey=GridTextBox}" />
+
+                    <Border Grid.Row="5" Grid.Column="0"  Style="{StaticResource ResourceKey=DtlHeaderBorder}" />
+                    <Label Grid.Row="5" Grid.Column="0" Content="시설물형식" Style="{StaticResource ResourceKey=GridLabel}"/>
+                    <TextBox Grid.Row="5" Grid.Column="1" Text="{Binding FctDtl.MOF_NAM}" Style="{StaticResource ResourceKey=GridTextBox}" />
+
+                </Grid>
+
+                <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Margin="10">
+                    <Button>시설물대장</Button>
+
+                </StackPanel>
+                
             </StackPanel>
-        </Grid>
+        </Popup>
+        
+        
     </Grid>
 
 
@@ -99,7 +352,7 @@
         <i:EventTrigger EventName="Loaded">
             <i:InvokeCommandAction Command="{Binding loadedCmd}" >
                 <i:InvokeCommandAction.CommandParameter>
-                    <Binding ElementName="mapView" />
+                    <Binding ElementName="divGrid" />
                 </i:InvokeCommandAction.CommandParameter>
             </i:InvokeCommandAction>
         </i:EventTrigger>

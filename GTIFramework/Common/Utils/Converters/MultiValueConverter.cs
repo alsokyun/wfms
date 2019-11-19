@@ -1,11 +1,9 @@
 ﻿using System;
-using System.Collections.Generic;
+using System.Drawing;
 using System.Globalization;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Data;
+using System.Windows.Media.Imaging;
 
 namespace GTIFramework.Common.Utils.Converters
 {
@@ -198,6 +196,24 @@ namespace GTIFramework.Common.Utils.Converters
             return value;
         }
     }
+
+    /// <summary>
+    /// String2ImgConverter 컨버터 - alsokyun
+    /// </summary>
+    public class Str2ImgConverter : IValueConverter
+    {
+        public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
+        {
+            string filepath = value as string;
+            return new Uri(filepath, UriKind.Absolute);
+        }
+
+        public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
+        {
+            return value;
+        }
+    }
+
 
 
 }
