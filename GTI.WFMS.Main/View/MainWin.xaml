@@ -93,8 +93,8 @@
         </Grid>
 
         <!--탑메뉴버튼 영역-->
-        <Border Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="3" Background="#cccccc" BorderThickness="0,0,0,3" BorderBrush="#125F97">
-
+        <Border Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="3" x:Name="borderTop"
+                Background="#cccccc" BorderThickness="0,0,0,3" BorderBrush="#125F97">
             <Border.Effect>
                 <DropShadowEffect Direction="-90" ShadowDepth="3" Opacity="0.3"/>
             </Border.Effect>

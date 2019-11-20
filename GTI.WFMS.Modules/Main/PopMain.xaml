@@ -1,0 +1,43 @@
+﻿<Popup x:Class="GTI.WFMS.Modules.Main.PopMain"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:GTI.WFMS.Modules.Main"
+             mc:Ignorable="d" 
+             d:DesignHeight="100" d:DesignWidth="100"
+        Height="600" Width="1000"
+       >
+
+    <Grid x:Name="gridContent" Background="White">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="2"/>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="2"/>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="2"/>
+            <RowDefinition Height="45"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="2"/>
+        </Grid.RowDefinitions>
+
+        <!--헤더 백그라운드 border-->
+        <Border Grid.Row="1" Grid.Column="1" x:Name="bdTitle" Background="#144873"/>
+
+        <!--폼 아웃라인 border-->
+        <Border Grid.Column="0" Grid.RowSpan="4" Background="#144873"/>
+        <Border Grid.Column="2" Grid.RowSpan="4" Background="#144873"/>
+        <Border Grid.Row="3" Grid.ColumnSpan="3" Background="#144873"/>
+
+        <Label Grid.Row="1" Grid.Column="1" Content="화면타이틀" FontSize="18" FontWeight="Bold" Foreground="White" 
+               HorizontalAlignment="Left" VerticalAlignment="Center" Padding="10 0 0 0"
+               x:Name="lbTitle"
+               />
+        <Button x:Name="btnXSignClose" Grid.Row="1" Grid.Column="1" Style="{StaticResource XSignCloseButton}" 
+                Margin="0 15 15 0"/>
+
+        <Frame Grid.Row="2" Grid.Column="1" NavigationUIVisibility="Hidden" x:Name="srcFrm"></Frame>
+    </Grid>
+
+</Popup>

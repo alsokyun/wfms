@@ -14,6 +14,7 @@ using System.Collections.Generic;
 using System.Windows.Controls.Primitives;
 using System.Windows;
 using GTI.WFMS.Models.Cmm.Model;
+using GTI.WFMS.GIS.Module;
 
 namespace GTI.WFMS.GIS
 {
@@ -36,7 +37,10 @@ namespace GTI.WFMS.GIS
                 Grid divGrid = obj as Grid;
 
                 this.mapView = divGrid.FindName("mapView") as MapView;
-                this.divLayerInfo = divGrid.FindName("divLayerInfo") as Popup;
+                this.divLayer = divGrid.FindName("divLayer") as Popup;
+                
+                //시설물레이어DIV 초기화작업
+                InitDivLayer();
 
                 //지도초기화
                 InitMap();
@@ -57,19 +61,18 @@ namespace GTI.WFMS.GIS
 
             //팝업레이어 토글처리
             toggleCmd = new RelayCommand<object>(delegate (object obj) {
-                Popup divLayer = obj as Popup;
                 StackPanel spLayer = divLayer.FindName("spLayer") as StackPanel;
-                DockPanel docDiv = divLayer.FindName("docDiv") as DockPanel;
+                Grid gridTitle = divLayer.FindName("gridTitle") as Grid;
                 
                 spLayer.Visibility = spLayer.Visibility == Visibility.Visible ? Visibility.Collapsed : Visibility.Visible;
 
                 if(spLayer.Visibility == Visibility.Collapsed)
                 {
-                    divLayer.Height = docDiv.Height;
+                    divLayer.Height = gridTitle.Height;
                 }
                 else
                 {
-                    divLayer.Height = docDiv.Height + spLayer.Height;
+                    divLayer.Height = gridTitle.Height + spLayer.Height;
                 }
             });
 
@@ -87,6 +90,33 @@ namespace GTI.WFMS.GIS
 
             // 울산행정구역 표시
             ShowShapeLayer(_map, "BML_GADM_AS", true);
+        }
+
+
+
+        //시설물레이어DIV 초기화작업
+        private void InitDivLayer()
+        {
+            var thumb = new Thumb
+            {
+                Width = 0,
+                Height = 0,
+            };
+            
+            StackPanel stContent = this.divLayer.FindName("stContent") as StackPanel;
+            stContent.Children.Add(thumb);
+
+            this.divLayer.MouseDown += (sender, e) =>
+            {
+                thumb.RaiseEvent(e);
+            };
+
+            thumb.DragDelta += (sender, e) =>
+            {
+                this.divLayer.HorizontalOffset += e.HorizontalChange;
+                this.divLayer.VerticalOffset += e.VerticalChange;
+            };
+
         }
 
 
@@ -145,8 +175,8 @@ namespace GTI.WFMS.GIS
         private double _ulsanScale = 150000;
 
         private FctDtl fctDtl = new FctDtl(); //시설물기본정보
-        private Popup divLayerInfo = new Popup(); //시설물기본정보팝업
-
+        private Popup divLayer = new Popup(); //시설물레이어DIV
+        private PopFct popFct = new PopFct(); //시설물정보DIV
         #endregion
 
 
@@ -211,13 +241,36 @@ namespace GTI.WFMS.GIS
 
 
 
+
+
+
+
+
+
         //맵뷰 클릭이벤트 핸들러
         public async void handlerGeoViewTapped(object sender, GeoViewInputEventArgs e)
         {
-            //팝업열기 & 위치
-            divLayerInfo.PlacementRectangle = new Rect(e.Position.X, e.Position.Y, 250, 300);
-            divLayerInfo.IsOpen = true; 
+            // PopFct 객체가 생성체크 관련 - 검증안됨
+            /*
+            if (App.Current.Windows.Count > 1)
+            {
+                // do your code here, when you have more than one window open state this code will execute
+            }
 
+            if (FmsUtil.IsWindowOpen<Popup>())
+            {
+                PopFct pop = new PopFct();
+                (Activator.GetObject((new PopFct()).GetType(), null) as PopFct).IsOpen = false;
+            }
+             */
+
+
+
+
+            /*
+            divLayerInfo.PlacementRectangle = new Rect(e.Position.X, e.Position.Y, 250, 300);
+            divLayerInfo.IsOpen = true;
+             */
 
             // Perform the identify operation.
             IdentifyLayerResult IR_WTL_MANH_PS = await mapView.IdentifyLayerAsync(layers["WTL_MANH_PS"], e.Position, 20, false);
@@ -306,7 +359,16 @@ namespace GTI.WFMS.GIS
             }
 
 
-            
+
+            //팝업열기 & 위치
+            popFct.IsOpen = false;
+
+            popFct = new PopFct();
+            popFct.PlacementRectangle = new Rect(e.Position.X + 300, e.Position.Y - 200, 250, 300);
+            popFct.IsOpen = true;
+            popFct.DataContext = this;
+
+
 
             //선택된 레이어에서 속성정보 가져오기
             //& 레이어정보 세팅

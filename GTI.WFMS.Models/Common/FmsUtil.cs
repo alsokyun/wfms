@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
+using System.Windows.Controls.Primitives;
 
 namespace GTI.WFMS.Models.Common
 {
@@ -85,8 +87,18 @@ namespace GTI.WFMS.Models.Common
 
 
 
-
-
+        /// <summary>
+        /// 해당 Popup 클래스의 인스턴스 체크
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="name"></param>
+        /// <returns></returns>
+        public static bool IsWindowOpen<T>(string name = "") where T : Popup
+        {
+            return string.IsNullOrEmpty(name)
+               ? Application.Current.Windows.OfType<T>().Any()
+               : Application.Current.Windows.OfType<T>().Any(w => w.Name.Equals(name));
+        }
 
 
 

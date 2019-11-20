@@ -13,6 +13,7 @@
 
              >
 
+    <!--뷰의 데이터컨텍스트 세팅-->
     <UserControl.DataContext>
         <local:MapMainViewModel/>
     </UserControl.DataContext>
@@ -27,16 +28,16 @@
             <!--트리내부 아이템 템플릿 -->
             <ControlTemplate x:Key="dockTemplate" TargetType="Button">
                 <DockPanel>
-                    <CheckBox Name="chkLayer"/>
+                    <CheckBox Name="chkLayer" Tag="{TemplateBinding ToolTip}"/>
                     <Image Source="{TemplateBinding ToolTip, Converter={StaticResource imgConverter}}"/>
                     <TextBlock Margin="5" Foreground="Brown" FontSize="12" Text="{TemplateBinding Content}" />
                 </DockPanel>
             </ControlTemplate>
-            
+
             <ResourceDictionary.MergedDictionaries>
                 <ResourceDictionary Source="Styles/GisStyles.xaml" />
             </ResourceDictionary.MergedDictionaries>
-            
+
         </ResourceDictionary>
 
 
@@ -59,10 +60,11 @@
         <Popup x:Name="divLayer"  Width="170" Height="Auto" HorizontalAlignment="Right" IsOpen="True" 
                PlacementTarget="{Binding ElementName=divGrid}" Placement="Right" HorizontalOffset="-170" VerticalOffset="30" >
             
-            <StackPanel>
-                <DockPanel Background="SkyBlue" x:Name="docDiv" Height="30" >
-                    <TextBlock Foreground="Blue" >시설물레이어</TextBlock>
-                    <Button>
+            <StackPanel x:Name="stContent">
+
+                <Grid x:Name="gridTitle"  Background="#144873">
+                    <Label Foreground="White" Margin="5">시설물정보</Label>
+                    <Button Margin="5">
                         <Button.Template>
                             <ControlTemplate>
                                 <Image Source="file:///D:/DEVGTI/style_img/icon_layer_close.png" Height="20" Width="20" HorizontalAlignment="Right"/>
@@ -75,7 +77,7 @@
                             </i:EventTrigger>
                         </i:Interaction.Triggers>
                     </Button>
-                </DockPanel>
+                </Grid>
 
 
                 <StackPanel x:Name="spLayer">
@@ -279,70 +281,7 @@
         </Popup>
 
 
-        <!--시설물상세div-->
-        <Popup x:Name="divLayerInfo"  Width="250" Height="Auto" HorizontalAlignment="Right" IsOpen="False" 
-               PlacementTarget="{Binding ElementName=divGrid}" Placement="Left" HorizontalOffset="250" VerticalOffset="30" >
-            <StackPanel Background="White">
-                <Grid >
-                    <Label Background="#144873" Foreground="White" Margin="5">시설물정보</Label>
-                    <Button x:Name="btnClose" Content="닫기" HorizontalAlignment="Right" Margin="5">
-                        <i:Interaction.Triggers>
-                            <i:EventTrigger EventName="Click">
-                                <i:InvokeCommandAction Command="{Binding closeCmd}"  CommandParameter="{Binding ElementName=divLayerInfo}" >
-                                </i:InvokeCommandAction>
-                            </i:EventTrigger>
-                        </i:Interaction.Triggers>
-                    </Button>
 
-                </Grid>
-
-                <Grid>
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="100"/>
-                        <ColumnDefinition Width="*"/>
-                    </Grid.ColumnDefinitions>
-                    <Grid.RowDefinitions>
-                        <RowDefinition Height="30" />
-                        <RowDefinition Height="30" />
-                        <RowDefinition Height="30" />
-                        <RowDefinition Height="30" />
-                        <RowDefinition Height="30" />
-                        <RowDefinition Height="30" />
-                    </Grid.RowDefinitions>
-
-                    <Border Grid.Row="0" Grid.Column="0"  Style="{StaticResource ResourceKey=DtlHeaderBorder}" />
-                    <Label Grid.Row="0" Grid.Column="0" Content="시설물종류" Style="{StaticResource ResourceKey=GridLabel}"/>
-                    <TextBox Grid.Row="0" Grid.Column="1" Text="{Binding FctDtl.FTR_NAM}" Style="{StaticResource ResourceKey=GridTextBox}" />
-
-                    <Border Grid.Row="1" Grid.Column="0"  Style="{StaticResource ResourceKey=DtlHeaderBorder}" />
-                    <Label Grid.Row="1" Grid.Column="0" Content="관리번호" Style="{StaticResource ResourceKey=GridLabel}"/>
-                    <TextBox Grid.Row="1" Grid.Column="1" Text="{Binding FctDtl.FTR_IDN}" Style="{StaticResource ResourceKey=GridTextBox}" />
-
-                    <Border Grid.Row="2" Grid.Column="0"  Style="{StaticResource ResourceKey=DtlHeaderBorder}" />
-                    <Label Grid.Row="2" Grid.Column="0" Content="관리기관" Style="{StaticResource ResourceKey=GridLabel}"/>
-                    <TextBox Grid.Row="2" Grid.Column="1" Text="{Binding FctDtl.MNG_NAM}" Style="{StaticResource ResourceKey=GridTextBox}" />
-
-                    <Border Grid.Row="3" Grid.Column="0"  Style="{StaticResource ResourceKey=DtlHeaderBorder}" />
-                    <Label Grid.Row="3" Grid.Column="0" Content="행정기관" Style="{StaticResource ResourceKey=GridLabel}"/>
-                    <TextBox Grid.Row="3" Grid.Column="1" Text="{Binding FctDtl.HJD_NAM}" Style="{StaticResource ResourceKey=GridTextBox}" />
-
-                    <Border Grid.Row="4" Grid.Column="0"  Style="{StaticResource ResourceKey=DtlHeaderBorder}" />
-                    <Label Grid.Row="4" Grid.Column="0" Content="설치일자" Style="{StaticResource ResourceKey=GridLabel}"/>
-                    <TextBox Grid.Row="4" Grid.Column="1" Text="{Binding FctDtl.IST_YMD}" Style="{StaticResource ResourceKey=GridTextBox}" />
-
-                    <Border Grid.Row="5" Grid.Column="0"  Style="{StaticResource ResourceKey=DtlHeaderBorder}" />
-                    <Label Grid.Row="5" Grid.Column="0" Content="시설물형식" Style="{StaticResource ResourceKey=GridLabel}"/>
-                    <TextBox Grid.Row="5" Grid.Column="1" Text="{Binding FctDtl.MOF_NAM}" Style="{StaticResource ResourceKey=GridTextBox}" />
-
-                </Grid>
-
-                <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Margin="10">
-                    <Button>시설물대장</Button>
-
-                </StackPanel>
-                
-            </StackPanel>
-        </Popup>
         
         
     </Grid>

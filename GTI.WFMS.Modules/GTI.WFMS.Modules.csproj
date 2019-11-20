@@ -109,6 +109,10 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
+    <Page Include="Main\PopMain.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Main\PopWin.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -149,6 +153,9 @@
     <Compile Include="Link\ViewModel\ChscResSubListViewModel.cs" />
     <Compile Include="Link\View\ChscResSubListView.xaml.cs">
       <DependentUpon>ChscResSubListView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Main\PopMain.xaml.cs">
+      <DependentUpon>PopMain.xaml</DependentUpon>
     </Compile>
     <Compile Include="Main\PopWin.xaml.cs">
       <DependentUpon>PopWin.xaml</DependentUpon>

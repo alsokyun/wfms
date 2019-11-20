@@ -13,6 +13,7 @@ using System.Collections;
 using System.Data;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Controls.Primitives;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Animation;
@@ -26,6 +27,8 @@ namespace GTI.WFMS.Main
         MainWork work = new MainWork();
         Hashtable htconditions = new Hashtable();
         MainWin mainwin;
+        PopMain pmain = new PopMain();
+        Border borderTop = new Border();
 
         private readonly IRegionManager regionManager;
 
@@ -113,7 +116,7 @@ namespace GTI.WFMS.Main
             try
             {
                 mainwin = obj as MainWin;
-
+                borderTop = mainwin.FindName("mainwin") as Border;
 
                 // 0.컨텐트 이벤트핸들러 적용 - 화면 ContentRendered 이벤트발생시
                 mainwin.ContentRendered += Mainwin_ContentRendered;
@@ -353,12 +356,27 @@ namespace GTI.WFMS.Main
                                 /*
                                  * ContentsRegion표시하지않고 팝업윈도우를 호출
                                  */
+                                /*1.윈도우팝업 방식
                                 PopWin pwin = new PopWin(dr[0]["MNU_PATH"].ToString());
-
                                 Label lbTitle = pwin.FindName("lbTitle") as Label;//화면타이틀
                                 lbTitle.Content = dr[0]["MNU_NM"].ToString();
-
                                 bool? ret = pwin.ShowDialog();
+                                 */
+
+                                /*2.Popup클래그 방식*/
+                                pmain.IsOpen = false; //현재열려있는 팝업을 닫는다
+
+                                pmain = new PopMain(dr[0]["MNU_PATH"].ToString());
+                                Label lbTitle = pmain.FindName("lbTitle") as Label;//화면타이틀
+                                lbTitle.Content = dr[0]["MNU_NM"].ToString();
+
+                                pmain.PlacementTarget = borderTop;
+                                pmain.Placement = PlacementMode.Bottom;
+                                pmain.VerticalOffset = 100;
+                                pmain.Placement = PlacementMode.Left;
+                                pmain.HorizontalOffset = 100;
+                                pmain.IsOpen = true;
+
 
                             }
                             else
