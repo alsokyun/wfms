@@ -99,7 +99,9 @@ namespace GTI.WFMS.Main
             CloseCommand = new DelegateCommand<object>(CloseAction);
             MenuShowHidenCommand = new DelegateCommand<object>(MenuShowHidenAction);
             QuickShowHidenCommand = new DelegateCommand<object>(QuickShowHidenAction);
-            
+
+
+
         }
 
 

@@ -15,6 +15,7 @@ using System.Windows.Controls.Primitives;
 using System.Windows;
 using GTI.WFMS.Models.Cmm.Model;
 using GTI.WFMS.GIS.Module;
+using Esri.ArcGISRuntime.LocalServices;
 
 namespace GTI.WFMS.GIS
 {
@@ -290,7 +291,44 @@ namespace GTI.WFMS.GIS
             IdentifyLayerResult IR_WTL_PURI_AS = await mapView.IdentifyLayerAsync(layers["WTL_PURI_AS"], e.Position, 20, false);
             
             Feature identifiedFeature; //이벤트 타겟레이어
+            
+            //이동처리
+            if (_selectedFeature != null)
+            {
+                try
+                {
+                    // Get the MapPoint from the EventArgs for the tap.
+                    MapPoint destinationPoint = e.Location;
 
+                    // Normalize the point - needed when the tapped location is over the international date line.
+                    destinationPoint = (MapPoint)GeometryEngine.NormalizeCentralMeridian(destinationPoint);
+
+                    // Load the feature.
+                    //await _selectedFeature.LoadAsync();
+
+                    // Update the geometry of the selected feature.
+                    _selectedFeature.Geometry = destinationPoint;
+
+                    // Apply the edit to the feature table.
+                    await _selectedFeature.FeatureTable.UpdateFeatureAsync(_selectedFeature);
+
+                    // Push the update to the service.
+                    ServiceFeatureTable serviceTable = (ServiceFeatureTable)_selectedFeature.FeatureTable;
+                    await serviceTable.ApplyEditsAsync();
+                    MessageBox.Show("Moved feature " + _selectedFeature.Attributes["objectid"], "Success!");
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show(ex.ToString(), "Error when moving feature.");
+                }
+                finally
+                {
+                    // Reset the selection.
+                    layers["WTL_FIRE_PS"].ClearSelection();
+                    _selectedFeature = null;
+                }
+
+            }
 
             if (IR_WTL_STPI_PS.GeoElements.Any())
             {
@@ -319,6 +357,8 @@ namespace GTI.WFMS.GIS
             else if (IR_WTL_FIRE_PS.GeoElements.Any())
             {
                 identifiedFeature = (Feature)IR_WTL_FIRE_PS.GeoElements[0];
+                layers["WTL_FIRE_PS"].SelectFeature(identifiedFeature);
+                //_selectedFeature = (ArcGISFeature)identifiedFeature;
             }
             else if (IR_WTL_VALV_PS.GeoElements.Any())
             {
@@ -399,9 +439,27 @@ namespace GTI.WFMS.GIS
 
         }
 
-
+        private Feature _selectedFeature;
 
         #endregion
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
     }
 }

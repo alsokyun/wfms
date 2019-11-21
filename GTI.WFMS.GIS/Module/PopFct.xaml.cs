@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Esri.ArcGISRuntime.Mapping;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -26,6 +27,8 @@ namespace GTI.WFMS.GIS.Module
             InitializeComponent();
 
 
+            
+
             var thumb = new Thumb
             {
                 Width = 0,
@@ -49,6 +52,8 @@ namespace GTI.WFMS.GIS.Module
         //닫기
         private void BtnClose_Click(object sender, RoutedEventArgs e)
         {
+            ((MapMainViewModel)this.DataContext).layers["WTL_FIRE_PS"].ClearSelection();
+            
             this.IsOpen = false;
         }
     }
