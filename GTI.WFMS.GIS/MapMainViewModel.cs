@@ -125,7 +125,7 @@ namespace GTI.WFMS.GIS
 
 
 
-            btnCmd = new RelayCommand<object>(delegate (object obj)
+            btnCmd = new RelayCommand<object>(async delegate (object obj)
             {
                 Button btn = obj as Button;
                 switch (btn.Content.ToString())
@@ -133,35 +133,47 @@ namespace GTI.WFMS.GIS
                     case "추가":
                         //추가처리 탭핸들러 추가
                         mapView.GeoViewTapped -= handlerGeoViewTappedMoveFeature;
-                        mapView.GeoViewTapped -= handlerGeoViewTappedDelFeature;
                         mapView.GeoViewTapped -= handlerGeoViewTapped;
                         mapView.GeoViewTapped += handlerGeoViewTappedAddFeature;
-
+                        MessageBox.Show("시설물을 추가할 지점을 마우스로 클릭하세요.");
                         break;
+
                     case "이동":
                         if (_selectedFeature == null)
                         {
                             MessageBox.Show("시설물을 선택하세요.");
                             return;
                         }
+
+
+                        MessageBox.Show("이동할 지점을 마우스로 클릭하세요.");
                         //이동처리 탭핸들러 추가
                         mapView.GeoViewTapped -= handlerGeoViewTappedAddFeature;
-                        mapView.GeoViewTapped -= handlerGeoViewTappedDelFeature;
                         mapView.GeoViewTapped -= handlerGeoViewTapped;
                         mapView.GeoViewTapped += handlerGeoViewTappedMoveFeature;
                         break;
+
                     case "삭제":
                         if (_selectedFeature == null)
                         {
                             MessageBox.Show("시설물을 선택하세요.");
                             return;
                         }
-                        //삭제처리 탭핸들러 추가
-                        mapView.GeoViewTapped -= handlerGeoViewTappedMoveFeature;
-                        mapView.GeoViewTapped -= handlerGeoViewTappedAddFeature;
-                        mapView.GeoViewTapped -= handlerGeoViewTapped;
-                        mapView.GeoViewTapped += handlerGeoViewTappedDelFeature;
+
+                        //삭제처리
+                        //열여있는 시설물정보창 닫기
+                        popFct.IsOpen = false;
+
+                        // Load the feature.
+                        await _selectedFeature.LoadAsync();
+
+                        // Apply the edit to the feature table.
+                        await _selectedFeature.FeatureTable.DeleteFeatureAsync(_selectedFeature);
+                        _selectedFeature.Refresh();
+
+
                         break;
+
                     case "저장":
                         if(Messages.ShowYesNoMsgBox("변경된 시설물위치정보를 저장하시겠습니까?") == MessageBoxResult.No)
                         {
@@ -170,13 +182,12 @@ namespace GTI.WFMS.GIS
 
                         // Push the update to the service.
                         ServiceFeatureTable serviceTable = (ServiceFeatureTable)_selectedFeature.FeatureTable;
-                        serviceTable.ApplyEditsAsync();
+                        await serviceTable.ApplyEditsAsync();
                         MessageBox.Show("Success!");
 
                         //이벤트핸들러원복
                         mapView.GeoViewTapped -= handlerGeoViewTappedMoveFeature;
                         mapView.GeoViewTapped -= handlerGeoViewTappedAddFeature;
-                        mapView.GeoViewTapped -= handlerGeoViewTappedDelFeature;
                         mapView.GeoViewTapped += handlerGeoViewTapped;
                         break;
                     case "취소":
@@ -321,7 +332,6 @@ namespace GTI.WFMS.GIS
             //맵뷰 클릭이벤트 설정
             mapView.GeoViewTapped -= handlerGeoViewTappedMoveFeature;
             mapView.GeoViewTapped -= handlerGeoViewTappedAddFeature;
-            mapView.GeoViewTapped -= handlerGeoViewTappedDelFeature;
             mapView.GeoViewTapped += handlerGeoViewTapped;
 
 
@@ -383,7 +393,6 @@ namespace GTI.WFMS.GIS
             //이벤트핸들러원복
             mapView.GeoViewTapped -= handlerGeoViewTappedMoveFeature;
             mapView.GeoViewTapped -= handlerGeoViewTappedAddFeature;
-            mapView.GeoViewTapped -= handlerGeoViewTappedDelFeature;
             mapView.GeoViewTapped += handlerGeoViewTapped;
         }
 
@@ -434,40 +443,7 @@ namespace GTI.WFMS.GIS
 
 
 
-        //맵뷰 클릭이벤트 핸들러 -  삭제처리
-        public async void handlerGeoViewTappedDelFeature(object sender, GeoViewInputEventArgs e)
-        {
 
-            //삭제처리
-            if (_selectedFeature != null)
-            {
-                try
-                {
-
-                    // Load the feature.
-                    await _selectedFeature.LoadAsync();
-
-
-                    // Apply the edit to the feature table.
-                    await _selectedFeature.FeatureTable.DeleteFeatureAsync(_selectedFeature);
-                    _selectedFeature.Refresh();
-
-                    // Push the update to the service. - Save버튼에서 최종저장
-                    //ServiceFeatureTable serviceTable = (ServiceFeatureTable)_selectedFeature.FeatureTable;
-                    //await serviceTable.ApplyEditsAsync();
-                    //MessageBox.Show("Moved feature " + _selectedFeature.Attributes["objectid"], "Success!");
-
-
-                }
-                catch (Exception ex)
-                {
-                    MessageBox.Show(ex.ToString(), "Error when moving feature.");
-                }
-
-            }
-
-
-        }
 
 
         //맵뷰 클릭이벤트 핸들러 - 상세정보팝업 
@@ -638,6 +614,8 @@ namespace GTI.WFMS.GIS
 
             //선택된 레이어에서 속성정보 가져오기
             //& 레이어정보 세팅
+            try
+            {
             FctDtl.FTR_CDE = identifiedFeature.GetAttributeValue("FTR_CDE").ToString();
             FctDtl.FTR_NAM = BizUtil.GetCodeNm("Select_FTR_NM", FctDtl.FTR_CDE);
             FctDtl.FTR_IDN = Int32.Parse(identifiedFeature.GetAttributeValue("FTR_IDN").ToString());
@@ -646,8 +624,6 @@ namespace GTI.WFMS.GIS
             FctDtl.HJD_NAM = BizUtil.GetCodeNm("Select_ADAR_NM", FctDtl.HJD_CDE);
             FctDtl.MNG_CDE = identifiedFeature.GetAttributeValue("MNG_CDE").ToString();
             FctDtl.MNG_NAM = BizUtil.GetCdNm("250101", FctDtl.MNG_CDE);//관리기관
-            try
-            {
                 FctDtl.IST_YMD = identifiedFeature.GetAttributeValue("IST_YMD").ToString();
             }
             catch (Exception ) { }
