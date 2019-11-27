@@ -1,7 +1,10 @@
 ﻿using Esri.ArcGISRuntime;
 using Esri.ArcGISRuntime.Data;
+using Esri.ArcGISRuntime.Geometry;
+using Esri.ArcGISRuntime.LocalServices;
 using Esri.ArcGISRuntime.Mapping;
 using Esri.ArcGISRuntime.Symbology;
+using Esri.ArcGISRuntime.UI.Controls;
 using GTI.WFMS.Models.Common;
 using System;
 using System.Collections.Generic;
@@ -15,6 +18,23 @@ namespace GTI.WFMS.GIS
     /// </summary>
     public class LayerModel 
     {
+        //생성자
+        public LayerModel()
+        {
+            // ArcGIS LocalServer start..
+            Initialize_LocalServer();
+        }
+
+
+        public Map _map = new Map(SpatialReference.Create(3857));
+        //private Map _map = new Map(Basemap.CreateStreets());
+        //private Map _map = new Map(Basemap.CreateNationalGeographic());
+        //private Map _map = new Map(Basemap.CreateImageryWithLabels());
+        //private Map _map = new Map(SpatialReference.Create(5181));
+        //private Map _map = new Map(SpatialReference.Create(3857)) { MinScale = 7000000.0 };
+
+        public MapView mapView = new MapView(); //뷰의 MapView
+
 
         /* 
          * 레이어객체리스트
@@ -48,7 +68,8 @@ namespace GTI.WFMS.GIS
 
 
         // 레이어 심볼 Renderer
-        public UniqueValueRenderer uniqueValueRenderer = new UniqueValueRenderer(); 
+        public UniqueValueRenderer uniqueValueRenderer = new UniqueValueRenderer();
+
 
 
 
@@ -68,7 +89,358 @@ namespace GTI.WFMS.GIS
 
 
         /// <summary>
-        /// Shape 레이어 보이기/끄기
+        /// 레이어 보이기/끄기 - LocalServer버전
+        /// </summary>
+        /// <param name="_map"></param>
+        /// <param name="layer"></param>
+        /// <param name="chk"></param>
+        public async void ShowLocalServerLayer(MapView _mapView, string _layerNm, bool chk)
+        {
+            try
+            {
+                // 0.해당레이어 가져오기
+                string filterExp = "";
+                string layerNm = "";
+
+                try
+                {
+                    string[] ary = _layerNm.Split(',');
+                    layerNm = ary[0]; //레이어테이블명
+                    filterExp = ary[1]; //필터표현식
+                }
+                catch (Exception e) { }
+
+                FeatureLayer layer = layers[layerNm];
+                //Type memberType = this.GetType();
+
+
+
+
+
+
+                // 1.레이어 ON
+                if (chk)
+                {
+
+
+                    if (_mapView.Map.OperationalLayers.Contains(layer))
+                    {
+                        //on상태 아무것도 안함
+                    }
+                    else
+                    {
+                        if (layer != null && layer.LoadStatus == LoadStatus.Loaded) //레이어객체 있으면 단순추가
+                        {
+                            // 필터링 인수있으면 하위시설물으로 필터
+                            if (!FmsUtil.IsNull(filterExp))
+                            {
+                                layer.DefinitionExpression = filterExp;
+                            }
+                            _mapView.Map.OperationalLayers.Add(layer);
+                        }
+                        else //레이어객체 없으면 Shape 로딩
+                        {
+
+                            if (LocalServer.Instance.Status == LocalServerStatus.Started)
+                            {
+                                // Get the path to the first layer - the local feature service url + layer ID
+                                string layerUrl = _localFeatureService.Url + "/" + GetLayerId(layerNm);
+
+                                // Create the ServiceFeatureTable
+                                ServiceFeatureTable myFeatureTable = new ServiceFeatureTable(new Uri(layerUrl));
+
+                                // Create the Feature Layer from the table
+                                FeatureLayer myFeatureLayer = new FeatureLayer(myFeatureTable);
+                                layers[layerNm] = myFeatureLayer; //생성한레이어를 딕셔너리에 저장
+
+                                // 필터링 인수있으면 하위시설물으로 필터
+                                if (!FmsUtil.IsNull(filterExp))
+                                {
+                                    myFeatureLayer.DefinitionExpression = filterExp;
+                                }
+
+
+                                // Add the layer to the map
+                                _mapView.Map.OperationalLayers.Add(myFeatureLayer);
+
+                                try
+                                {
+                                    // Wait for the layer to load
+                                    await myFeatureLayer.LoadAsync();
+
+                                    // Set the viewpoint on the MapView to show the layer data
+                                    await _mapView.SetViewpointGeometryAsync(myFeatureLayer.FullExtent, 50);
+
+
+                                }
+                                catch (Exception ex)
+                                {
+                                    MessageBox.Show(ex.ToString(), "Error");
+                                }
+                            }
+
+                        }
+                    }
+
+
+                }
+                // 2.레이어 OFF
+                else
+                {
+                    // 필터링 인수있으면 하위시설물으로 필터
+                    if (!FmsUtil.IsNull(filterExp))
+                    {
+                        layer.DefinitionExpression = filterExp;
+                    }
+
+                    if (_mapView.Map.OperationalLayers.Contains(layer))
+                    {
+                        _mapView.Map.OperationalLayers.Remove(layer);
+                    }
+                    else
+                    {
+                        //off상태 아무것도 안함
+                    }
+
+                }
+
+
+
+
+            }
+            catch (Exception e)
+            {
+                MessageBox.Show("레이어가 존재하지 않습니다.");
+            }
+        }
+
+        /// LocalServer에서 해당레이어의 LayerI 가져오기
+        public string GetLayerId(string layerNm)
+        {
+            string layerId = "1";
+            switch (layerNm)
+            {
+                case "WTL_VALV_PS":
+                    layerId = "0";
+                    break;
+                case "WTL_STPI_PS":
+                    layerId = "1";
+                    break;
+                case "WTL_SERV_PS":
+                    layerId = "2";
+                    break;
+                case "WTL_RSRV_PS":
+                    layerId = "3";
+                    break;
+                case "WTL_PRES_PS":
+                    layerId = "4";
+                    break;
+                case "WTL_META_PS":
+                    layerId = "5";
+                    break;
+                case "WTL_MANH_PS":
+                    layerId = "6";
+                    break;
+                case "WTL_LEAK_PS":
+                    layerId = "7";
+                    break;
+                case "WTL_HEAD_PS":
+                    layerId = "8";
+                    break;
+                case "WTL_GAIN_PS":
+                    layerId = "9";
+                    break;
+                case "WTL_FIRE_PS":
+                    layerId = "10";
+                    break;
+                case "WTL_PRGA_PS":
+                    layerId = "11";
+                    break;
+                case "WTL_FLOW_PS":
+                    layerId = "12";
+                    break;
+                case "WTL_SPLY_LS":
+                    layerId = "13";
+                    break;
+                case "WTL_PIPE_LM":
+                    layerId = "14";
+                    break;
+                case "WTL_PURI_AS":
+                    layerId = "15";
+                    break;
+                case "BML_GADM_AS":
+                    layerId = "16";
+                    break;
+                default:
+                    break;
+            }
+            return layerId;
+        }
+
+
+
+
+
+
+
+
+
+
+
+
+
+        #region ============ LocalServer (start) 관련부분 ==============
+
+        // Hold a reference to the local feature service; the ServiceFeatureTable will be loaded from this service
+        public LocalFeatureService _localFeatureService;
+
+        public async void Initialize_LocalServer()
+        {
+
+            try
+            {
+                // LocalServer must not be running when setting the data path.
+                if (LocalServer.Instance.Status == LocalServerStatus.Started)
+                {
+                    await LocalServer.Instance.StopAsync();
+                }
+
+                // Set the local data path - must be done before starting. On most systems, this will be C:\EsriSamples\AppData.
+                // This path should be kept short to avoid Windows path length limitations.
+                string tempDataPathRoot = Directory.GetParent(Environment.GetFolderPath(Environment.SpecialFolder.Windows)).FullName;
+                string tempDataPath = Path.Combine(tempDataPathRoot, "EsriSamples", "AppData");
+                Directory.CreateDirectory(tempDataPath); // CreateDirectory won't overwrite if it already exists.
+                LocalServer.Instance.AppDataPath = tempDataPath;
+
+                // Start the local server instance
+                await LocalServer.Instance.StartAsync();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(String.Format("Please ensure that local server is installed prior to using the sample. See instructions in readme.md. Message: {0}", ex.Message), "Local Server failed to start");
+                return;
+            }
+
+            // Load the sample data and get the path
+            string myfeatureServicePath = GetFeatureLayerPath();
+
+            // Create the feature service to serve the local data
+            _localFeatureService = new LocalFeatureService(myfeatureServicePath);
+
+            // Listen to feature service status changes
+            _localFeatureService.StatusChanged += _localFeatureService_StatusChanged;
+
+            // Start the feature service
+            try
+            {
+                await _localFeatureService.StartAsync();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message, "The feature service failed to load");
+            }
+        }
+
+        private async void _localFeatureService_StatusChanged(object sender, StatusChangedEventArgs e)
+        {
+            // Load the map from the service once ready
+            if (e.Status == LocalServerStatus.Started)
+            {
+                // 울산행정구역 표시
+                ShowLocalServerLayer(mapView, "BML_GADM_AS", true);
+                /*
+                        // Get the path to the first layer - the local feature service url + layer ID
+                        string layerUrl = _localFeatureService.Url + "/0";
+
+                        // Create the ServiceFeatureTable
+                        ServiceFeatureTable myFeatureTable = new ServiceFeatureTable(new Uri(layerUrl));
+
+                        // Create the Feature Layer from the table
+                        FeatureLayer myFeatureLayer = new FeatureLayer(myFeatureTable);
+                        layers["WTL_FLOW_PS"] = myFeatureLayer;
+
+                        // Add the layer to the map
+                        mapView.Map.OperationalLayers.Add(myFeatureLayer);
+
+                        try
+                        {
+                            // Wait for the layer to load
+                            await myFeatureLayer.LoadAsync();
+
+                            // Set the viewpoint on the MapView to show the layer data
+                            await mapView.SetViewpointGeometryAsync(myFeatureLayer.FullExtent, 50);
+                        }
+                        catch (Exception ex)
+                        {
+                            MessageBox.Show(ex.ToString(), "Error");
+                        }
+                 */
+            }
+        }
+
+
+        // mpk 패키지파일의 위치 가져오기
+        private static string GetFeatureLayerPath()
+        {
+            //return DataManager.GetDataFolder("4e94fec734434d1288e6ebe36c3c461f", "PointsOfInterest.mpk");
+            //return GetDataFolder("4e94fec734434d1288e6ebe36c3c461f", "PointsOfInterest.mpk");
+            return GetDataFolder("shape", "fms.mpk");
+        }
+
+
+
+
+
+        /// <summary>
+        /// Gets the data folder where locally provisioned data is stored.
+        /// </summary>
+        internal static string GetDataFolder()
+        {
+            string appDataFolder = Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData);
+            string sampleDataFolder = Path.Combine(appDataFolder, "ArcGISRuntimeSampleData");
+
+            if (!Directory.Exists(sampleDataFolder)) { Directory.CreateDirectory(sampleDataFolder); }
+
+            return sampleDataFolder;
+        }
+
+        /// <summary>
+        /// Gets the path to an item on disk. 
+        /// The item must have already been downloaded for the path to be valid.
+        /// </summary>
+        /// <param name="itemId">ID of the portal item.</param>
+        internal static string GetDataFolder(string itemId)
+        {
+            return Path.Combine(GetDataFolder(), itemId);
+        }
+
+        /// <summary>
+        /// Gets the path to an item on disk. 
+        /// The item must have already been downloaded for the path to be valid.
+        /// </summary>
+        /// <param name="itemId">ID of the portal item.</param>
+        /// <param name="pathParts">Components of the path.</param>
+        internal static string GetDataFolder(string itemId, params string[] pathParts)
+        {
+            return Path.Combine(GetDataFolder(itemId), Path.Combine(pathParts));
+        }
+
+
+
+
+
+        #endregion
+
+
+
+
+
+
+
+        #region =========== shape 레이어 구성부분(mpk 방식으로 변경해서 사용안함)
+
+        /// <summary>
+        /// Shape 레이어 보이기/끄기 - Shape버전
         /// </summary>
         /// <param name="_map"></param>
         /// <param name="layer"></param>
@@ -80,14 +452,14 @@ namespace GTI.WFMS.GIS
                 // 0.해당레이어 가져오기
                 string filterExp = "";
                 string layerNm = "";
-                
+
                 try
                 {
                     string[] ary = _layerNm.Split(',');
                     layerNm = ary[0]; //레이어테이블명
                     filterExp = ary[1]; //필터표현식
                 }
-                catch (Exception e) {}
+                catch (Exception e) { }
 
                 FeatureLayer layer = layers[layerNm];
                 //Type memberType = this.GetType();
@@ -166,7 +538,10 @@ namespace GTI.WFMS.GIS
 
 
 
-        // 레이어 심볼 Renderer 구성 초기화
+
+
+
+        // 레이어 심볼 Renderer 구성 초기화 - shape버전 레이어구성시에만 사용함
         public void InitUniqueValueRenderer()
         {
             // 1.Point 마커 스타일링 - 속성값에따른 이미지 선별매핑
@@ -248,7 +623,7 @@ namespace GTI.WFMS.GIS
             var SA300Uri = new Uri("file:///D:/DEVGTI/style_img/SA300.gif");
             PictureMarkerSymbol SA300Symbol = new PictureMarkerSymbol(SA300Uri);
             UniqueValue SA300Value = new UniqueValue("SA300", "SA300", SA300Symbol, "SA300"); //string description, string label, Symbol symbol, object value
-            
+
             uniqueValueRenderer.FieldNames.Add("FTR_CDE");
 
             uniqueValueRenderer.UniqueValues.Add(SA003Value);
@@ -311,6 +686,7 @@ namespace GTI.WFMS.GIS
 
 
 
+        #endregion
 
     }
 

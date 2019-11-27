@@ -49,7 +49,16 @@
         <esri:MapView Map="{Binding Map}" x:Name="mapView"/>
         
         <esri:Compass Margin="30" AutoHide="False" DataContext="{Binding Map}"/>
-        
+
+        <Grid VerticalAlignment="Top" Height="30" Width="Auto" HorizontalAlignment="Left" >
+            <Button Content="Reset">
+                <i:Interaction.Triggers>
+                    <i:EventTrigger EventName="Click">
+                        <i:InvokeCommandAction Command="{Binding resetCmd}" />
+                    </i:EventTrigger>
+                </i:Interaction.Triggers>
+            </Button>
+        </Grid>
         <Grid VerticalAlignment="Top" Height="30" Width="Auto" HorizontalAlignment="Right" >
             <esri:MeasureToolbar MapView="{Binding ElementName=mapView}" />
         </Grid>
@@ -79,11 +88,53 @@
                     </Button>
                 </Grid>
 
+                <StackPanel Orientation="Horizontal">
+                    <Button Content="추가">
+                        <i:Interaction.Triggers>
+                            <i:EventTrigger EventName="Click">
+                                <i:InvokeCommandAction Command="{Binding btnCmd}" CommandParameter="{Binding RelativeSource={RelativeSource AncestorType={x:Type Button}}}"  >
+                                </i:InvokeCommandAction>
+                            </i:EventTrigger>
+                        </i:Interaction.Triggers>
+                    </Button>
+                    <Button Content="이동">
+                        <i:Interaction.Triggers>
+                            <i:EventTrigger EventName="Click">
+                                <i:InvokeCommandAction Command="{Binding btnCmd}" CommandParameter="{Binding RelativeSource={RelativeSource AncestorType={x:Type Button}}}"  >
+                                </i:InvokeCommandAction>
+                            </i:EventTrigger>
+                        </i:Interaction.Triggers>
+                    </Button>
+                    <Button Content="삭제">
+                        <i:Interaction.Triggers>
+                            <i:EventTrigger EventName="Click">
+                                <i:InvokeCommandAction Command="{Binding btnCmd}" CommandParameter="{Binding RelativeSource={RelativeSource AncestorType={x:Type Button}}}"  >
+                                </i:InvokeCommandAction>
+                            </i:EventTrigger>
+                        </i:Interaction.Triggers>
+                    </Button>
+                    <Button Content="저장">
+                        <i:Interaction.Triggers>
+                            <i:EventTrigger EventName="Click">
+                                <i:InvokeCommandAction Command="{Binding btnCmd}" CommandParameter="{Binding RelativeSource={RelativeSource AncestorType={x:Type Button}}}"  >
+                                </i:InvokeCommandAction>
+                            </i:EventTrigger>
+                        </i:Interaction.Triggers>
+                    </Button>
+                    <Button Content="취소">
+                        <i:Interaction.Triggers>
+                            <i:EventTrigger EventName="Click">
+                                <i:InvokeCommandAction Command="{Binding btnCmd}" CommandParameter="{Binding RelativeSource={RelativeSource AncestorType={x:Type Button}}}"  >
+                                </i:InvokeCommandAction>
+                            </i:EventTrigger>
+                        </i:Interaction.Triggers>
+                    </Button>
+                </StackPanel>
 
                 <StackPanel x:Name="spLayer">
                     <Border Width="120" Height="2" BorderBrush="Green" Background="Green" HorizontalAlignment="Center" ></Border>
                     
-                    <TreeView>
+                    <TreeView x:Name="treeLayer">
                         <Button  Tag="WTL_STPI_PS"  Content="스탠드파이프" ToolTip="file:///D:/DEVGTI/style_img/SA003.gif" Template="{StaticResource ResourceKey=dockTemplate}">
                             <i:Interaction.Triggers>
                                 <i:EventTrigger EventName="Click">

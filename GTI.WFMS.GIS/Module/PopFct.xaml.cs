@@ -52,8 +52,15 @@ namespace GTI.WFMS.GIS.Module
         //닫기
         private void BtnClose_Click(object sender, RoutedEventArgs e)
         {
-            ((MapMainViewModel)this.DataContext).layers["WTL_FIRE_PS"].ClearSelection();
-            
+            foreach (var v in ((MapMainViewModel)this.DataContext).layers)
+            {
+                v.Value.ClearSelection();
+            }
+            ((MapMainViewModel)this.DataContext)._selectedFeature = null;
+
+
+
+
             this.IsOpen = false;
         }
     }

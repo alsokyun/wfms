@@ -147,7 +147,7 @@
                 </Border.Effect>
             </Border>
 
-            <!--화면컨텐층영역-->
+            <!--화면컨텐츠영역-->
             <Grid x:Name="gridtitle" Grid.Column="1" Grid.RowSpan="2" Margin="20,0,20,20">
                 <Grid.RowDefinitions>
                     <RowDefinition Height="40"/>
