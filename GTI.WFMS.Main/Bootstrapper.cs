@@ -19,6 +19,7 @@ namespace GTI.WFMS.Main
             //Container.RegisterTypeForNavigation<UcUserMngView>("UcUserMngView");
             Container.RegisterTypeForNavigation<MapMainView>("MapMainView");
             Container.RegisterTypeForNavigation<Map2View>("Map2View");
+            Container.RegisterTypeForNavigation<Map3View>("Map3View");
         }
 
         /// <summary>

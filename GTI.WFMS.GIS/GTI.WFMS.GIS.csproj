@@ -74,6 +74,9 @@
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="Map3View.xaml.cs">
+      <DependentUpon>Map3View.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Map2View.xaml.cs">
       <DependentUpon>Map2View.xaml</DependentUpon>
     </Compile>
@@ -81,6 +84,10 @@
       <DependentUpon>MapMainView.xaml</DependentUpon>
     </Compile>
     <Compile Include="MapMainViewModel.cs" />
+    <Page Include="Map3View.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
     <Page Include="Map2View.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>

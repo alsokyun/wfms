@@ -27,9 +27,12 @@ namespace GTI.WFMS.GIS
     public class MapMainViewModel : LayerModel, INotifyPropertyChanged
     {
 
+        // 선택한 피처 - 서버연계된Feature  
+        public ArcGISFeature _selectedFeature;
+        public List<string> _selectedLayers = new List<string>();
+
         public MapMainViewModel()
         {
-
 
             //뷰객체를 파라미터로 전달받기
             //loadedCmd = new RelayCommand<object>(loadedMethod);
@@ -64,6 +67,20 @@ namespace GTI.WFMS.GIS
                 bool chk = (bool)chkbox.IsChecked;
 
                 ShowLocalServerLayer(mapView, doc.Tag.ToString(), chk);
+
+                //선택된 레이어저장
+                try
+                {
+                    if (chk)
+                    {
+                        _selectedLayers.Add(doc.Tag.ToString());
+                    }
+                    else
+                    {
+                        _selectedLayers.Remove(doc.Tag.ToString());
+                    }
+                }
+                catch (Exception){}
             });
 
             //팝업레이어 토글처리
@@ -131,6 +148,17 @@ namespace GTI.WFMS.GIS
                 switch (btn.Content.ToString())
                 {
                     case "추가":
+                        if (_selectedLayers.Count<1)
+                        {
+                            MessageBox.Show("시설물을 선택하세요.");
+                            return;
+                        }
+                        else if (_selectedLayers.Count > 1)
+                        {
+                            MessageBox.Show("시설물을 하나만 선택하세요.");
+                            return;
+                        }
+
                         //추가처리 탭핸들러 추가
                         mapView.GeoViewTapped -= handlerGeoViewTappedMoveFeature;
                         mapView.GeoViewTapped -= handlerGeoViewTapped;
@@ -182,6 +210,7 @@ namespace GTI.WFMS.GIS
 
                         // Push the update to the service.
                         ServiceFeatureTable serviceTable = (ServiceFeatureTable)_selectedFeature.FeatureTable;
+
                         await serviceTable.ApplyEditsAsync();
                         MessageBox.Show("Success!");
 
@@ -204,7 +233,6 @@ namespace GTI.WFMS.GIS
 
         }
 
-        private string mode = "NORMAL";
 
 
         //시설물레이어DIV 초기화작업
@@ -350,7 +378,7 @@ namespace GTI.WFMS.GIS
 
 
             // Get the path to the first layer - the local feature service url + layer ID
-            string layerUrl = _localFeatureService.Url + "/" + GetLayerId("WTL_HEAD_PS");
+            string layerUrl = _localFeatureService.Url + "/" + GetLayerId(_selectedLayers[0]);
 
             // Create the ServiceFeatureTable
             ServiceFeatureTable serviceFeatureTable = new ServiceFeatureTable(new Uri(layerUrl));
@@ -644,8 +672,6 @@ namespace GTI.WFMS.GIS
 
         }
 
-        // 서버연계된Feature  
-        public ArcGISFeature _selectedFeature;
 
         #endregion
 

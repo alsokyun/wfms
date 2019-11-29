@@ -128,15 +128,16 @@ namespace GTI.WFMS.Main
 
 
                 // 2.테마일괄적용...
-                ThemeApply.Themeapply(mainwin); 
+                ThemeApply.Themeapply(mainwin);
 
 
 
                 /* ArcGis 2D-MapView 로딩
                  */
                 //regionManager.Regions["ContentRegion"].RemoveAll();
+                regionManager.RequestNavigate("ContentRegion", new Uri("Map3View", UriKind.Relative));
                 //regionManager.RequestNavigate("ContentRegion", new Uri("Map2View", UriKind.Relative));
-                regionManager.RequestNavigate("ContentRegion", new Uri("MapMainView", UriKind.Relative));
+                //regionManager.RequestNavigate("ContentRegion", new Uri("MapMainView", UriKind.Relative));
                 //regionManager.RequestNavigate("ContentRegion", new Uri("MainWindow", UriKind.Relative));
 
 

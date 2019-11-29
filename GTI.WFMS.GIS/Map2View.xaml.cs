@@ -20,7 +20,7 @@ using System.Windows.Shapes;
 namespace GTI.WFMS.GIS
 {
     /// <summary>
-    /// Map2View.xaml에 대한 상호 작용 논리
+    /// 피처 추가기능
     /// </summary>
     public partial class Map2View : UserControl
     {
