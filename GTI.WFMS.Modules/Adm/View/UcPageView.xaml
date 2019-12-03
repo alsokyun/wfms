@@ -17,13 +17,14 @@
              xmlns:vm="clr-namespace:GTI.WFMS.Modules.Adm"               
 
              x:Name="ucPageView"
+             xmlns:cv="clr-namespace:GTI.WFMS.Models.Common;assembly=GTI.WFMS.Models"
              >
 
     <Page.Resources>
         <ResourceDictionary>
 
             <cm:MultiValueConverter x:Key="multiValueConverter"/>
-            <cm:ToggleConverter x:Key="toggleConverter" />
+            <cv:ToggleConverter x:Key="toggleConverter" />
         </ResourceDictionary>
     </Page.Resources>
 

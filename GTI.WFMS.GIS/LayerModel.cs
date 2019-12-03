@@ -22,7 +22,7 @@ namespace GTI.WFMS.GIS
         public LayerModel()
         {
             // ArcGIS LocalServer start..
-            Initialize_LocalServer();
+            //Initialize_LocalServer();
         }
 
 
@@ -289,151 +289,6 @@ namespace GTI.WFMS.GIS
 
 
 
-        #region ============ LocalServer (start) 관련부분 ==============
-
-        // Hold a reference to the local feature service; the ServiceFeatureTable will be loaded from this service
-        public LocalFeatureService _localFeatureService;
-
-        public async void Initialize_LocalServer()
-        {
-
-            try
-            {
-                // LocalServer must not be running when setting the data path.
-                if (LocalServer.Instance.Status == LocalServerStatus.Started)
-                {
-                    await LocalServer.Instance.StopAsync();
-                }
-
-                // Set the local data path - must be done before starting. On most systems, this will be C:\EsriSamples\AppData.
-                // This path should be kept short to avoid Windows path length limitations.
-                string tempDataPathRoot = Directory.GetParent(Environment.GetFolderPath(Environment.SpecialFolder.Windows)).FullName;
-                string tempDataPath = Path.Combine(tempDataPathRoot, "EsriSamples", "AppData");
-                Directory.CreateDirectory(tempDataPath); // CreateDirectory won't overwrite if it already exists.
-                LocalServer.Instance.AppDataPath = tempDataPath;
-
-                // Start the local server instance
-                await LocalServer.Instance.StartAsync();
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show(String.Format("Please ensure that local server is installed prior to using the sample. See instructions in readme.md. Message: {0}", ex.Message), "Local Server failed to start");
-                return;
-            }
-
-            // Load the sample data and get the path
-            string myfeatureServicePath = GetFeatureLayerPath();
-
-            // Create the feature service to serve the local data
-            _localFeatureService = new LocalFeatureService(myfeatureServicePath);
-
-            // Listen to feature service status changes
-            _localFeatureService.StatusChanged += _localFeatureService_StatusChanged;
-
-            // Start the feature service
-            try
-            {
-                await _localFeatureService.StartAsync();
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show(ex.Message, "The feature service failed to load");
-            }
-        }
-
-        private async void _localFeatureService_StatusChanged(object sender, StatusChangedEventArgs e)
-        {
-            // Load the map from the service once ready
-            if (e.Status == LocalServerStatus.Started)
-            {
-                // 울산행정구역 표시
-                ShowLocalServerLayer(mapView, "BML_GADM_AS", true);
-                /*
-                        // Get the path to the first layer - the local feature service url + layer ID
-                        string layerUrl = _localFeatureService.Url + "/0";
-
-                        // Create the ServiceFeatureTable
-                        ServiceFeatureTable myFeatureTable = new ServiceFeatureTable(new Uri(layerUrl));
-
-                        // Create the Feature Layer from the table
-                        FeatureLayer myFeatureLayer = new FeatureLayer(myFeatureTable);
-                        layers["WTL_FLOW_PS"] = myFeatureLayer;
-
-                        // Add the layer to the map
-                        mapView.Map.OperationalLayers.Add(myFeatureLayer);
-
-                        try
-                        {
-                            // Wait for the layer to load
-                            await myFeatureLayer.LoadAsync();
-
-                            // Set the viewpoint on the MapView to show the layer data
-                            await mapView.SetViewpointGeometryAsync(myFeatureLayer.FullExtent, 50);
-                        }
-                        catch (Exception ex)
-                        {
-                            MessageBox.Show(ex.ToString(), "Error");
-                        }
-                 */
-            }
-        }
-
-
-        // mpk 패키지파일의 위치 가져오기
-        private static string GetFeatureLayerPath()
-        {
-            //return DataManager.GetDataFolder("4e94fec734434d1288e6ebe36c3c461f", "PointsOfInterest.mpk");
-            //return GetDataFolder("4e94fec734434d1288e6ebe36c3c461f", "PointsOfInterest.mpk");
-            return GetDataFolder("shape", "fms.mpk");
-        }
-
-
-
-
-
-        /// <summary>
-        /// Gets the data folder where locally provisioned data is stored.
-        /// </summary>
-        internal static string GetDataFolder()
-        {
-            string appDataFolder = Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData);
-            string sampleDataFolder = Path.Combine(appDataFolder, "ArcGISRuntimeSampleData");
-
-            if (!Directory.Exists(sampleDataFolder)) { Directory.CreateDirectory(sampleDataFolder); }
-
-            return sampleDataFolder;
-        }
-
-        /// <summary>
-        /// Gets the path to an item on disk. 
-        /// The item must have already been downloaded for the path to be valid.
-        /// </summary>
-        /// <param name="itemId">ID of the portal item.</param>
-        internal static string GetDataFolder(string itemId)
-        {
-            return Path.Combine(GetDataFolder(), itemId);
-        }
-
-        /// <summary>
-        /// Gets the path to an item on disk. 
-        /// The item must have already been downloaded for the path to be valid.
-        /// </summary>
-        /// <param name="itemId">ID of the portal item.</param>
-        /// <param name="pathParts">Components of the path.</param>
-        internal static string GetDataFolder(string itemId, params string[] pathParts)
-        {
-            return Path.Combine(GetDataFolder(itemId), Path.Combine(pathParts));
-        }
-
-
-
-
-
-        #endregion
-
-
-
-
 
 
 
@@ -442,10 +297,10 @@ namespace GTI.WFMS.GIS
         /// <summary>
         /// Shape 레이어 보이기/끄기 - Shape버전
         /// </summary>
-        /// <param name="_map"></param>
+        /// <param name="_mapView"></param>
         /// <param name="layer"></param>
         /// <param name="chk"></param>
-        public async void ShowShapeLayer(Map _map, string _layerNm, bool chk)
+        public async void ShowShapeLayer(MapView _mapView, string _layerNm, bool chk)
         {
             try
             {
@@ -469,7 +324,7 @@ namespace GTI.WFMS.GIS
                 // 1.레이어 ON
                 if (chk)
                 {
-                    if (_map.OperationalLayers.Contains(layer))
+                    if (_mapView.Map.OperationalLayers.Contains(layer))
                     {
                         //on상태 아무것도 안함
                     }
@@ -477,11 +332,11 @@ namespace GTI.WFMS.GIS
                     {
                         if (layer != null && layer.LoadStatus == LoadStatus.Loaded) //레이어객체 있으면 단순추가
                         {
-                            _map.OperationalLayers.Add(layer);
+                            _mapView.Map.OperationalLayers.Add(layer);
                         }
                         else //레이어객체 없으면 Shape 로딩
                         {
-                            string shapefilePath = Path.Combine("D:\\DEVGTI\\layer", layerNm + ".shp");
+                            string shapefilePath = Path.Combine(BizUtil.GetDataFolder("shape", layerNm + ".shp"));
                             try
                             {
                                 ShapefileFeatureTable layerTable = await ShapefileFeatureTable.OpenAsync(shapefilePath);
@@ -489,9 +344,10 @@ namespace GTI.WFMS.GIS
                                 layer = new FeatureLayer(layerTable); /////// 신규레이어 생성 /////// 
                                 layers[layerNm] = layer; /////// 딕셔너리에 자동으로 저장되지는 않을것임 /////// 
 
-                                _map.OperationalLayers.Add(layer);
+                                _mapView.Map.OperationalLayers.Add(layer);
                                 layer.Renderer = uniqueValueRenderer.Clone(); //렌더러는 레이어 각각 할당해야하므로 렌더러복사하여 할당
 
+                                
                             }
                             catch (Exception e)
                             {
@@ -510,9 +366,9 @@ namespace GTI.WFMS.GIS
                 // 2.레이어 OFF
                 else
                 {
-                    if (_map.OperationalLayers.Contains(layer))
+                    if (_mapView.Map.OperationalLayers.Contains(layer))
                     {
-                        _map.OperationalLayers.Remove(layer);
+                        _mapView.Map.OperationalLayers.Remove(layer);
                     }
                     else
                     {
@@ -549,78 +405,78 @@ namespace GTI.WFMS.GIS
             SimpleLineSymbol SA003Symbol = new SimpleLineSymbol(SimpleLineSymbolStyle.Solid, System.Drawing.Color.SkyBlue, 1);
             UniqueValue SA003Value = new UniqueValue("SA003", "SA003", SA003Symbol, "SA003");
             //상수맨홀
-            var SA100Uri = new Uri("file:///D:/DEVGTI/style_img/SA100.gif");
+            var SA100Uri = new Uri(BizUtil.GetDataFolder("style_img", "SA100.gif"), UriKind.Relative);
             PictureMarkerSymbol SA100Symbol = new PictureMarkerSymbol(SA100Uri);
             UniqueValue SA100Value = new UniqueValue("SA100", "SA100", SA100Symbol, "SA100"); //string description, string label, Symbol symbol, object value
             //취수장
-            var SA112Uri = new Uri("file:///D:/DEVGTI/style_img/SA112.gif");
+            var SA112Uri = new Uri(BizUtil.GetDataFolder("style_img", "SA112.gif"), UriKind.Relative);
             PictureMarkerSymbol SA112Symbol = new PictureMarkerSymbol(SA112Uri);
             UniqueValue SA112Value = new UniqueValue("SA112", "SA112", SA112Symbol, "SA112"); //string description, string label, Symbol symbol, object value
             //배수지
-            var SA114Uri = new Uri("file:///D:/DEVGTI/style_img/SA114.gif");
+            var SA114Uri = new Uri(BizUtil.GetDataFolder("style_img", "SA114.gif"), UriKind.Relative);
             PictureMarkerSymbol SA114Symbol = new PictureMarkerSymbol(SA114Uri);
             UniqueValue SA114Value = new UniqueValue("SA114", "SA114", SA114Symbol, "SA114"); //string description, string label, Symbol symbol, object value
             //수원지
-            var SA110Uri = new Uri("file:///D:/DEVGTI/style_img/SA110.gif");
+            var SA110Uri = new Uri(BizUtil.GetDataFolder("style_img", "SA110.gif"), UriKind.Relative);
             PictureMarkerSymbol SA110Symbol = new PictureMarkerSymbol(SA110Uri);
             UniqueValue SA110Value = new UniqueValue("SA110", "SA110", SA110Symbol, "SA110"); //string description, string label, Symbol symbol, object value
             //유량계
-            var SA117Uri = new Uri("file:///D:/DEVGTI/style_img/SA117.gif");
+            var SA117Uri = new Uri(BizUtil.GetDataFolder("style_img", "SA117.gif"), UriKind.Relative);
             PictureMarkerSymbol SA117Symbol = new PictureMarkerSymbol(SA117Uri);
             UniqueValue SA117Value = new UniqueValue("SA117", "SA117", SA117Symbol, "SA117"); //string description, string label, Symbol symbol, object value
             //급수탑
-            var SA118Uri = new Uri("file:///D:/DEVGTI/style_img/SA118.gif");
+            var SA118Uri = new Uri(BizUtil.GetDataFolder("style_img", "SA118.gif"), UriKind.Relative);
             PictureMarkerSymbol SA118Symbol = new PictureMarkerSymbol(SA118Uri);
             UniqueValue SA118Value = new UniqueValue("SA118", "SA118", SA118Symbol, "SA118"); //string description, string label, Symbol symbol, object value
             //소화전
-            var SA119Uri = new Uri("file:///D:/DEVGTI/style_img/SA119.gif");
+            var SA119Uri = new Uri(BizUtil.GetDataFolder("style_img", "SA119.gif"), UriKind.Relative);
             PictureMarkerSymbol SA119Symbol = new PictureMarkerSymbol(SA119Uri);
             UniqueValue SA119Value = new UniqueValue("SA119", "SA119", SA119Symbol, "SA119");
             //저수조
-            var SA120Uri = new Uri("file:///D:/DEVGTI/style_img/SA120.gif");
+            var SA120Uri = new Uri(BizUtil.GetDataFolder("style_img", "SA120.gif"), UriKind.Relative);
             PictureMarkerSymbol SA120Symbol = new PictureMarkerSymbol(SA120Uri);
             UniqueValue SA120Value = new UniqueValue("SA120", "SA120", SA120Symbol, "SA120");
             //수압계
-            var SA121Uri = new Uri("file:///D:/DEVGTI/style_img/SA121.gif");
+            var SA121Uri = new Uri(BizUtil.GetDataFolder("style_img", "SA121.gif"), UriKind.Relative);
             PictureMarkerSymbol SA121Symbol = new PictureMarkerSymbol(SA121Uri);
             UniqueValue SA121Value = new UniqueValue("SA121", "SA121", SA121Symbol, "SA121"); //string description, string label, Symbol symbol, object value
             //급수전계량기
-            var SA122Uri = new Uri("file:///D:/DEVGTI/style_img/SA122.gif");
+            var SA122Uri = new Uri(BizUtil.GetDataFolder("style_img", "SA122.gif"), UriKind.Relative);
             PictureMarkerSymbol SA122Symbol = new PictureMarkerSymbol(SA122Uri);
             UniqueValue SA122Value = new UniqueValue("SA122", "SA122", SA122Symbol, "SA122"); //string description, string label, Symbol symbol, object value
 
             /* 변류시설 그룹 */
             //제수변
-            var SA200Uri = new Uri("file:///D:/DEVGTI/style_img/SA200.gif");
+            var SA200Uri = new Uri(BizUtil.GetDataFolder("style_img", "SA200.gif"), UriKind.Relative);
             PictureMarkerSymbol SA200Symbol = new PictureMarkerSymbol(SA200Uri);
             UniqueValue SA200Value = new UniqueValue("SA200", "SA200", SA200Symbol, "SA200"); //string description, string label, Symbol symbol, object value
             //역지변
-            var SA201Uri = new Uri("file:///D:/DEVGTI/style_img/SA201.gif");
+            var SA201Uri = new Uri(BizUtil.GetDataFolder("style_img", "SA201.gif"), UriKind.Relative);
             PictureMarkerSymbol SA201Symbol = new PictureMarkerSymbol(SA201Uri);
             UniqueValue SA201Value = new UniqueValue("SA201", "SA201", SA201Symbol, "SA201"); //string description, string label, Symbol symbol, object value
             //이토변
-            var SA202Uri = new Uri("file:///D:/DEVGTI/style_img/SA202.gif");
+            var SA202Uri = new Uri(BizUtil.GetDataFolder("style_img", "SA202.gif"), UriKind.Relative);
             PictureMarkerSymbol SA202Symbol = new PictureMarkerSymbol(SA202Uri);
             UniqueValue SA202Value = new UniqueValue("SA202", "SA202", SA202Symbol, "SA202"); //string description, string label, Symbol symbol, object value
             //배기변
-            var SA203Uri = new Uri("file:///D:/DEVGTI/style_img/SA203.gif");
+            var SA203Uri = new Uri(BizUtil.GetDataFolder("style_img", "SA203.gif"), UriKind.Relative);
             PictureMarkerSymbol SA203Symbol = new PictureMarkerSymbol(SA203Uri);
             UniqueValue SA203Value = new UniqueValue("SA203", "SA203", SA203Symbol, "SA203"); //string description, string label, Symbol symbol, object value
             //감압변
-            var SA204Uri = new Uri("file:///D:/DEVGTI/style_img/SA204.gif");
+            var SA204Uri = new Uri(BizUtil.GetDataFolder("style_img", "SA204.gif"), UriKind.Relative);
             PictureMarkerSymbol SA204Symbol = new PictureMarkerSymbol(SA204Uri);
             UniqueValue SA204Value = new UniqueValue("SA204", "SA204", SA204Symbol, "SA204"); //string description, string label, Symbol symbol, object value
             //안전변
-            var SA205Uri = new Uri("file:///D:/DEVGTI/style_img/SA205.gif");
+            var SA205Uri = new Uri(BizUtil.GetDataFolder("style_img", "SA205.gif"), UriKind.Relative);
             PictureMarkerSymbol SA205Symbol = new PictureMarkerSymbol(SA205Uri);
             UniqueValue SA205Value = new UniqueValue("SA205", "SA205", SA205Symbol, "SA205"); //string description, string label, Symbol symbol, object value
             //소화전제수변
-            var SA206Uri = new Uri("file:///D:/DEVGTI/style_img/SA206.gif");
+            var SA206Uri = new Uri(BizUtil.GetDataFolder("style_img", "SA206.gif"), UriKind.Relative);
             PictureMarkerSymbol SA206Symbol = new PictureMarkerSymbol(SA206Uri);
             UniqueValue SA206Value = new UniqueValue("SA206", "SA206", SA206Symbol, "SA206"); //string description, string label, Symbol symbol, object value
 
             //누수지점
-            var SA300Uri = new Uri("file:///D:/DEVGTI/style_img/SA300.gif");
+            var SA300Uri = new Uri(BizUtil.GetDataFolder("style_img", "SA300.gif"), UriKind.Relative);
             PictureMarkerSymbol SA300Symbol = new PictureMarkerSymbol(SA300Uri);
             UniqueValue SA300Value = new UniqueValue("SA300", "SA300", SA300Symbol, "SA300"); //string description, string label, Symbol symbol, object value
 
@@ -687,6 +543,117 @@ namespace GTI.WFMS.GIS
 
 
         #endregion
+
+
+
+
+
+
+
+
+        #region ============ LocalServer (start) 관련부분 ==============
+
+        // Hold a reference to the local feature service; the ServiceFeatureTable will be loaded from this service
+        public LocalFeatureService _localFeatureService;
+
+        public async void Initialize_LocalServer()
+        {
+
+            try
+            {
+                // LocalServer must not be running when setting the data path.
+                if (LocalServer.Instance.Status == LocalServerStatus.Started)
+                {
+                    await LocalServer.Instance.StopAsync();
+                }
+
+                // Set the local data path - must be done before starting. On most systems, this will be C:\EsriSamples\AppData.
+                // This path should be kept short to avoid Windows path length limitations.
+                string tempDataPathRoot = Directory.GetParent(Environment.GetFolderPath(Environment.SpecialFolder.Windows)).FullName;
+                string tempDataPath = Path.Combine(tempDataPathRoot, "EsriSamples", "AppData");
+                Directory.CreateDirectory(tempDataPath); // CreateDirectory won't overwrite if it already exists.
+                LocalServer.Instance.AppDataPath = tempDataPath;
+
+                // Start the local server instance
+                await LocalServer.Instance.StartAsync();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(String.Format("Please ensure that local server is installed prior to using the sample. See instructions in readme.md. Message: {0}", ex.Message), "Local Server failed to start");
+                return;
+            }
+
+            // Load the sample data and get the path
+            string myfeatureServicePath = GetFeatureLayerPath();
+
+            // Create the feature service to serve the local data
+            _localFeatureService = new LocalFeatureService(myfeatureServicePath);
+
+            // Listen to feature service status changes
+            _localFeatureService.StatusChanged += _localFeatureService_StatusChanged;
+
+            // Start the feature service
+            try
+            {
+                await _localFeatureService.StartAsync();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message, "The feature service failed to load");
+            }
+        }
+
+        private async void _localFeatureService_StatusChanged(object sender, StatusChangedEventArgs e)
+        {
+            // Load the map from the service once ready
+            if (e.Status == LocalServerStatus.Started)
+            {
+                // 울산행정구역 표시
+                //ShowLocalServerLayer(mapView, "BML_GADM_AS", true);
+                ShowShapeLayer(mapView, "BML_GADM_AS", true);
+                /*
+                        // Get the path to the first layer - the local feature service url + layer ID
+                        string layerUrl = _localFeatureService.Url + "/0";
+
+                        // Create the ServiceFeatureTable
+                        ServiceFeatureTable myFeatureTable = new ServiceFeatureTable(new Uri(layerUrl));
+
+                        // Create the Feature Layer from the table
+                        FeatureLayer myFeatureLayer = new FeatureLayer(myFeatureTable);
+                        layers["WTL_FLOW_PS"] = myFeatureLayer;
+
+                        // Add the layer to the map
+                        mapView.Map.OperationalLayers.Add(myFeatureLayer);
+
+                        try
+                        {
+                            // Wait for the layer to load
+                            await myFeatureLayer.LoadAsync();
+
+                            // Set the viewpoint on the MapView to show the layer data
+                            await mapView.SetViewpointGeometryAsync(myFeatureLayer.FullExtent, 50);
+                        }
+                        catch (Exception ex)
+                        {
+                            MessageBox.Show(ex.ToString(), "Error");
+                        }
+                 */
+            }
+        }
+
+
+        // mpk 패키지파일의 위치 가져오기
+        private static string GetFeatureLayerPath()
+        {
+            //return DataManager.GetDataFolder("4e94fec734434d1288e6ebe36c3c461f", "PointsOfInterest.mpk");
+            //return GetDataFolder("4e94fec734434d1288e6ebe36c3c461f", "PointsOfInterest.mpk");
+            return BizUtil.GetDataFolder("shape", "fms.mpk");
+        }
+
+
+        #endregion
+
+
 
     }
 

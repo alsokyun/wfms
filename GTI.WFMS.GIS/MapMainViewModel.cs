@@ -3,8 +3,6 @@ using System.ComponentModel;
 using System.Runtime.CompilerServices;
 using Esri.ArcGISRuntime.Geometry;
 using Esri.ArcGISRuntime.Mapping;
-using Esri.ArcGISRuntime.Symbology;
-using System.IO;
 using GTI.WFMS.Models.Common;
 using Esri.ArcGISRuntime.UI.Controls;
 using Esri.ArcGISRuntime.Data;
@@ -15,9 +13,8 @@ using System.Windows.Controls.Primitives;
 using System.Windows;
 using GTI.WFMS.Models.Cmm.Model;
 using GTI.WFMS.GIS.Module;
-using Esri.ArcGISRuntime.LocalServices;
 using GTIFramework.Common.MessageBox;
-using System.Drawing;
+using System.IO;
 
 namespace GTI.WFMS.GIS
 {
@@ -28,7 +25,8 @@ namespace GTI.WFMS.GIS
     {
 
         // 선택한 피처 - 서버연계된Feature  
-        public ArcGISFeature _selectedFeature;
+        //public ArcGISFeature _selectedFeature;
+        public Feature _selectedFeature;
         public List<string> _selectedLayers = new List<string>();
 
         public MapMainViewModel()
@@ -53,6 +51,8 @@ namespace GTI.WFMS.GIS
                 
                 //시설물레이어DIV 초기화작업
                 InitDivLayer();
+
+                InitUniqueValueRenderer();//렌더러초기생성작업
             });
 
 
@@ -66,7 +66,9 @@ namespace GTI.WFMS.GIS
                 CheckBox chkbox = doc.Template.FindName("chkLayer", doc) as CheckBox;
                 bool chk = (bool)chkbox.IsChecked;
 
-                ShowLocalServerLayer(mapView, doc.Tag.ToString(), chk);
+                //ShowLocalServerLayer(mapView, doc.Tag.ToString(), chk);
+                ShowShapeLayer(mapView, doc.Tag.ToString(), chk);
+                
 
                 //선택된 레이어저장
                 try
@@ -125,7 +127,9 @@ namespace GTI.WFMS.GIS
                 //2.레이어 클리어
                 mapView.Map.OperationalLayers.Clear();
                 // 울산행정구역 표시
-                ShowLocalServerLayer(mapView, "BML_GADM_AS", true);
+                //ShowLocalServerLayer(mapView, "BML_GADM_AS", true);
+                ShowShapeLayer(mapView, "BML_GADM_AS", true);
+                
 
                 //3.열여있는 시설물정보창 닫기
                 popFct.IsOpen = false;
@@ -193,42 +197,31 @@ namespace GTI.WFMS.GIS
                         popFct.IsOpen = false;
 
                         // Load the feature.
-                        await _selectedFeature.LoadAsync();
+                        //await _selectedFeature.LoadAsync();
 
-                        // Apply the edit to the feature table.
-                        await _selectedFeature.FeatureTable.DeleteFeatureAsync(_selectedFeature);
-                        _selectedFeature.Refresh();
-
-
-                        break;
-
-                    case "저장":
-                        if(Messages.ShowYesNoMsgBox("변경된 시설물위치정보를 저장하시겠습니까?") == MessageBoxResult.No)
+                        Feature back_selectedFeature = _selectedFeature;
+                        if (Messages.ShowYesNoMsgBox("시설물 위치정보를 삭제하시겠습니까?") == MessageBoxResult.Yes)
                         {
-                            return;
+                            // Apply the edit to the feature table.
+                            await _selectedFeature.FeatureTable.DeleteFeatureAsync(_selectedFeature);
+                            _selectedFeature.Refresh();
+                        }
+                        else
+                        {
+                            await _selectedFeature.FeatureTable.AddFeatureAsync(back_selectedFeature);
+                            _selectedFeature.Refresh();
                         }
 
-                        // Push the update to the service.
-                        ServiceFeatureTable serviceTable = (ServiceFeatureTable)_selectedFeature.FeatureTable;
-
-                        await serviceTable.ApplyEditsAsync();
-                        MessageBox.Show("Success!");
-
-                        //이벤트핸들러원복
-                        mapView.GeoViewTapped -= handlerGeoViewTappedMoveFeature;
-                        mapView.GeoViewTapped -= handlerGeoViewTappedAddFeature;
-                        mapView.GeoViewTapped += handlerGeoViewTapped;
                         break;
+
                     case "취소":
                         // Push the update to the service.
-                        ServiceFeatureTable serviceTableCancel = (ServiceFeatureTable)_selectedFeature.FeatureTable;
-                        serviceTableCancel.CancelLoad();
+                        //ServiceFeatureTable serviceTableCancel = (ServiceFeatureTable)_selectedFeature.FeatureTable;
+                        //serviceTableCancel.CancelLoad();
                         break;
                     default:
                         break;
                 }
-
-
             });
 
         }
@@ -278,7 +271,8 @@ namespace GTI.WFMS.GIS
         public RelayCommand<object> toggleCmd { get; set; }
         public RelayCommand<object> closeCmd { get; set; }
         public RelayCommand<object> resetCmd { get; set; }
-
+        public RelayCommand<object> geoDBCmd { get; set; }
+        
         public RelayCommand<object> btnCmd { get; set; }
 
         public FctDtl FctDtl
@@ -353,8 +347,17 @@ namespace GTI.WFMS.GIS
             await mapView.SetViewpointCenterAsync(_ulsanCoords, _ulsanScale);
 
             //Base맵 초기화
-            this._map.Basemap = Basemap.CreateOpenStreetMap();
             Console.WriteLine("this._map.SpatialReference - " + this._map.SpatialReference);
+            //this._map.Basemap = Basemap.CreateOpenStreetMap();
+
+            //타일맵
+            TileCache tileCache = new TileCache(BizUtil.GetDataFolder("tile", "korea.tpk"));
+            ArcGISTiledLayer tileLayer = new ArcGISTiledLayer(tileCache);
+            this._map.Basemap = new Basemap(tileLayer);
+
+
+            //울산행정구역표시
+            ShowShapeLayer(mapView, "BML_GADM_AS", true);
 
 
             //맵뷰 클릭이벤트 설정
@@ -378,17 +381,21 @@ namespace GTI.WFMS.GIS
 
 
             // Get the path to the first layer - the local feature service url + layer ID
-            string layerUrl = _localFeatureService.Url + "/" + GetLayerId(_selectedLayers[0]);
+            //string layerUrl = _localFeatureService.Url + "/" + GetLayerId(_selectedLayers[0]);
 
             // Create the ServiceFeatureTable
-            ServiceFeatureTable serviceFeatureTable = new ServiceFeatureTable(new Uri(layerUrl));
-            FeatureLayer featureLayer = new FeatureLayer(serviceFeatureTable);
+            //ServiceFeatureTable serviceFeatureTable = new ServiceFeatureTable(new Uri(layerUrl));
+            //FeatureLayer featureLayer = new FeatureLayer(serviceFeatureTable);
 
             // Wait for the layer to load
-            await featureLayer.LoadAsync();
+            //await featureLayer.LoadAsync();
+
+            
+            FeatureTable layerTable = layers[_selectedLayers[0]].FeatureTable;
+
 
             //피처추가
-            ArcGISFeature _addedFeature = (ArcGISFeature)serviceFeatureTable.CreateFeature();
+            Feature _addedFeature = layerTable.CreateFeature();
             _addedFeature.Geometry = destinationPoint;
 
             //속성추가
@@ -406,14 +413,8 @@ namespace GTI.WFMS.GIS
 
 
 
-            await serviceFeatureTable.AddFeatureAsync(_addedFeature);
-
-            //추가내용 저장처리
-            //await featureLayer.LoadAsync();
-            await serviceFeatureTable.ApplyEditsAsync();
-
+            await layerTable.AddFeatureAsync(_addedFeature);
             //추가내용 새로고침
-            //featureLayer.SelectFeature(_addedFeature);
             _addedFeature.Refresh(); 
 
             MessageBox.Show("Added feature ", "Success!");
@@ -425,8 +426,8 @@ namespace GTI.WFMS.GIS
         }
 
 
-        //맵뷰 클릭이벤트 핸들러 -  이동처리
-        public async void handlerGeoViewTappedMoveFeature(object sender, GeoViewInputEventArgs e)
+        //맵뷰 클릭이벤트 핸들러 -  이동처리(ServiceFeature)
+        public async void handlerGeoViewTappedMoveFeature_org(object sender, GeoViewInputEventArgs e)
         {
 
             //이동처리
@@ -441,7 +442,7 @@ namespace GTI.WFMS.GIS
                     destinationPoint = (MapPoint)GeometryEngine.NormalizeCentralMeridian(destinationPoint);
 
                     // Load the feature.
-                    await _selectedFeature.LoadAsync();
+                    //await _selectedFeature.LoadAsync();
 
                     // Update the geometry of the selected feature.
                     _selectedFeature.Geometry = destinationPoint;
@@ -463,9 +464,50 @@ namespace GTI.WFMS.GIS
                 }
 
             }
+        }
+
+        //맵뷰 클릭이벤트 핸들러 -  이동처리(shape파일)
+        public async void handlerGeoViewTappedMoveFeature(object sender, GeoViewInputEventArgs e)
+        {
+
+            //이동처리
+            if (_selectedFeature != null)
+            {
+                try
+                {
+                    // Get the MapPoint from the EventArgs for the tap.
+                    MapPoint destinationPoint = e.Location;
+
+                    // Normalize the point - needed when the tapped location is over the international date line.
+                    destinationPoint = (MapPoint)GeometryEngine.NormalizeCentralMeridian(destinationPoint);
+
+                    // Load the feature.
+                    //await _selectedFeature.LoadAsync();
+
+                    // Update the geometry of the selected feature.
+                    Feature back_selectedFeature = _selectedFeature;
+                    _selectedFeature.Geometry = destinationPoint;
 
 
+                    if (Messages.ShowYesNoMsgBox("시설물 위치이동을 저장하시겠습니까?") == MessageBoxResult.Yes)
+                    {
+                        // Apply the edit to the feature table.
+                        await _selectedFeature.FeatureTable.UpdateFeatureAsync(_selectedFeature);
+                        _selectedFeature.Refresh();
+                    }
+                    else
+                    {
+                        await _selectedFeature.FeatureTable.UpdateFeatureAsync(back_selectedFeature);
+                        _selectedFeature.Refresh();
+                    }
 
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show(ex.ToString(), "Error when moving feature.");
+                }
+
+            }
         }
 
 
@@ -623,7 +665,8 @@ namespace GTI.WFMS.GIS
 
             //선택처리
             layer.SelectFeature(identifiedFeature); //시설물선택활성화 처리
-            _selectedFeature = (ArcGISFeature)identifiedFeature; //선택피처 ArcGISFeature 변환저장
+            //_selectedFeature = (ArcGISFeature)identifiedFeature; //선택피처 ArcGISFeature 변환저장
+            _selectedFeature = (Feature)identifiedFeature; //선택피처 ArcGISFeature 변환저장
 
 
 

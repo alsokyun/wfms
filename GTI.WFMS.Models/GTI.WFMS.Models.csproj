@@ -106,6 +106,7 @@
     <Compile Include="Cmm\Work\CmmWork.cs" />
     <Compile Include="Common\BizUtil.cs" />
     <Compile Include="Common\FmsUtil.cs" />
+    <Compile Include="Common\FmsValueConverter.cs" />
     <Compile Include="Common\RelayCommand.cs" />
     <Compile Include="Common\SourcesBehavior.cs" />
     <Compile Include="Main\Dao\MainDao.cs" />

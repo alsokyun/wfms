@@ -9,10 +9,11 @@
              
              xmlns:vm="clr-namespace:GTI.WFMS.Modules.Link.ViewModel"
              xmlns:cm="clr-namespace:GTIFramework.Common.Utils.Converters;assembly=GTIFramework"
+             xmlns:cv="clr-namespace:GTI.WFMS.Models.Common;assembly=GTI.WFMS.Models"
              >
 
     <UserControl.Resources>
-        <cm:RownumConverter x:Key="rownumConverter" />
+        <cv:RownumConverter x:Key="rownumConverter" />
     </UserControl.Resources>
     
     <Grid>

@@ -14,12 +14,13 @@
              prism:ViewModelLocator.AutoWireViewModel="True"
 
              x:Name="ucUserMngView"
+             xmlns:cv="clr-namespace:GTI.WFMS.Models.Common;assembly=GTI.WFMS.Models"
              >
 
     <UserControl.Resources>
         <ResourceDictionary>
             <cm:MultiValueConverter x:Key="multiValueConverter"/>
-            <cm:ToggleConverter x:Key="toggleConverter" />
+            <cv:ToggleConverter x:Key="toggleConverter" />
         </ResourceDictionary>
     </UserControl.Resources>
 

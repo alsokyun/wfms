@@ -2,6 +2,7 @@
 using Esri.ArcGISRuntime.ArcGISServices;
 using Esri.ArcGISRuntime.Data;
 using Esri.ArcGISRuntime.Geometry;
+using Esri.ArcGISRuntime.LocalServices;
 using Esri.ArcGISRuntime.Mapping;
 using Esri.ArcGISRuntime.Symbology;
 using Esri.ArcGISRuntime.Tasks;
@@ -26,7 +27,7 @@ namespace GTI.WFMS.GIS
     ///  - TileCache tpk 맵구성
     ///  - GraphicsOverlay 맵에추가
     /// </summary>
-    public partial class Map3View : UserControl
+    public partial class Map4View : UserControl
     {
 
         // Enumeration to track which phase of the workflow the sample is in.
@@ -38,7 +39,7 @@ namespace GTI.WFMS.GIS
         }
 
         // URI for a feature service that supports geodatabase generation.
-        private Uri _featureServiceUri = new Uri("https://sampleserver6.arcgisonline.com/arcgis/rest/services/Sync/WildfireSync/FeatureServer");
+        private Uri _featureServiceUri;
 
         // Path to the geodatabase file on disk.
         private string _gdbPath;
@@ -52,87 +53,32 @@ namespace GTI.WFMS.GIS
         // Hold a reference to the generated geodatabase.
         private Geodatabase _resultGdb;
 
-        public Map3View()
+        public Map4View()
         {
             InitializeComponent();
 
             // Create the UI, setup the control references and execute initialization.
             Initialize();
+
+            Initialize_LocalServer();
         }
 
-        private async void Initialize()
+        private void Initialize()
         {
-            // Create a tile cache and load it with the SanFrancisco streets tpk.
-            //TileCache tileCache = new TileCache(GetDataFolder("tile", "SanFrancisco.tpk"));
-            TileCache tileCache = new TileCache(GetDataFolder("tile", "fms_base.tpk"));
-            
-            // Create the corresponding layer based on the tile cache.
-            ArcGISTiledLayer tileLayer = new ArcGISTiledLayer(tileCache);
-
-            // Create the basemap based on the tile cache.
-            Basemap sfBasemap = new Basemap(tileLayer);
-
-            // Create the map with the tile-based basemap.
-            Map myMap = new Map(sfBasemap);
 
             // Assign the map to the MapView.
-            MyMapView.Map = myMap;
+            MyMapView.Map = new Map(Basemap.CreateOpenStreetMap());
 
-            // Create a new symbol for the extent graphic.
-            SimpleLineSymbol lineSymbol = new SimpleLineSymbol(SimpleLineSymbolStyle.Solid, Color.Red, 2);
+            MapPoint _ulsanCoords = new MapPoint(14389882.070911, 4239809.084922, SpatialReferences.WebMercator); //3857
+            double _ulsanScale = 150000;
+            MyMapView.SetViewpointCenterAsync(_ulsanCoords, _ulsanScale);
 
-            // Create a graphics overlay for the extent graphic and apply a renderer.
-            GraphicsOverlay extentOverlay = new GraphicsOverlay
-            {
-                Renderer = new SimpleRenderer(lineSymbol)
-            };
 
-            // Add graphics overlay to the map view.
-            MyMapView.GraphicsOverlays.Add(extentOverlay);
 
             // Set up an event handler for when the viewpoint (extent) changes.
             MyMapView.ViewpointChanged += MapViewExtentChanged;
 
-            try
-            {
-                // Create a task for generating a geodatabase (GeodatabaseSyncTask).
-                _gdbSyncTask = await GeodatabaseSyncTask.CreateAsync(_featureServiceUri);
 
-                // Add all graphics from the service to the map.
-                foreach (IdInfo layer in _gdbSyncTask.ServiceInfo.LayerInfos)
-                {
-                    // Get the URL for this particular layer.
-                    Uri onlineTableUri = new Uri(_featureServiceUri + "/" + layer.Id);
-
-                    // Create the ServiceFeatureTable.
-                    ServiceFeatureTable onlineTable = new ServiceFeatureTable(onlineTableUri);
-
-                    // Wait for the table to load.
-                    await onlineTable.LoadAsync();
-
-                    // Skip tables that aren't for point features.{
-                    if (onlineTable.GeometryType != GeometryType.Point)
-                    {
-                        continue;
-                    }
-
-                    // Add the layer to the map's operational layers if load succeeds.
-                    if (onlineTable.LoadStatus == LoadStatus.Loaded)
-                    {
-                        myMap.OperationalLayers.Add(new FeatureLayer(onlineTable));
-                    }
-                }
-
-                // Update the graphic - needed in case the user decides not to interact before pressing the button.
-                UpdateMapExtent();
-
-                // Enable the generate button.
-                MyGenerateButton.IsEnabled = true;
-            }
-            catch (Exception e)
-            {
-                MessageBox.Show(e.ToString(), "Error");
-            }
         }
 
         private async void GeoViewTapped(object sender, Esri.ArcGISRuntime.UI.Controls.GeoViewInputEventArgs e)
@@ -479,7 +425,7 @@ namespace GTI.WFMS.GIS
             // Update the Geodatabase path for the new run.
             try
             {
-                _gdbPath = Path.Combine(Environment.ExpandEnvironmentVariables("%TEMP%"), Path.GetTempFileName() + ".geodatabase");
+                _gdbPath = Path.Combine(Environment.ExpandEnvironmentVariables("%TEMP%"), "geofms.geodatabase");
 
                 // Prevent duplicate clicks.
                 MyGenerateButton.IsEnabled = false;
@@ -561,6 +507,133 @@ namespace GTI.WFMS.GIS
         {
             return Path.Combine(GetDataFolder(itemId), Path.Combine(pathParts));
         }
+
+
+
+
+
+        #region ============ LocalServer (start) 관련부분 ==============
+
+        // Hold a reference to the local feature service; the ServiceFeatureTable will be loaded from this service
+        public LocalFeatureService _localFeatureService;
+
+        public async void Initialize_LocalServer()
+        {
+
+            try
+            {
+                // LocalServer must not be running when setting the data path.
+                if (LocalServer.Instance.Status == LocalServerStatus.Started)
+                {
+                    await LocalServer.Instance.StopAsync();
+                }
+
+                // Set the local data path - must be done before starting. On most systems, this will be C:\EsriSamples\AppData.
+                // This path should be kept short to avoid Windows path length limitations.
+                string tempDataPathRoot = Directory.GetParent(Environment.GetFolderPath(Environment.SpecialFolder.Windows)).FullName;
+                string tempDataPath = Path.Combine(tempDataPathRoot, "EsriSamples", "AppData");
+                Directory.CreateDirectory(tempDataPath); // CreateDirectory won't overwrite if it already exists.
+                LocalServer.Instance.AppDataPath = tempDataPath;
+
+                // Start the local server instance
+                await LocalServer.Instance.StartAsync();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(String.Format("Please ensure that local server is installed prior to using the sample. See instructions in readme.md. Message: {0}", ex.Message), "Local Server failed to start");
+                return;
+            }
+
+            // Load the sample data and get the path
+            string myfeatureServicePath = GetFeatureLayerPath();
+
+            // Create the feature service to serve the local data
+            _localFeatureService = new LocalFeatureService(myfeatureServicePath);
+
+            // Listen to feature service status changes
+            _localFeatureService.StatusChanged += _localFeatureService_StatusChanged;
+
+            // Start the feature service
+            try
+            {
+                await _localFeatureService.StartAsync();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message, "The feature service failed to load");
+            }
+        }
+
+        private async void _localFeatureService_StatusChanged(object sender, StatusChangedEventArgs e)
+        {
+            // Load the map from the service once ready
+            if (e.Status == LocalServerStatus.Started)
+            {
+                //서버올라오면 geodatabase 동기화연결 시작...
+                _featureServiceUri = _localFeatureService.Url;
+
+                try
+                {
+                    // Create a task for generating a geodatabase (GeodatabaseSyncTask).
+                    _gdbSyncTask = await GeodatabaseSyncTask.CreateAsync(_featureServiceUri);
+
+                    // Add all graphics from the service to the map.
+                    foreach (IdInfo layer in _gdbSyncTask.ServiceInfo.LayerInfos)
+                    {
+                        // Get the URL for this particular layer.
+                        Uri onlineTableUri = new Uri(_featureServiceUri + "/" + layer.Id);
+
+                        // Create the ServiceFeatureTable.
+                        ServiceFeatureTable onlineTable = new ServiceFeatureTable(onlineTableUri);
+
+                        // Wait for the table to load.
+                        await onlineTable.LoadAsync();
+
+                        // Skip tables that aren't for point features.{
+                        if (onlineTable.GeometryType != GeometryType.Point)
+                        {
+                            continue;
+                        }
+
+                        // Add the layer to the map's operational layers if load succeeds.
+                        if (onlineTable.LoadStatus == LoadStatus.Loaded)
+                        {
+                            MyMapView.Map.OperationalLayers.Add(new FeatureLayer(onlineTable));
+                        }
+                    }
+
+                    // Update the graphic - needed in case the user decides not to interact before pressing the button.
+                    UpdateMapExtent();
+
+                    // Enable the generate button.
+                    MyGenerateButton.IsEnabled = true;
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show(ex.ToString(), "Error");
+                }
+
+            }
+        }
+
+
+        // mpk 패키지파일의 위치 가져오기
+        private static string GetFeatureLayerPath()
+        {
+            //return DataManager.GetDataFolder("4e94fec734434d1288e6ebe36c3c461f", "PointsOfInterest.mpk");
+            //return GetDataFolder("4e94fec734434d1288e6ebe36c3c461f", "PointsOfInterest.mpk");
+            return GetDataFolder("shape", "fms.mpk");
+        }
+
+
+
+
+
+
+
+
+
+        #endregion
 
 
 

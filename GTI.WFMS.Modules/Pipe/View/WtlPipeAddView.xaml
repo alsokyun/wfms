@@ -13,7 +13,7 @@
             xmlns:cm="clr-namespace:GTIFramework.Common.Utils.Converters;assembly=GTIFramework"
             xmlns:vm="clr-namespace:GTI.WFMS.Modules.Pipe.ViewModel"
             x:Name="wtlPipeAdd"
-      
+            xmlns:cv="clr-namespace:GTI.WFMS.Models.Common;assembly=GTI.WFMS.Models"    
       >
 
     <!--뷰와 뷰모델 바인딩-->
@@ -27,7 +27,7 @@
         <ResourceDictionary>
 
             <cm:MultiValueConverter x:Key="multiValueConverter"/>
-            <cm:Toggle2Converter x:Key="toggleConverter" />
+            <cv:Toggle2Converter x:Key="toggleConverter" />
 
             
             <dx:BoolToObjectConverter x:Key="foregroundConverter">

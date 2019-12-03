@@ -135,9 +135,11 @@ namespace GTI.WFMS.Main
                 /* ArcGis 2D-MapView 로딩
                  */
                 //regionManager.Regions["ContentRegion"].RemoveAll();
-                regionManager.RequestNavigate("ContentRegion", new Uri("Map3View", UriKind.Relative));
+                //regionManager.RequestNavigate("ContentRegion", new Uri("Map4View", UriKind.Relative));
+                //regionManager.RequestNavigate("ContentRegion", new Uri("OfflineBasemapByReference", UriKind.Relative));
+                //regionManager.RequestNavigate("ContentRegion", new Uri("Map3View", UriKind.Relative));
                 //regionManager.RequestNavigate("ContentRegion", new Uri("Map2View", UriKind.Relative));
-                //regionManager.RequestNavigate("ContentRegion", new Uri("MapMainView", UriKind.Relative));
+                regionManager.RequestNavigate("ContentRegion", new Uri("MapMainView", UriKind.Relative));
                 //regionManager.RequestNavigate("ContentRegion", new Uri("MainWindow", UriKind.Relative));
 
 
