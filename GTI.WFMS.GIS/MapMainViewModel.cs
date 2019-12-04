@@ -134,10 +134,10 @@ namespace GTI.WFMS.GIS
                 //3.열여있는 시설물정보창 닫기
                 popFct.IsOpen = false;
 
-
+                TreeView treeLayer = obj as TreeView;
 
                 //레이어div 체크해제
-                foreach (CheckBox cb in FmsUtil.FindVisualChildren<CheckBox>(divLayer))
+                foreach (CheckBox cb in FmsUtil.FindVisualChildren<CheckBox>(treeLayer))
                 {
                     cb.IsChecked = false;
                 }

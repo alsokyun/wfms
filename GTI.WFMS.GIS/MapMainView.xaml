@@ -35,6 +35,13 @@
                     <TextBlock Margin="5" Foreground="Brown" FontSize="12" Text="{TemplateBinding Content}" />
                 </DockPanel>
             </ControlTemplate>
+            <ControlTemplate x:Key="dockTemp" TargetType="TreeViewItem">
+                <DockPanel>
+                    <CheckBox Name="chkLayer" Tag="{TemplateBinding ToolTip}"/>
+                    <Image Source="{TemplateBinding ToolTip, Converter={StaticResource imgConverter}}"/>
+                    <TextBlock Margin="5" Foreground="Brown" FontSize="12" Text="{TemplateBinding Header}" />
+                </DockPanel>
+            </ControlTemplate>
 
             <ResourceDictionary.MergedDictionaries>
                 <ResourceDictionary Source="Styles/GisStyles.xaml" />
@@ -58,7 +65,7 @@
             <Button Content="Reset">
                 <i:Interaction.Triggers>
                     <i:EventTrigger EventName="Click">
-                        <i:InvokeCommandAction Command="{Binding resetCmd}" />
+                        <i:InvokeCommandAction Command="{Binding resetCmd}" CommandParameter="{Binding ElementName=treeLayer}"/>
                     </i:EventTrigger>
                 </i:Interaction.Triggers>
             </Button>
@@ -77,10 +84,10 @@
 
                 <Grid x:Name="gridTitle"  Background="#144873">
                     <Label Foreground="White" Margin="5">시설물정보</Label>
-                    <Button Margin="5">
+                    <Button Margin="5" HorizontalAlignment="Right">
                         <Button.Template>
                             <ControlTemplate>
-                                <Image Source="/Resources/Image/icon_layer_close.png" Height="20" Width="20" HorizontalAlignment="Right"  />
+                                <Image Source="Resources/Image/icon_layer_close.png" Height="20" Width="40"/>
                             </ControlTemplate>
                         </Button.Template>
                         <i:Interaction.Triggers>
