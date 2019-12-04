@@ -11,6 +11,7 @@
             xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
             xmlns:cm="clr-namespace:GTIFramework.Common.Utils.Converters;assembly=GTIFramework"
             xmlns:cv="clr-namespace:GTI.WFMS.Models.Common;assembly=GTI.WFMS.Models"
+            xmlns:system="clr-namespace:System;assembly=mscorlib"
              >
 
     <!--뷰의 데이터컨텍스트 세팅-->
@@ -22,7 +23,8 @@
 
     <UserControl.Resources>
         <ResourceDictionary>
-            
+            <system:String x:Key="icon_layer_close.png">icon_layer_close.png</system:String>
+
             <cv:Str2ImgConverter x:Key="imgConverter" />
         
             <!--트리내부 아이템 템플릿 -->
@@ -37,6 +39,8 @@
             <ResourceDictionary.MergedDictionaries>
                 <ResourceDictionary Source="Styles/GisStyles.xaml" />
             </ResourceDictionary.MergedDictionaries>
+
+
 
         </ResourceDictionary>
 
@@ -76,7 +80,7 @@
                     <Button Margin="5">
                         <Button.Template>
                             <ControlTemplate>
-                                <Image Source="icon_layer_close.png" Height="20" Width="20" HorizontalAlignment="Right"/>
+                                <Image Source="/Resources/Image/icon_layer_close.png" Height="20" Width="20" HorizontalAlignment="Right"  />
                             </ControlTemplate>
                         </Button.Template>
                         <i:Interaction.Triggers>

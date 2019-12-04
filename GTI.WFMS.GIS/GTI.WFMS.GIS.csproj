@@ -181,6 +181,10 @@
     <Resource Include="Resources\image\btn_popup_close.png" />
     <Resource Include="Resources\image\btn_popup_close_on.png" />
   </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\image\icon_layer_close.png" />
+    <Resource Include="Resources\image\icon_layer_map_folder.png" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
