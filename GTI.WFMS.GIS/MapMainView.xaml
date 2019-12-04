@@ -83,7 +83,7 @@
             <StackPanel x:Name="stContent">
 
                 <Grid x:Name="gridTitle"  Background="#144873">
-                    <Label Foreground="White" Margin="5">시설물정보</Label>
+                    <Label Foreground="White" Margin="5">시설물 레이어</Label>
                     <Button Margin="5" HorizontalAlignment="Right">
                         <Button.Template>
                             <ControlTemplate>
