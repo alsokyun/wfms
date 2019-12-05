@@ -476,17 +476,64 @@ namespace GTI.WFMS.GIS
                 try
                 {
                     // Get the MapPoint from the EventArgs for the tap.
-                    MapPoint destinationPoint = e.Location;
-
+                    MapPoint mapPoint = e.Location;
                     // Normalize the point - needed when the tapped location is over the international date line.
-                    destinationPoint = (MapPoint)GeometryEngine.NormalizeCentralMeridian(destinationPoint);
+                    mapPoint = (MapPoint)GeometryEngine.NormalizeCentralMeridian(mapPoint);
+                    Polyline polyline;
+                    Polygon polygon;
 
-                    // Load the feature.
-                    //await _selectedFeature.LoadAsync();
 
                     // Update the geometry of the selected feature.
                     Feature back_selectedFeature = _selectedFeature;
-                    _selectedFeature.Geometry = destinationPoint;
+
+
+                    //라인피처인 경우 - 평행이동 라인을 만든다
+                    if (_selectedFeature.Geometry is Polyline)
+                    {
+                        polyline = (Polyline)_selectedFeature.Geometry;
+
+                        List<MapPoint> points = new List<MapPoint>();
+                        foreach (var part in polyline.Parts)
+                        {
+                            //라인의 첫번째점을 기준으로 이동
+                            double dx = mapPoint.X - part.Points[0].X;
+                            double dy = mapPoint.Y - part.Points[0].Y;
+
+                            foreach (var pt in part.Points)
+                            {
+                                MapPoint mpt = new MapPoint(pt.X + dx, pt.Y + dy, SpatialReferences.WebMercator);
+                                points.Add(mpt);
+                            }
+                        }
+
+                        _selectedFeature.Geometry = new Polyline(points);
+                    }
+                    //폴리곤 피처인경우 - 평행이동 폴리곤을 만든다
+                    else if (_selectedFeature.Geometry is Polygon)
+                    {
+                        polygon = (Polygon)_selectedFeature.Geometry;
+
+                        List<MapPoint> points = new List<MapPoint>();
+                        foreach (var part in polygon.Parts)
+                        {
+                            //라인의 첫번째점을 기준으로 이동
+                            double dx = mapPoint.X - part.Points[0].X;
+                            double dy = mapPoint.Y - part.Points[0].Y;
+
+                            foreach (var pt in part.Points)
+                            {
+                                MapPoint mpt = new MapPoint(pt.X + dx, pt.Y + dy, SpatialReferences.WebMercator);
+                                points.Add(mpt);
+                            }
+                        }
+
+                        _selectedFeature.Geometry = new Polygon(points);
+                    }
+                    //포인트 피처인 경우는 위치만 변경하면됨
+                    else
+                    {
+                        _selectedFeature.Geometry = mapPoint;
+                    }
 
 
                     if (Messages.ShowYesNoMsgBox("시설물 위치이동을 저장하시겠습니까?") == MessageBoxResult.Yes)
@@ -494,6 +541,7 @@ namespace GTI.WFMS.GIS
                         // Apply the edit to the feature table.
                         await _selectedFeature.FeatureTable.UpdateFeatureAsync(_selectedFeature);
                         _selectedFeature.Refresh();
+                        MessageBox.Show("Moved feature ", "Success!");
                     }
                     else
                     {
@@ -508,6 +556,12 @@ namespace GTI.WFMS.GIS
                 }
 
             }
+
+            //이벤트핸들러원복
+            mapView.GeoViewTapped -= handlerGeoViewTappedMoveFeature;
+            mapView.GeoViewTapped -= handlerGeoViewTappedAddFeature;
+            mapView.GeoViewTapped += handlerGeoViewTapped;
+
         }
 
 

@@ -4,28 +4,24 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         mc:Ignorable="d"
-        Width="380" Height="500" 
+        Width="380" Height="380" 
         WindowStyle="None" ResizeMode="NoResize" WindowStartupLocation="CenterScreen"
         Title="InfoFacility">
     <Grid>
 
         <Grid.Background>
-            <!--<ImageBrush ImageSource="/Resources/Images/Image/login_background.png" Stretch="None"/>-->
-            <SolidColorBrush Color="#0086b3" ></SolidColorBrush>
+            <ImageBrush ImageSource="/Resources/Images/Image/bg.png" Stretch="Fill"/>
         </Grid.Background>
 
         <Grid.RowDefinitions>
-            <RowDefinition Height="30"/>
-            <RowDefinition Height="35"/>
+            <RowDefinition Height="25"/>
+            <RowDefinition Height="40"/>
             <RowDefinition Height="15"/>
 
             <RowDefinition Height="238"/>
 
-            <RowDefinition Height="15"/>
-            <RowDefinition Height="50"/>
-            <RowDefinition Height="50"/>
-            <RowDefinition Height="27"/>
-            <RowDefinition Height="40"/>
+            <RowDefinition Height="20"/>
+            <RowDefinition Height="42"/>
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="20"/>
@@ -37,16 +33,15 @@
             <ColumnDefinition Width="20"/>
         </Grid.ColumnDefinitions>
 
-
-        <Border x:Name="bdTitle" Grid.ColumnSpan="5" Background="#00ace6"/>
-
-        <Button x:Name="btnClose" Grid.Row="0" Grid.Column="4" Style="{StaticResource ResourceKey=XSignCloseButton}"/>
+        <Border x:Name="bdTitle" Grid.Row="0" Grid.ColumnSpan="5" ></Border>
+        <StackPanel Grid.Row="0" Grid.ColumnSpan="5" Orientation="Horizontal" HorizontalAlignment="Right" Margin="0 5 5 0">
+            <Button x:Name="btnDataBaseInfoEdit" Style="{StaticResource ResourceKey=XSignSettingButton}"/>
+            <Button x:Name="btnClose" Style="{StaticResource ResourceKey=XSignCloseButton}"/>
+        </StackPanel>
 
 
         <Grid Grid.Row="1" Grid.Column="2" VerticalAlignment="Center" HorizontalAlignment="Center">
-            <!--<Image Source="/Resources/Images/Image/login_logo.png" Stretch="None"/>-->
-            <Label FontFamily="맑은고딕" FontSize="20" FontWeight="Bold" Foreground="SkyBlue" Content="Info Facility"/>
-            
+            <Image Source="/Resources/Images/Image/login_logo.png" Stretch="None"/>
         </Grid>
 
 
@@ -72,7 +67,6 @@
 
             <!--접속정보 영역 Border-->
             <Border Grid.RowSpan="9" Grid.ColumnSpan="4" Background="#b307365f" CornerRadius="4"/>
-
             <Border Grid.Row="1" Grid.Column="2" Background="White" CornerRadius="4"/>
             <Border Grid.Row="3" Grid.Column="2" Background="White" CornerRadius="4"/>
             <Border Grid.Row="5" Grid.Column="2" Background="White" CornerRadius="4"/>
@@ -86,34 +80,17 @@
             <Label Grid.Row="5" Grid.Column="1" Content="비밀번호" Style="{StaticResource ResourceKey= LoginLabel}"/>
             <dxe:PasswordBoxEdit x:Name="pwdPW" Grid.Row="5" Grid.Column="2" Style="{StaticResource ResourceKey= LoginPasswordBox}"/>
 
+            <StackPanel Grid.Row="6" Grid.Column="2" Orientation="Horizontal" HorizontalAlignment="Left" VerticalAlignment="Center">
+                <Image x:Name="imgConnAbnormal" Source="/Resources/Images/Image/login_alram_abnormal.png" Stretch="None"/>
+                <Image x:Name="imgConnNormal" Source="/Resources/Images/Image/login_alram_normal.png" Stretch="None" Visibility="Collapsed"/>
+            </StackPanel>
             <dxe:CheckEdit x:Name="chkSaveID" Grid.Row="6" Grid.Column="2" HorizontalAlignment ="Right"  Content="아이디 저장" Foreground="White" FontFamily="맑은고딕" FontSize="14"/>
 
             <Button x:Name="btnLogin" Grid.Row="7" Grid.Column="2" Style="{StaticResource ResourceKey=LoginButton}"/>
         </Grid>
 
-
-
-        <!--사업소 정보설정 & 접속상태-->
-        <Grid Grid.Row="5" Grid.Column="1" Grid.ColumnSpan="3">
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="*"/>
-                <ColumnDefinition Width="*"/>
-            </Grid.ColumnDefinitions>
-
-            <Border Grid.Column="0" Grid.ColumnSpan="3" Background="#b307365f" CornerRadius="4"/>
-
-            <Button  x:Name="btnDataBaseInfoEdit" Style="{StaticResource ResourceKey=LoginSettingButton}"/>
-
-            <StackPanel Grid.Column="1" Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Center">
-                <Label Content="접속상태" FontFamily="맑은고딕" FontSize="14" Foreground="#76b0d9" Margin="0,0,10,0"/>
-                <Image x:Name="imgConnAbnormal" Source="/Resources/Images/Image/login_alram_abnormal.png" Stretch="None"/>
-                <Image x:Name="imgConnNormal" Source="/Resources/Images/Image/login_alram_normal.png" Stretch="None" Visibility="Collapsed"/>
-            </StackPanel>
-        </Grid>
-
-
         <!--그린텍아이엔씨 로고-->
-        <Image Grid.Row="7" Grid.Column="2" Source="/Resources/Images/Image/greentech_logo.png" Stretch="None"/>
+        <Image Grid.Row="5" Grid.Column="2" Source="/Resources/Images/Image/greentech_logo.png" Stretch="None" VerticalAlignment="Top"/>
 
 
     </Grid>

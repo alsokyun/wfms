@@ -177,7 +177,7 @@ namespace GTI.WFMS.Main
 
             DataRow[] drmidMENU;
             DataRow[] drsmMENU;
-            drmidMENU = dtMenuList.Select("MNU_STEP = '2' AND UPPER_CD ='" + ((Button)sender).Name.Replace("MN_", "").ToString() + "'", "ORD");
+            drmidMENU = dtMenuList.Select("MNU_STEP = '3' AND UPPER_CD ='" + ((Button)sender).Name.Replace("MN_", "").ToString() + "'", "ORD");
 
             //중메뉴
             foreach (DataRow r in drmidMENU)
@@ -199,7 +199,7 @@ namespace GTI.WFMS.Main
                         accrMenu.Items.Add(acctwoitem);
 
                         drsmMENU = null;
-                        drsmMENU = dtMenuList.Select("MNU_STEP = '3' AND UPPER_CD ='" + acctwoitem.Name.Replace("MN_", "").ToString() + "'", "ORD");
+                        drsmMENU = dtMenuList.Select("MNU_STEP = '4' AND UPPER_CD ='" + acctwoitem.Name.Replace("MN_", "").ToString() + "'", "ORD");
 
                         //소메뉴
                         foreach (DataRow drthree in drsmMENU)
@@ -267,7 +267,7 @@ namespace GTI.WFMS.Main
 
                 dtMenuList = work.Select_MNU_LIST(htconditions);
 
-                foreach (DataRow r in dtMenuList.Select("MNU_STEP = '1'", "ORD"))
+                foreach (DataRow r in dtMenuList.Select("MNU_STEP = '2'", "ORD"))
                 {
                     try
                     {

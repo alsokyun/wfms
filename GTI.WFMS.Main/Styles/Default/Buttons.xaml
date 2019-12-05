@@ -640,6 +640,36 @@
             </Trigger>
         </Style.Triggers>
     </Style>
+    <!--설정 버튼 (이미지)-->
+    <Style TargetType="Button" x:Key="XSignSettingButton">
+        <Setter Property="Width" Value="15"/>
+        <Setter Property="Height" Value="15"/>
+        <Setter Property="VerticalAlignment" Value="Top"/>
+        <Setter Property="HorizontalAlignment" Value="Right"/>
+        <Setter Property="Margin" Value="0,5,5,0"/>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate>
+                    <Grid>
+                        <Image Source="/Resources/Images/Image/btn_X_settings.png"/>
+                    </Grid>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+        <Style.Triggers>
+            <Trigger Property="IsMouseOver" Value="True">
+                <Setter Property="Template">
+                    <Setter.Value>
+                        <ControlTemplate>
+                            <Grid>
+                                <Image Source="/Resources/Images/Image/btn_X_settings_on.png"/>
+                            </Grid>
+                        </ControlTemplate>
+                    </Setter.Value>
+                </Setter>
+            </Trigger>
+        </Style.Triggers>
+    </Style>
 
     <!--메뉴 Show Hiden (이미지)-->
     <Style TargetType="Button" x:Key="btn_Menu_Slide">
