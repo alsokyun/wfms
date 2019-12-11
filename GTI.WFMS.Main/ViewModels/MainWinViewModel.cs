@@ -136,6 +136,7 @@ namespace GTI.WFMS.Main
                  */
                 //regionManager.Regions["ContentRegion"].RemoveAll();
                 //regionManager.RequestNavigate("ContentRegion", new Uri("Map4View", UriKind.Relative));
+                //regionManager.RequestNavigate("ContentRegion", new Uri("SketchOnMap", UriKind.Relative));
                 //regionManager.RequestNavigate("ContentRegion", new Uri("OfflineBasemapByReference", UriKind.Relative));
                 //regionManager.RequestNavigate("ContentRegion", new Uri("Map3View", UriKind.Relative));
                 //regionManager.RequestNavigate("ContentRegion", new Uri("Map2View", UriKind.Relative));
@@ -192,9 +193,18 @@ namespace GTI.WFMS.Main
                             Name = "MN_" + r["MNU_CD"].ToString(),
                             Header = r["MNU_NM"].ToString(),
                             Foreground = new SolidColorBrush(Colors.White),
-                            FontSize = 16,
+                            FontSize = 14,
                             Glyph = new BitmapImage(new Uri("/Resources/Images/MNUImage/" + r["MNU_IMG"].ToString(), UriKind.Relative))
                         };
+                        if (ThemeApply.strThemeName.Equals("GTINavyTheme"))
+                        {
+                            acctwoitem.Glyph = new BitmapImage(new Uri("/Resources/Navy/Images/MNUImage/" + r["MNU_IMG"].ToString(), UriKind.Relative));
+                        }
+                        else
+                        {
+                            acctwoitem.Glyph = new BitmapImage(new Uri("/Resources/Blue/Images/MNUImage/" + r["MNU_IMG"].ToString(), UriKind.Relative));
+                        }
+
                         mainwin.RegisterName(acctwoitem.Name, acctwoitem); //메인윈도우에 객체를 추가한다...
                         accrMenu.Items.Add(acctwoitem);
 
@@ -278,8 +288,17 @@ namespace GTI.WFMS.Main
                                 Name = "MN_" + r["MNU_CD"].ToString(),
                                 Content = r["MNU_NM"].ToString(),
                                 Style = Application.Current.Resources["MainMNUButton"] as Style,
-                                Tag = "/Resources/Images/MNUImage/" + r["MNU_IMG"].ToString()
+                                //Tag = "/Resources/Images/MNUImage/" + r["MNU_IMG"].ToString()
                             };
+                            if (ThemeApply.strThemeName.Equals("GTINavyTheme"))
+                            {
+                                btnMenu.Tag = "/Resources/Navy/Images/MNUImage/" + r["MNU_IMG"].ToString();
+                            }
+                            else
+                            {
+                                btnMenu.Tag = "/Resources/Navy/Images/MNUImage/" + r["MNU_IMG"].ToString();
+                            }
+
                             btnMenu.Click += btnMenu_Click;
                             mainwin.RegisterName(btnMenu.Name, btnMenu);
                             spMenuArea.Children.Add(btnMenu);

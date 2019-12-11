@@ -5,39 +5,27 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:GTI.WFMS.Modules.Main"
         mc:Ignorable="d"
-        Title="PopWin" Height="600" Width="1000"
+        Title="PopWin" Height="630" Width="1100"
         WindowStyle="None"
         x:Name="popWin"
         
         >
     <Grid>
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="2"/>
-            <ColumnDefinition Width="*"/>
-            <ColumnDefinition Width="2"/>
-        </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
-            <RowDefinition Height="2"/>
             <RowDefinition Height="45"/>
             <RowDefinition Height="*"/>
-            <RowDefinition Height="2"/>
         </Grid.RowDefinitions>
 
-        <!--헤더 백그라운드 border-->
-        <Border Grid.Row="1" Grid.Column="1" x:Name="bdTitle" Background="#144873"/>
 
         <!--폼 아웃라인 border-->
-        <Border Grid.Column="0" Grid.RowSpan="4" Background="#144873"/>
-        <Border Grid.Column="2" Grid.RowSpan="4" Background="#144873"/>
-        <Border Grid.Row="3" Grid.ColumnSpan="3" Background="#144873"/>
-
-        <Label Grid.Row="1" Grid.Column="1" Content="화면타이틀" FontSize="18" FontWeight="Bold" Foreground="White" 
-               HorizontalAlignment="Left" VerticalAlignment="Center" Padding="10 0 0 0"
+        <Border Grid.Row="0" Background="{DynamicResource TileCOLOR2Brush}"/>
+        <Label Grid.Row="0" Content="화면타이틀" FontSize="16" FontWeight="Bold" Foreground="White" 
+               HorizontalAlignment="Left" VerticalAlignment="Center" Margin="10 0 0 0"
                x:Name="lbTitle"
                />
-        <Button x:Name="btnXSignClose" Grid.Row="1" Grid.Column="1" Style="{StaticResource XSignCloseButton}" 
+        <Button x:Name="btnXSignClose" Grid.Row="0" Style="{DynamicResource XSignCloseButton}" 
                 Margin="0 15 15 0"/>
 
-        <Frame Grid.Row="2" Grid.Column="1" NavigationUIVisibility="Hidden" x:Name="srcFrm"></Frame>
+        <Frame Grid.Row="1" NavigationUIVisibility="Hidden" x:Name="srcFrm"></Frame>
     </Grid>
 </Window>

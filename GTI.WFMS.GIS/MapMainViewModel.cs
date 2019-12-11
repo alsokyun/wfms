@@ -15,6 +15,9 @@ using GTI.WFMS.Models.Cmm.Model;
 using GTI.WFMS.GIS.Module;
 using GTIFramework.Common.MessageBox;
 using System.IO;
+using Esri.ArcGISRuntime.UI;
+using Esri.ArcGISRuntime.Symbology;
+using System.Threading.Tasks;
 
 namespace GTI.WFMS.GIS
 {
@@ -28,6 +31,9 @@ namespace GTI.WFMS.GIS
         //public ArcGISFeature _selectedFeature;
         public Feature _selectedFeature;
         public List<string> _selectedLayers = new List<string>();
+        // Graphics overlay to host sketch graphics
+        private GraphicsOverlay _sketchOverlay;
+        private Esri.ArcGISRuntime.Geometry.Geometry _geometry;
 
         public MapMainViewModel()
         {
@@ -40,10 +46,11 @@ namespace GTI.WFMS.GIS
             {
 
                 //뷰객체를 파라미터로 전달받기
-                Grid divGrid = obj as Grid;
+                System.Windows.Controls.Grid divGrid = obj as System.Windows.Controls.Grid;
 
                 this.mapView = divGrid.FindName("mapView") as MapView;
                 this.divLayer = divGrid.FindName("divLayer") as Popup;
+                this.ClearButton = divGrid.FindName("ClearButton") as Button;
 
                 //지도초기화
                 InitMap();
@@ -53,6 +60,7 @@ namespace GTI.WFMS.GIS
                 InitDivLayer();
 
                 InitUniqueValueRenderer();//렌더러초기생성작업
+
             });
 
 
@@ -89,7 +97,7 @@ namespace GTI.WFMS.GIS
             toggleCmd = new RelayCommand<object>(delegate (object obj)
             {
                 StackPanel spLayer = divLayer.FindName("spLayer") as StackPanel;
-                Grid gridTitle = divLayer.FindName("gridTitle") as Grid;
+                System.Windows.Controls.Grid gridTitle = divLayer.FindName("gridTitle") as System.Windows.Controls.Grid;
 
                 spLayer.Visibility = spLayer.Visibility == Visibility.Visible ? Visibility.Collapsed : Visibility.Visible;
 
@@ -163,11 +171,52 @@ namespace GTI.WFMS.GIS
                             return;
                         }
 
-                        //추가처리 탭핸들러 추가
-                        mapView.GeoViewTapped -= handlerGeoViewTappedMoveFeature;
-                        mapView.GeoViewTapped -= handlerGeoViewTapped;
-                        mapView.GeoViewTapped += handlerGeoViewTappedAddFeature;
-                        MessageBox.Show("시설물을 추가할 지점을 마우스로 클릭하세요.");
+
+                        //라인피처인 경우 - SketchEditor 를 GraphicOverlay에 생성한다
+                        if (_selectedLayers[0].Equals("WTL_PIPE_LM") || _selectedLayers[0].Equals("WTL_SPLY_LS")) 
+                        {
+                            try
+                            {
+                                // Let the user draw on the map view using the chosen sketch mode
+                                Esri.ArcGISRuntime.Geometry.Geometry geometry = await mapView.SketchEditor.StartAsync(SketchCreationMode.Polyline, true); //맵에 신규geometry 얻어오기
+
+                                // Create and add a graphic from the geometry the user drew
+                                SimpleLineSymbol symbol ;
+                                if (_selectedLayers[0].Equals("WTL_PIPE_LM"))
+                                {
+                                    symbol  = new SimpleLineSymbol(SimpleLineSymbolStyle.Solid, System.Drawing.Color.SkyBlue, 2);
+                                }
+                                else 
+                                {
+                                    symbol = new SimpleLineSymbol(SimpleLineSymbolStyle.Solid, System.Drawing.Color.SkyBlue, 2);
+                                }
+
+                                Graphic graphic = new Graphic(geometry, symbol);
+                                _sketchOverlay.Graphics.Add(graphic);
+
+                                // Enable/disable the clear and edit buttons according to whether or not graphics exist in the overlay
+                                ClearButton.IsEnabled = _sketchOverlay.Graphics.Count > 0;
+                            }
+                            catch (TaskCanceledException)
+                            {
+                                // Ignore ... let the user cancel drawing
+                            }
+                            catch (Exception ex)
+                            {
+                                // Report exceptions
+                                MessageBox.Show("Error drawing graphic shape: " + ex.Message);
+                            }
+                        }
+                        //포인트피처의 경우는 클릭핸들러만 추가함
+                        else
+                        {
+                            //추가처리 탭핸들러 추가
+                            mapView.GeoViewTapped -= handlerGeoViewTappedMoveFeature;
+                            mapView.GeoViewTapped -= handlerGeoViewTapped;
+                            mapView.GeoViewTapped += handlerGeoViewTappedAddFeature;
+                            MessageBox.Show("시설물을 추가할 지점을 마우스로 클릭하세요.");
+                        }
+
                         break;
 
                     case "이동":
@@ -224,7 +273,35 @@ namespace GTI.WFMS.GIS
                 }
             });
 
+
+            //도형클리어처리
+            clearCmd = new RelayCommand<object>(delegate (object obj)
+            {
+                // Remove all graphics from the graphics overlay
+                _sketchOverlay.Graphics.Clear();
+
+                // Disable buttons that require graphics
+                ClearButton.IsEnabled = false;
+            });
+            completeCmd = new RelayCommand<object>(async delegate (object obj)
+            {
+                mapView.SketchEditor.Stop();
+                //추가된 도형 저장처리
+
+                _selectedFeature.Geometry = _geometry;
+                // Apply the edit to the feature table.
+                await _selectedFeature.FeatureTable.UpdateFeatureAsync(_selectedFeature);
+                _selectedFeature.Refresh();
+                MessageBox.Show("Added feature ", "Success!");
+
+            });
+
+            
+
         }
+
+
+
 
 
 
@@ -271,9 +348,10 @@ namespace GTI.WFMS.GIS
         public RelayCommand<object> toggleCmd { get; set; }
         public RelayCommand<object> closeCmd { get; set; }
         public RelayCommand<object> resetCmd { get; set; }
-        public RelayCommand<object> geoDBCmd { get; set; }
         
         public RelayCommand<object> btnCmd { get; set; }
+        public RelayCommand<object> completeCmd { get; set; }
+        public RelayCommand<object> clearCmd { get; set; }
 
         public FctDtl FctDtl
         {
@@ -304,6 +382,7 @@ namespace GTI.WFMS.GIS
         private FctDtl fctDtl = new FctDtl(); //시설물기본정보
         private Popup divLayer = new Popup(); //시설물레이어DIV
         private PopFct popFct = new PopFct(); //시설물정보DIV
+        private Button ClearButton = new Button();
         #endregion
 
 
@@ -366,6 +445,9 @@ namespace GTI.WFMS.GIS
             mapView.GeoViewTapped += handlerGeoViewTapped;
 
 
+            // Create graphics overlay to display sketch geometry
+            _sketchOverlay = new GraphicsOverlay();
+            mapView.GraphicsOverlays.Add(_sketchOverlay);
         }
 
 

@@ -7,7 +7,7 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
         xmlns:local="clr-namespace:GTI.WFMS.Modules.Pipe.View"
         mc:Ignorable="d" 
-        d:DesignHeight="550" d:DesignWidth="950"
+        d:DesignHeight="585" d:DesignWidth="1100"
       
         xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
         xmlns:ei="http://schemas.microsoft.com/expression/2010/interactions"
@@ -32,25 +32,25 @@
     </Page.Resources>
 
 
-    <Grid>
+    <Grid Background="{DynamicResource PopCOLOR1Brush}">
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="250"/>
+            <ColumnDefinition Width="278"/>
             <ColumnDefinition Width="*"/>
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
-            <RowDefinition Height="40" />
+            <RowDefinition Height="44" />
             <RowDefinition Height="*" />
             <RowDefinition Height="40" />
         </Grid.RowDefinitions>
 
 
         <StackPanel Grid.Row="0" Grid.Column="0" Orientation="Horizontal">
-            <Image Style="{StaticResource TitleCircle}"/>
-            <Label Content="검색항목" Style="{StaticResource CircleTitleLabel}"/>
+            <Image Style="{DynamicResource TitleCircle}" Margin="10 0 0 0"/>
+            <Label Content="검색항목" Style="{DynamicResource CircleTitleLabel}"/>
         </StackPanel>
 
 
-        <Border Grid.Row="1" Grid.Column="0" Style="{StaticResource ResourceKey=MenuHeaderBorder}" />
+        <Border Grid.Row="1" Grid.Column="0" Style="{DynamicResource ResourceKey=MenuHeaderBorder}" />
         <Grid Grid.Row="1" Grid.Column="0" >
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="120"/>
@@ -93,12 +93,12 @@
             <Border Grid.Row="9" Grid.Column="1" BorderThickness="0,0,0,1" BorderBrush="White" Margin="0,0,0,0"/>
 
             <!--라벨&입력창-->
-            <Label Grid.Row="0" Grid.Column="0" Content="관리기관" Style="{StaticResource ResourceKey=HeaderLabel}"/>
-            <dxe:ComboBoxEdit Grid.Row="0" Grid.Column="1" x:Name="cbMNG_CDE" DisplayMember="NM" ValueMember="DTL_CD" Style="{StaticResource ResourceKey=SearchComboBox}" 
+            <Label Grid.Row="0" Grid.Column="0" Content="관리기관" Style="{DynamicResource ResourceKey=HeaderLabel}"/>
+            <dxe:ComboBoxEdit Grid.Row="0" Grid.Column="1" x:Name="cbMNG_CDE" DisplayMember="NM" ValueMember="DTL_CD" Style="{DynamicResource ResourceKey=SearchComboBox}" 
                               Width="120" HorizontalAlignment="Center" />
 
-            <Label Grid.Row="1" Grid.Column="0" Content="관리번호" Style="{StaticResource ResourceKey=HeaderLabel}"/>
-            <dxe:TextEdit Grid.Row="1" Grid.Column="1" x:Name="txtFTR_IDN" Style="{StaticResource ResourceKey=SearchTextEdit}" Width="120" HorizontalAlignment="Center" >
+            <Label Grid.Row="1" Grid.Column="0" Content="관리번호" Style="{DynamicResource ResourceKey=HeaderLabel}"/>
+            <dxe:TextEdit Grid.Row="1" Grid.Column="1" x:Name="txtFTR_IDN" Style="{DynamicResource ResourceKey=SearchTextEdit}" Width="120" HorizontalAlignment="Center" >
                 <dxe:TextEdit.InputBindings>
                     <KeyBinding Key="Enter" Command="{Binding SearchCommand}">
                         <KeyBinding.CommandParameter>
@@ -109,12 +109,12 @@
                 </dxe:TextEdit.InputBindings>
             </dxe:TextEdit>
 
-            <Label Grid.Row="2" Grid.Column="0" Content="행정동" Style="{StaticResource ResourceKey=HeaderLabel}"/>
-            <dxe:ComboBoxEdit Grid.Row="2" Grid.Column="1" x:Name="cbHJD_CDE" Style="{StaticResource ResourceKey=SearchComboBox}" 
+            <Label Grid.Row="2" Grid.Column="0" Content="행정동" Style="{DynamicResource ResourceKey=HeaderLabel}"/>
+            <dxe:ComboBoxEdit Grid.Row="2" Grid.Column="1" x:Name="cbHJD_CDE" Style="{DynamicResource ResourceKey=SearchComboBox}" 
                               Width="120" HorizontalAlignment="Center" />
 
-            <Label Grid.Row="3" Grid.Column="0" Content="공사번호" Style="{StaticResource ResourceKey=HeaderLabel}"/>
-            <dxe:TextEdit Grid.Row="3" Grid.Column="1" x:Name="txtCNT_NUM" Style="{StaticResource ResourceKey=SearchTextEdit}" Width="120" HorizontalAlignment="Center" >
+            <Label Grid.Row="3" Grid.Column="0" Content="공사번호" Style="{DynamicResource ResourceKey=HeaderLabel}"/>
+            <dxe:TextEdit Grid.Row="3" Grid.Column="1" x:Name="txtCNT_NUM" Style="{DynamicResource ResourceKey=SearchTextEdit}" Width="120" HorizontalAlignment="Center" >
                 <dxe:TextEdit.InputBindings>
                     <KeyBinding Key="Enter" Command="{Binding SearchCommand}">
                         <KeyBinding.CommandParameter>
@@ -125,8 +125,8 @@
                 </dxe:TextEdit.InputBindings>
             </dxe:TextEdit>
 
-            <Label Grid.Row="4" Grid.Column="0" Content="도엽번호" Style="{StaticResource ResourceKey=HeaderLabel}"/>
-            <dxe:TextEdit Grid.Row="4" Grid.Column="1" x:Name="txtSHT_NUM" Style="{StaticResource ResourceKey=SearchTextEdit}" Width="120" HorizontalAlignment="Center" >
+            <Label Grid.Row="4" Grid.Column="0" Content="도엽번호" Style="{DynamicResource ResourceKey=HeaderLabel}"/>
+            <dxe:TextEdit Grid.Row="4" Grid.Column="1" x:Name="txtSHT_NUM" Style="{DynamicResource ResourceKey=SearchTextEdit}" Width="120" HorizontalAlignment="Center" >
                 <dxe:TextEdit.InputBindings>
                     <KeyBinding Key="Enter" Command="{Binding SearchCommand}">
                         <KeyBinding.CommandParameter>
@@ -137,24 +137,24 @@
                 </dxe:TextEdit.InputBindings>
             </dxe:TextEdit>
 
-            <Label Grid.Row="5" Grid.Column="0" Content="설치일자[이상]" Style="{StaticResource ResourceKey=HeaderLabel}"/>
-            <dxe:DateEdit  Grid.Row="5" Grid.Column="1" Style="{StaticResource ResourceKey=HeaderDateEdit}" x:Name="dtIST_YMD_FROM" >
+            <Label Grid.Row="5" Grid.Column="0" Content="설치일자[이상]" Style="{DynamicResource ResourceKey=HeaderLabel}"/>
+            <dxe:DateEdit  Grid.Row="5" Grid.Column="1" Style="{DynamicResource ResourceKey=HeaderDateEdit}" x:Name="dtIST_YMD_FROM" >
             </dxe:DateEdit>
 
 
-            <Label Grid.Row="6" Grid.Column="0" Content="설치일자[이하]" Style="{StaticResource ResourceKey=HeaderLabel}"/>
-            <dxe:DateEdit  Grid.Row="6" Grid.Column="1" Style="{StaticResource ResourceKey=HeaderDateEdit}" x:Name="dtIST_YMD_TO" />
+            <Label Grid.Row="6" Grid.Column="0" Content="설치일자[이하]" Style="{DynamicResource ResourceKey=HeaderLabel}"/>
+            <dxe:DateEdit  Grid.Row="6" Grid.Column="1" Style="{DynamicResource ResourceKey=HeaderDateEdit}" x:Name="dtIST_YMD_TO" />
 
-            <Label Grid.Row="7" Grid.Column="0" Content="관재질" Style="{StaticResource ResourceKey=HeaderLabel}"/>
-            <dxe:ComboBoxEdit Grid.Row="7" Grid.Column="1" x:Name="cbMOP_CDE" DisplayMember="NM" ValueMember="DTL_CD" Style="{StaticResource ResourceKey=SearchComboBox}" 
+            <Label Grid.Row="7" Grid.Column="0" Content="관재질" Style="{DynamicResource ResourceKey=HeaderLabel}"/>
+            <dxe:ComboBoxEdit Grid.Row="7" Grid.Column="1" x:Name="cbMOP_CDE" DisplayMember="NM" ValueMember="DTL_CD" Style="{DynamicResource ResourceKey=SearchComboBox}" 
                               Width="120" HorizontalAlignment="Center" />
 
-            <Label Grid.Row="8" Grid.Column="0" Content="접합종류" Style="{StaticResource ResourceKey=HeaderLabel}"/>
-            <dxe:ComboBoxEdit Grid.Row="8" Grid.Column="1" x:Name="cbJHT_CDE" Style="{StaticResource ResourceKey=SearchComboBox}" 
+            <Label Grid.Row="8" Grid.Column="0" Content="접합종류" Style="{DynamicResource ResourceKey=HeaderLabel}"/>
+            <dxe:ComboBoxEdit Grid.Row="8" Grid.Column="1" x:Name="cbJHT_CDE" Style="{DynamicResource ResourceKey=SearchComboBox}" 
                               Width="120" HorizontalAlignment="Center" />
 
-            <Label Grid.Row="9" Grid.Column="0" Content="구경" Style="{StaticResource ResourceKey=HeaderLabel}"/>
-            <dxe:TextEdit Grid.Row="9" Grid.Column="1" x:Name="txtPIP_DIP" Style="{StaticResource ResourceKey=SearchTextEdit}" Width="120" HorizontalAlignment="Center" >
+            <Label Grid.Row="9" Grid.Column="0" Content="구경" Style="{DynamicResource ResourceKey=HeaderLabel}"/>
+            <dxe:TextEdit Grid.Row="9" Grid.Column="1" x:Name="txtPIP_DIP" Style="{DynamicResource ResourceKey=SearchTextEdit}" Width="120" HorizontalAlignment="Center" >
                 <dxe:TextEdit.InputBindings>
                     <KeyBinding Key="Enter" Command="{Binding SearchCommand}">
                         <KeyBinding.CommandParameter>
@@ -171,13 +171,13 @@
 
         <!--그리드영역-->
         <StackPanel Grid.Row="0" Grid.Column="1" Orientation="Horizontal">
-            <Image Style="{StaticResource TitleCircle}"/>
-            <Label Content="{Binding TotalCnt, Mode=OneWay}" ContentStringFormat="목록 ({0:N0}건)" Style="{StaticResource ResourceKey=CircleTitleLabel}"/>
+            <Image Style="{DynamicResource TitleCircle}" Margin="10 0 0 0"/>
+            <Label Content="{Binding TotalCnt, Mode=OneWay}" ContentStringFormat="목록 ({0:N0}건)" Style="{DynamicResource ResourceKey=CircleTitleLabel}" />
         </StackPanel>
 
         <StackPanel Grid.Row="0" Grid.Column="1" Orientation="Horizontal" HorizontalAlignment="Right">
-            <Button x:Name="btnAdd" Style="{StaticResource ResourceKey=AddButton}" Click="BtnAdd_Click" />
-            <Button x:Name="btnExcel" Style="{StaticResource ResourceKey=ExcelDownButton}"  />
+            <Button x:Name="btnAdd" Style="{DynamicResource ResourceKey=AddButton}" Click="BtnAdd_Click" />
+            <Button x:Name="btnExcel" Style="{DynamicResource ResourceKey=ExcelDownButton}"  />
         </StackPanel>
 
 
@@ -291,7 +291,7 @@
 
         <!--하단버튼-->
         <StackPanel Grid.Row="2" Grid.Column="0" Orientation="Horizontal">
-            <Button x:Name="btnReset" Style="{StaticResource ResourceKey=InitButton}">
+            <Button x:Name="btnReset" Style="{DynamicResource ResourceKey=InitButton}">
                 <i:Interaction.Triggers>
                     <i:EventTrigger EventName="Click">
                         <i:InvokeCommandAction Command="{Binding ResetCommand}">
@@ -299,7 +299,7 @@
                     </i:EventTrigger>
                 </i:Interaction.Triggers>
             </Button>
-            <Button x:Name="btnSearch" Style="{StaticResource ResourceKey=SearchButton}">
+            <Button x:Name="btnSearch" Style="{DynamicResource ResourceKey=SearchButton}">
                 <i:Interaction.Triggers>
                     <i:EventTrigger EventName="Click">
                         <i:InvokeCommandAction Command="{Binding SearchCommand}">

@@ -29,6 +29,14 @@ namespace GTI.WFMS.Main.View
         public Login()
         {
             InitializeComponent();
+
+
+            //팝업창 테마적용
+            if (Properties.Settings.Default.strThemeName.Equals(""))
+                ThemeApply.strThemeName = "GTINavyTheme";
+            else
+                ThemeApply.strThemeName = Properties.Settings.Default.strThemeName;
+            ThemeApply.ThemeChange(this);
             ThemeApply.Themeapply(this);
 
 

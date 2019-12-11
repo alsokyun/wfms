@@ -5,19 +5,13 @@
     <Application.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
-                <ResourceDictionary Source="Styles/Default/Buttons.xaml"/>
-                <ResourceDictionary Source="Styles/Default/Colors.xaml"/>
-                <ResourceDictionary Source="Styles/Default/Controls.xaml"/>
-                <ResourceDictionary Source="Styles/Default/Fonts.xaml"/>
-                <ResourceDictionary Source="Styles/Default/Labels.xaml"/>
+                <ResourceDictionary Source="Styles/Navy/Buttons.xaml"/>
+                <ResourceDictionary Source="Styles/Navy/Colors.xaml"/>
+                <ResourceDictionary Source="Styles/Navy/Controls.xaml"/>
+                <ResourceDictionary Source="Styles/Navy/Fonts.xaml"/>
+                <ResourceDictionary Source="Styles/Navy/Labels.xaml"/>
             </ResourceDictionary.MergedDictionaries>
 
-        <!--================= Global Style =================-->
-        <!--Image-->
-        <Style TargetType="{x:Type Image}">
-            <Setter Property="RenderOptions.BitmapScalingMode" Value="NearestNeighbor"/>
-            <Setter Property="RenderOptions.EdgeMode" Value="Aliased"/>
-        </Style>
 
         </ResourceDictionary>
     </Application.Resources>

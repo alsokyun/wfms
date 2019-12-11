@@ -7,11 +7,8 @@
         Width="380" Height="380" 
         WindowStyle="None" ResizeMode="NoResize" WindowStartupLocation="CenterScreen"
         Title="InfoFacility">
-    <Grid>
+    <Grid Style="{DynamicResource LoginGridBackground}"> 
 
-        <Grid.Background>
-            <ImageBrush ImageSource="/Resources/Images/Image/bg.png" Stretch="Fill"/>
-        </Grid.Background>
 
         <Grid.RowDefinitions>
             <RowDefinition Height="25"/>
@@ -35,13 +32,13 @@
 
         <Border x:Name="bdTitle" Grid.Row="0" Grid.ColumnSpan="5" ></Border>
         <StackPanel Grid.Row="0" Grid.ColumnSpan="5" Orientation="Horizontal" HorizontalAlignment="Right" Margin="0 5 5 0">
-            <Button x:Name="btnDataBaseInfoEdit" Style="{StaticResource ResourceKey=XSignSettingButton}"/>
-            <Button x:Name="btnClose" Style="{StaticResource ResourceKey=XSignCloseButton}"/>
+            <Button x:Name="btnDataBaseInfoEdit" Style="{DynamicResource ResourceKey=DataBaseInfoButton}"/>
+            <Button x:Name="btnClose" Style="{DynamicResource ResourceKey=XSignCloseButton}"/>
         </StackPanel>
 
 
         <Grid Grid.Row="1" Grid.Column="2" VerticalAlignment="Center" HorizontalAlignment="Center">
-            <Image Source="/Resources/Images/Image/login_logo.png" Stretch="None"/>
+            <Image Style="{DynamicResource LoginLogo}" Stretch="None"/>
         </Grid>
 
 
@@ -71,26 +68,26 @@
             <Border Grid.Row="3" Grid.Column="2" Background="White" CornerRadius="4"/>
             <Border Grid.Row="5" Grid.Column="2" Background="White" CornerRadius="4"/>
 
-            <Label Grid.Row="1" Grid.Column="1" Content="사업소" Style="{StaticResource ResourceKey= LoginLabel}"/>
-            <dxe:ComboBoxEdit x:Name="cbSite" Grid.Row="1" Grid.Column="2" Style="{StaticResource ResourceKey= LoginCombo}" />
+            <Label Grid.Row="1" Grid.Column="1" Content="사업소" Style="{DynamicResource ResourceKey= LoginLabel}"/>
+            <dxe:ComboBoxEdit x:Name="cbSite" Grid.Row="1" Grid.Column="2" Style="{DynamicResource ResourceKey= LoginCombo}" />
 
-            <Label Grid.Row="3" Grid.Column="1" Content="아이디" Style="{StaticResource ResourceKey= LoginLabel}"/>
-            <dxe:TextEdit x:Name="txtID" Grid.Row="3" Grid.Column="2" Style="{StaticResource ResourceKey= LoginTextEdit}"/>
+            <Label Grid.Row="3" Grid.Column="1" Content="아이디" Style="{DynamicResource ResourceKey= LoginLabel}"/>
+            <dxe:TextEdit x:Name="txtID" Grid.Row="3" Grid.Column="2" Style="{DynamicResource ResourceKey= LoginTextEdit}"/>
 
-            <Label Grid.Row="5" Grid.Column="1" Content="비밀번호" Style="{StaticResource ResourceKey= LoginLabel}"/>
-            <dxe:PasswordBoxEdit x:Name="pwdPW" Grid.Row="5" Grid.Column="2" Style="{StaticResource ResourceKey= LoginPasswordBox}"/>
+            <Label Grid.Row="5" Grid.Column="1" Content="비밀번호" Style="{DynamicResource ResourceKey= LoginLabel}"/>
+            <dxe:PasswordBoxEdit x:Name="pwdPW" Grid.Row="5" Grid.Column="2" Style="{DynamicResource ResourceKey= LoginPasswordBox}"/>
 
             <StackPanel Grid.Row="6" Grid.Column="2" Orientation="Horizontal" HorizontalAlignment="Left" VerticalAlignment="Center">
-                <Image x:Name="imgConnAbnormal" Source="/Resources/Images/Image/login_alram_abnormal.png" Stretch="None"/>
-                <Image x:Name="imgConnNormal" Source="/Resources/Images/Image/login_alram_normal.png" Stretch="None" Visibility="Collapsed"/>
+                <Image x:Name="imgConnAbnormal" Grid.Row="6" Grid.Column="2" Style="{DynamicResource LoginConnStat}" HorizontalAlignment="Left"/>
+                <Image x:Name="imgConnNormal" Grid.Row="6" Grid.Column="2" Style="{DynamicResource LoginConnStatNormal}" HorizontalAlignment="Left" Visibility="Collapsed"/>
             </StackPanel>
             <dxe:CheckEdit x:Name="chkSaveID" Grid.Row="6" Grid.Column="2" HorizontalAlignment ="Right"  Content="아이디 저장" Foreground="White" FontFamily="맑은고딕" FontSize="14"/>
 
-            <Button x:Name="btnLogin" Grid.Row="7" Grid.Column="2" Style="{StaticResource ResourceKey=LoginButton}"/>
+            <Button x:Name="btnLogin" Grid.Row="7" Grid.Column="2" Style="{DynamicResource ResourceKey=LoginButton}"/>
         </Grid>
 
         <!--그린텍아이엔씨 로고-->
-        <Image Grid.Row="5" Grid.Column="2" Source="/Resources/Images/Image/greentech_logo.png" Stretch="None" VerticalAlignment="Top"/>
+        <Image Grid.Row="5" Grid.Column="2" Style="{DynamicResource LoginCompanyLog}"  Stretch="None" VerticalAlignment="Top"/>
 
 
     </Grid>

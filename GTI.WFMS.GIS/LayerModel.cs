@@ -515,7 +515,7 @@ namespace GTI.WFMS.GIS
             SimpleLineSymbol SA002Symbol = new SimpleLineSymbol(SimpleLineSymbolStyle.Solid, System.Drawing.Color.SkyBlue, 2);
             UniqueValue SA002Value = new UniqueValue("SA002", "SA002", SA002Symbol, "SA002");
 
-            uniqueValueRenderer.UniqueValues.Add(SA001Value);
+            uniqueValueRenderer.UniqueValues.Add(SA001Value); 
             uniqueValueRenderer.UniqueValues.Add(SA002Value);
 
 
