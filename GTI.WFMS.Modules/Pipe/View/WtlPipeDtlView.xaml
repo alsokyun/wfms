@@ -76,12 +76,12 @@
 
         <StackPanel Grid.Row="0" Orientation="Horizontal">
             <StackPanel  Orientation="Horizontal">
-                <Image Style="{StaticResource TitleCircle}"/>
-                <Label Content="일반정보" Style="{StaticResource ResourceKey=CircleTitleLabel}"/>
+                <Image Style="{DynamicResource TitleCircle}"/>
+                <Label Content="일반정보" Style="{DynamicResource ResourceKey=CircleTitleLabel}"/>
             </StackPanel>
         </StackPanel>
         <StackPanel Grid.Row="0" Orientation="Horizontal" HorizontalAlignment="Right">
-            <Button x:Name="btnPrint" Style="{StaticResource ResourceKey=SendButton}"  >
+            <Button x:Name="btnPrint" Style="{DynamicResource ResourceKey=SendButton}"  >
                 <i:Interaction.Triggers>
                     <i:EventTrigger EventName="Click">
                         <i:InvokeCommandAction Command="{Binding SearchCommand}">
@@ -89,7 +89,7 @@
                     </i:EventTrigger>
                 </i:Interaction.Triggers>
             </Button>
-            <Button x:Name="btnDelete" Style="{StaticResource ResourceKey=DelButton}"  >
+            <Button x:Name="btnDelete" Style="{DynamicResource ResourceKey=DelButton}"  >
                 <i:Interaction.Triggers>
                     <i:EventTrigger EventName="Click">
                         <i:InvokeCommandAction Command="{Binding DeleteCommand}">
@@ -97,7 +97,7 @@
                     </i:EventTrigger>
                 </i:Interaction.Triggers>
             </Button>
-            <Button x:Name="btnSave" Style="{StaticResource ResourceKey=SaveButton}"  >
+            <Button x:Name="btnSave" Style="{DynamicResource ResourceKey=SaveButton}"  >
                 <i:Interaction.Triggers>
                     <i:EventTrigger EventName="Click">
                         <i:InvokeCommandAction Command="{Binding SaveCommand}">
@@ -105,7 +105,7 @@
                     </i:EventTrigger>
                 </i:Interaction.Triggers>
             </Button>
-            <Button x:Name="btnBack" Style="{StaticResource ResourceKey=PopupCloseButton}" >
+            <Button x:Name="btnBack" Style="{DynamicResource ResourceKey=PopupCloseButton}" >
             </Button>
         </StackPanel>
 
@@ -128,51 +128,51 @@
             </Grid.RowDefinitions>
 
 
-            <Border Grid.Row="0" Grid.Column="0"  Style="{StaticResource ResourceKey=DtlHeaderBorder}" />
-            <Label Grid.Row="0" Grid.Column="0" Content="관리번호" Style="{StaticResource ResourceKey=GridLabel}"/>
+            <Border Grid.Row="0" Grid.Column="0"  Style="{DynamicResource DtlHeaderBorder}" />
+            <Label Grid.Row="0" Grid.Column="0" Content="관리번호" Style="{DynamicResource ResourceKey=GridLabel}"/>
             <!--키값으로 사용 : 부모페이지로부터 뷰생성자로 전달되고, 뷰에서 변경되면 뷰모델로 전달된다.-->
-            <dxe:TextEdit Grid.Row="0" Grid.Column="1" Style="{StaticResource ResourceKey=GridTextEdit}"   
+            <dxe:TextEdit Grid.Row="0" Grid.Column="1" Style="{DynamicResource ResourceKey=GridTextEdit}"   
                         x:Name="txtFTR_IDN" EditValue="{Binding FTR_IDN, UpdateSourceTrigger=PropertyChanged}" IsEnabled="False" />
             <dxe:TextEdit Visibility="Hidden" 
                         x:Name="txtFTR_CDE" EditValue="{Binding FTR_CDE, UpdateSourceTrigger=PropertyChanged}" />
 
 
 
-            <Border Grid.Row="0" Grid.Column="2"  Style="{StaticResource ResourceKey=DtlHeaderBorder}" />
-            <Label Grid.Row="0" Grid.Column="2" Content="행정동" Style="{StaticResource ResourceKey=GridLabel}"/>
-            <dxe:ComboBoxEdit Grid.Row="0" Grid.Column="3" Style="{StaticResource ResourceKey=GridComboBox}"  
+            <Border Grid.Row="0" Grid.Column="2"  Style="{DynamicResource DtlHeaderBorder}" />
+            <Label Grid.Row="0" Grid.Column="2" Content="행정동" Style="{DynamicResource ResourceKey=GridLabel}"/>
+            <dxe:ComboBoxEdit Grid.Row="0" Grid.Column="3" Style="{DynamicResource ResourceKey=GridComboBox}"  
                               x:Name="cbHJD_CDE" EditValue="{Binding HJD_CDE,Mode=TwoWay}" />
 
 
-            <Border Grid.Row="0" Grid.Column="4"  Style="{StaticResource ResourceKey=DtlHeaderBorder}" />
-            <Label Grid.Row="0" Grid.Column="4" Content="공사번호" Style="{StaticResource ResourceKey=GridLabel}"/>
-            <dxe:TextEdit Grid.Row="0" Grid.Column="5" Style="{StaticResource ResourceKey=GridTextEdit}"  
+            <Border Grid.Row="0" Grid.Column="4"  Style="{DynamicResource DtlHeaderBorder}" />
+            <Label Grid.Row="0" Grid.Column="4" Content="공사번호" Style="{DynamicResource ResourceKey=GridLabel}"/>
+            <dxe:TextEdit Grid.Row="0" Grid.Column="5" Style="{DynamicResource ResourceKey=GridTextEdit}"  
                           x:Name="txtCNT_NUM" EditValue="{Binding CNT_NUM}"/>
 
 
-            <Border Grid.Row="0" Grid.Column="6"  Style="{StaticResource ResourceKey=DtlHeaderBorder}" />
-            <Label Grid.Row="0" Grid.Column="6" Content="관리기관" Style="{StaticResource ResourceKey=GridLabel}"/>
-            <dxe:ComboBoxEdit Grid.Row="0" Grid.Column="7" Style="{StaticResource ResourceKey=GridComboBox}"  
+            <Border Grid.Row="0" Grid.Column="6"  Style="{DynamicResource DtlHeaderBorder}" />
+            <Label Grid.Row="0" Grid.Column="6" Content="관리기관" Style="{DynamicResource ResourceKey=GridLabel}"/>
+            <dxe:ComboBoxEdit Grid.Row="0" Grid.Column="7" Style="{DynamicResource ResourceKey=GridComboBox}"  
                               x:Name="cbMNG_CDE" EditValue="{Binding MNG_CDE}" />
 
-            <Border Grid.Row="1" Grid.Column="0"  Style="{StaticResource ResourceKey=DtlHeaderBorder}" />
-            <Label Grid.Row="1" Grid.Column="0" Content="도엽번호" Style="{StaticResource ResourceKey=GridLabel}"/>
-            <dxe:TextEdit Grid.Row="1" Grid.Column="1" Style="{StaticResource ResourceKey=GridTextEdit}"  
+            <Border Grid.Row="1" Grid.Column="0"  Style="{DynamicResource DtlHeaderBorder}" />
+            <Label Grid.Row="1" Grid.Column="0" Content="도엽번호" Style="{DynamicResource ResourceKey=GridLabel}"/>
+            <dxe:TextEdit Grid.Row="1" Grid.Column="1" Style="{DynamicResource ResourceKey=GridTextEdit}"  
                           x:Name="txtSHT_NUM" EditValue="{Binding SHT_NUM}"/>
 
 
-            <Border Grid.Row="1" Grid.Column="2"  Style="{StaticResource ResourceKey=DtlHeaderBorder}" />
-            <Label Grid.Row="1" Grid.Column="2" Content="설치일자" Style="{StaticResource ResourceKey=GridLabel}" />
-            <dxe:DateEdit Grid.Row="1" Grid.Column="3" Style="{StaticResource ResourceKey=GridDateEdit}" HorizontalContentAlignment="Center" 
+            <Border Grid.Row="1" Grid.Column="2"  Style="{DynamicResource DtlHeaderBorder}" />
+            <Label Grid.Row="1" Grid.Column="2" Content="설치일자" Style="{DynamicResource ResourceKey=GridLabel}" />
+            <dxe:DateEdit Grid.Row="1" Grid.Column="3" Style="{DynamicResource ResourceKey=GridDateEdit}" HorizontalContentAlignment="Center" 
                           x:Name="dtIST_YMD" EditValue="{Binding IST_YMD}"  />
 
 
 
-            <Border Grid.Row="1" Grid.Column="4"  Style="{StaticResource ResourceKey=DtlHeaderBorder}" />
-            <Label Grid.Row="1" Grid.Column="4" Content="" Style="{StaticResource ResourceKey=GridLabel}"/>
+            <Border Grid.Row="1" Grid.Column="4"  Style="{DynamicResource DtlHeaderBorder}" />
+            <Label Grid.Row="1" Grid.Column="4" Content="" Style="{DynamicResource ResourceKey=GridLabel}"/>
 
-            <Border Grid.Row="1" Grid.Column="6"  Style="{StaticResource ResourceKey=DtlHeaderBorder}" />
-            <Label Grid.Row="1" Grid.Column="6" Content="" Style="{StaticResource ResourceKey=GridLabel}"/>
+            <Border Grid.Row="1" Grid.Column="6"  Style="{DynamicResource DtlHeaderBorder}" />
+            <Label Grid.Row="1" Grid.Column="6" Content="" Style="{DynamicResource ResourceKey=GridLabel}"/>
 
         </Grid>
 
@@ -180,8 +180,8 @@
 
         <StackPanel Grid.Row="2" Orientation="Horizontal">
             <StackPanel Orientation="Horizontal">
-                <Image Style="{StaticResource TitleCircle}"/>
-                <Label Content="시설물현황 정보" Style="{StaticResource ResourceKey=CircleTitleLabel}"/>
+                <Image Style="{DynamicResource TitleCircle}"/>
+                <Label Content="시설물현황 정보" Style="{DynamicResource ResourceKey=CircleTitleLabel}"/>
             </StackPanel>
         </StackPanel>
 
@@ -204,70 +204,70 @@
             </Grid.RowDefinitions>
 
 
-            <Border Grid.Row="0" Grid.Column="0"  Style="{StaticResource ResourceKey=DtlHeaderBorder}" />
-            <Label Grid.Row="0" Grid.Column="0" Content="관용도" Style="{StaticResource ResourceKey=GridLabel}"/>
-            <dxe:ComboBoxEdit Grid.Row="0" Grid.Column="1" Style="{StaticResource ResourceKey=GridComboBox}" 
+            <Border Grid.Row="0" Grid.Column="0"  Style="{DynamicResource DtlHeaderBorder}" />
+            <Label Grid.Row="0" Grid.Column="0" Content="관용도" Style="{DynamicResource ResourceKey=GridLabel}"/>
+            <dxe:ComboBoxEdit Grid.Row="0" Grid.Column="1" Style="{DynamicResource ResourceKey=GridComboBox}" 
                               x:Name="cbSAA_CDE" EditValue="{Binding SAA_CDE}" />
 
-            <Border Grid.Row="0" Grid.Column="2"  Style="{StaticResource ResourceKey=DtlHeaderBorder}" />
-            <Label Grid.Row="0" Grid.Column="2" Content="접합종류" Style="{StaticResource ResourceKey=GridLabel}"/>
-            <dxe:ComboBoxEdit Grid.Row="0" Grid.Column="3"  Style="{StaticResource ResourceKey=GridComboBox}"  
+            <Border Grid.Row="0" Grid.Column="2"  Style="{DynamicResource DtlHeaderBorder}" />
+            <Label Grid.Row="0" Grid.Column="2" Content="접합종류" Style="{DynamicResource ResourceKey=GridLabel}"/>
+            <dxe:ComboBoxEdit Grid.Row="0" Grid.Column="3"  Style="{DynamicResource ResourceKey=GridComboBox}"  
                               x:Name="cbMOP_CDE" EditValue="{Binding MOP_CDE}"/>
 
 
-            <Border Grid.Row="0" Grid.Column="4"  Style="{StaticResource ResourceKey=DtlHeaderBorder}" />
-            <Label Grid.Row="0" Grid.Column="4" Content="관재질" Style="{StaticResource ResourceKey=GridLabel}"/>
-            <dxe:ComboBoxEdit Grid.Row="0" Grid.Column="5" Style="{StaticResource ResourceKey=GridComboBox}"  
+            <Border Grid.Row="0" Grid.Column="4"  Style="{DynamicResource DtlHeaderBorder}" />
+            <Label Grid.Row="0" Grid.Column="4" Content="관재질" Style="{DynamicResource ResourceKey=GridLabel}"/>
+            <dxe:ComboBoxEdit Grid.Row="0" Grid.Column="5" Style="{DynamicResource ResourceKey=GridComboBox}"  
                               x:Name="cbJHT_CDE"  EditValue="{Binding JHT_CDE}"/>
 
-            <Border Grid.Row="0" Grid.Column="6"  Style="{StaticResource ResourceKey=DtlHeaderBorder}" />
-            <Label Grid.Row="0" Grid.Column="6" Content="최저깊이(m)" Style="{StaticResource ResourceKey=GridLabel}"/>
-            <dxe:TextEdit Grid.Row="0" Grid.Column="7" Style="{StaticResource ResourceKey=GridNumberEdit}"   
+            <Border Grid.Row="0" Grid.Column="6"  Style="{DynamicResource DtlHeaderBorder}" />
+            <Label Grid.Row="0" Grid.Column="6" Content="최저깊이(m)" Style="{DynamicResource ResourceKey=GridLabel}"/>
+            <dxe:TextEdit Grid.Row="0" Grid.Column="7" Style="{DynamicResource ResourceKey=GridNumberEdit}"   
                           x:Name="txtLOW_DEP" EditValue="{Binding LOW_DEP}"/>
 
 
-            <Border Grid.Row="1" Grid.Column="0"  Style="{StaticResource ResourceKey=DtlHeaderBorder}" />
-            <Label Grid.Row="1" Grid.Column="0" Content="구경" Style="{StaticResource ResourceKey=GridLabel}"/>
-            <dxe:TextEdit Grid.Row="1" Grid.Column="1" Style="{StaticResource ResourceKey=GridNumberEdit}"   
+            <Border Grid.Row="1" Grid.Column="0"  Style="{DynamicResource DtlHeaderBorder}" />
+            <Label Grid.Row="1" Grid.Column="0" Content="구경" Style="{DynamicResource ResourceKey=GridLabel}"/>
+            <dxe:TextEdit Grid.Row="1" Grid.Column="1" Style="{DynamicResource ResourceKey=GridNumberEdit}"   
                           x:Name="txtPIP_DIP"  EditValue="{Binding PIP_DIP}"/>
 
 
-            <Border Grid.Row="1" Grid.Column="2"  Style="{StaticResource ResourceKey=DtlHeaderBorder}" />
-            <Label Grid.Row="1" Grid.Column="2" Content="최고깊이(m)" Style="{StaticResource ResourceKey=GridLabel}"/>
-            <dxe:TextEdit Grid.Row="1" Grid.Column="3" Style="{StaticResource ResourceKey=GridNumberEdit}"   
+            <Border Grid.Row="1" Grid.Column="2"  Style="{DynamicResource DtlHeaderBorder}" />
+            <Label Grid.Row="1" Grid.Column="2" Content="최고깊이(m)" Style="{DynamicResource ResourceKey=GridLabel}"/>
+            <dxe:TextEdit Grid.Row="1" Grid.Column="3" Style="{DynamicResource ResourceKey=GridNumberEdit}"   
                           x:Name="txtHGH_DEP" EditValue="{Binding HGH_DEP}"/>
 
 
-            <Border Grid.Row="1" Grid.Column="4"  Style="{StaticResource ResourceKey=DtlHeaderBorder}" />
-            <Label Grid.Row="1" Grid.Column="4" Content="연장(m)" Style="{StaticResource ResourceKey=GridLabel}"/>
-            <dxe:TextEdit Grid.Row="1" Grid.Column="5" Style="{StaticResource ResourceKey=GridNumberEdit}"   
+            <Border Grid.Row="1" Grid.Column="4"  Style="{DynamicResource DtlHeaderBorder}" />
+            <Label Grid.Row="1" Grid.Column="4" Content="연장(m)" Style="{DynamicResource ResourceKey=GridLabel}"/>
+            <dxe:TextEdit Grid.Row="1" Grid.Column="5" Style="{DynamicResource ResourceKey=GridNumberEdit}"   
                           x:Name="txtPIP_LEN" EditValue="{Binding PIP_LEN}"/>
 
 
-            <Border Grid.Row="1" Grid.Column="6"  Style="{StaticResource ResourceKey=DtlHeaderBorder}" />
-            <Label Grid.Row="1" Grid.Column="6" Content="관라벨" Style="{StaticResource ResourceKey=GridLabel}"/>
-            <dxe:TextEdit Grid.Row="1" Grid.Column="7" Style="{StaticResource ResourceKey=GridTextEdit}"  
+            <Border Grid.Row="1" Grid.Column="6"  Style="{DynamicResource DtlHeaderBorder}" />
+            <Label Grid.Row="1" Grid.Column="6" Content="관라벨" Style="{DynamicResource ResourceKey=GridLabel}"/>
+            <dxe:TextEdit Grid.Row="1" Grid.Column="7" Style="{DynamicResource ResourceKey=GridTextEdit}"  
                            x:Name="txtPIP_LBL" EditValue="{Binding PIP_LBL}"/>
 
-            <Border Grid.Row="2" Grid.Column="0"  Style="{StaticResource ResourceKey=DtlHeaderBorder}" />
-            <Label Grid.Row="2" Grid.Column="0" Content="대장초기화" Style="{StaticResource ResourceKey=GridLabel}"/>
+            <Border Grid.Row="2" Grid.Column="0"  Style="{DynamicResource DtlHeaderBorder}" />
+            <Label Grid.Row="2" Grid.Column="0" Content="대장초기화" Style="{DynamicResource ResourceKey=GridLabel}"/>
             <dxe:ToggleSwitch Grid.Row="2" Grid.Column="1" HorizontalAlignment="Center"  VerticalAlignment="Center"
                                   CheckedStateContent="유" UncheckedStateContent="무" ContentPlacement="Inside" 
                                   x:Name="tgSYS_CHK" IsChecked="{Binding SYS_CHK, Converter={StaticResource toggleConverter}}" />
-            <!--<dxe:ComboBoxEdit Grid.Row="0" Grid.Column="5" x:Name="cbSYS_CHK"  Style="{StaticResource ResourceKey=GridComboBox}" 
+            <!--<dxe:ComboBoxEdit Grid.Row="0" Grid.Column="5" x:Name="cbSYS_CHK"  Style="{DynamicResource ResourceKey=GridComboBox}" 
                                />-->
 
             
-            <Border Grid.Row="2" Grid.Column="2"  Style="{StaticResource ResourceKey=DtlHeaderBorder}" />
-            <Label Grid.Row="2" Grid.Column="2" Content="" Style="{StaticResource ResourceKey=GridLabel}"/>
+            <Border Grid.Row="2" Grid.Column="2"  Style="{DynamicResource DtlHeaderBorder}" />
+            <Label Grid.Row="2" Grid.Column="2" Content="" Style="{DynamicResource ResourceKey=GridLabel}"/>
 
             
 
-            <Border Grid.Row="2" Grid.Column="4"  Style="{StaticResource ResourceKey=DtlHeaderBorder}" />
-            <Label Grid.Row="2" Grid.Column="4" Content="" Style="{StaticResource ResourceKey=GridLabel}"/>
+            <Border Grid.Row="2" Grid.Column="4"  Style="{DynamicResource DtlHeaderBorder}" />
+            <Label Grid.Row="2" Grid.Column="4" Content="" Style="{DynamicResource ResourceKey=GridLabel}"/>
 
-            <Border Grid.Row="2" Grid.Column="6"  Style="{StaticResource ResourceKey=DtlHeaderBorder}" />
-            <Label Grid.Row="2" Grid.Column="6" Content="" Style="{StaticResource ResourceKey=GridLabel}"/>
+            <Border Grid.Row="2" Grid.Column="6"  Style="{DynamicResource DtlHeaderBorder}" />
+            <Label Grid.Row="2" Grid.Column="6" Content="" Style="{DynamicResource ResourceKey=GridLabel}"/>
 
         </Grid>
 

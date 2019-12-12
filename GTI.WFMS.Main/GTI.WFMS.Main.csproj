@@ -490,6 +490,8 @@
     <Resource Include="Resources\Blue\Images\MNUImage\MNU_M_4_1.png" />
     <Resource Include="Resources\Navy\Images\MNUImage\MNU_L_06.png" />
     <Resource Include="Resources\Navy\Images\MNUImage\MNU_L_07.png" />
+    <Resource Include="Resources\Navy\Images\Image\btn_reset_on.png" />
+    <Resource Include="Resources\Navy\Images\Image\btn_reset.png" />
     <Content Include="Styles\Fonts\malgun.ttf">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>

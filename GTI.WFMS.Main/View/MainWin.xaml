@@ -13,8 +13,9 @@
     
         xmlns:gridani="clr-namespace:GTIFramework.Common.Utils.ViewEffect;assembly=GTIFramework"
     
-        Title="InfoFacility" WindowStyle="None" WindowStartupLocation="CenterScreen" ResizeMode="CanResize" 
-        Width="1900" Height="1050" MinWidth="1280" MinHeight="720" 
+        Title="InfoFacility" WindowStyle="None" WindowStartupLocation="CenterScreen" ResizeMode="CanResize" AllowsTransparency="True" 
+        Width="1900" Height="1049" MinWidth="1280" MinHeight="720" 
+        Style="{DynamicResource MAINWindow}" Background="{DynamicResource MainWindowColorBrush1}"
         x:Name="mainWin">
 
 

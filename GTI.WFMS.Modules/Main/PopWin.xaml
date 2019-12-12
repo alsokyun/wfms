@@ -6,7 +6,7 @@
         xmlns:local="clr-namespace:GTI.WFMS.Modules.Main"
         mc:Ignorable="d"
         Title="PopWin" Height="630" Width="1100"
-        WindowStyle="None"
+        WindowStyle="None" AllowsTransparency="True"
         x:Name="popWin"
         
         >
@@ -18,7 +18,7 @@
 
 
         <!--폼 아웃라인 border-->
-        <Border Grid.Row="0" Background="{DynamicResource TileCOLOR2Brush}"/>
+        <Border x:Name="bdTitle" Grid.Row="0" Background="{DynamicResource TileCOLOR2Brush}"/>
         <Label Grid.Row="0" Content="화면타이틀" FontSize="16" FontWeight="Bold" Foreground="White" 
                HorizontalAlignment="Left" VerticalAlignment="Center" Margin="10 0 0 0"
                x:Name="lbTitle"
