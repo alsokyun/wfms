@@ -5,6 +5,7 @@ using Unity;
 using GTI.WFMS.Modules.Adm;
 using GTI.WFMS.GIS;
 using GTI.WFMS.GIS.sample;
+using GTI.WFMS.Modules.Pipe.View;
 
 namespace GTI.WFMS.Main
 {
@@ -25,6 +26,8 @@ namespace GTI.WFMS.Main
             Container.RegisterTypeForNavigation<Map2View>("Map2View");
             Container.RegisterTypeForNavigation<Map3View>("Map3View");
             Container.RegisterTypeForNavigation<Map4View>("Map4View");
+            Container.RegisterTypeForNavigation<WtlPipeList>("WtlPipeList");
+
         }
 
         /// <summary>

@@ -90,7 +90,7 @@ namespace GTI.WFMS.Modules.Pipe.ViewModel
 
         public DelegateCommand<object> SearchCommand { get; set; }
         public DelegateCommand<object> ResetCommand { get; set; }
-        
+
         public DelegateCommand<object> btnCmd { get; set; }
         #endregion
 
@@ -132,7 +132,7 @@ namespace GTI.WFMS.Modules.Pipe.ViewModel
             LoadedCommand = new DelegateCommand<object>(OnLoaded);
             SearchCommand = new DelegateCommand<object>(SearchAction);
             ResetCommand = new DelegateCommand<object>(ResetAction);
-            
+
             btnCmd = new DelegateCommand<object>(btnMethod);
 
 
@@ -176,7 +176,7 @@ namespace GTI.WFMS.Modules.Pipe.ViewModel
             var values = (object[])obj;
 
             //1. 화면객체 인스턴스
-            wtlPipeList = values[0] as WtlPipeList ;
+            wtlPipeList = values[0] as WtlPipeList;
 
             cbMNG_CDE = wtlPipeList.cbMNG_CDE;
             cbHJD_CDE = wtlPipeList.cbHJD_CDE;
@@ -256,7 +256,7 @@ namespace GTI.WFMS.Modules.Pipe.ViewModel
                 //조회버튼으로 조회는 버튼위치(PageIndex) 초기화
                 else
                 {
-                    PageIndex = -1; 
+                    PageIndex = -1;
                 }
                 BizUtil.SelectListPage(conditions, page_idx, delegate (DataTable dt) {
                     // TotalCnt 설정
@@ -284,7 +284,7 @@ namespace GTI.WFMS.Modules.Pipe.ViewModel
             }
         }
 
-        
+
         /// <summary>
         /// 초기화
         /// </summary>
@@ -318,7 +318,8 @@ namespace GTI.WFMS.Modules.Pipe.ViewModel
         /// </summary>
         private void InitDataBinding()
         {
-            try { 
+            try
+            {
                 // cbMNG_CDE
                 BizUtil.SetCmbCode(cbMNG_CDE, "MNG_CDE", true);
 
@@ -381,7 +382,7 @@ namespace GTI.WFMS.Modules.Pipe.ViewModel
 
             string name_space = "GTI.WFMS.Modules.Pipe.Model";
             string class_name = "PipeDtl";
-            
+
             Hashtable param = new Hashtable();
             param.Add("sqlId", "SelectWtlPipeDtl");
             param.Add("FTR_CDE", "SA001");
@@ -402,7 +403,7 @@ namespace GTI.WFMS.Modules.Pipe.ViewModel
             sb += "         { " + "\r\n";
             sb += "             if (PropertyChanged != null)" + "\r\n";
             sb += "             { " + "\r\n";
-            sb += "                 PropertyChanged(this, new PropertyChangedEventArgs(propertyName));" + "\r\n";           
+            sb += "                 PropertyChanged(this, new PropertyChangedEventArgs(propertyName));" + "\r\n";
             sb += "             } " + "\r\n";
             sb += "         } " + "\r\n";
 

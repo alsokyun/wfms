@@ -265,7 +265,7 @@
 
     <!--초기화 버튼 (이미지)-->
     <Style TargetType="Button" x:Key="InitButton">
-        <Setter Property="Width" Value="106"/>
+        <Setter Property="Width" Value="116"/>
         <Setter Property="Height" Value="34"/>
         <Setter Property="Margin" Value="5,0,0,0"/>
         <Setter Property="Template">
@@ -497,9 +497,9 @@
 
     <!--조회 버튼 (이미지)-->
     <Style TargetType="Button" x:Key="SearchButton">
-        <Setter Property="Width" Value="110"/>
+        <Setter Property="Width" Value="137"/>
         <Setter Property="Height" Value="34"/>
-        <Setter Property="Margin" Value="15,4,0,0"/>
+        <Setter Property="Margin" Value="5,0,0,0"/>
         <Setter Property="VerticalAlignment" Value="Center"/>
         <Setter Property="Template">
             <Setter.Value>

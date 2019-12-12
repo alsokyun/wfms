@@ -388,7 +388,8 @@ namespace GTI.WFMS.Main
                                 bool? ret = pwin.ShowDialog();
                                  */
 
-                                /*2.Popup클래그 방식*/
+                                /*2.Popup클래그 방식
+                                 */
                                 pmain.IsOpen = false; //현재열려있는 팝업을 닫는다
 
                                 pmain = new PopMain(dr[0]["MNU_PATH"].ToString());

@@ -81,6 +81,9 @@
     <Reference Include="DevExpress.Xpf.Themes.GTIBlueTheme.v19.1">
       <HintPath>..\GTI.WFMS.Main\bin\Debug\DevExpress.Xpf.Themes.GTIBlueTheme.v19.1.dll</HintPath>
     </Reference>
+    <Reference Include="DevExpress.Xpf.Themes.GTINavyTheme.v19.1">
+      <HintPath>..\GTI.WFMS.Main\bin\Debug\DevExpress.Xpf.Themes.GTINavyTheme.v19.1.dll</HintPath>
+    </Reference>
     <Reference Include="DynamicInterop, Version=0.8.1.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\DynamicInterop.0.8.1\lib\netstandard1.2\DynamicInterop.dll</HintPath>
     </Reference>

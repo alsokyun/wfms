@@ -1,4 +1,5 @@
 ﻿using GTI.WFMS.Modules.Adm.View;
+using GTIFramework.Common.Utils.ViewEffect;
 using System;
 using System.Reflection;
 using System.Windows;
@@ -31,7 +32,6 @@ namespace GTI.WFMS.Modules.Main
             this.srcFrm.Navigate(pageInstance);
              */
 
-
             string path = "../" + v;
             this.srcFrm.Source = new Uri(path, UriKind.Relative);
             //this.srcFrm.Source = new Uri("pack://application:,,,/GTI.WFMS.Modules;component/Adm/View/UcPageView.xaml", UriKind.Absolute);
@@ -43,7 +43,6 @@ namespace GTI.WFMS.Modules.Main
 
             //윈도우창이동
             bdTitle.PreviewMouseDown += BdTitle_PreviewMouseDown;
-
 
         }
 

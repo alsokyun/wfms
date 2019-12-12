@@ -1,4 +1,5 @@
 ﻿using DevExpress.Xpf.Grid;
+using GTIFramework.Common.Utils.ViewEffect;
 using System;
 using System.Collections.Generic;
 using System.Data;
@@ -25,9 +26,13 @@ namespace GTI.WFMS.Modules.Pipe.View
         public WtlPipeList()
         {
             InitializeComponent();
+
+            // 2.테마일괄적용...
+            ThemeApply.Themeapply(this);
+
         }
 
-        
+
         //선택된 항목으로 페이지이동
         private void Grid_MouseDoubleClick(object sender, MouseButtonEventArgs e)
         {
@@ -43,7 +48,7 @@ namespace GTI.WFMS.Modules.Pipe.View
 
                 ///페이지이동 - 뷰생성자로 파라미터키 전달 
                 ///=> 뷰모델과바인딩된 객체값을 변경해서 뷰모델로 최종적으로 파라미터 전달
-                NavigationService.Navigate(new WtlPipeDtlView(FTR_CDE, FTR_IDN));
+                //NavigationService.Navigate(new WtlPipeDtlView(FTR_CDE, FTR_IDN));
             }
             catch (Exception)
             {
@@ -55,7 +60,7 @@ namespace GTI.WFMS.Modules.Pipe.View
         // 등록 팝업
         private void BtnAdd_Click(object sender, RoutedEventArgs e)
         {
-            NavigationService.Navigate(new WtlPipeAddView());
+            //NavigationService.Navigate(new WtlPipeAddView());
         }
     }
 }
