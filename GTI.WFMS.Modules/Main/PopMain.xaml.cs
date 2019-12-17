@@ -1,4 +1,6 @@
-﻿using System;
+﻿using GTIFramework.Common.MessageBox;
+using GTIFramework.Common.Utils.ViewEffect;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -26,6 +28,13 @@ namespace GTI.WFMS.Modules.Main
         public PopMain()
         {
             InitializeComponent();
+            
+
+
+            // 2.테마일괄적용...
+            ThemeApply.Themeapply(this);
+
+
 
             var thumb = new Thumb
             {
@@ -62,8 +71,10 @@ namespace GTI.WFMS.Modules.Main
 
 
             string path = "../" + v;
-            this.srcFrm.Source = new Uri(path, UriKind.Relative);
+            Uri uri =  new Uri(path, UriKind.Relative);
+            this.srcFrm.Source = uri;
             //this.srcFrm.Source = new Uri("pack://application:,,,/GTI.WFMS.Modules;component/Adm/View/UcPageView.xaml", UriKind.Absolute);
+            
 
 
             /* 이벤트등록 */

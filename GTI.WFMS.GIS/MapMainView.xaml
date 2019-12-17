@@ -79,7 +79,7 @@
                     </i:Interaction.Triggers>
                 </Button>
                 <Button x:Name="CancelButton" 
-                    Content="Complete"
+                    Content="Cancel"
                     Command="{Binding CancelCommand}"/>
 
             </StackPanel>

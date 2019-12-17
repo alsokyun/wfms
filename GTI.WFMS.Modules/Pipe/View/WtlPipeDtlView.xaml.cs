@@ -1,5 +1,6 @@
 ﻿using DevExpress.Xpf.Core;
 using GTI.WFMS.Modules.Link.View;
+using GTIFramework.Common.Utils.ViewEffect;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -28,6 +29,9 @@ namespace GTI.WFMS.Modules.Pipe.View
         public WtlPipeDtlView(string FTR_CDE, int FTR_IDN)
         {
             InitializeComponent();
+
+            // 테마일괄적용...
+            ThemeApply.Themeapply(this);
 
             this.txtFTR_CDE.EditValue = FTR_CDE;
             this.txtFTR_IDN.EditValue = FTR_IDN;

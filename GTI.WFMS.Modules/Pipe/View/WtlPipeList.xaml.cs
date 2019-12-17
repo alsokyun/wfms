@@ -27,9 +27,8 @@ namespace GTI.WFMS.Modules.Pipe.View
         {
             InitializeComponent();
 
-            // 2.테마일괄적용...
+            // 테마일괄적용...
             ThemeApply.Themeapply(this);
-
         }
 
 
@@ -48,11 +47,11 @@ namespace GTI.WFMS.Modules.Pipe.View
 
                 ///페이지이동 - 뷰생성자로 파라미터키 전달 
                 ///=> 뷰모델과바인딩된 객체값을 변경해서 뷰모델로 최종적으로 파라미터 전달
-                //NavigationService.Navigate(new WtlPipeDtlView(FTR_CDE, FTR_IDN));
+                NavigationService.Navigate(new WtlPipeDtlView(FTR_CDE, FTR_IDN));
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-                return; //throw;
+                throw ex;
             }
             
         }
@@ -60,7 +59,7 @@ namespace GTI.WFMS.Modules.Pipe.View
         // 등록 팝업
         private void BtnAdd_Click(object sender, RoutedEventArgs e)
         {
-            //NavigationService.Navigate(new WtlPipeAddView());
+            NavigationService.Navigate(new WtlPipeAddView());
         }
     }
 }

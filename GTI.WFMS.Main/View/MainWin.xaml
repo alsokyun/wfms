@@ -12,10 +12,12 @@
         mc:Ignorable="d"
     
         xmlns:gridani="clr-namespace:GTIFramework.Common.Utils.ViewEffect;assembly=GTIFramework"
+        xmlns:dxmvvm="http://schemas.devexpress.com/winfx/2008/xaml/mvvm"
     
         Title="InfoFacility" WindowStyle="None" WindowStartupLocation="CenterScreen" ResizeMode="CanResize" AllowsTransparency="True" 
         Width="1900" Height="1049" MinWidth="1280" MinHeight="720" 
         Style="{DynamicResource MAINWindow}" Background="{DynamicResource MainWindowColorBrush1}"
+    
         x:Name="mainWin">
 
 
@@ -24,19 +26,19 @@
         <cm:MultiValueConverter x:Key="multiValueConverter"/>
 
         <Storyboard x:Key="Menuin">
-            <gridani:GridLengthAnimation BeginTime="0:0:0" Duration="0:0:0.5" Storyboard.TargetName="colMenu" Storyboard.TargetProperty="Width" From="250" To="54"/>
+            <gridani:GridLengthAnimation BeginTime="0:0:0" Duration="0:0:0.5" Storyboard.TargetName="colMenu" Storyboard.TargetProperty="Width" From="230" To="54"/>
         </Storyboard>
 
         <Storyboard x:Key="Menuout">
-            <gridani:GridLengthAnimation BeginTime="0:0:0" Duration="0:0:0.5" Storyboard.TargetName="colMenu" Storyboard.TargetProperty="Width" From="54" To="250"/>
+            <gridani:GridLengthAnimation BeginTime="0:0:0" Duration="0:0:0.5" Storyboard.TargetName="colMenu" Storyboard.TargetProperty="Width" From="54" To="230"/>
         </Storyboard>
 
         <Storyboard x:Key="QuickHiden">
-            <gridani:GridLengthAnimation BeginTime="0:0:0" Duration="0:0:0.3" Storyboard.TargetName="colQuick" Storyboard.TargetProperty="Width" From="120" To="2"/>
+            <gridani:GridLengthAnimation BeginTime="0:0:0" Duration="0:0:0.3" Storyboard.TargetName="colQuick" Storyboard.TargetProperty="Width" From="150" To="7"/>
         </Storyboard>
 
         <Storyboard x:Key="QuickShow">
-            <gridani:GridLengthAnimation BeginTime="0:0:0" Duration="0:0:0.3" Storyboard.TargetName="colQuick" Storyboard.TargetProperty="Width" From="2" To="120"/>
+            <gridani:GridLengthAnimation BeginTime="0:0:0" Duration="0:0:0.3" Storyboard.TargetName="colQuick" Storyboard.TargetProperty="Width" From="7" To="150"/>
         </Storyboard>
 
     </Window.Resources>
@@ -46,7 +48,7 @@
         <Grid.RowDefinitions>
             <RowDefinition Height="0"/>
             <RowDefinition Height="50"/>
-            <RowDefinition Height="51"/>
+            <RowDefinition Height="42"/>
             <RowDefinition Height="*"/>
             <RowDefinition Height="25"/>
             <RowDefinition Height="0"/>
@@ -110,33 +112,28 @@
                 <RowDefinition Height="*"/>
             </Grid.RowDefinitions>
             <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="250" x:Name="colMenu"/>
+                <ColumnDefinition Width="230" x:Name="colMenu"/>
                 <ColumnDefinition Width="*"/>
             </Grid.ColumnDefinitions>
 
-            <Grid.Background>
-                <ImageBrush TileMode="Tile" ViewportUnits="Absolute" Viewport="0,0,15,15"/>
-            </Grid.Background>
 
 
 
             <Border Grid.Row="0" Margin="0,0,0,0" VerticalAlignment="Stretch" Background="{DynamicResource MainBack1Brush1}">
+                <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
+                    <Button x:Name="btnMenuSlide" Margin="0,0,6,0" Style="{DynamicResource btn_Menu_Slide}" Command="{Binding MenuShowHidenCommand}" CommandParameter="{Binding RelativeSource={RelativeSource AncestorType={x:Type Window}, Mode=FindAncestor}}" HorizontalAlignment="Center"/>
+                </StackPanel>
+
                 <Border.Effect>
                     <DropShadowEffect Direction="0" ShadowDepth="2" Opacity="0.3"/>
-                </Border.Effect>
-                <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
-                    <Button x:Name="btnMenuSlide" Margin="0,0,6,0" Style="{DynamicResource btn_Menu_Slide}" HorizontalAlignment="Center"
-                            Command="{Binding MenuShowHidenCommand}" 
-                            CommandParameter="{Binding RelativeSource={RelativeSource AncestorType={x:Type Window}, Mode=FindAncestor}}" 
-                            />
-                </StackPanel>
+                </Border.Effect>            
             </Border>
 
             <!--레프트메뉴 아코디언-->
-            <Border Grid.Row="1" Grid.Column="0" Margin="0,0,0,0" VerticalAlignment="Stretch" Background="#2574AB" BorderThickness="0,0,1,0" BorderBrush="#144772">
+            <Border Grid.Row="1" Margin="0,0,0,0" VerticalAlignment="Stretch" Background="{DynamicResource MainAccr1Brush1}">
                 <dxa:AccordionControl x:Name="accrMenu" Background="{DynamicResource MainAccr1Brush1}" BorderBrush="{DynamicResource MainAccr1Brush1}" FontWeight="Normal">
                     <i:Interaction.Triggers>
-                        <i:EventTrigger EventName="SelectedItemChanged">
+                        <i:EventTrigger EventName="MouseLeftButtonUp">
                             <i:InvokeCommandAction Command="{Binding MenuControlCommand}" CommandParameter="{Binding RelativeSource={RelativeSource AncestorType={x:Type Window}, Mode=FindAncestor}}"/>
                         </i:EventTrigger>
                     </i:Interaction.Triggers>
@@ -176,7 +173,7 @@
                         <RowDefinition Height="30"/>
                     </Grid.RowDefinitions>
 
-                    <Border x:Name="Quickborder" Grid.Row="0" Background="#1F3D61" Margin="7,0,0,0">
+                    <Border x:Name="Quickborder" Grid.Row="0" Background="#1F3D61" Margin="0,0,0,0">
                         <StackPanel Orientation="Horizontal" HorizontalAlignment="Left" VerticalAlignment="Center">
                             <TextBlock Text="★즐겨찾기" FontSize="15" Foreground="#5090BC" Margin="10,0,0,0"/>
                         </StackPanel>
@@ -190,8 +187,9 @@
 
                 </Grid>
             </Border>
-            
+
         </Grid>
+
 
 
         <Border Grid.Row="4" Grid.Column="0" Grid.ColumnSpan="3" Margin="0,0,0,0" VerticalAlignment="Stretch" Background="{DynamicResource MainBack1Brush1}" BorderBrush="{DynamicResource MainThin1Brush1}" BorderThickness="1,1,1,0">
@@ -202,6 +200,40 @@
         </Border>
 
 
+        <dxmvvm:Interaction.Behaviors>
+            <dxmvvm:NotificationService x:Name="AppNotificationService" ApplicationId="InfoWQuality" PredefinedNotificationTemplate="ShortHeaderAndTwoTextFields" CustomNotificationPosition="BottomRight"
+                                        CustomNotificationVisibleMaxCount="5">
+                <dxmvvm:NotificationService.CustomNotificationTemplate>
+                    <DataTemplate>
+                        <Border BorderThickness="3" BorderBrush="{DynamicResource NotifiCOLOR1Brush}" Background="{DynamicResource NotifiCOLOR2Brush}">
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="15"/>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="10"/>
+                                    <ColumnDefinition Width="4*"/>
+                                </Grid.ColumnDefinitions>
+
+                                <Border Grid.Row="0" Grid.Column="1" Background="{DynamicResource NotifiCOLOR2Brush}">
+                                    <Image  HorizontalAlignment="Center" VerticalAlignment="Center" Stretch="None">
+                                        <Image.Source>
+                                            <BitmapImage UriSource="{Binding ImageSur}" />
+                                        </Image.Source>
+                                    </Image>
+                                </Border>
+
+                                <StackPanel Grid.Row="0" Grid.Column="3" Orientation="Vertical" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
+                                    <TextBlock HorizontalAlignment="Left" Text="{Binding Caption}" Foreground="#FFFFFF" FontSize="22" FontWeight="Bold" Margin="3"/>
+                                    <TextBlock HorizontalAlignment="Left" Text="{Binding Content1}" Foreground="#FFFFFF" FontSize="13" Margin="3"/>
+                                    <TextBlock HorizontalAlignment="Left" Text="{Binding Content2}" Foreground="#FFFFFF" FontSize="13" Margin="3"/>
+                                </StackPanel>
+                            </Grid>
+                        </Border>
+                    </DataTemplate>
+                </dxmvvm:NotificationService.CustomNotificationTemplate>
+            </dxmvvm:NotificationService>
+        </dxmvvm:Interaction.Behaviors>        
+        
     </Grid>
 
 

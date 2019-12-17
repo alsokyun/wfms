@@ -6,7 +6,7 @@
              xmlns:local="clr-namespace:GTI.WFMS.Modules.Main"
              mc:Ignorable="d" 
              d:DesignHeight="100" d:DesignWidth="100"
-        Height="600" Width="1000"
+        Height="631" Width="1101"
        >
 
     <Grid x:Name="gridContent" Background="White">
@@ -23,12 +23,12 @@
         </Grid.RowDefinitions>
 
         <!--헤더 백그라운드 border-->
-        <Border Grid.Row="1" Grid.Column="1" x:Name="bdTitle" Background="#144873"/>
+        <Border Grid.Row="1" Grid.Column="1" x:Name="bdTitle" Background="{DynamicResource TileCOLOR2Brush}"/>
 
         <!--폼 아웃라인 border-->
-        <Border Grid.Column="0" Grid.RowSpan="4" Background="#144873"/>
-        <Border Grid.Column="2" Grid.RowSpan="4" Background="#144873"/>
-        <Border Grid.Row="3" Grid.ColumnSpan="3" Background="#144873"/>
+        <Border Grid.Column="0" Grid.RowSpan="4" Background="{DynamicResource TileCOLOR2Brush}"/>
+        <Border Grid.Column="2" Grid.RowSpan="4" Background="{DynamicResource TileCOLOR2Brush}"/>
+        <Border Grid.Row="3" Grid.ColumnSpan="3" Background="{DynamicResource TileCOLOR2Brush}"/>
 
         <Label Grid.Row="1" Grid.Column="1" Content="화면타이틀" FontSize="18" FontWeight="Bold" Foreground="White" 
                HorizontalAlignment="Left" VerticalAlignment="Center" Padding="10 0 0 0"

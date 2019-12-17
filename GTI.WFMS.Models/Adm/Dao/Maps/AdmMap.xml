@@ -269,5 +269,51 @@
 
 
 
+
+
+
+
+
+    <!--즐겨찾기 설정 삭제-->
+    <update id ="Delete_BASE_FLOW_CALC_INFO" parameterClass="Hashtable" resultClass ="Hashtable">
+      DELETE
+      FROM INFOUSER.MNU_BKMK_MNG
+      WHERE SYS_CD = #SYS_CD#
+      AND USER_ID = #USER_ID#
+    </update>
+
+    <!--즐겨찾기 설정 입력-->
+    <update id ="Insert_BASE_FLOW_CALC_INFO" parameterClass="Hashtable" resultClass ="Hashtable">
+      INSERT INTO INFOUSER.MNU_BKMK_MNG
+      (MNU_CD, SYS_CD, SHRTEN_KEY, USER_ID, EDT_DT, ORD)
+      VALUES
+      (#MNU_CD#, #SYS_CD#, #SHRTEN_KEY#, #USER_ID#, SYSDATE, #ORD#)
+    </update>
+
+    <!--설정안되어 있는 메뉴-->
+    <select id ="Select_BASE_FLOW_CALC_INFO_R" parameterClass="Hashtable" resultClass ="Hashtable">
+      SELECT A.MNU_CD, B.UPPER_CD, B.MNU_NM, A.SHRTEN_KEY, B.MNU_PATH, DECODE(B.MNU_STEP, 3, '0', '1') STRSHOW
+      FROM INFOUSER.MNU_BKMK_MNG A
+          ,INFOUSER.SYS_MNU_INFO B
+      WHERE A.SYS_CD = #SYS_CD#
+      AND B.SYS_CD = A.SYS_CD
+      AND B.MNU_CD = A.MNU_CD
+      AND A.USER_ID = #USER_ID#
+      ORDER BY A.ORD
+    </select>
+
+    <!--설정되어 있는 메뉴-->
+    <select id ="Select_BASE_FLOW_CALC_INFO_L" parameterClass="Hashtable" resultClass ="Hashtable">
+      SELECT MNU_CD, UPPER_CD, MNU_NM, '' SHRTEN_KEY, DECODE(MNU_STEP, 3, '0', '1') STRSHOW
+      FROM INFOUSER.SYS_MNU_INFO
+      WHERE SYS_CD = #SYS_CD#
+      AND MNU_CD NOT IN (SELECT MNU_CD
+      FROM INFOUSER.MNU_BKMK_MNG
+      WHERE SYS_CD = #SYS_CD#
+      AND USER_ID = #USER_ID#)
+      ORDER BY MNU_CD
+    </select>
+
+
   </statements>
 </sqlMap>

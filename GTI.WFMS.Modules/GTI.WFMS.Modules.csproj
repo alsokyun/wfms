@@ -113,10 +113,6 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Main\PopWin.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
     <Page Include="Pipe\View\WtlPipeAddView.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -156,9 +152,6 @@
     </Compile>
     <Compile Include="Main\PopMain.xaml.cs">
       <DependentUpon>PopMain.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Main\PopWin.xaml.cs">
-      <DependentUpon>PopWin.xaml</DependentUpon>
     </Compile>
     <Compile Include="Pipe\ViewModel\WtlPipeAddViewModel.cs" />
     <Compile Include="Pipe\ViewModel\WtlPipeDtlViewModel.cs" />

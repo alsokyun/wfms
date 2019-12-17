@@ -83,7 +83,7 @@ namespace GTI.WFMS.Models.Cmm.Dao
         public void Update(Hashtable conditions)
         {
             string sqlId = conditions["sqlId"].ToString();
-            DBManager.QueryForUpdate("sqlId", conditions);
+            DBManager.QueryForUpdate(sqlId, conditions);
         }
 
         /// <summary>

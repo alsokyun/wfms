@@ -1,9 +1,11 @@
 ﻿using DevExpress.Xpf.Editors;
 using GTI.WFMS.Models.Cmm.Dao;
+using GTIFramework.Common.MessageBox;
 using System;
 using System.Collections;
 using System.Data;
 using System.IO;
+using System.Windows;
 
 namespace GTI.WFMS.Models.Common
 {
@@ -102,6 +104,43 @@ namespace GTI.WFMS.Models.Common
 
         #endregion
 
+
+
+
+        #region ========== Validation ===========
+
+        /// <summary>
+        /// 상세화면 필수체크
+        /// </summary>
+        /// <param name="obj"></param>
+        public static void ValidReq(DependencyObject obj)
+        {
+            //필수값체크
+            foreach (TextEdit cb in FmsUtil.FindVisualChildren<TextEdit>(obj))
+            {
+                if (!FmsUtil.IsNull(cb.Tag))
+                {
+                    if (FmsUtil.IsNull(cb.Text))
+                    {
+                        Messages.ShowInfoMsgBox(string.Format("{0}은 필수입력 항목입니다.", cb.Tag.ToString()));
+                        return;
+                    }
+                }
+            }
+            foreach (ComboBoxEdit cb in FmsUtil.FindVisualChildren<ComboBoxEdit>(obj))
+            {
+                if (!FmsUtil.IsNull(cb.Tag))
+                {
+                    if (FmsUtil.IsNull(cb.EditValue))
+                    {
+                        Messages.ShowInfoMsgBox(string.Format("{0}은 필수입력 항목입니다.", cb.Tag.ToString()));
+                        return;
+                    }
+                }
+            }
+        }
+
+        #endregion
 
 
 

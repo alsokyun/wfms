@@ -149,6 +149,9 @@
     <Compile Include="View\MainWin.xaml.cs">
       <DependentUpon>MainWin.xaml</DependentUpon>
     </Compile>
+    <Compile Include="View\Popup\PopupQuickMenuMng.xaml.cs">
+      <DependentUpon>PopupQuickMenuMng.xaml</DependentUpon>
+    </Compile>
     <Page Include="Styles\Blue\Buttons.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -212,6 +215,10 @@
     <Page Include="View\MainWin.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\Popup\PopupQuickMenuMng.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
     </Page>
   </ItemGroup>
   <ItemGroup>
