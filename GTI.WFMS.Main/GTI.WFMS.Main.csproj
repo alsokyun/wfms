@@ -14,7 +14,10 @@
     <WarningLevel>4</WarningLevel>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
     <Deterministic>true</Deterministic>
-    <PublishUrl>publish\</PublishUrl>
+    <IsWebBootstrapper>false</IsWebBootstrapper>
+    <NuGetPackageImportStamp>
+    </NuGetPackageImportStamp>
+    <PublishUrl>D:\publish\</PublishUrl>
     <Install>true</Install>
     <InstallFrom>Disk</InstallFrom>
     <UpdateEnabled>false</UpdateEnabled>
@@ -26,11 +29,9 @@
     <MapFileExtensions>true</MapFileExtensions>
     <ApplicationRevision>0</ApplicationRevision>
     <ApplicationVersion>1.0.0.%2a</ApplicationVersion>
-    <IsWebBootstrapper>false</IsWebBootstrapper>
     <UseApplicationTrust>false</UseApplicationTrust>
+    <PublishWizardCompleted>true</PublishWizardCompleted>
     <BootstrapperEnabled>true</BootstrapperEnabled>
-    <NuGetPackageImportStamp>
-    </NuGetPackageImportStamp>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <PlatformTarget>AnyCPU</PlatformTarget>
@@ -50,6 +51,24 @@
     <DefineConstants>TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup>
+    <ManifestCertificateThumbprint>B1F703ACB70222A4A4E3A2FB3E12B4E6D5B25472</ManifestCertificateThumbprint>
+  </PropertyGroup>
+  <PropertyGroup>
+    <ManifestKeyFile>GTI.WFMS.Main_TemporaryKey.pfx</ManifestKeyFile>
+  </PropertyGroup>
+  <PropertyGroup>
+    <GenerateManifests>true</GenerateManifests>
+  </PropertyGroup>
+  <PropertyGroup>
+    <TargetZone>LocalIntranet</TargetZone>
+  </PropertyGroup>
+  <PropertyGroup>
+    <ApplicationManifest>Properties\app.manifest</ApplicationManifest>
+  </PropertyGroup>
+  <PropertyGroup>
+    <SignManifests>true</SignManifests>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="CommonServiceLocator, Version=2.0.4.0, Culture=neutral, PublicKeyToken=489b6accfaf20ef0, processorArchitecture=MSIL">
@@ -140,6 +159,7 @@
     <Compile Include="Bootstrapper.cs" />
     <Compile Include="Settings.cs" />
     <Compile Include="ViewModels\MainWinViewModel.cs" />
+    <Compile Include="ViewModels\FileMngViewModel.cs" />
     <Compile Include="View\DBManagement.xaml.cs">
       <DependentUpon>DBManagement.xaml</DependentUpon>
     </Compile>
@@ -149,7 +169,10 @@
     <Compile Include="View\MainWin.xaml.cs">
       <DependentUpon>MainWin.xaml</DependentUpon>
     </Compile>
-    <Compile Include="View\Popup\PopupQuickMenuMng.xaml.cs">
+    <Compile Include="View\Pop\FileMngView.xaml.cs">
+      <DependentUpon>FileMngView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\Pop\PopupQuickMenuMng.xaml.cs">
       <DependentUpon>PopupQuickMenuMng.xaml</DependentUpon>
     </Compile>
     <Page Include="Styles\Blue\Buttons.xaml">
@@ -216,7 +239,11 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="View\Popup\PopupQuickMenuMng.xaml">
+    <Page Include="View\Pop\FileMngView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="View\Pop\PopupQuickMenuMng.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
@@ -240,11 +267,16 @@
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
+    <None Include="GTI.WFMS.Main_TemporaryKey.pfx" />
     <None Include="packages.config" />
+    <None Include="Properties\app.manifest" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
     </None>
+    <EmbeddedResource Include="Resources\Excel\FmsBaseExcel.xlsx">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </EmbeddedResource>
     <Resource Include="Resources\Navy\Images\Image\BackPT.png" />
     <Resource Include="Resources\Navy\Images\Image\bar_bg.png" />
     <Resource Include="Resources\Navy\Images\Image\bg.png" />
@@ -507,6 +539,18 @@
     <Resource Include="Resources\Navy\Images\MNUImage\MNU_L_07.png" />
     <Resource Include="Resources\Navy\Images\Image\btn_reset_on.png" />
     <Resource Include="Resources\Navy\Images\Image\btn_reset.png" />
+    <Resource Include="Resources\Navy\Images\Image\btn_list.png" />
+    <Resource Include="Resources\Navy\Images\Image\btn_list_on.png" />
+    <Resource Include="Resources\Navy\Images\Image\btn_xs_add.png" />
+    <Resource Include="Resources\Navy\Images\Image\btn_xs_add_on.png" />
+    <Resource Include="Resources\Navy\Images\Image\btn_xs_delete.png" />
+    <Resource Include="Resources\Navy\Images\Image\btn_xs_delete_on.png" />
+    <Resource Include="Resources\Navy\Images\Image\btn_xs_regist.png" />
+    <Resource Include="Resources\Navy\Images\Image\btn_xs_regist_on.png" />
+    <Resource Include="Resources\Navy\Images\Image\btn_print.png" />
+    <Resource Include="Resources\Navy\Images\Image\btn_print_on.png" />
+    <Resource Include="Resources\Navy\Images\Image\icon_pos.png" />
+    <Resource Include="Resources\Navy\Images\Image\icon_position.png" />
     <Content Include="Styles\Fonts\malgun.ttf">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
@@ -520,9 +564,7 @@
   <ItemGroup>
     <None Include="App.config" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Resources\Excel\" />
-  </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
     <ProjectReference Include="..\GTI.WFMS.GIS\GTI.WFMS.GIS.csproj">
       <Project>{28bcab02-61d3-4afc-be3a-713f062d3923}</Project>

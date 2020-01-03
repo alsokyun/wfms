@@ -3,7 +3,7 @@ using DevExpress.Xpf.Core;
 using GTI.WFMS.Models.Common;
 using GTI.WFMS.Models.Main.Work;
 using GTI.WFMS.Modules.Main;
-using GTI.WNMS.Main.View.Popup;
+using GTI.WNMS.Main.View.Pop;
 using GTIFramework.Common.Log;
 using GTIFramework.Common.MessageBox;
 using GTIFramework.Common.Utils.ViewEffect;

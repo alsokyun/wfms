@@ -1,4 +1,4 @@
-﻿<Page x:Class="GTI.WFMS.Modules.Pipe.View.WtlPipeList"
+﻿<Page x:Class="GTI.WFMS.Modules.Pipe.View.WtlPipeListView"
         xmlns:dxe="http://schemas.devexpress.com/winfx/2008/xaml/editors"  
         xmlns:dxg="http://schemas.devexpress.com/winfx/2008/xaml/grid"  
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
@@ -14,7 +14,7 @@
         xmlns:vm="clr-namespace:GTI.WFMS.Modules.Pipe.ViewModel"
         xmlns:cm="clr-namespace:GTIFramework.Common.Utils.Converters;assembly=GTIFramework"
         xmlns:common="clr-namespace:GTI.WFMS.Models.Common;assembly=GTI.WFMS.Models"
-        x:Name="wtlPipeList"
+        x:Name="wtlPipeListView"
 
       >
 
@@ -119,10 +119,6 @@
             <dxe:TextEdit Grid.Row="3" Grid.Column="2" x:Name="txtCNT_NUM" Style="{DynamicResource ResourceKey=SrchTextEdit}"  HorizontalAlignment="Center" >
                 <dxe:TextEdit.InputBindings>
                     <KeyBinding Key="Enter" Command="{Binding SearchCommand}">
-                        <KeyBinding.CommandParameter>
-                            <MultiBinding Converter="{StaticResource multiValueConverter}">
-                            </MultiBinding>
-                        </KeyBinding.CommandParameter>
                     </KeyBinding>
                 </dxe:TextEdit.InputBindings>
             </dxe:TextEdit>
@@ -131,10 +127,6 @@
             <dxe:TextEdit Grid.Row="4" Grid.Column="2" x:Name="txtSHT_NUM" Style="{DynamicResource ResourceKey=SrchTextEdit}"  HorizontalAlignment="Center" >
                 <dxe:TextEdit.InputBindings>
                     <KeyBinding Key="Enter" Command="{Binding SearchCommand}">
-                        <KeyBinding.CommandParameter>
-                            <MultiBinding Converter="{StaticResource multiValueConverter}">
-                            </MultiBinding>
-                        </KeyBinding.CommandParameter>
                     </KeyBinding>
                 </dxe:TextEdit.InputBindings>
             </dxe:TextEdit>
@@ -159,10 +151,6 @@
             <dxe:TextEdit Grid.Row="9" Grid.Column="2" x:Name="txtPIP_DIP" Style="{DynamicResource ResourceKey=SrchTextEdit}"  HorizontalAlignment="Center" >
                 <dxe:TextEdit.InputBindings>
                     <KeyBinding Key="Enter" Command="{Binding SearchCommand}">
-                        <KeyBinding.CommandParameter>
-                            <MultiBinding Converter="{StaticResource multiValueConverter}">
-                            </MultiBinding>
-                        </KeyBinding.CommandParameter>
                     </KeyBinding>
                 </dxe:TextEdit.InputBindings>
             </dxe:TextEdit>
@@ -340,7 +328,7 @@
             <i:InvokeCommandAction Command="{Binding LoadedCommand}">
                 <i:InvokeCommandAction.CommandParameter>
                     <MultiBinding Converter="{StaticResource multiValueConverter}">
-                        <Binding ElementName="wtlPipeList"/>
+                        <Binding ElementName="wtlPipeListView"/>
                     </MultiBinding>
                 </i:InvokeCommandAction.CommandParameter>
             </i:InvokeCommandAction>

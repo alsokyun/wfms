@@ -1,5 +1,7 @@
 ﻿using DevExpress.Xpf.Editors;
 using GTI.WFMS.Models.Cmm.Dao;
+using GTI.WFMS.Models.Cmm.Model;
+using GTIFramework.Common.Log;
 using GTIFramework.Common.MessageBox;
 using System;
 using System.Collections;
@@ -74,6 +76,42 @@ namespace GTI.WFMS.Models.Common
         }
 
 
+
+        /// <summary>
+        /// 공통코드 콤보 데이터
+        /// </summary>
+        /// <param name="MST_CD"></param>
+        /// <param name="NV 널항목추가"></param>
+        public static DataTable GetCmbCode(string ETC, bool NV, string MST_CD)
+        {
+            Hashtable conditions = new Hashtable();
+            DataTable dt = new DataTable(MST_CD);
+
+
+            conditions.Add("MST_CD", MST_CD);
+            conditions.Add("ETC", ETC);
+            dt = cmmDao.Select_CODE_LIST(conditions);
+
+            /* 전체추가 */
+            if (NV)
+            {
+                DataRow dr = dt.NewRow();
+                dr["DTL_CD"] = " ";
+                dr["NM"] = "";
+                dt.Rows.InsertAt(dr, 0);
+            }
+
+            return dt;
+        }
+        public static DataTable GetCmbCode(string ETC)
+        {
+            return GetCmbCode(ETC, false, null);
+        }
+        public static DataTable GetCmbCode(string ETC, bool ALL)
+        {
+            return GetCmbCode(ETC, ALL, null);
+        }
+
         #endregion
 
 
@@ -88,15 +126,36 @@ namespace GTI.WFMS.Models.Common
         /// <param name="conditions"></param>
         public static void Update(Hashtable conditions)
         {
+            try
+            {
+                conditions.Add("ID", Logs.strLogin_ID);
+            }
+            catch (Exception) { }
+
             dao.Update(conditions);
+        }
+        /// <summary>
+        /// 데이터 업데이트 - 리턴
+        /// </summary>
+        /// <param name="conditions"></param>
+        public static int UpdateR(Hashtable conditions)
+        {
+            try
+            {
+                conditions.Add("ID", Logs.strLogin_ID);
+            }
+            catch (Exception) { }
+
+            return (int)dao.UpdateR(conditions);
         }
 
         /// <summary>
         /// 데이터 업데이트 - Object
         /// </summary>
         /// <param name="obj"></param>
-        public static void Update2(object  obj, string sqlId)
+        public static void Update2(CmmDtl  obj, string sqlId)
         {
+            obj.ID = Logs.strLogin_ID;
             dao.Update2(obj, sqlId);
         }
 
@@ -113,7 +172,7 @@ namespace GTI.WFMS.Models.Common
         /// 상세화면 필수체크
         /// </summary>
         /// <param name="obj"></param>
-        public static void ValidReq(DependencyObject obj)
+        public static bool ValidReq(DependencyObject obj)
         {
             //필수값체크
             foreach (TextEdit cb in FmsUtil.FindVisualChildren<TextEdit>(obj))
@@ -123,7 +182,7 @@ namespace GTI.WFMS.Models.Common
                     if (FmsUtil.IsNull(cb.Text))
                     {
                         Messages.ShowInfoMsgBox(string.Format("{0}은 필수입력 항목입니다.", cb.Tag.ToString()));
-                        return;
+                        return false;
                     }
                 }
             }
@@ -134,10 +193,11 @@ namespace GTI.WFMS.Models.Common
                     if (FmsUtil.IsNull(cb.EditValue))
                     {
                         Messages.ShowInfoMsgBox(string.Format("{0}은 필수입력 항목입니다.", cb.Tag.ToString()));
-                        return;
+                        return false;
                     }
                 }
             }
+            return true;
         }
 
         #endregion

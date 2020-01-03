@@ -1,5 +1,4 @@
 ﻿using Esri.ArcGISRuntime.Data;
-using Esri.ArcGISRuntime.LocalServices;
 using Esri.ArcGISRuntime.Mapping;
 using Esri.ArcGISRuntime.Symbology;
 using GTIFramework.Common.Utils.ViewEffect;

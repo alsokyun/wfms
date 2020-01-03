@@ -27,5 +27,70 @@
     </select>
 
 
+    <!-- 파일디테일 일괄삭제 -->
+    <update id="DeleteFileSeq" parameterClass="Hashtable">
+      DELETE FROM FMS_FILE_DTL WHERE 1=1
+      AND FIL_SEQ = #FIL_SEQ#
+    </update>
+
+
+      <!-- 파일마스터 추가 -->
+    <update id="InsertFileMst" parameterClass="Hashtable">
+      <selectKey keyProperty="filSeq" resultClass="Integer">
+        SELECT nvl(max(FIL_SEQ),0) +1 FROM FMS_FILE_MST
+      </selectKey>
+
+      <![CDATA[
+			INSERT INTO FMS_FILE_MST 
+				( FIL_SEQ
+				  , FIL_NM
+				  , CRE_YMD
+				  , CRE_USR
+				  , UPD_YMD
+				  , UPD_USR )
+			VALUES ( #filSeq#
+				  , ''
+				  , TO_CHAR(SYSDATE, 'yyyyMMdd')
+				  , #id#
+				  , TO_CHAR(SYSDATE, 'yyyyMMdd')
+				  , #id# )
+		]]>
+    </update>
+
+
+    <!-- 파일상세 추가 -->
+    <update id="InsertFileDtl" parameterClass="Hashtable">
+      <selectKey keyProperty="SEQ" resultClass="Integer">
+        SELECT NVL(MAX(SEQ),0)+1 FROM FMS_FILE_DTL WHERE FIL_SEQ = #FIL_SEQ#
+      </selectKey>
+
+      <![CDATA[
+			INSERT INTO FMS_FILE_DTL 
+				( SEQ
+				  , FIL_SEQ
+				  , DWN_NAM
+				  , UPF_NAM
+				  , FIL_PTH
+				  , FIL_TYP
+				  , FIL_SIZ
+				  , FIL_RST
+				  , FIL_EXP
+				  , CUR_TFS
+				  , CRE_YMD )
+			VALUES ( #SEQ#
+				  , #FIL_SEQ#
+				  , #DWN_NAM#
+				  , #UPF_NAM#
+				  , #FIL_PTH#
+				  , #FIL_TYP#
+				  , #FIL_SIZ#
+				  , #FIL_RST#
+				  , #FIL_EXP#
+				  , '1'
+				  , TO_CHAR(SYSDATE, 'yyyyMMdd') )
+		]]>
+    </update>
+
+
   </statements>
 </sqlMap>

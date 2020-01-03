@@ -74,64 +74,69 @@ namespace GTI.WFMS.Modules.Pipe.ViewModel
         /// <param name="obj"></param>
         private void OnLoaded(object obj)
         {
-            //throw new NotImplementedException();
-
-            // 0.화면객체인스턴스화
-            if (obj == null) return;
-            var values = (object[])obj;
-
-            wtlPipeDtlView = values[0] as WtlPipeDtlView;
-            cbMNG_CDE = wtlPipeDtlView.cbMNG_CDE;
-            cbHJD_CDE = wtlPipeDtlView.cbHJD_CDE;
-            cbMOP_CDE = wtlPipeDtlView.cbMOP_CDE;
-            cbJHT_CDE = wtlPipeDtlView.cbJHT_CDE;
-            cbSAA_CDE = wtlPipeDtlView.cbSAA_CDE;
-            btnBack = wtlPipeDtlView.btnBack;
-            btnDelete = wtlPipeDtlView.btnDelete;
-            btnSave = wtlPipeDtlView.btnSave;
-            
-
-            //2.화면데이터객체 초기화
-            InitDataBinding();
-
-
-            //3.권한처리
-            permissionApply();
-
-
-
-
-            // 4.초기조회
-            //DataTable dt = new DataTable();
-            Hashtable param = new Hashtable();
-            param.Add("sqlId", "SelectWtlPipeDtl2");
-            param.Add("FTR_CDE", this.FTR_CDE);
-            param.Add("FTR_IDN", this.FTR_IDN);
-
-            PipeDtl result = new PipeDtl();
-            result = BizUtil.SelectObject(param) as PipeDtl;
-
-
-
-            //결과를 뷰모델멤버로 매칭
-            Type dbmodel = result.GetType();
-            Type model = this.GetType();
-
-            //모델프로퍼티 순회
-            foreach (PropertyInfo prop in model.GetProperties())
+            try
             {
-                string propName = prop.Name;
-                //db프로퍼티 순회
-                foreach (PropertyInfo dbprop in dbmodel.GetProperties())
+                // 0.화면객체인스턴스화
+                if (obj == null) return;
+                var values = (object[])obj;
+
+                wtlPipeDtlView = values[0] as WtlPipeDtlView;
+                cbMNG_CDE = wtlPipeDtlView.cbMNG_CDE;
+                cbHJD_CDE = wtlPipeDtlView.cbHJD_CDE;
+                cbMOP_CDE = wtlPipeDtlView.cbMOP_CDE;
+                cbJHT_CDE = wtlPipeDtlView.cbJHT_CDE;
+                cbSAA_CDE = wtlPipeDtlView.cbSAA_CDE;
+                btnBack = wtlPipeDtlView.btnBack;
+                btnDelete = wtlPipeDtlView.btnDelete;
+                btnSave = wtlPipeDtlView.btnSave;
+
+
+                //2.화면데이터객체 초기화
+                InitDataBinding();
+
+
+                //3.권한처리
+                permissionApply();
+
+
+
+
+                // 4.초기조회
+                //DataTable dt = new DataTable();
+                Hashtable param = new Hashtable();
+                param.Add("sqlId", "SelectWtlPipeDtl2");
+                param.Add("FTR_CDE", this.FTR_CDE);
+                param.Add("FTR_IDN", this.FTR_IDN);
+
+                PipeDtl result = new PipeDtl();
+                result = BizUtil.SelectObject(param) as PipeDtl;
+
+
+
+                //결과를 뷰모델멤버로 매칭
+                Type dbmodel = result.GetType();
+                Type model = this.GetType();
+
+                //모델프로퍼티 순회
+                foreach (PropertyInfo prop in model.GetProperties())
                 {
-                    string colName = dbprop.Name;
-                    var colValue = dbprop.GetValue(result, null);
-                    if (colName.Equals(propName))
+                    string propName = prop.Name;
+                    //db프로퍼티 순회
+                    foreach (PropertyInfo dbprop in dbmodel.GetProperties())
                     {
-                        prop.SetValue(this, Convert.ChangeType(colValue, prop.PropertyType));
+                        string colName = dbprop.Name;
+                        var colValue = dbprop.GetValue(result, null);
+                        if (colName.Equals(propName))
+                        {
+                            prop.SetValue(this, Convert.ChangeType(colValue, prop.PropertyType));
+                        }
                     }
+                    Console.WriteLine(propName + " - " + prop.GetValue(this, null));
                 }
-               Console.WriteLine(propName + " - " + prop.GetValue(this,null));
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
             }
 
         }
@@ -146,8 +151,7 @@ namespace GTI.WFMS.Modules.Pipe.ViewModel
         {
 
             // 필수체크 (Tag에 필수체크 표시한 EditBox, ComboBox 대상으로 수행)
-            BizUtil.ValidReq(wtlPipeDtlView);
-
+            if (!BizUtil.ValidReq(wtlPipeDtlView)) return;
 
 
             if (Messages.ShowYesNoMsgBox("저장하시겠습니까?") != MessageBoxResult.Yes) return;

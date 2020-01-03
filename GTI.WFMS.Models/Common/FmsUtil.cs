@@ -1,13 +1,16 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
+using System.Runtime.Serialization;
+using System.Runtime.Serialization.Formatters.Binary;
 using System.Windows;
 using System.Windows.Controls.Primitives;
 using System.Windows.Media;
 
 namespace GTI.WFMS.Models.Common
 {
-    public class FmsUtil
+    public static class FmsUtil
     {
         /// <summary>
         /// 전역변수 설정
@@ -125,6 +128,31 @@ namespace GTI.WFMS.Models.Common
                         yield return childOfChild;
                     }
                 }
+            }
+        }
+
+
+
+        /// <summary>
+        /// 모델복사 Create a Generic Extension
+        /// </summary>
+        public static T Clone<T>(this T source)
+        {
+            if (!typeof(T).IsSerializable)
+            {
+                throw new ArgumentException("This type must be serializable.", "source");
+            }
+
+            if (Object.ReferenceEquals(source, null))
+                return default(T);
+
+            IFormatter formatter = new BinaryFormatter();
+            Stream stream = new MemoryStream();
+            using (stream)
+            {
+                formatter.Serialize(stream, source);
+                stream.Seek(0, SeekOrigin.Begin);
+                return (T)formatter.Deserialize(stream);
             }
         }
 

@@ -96,4 +96,34 @@ namespace GTI.WFMS.Models.Common
     }
 
 
+    /// <summary>
+    /// Date2StrConverter 컨버터 - alsokyun
+    /// </summary>
+    public class Date2StrConverter : IValueConverter
+    {
+        public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
+        {
+            return value;
+        }
+
+        public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
+        {
+            return System.Convert.ToDateTime(value).ToString("yyyy-MM-dd");
+        }
+    }
+
+    public class S2StrConverter : IValueConverter
+    {
+        public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
+        {
+            return value;
+        }
+
+        public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
+        {
+            return value;
+        }
+    }
+
+
 }

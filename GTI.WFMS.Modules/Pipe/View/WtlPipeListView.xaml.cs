@@ -19,11 +19,11 @@ using System.Windows.Shapes;
 namespace GTI.WFMS.Modules.Pipe.View
 {
     /// <summary>
-    /// WtlPipeList.xaml에 대한 상호 작용 논리
+    /// WtlPipeListView.xaml에 대한 상호 작용 논리
     /// </summary>
-    public partial class WtlPipeList : Page
+    public partial class WtlPipeListView : Page
     {
-        public WtlPipeList()
+        public WtlPipeListView()
         {
             InitializeComponent();
 

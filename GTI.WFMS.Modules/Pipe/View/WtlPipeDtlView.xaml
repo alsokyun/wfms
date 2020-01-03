@@ -1,4 +1,5 @@
-﻿<Page xmlns:dxe="http://schemas.devexpress.com/winfx/2008/xaml/editors"  xmlns:dx="http://schemas.devexpress.com/winfx/2008/xaml/core"  x:Class="GTI.WFMS.Modules.Pipe.View.WtlPipeDtlView"
+﻿<Page xmlns:dxe="http://schemas.devexpress.com/winfx/2008/xaml/editors"  xmlns:dx="http://schemas.devexpress.com/winfx/2008/xaml/core"  
+            x:Class="GTI.WFMS.Modules.Pipe.View.WtlPipeDtlView"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
@@ -28,8 +29,9 @@
 
             <cm:MultiValueConverter x:Key="multiValueConverter"/>
             <cv:Toggle2Converter x:Key="toggleConverter" />
+            <cv:Date2StrConverter x:Key="date2StrConverter" />
 
-            
+
             <dx:BoolToObjectConverter x:Key="foregroundConverter">
                 <dx:BoolToObjectConverter.TrueValue>
                     <SolidColorBrush Color="White"/>
@@ -87,7 +89,7 @@
             </StackPanel>
         </StackPanel>
         <StackPanel Grid.Row="0" Orientation="Horizontal" HorizontalAlignment="Right" Margin="10 0 10 0">
-            <Button x:Name="btnPrint" Style="{DynamicResource ResourceKey=SendButton}"  >
+            <Button x:Name="btnPrint" Style="{DynamicResource ResourceKey=PrintButton}"  >
                 <i:Interaction.Triggers>
                     <i:EventTrigger EventName="Click">
                         <i:InvokeCommandAction Command="{Binding SearchCommand}">
@@ -111,7 +113,7 @@
                     </i:EventTrigger>
                 </i:Interaction.Triggers>
             </Button>
-            <Button x:Name="btnBack" Style="{DynamicResource ResourceKey=PopupCloseButton}" >
+            <Button x:Name="btnBack" Style="{DynamicResource ResourceKey=PopupBackButton}" >
             </Button>
         </StackPanel>
 
@@ -186,8 +188,8 @@
 
 
             <Label Grid.Row="1" Grid.Column="2" Content="설치일자" Style="{DynamicResource ResourceKey=GridLabel}" />
-            <dxe:DateEdit Grid.Row="1" Grid.Column="3" Style="{DynamicResource ResourceKey=GridDateEdit}" HorizontalContentAlignment="Center" 
-                          x:Name="dtIST_YMD" EditValue="{Binding IST_YMD}"  />
+            <dxe:DateEdit Grid.Row="1" Grid.Column="3" Style="{DynamicResource ResourceKey=GrdDateEdit}" HorizontalContentAlignment="Center" 
+                          x:Name="dtIST_YMD" EditValue="{Binding IST_YMD, Converter={StaticResource date2StrConverter}}"  />
 
 
 
