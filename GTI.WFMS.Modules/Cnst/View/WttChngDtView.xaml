@@ -1,0 +1,125 @@
+﻿<UserControl xmlns:dxe="http://schemas.devexpress.com/winfx/2008/xaml/editors"  xmlns:dxg="http://schemas.devexpress.com/winfx/2008/xaml/grid"  
+             x:Class="GTI.WFMS.Modules.Cnst.View.WttChngDtView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:GTI.WFMS.Modules.Cnst.View"
+             mc:Ignorable="d" 
+             d:DesignHeight="300" d:DesignWidth="900"
+             
+             xmlns:vm="clr-namespace:GTI.WFMS.Modules.Cnst.ViewModel"
+             xmlns:cm="clr-namespace:GTIFramework.Common.Utils.Converters;assembly=GTIFramework"
+             xmlns:cv="clr-namespace:GTI.WFMS.Models.Common;assembly=GTI.WFMS.Models"
+             >
+
+    <UserControl.Resources>
+        <cv:RownumConverter x:Key="rownumConverter" />
+    </UserControl.Resources>
+
+
+
+
+
+    <Grid>
+
+        <Grid.RowDefinitions>
+            <RowDefinition Height="30" />
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+
+
+        <StackPanel Grid.Row="0" Orientation="Horizontal" HorizontalAlignment="Right" Margin="0 0 5 3">
+            <Button x:Name="btnAdd" Style="{DynamicResource ResourceKey=GrdAddButton}" Click="BtnAdd_Click"  />
+            <Button x:Name="btnDel" Style="{DynamicResource ResourceKey=GrdDelButton}" Click="BtnDel_Click"  />
+            <Button x:Name="btnReg" Style="{DynamicResource ResourceKey=GrdRegButton}" Click="BtnReg_Click"  />
+        </StackPanel>
+
+
+        <dxg:GridControl Grid.Row="1" x:Name="grid" VerticalAlignment="Stretch" HorizontalAlignment="Stretch"  >
+
+            <dxg:GridControl.View>
+                <dxg:TableView x:Name="gv"
+                                NavigationStyle="Row" 
+                                AllowPerPixelScrolling="True"  
+                                ShowHorizontalLines="True"
+                               
+                                ShowIndicator="False" 
+                                ShowGroupPanel="False" 
+                                AllowBandMultiRow="False" 
+
+                               
+                    />
+            </dxg:GridControl.View>
+
+
+            <dxg:GridColumn Header="" Width="1*" HorizontalHeaderContentAlignment="Center">
+                <dxg:GridColumn.HeaderTemplate>
+                    <DataTemplate>
+                        <dxe:CheckEdit x:Name="allChk"  
+                                NullValue="false" IsThreeState="False"  EditMode="InplaceActive" Checked="AllChk_Checked"/>
+                    </DataTemplate>
+                </dxg:GridColumn.HeaderTemplate>
+                <dxg:GridColumn.CellTemplate>
+                    <DataTemplate>
+                        <dxe:CheckEdit EditValue="{Binding RowData.Row.CHK,TargetNullValue=false}"  
+                                NullValue="false" IsThreeState="False"  EditMode="InplaceActive"/>
+                    </DataTemplate>
+                </dxg:GridColumn.CellTemplate>
+            </dxg:GridColumn>
+            <dxg:GridColumn Header="변경일자" Width="3*" FieldName="CHG_YMD" HorizontalHeaderContentAlignment="Center">
+                <dxg:GridColumn.CellTemplate>
+                    <DataTemplate>
+                        <dxe:DateEdit Style="{DynamicResource ResourceKey=GrdDateEdit}" DisplayFormatString="yyyy-MM-dd"
+                            EditValue="{Binding RowData.ATT_TIM, Mode=TwoWay}"  />
+                    </DataTemplate>
+                </dxg:GridColumn.CellTemplate>
+            </dxg:GridColumn>
+            <dxg:GridColumn Header="증감금액" Width="4*" FieldName="INC_AMT" HorizontalHeaderContentAlignment="Center">
+                <dxg:GridColumn.CellTemplate>
+                    <DataTemplate>
+                        <dxe:TextEdit Style="{DynamicResource ResourceKey=GrdNumberEdit}"   
+                            EditValue="{Binding  RowData.INC_AMT, Mode=TwoWay}"/>
+                    </DataTemplate>
+                </dxg:GridColumn.CellTemplate>
+            </dxg:GridColumn>
+            <dxg:GridColumn Header="증감관급금액" Width="4*" FieldName="IGV_AMT" HorizontalHeaderContentAlignment="Center">
+                <dxg:GridColumn.CellTemplate>
+                    <DataTemplate>
+                        <dxe:TextEdit Style="{DynamicResource ResourceKey=GrdNumberEdit}"   
+                            EditValue="{Binding  RowData.IGV_AMT, Mode=TwoWay}"/>
+                    </DataTemplate>
+                </dxg:GridColumn.CellTemplate>
+            </dxg:GridColumn>
+            <dxg:GridColumn Header="변경공사금액" Width="4*" FieldName="CHG_AMT" HorizontalHeaderContentAlignment="Center">
+                <dxg:GridColumn.CellTemplate>
+                    <DataTemplate>
+                        <dxe:TextEdit Style="{DynamicResource ResourceKey=GrdNumberEdit}"   
+                            EditValue="{Binding  RowData.CHG_AMT, Mode=TwoWay}"/>
+                    </DataTemplate>
+                </dxg:GridColumn.CellTemplate>
+            </dxg:GridColumn>
+            <dxg:GridColumn Header="최종수정일" Width="3*" FieldName="ATT_TIM" HorizontalHeaderContentAlignment="Center">
+                <dxg:GridColumn.CellTemplate>
+                    <DataTemplate>
+                        <dxe:DateEdit Style="{DynamicResource ResourceKey=GrdDateEdit}" DisplayFormatString="yyyy-MM-dd"
+                            EditValue="{Binding RowData.CHG_YMD, Mode=TwoWay}"  />
+                    </DataTemplate>
+                </dxg:GridColumn.CellTemplate>
+            </dxg:GridColumn>
+            <dxg:GridColumn Header="변경관급량" Width="4*" FieldName="CGV_DES" HorizontalHeaderContentAlignment="Center">
+                <dxg:GridColumn.CellTemplate>
+                    <DataTemplate>
+                        <dxe:TextEdit Style="{DynamicResource ResourceKey=GrdTextEdit}"   
+                            EditValue="{Binding  RowData.CGV_DES, Mode=TwoWay}"/>
+                    </DataTemplate>
+                </dxg:GridColumn.CellTemplate>
+            </dxg:GridColumn>
+
+
+        </dxg:GridControl>
+
+    </Grid>
+
+
+</UserControl>

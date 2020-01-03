@@ -2,8 +2,45 @@
 <sqlMap namespace="Main" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://ibatis.apache.org/mapping">
   <statements>
 
+    
     <!--사용자조회-->
     <select id="selectUsrList" parameterClass="Hashtable" resultClass="Hashtable">
+
+
+
+        SELECT ROW_NUMBER() OVER(ORDER BY U.EDT_DT DESC ) AS RN
+        , U.USER_ID AS USER_ID
+        , U.USER_NM
+        , U.USER_TEL
+        , C2.NM AS DEPT_NM
+        , C3.NM AS POS_NM
+        , U.ETC
+        , DECODE(U.USE_YN,'N','N','Y') AS USE_YN
+        , U.USER_PWD
+        FROM INFOUSER.SYS_USER_INFO U
+        LEFT JOIN INFOUSER.CD_DTL_INFO C2 ON C2.DTL_CD = U.DEPT_CD
+        LEFT JOIN INFOUSER.CD_DTL_INFO C3 ON C3.DTL_CD = U.POS_CD
+        WHERE U.DEL_YN = 'N'
+
+        <isEqual property="GBN" compareValue="*">
+            AND ( U.USER_NM LIKE '%'||#WORD#||'%' OR U.USER_ID LIKE '%'||#WORD#||'%' )
+          </isEqual>
+          <isEqual property="GBN" compareValue="NM">
+            AND U.USER_NM LIKE '%'||#WORD#||'%'
+          </isEqual>
+          <isEqual property="GBN" compareValue="ID">
+            AND U.USER_ID LIKE '%'||#WORD#||'%'
+          </isEqual>
+
+
+
+    </select>
+
+    
+    
+    
+    <!--사용자조회-->
+    <select id="selectUsrPageList" parameterClass="Hashtable" resultClass="Hashtable">
 
       WITH C AS (
         SELECT COUNT(1) AS ROWCNT

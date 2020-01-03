@@ -45,9 +45,16 @@ namespace GTI.WFMS.Models.Cmm.Dao
             catch (Exception e) { }
             try
             {
-                string sqlId = conditions["sqlId3"].ToString();
+                string sqlId = conditions["sqlId4"].ToString();
                 ret = DBManager.QueryForTable(sqlId, conditions);
-                result.Add("dt3", ret);
+                result.Add("dt4", ret);
+            }
+            catch (Exception e) { }
+            try
+            {
+                string sqlId = conditions["sqlId5"].ToString();
+                ret = DBManager.QueryForTable(sqlId, conditions);
+                result.Add("dt5", ret);
             }
             catch (Exception e) { }
 
@@ -84,6 +91,15 @@ namespace GTI.WFMS.Models.Cmm.Dao
         {
             string sqlId = conditions["sqlId"].ToString();
             DBManager.QueryForUpdate(sqlId, conditions);
+        }
+        /// <summary>
+        /// 데이터 업데이트 단건 - 리턴
+        /// </summary>
+        /// <param name="conditions"></param>
+        public object UpdateR(Hashtable conditions)
+        {
+            string sqlId = conditions["sqlId"].ToString();
+            return DBManager.QueryForUpdate(sqlId, conditions);
         }
 
         /// <summary>

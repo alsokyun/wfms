@@ -105,7 +105,43 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
+    <Page Include="Cnst\View\SplyMngListView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Cnst\View\SplyDtlView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Cnst\View\WttFlawDtView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Cnst\View\WttSubcDtView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Cnst\View\WttChngDtView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Cnst\View\WttCostDtView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Cnst\View\CnstMngListView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Cnst\View\CnstMngDtlView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
     <Page Include="Link\View\ChscResSubListView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Link\View\RefFileMngView.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
@@ -121,9 +157,13 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Pipe\View\WtlPipeList.xaml">
+    <Page Include="Pipe\View\WtlPipeListView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Pop\View\FileMngView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
     </Page>
   </ItemGroup>
   <ItemGroup>
@@ -146,9 +186,40 @@
       <DependentUpon>UcUserMngView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Adm\ViewModel\UcUserMngViewModel.cs" />
+    <Compile Include="Cnst\ViewModel\SplyMngListViewModel.cs" />
+    <Compile Include="Cnst\ViewModel\CnstMngListViewModel.cs" />
+    <Compile Include="Cnst\ViewModel\CnstMngDtlViewModel.cs" />
+    <Compile Include="Cnst\ViewModel\SplyDtlViewModel.cs" />
+    <Compile Include="Cnst\View\SplyMngListView.xaml.cs">
+      <DependentUpon>SplyMngListView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Cnst\View\SplyDtlView.xaml.cs">
+      <DependentUpon>SplyDtlView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Cnst\View\WttFlawDtView.xaml.cs">
+      <DependentUpon>WttFlawDtView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Cnst\View\WttSubcDtView.xaml.cs">
+      <DependentUpon>WttSubcDtView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Cnst\View\WttChngDtView.xaml.cs">
+      <DependentUpon>WttChngDtView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Cnst\View\WttCostDtView.xaml.cs">
+      <DependentUpon>WttCostDtView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Cnst\View\CnstMngListView.xaml.cs">
+      <DependentUpon>CnstMngListView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Cnst\View\CnstMngDtlView.xaml.cs">
+      <DependentUpon>CnstMngDtlView.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Link\ViewModel\ChscResSubListViewModel.cs" />
     <Compile Include="Link\View\ChscResSubListView.xaml.cs">
       <DependentUpon>ChscResSubListView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Link\View\RefFileMngView.xaml.cs">
+      <DependentUpon>RefFileMngView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Main\PopMain.xaml.cs">
       <DependentUpon>PopMain.xaml</DependentUpon>
@@ -162,8 +233,12 @@
     <Compile Include="Pipe\View\WtlPipeDtlView.xaml.cs">
       <DependentUpon>WtlPipeDtlView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Pipe\View\WtlPipeList.xaml.cs">
-      <DependentUpon>WtlPipeList.xaml</DependentUpon>
+    <Compile Include="Pipe\View\WtlPipeListView.xaml.cs">
+      <DependentUpon>WtlPipeListView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Pop\ViewModel\FileMngViewModel.cs" />
+    <Compile Include="Pop\View\FileMngView.xaml.cs">
+      <DependentUpon>FileMngView.xaml</DependentUpon>
     </Compile>
   </ItemGroup>
   <ItemGroup>

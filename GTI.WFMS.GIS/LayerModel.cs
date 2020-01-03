@@ -46,7 +46,8 @@ namespace GTI.WFMS.GIS
         public Dictionary<string, FeatureLayer> layers = new Dictionary<string, FeatureLayer>()
         {
             {"WTL_FLOW_PS",  new FeatureLayer()},
-            {"WTL_FIRE_PS",  new FeatureLayer()},
+            {"WTL_FIRE_PS,FTR_CDE='SA118'",  new FeatureLayer()},
+            {"WTL_FIRE_PS,FTR_CDE='SA119'",  new FeatureLayer()},
             {"WTL_GAIN_PS",  new FeatureLayer()},
             {"WTL_HEAD_PS",  new FeatureLayer()},
             {"WTL_LEAK_PS",  new FeatureLayer()},
@@ -57,7 +58,13 @@ namespace GTI.WFMS.GIS
             {"WTL_RSRV_PS",  new FeatureLayer()},
             {"WTL_SERV_PS",  new FeatureLayer()},
             {"WTL_STPI_PS",  new FeatureLayer()},
-            {"WTL_VALV_PS",  new FeatureLayer()},
+            {"WTL_VALV_PS,FTR_CDE='SA200",  new FeatureLayer()},
+            {"WTL_VALV_PS,FTR_CDE='SA201",  new FeatureLayer()},
+            {"WTL_VALV_PS,FTR_CDE='SA202",  new FeatureLayer()},
+            {"WTL_VALV_PS,FTR_CDE='SA203",  new FeatureLayer()},
+            {"WTL_VALV_PS,FTR_CDE='SA204",  new FeatureLayer()},
+            {"WTL_VALV_PS,FTR_CDE='SA205",  new FeatureLayer()},
+            {"WTL_VALV_PS,FTR_CDE='SA206",  new FeatureLayer()},
 
             {"BML_GADM_AS",  new FeatureLayer()},
             {"WTL_PURI_AS",  new FeatureLayer()},
@@ -316,7 +323,7 @@ namespace GTI.WFMS.GIS
                 }
                 catch (Exception e) { }
 
-                FeatureLayer layer = layers[layerNm];
+                FeatureLayer layer = layers[_layerNm];
                 //Type memberType = this.GetType();
 
 
@@ -342,7 +349,7 @@ namespace GTI.WFMS.GIS
                                 ShapefileFeatureTable layerTable = await ShapefileFeatureTable.OpenAsync(shapefilePath);
 
                                 layer = new FeatureLayer(layerTable); /////// 신규레이어 생성 /////// 
-                                layers[layerNm] = layer; /////// 딕셔너리에 자동으로 저장되지는 않을것임 /////// 
+                                layers[_layerNm] = layer; /////// 딕셔너리에 자동으로 저장되지는 않을것임 /////// 
 
                                 _mapView.Map.OperationalLayers.Add(layer);
                                 layer.Renderer = uniqueValueRenderer.Clone(); //렌더러는 레이어 각각 할당해야하므로 렌더러복사하여 할당

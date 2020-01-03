@@ -1,4 +1,5 @@
-﻿using System;
+﻿using GTI.WFMS.Models.Cmm.Model;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
@@ -7,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace GTI.WFMS.Models.Pipe.Model
 {
-    public class PipeDtl : INotifyPropertyChanged
+    public class PipeDtl : CmmDtl, INotifyPropertyChanged
     {
         /// <summary>
         /// 인터페이스 구현부분
@@ -259,5 +260,7 @@ namespace GTI.WFMS.Models.Pipe.Model
                 OnPropertyChanged("PIP_LEN");
             }
         }
+
+
     }
 }

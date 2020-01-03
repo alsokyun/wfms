@@ -21,7 +21,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 
-namespace GTI.WNMS.Main.View.Popup
+namespace GTI.WNMS.Main.View.Pop
 {
     /// <summary>
     /// PopupQuickMenuMng.xaml에 대한 상호 작용 논리
@@ -89,7 +89,7 @@ namespace GTI.WNMS.Main.View.Popup
             {
                 Messages.ShowInfoMsgBox(ex.ToString());
             }
-            
+
         }
 
         /// <summary>
@@ -197,7 +197,7 @@ namespace GTI.WNMS.Main.View.Popup
                 if (cbSHRTEN_KEY.EditValue == null)
                     return;
 
-                if(((ObservableCollection<QuickMNU>)gcQuickR.ItemsSource).Count(item => item.SHRTEN_KEY == cbSHRTEN_KEY.EditValue.ToString()) == 2)
+                if (((ObservableCollection<QuickMNU>)gcQuickR.ItemsSource).Count(item => item.SHRTEN_KEY == cbSHRTEN_KEY.EditValue.ToString()) == 2)
                 {
                     cbSHRTEN_KEY.EditValue = null;
                 }
@@ -305,7 +305,7 @@ namespace GTI.WNMS.Main.View.Popup
                     if (item.CHK)
                     {
                         item.SHRTEN_KEY = null;
-                        QuickD.Insert(0,item);
+                        QuickD.Insert(0, item);
                         QuickS.Remove(item);
                     }
                 }

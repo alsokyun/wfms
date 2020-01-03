@@ -1,0 +1,86 @@
+﻿<Popup x:Class="GTI.WFMS.Modules.Pop.View.FileMngView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             
+            xmlns:cv="clr-namespace:GTI.WFMS.Models.FileUtils;assembly=GTI.WFMS.Models"
+            xmlns:vd="clr-namespace:GTI.WFMS.Modules.Pop.ViewModel"      
+       
+            mc:Ignorable="d" 
+            d:DesignHeight="200" d:DesignWidth="450"
+        
+            xmlns:dxg="http://schemas.devexpress.com/winfx/2008/xaml/grid"
+            xmlns:dxe="http://schemas.devexpress.com/winfx/2008/xaml/editors"
+            xmlns:dxmvvm="http://schemas.devexpress.com/winfx/2008/xaml/mvvm"
+       
+            DataContext="{dxmvvm:ViewModelSource Type={x:Type vd:FileMngViewModel}}"
+       
+       Width="550" Height="300"
+       >
+
+
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="40"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+
+        <StackPanel Grid.Row="0" Orientation="Horizontal" HorizontalAlignment="Right">
+        </StackPanel>
+        
+        <Grid Grid.Row="1" x:Name="gridContent" >
+
+            <dxg:GridControl AutoGenerateColumns="AddNew"
+                        EnableSmartColumnsGeneration="False"
+                        ItemsSource="{Binding Items}"
+                        SelectionMode="Cell">
+
+                <dxg:GridControl.View>
+                    <dxg:TableView AllowDragDrop="True"
+                                GiveRecordDragFeedback="OnGiveRecordDragFeedback"
+                                AllowPerPixelScrolling="True"
+                                ShowTotalSummary="True" ShowDragDropHint="False" ShowBandsInCustomizationForm="False" ShowGroupPanel="False">
+                        <dxmvvm:Interaction.Behaviors>
+                            <dxmvvm:EventToCommand
+                        Command="{Binding DragRecordOverCommand}"
+                        EventArgsConverter="{cv:DragRecordOverEventArgsConverter}"
+                        EventName="DragRecordOver"
+                        PassEventArgsToCommand="True" />
+                            <dxmvvm:EventToCommand
+                        Command="{Binding DropRecordCommand}"
+                        EventArgsConverter="{cv:DropRecordEventArgsConverter}"
+                        EventName="DropRecord"
+                        PassEventArgsToCommand="True" />
+                            <dxmvvm:EventToCommand
+                        Command="{Binding StartRecordDragCommand}"
+                        EventArgsConverter="{cv:StartRecordDragEventArgsConverter}"
+                        EventName="StartRecordDrag"
+                        PassEventArgsToCommand="True" />
+                            <dxmvvm:EventToCommand
+                        Command="{Binding GiveRecordDragFeedbackCommand}"
+                        EventArgsConverter="{cv:GiveRecordDragFeedbackEventArgsConverter}"
+                        EventName="GiveRecordDragFeedback"
+                        PassEventArgsToCommand="True" />
+                            <dxmvvm:EventToCommand
+                        Command="{Binding CompleteRecordDragDropCommand}"
+                        EventArgsConverter="{cv:CompleteRecordDragDropEventArgsConverter}"
+                        EventName="CompleteRecordDragDrop"
+                        PassEventArgsToCommand="True" />
+                        </dxmvvm:Interaction.Behaviors>
+
+                    </dxg:TableView>
+                </dxg:GridControl.View>
+
+
+
+            </dxg:GridControl>
+        </Grid>
+
+    </Grid>
+    
+    
+
+
+
+</Popup>

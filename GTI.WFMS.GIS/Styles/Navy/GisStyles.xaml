@@ -62,34 +62,6 @@
 
 
     <!--///////////////// Button /////////////////-->
-    <!--발송 버튼 (이미지)-->
-    <Style TargetType="Button" x:Key="SendButton">
-        <Setter Property="Width" Value="92"/>
-        <Setter Property="Height" Value="34"/>
-        <Setter Property="Margin" Value="5,0,0,0"/>
-        <Setter Property="Template">
-            <Setter.Value>
-                <ControlTemplate>
-                    <Grid>
-                        <Image Source="/Resources/Navy/Image/btn_send.png"/>
-                    </Grid>
-                </ControlTemplate>
-            </Setter.Value>
-        </Setter>
-        <Style.Triggers>
-            <Trigger Property="IsMouseOver" Value="True">
-                <Setter Property="Template">
-                    <Setter.Value>
-                        <ControlTemplate>
-                            <Grid>
-                                <Image Source="/Resources/Navy/Image/btn_send_on.png"/>
-                            </Grid>
-                        </ControlTemplate>
-                    </Setter.Value>
-                </Setter>
-            </Trigger>
-        </Style.Triggers>
-    </Style>
     <!--팝업 닫기 버튼 (이미지)-->
     <Style TargetType="Button" x:Key="PopupCloseButton">
         <Setter Property="Width" Value="72"/>
@@ -112,6 +84,82 @@
                             <Grid>
                                 <Image Source="/Resources/Navy/Image/btn_popup_close_on.png"/>
                             </Grid>
+                        </ControlTemplate>
+                    </Setter.Value>
+                </Setter>
+            </Trigger>
+        </Style.Triggers>
+    </Style>
+    <!--레이어추가 버튼 (이미지)-->
+    <Style TargetType="Button" x:Key="AddBtn">
+        <Setter Property="Width" Value="46"/>
+        <Setter Property="Height" Value="25"/>
+        <Setter Property="Margin" Value="5,0,0,0"/>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate>
+                    <Grid>
+                        <Image Source="/Resources/Navy/Image/btn_layer_add.png"/>
+                    </Grid>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+        <Style.Triggers>
+            <Trigger Property="IsMouseOver" Value="True">
+                <Setter Property="Template">
+                    <Setter.Value>
+                        <ControlTemplate>
+                            <Grid>
+                                <Image Source="/Resources/Navy/Image/btn_layer_add_on.png"/>
+                            </Grid>
+                        </ControlTemplate>
+                    </Setter.Value>
+                </Setter>
+            </Trigger>
+        </Style.Triggers>
+    </Style>
+    <!--레이어이동 버튼 (이미지)-->
+    <Style TargetType="Button" x:Key="MoveBtn">
+        <Setter Property="Width" Value="46"/>
+        <Setter Property="Height" Value="25"/>
+        <Setter Property="Margin" Value="5,0,0,0"/>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate>
+                        <Image Source="/Resources/Navy/Image/btn_layer_move.png"/>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+        <Style.Triggers>
+            <Trigger Property="IsMouseOver" Value="True">
+                <Setter Property="Template">
+                    <Setter.Value>
+                        <ControlTemplate>
+                                <Image Source="/Resources/Navy/Image/btn_layer_move_on.png"/>
+                        </ControlTemplate>
+                    </Setter.Value>
+                </Setter>
+            </Trigger>
+        </Style.Triggers>
+    </Style>
+    <!--레이어삭제 버튼 (이미지)-->
+    <Style TargetType="Button" x:Key="DelBtn">
+        <Setter Property="Width" Value="46"/>
+        <Setter Property="Height" Value="25"/>
+        <Setter Property="Margin" Value="5,0,0,0"/>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate>
+                        <Image Source="/Resources/Navy/Image/btn_layer_del.png"/>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+        <Style.Triggers>
+            <Trigger Property="IsMouseOver" Value="True">
+                <Setter Property="Template">
+                    <Setter.Value>
+                        <ControlTemplate>
+                                <Image Source="/Resources/Navy/Image/btn_layer_del_on.png"/>
                         </ControlTemplate>
                     </Setter.Value>
                 </Setter>
