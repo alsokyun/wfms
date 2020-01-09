@@ -1,6 +1,7 @@
 ﻿using DevExpress.Xpf.Editors;
 using DevExpress.Xpf.Grid;
 using GTI.WFMS.Models.Common;
+using GTI.WFMS.Modules.Cnst.Model;
 using GTIFramework.Common.MessageBox;
 using System;
 using System.Collections;
@@ -27,26 +28,14 @@ namespace GTI.WFMS.Modules.Cnst.View
     public partial class WttSubcDtView : UserControl
     {
 
-        private string CNT_NUM;
+        public DataTable dt; //그리드데이터 소스
+
 
         public WttSubcDtView(string _CNT_NUM)
         {
             InitializeComponent();
 
-            this.CNT_NUM = _CNT_NUM;
-            
-            
-            //초기조회
-            DataTable dt = new DataTable();
-
-            Hashtable param = new Hashtable();
-            param.Add("sqlId", "SelectWttSubcDtList");
-
-            param.Add("CNT_NUM", CNT_NUM);
-
-            dt = BizUtil.SelectList(param);
-            grid.ItemsSource = dt;
-
+            this.txtCNT_NUM.EditValue = _CNT_NUM; //키를 뷰모델로 넘기기위해 뷰바인딩 활용
         }
 
 
@@ -75,73 +64,30 @@ namespace GTI.WFMS.Modules.Cnst.View
         //행추가
         private void BtnAdd_Click(object sender, RoutedEventArgs e)
         {
-            gv.AddNewRow();
+            //gv.AddNewRow();
         }
         //행삭제
         private void BtnDel_Click(object sender, RoutedEventArgs e)
         {
-            gv.DeleteRow(gv.FocusedRowHandle);
+            //gv.DeleteRow(gv.FocusedRowHandle);
         }
 
 
         //그리드저장
         private void BtnReg_Click(object sender, RoutedEventArgs e)
         {
-            if (Messages.ShowYesNoMsgBox("저장하시겠습니까?") != MessageBoxResult.Yes) return;
 
-            //기존 공사비 삭제
-            Hashtable param = new Hashtable();
-            param.Add("sqlId", "DeleteWttSubcDt");
-            param.Add("CNT_NUM", CNT_NUM);
-            BizUtil.Update(param);
 
-            //그리드 저장
-            DataTable dt = grid.ItemsSource as DataTable;
-            foreach (DataRow row in dt.Rows)
+        }
+
+
+        private void grid_CustomUnboundColumnData(object sender, DevExpress.Xpf.Grid.GridColumnDataEventArgs e)
+        {
+            if (e.Column.FieldName == "Total")
             {
-                param = new Hashtable();
-
-                if (row.RowState == DataRowState.Modified)
-                {
-                    param.Add("sqlId", "SaveWttSubcDt");
-                    param.Add("CNT_NUM", CNT_NUM);
-                    param.Add("SUBC_SEQ", Convert.ToInt32(row["SUBC_SEQ"]));
-
-                    param.Add("SUB_NAM", row["SUB_NAM"].ToString());
-                    param.Add("PSB_NAM", row["PSB_NAM"].ToString());
-                    param.Add("SUB_ADR", row["SUB_ADR"].ToString());
-                    param.Add("SUB_TEL", row["SUB_TEL"].ToString());
-                }
-                if (row.RowState == DataRowState.Added)
-                {
-                    param.Add("sqlId", "SaveWttSubcDt");
-                    param.Add("CNT_NUM", CNT_NUM);
-
-                    param.Add("SUB_NAM", row["SUB_NAM"].ToString());
-                    param.Add("PSB_NAM", row["PSB_NAM"].ToString());
-                    param.Add("SUB_ADR", row["SUB_ADR"].ToString());
-                    param.Add("SUB_TEL", row["SUB_TEL"].ToString());
-                }
-                else
-                {
-                    continue;
-                }
-
-
-                try
-                {
-                    BizUtil.Update(param);
-                }
-                catch (Exception)
-                {
-                    Messages.ShowErrMsgBox("저장 처리중 오류가 발생하였습니다.");
-                    return;
-                }
-
+                e.Value = Convert.ToInt32(grid.GetCellValueByListIndex(e.ListSourceRowIndex, "UnitPrice")) *
+                    Convert.ToDouble(grid.GetCellValueByListIndex(e.ListSourceRowIndex, "UnitsOnOrder"));
             }
-            //저장처리성공
-            Messages.ShowOkMsgBox();
-
         }
     }
 }

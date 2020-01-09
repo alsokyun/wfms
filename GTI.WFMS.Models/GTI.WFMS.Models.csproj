@@ -114,9 +114,11 @@
     <Compile Include="Cmm\Work\CmmWork.cs" />
     <Compile Include="Cnst\Model\CnstDtl.cs" />
     <Compile Include="Cnst\Model\SplyDtl.cs" />
+    <Compile Include="Cnst\Model\WttSubcDt.cs" />
     <Compile Include="Common\BizUtil.cs" />
     <Compile Include="Common\FmsUtil.cs" />
     <Compile Include="Common\FmsValueConverter.cs" />
+    <Compile Include="Common\Integer.cs" />
     <Compile Include="Common\RelayCommand.cs" />
     <Compile Include="Common\SourcesBehavior.cs" />
     <Compile Include="FileUtils\CompleteRecordDragDropEventArgsConverter.cs" />

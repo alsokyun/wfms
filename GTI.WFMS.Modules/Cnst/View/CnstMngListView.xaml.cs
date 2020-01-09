@@ -1,4 +1,5 @@
 ﻿using DevExpress.Xpf.Grid;
+using GTIFramework.Common.MessageBox;
 using GTIFramework.Common.Utils.ViewEffect;
 using System;
 using System.Data;
@@ -37,9 +38,10 @@ namespace GTI.WFMS.Modules.Cnst.View
                 ///=> 뷰모델과바인딩된 객체값을 변경해서 뷰모델로 최종적으로 파라미터 전달
                 NavigationService.Navigate(new CnstMngDtlView(CNT_NUM));
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-                return; //throw;
+                Messages.ShowErrMsgBox(ex.ToString());
+                //return; //throw;
             }
             
         }

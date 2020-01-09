@@ -25,7 +25,7 @@
             <system:String x:Key="icon_layer_close.png">icon_layer_close.png</system:String>
 
             <cv:Str2ImgConverter x:Key="imgConverter" />
-        
+
             <!--트리내부 아이템 템플릿 -->
             <ControlTemplate x:Key="dockTemplate" TargetType="Button">
                 <DockPanel >
@@ -54,7 +54,7 @@
 
     <Grid x:Name="divGrid">
         <esri:MapView Map="{Binding Map}" x:Name="mapView"/>
-        
+
         <esri:Compass Margin="30" AutoHide="False" DataContext="{Binding Map}"/>
 
         <Grid VerticalAlignment="Top" Height="30" Width="Auto" HorizontalAlignment="Left" >
@@ -88,12 +88,12 @@
             <esri:MeasureToolbar MapView="{Binding ElementName=mapView}" />
         </Grid>
 
-        
-        
+
+
         <!--시설물레이어div-->
         <Popup x:Name="divLayer"  Width="170" Height="Auto" HorizontalAlignment="Right" IsOpen="True" 
                PlacementTarget="{Binding ElementName=divGrid}" Placement="Right" HorizontalOffset="-170" VerticalOffset="30" >
-            
+
             <StackPanel x:Name="stContent">
 
                 <Grid x:Name="gridTitle"  Background="{DynamicResource HeadBack1Brush1}">
@@ -360,8 +360,8 @@
 
 
 
-        
-        
+
+
     </Grid>
 
 

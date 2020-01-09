@@ -9,16 +9,12 @@
              d:DesignHeight="300" d:DesignWidth="900"
              
              xmlns:vm="clr-namespace:GTI.WFMS.Modules.Cnst.ViewModel"
-             xmlns:cm="clr-namespace:GTIFramework.Common.Utils.Converters;assembly=GTIFramework"
-             xmlns:cv="clr-namespace:GTI.WFMS.Models.Common;assembly=GTI.WFMS.Models"
              >
 
-    <UserControl.Resources>
-        <cv:RownumConverter x:Key="rownumConverter" />
-    </UserControl.Resources>
 
-
-
+    <UserControl.DataContext>
+        <vm:WttSubcDtViewModel/>
+    </UserControl.DataContext>
 
 
     <Grid>
@@ -30,13 +26,16 @@
 
 
         <StackPanel Grid.Row="0" Orientation="Horizontal" HorizontalAlignment="Right" Margin="0 0 5 3">
+            <dxe:TextEdit x:Name="txtCNT_NUM" EditValue="{Binding CNT_NUM, UpdateSourceTrigger=PropertyChanged}" Width="20" Visibility="Collapsed"/>
+
             <Button x:Name="btnAdd" Style="{DynamicResource ResourceKey=GrdAddButton}" Click="BtnAdd_Click"  />
             <Button x:Name="btnDel" Style="{DynamicResource ResourceKey=GrdDelButton}" Click="BtnDel_Click"  />
-            <Button x:Name="btnReg" Style="{DynamicResource ResourceKey=GrdRegButton}" Click="BtnReg_Click"  />
+            <Button x:Name="btnReg" Style="{DynamicResource ResourceKey=GrdRegButton}" Click="BtnReg_Click" Command="{Binding SaveCommand}" />
         </StackPanel>
 
 
-        <dxg:GridControl Grid.Row="1" x:Name="grid" VerticalAlignment="Stretch" HorizontalAlignment="Stretch"  >
+        <dxg:GridControl x:Name="grid" ItemsSource="{Binding Lst}" 
+            Grid.Row="1" VerticalAlignment="Stretch" HorizontalAlignment="Stretch"  >
 
             <dxg:GridControl.View>
                 <dxg:TableView x:Name="gv"
@@ -47,8 +46,6 @@
                                 ShowIndicator="False" 
                                 ShowGroupPanel="False" 
                                 AllowBandMultiRow="False" 
-
-                               
                     />
             </dxg:GridControl.View>
 
@@ -62,7 +59,7 @@
                 </dxg:GridColumn.HeaderTemplate>
                 <dxg:GridColumn.CellTemplate>
                     <DataTemplate>
-                        <dxe:CheckEdit EditValue="{Binding RowData.Row.CHK,TargetNullValue=false}"  
+                        <dxe:CheckEdit EditValue="{Binding Path=Value, TargetNullValue=false}"  
                                 NullValue="false" IsThreeState="False"  EditMode="InplaceActive"/>
                     </DataTemplate>
                 </dxg:GridColumn.CellTemplate>
@@ -72,7 +69,7 @@
                 <dxg:GridColumn.CellTemplate>
                     <DataTemplate>
                         <dxe:TextEdit Style="{DynamicResource ResourceKey=GrdTextEdit}"   
-                            EditValue="{Binding  RowData.SUB_NUM, Mode=TwoWay}"/>
+                            EditValue="{Binding  Path=Value,  Mode=TwoWay,  UpdateSourceTrigger=PropertyChanged}"/>
                     </DataTemplate>
                 </dxg:GridColumn.CellTemplate>
             </dxg:GridColumn>
@@ -80,7 +77,7 @@
                 <dxg:GridColumn.CellTemplate>
                     <DataTemplate>
                         <dxe:TextEdit Style="{DynamicResource ResourceKey=GrdTextEdit}"   
-                            EditValue="{Binding  RowData.PSB_NAM, Mode=TwoWay}"/>
+                            EditValue="{Binding  Path=Value,  Mode=TwoWay,  UpdateSourceTrigger=PropertyChanged}"/>
                     </DataTemplate>
                 </dxg:GridColumn.CellTemplate>
             </dxg:GridColumn>
@@ -88,7 +85,7 @@
                 <dxg:GridColumn.CellTemplate>
                     <DataTemplate>
                         <dxe:TextEdit Style="{DynamicResource ResourceKey=GrdTextEdit}"   
-                            EditValue="{Binding  RowData.SUB_TEL, Mode=TwoWay}"/>
+                            EditValue="{Binding  Path=Value,  Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
                     </DataTemplate>
                 </dxg:GridColumn.CellTemplate>
             </dxg:GridColumn>
@@ -96,13 +93,15 @@
                 <dxg:GridColumn.CellTemplate>
                     <DataTemplate>
                         <dxe:TextEdit Style="{DynamicResource ResourceKey=GrdTextEdit}"   
-                            EditValue="{Binding  RowData.SUB_ADR, Mode=TwoWay}"/>
+                            EditValue="{Binding  Path=Value, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
                     </DataTemplate>
                 </dxg:GridColumn.CellTemplate>
             </dxg:GridColumn>
 
 
         </dxg:GridControl>
+
+
 
     </Grid>
 

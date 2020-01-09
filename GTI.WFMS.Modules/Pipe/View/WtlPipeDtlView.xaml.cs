@@ -73,5 +73,6 @@ namespace GTI.WFMS.Modules.Pipe.View
         {
             NavigationService.Navigate(new WtlPipeListView());
         }
+        
     }
 }

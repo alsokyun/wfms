@@ -16,6 +16,7 @@
       , M.UPD_USR
       , M.UPD_YMD
       , M.CTNT
+      , NULL AS CHK
       FROM FMS_FILE_MAP M
       LEFT JOIN INFOUSER.SYS_USER_INFO U ON M.CRE_USR = U.USER_ID
       WHERE 1=1
@@ -27,7 +28,77 @@
     </select>
 
 
-    <!-- 업무파일정보 목록	 -->
+    
+    
+    
+    
+    <!-- 업무파일정보 삭제 -->
+    <update id="DeleteFileMap" parameterClass="Hashtable">
+      DELETE FROM FMS_FILE_MAP WHERE 1=1
+        AND BIZ_ID = #BIZ_ID#
+        AND FIL_SEQ = #FIL_SEQ#
+    </update>
+
+
+
+	<!-- 업무파일 저장 -->
+	<update id="SaveFileMap">
+    MERGE INTO FMS_FILE_MAP
+    USING DUAL ON ( BIZ_ID = #BIZ_ID# AND FIL_SEQ = #FIL_SEQ# )
+
+    WHEN MATCHED THEN
+    UPDATE SET
+    UPD_USR = #ID#
+      <isNotEmpty property="UPD_YMD">
+        , UPD_YMD = decode(length(#UPD_YMD#), 10, to_char(to_date(#UPD_YMD#, 'yyyy-MM-dd'), 'yyyyMMdd'), '')
+      </isNotEmpty>
+      <isNotEmpty property="GRP_TYP">
+        , GRP_TYP = #GRP_TYP#
+      </isNotEmpty>
+    <isNotEmpty property="TIT_NAM">
+	      , TIT_NAM = #TIT_NAM#
+	      </isNotEmpty>
+	      <isNotEmpty property="CTNT">
+	      , CTNT = #CTNT#
+	      </isNotEmpty>
+	
+	  WHEN NOT MATCHED THEN
+	      INSERT 
+	              (BIZ_ID, FIL_SEQ
+				  <isNotEmpty property="GRP_TYP">
+					    , GRP_TYP 
+				  </isNotEmpty>				
+		      <isNotEmpty property="TIT_NAM">
+		          , TIT_NAM
+		      </isNotEmpty>
+		      <isNotEmpty property="CTNT">
+		          , CTNT
+		      </isNotEmpty>
+          <isNotEmpty property="UPD_YMD">
+            , UPD_YMD
+          </isNotEmpty>
+        , CRE_USR, CRE_YMD )
+    VALUES
+      ( #BIZ_ID#, #FIL_SEQ#
+        <isNotEmpty property="GRP_TYP">
+				    ,#GRP_TYP#
+				</isNotEmpty>				
+		    <isNotEmpty property="TIT_NAM">
+	        , #TIT_NAM#
+		    </isNotEmpty>
+		    <isNotEmpty property="CTNT">
+	        , #CTNT#
+		    </isNotEmpty>
+        <isNotEmpty property="UPD_YMD">
+          , decode(length(#UPD_YMD#), 10, to_char(to_date(#UPD_YMD#, 'yyyy-MM-dd'), 'yyyyMMdd'), '')
+        </isNotEmpty>
+        , #ID#, TO_CHAR(SYSDATE, 'yyyyMMdd'))
+  </update>	
+
+
+
+
+      <!-- 첨부파일상세 목록	 -->
     <select id="SelectFileDtl"  resultClass="Hashtable">
       SELECT
       SEQ
@@ -57,63 +128,65 @@
     </update>
 
 
-      <!-- 파일마스터 추가 -->
-    <update id="InsertFileMst" parameterClass="Hashtable">
-      <selectKey keyProperty="filSeq" resultClass="Integer">
-        SELECT nvl(max(FIL_SEQ),0) +1 FROM FMS_FILE_MST
+    <!-- 파일마스터 추가 -->
+    <insert id="InsertFileMst" parameterClass="Hashtable">
+      <selectKey property="filSeq" resultClass="int" type="pre">
+        SELECT nvl(max(FIL_SEQ),0) +1  FROM FMS_FILE_MST
       </selectKey>
 
-      <![CDATA[
-			INSERT INTO FMS_FILE_MST 
-				( FIL_SEQ
-				  , FIL_NM
-				  , CRE_YMD
-				  , CRE_USR
-				  , UPD_YMD
-				  , UPD_USR )
-			VALUES ( #filSeq#
-				  , ''
-				  , TO_CHAR(SYSDATE, 'yyyyMMdd')
-				  , #id#
-				  , TO_CHAR(SYSDATE, 'yyyyMMdd')
-				  , #id# )
-		]]>
-    </update>
+      INSERT INTO FMS_FILE_MST
+      ( FIL_SEQ
+      , FIL_NM
+      , CRE_YMD
+      , CRE_USR
+      , UPD_YMD
+      , UPD_USR )
+      VALUES ( #filSeq#
+      , ''
+      , TO_CHAR(SYSDATE, 'yyyyMMdd')
+      , #ID#
+      , TO_CHAR(SYSDATE, 'yyyyMMdd')
+      , #ID# 
+      )
+    </insert>
 
 
     <!-- 파일상세 추가 -->
-    <update id="InsertFileDtl" parameterClass="Hashtable">
-      <selectKey keyProperty="SEQ" resultClass="Integer">
+    <insert id="InsertFileDtl" parameterClass="Hashtable">
+      <selectKey property="_seq" resultClass="int"  type="pre">
         SELECT NVL(MAX(SEQ),0)+1 FROM FMS_FILE_DTL WHERE FIL_SEQ = #FIL_SEQ#
       </selectKey>
 
-      <![CDATA[
-			INSERT INTO FMS_FILE_DTL 
-				( SEQ
-				  , FIL_SEQ
-				  , DWN_NAM
-				  , UPF_NAM
-				  , FIL_PTH
-				  , FIL_TYP
-				  , FIL_SIZ
-				  , FIL_RST
-				  , FIL_EXP
-				  , CUR_TFS
-				  , CRE_YMD )
-			VALUES ( #SEQ#
-				  , #FIL_SEQ#
-				  , #DWN_NAM#
-				  , #UPF_NAM#
-				  , #FIL_PTH#
-				  , #FIL_TYP#
-				  , #FIL_SIZ#
-				  , #FIL_RST#
-				  , #FIL_EXP#
-				  , '1'
-				  , TO_CHAR(SYSDATE, 'yyyyMMdd') )
-		]]>
-    </update>
-
+      INSERT INTO FMS_FILE_DTL
+      ( SEQ
+      , FIL_SEQ
+      , DWN_NAM
+      , UPF_NAM
+      , FIL_PTH
+      , FIL_TYP
+      , FIL_SIZ
+      , FIL_RST
+      , FIL_EXP
+      , CUR_TFS
+      , UPD_USR
+      , UPD_YMD
+      , CRE_USR
+      , CRE_YMD )
+      VALUES ( #_seq#
+      , #FIL_SEQ#
+      , #DWN_NAM#
+      , #UPF_NAM#
+      , #FIL_PTH#
+      , #FIL_TYP#
+      , #FIL_SIZ#
+      , #FIL_RST#
+      , #FIL_EXP#
+      , '1'
+      , #ID#
+      , TO_CHAR(SYSDATE, 'yyyyMMdd')
+      , #ID#
+      , TO_CHAR(SYSDATE, 'yyyyMMdd') )
+    </insert>
 
   </statements>
 </sqlMap>

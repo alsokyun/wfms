@@ -5,6 +5,7 @@ using GTIFramework.Common.Log;
 using GTIFramework.Common.MessageBox;
 using System;
 using System.Collections;
+using System.Collections.Generic;
 using System.Data;
 using System.IO;
 using System.Windows;
@@ -60,9 +61,9 @@ namespace GTI.WFMS.Models.Common
         /// </summary>
         /// <param name="conditions"></param>
         /// <returns></returns>
-        public static ArrayList SelectList2(Hashtable conditions)
+        public static IList<T> SelectListObj<T>(Hashtable conditions)
         {
-            return dao.SelectLIST2(conditions);
+            return dao.SelectLISTObj<T>(conditions);
         }
 
         /// <summary>
@@ -138,7 +139,7 @@ namespace GTI.WFMS.Models.Common
         /// 데이터 업데이트 - 리턴
         /// </summary>
         /// <param name="conditions"></param>
-        public static int UpdateR(Hashtable conditions)
+        public static int InsertR(Hashtable conditions)
         {
             try
             {
@@ -146,7 +147,7 @@ namespace GTI.WFMS.Models.Common
             }
             catch (Exception) { }
 
-            return (int)dao.UpdateR(conditions);
+            return (int)dao.InsertR(conditions);
         }
 
         /// <summary>

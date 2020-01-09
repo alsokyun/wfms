@@ -217,7 +217,11 @@
                                 AllowPerPixelScrolling="False"  
                                 ShowHorizontalLines="True"
                                 AllowPaging="False"
-                                       
+                               
+                               VerticalScrollbarVisibility="Disabled"
+                               HorizontalScrollbarVisibility="Visible"
+                               AutoWidth="False"
+                               
                                 ShowIndicator="False" 
                                 ShowGroupPanel="False" 
                                 AllowBandMultiRow="False" 
@@ -230,67 +234,67 @@
                 </dxg:TableView>
             </dxg:GridControl.View>
 
-            <dxg:GridColumn Header="위치" Width="1*" FieldName="IS_GEOMETRY" HorizontalHeaderContentAlignment="Center">
+            <dxg:GridColumn Header="위치" Width="200" FieldName="IS_GEOMETRY" HorizontalHeaderContentAlignment="Center" Fixed="Left">
                 <dxg:GridColumn.EditSettings>
                     <dxe:TextEditSettings HorizontalContentAlignment="Center"/>
                 </dxg:GridColumn.EditSettings>
             </dxg:GridColumn>
 
-            <dxg:GridColumn Header="지형지물" Width="5*" FieldName="FTR_NAM" HorizontalHeaderContentAlignment="Center">
+            <dxg:GridColumn Header="지형지물" Width="200" FieldName="FTR_NAM" HorizontalHeaderContentAlignment="Center" Fixed="Right">
                 <dxg:GridColumn.EditSettings>
                     <dxe:TextEditSettings HorizontalContentAlignment="Center"/>
                 </dxg:GridColumn.EditSettings>
             </dxg:GridColumn>
 
-            <dxg:GridColumn Header="관리기관" Width="5*" FieldName="MNG_NAM" HorizontalHeaderContentAlignment="Center">
+            <dxg:GridColumn Header="관리기관" Width="200" FieldName="MNG_NAM" HorizontalHeaderContentAlignment="Center">
                 <dxg:GridColumn.EditSettings>
                     <dxe:TextEditSettings HorizontalContentAlignment="Center"/>
                 </dxg:GridColumn.EditSettings>
             </dxg:GridColumn>
 
-            <dxg:GridColumn Header="관리번호" Width="3*" FieldName="FTR_IDN" HorizontalHeaderContentAlignment="Center">
+            <dxg:GridColumn Header="관리번호" Width="200" FieldName="FTR_IDN" HorizontalHeaderContentAlignment="Center">
                 <dxg:GridColumn.EditSettings>
                     <dxe:TextEditSettings HorizontalContentAlignment="Left"/>
                 </dxg:GridColumn.EditSettings>
             </dxg:GridColumn>
 
-            <dxg:GridColumn Header="행정동" Width="3*" FieldName="HJD_NAM" HorizontalHeaderContentAlignment="Center">
+            <dxg:GridColumn Header="행정동" Width="200" FieldName="HJD_NAM" HorizontalHeaderContentAlignment="Center">
                 <dxg:GridColumn.EditSettings>
                     <dxe:TextEditSettings HorizontalContentAlignment="Left"/>
                 </dxg:GridColumn.EditSettings>
             </dxg:GridColumn>
 
-            <dxg:GridColumn Header="공사번호" Width="3*" FieldName="CNT_NUM" HorizontalHeaderContentAlignment="Center">
+            <dxg:GridColumn Header="공사번호" Width="200" FieldName="CNT_NUM" HorizontalHeaderContentAlignment="Center">
                 <dxg:GridColumn.EditSettings>
                     <dxe:TextEditSettings HorizontalContentAlignment="Center"/>
                 </dxg:GridColumn.EditSettings>
             </dxg:GridColumn>
 
-            <dxg:GridColumn Header="도엽번호" Width="3*" FieldName="SHT_NUM" HorizontalHeaderContentAlignment="Center">
+            <dxg:GridColumn Header="도엽번호" Width="200" FieldName="SHT_NUM" HorizontalHeaderContentAlignment="Center">
                 <dxg:GridColumn.EditSettings>
                     <dxe:TextEditSettings HorizontalContentAlignment="Center"/>
                 </dxg:GridColumn.EditSettings>
             </dxg:GridColumn>
 
-            <dxg:GridColumn Header="설치일자" Width="3*" FieldName="IST_YMD" HorizontalHeaderContentAlignment="Center">
+            <dxg:GridColumn Header="설치일자" Width="200" FieldName="IST_YMD" HorizontalHeaderContentAlignment="Center">
                 <dxg:GridColumn.EditSettings>
                     <dxe:TextEditSettings HorizontalContentAlignment="Left"/>
                 </dxg:GridColumn.EditSettings>
             </dxg:GridColumn>
 
-            <dxg:GridColumn Header="관재질" Width="3*" FieldName="MOP_NAM" HorizontalHeaderContentAlignment="Center">
+            <dxg:GridColumn Header="관재질" Width="200" FieldName="MOP_NAM" HorizontalHeaderContentAlignment="Center">
                 <dxg:GridColumn.EditSettings>
                     <dxe:TextEditSettings HorizontalContentAlignment="Left"/>
                 </dxg:GridColumn.EditSettings>
             </dxg:GridColumn>
 
-            <dxg:GridColumn Header="접합종류" Width="3*" FieldName="JHT_NAM" HorizontalHeaderContentAlignment="Center">
+            <dxg:GridColumn Header="접합종류" Width="200" FieldName="JHT_NAM" HorizontalHeaderContentAlignment="Center">
                 <dxg:GridColumn.EditSettings>
                     <dxe:TextEditSettings HorizontalContentAlignment="Left"/>
                 </dxg:GridColumn.EditSettings>
             </dxg:GridColumn>
 
-            <dxg:GridColumn Header="구경" Width="2*" FieldName="PIP_DIP" HorizontalHeaderContentAlignment="Center">
+            <dxg:GridColumn Header="구경" Width="200" FieldName="PIP_DIP" HorizontalHeaderContentAlignment="Center">
                 <dxg:GridColumn.EditSettings>
                     <dxe:TextEditSettings HorizontalContentAlignment="Left"/>
                 </dxg:GridColumn.EditSettings>

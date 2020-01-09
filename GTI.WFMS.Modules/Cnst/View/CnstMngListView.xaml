@@ -15,13 +15,12 @@
         xmlns:cm="clr-namespace:GTIFramework.Common.Utils.Converters;assembly=GTIFramework"
         xmlns:common="clr-namespace:GTI.WFMS.Models.Common;assembly=GTI.WFMS.Models"
         x:Name="cnstMngListView"
-
       >
 
     <!--뷰모델연결처리
     -->
     <Page.DataContext>
-        <vm:CnstMngListViewModel></vm:CnstMngListViewModel>
+        <vm:CnstMngListViewModel/>
     </Page.DataContext>
 
 

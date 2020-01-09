@@ -4,17 +4,15 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-             xmlns:local="clr-namespace:GTI.WFMS.Modules.Link.View"
              mc:Ignorable="d" 
              d:DesignHeight="300" d:DesignWidth="900"
              
-             xmlns:vm="clr-namespace:GTI.WFMS.Modules.Link.ViewModel"
-             xmlns:cm="clr-namespace:GTIFramework.Common.Utils.Converters;assembly=GTIFramework"
              xmlns:cv="clr-namespace:GTI.WFMS.Models.Common;assembly=GTI.WFMS.Models"
              >
 
     <UserControl.Resources>
         <cv:RownumConverter x:Key="rownumConverter" />
+        <cv:ToggleConverter x:Key="toggleConverter" />
     </UserControl.Resources>
 
 
@@ -58,13 +56,12 @@
                 <dxg:GridColumn.HeaderTemplate>
                     <DataTemplate>
                         <dxe:CheckEdit x:Name="allChk"  
-                                NullValue="false" IsThreeState="False"  EditMode="InplaceActive" Checked="AllChk_Checked"/>
+                                NullValue="false" IsThreeState="False"  EditMode="InplaceActive" Checked="AllChk_Checked" Unchecked="AllChk_Unchecked"/>
                     </DataTemplate>
                 </dxg:GridColumn.HeaderTemplate>
                 <dxg:GridColumn.CellTemplate>
                     <DataTemplate>
-                        <dxe:CheckEdit EditValue="{Binding RowData.Row.CHK,TargetNullValue=false}"  
-                                NullValue="false" IsThreeState="False"  EditMode="InplaceActive"/>
+                        <dxe:CheckEdit EditValue="{Binding RowData.Row.CHK, Mode=TwoWay, Converter={StaticResource toggleConverter}}" HorizontalAlignment="Center" />
                     </DataTemplate>
                 </dxg:GridColumn.CellTemplate>
             </dxg:GridColumn>

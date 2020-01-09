@@ -14,6 +14,7 @@
 
     <UserControl.Resources>
         <cv:RownumConverter x:Key="rownumConverter" />
+        <cv:ToggleConverter x:Key="toggleConverter" />
     </UserControl.Resources>
 
 
@@ -52,21 +53,21 @@
             </dxg:GridControl.View>
 
 
-            <dxg:GridColumn Header="" Width="1*" HorizontalHeaderContentAlignment="Center">
+            <dxg:GridColumn Header="" Width="1*" HorizontalHeaderContentAlignment="Center"  AllowEditing="True">
                 <dxg:GridColumn.HeaderTemplate>
                     <DataTemplate>
                         <dxe:CheckEdit x:Name="allChk"  
-                                NullValue="false" IsThreeState="False"  EditMode="InplaceActive" Checked="AllChk_Checked"/>
+                                NullValue="false" IsThreeState="False"  EditMode="InplaceActive" Checked="AllChk_Checked" Unchecked="AllChk_Unchecked"/>
                     </DataTemplate>
                 </dxg:GridColumn.HeaderTemplate>
                 <dxg:GridColumn.CellTemplate>
                     <DataTemplate>
-                        <dxe:CheckEdit EditValue="{Binding RowData.Row.CHK,TargetNullValue=false}"  
-                                NullValue="false" IsThreeState="False"  EditMode="InplaceActive"/>
+                        <!--<dxe:CheckEdit EditValue="{Binding RowData.Row.CHK,TargetNullValue=false}" NullValue="false" IsThreeState="False"  EditMode="InplaceActive"/>-->
+                        <dxe:CheckEdit EditValue="{Binding RowData.Row.CHK, Mode=TwoWay, Converter={StaticResource toggleConverter}}" HorizontalAlignment="Center" />
                     </DataTemplate>
                 </dxg:GridColumn.CellTemplate>
             </dxg:GridColumn>
-            <dxg:GridColumn Header="지급구분" Width="4*" FieldName="PTY_CDE" HorizontalHeaderContentAlignment="Center">
+            <dxg:GridColumn Header="지급구분" Width="4*" FieldName="PTY_CDE" HorizontalHeaderContentAlignment="Center"  AllowEditing="True">
                 <dxg:GridColumn.CellTemplate>
                     <DataTemplate>
                         <dxe:ComboBoxEdit EditValue="{Binding RowData.Row.PTY_CDE, Mode=TwoWay}" ValueMember="DTL_CD" DisplayMember="NM"
@@ -81,19 +82,19 @@
                     </DataTemplate>
                 </dxg:GridColumn.CellTemplate>
             </dxg:GridColumn>
-            <dxg:GridColumn Header="지급일자" Width="3*" FieldName="PAY_YMD" HorizontalHeaderContentAlignment="Center">
+            <dxg:GridColumn Header="지급일자" Width="3*" FieldName="PAY_YMD" HorizontalHeaderContentAlignment="Center" AllowEditing="True">
                 <dxg:GridColumn.CellTemplate>
                     <DataTemplate>
                         <dxe:DateEdit Style="{DynamicResource ResourceKey=GrdDateEdit}" DisplayFormatString="yyyy-MM-dd"
-                            EditValue="{Binding RowData.PAY_YMD, Mode=TwoWay}"  />
+                            EditValue="{Binding RowData.Row.PAY_YMD, Mode=TwoWay}"   />
                     </DataTemplate>
                 </dxg:GridColumn.CellTemplate>
             </dxg:GridColumn>
-            <dxg:GridColumn Header="지급금액" Width="4*" FieldName="PAY_AMT" HorizontalHeaderContentAlignment="Center">
+            <dxg:GridColumn Header="지급금액" Width="4*" FieldName="PAY_AMT" HorizontalHeaderContentAlignment="Center"  AllowEditing="True">
                 <dxg:GridColumn.CellTemplate>
                     <DataTemplate>
-                        <dxe:TextEdit Style="{DynamicResource ResourceKey=GrdNumberEdit}"   
-                            EditValue="{Binding  RowData.PAY_AMT, Mode=TwoWay}"/>
+                        <dxe:TextEdit  Style="{DynamicResource ResourceKey=GrdNumberEdit}"
+                            EditValue="{Binding  RowData.Row.PAY_AMT, Mode=TwoWay}" />
                     </DataTemplate>
                 </dxg:GridColumn.CellTemplate>
             </dxg:GridColumn>

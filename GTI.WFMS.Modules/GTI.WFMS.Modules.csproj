@@ -190,6 +190,7 @@
     <Compile Include="Cnst\ViewModel\CnstMngListViewModel.cs" />
     <Compile Include="Cnst\ViewModel\CnstMngDtlViewModel.cs" />
     <Compile Include="Cnst\ViewModel\SplyDtlViewModel.cs" />
+    <Compile Include="Cnst\ViewModel\WttSubcDtViewModel.cs" />
     <Compile Include="Cnst\View\SplyMngListView.xaml.cs">
       <DependentUpon>SplyMngListView.xaml</DependentUpon>
     </Compile>

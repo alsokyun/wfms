@@ -16,7 +16,7 @@ namespace GTI.WFMS.GIS
     /// <summary>
     /// MapViewModel 에서 레이어관련 항목 및 처리
     /// </summary>
-    public class LayerModel 
+    public class LayerModel
     {
         //생성자
         public LayerModel()
@@ -58,17 +58,17 @@ namespace GTI.WFMS.GIS
             {"WTL_RSRV_PS",  new FeatureLayer()},
             {"WTL_SERV_PS",  new FeatureLayer()},
             {"WTL_STPI_PS",  new FeatureLayer()},
-            {"WTL_VALV_PS,FTR_CDE='SA200",  new FeatureLayer()},
-            {"WTL_VALV_PS,FTR_CDE='SA201",  new FeatureLayer()},
-            {"WTL_VALV_PS,FTR_CDE='SA202",  new FeatureLayer()},
-            {"WTL_VALV_PS,FTR_CDE='SA203",  new FeatureLayer()},
-            {"WTL_VALV_PS,FTR_CDE='SA204",  new FeatureLayer()},
-            {"WTL_VALV_PS,FTR_CDE='SA205",  new FeatureLayer()},
-            {"WTL_VALV_PS,FTR_CDE='SA206",  new FeatureLayer()},
+            {"WTL_VALV_PS,FTR_CDE='SA200'",  new FeatureLayer()},
+            {"WTL_VALV_PS,FTR_CDE='SA201'",  new FeatureLayer()},
+            {"WTL_VALV_PS,FTR_CDE='SA202'",  new FeatureLayer()},
+            {"WTL_VALV_PS,FTR_CDE='SA203'",  new FeatureLayer()},
+            {"WTL_VALV_PS,FTR_CDE='SA204'",  new FeatureLayer()},
+            {"WTL_VALV_PS,FTR_CDE='SA205'",  new FeatureLayer()},
+            {"WTL_VALV_PS,FTR_CDE='SA206'",  new FeatureLayer()},
 
             {"BML_GADM_AS",  new FeatureLayer()},
             {"WTL_PURI_AS",  new FeatureLayer()},
-            
+
             {"WTL_PIPE_LM",  new FeatureLayer()},
             {"WTL_SPLY_LS",  new FeatureLayer()},
         };
@@ -227,9 +227,6 @@ namespace GTI.WFMS.GIS
             string layerId = "1";
             switch (layerNm)
             {
-                case "WTL_VALV_PS":
-                    layerId = "0";
-                    break;
                 case "WTL_STPI_PS":
                     layerId = "1";
                     break;
@@ -257,26 +254,50 @@ namespace GTI.WFMS.GIS
                 case "WTL_GAIN_PS":
                     layerId = "9";
                     break;
-                case "WTL_FIRE_PS":
+                case "WTL_PRGA_PS":
                     layerId = "10";
                     break;
-                case "WTL_PRGA_PS":
+                case "WTL_FLOW_PS":
                     layerId = "11";
                     break;
-                case "WTL_FLOW_PS":
+                case "WTL_SPLY_LS":
                     layerId = "12";
                     break;
-                case "WTL_SPLY_LS":
+                case "WTL_PIPE_LM":
                     layerId = "13";
                     break;
-                case "WTL_PIPE_LM":
+                case "WTL_PURI_AS":
                     layerId = "14";
                     break;
-                case "WTL_PURI_AS":
+                case "BML_GADM_AS":
                     layerId = "15";
                     break;
-                case "BML_GADM_AS":
+                case "WTL_FIRE_PS,FTR_CDE='SA118'":
                     layerId = "16";
+                    break;
+                case "WTL_FIRE_PS,FTR_CDE='SA119'":
+                    layerId = "17";
+                    break;
+                case "WTL_VALV_PS,FTR_CDE='SA200'":
+                    layerId = "18";
+                    break;
+                case "WTL_VALV_PS,FTR_CDE='SA201'":
+                    layerId = "19";
+                    break;
+                case "WTL_VALV_PS,FTR_CDE='SA202'":
+                    layerId = "20";
+                    break;
+                case "WTL_VALV_PS,FTR_CDE='SA203'":
+                    layerId = "21";
+                    break;
+                case "WTL_VALV_PS,FTR_CDE='SA204'":
+                    layerId = "22";
+                    break;
+                case "WTL_VALV_PS,FTR_CDE='SA205'":
+                    layerId = "23";
+                    break;
+                case "WTL_VALV_PS,FTR_CDE='SA206'":
+                    layerId = "24";
                     break;
                 default:
                     break;
@@ -354,7 +375,7 @@ namespace GTI.WFMS.GIS
                                 _mapView.Map.OperationalLayers.Add(layer);
                                 layer.Renderer = uniqueValueRenderer.Clone(); //렌더러는 레이어 각각 할당해야하므로 렌더러복사하여 할당
 
-                                
+
                             }
                             catch (Exception e)
                             {
@@ -522,7 +543,7 @@ namespace GTI.WFMS.GIS
             SimpleLineSymbol SA002Symbol = new SimpleLineSymbol(SimpleLineSymbolStyle.Solid, System.Drawing.Color.SkyBlue, 2);
             UniqueValue SA002Value = new UniqueValue("SA002", "SA002", SA002Symbol, "SA002");
 
-            uniqueValueRenderer.UniqueValues.Add(SA001Value); 
+            uniqueValueRenderer.UniqueValues.Add(SA001Value);
             uniqueValueRenderer.UniqueValues.Add(SA002Value);
 
 

@@ -161,7 +161,7 @@
     <select id="selectDtlCdList" parameterClass="Hashtable" resultClass="Hashtable">
       SELECT rownum rn
       , MST_CD
-      , (select NM FROM CD_MST_INFO  WHERE MST_CD = D.MST_CD ) as MST_NM
+      , (select NM FROM INFOUSER.CD_MST_INFO  WHERE MST_CD = D.MST_CD ) as MST_NM
       , DTL_CD, NM, ETC, ORD, decode(USE_YN,'Y','Y','N') as USE_YN
       ,null as CHK
 
@@ -176,11 +176,11 @@
 
     <!-- 코드마스터 저장 -->
     <update id="saveMstCd" parameterClass="Hashtable">
-      MERGE INTO CD_MST_INFO
+      MERGE INTO INFOUSER.CD_MST_INFO
       USING DUAL ON (MST_CD = #MST_CD#)
       WHEN MATCHED THEN
       UPDATE SET
-      NM = #CD_NM#
+      NM = #NM#
       , ETC = #ETC#
       , ORD = #ORD#
       , EDT_ID = #EDT_ID#
@@ -189,22 +189,22 @@
 
       WHEN NOT MATCHED THEN
       INSERT (MST_CD, NM, ETC, ORD, USE_YN, EDT_ID, EDT_DT)
-      VALUES (#MST_CD#, #CD_NM#, #ETC#,#ORD#, DECODE(#USE_YN#,'Y','Y','N'), #EDT_ID#, sysdate)
+      VALUES (#MST_CD#, #NM#, #ETC#,#ORD#, DECODE(#USE_YN#,'Y','Y','N'), #EDT_ID#, sysdate)
     </update>
 
     <!--마스터삭제-->
     <update id="deleteMstCd" parameterClass="Hashtable">
-      DELETE CD_MST_INFO
+      DELETE INFOUSER.CD_MST_INFO
       WHERE MST_CD = #MST_CD#
     </update>
 
       <!-- 코드상세 저장  -->
     <update id="saveDtlCd" parameterClass="Hashtable">
-      MERGE INTO CD_DTL_INFO
+      MERGE INTO INFOUSER.CD_DTL_INFO
       USING DUAL ON (MST_CD = #MST_CD# and DTL_CD = #DTL_CD#)
       WHEN MATCHED THEN
       UPDATE SET
-      NM = #CD_NM#
+      NM = #NM#
       , ETC = #ETC#
       , ORD = #ORD#
       , USE_YN = decode(#USE_YN#,'Y','Y','N')
@@ -213,12 +213,12 @@
 
       WHEN NOT MATCHED THEN
       INSERT (MST_CD, DTL_CD, NM, ETC, ORD, USE_YN, EDT_ID, EDT_DT)
-      VALUES (#MST_CD#, #DTL_CD#, #CD_NM#, #ETC#,#ORD#, DECODE(#USE_YN#,'Y','Y','N'), #EDT_ID#, sysdate)
+      VALUES (#MST_CD#, #DTL_CD#, #NM#, #ETC#,#ORD#, DECODE(#USE_YN#,'Y','Y','N'), #EDT_ID#, sysdate)
     </update>
 
     <!--상세코드삭제-->
     <update id="deleteDtlCd" parameterClass="Hashtable">
-      DELETE CD_DTL_INFO
+      DELETE INFOUSER.CD_DTL_INFO
       WHERE MST_CD = #MST_CD#
       AND DTL_CD = #DTL_CD#
     </update>

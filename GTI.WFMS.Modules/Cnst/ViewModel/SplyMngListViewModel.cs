@@ -508,7 +508,7 @@ namespace GTI.WFMS.Modules.Cnst.ViewModel
 
                 //type 결정
                 string type_name = "string";
-                if (col.ColumnName.Contains("_AMT"))
+                if (col.ColumnName.Contains("_AMT") || col.ColumnName.Contains("_DIP") || col.ColumnName.Contains("_DIR"))
                 {
                     type_name = "decimal";
                 }
