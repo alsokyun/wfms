@@ -4,6 +4,7 @@ using System.Collections;
 
 using GTIFramework.Core.Managers;
 using System;
+using System.Collections.Generic;
 
 namespace GTI.WFMS.Models.Cmm.Dao
 {
@@ -45,9 +46,16 @@ namespace GTI.WFMS.Models.Cmm.Dao
             catch (Exception e) { }
             try
             {
-                string sqlId = conditions["sqlId3"].ToString();
+                string sqlId = conditions["sqlId4"].ToString();
                 ret = DBManager.QueryForTable(sqlId, conditions);
-                result.Add("dt3", ret);
+                result.Add("dt4", ret);
+            }
+            catch (Exception e) { }
+            try
+            {
+                string sqlId = conditions["sqlId5"].ToString();
+                ret = DBManager.QueryForTable(sqlId, conditions);
+                result.Add("dt5", ret);
             }
             catch (Exception e) { }
 
@@ -59,10 +67,10 @@ namespace GTI.WFMS.Models.Cmm.Dao
         /// </summary>
         /// <param name="conditions"></param>
         /// <returns></returns>
-        public ArrayList SelectLIST2(Hashtable conditions)
+        public IList<T> SelectLISTObj<T>(Hashtable conditions)
         {
             string sqlId = conditions["sqlId"].ToString();
-            return DBManager.QueryForList(sqlId, conditions);
+            return DBManager.QueryForListObj<T>(sqlId, conditions);
         }
 
         /// <summary>
@@ -83,7 +91,16 @@ namespace GTI.WFMS.Models.Cmm.Dao
         public void Update(Hashtable conditions)
         {
             string sqlId = conditions["sqlId"].ToString();
-            DBManager.QueryForUpdate("sqlId", conditions);
+            DBManager.QueryForUpdate(sqlId, conditions);
+        }
+        /// <summary>
+        /// 데이터 업데이트 단건 - 리턴
+        /// </summary>
+        /// <param name="conditions"></param>
+        public object InsertR(Hashtable conditions)
+        {
+            string sqlId = conditions["sqlId"].ToString();
+            return DBManager.QueryForInsert(sqlId, conditions);
         }
 
         /// <summary>

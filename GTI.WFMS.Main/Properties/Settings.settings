@@ -8,5 +8,8 @@
     <Setting Name="bSaveID" Type="System.Boolean" Scope="User">
       <Value Profile="(Default)">False</Value>
     </Setting>
+    <Setting Name="strThemeName" Type="System.String" Scope="User">
+      <Value Profile="(Default)">GTINavyTheme</Value>
+    </Setting>
   </Settings>
 </SettingsFile>

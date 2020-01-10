@@ -1,0 +1,159 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:dxe="http://schemas.devexpress.com/winfx/2008/xaml/editors"  
+                    xmlns:dxg="http://schemas.devexpress.com/winfx/2008/xaml/grid"
+                    xmlns:dxc="http://schemas.devexpress.com/winfx/2008/xaml/charts"
+                    xmlns:dx="http://schemas.devexpress.com/winfx/2008/xaml/core"
+                    xmlns:dxgt="http://schemas.devexpress.com/winfx/2008/xaml/grid/themekeys"
+                    xmlns:local="clr-namespace:GTI.WFMS.Main.Styles.Navy">
+
+    <!--================= Global Style Navy =================-->
+    <!--Button-->
+    <Style TargetType="{x:Type Button}">
+        <Setter Property="Padding" Value="0"/>
+        <Setter Property="RenderOptions.BitmapScalingMode" Value="NearestNeighbor"/>
+        <Setter Property="RenderOptions.EdgeMode" Value="Unspecified"/>
+    </Style>
+
+    <!--Image-->
+    <Style TargetType="{x:Type Image}">
+        <Setter Property="Stretch" Value="Fill"/>
+        <Setter Property="RenderOptions.BitmapScalingMode" Value="NearestNeighbor"/>
+        <Setter Property="RenderOptions.EdgeMode" Value="Aliased"/>
+    </Style>
+
+    <!--GridControl-->
+    <Style TargetType="{x:Type dxg:GridControl}">
+        <Setter Property="AutoGenerateColumns" Value="None"/>
+        <Setter Property="EnableSmartColumnsGeneration" Value="False"/>
+        <Setter Property="VerticalAlignment" Value="Stretch"/>
+        <Setter Property="HorizontalAlignment" Value="Stretch"/>
+        <Setter Property="SelectionMode" Value="None"/>
+        <Setter Property="dx:ScrollBarExtensions.ScrollBarMode" Value="Standard"/>
+        <Setter Property="ShowBorder" Value="False"/>
+        <Setter Property="RenderOptions.BitmapScalingMode" Value="NearestNeighbor"/>
+        <Setter Property="RenderOptions.EdgeMode" Value="Aliased"/>
+    </Style>
+
+    <!--GridControl-->
+    <Style TargetType="{x:Type dxg:GridColumn}">
+        <Setter Property="HorizontalHeaderContentAlignment" Value="Center"/>
+    </Style>
+
+    <!--TreeListView-->
+    <Style TargetType="{x:Type dxg:TreeListView}">
+        <Setter Property="AutoExpandAllNodes" Value="True"/>
+        <Setter Property="RowMinHeight" Value="40"/>
+        <Setter Property="HeaderPanelMinHeight" Value="34"/>
+        <Setter Property="FontSize" Value="14"/>
+        <Setter Property="ShowIndicator" Value="False"/>
+        <Setter Property="AllowColumnFiltering" Value="False"/>
+        <Setter Property="UseEvenRowBackground" Value="False"/>
+        <Setter Property="NavigationStyle" Value="Row"/>
+    </Style>
+
+    <!--TableView-->
+    <Style TargetType="{x:Type dxg:TableView}">
+        <Setter Property="AllowPerPixelScrolling" Value="True"/>
+        <Setter Property="ShowIndicator" Value="False"/>
+        <Setter Property="NavigationStyle" Value="Row"/>
+        <Setter Property="ShowGroupPanel" Value="False"/>
+        <Setter Property="AllowSorting" Value="False"/>
+        <Setter Property="AllowColumnFiltering" Value="False"/>
+        <Setter Property="AllowMoveColumnToDropArea" Value="False"/>
+        <Setter Property="IsColumnMenuEnabled" Value="False"/>
+        <Setter Property="AllowBandResizing" Value="True"/>
+        <Setter Property="AllowEditing" Value="False"/>
+        <Setter Property="AllowBandMultiRow" Value="False"/>
+        <Setter Property="UseEvenRowBackground" Value="False"/>
+        <Setter Property="ShowHorizontalLines" Value="True"/>
+        <Setter Property="ClipboardMode" Value="PlainText"/>
+        <Setter Property="FontFamily" Value="{DynamicResource malgun}"/>
+        <Setter Property="FontSize" Value="13"/>
+        <Setter Property="RowMinHeight" Value="40"/>
+        <Setter Property="AllowDragDrop" Value="False"/>
+        <Setter Property="BandHeaderTemplate">
+            <Setter.Value>
+                <DataTemplate>
+                    <Border Height="20">
+                        <TextBlock Text="{Binding}" VerticalAlignment="Center"/>
+                    </Border>
+                </DataTemplate>
+            </Setter.Value>
+        </Setter>
+        <Setter Property="ColumnHeaderTemplate">
+            <Setter.Value>
+                <DataTemplate>
+                    <Border Height="22">
+                        <TextBlock Text="{Binding}" VerticalAlignment="Center"/>
+                    </Border>
+                </DataTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <!--GridControl Row 기본 스타일(포커스를 잃어도 선택 유지)-->
+    <Style TargetType="{x:Type dxg:RowControl}">
+        <Style.Triggers>
+            <Trigger Property="SelectionState" Value="Focused">
+                <Setter Property="Background" Value="#FF335173"/>
+            </Trigger>
+        </Style.Triggers>
+    </Style>
+
+    <!--차트 팔레트-->
+    <Style TargetType="{x:Type dxc:ChartControl}">
+        <Setter Property="Palette">
+            <Setter.Value>
+                <dxc:CustomPalette>
+                    <dxc:CustomPalette.Colors>
+                        <Color>#5aa0cf</Color>
+                        <!--하늘-->
+                        <Color>#abcc3d</Color>
+                        <!--연-->
+                        <Color>#f68857</Color>
+                        <!--주-->
+                        <Color>#fecf41</Color>
+                        <!--노-->
+                        <Color>#ef5f44</Color>
+                        <!--빨-->
+                        <Color>#47a51b</Color>
+                        <!--초-->
+                        <Color>#34b3b9</Color>
+                        <!--청록-->
+                        <Color>#5f7fb5</Color>
+                        <!--파-->
+                        <Color>#f06d8b</Color>
+                        <!--핑-->
+                        <Color>#9b67ab</Color>
+                        <!--보-->
+                    </dxc:CustomPalette.Colors>
+                </dxc:CustomPalette>
+            </Setter.Value>
+        </Setter>
+        <Setter Property="AnimationMode" Value="OnDataChanged"/>
+        <Setter Property="SeriesSelectionMode" Value="Argument"/>
+        <Setter Property="BorderThickness" Value="0"/>
+    </Style>
+
+    <!--차트 레전드-->
+    <Style TargetType="{x:Type dxc:Legend}">
+        <Setter Property="Margin" Value="-10"/>
+        <Setter Property="Padding" Value="5"/>
+        <Setter Property="Background" Value="White"/>
+        <Setter Property="BorderThickness" Value="0"/>
+        <Setter Property="FontSize" Value="11"/>
+    </Style>
+
+    <!--차트 팬-->
+    <Style TargetType="{x:Type dxc:Pane}">
+        <!--<Setter Property="Margin" Value="0"/>-->
+        <Setter Property="Padding" Value="0"/>
+    </Style>
+
+    <!--dx:LoadingDecorator-->
+    <Style TargetType="{x:Type dx:LoadingDecorator}">
+
+    </Style>
+
+</ResourceDictionary>

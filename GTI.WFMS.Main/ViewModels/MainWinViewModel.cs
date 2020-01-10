@@ -1,7 +1,9 @@
 ﻿using DevExpress.Xpf.Accordion;
 using DevExpress.Xpf.Core;
+using GTI.WFMS.Models.Common;
 using GTI.WFMS.Models.Main.Work;
 using GTI.WFMS.Modules.Main;
+using GTI.WNMS.Main.View.Pop;
 using GTIFramework.Common.Log;
 using GTIFramework.Common.MessageBox;
 using GTIFramework.Common.Utils.ViewEffect;
@@ -37,7 +39,12 @@ namespace GTI.WFMS.Main
 
         private bool bMenuShowHiden = true; //아코디언메뉴 visible 
         private bool bQuickShowHiden = true; //퀵메뉴 visible 
-        
+
+
+        DataTable dtQuickMenuList = new DataTable(); //즐겨찾기메뉴
+        StackPanel stQuickMenu; //즐겨찾기버튼
+
+
         #endregion
 
 
@@ -75,7 +82,11 @@ namespace GTI.WFMS.Main
         /// 퀵메뉴버튼 접힘버튼 이벤트
         /// </summary>
         public DelegateCommand<object> QuickShowHidenCommand { get; set; }
-        
+        /// <summary>
+        /// 퀵메뉴버튼 관리버튼 이벤트
+        /// </summary>
+        public DelegateCommand<object> QuickMngCommand { get; set; }
+
 
         #endregion
 
@@ -99,6 +110,7 @@ namespace GTI.WFMS.Main
             CloseCommand = new DelegateCommand<object>(CloseAction);
             MenuShowHidenCommand = new DelegateCommand<object>(MenuShowHidenAction);
             QuickShowHidenCommand = new DelegateCommand<object>(QuickShowHidenAction);
+            QuickMngCommand = new DelegateCommand<object>(QuickMngAction);
 
 
 
@@ -130,12 +142,24 @@ namespace GTI.WFMS.Main
                 // 2.테마일괄적용...
                 ThemeApply.Themeapply(mainwin);
 
+                // 3.즐겨찾기
+                stQuickMenu = mainwin.FindName("stQuickMenu") as StackPanel;
+                QuickMnuBinding();
+
+                // 4.기타기능처리
+                Logs.progressunlimit = mainwin.FindName("progressunlimit") as ProgressBar; //로딩바설정
+                Messages.AppNotificationService = mainwin.FindName("AppNotificationService") as DevExpress.Mvvm.UI.NotificationService; //알림토스트
+
+
+
+
 
 
                 /* ArcGis 2D-MapView 로딩
                  */
                 //regionManager.Regions["ContentRegion"].RemoveAll();
                 //regionManager.RequestNavigate("ContentRegion", new Uri("Map4View", UriKind.Relative));
+                //regionManager.RequestNavigate("ContentRegion", new Uri("SketchOnMap", UriKind.Relative));
                 //regionManager.RequestNavigate("ContentRegion", new Uri("OfflineBasemapByReference", UriKind.Relative));
                 //regionManager.RequestNavigate("ContentRegion", new Uri("Map3View", UriKind.Relative));
                 //regionManager.RequestNavigate("ContentRegion", new Uri("Map2View", UriKind.Relative));
@@ -143,6 +167,8 @@ namespace GTI.WFMS.Main
                 //regionManager.RequestNavigate("ContentRegion", new Uri("MainWindow", UriKind.Relative));
 
 
+
+                Messages.NotificationBox("InfoFMS", "InfoFMS에 접속하셨습니다.", "InfoFMS에 접속하셨습니다.");
             }
             catch (Exception ex)
             {
@@ -192,9 +218,19 @@ namespace GTI.WFMS.Main
                             Name = "MN_" + r["MNU_CD"].ToString(),
                             Header = r["MNU_NM"].ToString(),
                             Foreground = new SolidColorBrush(Colors.White),
-                            FontSize = 16,
+                            FontSize = 14,
                             Glyph = new BitmapImage(new Uri("/Resources/Images/MNUImage/" + r["MNU_IMG"].ToString(), UriKind.Relative))
                         };
+                        if (ThemeApply.strThemeName.Equals("GTINavyTheme"))
+                        {
+                            acctwoitem.Glyph = new BitmapImage(new Uri("/Resources/Navy/Images/MNUImage/" + r["MNU_IMG"].ToString(), UriKind.Relative));
+                        }
+                        else
+                        {
+                            acctwoitem.Glyph = new BitmapImage(new Uri("/Resources/Blue/Images/MNUImage/" + r["MNU_IMG"].ToString(), UriKind.Relative));
+                        }
+                        acctwoitem.Margin = new Thickness(3,0,3,0);
+
                         mainwin.RegisterName(acctwoitem.Name, acctwoitem); //메인윈도우에 객체를 추가한다...
                         accrMenu.Items.Add(acctwoitem);
 
@@ -278,8 +314,17 @@ namespace GTI.WFMS.Main
                                 Name = "MN_" + r["MNU_CD"].ToString(),
                                 Content = r["MNU_NM"].ToString(),
                                 Style = Application.Current.Resources["MainMNUButton"] as Style,
-                                Tag = "/Resources/Images/MNUImage/" + r["MNU_IMG"].ToString()
+                                //Tag = "/Resources/Images/MNUImage/" + r["MNU_IMG"].ToString()
                             };
+                            if (ThemeApply.strThemeName.Equals("GTINavyTheme"))
+                            {
+                                btnMenu.Tag = "/Resources/Navy/Images/MNUImage/" + r["MNU_IMG"].ToString();
+                            }
+                            else
+                            {
+                                btnMenu.Tag = "/Resources/Navy/Images/MNUImage/" + r["MNU_IMG"].ToString();
+                            }
+
                             btnMenu.Click += btnMenu_Click;
                             mainwin.RegisterName(btnMenu.Name, btnMenu);
                             spMenuArea.Children.Add(btnMenu);
@@ -369,10 +414,24 @@ namespace GTI.WFMS.Main
                                 bool? ret = pwin.ShowDialog();
                                  */
 
-                                /*2.Popup클래그 방식*/
+                                /*2.Popup클래그 방식
+                                 */
                                 pmain.IsOpen = false; //현재열려있는 팝업을 닫는다
 
-                                pmain = new PopMain(dr[0]["MNU_PATH"].ToString());
+                                if (FmsUtil.IsNull(dr[0]["MNU_PATH"].ToString()))
+                                {
+                                    Messages.ShowErrMsgBox("잘못된 메뉴경로입니다.");
+                                    return;
+                                }
+                                try
+                                {
+                                    pmain = new PopMain(dr[0]["MNU_PATH"].ToString());
+                                }
+                                catch (Exception)
+                                {
+                                    return;
+                                }
+
                                 Label lbTitle = pmain.FindName("lbTitle") as Label;//화면타이틀
                                 lbTitle.Content = dr[0]["MNU_NM"].ToString();
 
@@ -540,6 +599,189 @@ namespace GTI.WFMS.Main
 
             sb.Begin(mainwin);
             bQuickShowHiden = !bQuickShowHiden;
+        }
+
+
+
+        /// <summary>
+        /// 단축키 입력 이벤트
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void Mainwin_KeyDown(object sender, KeyEventArgs e)
+        {
+            try
+            {
+                AccordionControl accrMenu = mainwin.FindName("accrMenu") as AccordionControl;
+                DataRow[] dr = null;
+
+                if (Keyboard.IsKeyDown(Key.F1))
+                    dr = dtQuickMenuList.Select("SHRTEN_KEY = 'F1'");
+                else if (Keyboard.IsKeyDown(Key.F2))
+                    dr = dtQuickMenuList.Select("SHRTEN_KEY = 'F2'");
+                else if (Keyboard.IsKeyDown(Key.F3))
+                    dr = dtQuickMenuList.Select("SHRTEN_KEY = 'F3'");
+                else if (Keyboard.IsKeyDown(Key.F4))
+                    dr = dtQuickMenuList.Select("SHRTEN_KEY = 'F4'");
+                else if (Keyboard.IsKeyDown(Key.F5))
+                    dr = dtQuickMenuList.Select("SHRTEN_KEY = 'F5'");
+                else if (Keyboard.IsKeyDown(Key.F6))
+                    dr = dtQuickMenuList.Select("SHRTEN_KEY = 'F6'");
+                else if (Keyboard.IsKeyDown(Key.F7))
+                    dr = dtQuickMenuList.Select("SHRTEN_KEY = 'F7'");
+                else if (Keyboard.IsKeyDown(Key.F8))
+                    dr = dtQuickMenuList.Select("SHRTEN_KEY = 'F8'");
+                else if (Keyboard.IsKeyDown(Key.F9))
+                    dr = dtQuickMenuList.Select("SHRTEN_KEY = 'F9'");
+                else if (Keyboard.IsKeyDown(Key.F10))
+                    dr = dtQuickMenuList.Select("SHRTEN_KEY = 'F10'");
+                else if (Keyboard.IsKeyDown(Key.F11))
+                    dr = dtQuickMenuList.Select("SHRTEN_KEY = 'F11'");
+                else if (Keyboard.IsKeyDown(Key.F12))
+                    dr = dtQuickMenuList.Select("SHRTEN_KEY = 'F12'");
+
+                if (dr != null && dr.Length == 1)
+                {
+                    dr = dtMenuList.Select("MNU_CD = '" + dr[0]["MNU_CD"].ToString() + "' AND MNU_STEP = '3'");
+
+                    if (dr.Length == 1)
+                    {
+                        if (!Logs.htPermission[dr[0]["MNU_CD"]].ToString().Equals("N"))
+                        {
+                            if (!dr[0]["MNU_PATH"].ToString().Equals(""))
+                            {
+                                btnMenu_Click(mainwin.FindName("MN_" + dr[0]["MNU_CD"].ToString().Substring(0, 4)), null);
+                                accrMenu.SelectedItem = mainwin.FindName("MN_" + dr[0]["MNU_CD"].ToString());
+                                MenuControlAction(null);
+
+                                if (!bQuickShowHiden)
+                                    QuickShowHidenAction(null);
+                            }
+                        }
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                Messages.ShowErrMsgBoxLog(ex);
+            }
+        }
+
+
+
+        #endregion
+
+
+
+
+
+
+        #region ======= 즐겨찾기관련 =========
+
+
+        /// <summary>
+        /// 즐겨찾기관리 
+        /// </summary>
+        /// <param name="obj"></param>
+        private void QuickMngAction(object obj)
+        {
+            PopupQuickMenuMng popupQuickMng = new PopupQuickMenuMng();
+            popupQuickMng.Closed += popupQuickMng_Closed;
+            popupQuickMng.ShowDialog();
+        }
+
+
+        /// <summary>
+        /// 즐겨찾기 관리 닫기 이벤트
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void popupQuickMng_Closed(object sender, EventArgs e)
+        {
+            QuickMnuBinding();
+        }
+
+
+
+        /// <summary>
+        /// 즐겨찾기 바인딩
+        /// </summary>
+        /// 
+        public void QuickMnuBinding()
+        {
+            try
+            {
+                // 즐겨찾기메뉴 조회
+                Hashtable param = new Hashtable();
+                param.Add("sqlId", "Select_BASE_FLOW_CALC_INFO_R");
+                param.Add("SYS_CD", "000007");
+                param.Add("USER_ID", Logs.strLogin_ID);
+
+                dtQuickMenuList = BizUtil.SelectList(param);
+
+
+                stQuickMenu.Children.Clear();
+
+                foreach (DataRow dr in dtQuickMenuList.Rows)
+                {
+                    Button btnQuickMenu = new Button
+                    {
+                        Name = "MN_" + dr["MNU_CD"].ToString(),
+                        Content = dr["MNU_NM"].ToString(),
+                        Tag = dr["SHRTEN_KEY"].ToString()
+                    };
+                    btnQuickMenu.Click += BtnQuickMenu_Click;
+                    btnQuickMenu.SetResourceReference(Control.StyleProperty, "Quick_Menu_Button");
+
+                    if (btnQuickMenu.Tag.ToString().Equals(""))
+                    {
+                        btnQuickMenu.Tag = "Collapsed";
+                    }
+
+                    stQuickMenu.Children.Add(btnQuickMenu);
+                }
+            }
+            catch (Exception ex)
+            {
+                Messages.ShowErrMsgBoxLog(ex);
+            }
+        }
+
+
+        /// <summary>
+        /// 즐겨찾기 액션
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void BtnQuickMenu_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                strSelectMenu = (sender as Button).Name.Replace("MN_", "");
+                AccordionControl accrMenu = mainwin.FindName("accrMenu") as AccordionControl;
+
+                DataRow[] dr = dtMenuList.Select("MNU_CD = '" + strSelectMenu + "' AND MNU_STEP = '3'");
+
+                if (dr.Length == 1)
+                {
+                    if (!Logs.htPermission[strSelectMenu].ToString().Equals("N"))
+                    {
+                        if (!dr[0]["MNU_PATH"].ToString().Equals(""))
+                        {
+                            btnMenu_Click(mainwin.FindName("MN_" + dr[0]["MNU_CD"].ToString().Substring(0, 4)), null);
+                            accrMenu.SelectedItem = mainwin.FindName("MN_" + dr[0]["MNU_CD"].ToString());
+                            MenuControlAction(null);
+
+                            if (!bQuickShowHiden)
+                                QuickShowHidenAction(null);
+                        }
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                Messages.ShowErrMsgBoxLog(ex);
+            }
         }
 
         #endregion

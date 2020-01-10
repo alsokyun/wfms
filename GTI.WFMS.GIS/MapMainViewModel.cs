@@ -15,6 +15,9 @@ using GTI.WFMS.Models.Cmm.Model;
 using GTI.WFMS.GIS.Module;
 using GTIFramework.Common.MessageBox;
 using System.IO;
+using Esri.ArcGISRuntime.UI;
+using Esri.ArcGISRuntime.Symbology;
+using System.Threading.Tasks;
 
 namespace GTI.WFMS.GIS
 {
@@ -28,6 +31,9 @@ namespace GTI.WFMS.GIS
         //public ArcGISFeature _selectedFeature;
         public Feature _selectedFeature;
         public List<string> _selectedLayers = new List<string>();
+        // Graphics overlay to host sketch graphics
+        private GraphicsOverlay _sketchOverlay;
+        private Esri.ArcGISRuntime.Geometry.Geometry _geometry;
 
         public MapMainViewModel()
         {
@@ -40,19 +46,21 @@ namespace GTI.WFMS.GIS
             {
 
                 //뷰객체를 파라미터로 전달받기
-                Grid divGrid = obj as Grid;
+                System.Windows.Controls.Grid divGrid = obj as System.Windows.Controls.Grid;
 
                 this.mapView = divGrid.FindName("mapView") as MapView;
                 this.divLayer = divGrid.FindName("divLayer") as Popup;
+                this.ClearButton = divGrid.FindName("ClearButton") as Button;
 
                 //지도초기화
                 InitMap();
 
-                
+
                 //시설물레이어DIV 초기화작업
                 InitDivLayer();
 
                 InitUniqueValueRenderer();//렌더러초기생성작업
+
             });
 
 
@@ -68,7 +76,7 @@ namespace GTI.WFMS.GIS
 
                 //ShowLocalServerLayer(mapView, doc.Tag.ToString(), chk);
                 ShowShapeLayer(mapView, doc.Tag.ToString(), chk);
-                
+
 
                 //선택된 레이어저장
                 try
@@ -82,14 +90,14 @@ namespace GTI.WFMS.GIS
                         _selectedLayers.Remove(doc.Tag.ToString());
                     }
                 }
-                catch (Exception){}
+                catch (Exception) { }
             });
 
             //팝업레이어 토글처리
             toggleCmd = new RelayCommand<object>(delegate (object obj)
             {
                 StackPanel spLayer = divLayer.FindName("spLayer") as StackPanel;
-                Grid gridTitle = divLayer.FindName("gridTitle") as Grid;
+                System.Windows.Controls.Grid gridTitle = divLayer.FindName("gridTitle") as System.Windows.Controls.Grid;
 
                 spLayer.Visibility = spLayer.Visibility == Visibility.Visible ? Visibility.Collapsed : Visibility.Visible;
 
@@ -129,7 +137,7 @@ namespace GTI.WFMS.GIS
                 // 울산행정구역 표시
                 //ShowLocalServerLayer(mapView, "BML_GADM_AS", true);
                 ShowShapeLayer(mapView, "BML_GADM_AS", true);
-                
+
 
                 //3.열여있는 시설물정보창 닫기
                 popFct.IsOpen = false;
@@ -141,7 +149,8 @@ namespace GTI.WFMS.GIS
                 {
                     cb.IsChecked = false;
                 }
-
+                //선택된레이어 해제
+                _selectedLayers.Clear();
             });
 
 
@@ -152,7 +161,7 @@ namespace GTI.WFMS.GIS
                 switch (btn.Content.ToString())
                 {
                     case "추가":
-                        if (_selectedLayers.Count<1)
+                        if (_selectedLayers.Count < 1)
                         {
                             MessageBox.Show("시설물을 선택하세요.");
                             return;
@@ -163,11 +172,52 @@ namespace GTI.WFMS.GIS
                             return;
                         }
 
-                        //추가처리 탭핸들러 추가
-                        mapView.GeoViewTapped -= handlerGeoViewTappedMoveFeature;
-                        mapView.GeoViewTapped -= handlerGeoViewTapped;
-                        mapView.GeoViewTapped += handlerGeoViewTappedAddFeature;
-                        MessageBox.Show("시설물을 추가할 지점을 마우스로 클릭하세요.");
+
+                        //라인피처인 경우 - SketchEditor 를 GraphicOverlay에 생성한다
+                        if (_selectedLayers[0].Equals("WTL_PIPE_LM") || _selectedLayers[0].Equals("WTL_SPLY_LS"))
+                        {
+                            try
+                            {
+                                // Let the user draw on the map view using the chosen sketch mode
+                                Esri.ArcGISRuntime.Geometry.Geometry geometry = await mapView.SketchEditor.StartAsync(SketchCreationMode.Polyline, true); //맵에 신규geometry 얻어오기
+
+                                // Create and add a graphic from the geometry the user drew
+                                SimpleLineSymbol symbol;
+                                if (_selectedLayers[0].Equals("WTL_PIPE_LM"))
+                                {
+                                    symbol = new SimpleLineSymbol(SimpleLineSymbolStyle.Solid, System.Drawing.Color.SkyBlue, 2);
+                                }
+                                else
+                                {
+                                    symbol = new SimpleLineSymbol(SimpleLineSymbolStyle.Solid, System.Drawing.Color.SkyBlue, 2);
+                                }
+
+                                Graphic graphic = new Graphic(geometry, symbol);
+                                _sketchOverlay.Graphics.Add(graphic);
+
+                                // Enable/disable the clear and edit buttons according to whether or not graphics exist in the overlay
+                                ClearButton.IsEnabled = _sketchOverlay.Graphics.Count > 0;
+                            }
+                            catch (TaskCanceledException)
+                            {
+                                // Ignore ... let the user cancel drawing
+                            }
+                            catch (Exception ex)
+                            {
+                                // Report exceptions
+                                MessageBox.Show("Error drawing graphic shape: " + ex.Message);
+                            }
+                        }
+                        //포인트피처의 경우는 클릭핸들러만 추가함
+                        else
+                        {
+                            //추가처리 탭핸들러 추가
+                            mapView.GeoViewTapped -= handlerGeoViewTappedMoveFeature;
+                            mapView.GeoViewTapped -= handlerGeoViewTapped;
+                            mapView.GeoViewTapped += handlerGeoViewTappedAddFeature;
+                            MessageBox.Show("시설물을 추가할 지점을 마우스로 클릭하세요.");
+                        }
+
                         break;
 
                     case "이동":
@@ -224,7 +274,35 @@ namespace GTI.WFMS.GIS
                 }
             });
 
+
+            //도형클리어처리
+            clearCmd = new RelayCommand<object>(delegate (object obj)
+            {
+                // Remove all graphics from the graphics overlay
+                _sketchOverlay.Graphics.Clear();
+
+                // Disable buttons that require graphics
+                ClearButton.IsEnabled = false;
+            });
+            completeCmd = new RelayCommand<object>(async delegate (object obj)
+            {
+                mapView.SketchEditor.Stop();
+                //추가된 도형 저장처리
+
+                _selectedFeature.Geometry = _geometry;
+                // Apply the edit to the feature table.
+                await _selectedFeature.FeatureTable.UpdateFeatureAsync(_selectedFeature);
+                _selectedFeature.Refresh();
+                MessageBox.Show("Added feature ", "Success!");
+
+            });
+
+
+
         }
+
+
+
 
 
 
@@ -236,7 +314,7 @@ namespace GTI.WFMS.GIS
                 Width = 0,
                 Height = 0,
             };
-            
+
             StackPanel stContent = this.divLayer.FindName("stContent") as StackPanel;
             stContent.Children.Add(thumb);
 
@@ -271,9 +349,10 @@ namespace GTI.WFMS.GIS
         public RelayCommand<object> toggleCmd { get; set; }
         public RelayCommand<object> closeCmd { get; set; }
         public RelayCommand<object> resetCmd { get; set; }
-        public RelayCommand<object> geoDBCmd { get; set; }
-        
+
         public RelayCommand<object> btnCmd { get; set; }
+        public RelayCommand<object> completeCmd { get; set; }
+        public RelayCommand<object> clearCmd { get; set; }
 
         public FctDtl FctDtl
         {
@@ -304,6 +383,7 @@ namespace GTI.WFMS.GIS
         private FctDtl fctDtl = new FctDtl(); //시설물기본정보
         private Popup divLayer = new Popup(); //시설물레이어DIV
         private PopFct popFct = new PopFct(); //시설물정보DIV
+        private Button ClearButton = new Button();
         #endregion
 
 
@@ -366,6 +446,9 @@ namespace GTI.WFMS.GIS
             mapView.GeoViewTapped += handlerGeoViewTapped;
 
 
+            // Create graphics overlay to display sketch geometry
+            _sketchOverlay = new GraphicsOverlay();
+            mapView.GraphicsOverlays.Add(_sketchOverlay);
         }
 
 
@@ -373,56 +456,71 @@ namespace GTI.WFMS.GIS
         // 피처추가
         public async void handlerGeoViewTappedAddFeature(object sender, GeoViewInputEventArgs e)
         {
-            // Get the MapPoint from the EventArgs for the tap.
-            MapPoint destinationPoint = e.Location;
-            // Normalize the point - needed when the tapped location is over the international date line.
-            destinationPoint = (MapPoint)GeometryEngine.NormalizeCentralMeridian(destinationPoint);
+            try
+            {
+                // Get the MapPoint from the EventArgs for the tap.
+                MapPoint destinationPoint = e.Location;
+                // Normalize the point - needed when the tapped location is over the international date line.
+                destinationPoint = (MapPoint)GeometryEngine.NormalizeCentralMeridian(destinationPoint);
 
 
 
-            // Get the path to the first layer - the local feature service url + layer ID
-            //string layerUrl = _localFeatureService.Url + "/" + GetLayerId(_selectedLayers[0]);
+                // Get the path to the first layer - the local feature service url + layer ID
+                //string layerUrl = _localFeatureService.Url + "/" + GetLayerId(_selectedLayers[0]);
 
-            // Create the ServiceFeatureTable
-            //ServiceFeatureTable serviceFeatureTable = new ServiceFeatureTable(new Uri(layerUrl));
-            //FeatureLayer featureLayer = new FeatureLayer(serviceFeatureTable);
+                // Create the ServiceFeatureTable
+                //ServiceFeatureTable serviceFeatureTable = new ServiceFeatureTable(new Uri(layerUrl));
+                //FeatureLayer featureLayer = new FeatureLayer(serviceFeatureTable);
 
-            // Wait for the layer to load
-            //await featureLayer.LoadAsync();
-
-            
-            FeatureTable layerTable = layers[_selectedLayers[0]].FeatureTable;
+                // Wait for the layer to load
+                //await featureLayer.LoadAsync();
 
 
-            //피처추가
-            Feature _addedFeature = layerTable.CreateFeature();
-            _addedFeature.Geometry = destinationPoint;
-
-            //속성추가
-            //Field Field_FTR_CDE = new Field(FieldType.Text, "FTR_CDE", "시설물코드", 50);
-            //Field Field_FTR_IDN = new Field(FieldType.Int32, "FTR_IDN", "관리번호", 10);
-            //Field Field_SHT_NUM = new Field(FieldType.Text, "SHT_NUM", "도엽번호", 50);
-
-            _addedFeature.SetAttributeValue("FTR_CDE", "SA110");
-            _addedFeature.SetAttributeValue("FTR_IDN", 99999);
-            _addedFeature.SetAttributeValue("SHT_NUM", "99999");
-            _addedFeature.SetAttributeValue("SHT_NUM", "99999");
-            _addedFeature.SetAttributeValue("HJD_CDE", "3171033000");
-            _addedFeature.SetAttributeValue("MNG_CDE", "MNG401");
-            
+                FeatureTable layerTable = layers[_selectedLayers[0]].FeatureTable;
 
 
+                //피처추가
+                Feature _addedFeature = layerTable.CreateFeature();
+                _addedFeature.Geometry = destinationPoint;
 
-            await layerTable.AddFeatureAsync(_addedFeature);
-            //추가내용 새로고침
-            _addedFeature.Refresh(); 
+                //속성추가
+                //Field Field_FTR_CDE = new Field(FieldType.Text, "FTR_CDE", "시설물코드", 50);
+                //Field Field_FTR_IDN = new Field(FieldType.Int32, "FTR_IDN", "관리번호", 10);
+                //Field Field_SHT_NUM = new Field(FieldType.Text, "SHT_NUM", "도엽번호", 50);
 
-            MessageBox.Show("Added feature ", "Success!");
+                string ftr_cde = "SA118";
+                try
+                {
+                    //ftr_cde = _selectedLayers[0].Split(',')[0];
+                }
+                catch (Exception){}
+                
+                _addedFeature.SetAttributeValue("FTR_CDE", ftr_cde);
+                _addedFeature.SetAttributeValue("FTR_IDN", 999f);
+                _addedFeature.SetAttributeValue("SHT_NUM", "99999");
+                _addedFeature.SetAttributeValue("SHT_NUM", "99999");
+                _addedFeature.SetAttributeValue("HJD_CDE", "3171033000");
+                _addedFeature.SetAttributeValue("MNG_CDE", "MNG401");
 
-            //이벤트핸들러원복
-            mapView.GeoViewTapped -= handlerGeoViewTappedMoveFeature;
-            mapView.GeoViewTapped -= handlerGeoViewTappedAddFeature;
-            mapView.GeoViewTapped += handlerGeoViewTapped;
+
+
+
+                await layerTable.AddFeatureAsync(_addedFeature);
+                //추가내용 새로고침
+                _addedFeature.Refresh();
+
+                MessageBox.Show("Added feature ", "Success!");
+
+                //이벤트핸들러원복
+                mapView.GeoViewTapped -= handlerGeoViewTappedMoveFeature;
+                mapView.GeoViewTapped -= handlerGeoViewTappedAddFeature;
+                mapView.GeoViewTapped += handlerGeoViewTapped;
+            }
+            catch (Exception ex)
+            {
+                Messages.ShowErrMsgBox(ex.ToString());
+            }
+
         }
 
 
@@ -476,17 +574,64 @@ namespace GTI.WFMS.GIS
                 try
                 {
                     // Get the MapPoint from the EventArgs for the tap.
-                    MapPoint destinationPoint = e.Location;
-
+                    MapPoint mapPoint = e.Location;
                     // Normalize the point - needed when the tapped location is over the international date line.
-                    destinationPoint = (MapPoint)GeometryEngine.NormalizeCentralMeridian(destinationPoint);
+                    mapPoint = (MapPoint)GeometryEngine.NormalizeCentralMeridian(mapPoint);
+                    Polyline polyline;
+                    Polygon polygon;
 
-                    // Load the feature.
-                    //await _selectedFeature.LoadAsync();
 
                     // Update the geometry of the selected feature.
                     Feature back_selectedFeature = _selectedFeature;
-                    _selectedFeature.Geometry = destinationPoint;
+
+
+                    //라인피처인 경우 - 평행이동 라인을 만든다
+                    if (_selectedFeature.Geometry is Polyline)
+                    {
+                        polyline = (Polyline)_selectedFeature.Geometry;
+
+                        List<MapPoint> points = new List<MapPoint>();
+                        foreach (var part in polyline.Parts)
+                        {
+                            //라인의 첫번째점을 기준으로 이동
+                            double dx = mapPoint.X - part.Points[0].X;
+                            double dy = mapPoint.Y - part.Points[0].Y;
+
+                            foreach (var pt in part.Points)
+                            {
+                                MapPoint mpt = new MapPoint(pt.X + dx, pt.Y + dy, SpatialReferences.WebMercator);
+                                points.Add(mpt);
+                            }
+                        }
+
+                        _selectedFeature.Geometry = new Polyline(points);
+                    }
+                    //폴리곤 피처인경우 - 평행이동 폴리곤을 만든다
+                    else if (_selectedFeature.Geometry is Polygon)
+                    {
+                        polygon = (Polygon)_selectedFeature.Geometry;
+
+                        List<MapPoint> points = new List<MapPoint>();
+                        foreach (var part in polygon.Parts)
+                        {
+                            //라인의 첫번째점을 기준으로 이동
+                            double dx = mapPoint.X - part.Points[0].X;
+                            double dy = mapPoint.Y - part.Points[0].Y;
+
+                            foreach (var pt in part.Points)
+                            {
+                                MapPoint mpt = new MapPoint(pt.X + dx, pt.Y + dy, SpatialReferences.WebMercator);
+                                points.Add(mpt);
+                            }
+                        }
+
+                        _selectedFeature.Geometry = new Polygon(points);
+                    }
+                    //포인트 피처인 경우는 위치만 변경하면됨
+                    else
+                    {
+                        _selectedFeature.Geometry = mapPoint;
+                    }
 
 
                     if (Messages.ShowYesNoMsgBox("시설물 위치이동을 저장하시겠습니까?") == MessageBoxResult.Yes)
@@ -494,6 +639,7 @@ namespace GTI.WFMS.GIS
                         // Apply the edit to the feature table.
                         await _selectedFeature.FeatureTable.UpdateFeatureAsync(_selectedFeature);
                         _selectedFeature.Refresh();
+                        MessageBox.Show("Moved feature ", "Success!");
                     }
                     else
                     {
@@ -508,6 +654,12 @@ namespace GTI.WFMS.GIS
                 }
 
             }
+
+            //이벤트핸들러원복
+            mapView.GeoViewTapped -= handlerGeoViewTappedMoveFeature;
+            mapView.GeoViewTapped -= handlerGeoViewTappedAddFeature;
+            mapView.GeoViewTapped += handlerGeoViewTapped;
+
         }
 
 
@@ -519,198 +671,248 @@ namespace GTI.WFMS.GIS
         //맵뷰 클릭이벤트 핸들러 - 상세정보팝업 
         public async void handlerGeoViewTapped(object sender, GeoViewInputEventArgs e)
         {
-
-            FeatureLayer layer = new FeatureLayer(); //이벤트발생 레이어
-
-
-
-            // PopFct 객체 생성여부 체크관련 - 검증안됨
-            /*
-            if (App.Current.Windows.Count > 1)
+            try
             {
-                // do your code here, when you have more than one window open state this code will execute
-            }
-
-            if (FmsUtil.IsWindowOpen<Popup>())
-            {
-                PopFct pop = new PopFct();
-                (Activator.GetObject((new PopFct()).GetType(), null) as PopFct).IsOpen = false;
-            }
-             */
+                FeatureLayer layer = new FeatureLayer(); //이벤트발생 레이어
 
 
 
+                // PopFct 객체 생성여부 체크관련 - 검증안됨
+                /*
+                if (App.Current.Windows.Count > 1)
+                {
+                    // do your code here, when you have more than one window open state this code will execute
+                }
 
-            /*
-            divLayerInfo.PlacementRectangle = new Rect(e.Position.X, e.Position.Y, 250, 300);
-            divLayerInfo.IsOpen = true;
-             */
-
-            // Perform the identify operation.
-            IdentifyLayerResult IR_WTL_MANH_PS = await mapView.IdentifyLayerAsync(layers["WTL_MANH_PS"], e.Position, 20, false);
-            IdentifyLayerResult IR_WTL_STPI_PS = await mapView.IdentifyLayerAsync(layers["WTL_STPI_PS"], e.Position, 20, false);
-            IdentifyLayerResult IR_WTL_HEAD_PS = await mapView.IdentifyLayerAsync(layers["WTL_HEAD_PS"], e.Position, 20, false);
-            IdentifyLayerResult IR_WTL_GAIN_PS = await mapView.IdentifyLayerAsync(layers["WTL_GAIN_PS"], e.Position, 20, false);
-            IdentifyLayerResult IR_WTL_SERV_PS = await mapView.IdentifyLayerAsync(layers["WTL_SERV_PS"], e.Position, 20, false);
-            IdentifyLayerResult IR_WTL_FLOW_PS = await mapView.IdentifyLayerAsync(layers["WTL_FLOW_PS"], e.Position, 20, false);
-            IdentifyLayerResult IR_WTL_FIRE_PS = await mapView.IdentifyLayerAsync(layers["WTL_FIRE_PS"], e.Position, 20, false);
-            IdentifyLayerResult IR_WTL_VALV_PS = await mapView.IdentifyLayerAsync(layers["WTL_VALV_PS"], e.Position, 20, false);
-            IdentifyLayerResult IR_WTL_RSRV_PS = await mapView.IdentifyLayerAsync(layers["WTL_RSRV_PS"], e.Position, 20, false);
-            IdentifyLayerResult IR_WTL_PRGA_PS = await mapView.IdentifyLayerAsync(layers["WTL_PRGA_PS"], e.Position, 20, false);
-            IdentifyLayerResult IR_WTL_META_PS = await mapView.IdentifyLayerAsync(layers["WTL_META_PS"], e.Position, 20, false);
-            IdentifyLayerResult IR_WTL_LEAK_PS = await mapView.IdentifyLayerAsync(layers["WTL_LEAK_PS"], e.Position, 20, false);
-            IdentifyLayerResult IR_WTL_PIPE_LM = await mapView.IdentifyLayerAsync(layers["WTL_PIPE_LM"], e.Position, 20, false);
-            IdentifyLayerResult IR_WTL_SPLY_LS = await mapView.IdentifyLayerAsync(layers["WTL_SPLY_LS"], e.Position, 20, false);
-            IdentifyLayerResult IR_WTL_PURI_AS = await mapView.IdentifyLayerAsync(layers["WTL_PURI_AS"], e.Position, 20, false);
-            
-            Feature identifiedFeature; //이벤트 타겟레이어
-            
-
-
-            if (IR_WTL_STPI_PS.GeoElements.Any())
-            {
-                identifiedFeature = (Feature)IR_WTL_STPI_PS.GeoElements[0];
-                layer = layers["WTL_STPI_PS"]; //선택한 레이어
-            }
-            else if (IR_WTL_MANH_PS.GeoElements.Any())
-            {
-                identifiedFeature = (Feature)IR_WTL_MANH_PS.GeoElements[0];
-                layer = layers["WTL_MANH_PS"];
-            }
-            else if (IR_WTL_HEAD_PS.GeoElements.Any())
-            {
-                identifiedFeature = (Feature)IR_WTL_HEAD_PS.GeoElements[0];
-                layer = layers["WTL_HEAD_PS"];
-            }
-            else if (IR_WTL_GAIN_PS.GeoElements.Any())
-            {
-                identifiedFeature = (Feature)IR_WTL_GAIN_PS.GeoElements[0];
-                layer = layers["WTL_GAIN_PS"];
-            }
-            else if (IR_WTL_SERV_PS.GeoElements.Any())
-            {
-                identifiedFeature = (Feature)IR_WTL_SERV_PS.GeoElements[0];
-                layer = layers["WTL_SERV_PS"];
-            }
-            else if (IR_WTL_FLOW_PS.GeoElements.Any())
-            {
-                identifiedFeature = (Feature)IR_WTL_FLOW_PS.GeoElements[0];
-                layer = layers["WTL_FLOW_PS"];
-            }
-            else if (IR_WTL_FIRE_PS.GeoElements.Any())
-            {
-                identifiedFeature = (Feature)IR_WTL_FIRE_PS.GeoElements[0];
-                layer = layers["WTL_FIRE_PS"];
-            }
-            else if (IR_WTL_VALV_PS.GeoElements.Any())
-            {
-                identifiedFeature = (Feature)IR_WTL_VALV_PS.GeoElements[0];
-                layer = layers["WTL_VALV_PS"];
-            }
-            else if (IR_WTL_RSRV_PS.GeoElements.Any())
-            {
-                identifiedFeature = (Feature)IR_WTL_RSRV_PS.GeoElements[0];
-                layer = layers["WTL_RSRV_PS"];
-            }
-            else if (IR_WTL_PRGA_PS.GeoElements.Any())
-            {
-                identifiedFeature = (Feature)IR_WTL_PRGA_PS.GeoElements[0];
-                layer = layers["WTL_PRGA_PS"];
-            }
-            else if (IR_WTL_META_PS.GeoElements.Any())
-            {
-                identifiedFeature = (Feature)IR_WTL_META_PS.GeoElements[0];
-                layer = layers["WTL_META_PS"];
-            }
-            else if (IR_WTL_LEAK_PS.GeoElements.Any())
-            {
-                identifiedFeature = (Feature)IR_WTL_LEAK_PS.GeoElements[0];
-                layer = layers["WTL_LEAK_PS"];
-            }
-            else if (IR_WTL_PIPE_LM.GeoElements.Any())
-            {
-                identifiedFeature = (Feature)IR_WTL_PIPE_LM.GeoElements[0];
-                layer = layers["WTL_PIPE_LM"];
-            }
-            else if (IR_WTL_SPLY_LS.GeoElements.Any())
-            {
-                identifiedFeature = (Feature)IR_WTL_SPLY_LS.GeoElements[0];
-                layer = layers["WTL_SPLY_LS"];
-            }
-            else if (IR_WTL_PURI_AS.GeoElements.Any())
-            {
-                identifiedFeature = (Feature)IR_WTL_PURI_AS.GeoElements[0];
-                layer = layers["WTL_PURI_AS"];
-            }
-            else
-            {
-                // Return if there's nothing to show.
-                return;
-            }
+                if (FmsUtil.IsWindowOpen<Popup>())
+                {
+                    PopFct pop = new PopFct();
+                    (Activator.GetObject((new PopFct()).GetType(), null) as PopFct).IsOpen = false;
+                }
+                 */
 
 
 
 
-            //선택해제
-            if (_selectedFeature != null)
-            {
+                /*
+                divLayerInfo.PlacementRectangle = new Rect(e.Position.X, e.Position.Y, 250, 300);
+                divLayerInfo.IsOpen = true;
+                 */
+
+                // Perform the identify operation.
+                IdentifyLayerResult IR_WTL_MANH_PS = await mapView.IdentifyLayerAsync(layers["WTL_MANH_PS"], e.Position, 20, false);
+                IdentifyLayerResult IR_WTL_STPI_PS = await mapView.IdentifyLayerAsync(layers["WTL_STPI_PS"], e.Position, 20, false);
+                IdentifyLayerResult IR_WTL_HEAD_PS = await mapView.IdentifyLayerAsync(layers["WTL_HEAD_PS"], e.Position, 20, false);
+                IdentifyLayerResult IR_WTL_GAIN_PS = await mapView.IdentifyLayerAsync(layers["WTL_GAIN_PS"], e.Position, 20, false);
+                IdentifyLayerResult IR_WTL_SERV_PS = await mapView.IdentifyLayerAsync(layers["WTL_SERV_PS"], e.Position, 20, false);
+                IdentifyLayerResult IR_WTL_FLOW_PS = await mapView.IdentifyLayerAsync(layers["WTL_FLOW_PS"], e.Position, 20, false);
+                IdentifyLayerResult IR_WTL_FIRE_PS_SA118 = await mapView.IdentifyLayerAsync(layers["WTL_FIRE_PS,FTR_CDE='SA118'"], e.Position, 20, false);
+                IdentifyLayerResult IR_WTL_FIRE_PS_SA119 = await mapView.IdentifyLayerAsync(layers["WTL_FIRE_PS,FTR_CDE='SA119'"], e.Position, 20, false);
+
+                IdentifyLayerResult IR_WTL_VALV_PS_SA200 = await mapView.IdentifyLayerAsync(layers["WTL_VALV_PS,FTR_CDE='SA200'"], e.Position, 20, false);
+                IdentifyLayerResult IR_WTL_VALV_PS_SA201 = await mapView.IdentifyLayerAsync(layers["WTL_VALV_PS,FTR_CDE='SA201'"], e.Position, 20, false);
+                IdentifyLayerResult IR_WTL_VALV_PS_SA202 = await mapView.IdentifyLayerAsync(layers["WTL_VALV_PS,FTR_CDE='SA202'"], e.Position, 20, false);
+                IdentifyLayerResult IR_WTL_VALV_PS_SA203 = await mapView.IdentifyLayerAsync(layers["WTL_VALV_PS,FTR_CDE='SA203'"], e.Position, 20, false);
+                IdentifyLayerResult IR_WTL_VALV_PS_SA204 = await mapView.IdentifyLayerAsync(layers["WTL_VALV_PS,FTR_CDE='SA204'"], e.Position, 20, false);
+                IdentifyLayerResult IR_WTL_VALV_PS_SA205 = await mapView.IdentifyLayerAsync(layers["WTL_VALV_PS,FTR_CDE='SA205'"], e.Position, 20, false);
+                IdentifyLayerResult IR_WTL_VALV_PS_SA206 = await mapView.IdentifyLayerAsync(layers["WTL_VALV_PS,FTR_CDE='SA206'"], e.Position, 20, false);
+                
+                IdentifyLayerResult IR_WTL_RSRV_PS = await mapView.IdentifyLayerAsync(layers["WTL_RSRV_PS"], e.Position, 20, false);
+                IdentifyLayerResult IR_WTL_PRGA_PS = await mapView.IdentifyLayerAsync(layers["WTL_PRGA_PS"], e.Position, 20, false);
+                IdentifyLayerResult IR_WTL_META_PS = await mapView.IdentifyLayerAsync(layers["WTL_META_PS"], e.Position, 20, false);
+                IdentifyLayerResult IR_WTL_LEAK_PS = await mapView.IdentifyLayerAsync(layers["WTL_LEAK_PS"], e.Position, 20, false);
+                IdentifyLayerResult IR_WTL_PIPE_LM = await mapView.IdentifyLayerAsync(layers["WTL_PIPE_LM"], e.Position, 20, false);
+                IdentifyLayerResult IR_WTL_SPLY_LS = await mapView.IdentifyLayerAsync(layers["WTL_SPLY_LS"], e.Position, 20, false);
+                IdentifyLayerResult IR_WTL_PURI_AS = await mapView.IdentifyLayerAsync(layers["WTL_PURI_AS"], e.Position, 20, false);
+
+                Feature identifiedFeature; //이벤트 타겟레이어
+
+
+
+                if (IR_WTL_STPI_PS.GeoElements.Any())
+                {
+                    identifiedFeature = (Feature)IR_WTL_STPI_PS.GeoElements[0];
+                    layer = layers["WTL_STPI_PS"]; //선택한 레이어
+                }
+                else if (IR_WTL_MANH_PS.GeoElements.Any())
+                {
+                    identifiedFeature = (Feature)IR_WTL_MANH_PS.GeoElements[0];
+                    layer = layers["WTL_MANH_PS"];
+                }
+                else if (IR_WTL_HEAD_PS.GeoElements.Any())
+                {
+                    identifiedFeature = (Feature)IR_WTL_HEAD_PS.GeoElements[0];
+                    layer = layers["WTL_HEAD_PS"];
+                }
+                else if (IR_WTL_GAIN_PS.GeoElements.Any())
+                {
+                    identifiedFeature = (Feature)IR_WTL_GAIN_PS.GeoElements[0];
+                    layer = layers["WTL_GAIN_PS"];
+                }
+                else if (IR_WTL_SERV_PS.GeoElements.Any())
+                {
+                    identifiedFeature = (Feature)IR_WTL_SERV_PS.GeoElements[0];
+                    layer = layers["WTL_SERV_PS"];
+                }
+                else if (IR_WTL_FLOW_PS.GeoElements.Any())
+                {
+                    identifiedFeature = (Feature)IR_WTL_FLOW_PS.GeoElements[0];
+                    layer = layers["WTL_FLOW_PS"];
+                }
+                else if (IR_WTL_FIRE_PS_SA118.GeoElements.Any())
+                {
+                    identifiedFeature = (Feature)IR_WTL_FIRE_PS_SA118.GeoElements[0];
+                    layer = layers["WTL_FIRE_PS,FTR_CDE='SA118'"];
+                }
+                else if (IR_WTL_FIRE_PS_SA119.GeoElements.Any())
+                {
+                    identifiedFeature = (Feature)IR_WTL_FIRE_PS_SA119.GeoElements[0];
+                    layer = layers["WTL_FIRE_PS,FTR_CDE='SA119'"];
+                }
+                else if (IR_WTL_VALV_PS_SA200.GeoElements.Any())
+                {
+                    identifiedFeature = (Feature)IR_WTL_VALV_PS_SA200.GeoElements[0];
+                    layer = layers["WTL_VALV_PS,FTR_CDE='SA200'"];
+                }
+                else if (IR_WTL_VALV_PS_SA201.GeoElements.Any())
+                {
+                    identifiedFeature = (Feature)IR_WTL_VALV_PS_SA201.GeoElements[0];
+                    layer = layers["WTL_VALV_PS,FTR_CDE='SA201'"];
+                }
+                else if (IR_WTL_VALV_PS_SA202.GeoElements.Any())
+                {
+                    identifiedFeature = (Feature)IR_WTL_VALV_PS_SA202.GeoElements[0];
+                    layer = layers["WTL_VALV_PS,FTR_CDE='SA202'"];
+                }
+                else if (IR_WTL_VALV_PS_SA203.GeoElements.Any())
+                {
+                    identifiedFeature = (Feature)IR_WTL_VALV_PS_SA203.GeoElements[0];
+                    layer = layers["WTL_VALV_PS,FTR_CDE='SA203'"];
+                }
+                else if (IR_WTL_VALV_PS_SA204.GeoElements.Any())
+                {
+                    identifiedFeature = (Feature)IR_WTL_VALV_PS_SA204.GeoElements[0];
+                    layer = layers["WTL_VALV_PS,FTR_CDE='SA204'"];
+                }
+                else if (IR_WTL_VALV_PS_SA205.GeoElements.Any())
+                {
+                    identifiedFeature = (Feature)IR_WTL_VALV_PS_SA205.GeoElements[0];
+                    layer = layers["WTL_VALV_PS,FTR_CDE='SA205'"];
+                }
+                else if (IR_WTL_VALV_PS_SA206.GeoElements.Any())
+                {
+                    identifiedFeature = (Feature)IR_WTL_VALV_PS_SA206.GeoElements[0];
+                    layer = layers["WTL_VALV_PS,FTR_CDE='SA206'"];
+                }
+                else if (IR_WTL_RSRV_PS.GeoElements.Any())
+                {
+                    identifiedFeature = (Feature)IR_WTL_RSRV_PS.GeoElements[0];
+                    layer = layers["WTL_RSRV_PS"];
+                }
+                else if (IR_WTL_PRGA_PS.GeoElements.Any())
+                {
+                    identifiedFeature = (Feature)IR_WTL_PRGA_PS.GeoElements[0];
+                    layer = layers["WTL_PRGA_PS"];
+                }
+                else if (IR_WTL_META_PS.GeoElements.Any())
+                {
+                    identifiedFeature = (Feature)IR_WTL_META_PS.GeoElements[0];
+                    layer = layers["WTL_META_PS"];
+                }
+                else if (IR_WTL_LEAK_PS.GeoElements.Any())
+                {
+                    identifiedFeature = (Feature)IR_WTL_LEAK_PS.GeoElements[0];
+                    layer = layers["WTL_LEAK_PS"];
+                }
+                else if (IR_WTL_PIPE_LM.GeoElements.Any())
+                {
+                    identifiedFeature = (Feature)IR_WTL_PIPE_LM.GeoElements[0];
+                    layer = layers["WTL_PIPE_LM"];
+                }
+                else if (IR_WTL_SPLY_LS.GeoElements.Any())
+                {
+                    identifiedFeature = (Feature)IR_WTL_SPLY_LS.GeoElements[0];
+                    layer = layers["WTL_SPLY_LS"];
+                }
+                else if (IR_WTL_PURI_AS.GeoElements.Any())
+                {
+                    identifiedFeature = (Feature)IR_WTL_PURI_AS.GeoElements[0];
+                    layer = layers["WTL_PURI_AS"];
+                }
+                else
+                {
+                    // Return if there's nothing to show.
+                    return;
+                }
+
+
+
+
+                //선택해제
+                if (_selectedFeature != null)
+                {
+                    try
+                    {
+                        // Reset the selection.
+                        layer.ClearSelection();
+                        _selectedFeature = null;
+                    }
+                    catch (Exception) { }
+                }
+
+                //선택처리
+                layer.SelectFeature(identifiedFeature); //시설물선택활성화 처리
+                                                        //_selectedFeature = (ArcGISFeature)identifiedFeature; //선택피처 ArcGISFeature 변환저장
+                _selectedFeature = (Feature)identifiedFeature; //선택피처 ArcGISFeature 변환저장
+
+
+
+
+
+
+                //팝업열기 & 위치
+                popFct.IsOpen = false;
+
+                popFct = new PopFct();
+                popFct.PlacementRectangle = new Rect(e.Position.X + 300, e.Position.Y - 200, 250, 300);
+                popFct.IsOpen = true;
+                popFct.DataContext = this;
+
+
+
+                //선택된 레이어에서 속성정보 가져오기
+                //& 레이어정보 세팅
                 try
                 {
-                    // Reset the selection.
-                    layer.ClearSelection();
-                    _selectedFeature = null;
+                    FctDtl.FTR_CDE = identifiedFeature.GetAttributeValue("FTR_CDE").ToString();
+                    FctDtl.FTR_NAM = BizUtil.GetCodeNm("Select_FTR_NM", FctDtl.FTR_CDE);
+                    FctDtl.FTR_IDN = Int32.Parse(identifiedFeature.GetAttributeValue("FTR_IDN").ToString());
+                    FctDtl.SHT_NUM = identifiedFeature.GetAttributeValue("SHT_NUM").ToString();
+                    FctDtl.HJD_CDE = identifiedFeature.GetAttributeValue("HJD_CDE").ToString();
+                    FctDtl.HJD_NAM = BizUtil.GetCodeNm("Select_ADAR_NM", FctDtl.HJD_CDE);
+                    FctDtl.MNG_CDE = identifiedFeature.GetAttributeValue("MNG_CDE").ToString();
+                    FctDtl.MNG_NAM = BizUtil.GetCdNm("250101", FctDtl.MNG_CDE);//관리기관
+                    FctDtl.IST_YMD = identifiedFeature.GetAttributeValue("IST_YMD").ToString();
+                }
+                catch (Exception) { }
+                try
+                {
+                    FctDtl.MOP_CDE = identifiedFeature.GetAttributeValue("MOP_CDE").ToString();
+                    FctDtl.MOP_NAM = BizUtil.GetCdNm("250102", FctDtl.MOP_CDE);//관재질
+                    FctDtl.MOF_NAM = FctDtl.MOP_NAM; //무조건 MOF에 형식저장!
+                }
+                catch (Exception) { }
+                try
+                {
+                    FctDtl.MOF_CDE = identifiedFeature.GetAttributeValue("MOF_CDE").ToString();
+                    FctDtl.MOF_NAM = BizUtil.GetCdNm("250004", FctDtl.MOF_CDE);//계량기형식
                 }
                 catch (Exception) { }
             }
-
-            //선택처리
-            layer.SelectFeature(identifiedFeature); //시설물선택활성화 처리
-            //_selectedFeature = (ArcGISFeature)identifiedFeature; //선택피처 ArcGISFeature 변환저장
-            _selectedFeature = (Feature)identifiedFeature; //선택피처 ArcGISFeature 변환저장
-
-
-
-
-
-
-            //팝업열기 & 위치
-            popFct.IsOpen = false;
-
-            popFct = new PopFct();
-            popFct.PlacementRectangle = new Rect(e.Position.X + 300, e.Position.Y - 200, 250, 300);
-            popFct.IsOpen = true;
-            popFct.DataContext = this;
-
-
-
-            //선택된 레이어에서 속성정보 가져오기
-            //& 레이어정보 세팅
-            try
+            catch (Exception)
             {
-            FctDtl.FTR_CDE = identifiedFeature.GetAttributeValue("FTR_CDE").ToString();
-            FctDtl.FTR_NAM = BizUtil.GetCodeNm("Select_FTR_NM", FctDtl.FTR_CDE);
-            FctDtl.FTR_IDN = Int32.Parse(identifiedFeature.GetAttributeValue("FTR_IDN").ToString());
-            FctDtl.SHT_NUM = identifiedFeature.GetAttributeValue("SHT_NUM").ToString();
-            FctDtl.HJD_CDE = identifiedFeature.GetAttributeValue("HJD_CDE").ToString();
-            FctDtl.HJD_NAM = BizUtil.GetCodeNm("Select_ADAR_NM", FctDtl.HJD_CDE);
-            FctDtl.MNG_CDE = identifiedFeature.GetAttributeValue("MNG_CDE").ToString();
-            FctDtl.MNG_NAM = BizUtil.GetCdNm("250101", FctDtl.MNG_CDE);//관리기관
-                FctDtl.IST_YMD = identifiedFeature.GetAttributeValue("IST_YMD").ToString();
+                Console.WriteLine("레이어 featrue click error...");
             }
-            catch (Exception ) { }
-            try
-            {
-                FctDtl.MOP_CDE = identifiedFeature.GetAttributeValue("MOP_CDE").ToString();
-                FctDtl.MOP_NAM = BizUtil.GetCdNm("250102", FctDtl.MOP_CDE);//관재질
-                FctDtl.MOF_NAM = FctDtl.MOP_NAM; //무조건 MOF에 형식저장!
-            }
-            catch (Exception) { }
-            try
-            {
-                FctDtl.MOF_CDE = identifiedFeature.GetAttributeValue("MOF_CDE").ToString();
-                FctDtl.MOF_NAM = BizUtil.GetCdNm("250004", FctDtl.MOF_CDE);//계량기형식
-            }
-            catch (Exception) { }
 
 
         }

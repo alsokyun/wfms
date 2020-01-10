@@ -61,6 +61,9 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="sample\SketchOnMap.xaml.cs">
+      <DependentUpon>SketchOnMap.xaml</DependentUpon>
+    </Compile>
     <Compile Include="sample\OfflineBasemapByReference.xaml.cs">
       <DependentUpon>OfflineBasemapByReference.xaml</DependentUpon>
     </Compile>
@@ -110,13 +113,21 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="sample\SketchOnMap.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
     <Page Include="sample\OfflineBasemapByReference.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="Styles\GisStyles.xaml">
-      <SubType>Designer</SubType>
+    <Page Include="Styles\Blue\GisStyles.xaml">
       <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Styles\Navy\GisStyles.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
     </Page>
   </ItemGroup>
   <ItemGroup>
@@ -174,16 +185,37 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="Resources\image\btn_send.png" />
-    <Resource Include="Resources\image\btn_send_on.png" />
+    <Resource Include="Resources\Blue\image\btn_popup_close.png" />
+    <Resource Include="Resources\Blue\image\btn_popup_close_on.png" />
+    <Resource Include="Resources\Blue\image\btn_send.png" />
+    <Resource Include="Resources\Blue\image\btn_send_on.png" />
+    <Resource Include="Resources\Blue\image\icon_layer_close.png" />
+    <Resource Include="Resources\Blue\image\icon_layer_map_folder.png" />
+    <Resource Include="Resources\Navy\image\btn_popup_close.png" />
+    <Resource Include="Resources\Navy\image\btn_popup_close_on.png" />
+    <Resource Include="Resources\Navy\image\icon_layer_close.png" />
+    <Resource Include="Resources\Navy\image\icon_layer_map_folder.png" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="Resources\image\btn_popup_close.png" />
-    <Resource Include="Resources\image\btn_popup_close_on.png" />
+    <Resource Include="Resources\Navy\image\btn_layer_add.png" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="Resources\image\icon_layer_close.png" />
-    <Resource Include="Resources\image\icon_layer_map_folder.png" />
+    <Resource Include="Resources\Navy\image\btn_layer_add_on.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\Navy\image\btn_layer_del.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\Navy\image\btn_layer_del_on.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\Navy\image\btn_layer_move.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\Navy\image\btn_layer_move_on.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <WCFMetadata Include="Connected Services\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

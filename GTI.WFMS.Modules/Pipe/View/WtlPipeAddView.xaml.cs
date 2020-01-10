@@ -35,7 +35,7 @@ namespace GTI.WFMS.Modules.Pipe.View
         // 목록으로 뒤로가기
         private void _backCmd(object sender, RoutedEventArgs e)
         {
-            NavigationService.Navigate(new WtlPipeList());
+            NavigationService.Navigate(new WtlPipeListView());
         }
     }
 }

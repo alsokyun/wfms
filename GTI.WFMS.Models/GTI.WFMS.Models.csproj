@@ -44,6 +44,11 @@
     <Reference Include="DevExpress.Pdf.v19.1.Core, Version=19.1.6.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL" />
     <Reference Include="DevExpress.Printing.v19.1.Core, Version=19.1.6.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL" />
     <Reference Include="DevExpress.Xpf.Core.v19.1, Version=19.1.6.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL" />
+    <Reference Include="Interop.SHDocVw, Version=1.1.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <EmbedInteropTypes>True</EmbedInteropTypes>
+      <HintPath>Lib\Interop.SHDocVw.dll</HintPath>
+    </Reference>
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="Microsoft.Expression.Interactions, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\System.Windows.Interactivity.WPF.2.0.20525\lib\net40\Microsoft.Expression.Interactions.dll</HintPath>
@@ -85,6 +90,11 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
       <SubType>Designer</SubType>
     </Content>
+    <Content Include="Cnst\Dao\Maps\CnstMap.xml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      <SubType>Designer</SubType>
+    </Content>
+    <Content Include="Lib\Interop.SHDocVw.dll" />
     <Content Include="Main\Dao\Maps\MainMap.xml">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
       <SubType>Designer</SubType>
@@ -96,19 +106,26 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Adm\Dao\AdmDao.cs" />
-    <Compile Include="Adm\UserControl1.xaml.cs">
-      <DependentUpon>UserControl1.xaml</DependentUpon>
-    </Compile>
     <Compile Include="Adm\Work\AdmWork.cs" />
     <Compile Include="Cmm\Dao\CommonDao.cs" />
     <Compile Include="Cmm\Dao\CmmDao.cs" />
+    <Compile Include="Cmm\Model\CmmDtl.cs" />
     <Compile Include="Cmm\Model\FctDtl.cs" />
     <Compile Include="Cmm\Work\CmmWork.cs" />
+    <Compile Include="Cnst\Model\CnstDtl.cs" />
+    <Compile Include="Cnst\Model\SplyDtl.cs" />
+    <Compile Include="Cnst\Model\WttSubcDt.cs" />
     <Compile Include="Common\BizUtil.cs" />
     <Compile Include="Common\FmsUtil.cs" />
     <Compile Include="Common\FmsValueConverter.cs" />
+    <Compile Include="Common\Integer.cs" />
     <Compile Include="Common\RelayCommand.cs" />
     <Compile Include="Common\SourcesBehavior.cs" />
+    <Compile Include="FileUtils\CompleteRecordDragDropEventArgsConverter.cs" />
+    <Compile Include="FileUtils\DragRecordOverEventArgsConverter.cs" />
+    <Compile Include="FileUtils\DropRecordEventArgsConverter.cs" />
+    <Compile Include="FileUtils\GiveRecordDragFeedbackEventArgsConverter.cs" />
+    <Compile Include="FileUtils\StartRecordDragEventArgsConverter.cs" />
     <Compile Include="Main\Dao\MainDao.cs" />
     <Compile Include="Main\Work\MainWork.cs" />
     <Compile Include="Pipe\Dao\PipeDao.cs" />
@@ -122,12 +139,6 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <Page Include="Adm\UserControl1.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-  </ItemGroup>
-  <ItemGroup>
     <None Include="..\GTI.WFMS.Main\bin\Debug\DBConfig\ORACLEConfig.config">
       <Link>DBConfig\ORACLEConfig.config</Link>
     </None>
@@ -139,5 +150,6 @@
     <None Include="app.config" />
     <None Include="packages.config" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

@@ -3,11 +3,11 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:GTI.WFMS.Main.View"
         mc:Ignorable="d"
         Title="DBManagement" Height="400" Width="404"
         
         WindowStyle="None" WindowStartupLocation="CenterScreen"
+        Style="{DynamicResource PopupWindow}"
         >
     <Grid>
 
@@ -37,68 +37,68 @@
             <ColumnDefinition Width="2"/>
         </Grid.ColumnDefinitions>
 
-        <Border x:Name="bdTitle" Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="5" Background="#eeeeee"/>
+        <Border x:Name="bdTitle" Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="5" Background="{DynamicResource PopupCOLOR1Brush}"/>
 
-        <Border Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="7" Background="#144873"/>
-        <Border Grid.Row="13" Grid.Column="0" Grid.ColumnSpan="7" Background="#144873"/>
+        <Border Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="7" Background="{DynamicResource PopupCOLOR1Brush}"/>
+        <Border Grid.Row="13" Grid.Column="0" Grid.ColumnSpan="7" Background="{DynamicResource PopupCOLOR1Brush}"/>
 
-        <Border Grid.Row="0" Grid.Column="0" Grid.RowSpan="22" Background="#144873"/>
-        <Border Grid.Row="0" Grid.Column="6" Grid.RowSpan="22" Background="#144873"/>
+        <Border Grid.Row="0" Grid.Column="0" Grid.RowSpan="22" Background="{DynamicResource PopupCOLOR1Brush}"/>
+        <Border Grid.Row="0" Grid.Column="6" Grid.RowSpan="22" Background="{DynamicResource PopupCOLOR1Brush}"/>
 
         <!--데이터베이스 정보 바깥선-->
-        <Border Grid.Row="4" Grid.Column="3" Grid.RowSpan="6" Grid.ColumnSpan="2" BorderThickness="1" BorderBrush="#227ab4"/>
+        <Border Grid.Row="4" Grid.Column="3" Grid.RowSpan="6" Grid.ColumnSpan="2" BorderThickness="1" BorderBrush="{DynamicResource PopupCOLOR2Brush}"/>
 
         <!--데이터베이스 정보 내부 구분선-->
-        <Border Grid.Row="4" Grid.Column="3" Grid.RowSpan="6" BorderThickness="0,0,1,0" BorderBrush="#227ab4"/>
-        <Border Grid.Row="4" Grid.Column="3" Grid.ColumnSpan="2" BorderThickness="0,0,0,1" BorderBrush="#227ab4"/>
-        <Border Grid.Row="6" Grid.Column="3" Grid.ColumnSpan="2" BorderThickness="0,1,0,1" BorderBrush="#227ab4"/>
-        <Border Grid.Row="8" Grid.Column="3" Grid.ColumnSpan="2" BorderThickness="0,1,0,1" BorderBrush="#227ab4"/>
+        <Border Grid.Row="4" Grid.Column="3" Grid.RowSpan="6" BorderThickness="0,0,1,0" BorderBrush="{DynamicResource PopupCOLOR2Brush}"/>
+        <Border Grid.Row="4" Grid.Column="3" Grid.ColumnSpan="2" BorderThickness="0,0,0,1" BorderBrush="{DynamicResource PopupCOLOR2Brush}"/>
+        <Border Grid.Row="6" Grid.Column="3" Grid.ColumnSpan="2" BorderThickness="0,1,0,1" BorderBrush="{DynamicResource PopupCOLOR2Brush}"/>
+        <Border Grid.Row="8" Grid.Column="3" Grid.ColumnSpan="2" BorderThickness="0,1,0,1" BorderBrush="{DynamicResource PopupCOLOR2Brush}"/>
 
         <!--라벨 백그라운드 border-->
-        <Border Grid.Row="4" Grid.Column="3" Background="#a9cfeb" Margin="1,1,1,1"/>
-        <Border Grid.Row="5" Grid.Column="3" Background="#a9cfeb" Margin="1,0,1,0"/>
-        <Border Grid.Row="6" Grid.Column="3" Background="#a9cfeb" Margin="1,1,1,1"/>
-        <Border Grid.Row="7" Grid.Column="3" Background="#a9cfeb" Margin="1,0,1,0"/>
-        <Border Grid.Row="8" Grid.Column="3" Background="#a9cfeb" Margin="1,1,1,1"/>
-        <Border Grid.Row="9" Grid.Column="3" Background="#a9cfeb" Margin="1,0,1,1"/>
+        <Border Grid.Row="4" Grid.Column="3" Background="{DynamicResource PopupCOLOR3Brush}" Margin="1,1,1,1"/>
+        <Border Grid.Row="5" Grid.Column="3" Background="{DynamicResource PopupCOLOR3Brush}" Margin="1,0,1,0"/>
+        <Border Grid.Row="6" Grid.Column="3" Background="{DynamicResource PopupCOLOR3Brush}" Margin="1,1,1,1"/>
+        <Border Grid.Row="7" Grid.Column="3" Background="{DynamicResource PopupCOLOR3Brush}" Margin="1,0,1,0"/>
+        <Border Grid.Row="8" Grid.Column="3" Background="{DynamicResource PopupCOLOR3Brush}" Margin="1,1,1,1"/>
+        <Border Grid.Row="9" Grid.Column="3" Background="{DynamicResource PopupCOLOR3Brush}" Margin="1,0,1,1"/>
 
-        <Label Grid.Row="1" Grid.Column="3" Grid.ColumnSpan="2" Content="데이터베이스 정보 설정" FontSize="18" FontWeight="Bold" Foreground="SkyBlue" HorizontalAlignment="Left" VerticalAlignment="Center"/>
-        <Button x:Name="btnXSignClose" Grid.Row="1" Grid.Column="3" Grid.ColumnSpan="3" Style="{StaticResource XSignCloseButton}" />
+        <Label Grid.Row="1" Grid.Column="3" Grid.ColumnSpan="2" Content="데이터베이스 정보 설정" FontSize="18" FontWeight="Bold" Foreground="White" HorizontalAlignment="Left" VerticalAlignment="Center"/>
+        <Button x:Name="btnXSignClose" Grid.Row="1" Grid.Column="3" Grid.ColumnSpan="3" Style="{DynamicResource XSignCloseButton}" Margin="0,10,10,0"/>
 
         <StackPanel Grid.Row="3" Grid.Column="3" Orientation="Horizontal">
-            <Image Style="{StaticResource TitleCircle}"/>
-            <Label Content="데이터베이스 정보" Style="{StaticResource ResourceKey=CircleTitleLabel}"/>
+            <Image Style="{DynamicResource TitleCircle}"/>
+            <Label Content="데이터베이스 정보" Style="{DynamicResource ResourceKey=CircleTitleLabel}"/>
         </StackPanel>
 
 
 
         <!--DB 구분-->
-        <Label Grid.Row="4" Grid.Column="3" Content="구분" Style="{StaticResource PopupLabel}"/>
-        <dxe:ComboBoxEdit x:Name="cbDBCAT" Grid.Row="4" Grid.Column="4" Text="{Binding null}" DisplayMember="NM" ValueMember="DTL_CD" Style="{StaticResource GridComboBox}"/>
+        <Label Grid.Row="4" Grid.Column="3" Content="구분" Style="{DynamicResource PopupLabel}"/>
+        <dxe:ComboBoxEdit x:Name="cbDBCAT" Grid.Row="4" Grid.Column="4" Text="{Binding null}" DisplayMember="NM" ValueMember="DTL_CD"  Style="{DynamicResource GridComboBox}"/>
         <!--IP주소-->
-        <Label Grid.Row="5" Grid.Column="3" Content="IP주소" Style="{StaticResource PopupLabel}"/>
-        <dxe:TextEdit x:Name="txtIP" Grid.Row="5" Grid.Column="4" Text="{Binding null}" MaxLength="16" Style="{StaticResource GridTextEdit}">
+        <Label Grid.Row="5" Grid.Column="3" Content="IP주소" Style="{DynamicResource PopupLabel}"/>
+        <dxe:TextEdit x:Name="txtIP" Grid.Row="5" Grid.Column="4" Text="{Binding null}" MaxLength="16" Style="{DynamicResource GridTextEdit}">
         </dxe:TextEdit>
         <!--PORT 번호-->
-        <Label Grid.Row="6" Grid.Column="3" Content="PORT번호" Style="{StaticResource PopupLabel}"/>
-        <dxe:TextEdit x:Name="txtPort" Grid.Row="6" Grid.Column="4" Text="{Binding null}" Mask="\d{0,16}" MaskType="RegEx" Style="{StaticResource GridTextEdit}">
+        <Label Grid.Row="6" Grid.Column="3" Content="PORT번호" Style="{DynamicResource PopupLabel}"/>
+        <dxe:TextEdit x:Name="txtPort" Grid.Row="6" Grid.Column="4" Text="{Binding null}" Mask="\d{0,16}" MaskType="RegEx" Style="{DynamicResource GridTextEdit}">
         </dxe:TextEdit>
         <!--SID 이름-->
-        <Label Grid.Row="7" Grid.Column="3" Content="SID이름" Style="{StaticResource PopupLabel}"/>
-        <dxe:TextEdit x:Name="txtSID" Grid.Row="7" Grid.Column="4" Text="{Binding null}" MaxLength="10" Style="{StaticResource GridTextEdit}">
+        <Label Grid.Row="7" Grid.Column="3" Content="SID이름" Style="{DynamicResource PopupLabel}"/>
+        <dxe:TextEdit x:Name="txtSID" Grid.Row="7" Grid.Column="4" Text="{Binding null}" MaxLength="10" Style="{DynamicResource GridTextEdit}">
         </dxe:TextEdit>
         <!--접속아이디-->
-        <Label Grid.Row="8" Grid.Column="3" Content="접속 아이디" Style="{StaticResource PopupLabel}"/>
-        <dxe:TextEdit x:Name="txtConnID" Grid.Row="8" Grid.Column="4" Text="{Binding null}" MaxLength="16" Style="{StaticResource GridTextEdit}">
+        <Label Grid.Row="8" Grid.Column="3" Content="접속 아이디" Style="{DynamicResource PopupLabel}"/>
+        <dxe:TextEdit x:Name="txtConnID" Grid.Row="8" Grid.Column="4" Text="{Binding null}" MaxLength="16" Style="{DynamicResource GridTextEdit}">
         </dxe:TextEdit>
         <!--접속 비밀번호-->
-        <Label Grid.Row="9" Grid.Column="3" Content="접속 비밀번호" Style="{StaticResource PopupLabel}"/>
-        <dxe:PasswordBoxEdit x:Name="pwdConnPW" Grid.Row="9" Grid.Column="4" Text="{Binding null}" MaxLength="20" Style="{StaticResource GirdPasswordBox}"/>
-        <Button x:Name="btnConnTest" Grid.Row="11" Grid.Column="3" Style="{StaticResource ConnTestButton}"/>
+        <Label Grid.Row="9" Grid.Column="3" Content="접속 비밀번호" Style="{DynamicResource PopupLabel}"/>
+        <dxe:PasswordBoxEdit x:Name="pwdConnPW" Grid.Row="9" Grid.Column="4" Text="{Binding null}" MaxLength="20" Style="{DynamicResource GirdPasswordBox}"/>
+        <Button x:Name="btnConnTest" Grid.Row="11" Grid.Column="3" Style="{DynamicResource ConnTestButton}"/>
 
         <StackPanel Grid.Row="11" Grid.Column="4" Orientation="Horizontal" HorizontalAlignment="Right" VerticalAlignment="Center">
-            <Button x:Name="btnSave" Style="{StaticResource PopupSaveButton}"/>
-            <Button x:Name="btnClose" Style="{StaticResource PopupCloseButton}"/>
+            <Button x:Name="btnSave" Style="{DynamicResource PopupSaveButton}"/>
+            <Button x:Name="btnClose" Style="{DynamicResource PopupCloseButton}"/>
         </StackPanel>
 
 

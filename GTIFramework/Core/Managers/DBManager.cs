@@ -736,6 +736,28 @@ namespace GTIFramework.Core.Managers
             QueryForBulkInsertCore(stateName, parameterObject, datasourceCode);
         }
         #endregion
-        
+
+
+
+
+
+        //Select ListObj (Default Datasource)
+        public static IList<T> QueryForListObj<T>(string statementName, object parameterObject)
+        {
+            return QueryForListObjCore<T>(statementName, parameterObject, Properties.Settings.Default.RES_DB_INS_DEFAULT);
+        }
+        ////Select ListObj 원형
+        private static IList<T> QueryForListObjCore<T>(string statementName, object parameterObject, string datasourceCode)
+        {
+            PreSelectExecute(datasourceCode);       //Select PreProcess 실행
+            ISqlMapper mapper = (ISqlMapper)maps[datasourceCode + GetProcessID()];
+
+            WriteLog(datasourceCode, mapper, statementName, parameterObject);
+
+            CloseAll(Process.GetCurrentProcess().Id.ToString());
+
+            return (IList<T>)mapper.QueryForList<T>(statementName, parameterObject);
+        }
+
     }
 }

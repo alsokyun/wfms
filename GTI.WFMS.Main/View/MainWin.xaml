@@ -12,9 +12,12 @@
         mc:Ignorable="d"
     
         xmlns:gridani="clr-namespace:GTIFramework.Common.Utils.ViewEffect;assembly=GTIFramework"
+        xmlns:dxmvvm="http://schemas.devexpress.com/winfx/2008/xaml/mvvm"
     
-        Title="InfoFacility" WindowStyle="None" WindowStartupLocation="CenterScreen" ResizeMode="CanResize" 
-        Width="1900" Height="1050" MinWidth="1280" MinHeight="720" 
+        Title="InfoFacility" WindowStyle="None" WindowStartupLocation="CenterScreen" ResizeMode="CanResize" AllowsTransparency="True" 
+        Width="1900" Height="1049" MinWidth="1280" MinHeight="720" 
+        Style="{DynamicResource MAINWindow}" Background="{DynamicResource MainWindowColorBrush1}"
+    
         x:Name="mainWin">
 
 
@@ -23,19 +26,19 @@
         <cm:MultiValueConverter x:Key="multiValueConverter"/>
 
         <Storyboard x:Key="Menuin">
-            <gridani:GridLengthAnimation BeginTime="0:0:0" Duration="0:0:0.5" Storyboard.TargetName="colMenu" Storyboard.TargetProperty="Width" From="250" To="54"/>
+            <gridani:GridLengthAnimation BeginTime="0:0:0" Duration="0:0:0.5" Storyboard.TargetName="colMenu" Storyboard.TargetProperty="Width" From="230" To="54"/>
         </Storyboard>
 
         <Storyboard x:Key="Menuout">
-            <gridani:GridLengthAnimation BeginTime="0:0:0" Duration="0:0:0.5" Storyboard.TargetName="colMenu" Storyboard.TargetProperty="Width" From="54" To="250"/>
+            <gridani:GridLengthAnimation BeginTime="0:0:0" Duration="0:0:0.5" Storyboard.TargetName="colMenu" Storyboard.TargetProperty="Width" From="54" To="230"/>
         </Storyboard>
 
         <Storyboard x:Key="QuickHiden">
-            <gridani:GridLengthAnimation BeginTime="0:0:0" Duration="0:0:0.3" Storyboard.TargetName="colQuick" Storyboard.TargetProperty="Width" From="120" To="2"/>
+            <gridani:GridLengthAnimation BeginTime="0:0:0" Duration="0:0:0.3" Storyboard.TargetName="colQuick" Storyboard.TargetProperty="Width" From="150" To="7"/>
         </Storyboard>
 
         <Storyboard x:Key="QuickShow">
-            <gridani:GridLengthAnimation BeginTime="0:0:0" Duration="0:0:0.3" Storyboard.TargetName="colQuick" Storyboard.TargetProperty="Width" From="2" To="120"/>
+            <gridani:GridLengthAnimation BeginTime="0:0:0" Duration="0:0:0.3" Storyboard.TargetName="colQuick" Storyboard.TargetProperty="Width" From="7" To="150"/>
         </Storyboard>
 
     </Window.Resources>
@@ -45,7 +48,7 @@
         <Grid.RowDefinitions>
             <RowDefinition Height="0"/>
             <RowDefinition Height="50"/>
-            <RowDefinition Height="51"/>
+            <RowDefinition Height="42"/>
             <RowDefinition Height="*"/>
             <RowDefinition Height="25"/>
             <RowDefinition Height="0"/>
@@ -59,7 +62,7 @@
 
 
         <!--프로그램 타이틀바 영역 144772-->
-        <Grid Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="3" Background="#fff">
+        <Grid Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="3" Style="{DynamicResource MainTitleHead}" PreviewMouseRightButtonDown="Border_PreviewMouseRightButtonDown">
             <Grid.InputBindings>
                 <MouseBinding MouseAction="LeftClick" Command="{Binding WindowMoveCommand}" 
                               CommandParameter="{Binding RelativeSource={RelativeSource AncestorType={x:Type Window}, Mode=FindAncestor}}"/>
@@ -68,33 +71,32 @@
             </Grid.InputBindings>
 
             <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="180"/>
                 <ColumnDefinition Width="*"/>
             </Grid.ColumnDefinitions>
 
             <StackPanel Orientation="Horizontal">
-
-                <Image x:Name="imgtitle" Source="/Resources/Images/Image/title_img.png" Stretch="None" Margin="20,0,0,0"/>
+                <Image x:Name="imgtitle" Style="{DynamicResource MainTitle}" Width="120" Height="28" Margin="20,0,0,0"/>
             </StackPanel>
 
             <StackPanel Grid.Row="1" Grid.Column="1" Orientation="Horizontal" HorizontalAlignment="Right">
-                <Button x:Name="btnUser" Style="{StaticResource UserButton}" Command="{Binding UserInfoMngCommand}" CommandParameter="{Binding RelativeSource={RelativeSource AncestorType={x:Type Window}, Mode=FindAncestor}}"/>
-                <Border Width="1" Background="#115f96"/>
-                <Button Command="{Binding InterestBlkCommand}" Style="{StaticResource SettingButton}"/>
-                <Border Width="1" Background="#115f96"/>
-                <Button Style="{StaticResource MinWindowButton}" Command="{Binding MinimizeCommand}" 
+                <Button x:Name="btnUser" Style="{DynamicResource UserButton}" Command="{Binding UserInfoMngCommand}" CommandParameter="{Binding RelativeSource={RelativeSource AncestorType={x:Type Window}, Mode=FindAncestor}}"/>
+                <Border Width="1" Background="{DynamicResource MainHeadGBNBrush1}"/>
+                <Button Command="{Binding InterestBlkCommand}" Style="{DynamicResource SettingButton}"/>
+                <Border Width="1" Background="{DynamicResource MainHeadGBNBrush1}"/>
+                <Button Style="{DynamicResource MinWindowButton}" Command="{Binding MinimizeCommand}" 
                         CommandParameter="{Binding RelativeSource={RelativeSource AncestorType={x:Type Window}, Mode=FindAncestor}}"/>
-                <Border Width="1" Background="#115f96"/>
-                <Button Style="{StaticResource MaxWindowButton}" Command="{Binding MaximizeCommand}" 
+                <Border Width="1" Background="{DynamicResource MainHeadGBNBrush1}"/>
+                <Button Style="{DynamicResource MaxWindowButton}" Command="{Binding MaximizeCommand}" 
                         CommandParameter="{Binding RelativeSource={RelativeSource AncestorType={x:Type Window}, Mode=FindAncestor}}"/>
-                <Border Width="1" Background="#115f96"/>
-                <Button Style="{StaticResource PowerButton}" Command="{Binding CloseCommand}"/>
+                <Border Width="1" Background="{DynamicResource MainHeadGBNBrush1}"/>
+                <Button Style="{DynamicResource PowerButton}" Command="{Binding CloseCommand}"/>
             </StackPanel>
         </Grid>
 
         <!--탑메뉴버튼 영역-->
         <Border Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="3" x:Name="borderTop"
-                Background="#cccccc" BorderThickness="0,0,0,3" BorderBrush="#125F97">
+                Background="{DynamicResource MainLMENUBrush1}"  BorderThickness="0,0,0,3" BorderBrush="{DynamicResource MainLMENUUnderBrush1}">
             <Border.Effect>
                 <DropShadowEffect Direction="-90" ShadowDepth="3" Opacity="0.3"/>
             </Border.Effect>
@@ -104,39 +106,34 @@
 
 
         <!--레프트메뉴 & 메인컨텐츠화면 영역-->
-        <Grid Grid.Row="3" Grid.Column="1">
+        <Grid Grid.Row="3" Grid.Column="1" Style="{DynamicResource MainGridBackground}">
             <Grid.RowDefinitions>
                 <RowDefinition Height="20"/>
                 <RowDefinition Height="*"/>
             </Grid.RowDefinitions>
             <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="250" x:Name="colMenu"/>
+                <ColumnDefinition Width="230" x:Name="colMenu"/>
                 <ColumnDefinition Width="*"/>
             </Grid.ColumnDefinitions>
 
-            <Grid.Background>
-                <ImageBrush TileMode="Tile" ViewportUnits="Absolute" Viewport="0,0,15,15"/>
-            </Grid.Background>
 
-            
-            
-            <Border Grid.Row="0" Margin="0,0,0,0" VerticalAlignment="Stretch" Background="#999999">
+
+
+            <Border Grid.Row="0" Margin="0,0,0,0" VerticalAlignment="Stretch" Background="{DynamicResource MainBack1Brush1}">
+                <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
+                    <Button x:Name="btnMenuSlide" Margin="0,0,6,0" Style="{DynamicResource btn_Menu_Slide}" Command="{Binding MenuShowHidenCommand}" CommandParameter="{Binding RelativeSource={RelativeSource AncestorType={x:Type Window}, Mode=FindAncestor}}" HorizontalAlignment="Center"/>
+                </StackPanel>
+
                 <Border.Effect>
                     <DropShadowEffect Direction="0" ShadowDepth="2" Opacity="0.3"/>
-                </Border.Effect>
-                <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
-                    <Button x:Name="btnMenuSlide" Margin="0,0,6,0" Style="{StaticResource btn_Menu_Slide}" HorizontalAlignment="Center"
-                            Command="{Binding MenuShowHidenCommand}" 
-                            CommandParameter="{Binding RelativeSource={RelativeSource AncestorType={x:Type Window}, Mode=FindAncestor}}" 
-                            />
-                </StackPanel>
+                </Border.Effect>            
             </Border>
 
             <!--레프트메뉴 아코디언-->
-            <Border Grid.Row="1" Grid.Column="0" Margin="0,0,0,0" VerticalAlignment="Stretch" Background="#2574AB" BorderThickness="0,0,1,0" BorderBrush="#144772">
-                <dxa:AccordionControl x:Name="accrMenu" Background="#eeeeee" BorderBrush="#2574AB" FontWeight="Normal">
+            <Border Grid.Row="1" Margin="0,0,0,0" VerticalAlignment="Stretch" Background="{DynamicResource MainAccr1Brush1}">
+                <dxa:AccordionControl x:Name="accrMenu" Background="{DynamicResource MainAccr1Brush1}" BorderBrush="{DynamicResource MainAccr1Brush1}" FontWeight="Normal">
                     <i:Interaction.Triggers>
-                        <i:EventTrigger EventName="SelectedItemChanged">
+                        <i:EventTrigger EventName="MouseLeftButtonUp">
                             <i:InvokeCommandAction Command="{Binding MenuControlCommand}" CommandParameter="{Binding RelativeSource={RelativeSource AncestorType={x:Type Window}, Mode=FindAncestor}}"/>
                         </i:EventTrigger>
                     </i:Interaction.Triggers>
@@ -148,20 +145,7 @@
             </Border>
 
             <!--화면컨텐츠영역-->
-            <Grid x:Name="gridtitle" Grid.Column="1" Grid.RowSpan="2" Margin="20,0,20,20">
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="40"/>
-                    <RowDefinition Height="*"/>
-                </Grid.RowDefinitions>
-
-                <StackPanel Grid.Row="0" Orientation="Horizontal" VerticalAlignment="Center" HorizontalAlignment="Left">
-                    <Image Source="/Resources/Images/Image/bullet_title.png" Stretch="None"/>
-                    <Label x:Name="lbTitle" Content="타이틀" Margin="5,6,0,0" FontSize="18" Foreground="#144873" FontWeight="Bold"/>
-                </StackPanel>
-
-                <StackPanel Grid.Row="0" Orientation="Horizontal" VerticalAlignment="Center" HorizontalAlignment="Right">
-                    <Button Style="{StaticResource QuestionButton}" Command="{Binding QuestionCommand}" CommandParameter="{Binding RelativeSource={RelativeSource AncestorType={x:Type Window}, Mode=FindAncestor}}"/>
-                </StackPanel>
+            <Grid x:Name="gridtitle" Grid.Column="1" Grid.RowSpan="2" Margin="0,0,0,0">
 
                 <ContentControl x:Name="ContentRegion" Grid.Row="1" prism:RegionManager.RegionName="ContentRegion" />
 
@@ -173,17 +157,15 @@
         <Grid Grid.Row="3" Grid.Column="1" HorizontalAlignment="Right">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="17"/>
-                <ColumnDefinition Width="2" x:Name="colQuick"/>
+                <ColumnDefinition Width="7" x:Name="colQuick"/>
             </Grid.ColumnDefinitions>
 
             <Border Grid.Column="0">
-                <Button x:Name="btnQuick" Style="{StaticResource btn_Quick_Slide_OPEN}" 
-                        Command="{Binding QuickShowHidenCommand}" 
-                        CommandParameter="{Binding RelativeSource={RelativeSource AncestorType={x:Type Window}, Mode=FindAncestor}}" >
+                <Button x:Name="btnQuick" Style="{DynamicResource btn_Quick_Slide_OPEN}" Command="{Binding QuickShowHidenCommand}" CommandParameter="{Binding RelativeSource={RelativeSource AncestorType={x:Type Window}, Mode=FindAncestor}}" >
                 </Button>
             </Border>
 
-            <Border Grid.Column="1" Background="#eeeeee" BorderBrush="#1D3E61" BorderThickness="1,0,0,0" Opacity="1">
+            <Border Grid.Column="1" Background="{DynamicResource MainBack1Brush1}" BorderBrush="{DynamicResource MainThin1Brush1}" BorderThickness="1,0,0,0" Opacity="1">
                 <Grid>
                     <Grid.RowDefinitions>
                         <RowDefinition Height="30"/>
@@ -191,20 +173,17 @@
                         <RowDefinition Height="30"/>
                     </Grid.RowDefinitions>
 
-                    <Border Grid.Row="0" Background="#eeeeee">
-                        <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Stretch">
-                            <TextBlock Text="즐겨찾기" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="15" Foreground="#5090BC" Margin="20,0,0,0"/>
-                            <Button Command="{Binding QuickMngCommand}" Style="{StaticResource SettingButton}" Width="40" Height="40" VerticalAlignment="Center"/>
+                    <Border x:Name="Quickborder" Grid.Row="0" Background="#1F3D61" Margin="0,0,0,0">
+                        <StackPanel Orientation="Horizontal" HorizontalAlignment="Left" VerticalAlignment="Center">
+                            <TextBlock Text="★즐겨찾기" FontSize="15" Foreground="#5090BC" Margin="10,0,0,0"/>
                         </StackPanel>
                     </Border>
 
-                    <StackPanel x:Name="stQuickMenu" Grid.Row="1" Orientation="Vertical">
-                        <Button Content="Menutest" Style="{StaticResource Quick_Menu_Button}"/>
-                    </StackPanel>
+                    <Button Grid.Row="0" Command="{Binding QuickMngCommand}" Style="{DynamicResource SettingButton}" Width="40" Height="40" VerticalAlignment="Center" HorizontalAlignment="Right"/>
 
-                    <Border Grid.Row="2" Background="#eeeeee">
-                        <TextBlock Text="QUICK MENU" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="15" Foreground="#5090BC"/>
-                    </Border>
+                    <StackPanel x:Name="stQuickMenu" Grid.Row="1" Orientation="Vertical">
+                        <!--<Button Content="Menutest" Style="{DynamicResource Quick_Menu_Button}"/>-->
+                    </StackPanel>
 
                 </Grid>
             </Border>
@@ -212,6 +191,49 @@
         </Grid>
 
 
+
+        <Border Grid.Row="4" Grid.Column="0" Grid.ColumnSpan="3" Margin="0,0,0,0" VerticalAlignment="Stretch" Background="{DynamicResource MainBack1Brush1}" BorderBrush="{DynamicResource MainThin1Brush1}" BorderThickness="1,1,1,0">
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="0,0,10,0">
+                <ProgressBar x:Name="progressunlimit" Width="100" FlowDirection="LeftToRight" IsIndeterminate="True" Visibility="Hidden"/>
+                <Label Content="GREENTECHINC InfoFacility v1.0" Foreground="Gray" Margin="10,0,0,0"/>
+            </StackPanel>
+        </Border>
+
+
+        <dxmvvm:Interaction.Behaviors>
+            <dxmvvm:NotificationService x:Name="AppNotificationService" ApplicationId="InfoWQuality" PredefinedNotificationTemplate="ShortHeaderAndTwoTextFields" CustomNotificationPosition="BottomRight"
+                                        CustomNotificationVisibleMaxCount="5">
+                <dxmvvm:NotificationService.CustomNotificationTemplate>
+                    <DataTemplate>
+                        <Border BorderThickness="3" BorderBrush="{DynamicResource NotifiCOLOR1Brush}" Background="{DynamicResource NotifiCOLOR2Brush}">
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="15"/>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="10"/>
+                                    <ColumnDefinition Width="4*"/>
+                                </Grid.ColumnDefinitions>
+
+                                <Border Grid.Row="0" Grid.Column="1" Background="{DynamicResource NotifiCOLOR2Brush}">
+                                    <Image  HorizontalAlignment="Center" VerticalAlignment="Center" Stretch="None">
+                                        <Image.Source>
+                                            <BitmapImage UriSource="{Binding ImageSur}" />
+                                        </Image.Source>
+                                    </Image>
+                                </Border>
+
+                                <StackPanel Grid.Row="0" Grid.Column="3" Orientation="Vertical" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
+                                    <TextBlock HorizontalAlignment="Left" Text="{Binding Caption}" Foreground="#FFFFFF" FontSize="22" FontWeight="Bold" Margin="3"/>
+                                    <TextBlock HorizontalAlignment="Left" Text="{Binding Content1}" Foreground="#FFFFFF" FontSize="13" Margin="3"/>
+                                    <TextBlock HorizontalAlignment="Left" Text="{Binding Content2}" Foreground="#FFFFFF" FontSize="13" Margin="3"/>
+                                </StackPanel>
+                            </Grid>
+                        </Border>
+                    </DataTemplate>
+                </dxmvvm:NotificationService.CustomNotificationTemplate>
+            </dxmvvm:NotificationService>
+        </dxmvvm:Interaction.Behaviors>        
+        
     </Grid>
 
 

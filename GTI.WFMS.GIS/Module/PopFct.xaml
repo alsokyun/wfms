@@ -12,9 +12,9 @@
        >
 
     <Popup.Resources>
-        <ResourceDictionary Source="../Styles/GisStyles.xaml" />
-    </Popup.Resources>    
-    
+        <ResourceDictionary Source="../Styles/Navy/GisStyles.xaml" />
+    </Popup.Resources>
+
     <Grid x:Name="gridContent" >
         <StackPanel Background="White">
             <Grid >

@@ -310,6 +310,18 @@ namespace GTIFramework.Common.Utils.Converters
             }
         }
 
+        /// <summary>
+        /// 엑셀다운로드 Universal
+        /// </summary>
+        /// <param name="strExcelInfo">         엑셀파일 관련 정보                                   </param>
+        /// <param name="strSearchCondition">   조회 조건 관련 정보(블록명,조회기간,데이터간격 등)   </param>
+        /// <param name="intSearchConditionXY"> 조회 조건 관련 정보를 쓰기 시작할 셀(x,y) 좌표       </param>
+        /// <param name="dtChartData">          엑셀 차트 데이터 / null 가능                         </param>
+        /// <param name="intChartXY">           차트 데이터를 쓰기 시작할 셀(x,y) 좌표 / null 가능   </param>
+        /// <param name="dtTableData">          엑셀 표 데이터                                       </param>
+        /// <param name="intTableXY">           표 데이터 쓰기 시작할 셀(x,y) 좌표                   </param>
+        /// <param name="gridControl">          밴드&컬럼을 내보내기 위한 gridControl / null 가능    </param>
+        /// <param name="bLineYN">              셀 테두리 Y/N                                        </param>
         public static void ExcelUniversal(string[] strExcelInfo, string[] strSearchCondition, int[] intSearchConditionXY, DataTable dtChartData, int[] intChartXY,
             DataTable dtTableData, int[] intTableXY, GridControl gridControl, bool bLineYN)
         {
@@ -332,6 +344,24 @@ namespace GTIFramework.Common.Utils.Converters
                 //밴드없는 표 데이터 (컬럼명이 헤더)
                 if (gridControl == null)
                 {
+                    //표 데이터 내보내기 전 표 하단의 그룹데이터(합계,평균 등) 유무 확인 후 처리
+                    //그룹데이터(합계,평균 등) 개수 확인용
+                    int intMaxRN = 0;
+
+                    //그룹데이터(합계,평균 등) 여부 확인 & RN 컬럼 삭제
+                    foreach (DataColumn dc in dtTableData.Columns)
+                    {
+                        if (dc.ColumnName.Equals("RN"))
+                        {
+                            intMaxRN = dtTableData.AsEnumerable().Where(x => !string.IsNullOrEmpty(x[dc.ColumnName].ToString())).Max(x => Convert.ToInt32(x[dc.ColumnName]));
+
+                            dtTableData.Columns.Remove(dc);
+
+                            //DataTable 수정 후 루프돌면 에러나기떄문에 break 처리
+                            break;
+                        }
+                    }
+
                     Excel.Range rangeTable = null;
                     long TDRowCNT = dtTableData.Rows.Count;
                     int TDColumCNT = dtTableData.Columns.Count;
@@ -370,6 +400,20 @@ namespace GTIFramework.Common.Utils.Converters
                     if (bLineYN)
                     {
                         rangeTable.Borders.LineStyle = Excel.XlLineStyle.xlContinuous;
+                    }
+
+                    //RN 이 존재했을경우 = 그룹데이터 존재
+                    if (intMaxRN != 0)
+                    {
+                        //표 데이터 그룹데이터(합계,평균 등) 색 변경 범위
+                        Excel.Range rangeColor = null;
+
+                        // range 설정
+                        Excel.Range sPoint_Color = ws.Cells[intEndX_TD - intMaxRN + 1, intStartY_TD];
+                        Excel.Range ePoint_Color = ws.Cells[intEndX_TD, intEndY_TD];
+
+                        rangeColor = ws.get_Range(sPoint_Color, ePoint_Color);
+                        rangeColor.Interior.Color = System.Drawing.ColorTranslator.ToOle(System.Drawing.ColorTranslator.FromHtml("#DDDDDD"));
                     }
 
 
@@ -417,22 +461,24 @@ namespace GTIFramework.Common.Utils.Converters
                                 ws.get_Range(sPoint_Bnd, ePoint_Bnd).Merge();
                                 rangeBands.Value = strBandsHeader;
 
-                                //다음 데이터가 쓰여질 셀 y좌표 +1
+                                //다음 데이터가 쓰여질 시작 y좌표 +1
                                 intStartY_Bnd++;
+                                //다음 데이터가 쓰여질 끝 y좌표 +1
+                                intEndY_Bnd++;
                             }
                             else if (gcb.Columns.Count > 1)
                             {
                                 //셀 merge 하면서 밴드 헤더 내보냄
                                 //밴드 내 컬럼 갯수만큼 범위로 잡아서 merge
-                                if(gcb == bandsList[0])
-                                {
-                                    intEndY_Bnd += gcb.Columns.Count - 1;
-                                }
-                                else
-                                {
-                                    intEndY_Bnd += gcb.Columns.Count;
-                                }
-                                
+                                //if(gcb == bandsList[0])
+                                //{
+                                intEndY_Bnd += gcb.Columns.Count - 1;
+                                //}
+                                //else
+                                //{
+                                //    intEndY_Bnd += gcb.Columns.Count -1;
+                                //}
+
 
                                 Excel.Range sPoint_Bnd = ws.Cells[intStartX_Bnd, intStartY_Bnd];
                                 Excel.Range ePoint_Bnd = ws.Cells[intEndX_Bnd, intEndY_Bnd];
@@ -441,10 +487,10 @@ namespace GTIFramework.Common.Utils.Converters
                                 ws.get_Range(sPoint_Bnd, ePoint_Bnd).Merge();
                                 rangeBands.Value = strBandsHeader;
 
+                                intEndY_Bnd++;
 
                                 //밴드 내 컬럼 추가 로직
                                 //셀 y 값 설정
-                                int intNextCol = intStartY_Bnd;
 
                                 foreach (GridColumn gc in gcb.Columns)
                                 {
@@ -458,8 +504,8 @@ namespace GTIFramework.Common.Utils.Converters
 
                                     Excel.Range rangeColumns = null;
 
-                                    Excel.Range sPoint_Col = ws.Cells[intStartX_Bnd + 1, intNextCol];
-                                    Excel.Range ePoint_col = ws.Cells[intStartX_Bnd + 1, intNextCol];
+                                    Excel.Range sPoint_Col = ws.Cells[intStartX_Bnd + 1, intStartY_Bnd];
+                                    Excel.Range ePoint_col = ws.Cells[intStartX_Bnd + 1, intStartY_Bnd];
 
                                     rangeColumns = ws.get_Range(sPoint_Col, ePoint_col);
                                     rangeColumns.Value = strColumnHeader;
@@ -469,11 +515,8 @@ namespace GTIFramework.Common.Utils.Converters
                                     }
 
 
-                                    intNextCol++;
+                                    intStartY_Bnd++;
                                 }
-
-                                intStartY_Bnd += gcb.Columns.Count;
-
                             }
                             if (bLineYN)
                             {
@@ -495,8 +538,9 @@ namespace GTIFramework.Common.Utils.Converters
                         if (dc.ColumnName.Equals("RN"))
                         {
                             intMaxRN = dtTableData.AsEnumerable().Where(x => !string.IsNullOrEmpty(x[dc.ColumnName].ToString())).Max(x => Convert.ToInt32(x[dc.ColumnName]));
-
                             dtTableData.Columns.Remove(dc);
+
+                            //DataTable 수정 후 루프돌면 에러나기떄문에 break 처리
                             break;
                         }
                     }
@@ -549,7 +593,7 @@ namespace GTIFramework.Common.Utils.Converters
                         Excel.Range ePoint_Color = ws.Cells[intEndX_TD, intEndY_TD];
 
                         rangeColor = ws.get_Range(sPoint_Color, ePoint_Color);
-                        rangeColor.Interior.Color = System.Drawing.ColorTranslator.ToOle(System.Drawing.Color.YellowGreen);
+                        rangeColor.Interior.Color = System.Drawing.ColorTranslator.ToOle(System.Drawing.ColorTranslator.FromHtml("#DDDDDD"));
                     }
                 }
                 #endregion
@@ -623,9 +667,9 @@ namespace GTIFramework.Common.Utils.Converters
                 wb.SaveAs(strExcelInfo[1], Type.Missing, Type.Missing, Type.Missing, Type.Missing, Type.Missing,
                         Excel.XlSaveAsAccessMode.xlNoChange, Type.Missing, Type.Missing, Type.Missing, Type.Missing, Type.Missing);
 
-                //wb.Close(true);
-                //excelApp.Quit();
+                wb.Close(true);
 
+                //excelApp.Quit();
 
                 //ReleaseExcelObject(ws);
                 //ReleaseExcelObject(wb);
@@ -1391,7 +1435,11 @@ namespace GTIFramework.Common.Utils.Converters
                         if (valueArray[i, j + 1] != null)
                         {
                             if (valueArray[i, j + 1] is DateTime)
-                                singleDValue[j] = ((DateTime)valueArray[i, j + 1]).ToString("yyyy-MM-dd HH:mm:ss");
+                                if (((DateTime)valueArray[i, j + 1]).Second != 00)
+                                    singleDValue[j] = ((DateTime)valueArray[i, j + 1]).AddMinutes(1).ToString("yyyy-MM-dd HH:mm:00");
+                                else
+                                    singleDValue[j] = ((DateTime)valueArray[i, j + 1]).ToString("yyyy-MM-dd HH:mm:ss");
+
                             else
                                 singleDValue[j] = valueArray[i, j + 1].ToString();
                         }
@@ -1551,5 +1599,230 @@ namespace GTIFramework.Common.Utils.Converters
             }
         }
         #endregion
+
+
+
+
+
+        /// <summary>
+        /// 엑셀다운로드 그리드일반
+        /// </summary>
+        /// <param name="strExcelInfo"></param>
+        /// <param name="titlePointXY"></param>
+        /// <param name="dtTableData"></param>
+        /// <param name="tablePointXY"></param>
+        /// <param name="gridControl"></param>
+        /// <param name="bLineYN"></param>
+        public static void ExcelGrid(string strExcelFormPath, string strFileName, string title, DataTable dtTableData, int[] tablePointXY, GridControl gridControl, bool bLineYN)
+        {
+            try
+            {
+                Excel.Application excelApp = null;
+                Excel.Workbook wb = null;
+                Excel.Worksheet ws = null;
+
+                excelApp = new Excel.Application();
+                excelApp.DisplayAlerts = false;
+
+                wb = excelApp.Workbooks.Open(strExcelFormPath, Type.Missing, Type.Missing, Type.Missing, Type.Missing, Type.Missing,
+                            Type.Missing, Type.Missing, Type.Missing, Type.Missing, Type.Missing, Type.Missing, Type.Missing, Type.Missing, Type.Missing);
+
+                ws = (Excel.Worksheet)wb.Sheets.get_Item(1);
+
+
+
+
+
+
+
+                #region 그리드헤더정보
+
+                //그리드 컨트롤에서 bands 복사하여 리스트의 인덱스 0부터 담음
+                GridColumn[] columnList = new GridColumn[gridControl.Columns.Count];
+                gridControl.Columns.CopyTo(columnList, 0);
+
+                //데이터 쓰기 시작하는 셀 x,y
+                int intStartX_Bnd = tablePointXY[0];
+                int intStartY_Bnd = tablePointXY[1];
+
+                //데이터 쓰기 종료되는 셀 x,y
+                int intEndX_Bnd = tablePointXY[0];
+                int intEndY_Bnd = tablePointXY[1];
+
+                foreach (GridColumn gcol in columnList)
+                {
+                    string strColHeader = string.Empty;
+                    bool bColVisible = false;
+                    string wid = string.Empty;
+
+                    gridControl.Dispatcher.Invoke(DispatcherPriority.Normal, new Action(delegate
+                    {
+                        strColHeader = gcol.Header.ToString();
+                        bColVisible = gcol.Visible;
+                        wid = gcol.Width.ToString();
+                    }));
+
+                    //가시적으로 표현되는 컬럼만 엑셀로 내보낸다.
+                    if (bColVisible == true)
+                    {
+                        Excel.Range rangeHeader = null;
+
+                        //range 끝 좌표 x값만 +1 증가시킨 후 merge
+                        Excel.Range sPoint = ws.Cells[intStartX_Bnd, intStartY_Bnd];
+                        Excel.Range ePoint = ws.Cells[intEndX_Bnd + 1, intEndY_Bnd];
+
+                        rangeHeader = ws.get_Range(sPoint, ePoint);
+                        ws.get_Range(sPoint, ePoint).Merge();
+                        rangeHeader.Value = strColHeader;
+
+                        //다음 데이터가 쓰여질 시작 y좌표 +1
+                        intStartY_Bnd++;
+                        //다음 데이터가 쓰여질 끝 y좌표 +1
+                        intEndY_Bnd++;
+
+                        if (bLineYN)
+                        {
+                            rangeHeader.Borders.LineStyle = Excel.XlLineStyle.xlContinuous;
+                            rangeHeader.Interior.Color = Color.Gray;
+                            
+                            //rangeHeader.Columns.AutoFit();
+                            //컬럼width비율에 따라 폭조정
+                            int width = Convert.ToInt16(wid.Replace("*",""));
+                            rangeHeader.Columns.ColumnWidth = 5* width;
+                            rangeHeader.HorizontalAlignment = Excel.XlHAlign.xlHAlignCenter;
+                        }
+
+
+                    }
+                }
+
+
+                #endregion
+
+
+
+
+                #region 타이틀 표시
+                Excel.Range sPoint_Bnd = ws.Cells[1, 1];
+                Excel.Range ePoint_Bnd = ws.Cells[1, columnList.Count()];
+
+
+                // range 설정
+                Excel.Range titleRange = ws.get_Range(sPoint_Bnd, ePoint_Bnd); 
+                ws.get_Range(sPoint_Bnd, ePoint_Bnd).Merge();
+                titleRange.Value2 = title;
+                titleRange.Font.Size = 30;
+                titleRange.Font.FontStyle = Excel.XlThemeFont.xlThemeFontMajor;
+                titleRange.Font.FontStyle = "Bold";
+                titleRange.Font.Underline = Excel.XlUnderlineStyle.xlUnderlineStyleSingle;
+                titleRange.HorizontalAlignment = Excel.XlHAlign.xlHAlignCenter;
+                //rangeSearchCondition.EntireColumn.AutoFit();
+
+                #endregion
+
+
+
+                #region 그리드데이터 부분
+
+                //표 데이터 내보내기 전 표 하단의 그룹데이터(합계,평균 등) 유무 확인 후 처리
+                //그룹데이터(합계,평균 등) 개수 확인용
+                int intMaxRN = 0;
+
+                //그룹데이터(합계,평균 등) 여부 확인 & RN 컬럼 삭제
+                foreach (DataColumn dc in dtTableData.Columns)
+                {
+                    if (dc.ColumnName.Equals("RN"))
+                    {
+                        intMaxRN = dtTableData.AsEnumerable().Where(x => !string.IsNullOrEmpty(x[dc.ColumnName].ToString())).Max(x => Convert.ToInt32(x[dc.ColumnName]));
+                        dtTableData.Columns.Remove(dc);
+
+                        //DataTable 수정 후 루프돌면 에러나기떄문에 break 처리
+                        break;
+                    }
+                }
+
+                //표 데이터 내보내기 부분
+                Excel.Range rangeTable = null;
+
+                long TDRowCNT = dtTableData.Rows.Count;
+                int TDColumCNT = dtTableData.Columns.Count;
+
+                object[,] tableDatas = new object[TDRowCNT, TDColumCNT];
+
+                for (int i = 0; i < TDColumCNT; i++)
+                {
+                    for (int j = 0; j < TDRowCNT; j++)
+                    {
+                        tableDatas[j, i] = dtTableData.Rows[j][i].ToString(); //데이터 정보
+                    }
+                }
+
+                //테이블 데이터 쓰기 시작되는 셀 x,y (Row,Column)
+                //밴드 이후로 조정하기 위해 +2
+                int intStartX_TD = tablePointXY[0] + 2;
+                int intStartY_TD = tablePointXY[1];
+
+                //엑셀 데이터 쓰기 종료되는 셀 x,y
+                int intEndX_TD = (int)TDRowCNT + intStartX_TD - 1;
+                int intEndY_TD = (int)TDColumCNT + intStartY_TD - 1;
+
+                // range 설정
+                Excel.Range sPoint_TD = ws.Cells[intStartX_TD, intStartY_TD];
+                Excel.Range ePoint_TD = ws.Cells[intEndX_TD, intEndY_TD];
+
+                rangeTable = ws.get_Range(sPoint_TD, ePoint_TD);
+                rangeTable.Value2 = tableDatas;
+                if (bLineYN)
+                {
+                    rangeTable.Borders.LineStyle = Excel.XlLineStyle.xlContinuous;
+                }
+
+
+                //RN 이 존재했을경우 = 그룹데이터 존재
+                if (intMaxRN != 0)
+                {
+                    //표 데이터 그룹데이터(합계,평균 등) 색 변경 범위
+                    Excel.Range rangeColor = null;
+
+                    // range 설정
+                    Excel.Range sPoint_Color = ws.Cells[intEndX_TD - intMaxRN + 1, intStartY_TD];
+                    Excel.Range ePoint_Color = ws.Cells[intEndX_TD, intEndY_TD];
+
+                    rangeColor = ws.get_Range(sPoint_Color, ePoint_Color);
+                    rangeColor.Interior.Color = System.Drawing.ColorTranslator.ToOle(System.Drawing.ColorTranslator.FromHtml("#DDDDDD"));
+                }
+                #endregion
+
+
+
+
+                wb.SaveAs(strFileName, Type.Missing, Type.Missing, Type.Missing, Type.Missing, Type.Missing,
+                        Excel.XlSaveAsAccessMode.xlNoChange, Type.Missing, Type.Missing, Type.Missing, Type.Missing, Type.Missing);
+
+                wb.Close(true);
+
+                //excelApp.Quit();
+
+                //ReleaseExcelObject(ws);
+                //ReleaseExcelObject(wb);
+                //ReleaseExcelObject(excelApp);
+
+                //프로세스 Kill 후 재실행
+                int intHwnd;
+                GetWindowThreadProcessId(excelApp.Hwnd, out intHwnd);
+
+                Process p = Process.GetProcessById(intHwnd);
+                p.Kill();
+
+                Process process = new Process();
+                process.StartInfo.FileName = strFileName;
+                process.Start();
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
     }
 }

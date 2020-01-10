@@ -2,8 +2,45 @@
 <sqlMap namespace="Main" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://ibatis.apache.org/mapping">
   <statements>
 
+    
     <!--사용자조회-->
     <select id="selectUsrList" parameterClass="Hashtable" resultClass="Hashtable">
+
+
+
+        SELECT ROW_NUMBER() OVER(ORDER BY U.EDT_DT DESC ) AS RN
+        , U.USER_ID AS USER_ID
+        , U.USER_NM
+        , U.USER_TEL
+        , C2.NM AS DEPT_NM
+        , C3.NM AS POS_NM
+        , U.ETC
+        , DECODE(U.USE_YN,'N','N','Y') AS USE_YN
+        , U.USER_PWD
+        FROM INFOUSER.SYS_USER_INFO U
+        LEFT JOIN INFOUSER.CD_DTL_INFO C2 ON C2.DTL_CD = U.DEPT_CD
+        LEFT JOIN INFOUSER.CD_DTL_INFO C3 ON C3.DTL_CD = U.POS_CD
+        WHERE U.DEL_YN = 'N'
+
+        <isEqual property="GBN" compareValue="*">
+            AND ( U.USER_NM LIKE '%'||#WORD#||'%' OR U.USER_ID LIKE '%'||#WORD#||'%' )
+          </isEqual>
+          <isEqual property="GBN" compareValue="NM">
+            AND U.USER_NM LIKE '%'||#WORD#||'%'
+          </isEqual>
+          <isEqual property="GBN" compareValue="ID">
+            AND U.USER_ID LIKE '%'||#WORD#||'%'
+          </isEqual>
+
+
+
+    </select>
+
+    
+    
+    
+    <!--사용자조회-->
+    <select id="selectUsrPageList" parameterClass="Hashtable" resultClass="Hashtable">
 
       WITH C AS (
         SELECT COUNT(1) AS ROWCNT
@@ -124,7 +161,7 @@
     <select id="selectDtlCdList" parameterClass="Hashtable" resultClass="Hashtable">
       SELECT rownum rn
       , MST_CD
-      , (select NM FROM CD_MST_INFO  WHERE MST_CD = D.MST_CD ) as MST_NM
+      , (select NM FROM INFOUSER.CD_MST_INFO  WHERE MST_CD = D.MST_CD ) as MST_NM
       , DTL_CD, NM, ETC, ORD, decode(USE_YN,'Y','Y','N') as USE_YN
       ,null as CHK
 
@@ -139,11 +176,11 @@
 
     <!-- 코드마스터 저장 -->
     <update id="saveMstCd" parameterClass="Hashtable">
-      MERGE INTO CD_MST_INFO
+      MERGE INTO INFOUSER.CD_MST_INFO
       USING DUAL ON (MST_CD = #MST_CD#)
       WHEN MATCHED THEN
       UPDATE SET
-      NM = #CD_NM#
+      NM = #NM#
       , ETC = #ETC#
       , ORD = #ORD#
       , EDT_ID = #EDT_ID#
@@ -152,22 +189,22 @@
 
       WHEN NOT MATCHED THEN
       INSERT (MST_CD, NM, ETC, ORD, USE_YN, EDT_ID, EDT_DT)
-      VALUES (#MST_CD#, #CD_NM#, #ETC#,#ORD#, DECODE(#USE_YN#,'Y','Y','N'), #EDT_ID#, sysdate)
+      VALUES (#MST_CD#, #NM#, #ETC#,#ORD#, DECODE(#USE_YN#,'Y','Y','N'), #EDT_ID#, sysdate)
     </update>
 
     <!--마스터삭제-->
     <update id="deleteMstCd" parameterClass="Hashtable">
-      DELETE CD_MST_INFO
+      DELETE INFOUSER.CD_MST_INFO
       WHERE MST_CD = #MST_CD#
     </update>
 
       <!-- 코드상세 저장  -->
     <update id="saveDtlCd" parameterClass="Hashtable">
-      MERGE INTO CD_DTL_INFO
+      MERGE INTO INFOUSER.CD_DTL_INFO
       USING DUAL ON (MST_CD = #MST_CD# and DTL_CD = #DTL_CD#)
       WHEN MATCHED THEN
       UPDATE SET
-      NM = #CD_NM#
+      NM = #NM#
       , ETC = #ETC#
       , ORD = #ORD#
       , USE_YN = decode(#USE_YN#,'Y','Y','N')
@@ -176,12 +213,12 @@
 
       WHEN NOT MATCHED THEN
       INSERT (MST_CD, DTL_CD, NM, ETC, ORD, USE_YN, EDT_ID, EDT_DT)
-      VALUES (#MST_CD#, #DTL_CD#, #CD_NM#, #ETC#,#ORD#, DECODE(#USE_YN#,'Y','Y','N'), #EDT_ID#, sysdate)
+      VALUES (#MST_CD#, #DTL_CD#, #NM#, #ETC#,#ORD#, DECODE(#USE_YN#,'Y','Y','N'), #EDT_ID#, sysdate)
     </update>
 
     <!--상세코드삭제-->
     <update id="deleteDtlCd" parameterClass="Hashtable">
-      DELETE CD_DTL_INFO
+      DELETE INFOUSER.CD_DTL_INFO
       WHERE MST_CD = #MST_CD#
       AND DTL_CD = #DTL_CD#
     </update>
@@ -267,6 +304,52 @@
 
     </select>
 
+
+
+
+
+
+
+
+    <!--즐겨찾기 설정 삭제-->
+    <update id ="Delete_BASE_FLOW_CALC_INFO" parameterClass="Hashtable" resultClass ="Hashtable">
+      DELETE
+      FROM INFOUSER.MNU_BKMK_MNG
+      WHERE SYS_CD = #SYS_CD#
+      AND USER_ID = #USER_ID#
+    </update>
+
+    <!--즐겨찾기 설정 입력-->
+    <update id ="Insert_BASE_FLOW_CALC_INFO" parameterClass="Hashtable" resultClass ="Hashtable">
+      INSERT INTO INFOUSER.MNU_BKMK_MNG
+      (MNU_CD, SYS_CD, SHRTEN_KEY, USER_ID, EDT_DT, ORD)
+      VALUES
+      (#MNU_CD#, #SYS_CD#, #SHRTEN_KEY#, #USER_ID#, SYSDATE, #ORD#)
+    </update>
+
+    <!--설정안되어 있는 메뉴-->
+    <select id ="Select_BASE_FLOW_CALC_INFO_R" parameterClass="Hashtable" resultClass ="Hashtable">
+      SELECT A.MNU_CD, B.UPPER_CD, B.MNU_NM, A.SHRTEN_KEY, B.MNU_PATH, DECODE(B.MNU_STEP, 3, '0', '1') STRSHOW
+      FROM INFOUSER.MNU_BKMK_MNG A
+          ,INFOUSER.SYS_MNU_INFO B
+      WHERE A.SYS_CD = #SYS_CD#
+      AND B.SYS_CD = A.SYS_CD
+      AND B.MNU_CD = A.MNU_CD
+      AND A.USER_ID = #USER_ID#
+      ORDER BY A.ORD
+    </select>
+
+    <!--설정되어 있는 메뉴-->
+    <select id ="Select_BASE_FLOW_CALC_INFO_L" parameterClass="Hashtable" resultClass ="Hashtable">
+      SELECT MNU_CD, UPPER_CD, MNU_NM, '' SHRTEN_KEY, DECODE(MNU_STEP, 3, '0', '1') STRSHOW
+      FROM INFOUSER.SYS_MNU_INFO
+      WHERE SYS_CD = #SYS_CD#
+      AND MNU_CD NOT IN (SELECT MNU_CD
+      FROM INFOUSER.MNU_BKMK_MNG
+      WHERE SYS_CD = #SYS_CD#
+      AND USER_ID = #USER_ID#)
+      ORDER BY MNU_CD
+    </select>
 
 
   </statements>

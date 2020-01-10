@@ -9,8 +9,10 @@ using System.Collections;
 using System.Data;
 using System.Net;
 using System.Net.NetworkInformation;
+using System.Threading;
 using System.Windows;
 using System.Windows.Input;
+using System.Windows.Threading;
 
 namespace GTI.WFMS.Main.View
 {
@@ -22,39 +24,30 @@ namespace GTI.WFMS.Main.View
         MainWork work = new MainWork();
         Hashtable htconditions = new Hashtable();
 
+        protected Thread thread;  //쓰레드 선언
+        protected System.Timers.Timer timer; //자동쓰레드 타이머
+
         DataTable dtDBInfo; //
         DataTable dtBaseSiteInfo = new DataTable(); //DB연결정보
 
+        bool bcbSiteping = false;
 
         public Login()
         {
             InitializeComponent();
+
+
+            //팝업창 테마적용
+            if (Properties.Settings.Default.strThemeName.Equals(""))
+                ThemeApply.strThemeName = "GTINavyTheme";
+            else
+                ThemeApply.strThemeName = Properties.Settings.Default.strThemeName;
+            ThemeApply.ThemeChange(this);
             ThemeApply.Themeapply(this);
 
-
-
-            /// 1.이벤트 초기화
-            this.Loaded += Login_Loaded;
-            this.Unloaded += Login_Unloaded;
-
-            btnLogin.Click += BtnLogin_Click; //로그인버튼 이벤트 추가
-            btnClose.Click += BtnClose_Click; //닫기버튼
-
-            btnDataBaseInfoEdit.Click += BtnDataBaseInfoEdit_Click;  //DB연결 설정팝업
-            pwdPW.KeyDown += PwdPW_KeyDown; //엔터키
-            bdTitle.PreviewMouseDown += BdTitle_PreviewMouseDown; //창드래그
-
-
-            /// 2.데이터 초기화
-            InitializeData();
+            Loaded += Login_Loaded;
+            Unloaded += Login_Unloaded;
         }
-
-
-
-
-
-
-
 
 
 
@@ -232,19 +225,134 @@ namespace GTI.WFMS.Main.View
 
         private void Login_Unloaded(object sender, RoutedEventArgs e)
         {
-            //throw new NotImplementedException();
+            timer.Stop();
+            timer.Dispose();
+            thread.Abort();
         }
 
         private void Login_Loaded(object sender, RoutedEventArgs e)
         {
-            //throw new NotImplementedException();
+            /// 2.데이터 초기화
+            InitializeEvent();
+            InitializeData();
+
+            try
+            {
+                thread = new Thread(new ThreadStart(thread_FX));
+                thread.Name = "thread";
+                thread.Start();
+            }
+            catch (Exception ex)
+            {
+
+            }
         }
 
+        private void thread_FX()
+        {
+            timer = new System.Timers.Timer();
+            timer.Interval = 1000;
+            timer.Elapsed += Timer_Elapsed;
+            timer.Start();
+        }
+
+        private void Timer_Elapsed(object sender, System.Timers.ElapsedEventArgs e)
+        {
+            try
+            {
+                CheckNetStat();
+            }
+            catch (Exception ex) { Messages.ErrLog(ex); }
+        }
+
+        /// <summary>
+        /// 접속상태 체크
+        /// 사업소정보설정폼에서 셋팅한 IP주소로 ping 체크
+        /// 핑 응답이 있을시 '정상' 표시
+        /// 사업소정보설정 저장값이 없으면 '비정상' 표시
+        /// </summary>
+        public void CheckNetStat()
+        {
+            try
+            {
+                Dispatcher.Invoke(DispatcherPriority.ApplicationIdle,
+                    new Action(delegate ()
+                    {
+                        if (cbSite.EditValue != null)
+                            bcbSiteping = true;
+                        else
+                            bcbSiteping = false;
+                    }));
+
+                if (bcbSiteping)
+                {
+                    if (dtDBInfo == null)
+                    {
+                        htconditions.Clear();
+                        Dispatcher.Invoke(DispatcherPriority.ApplicationIdle,
+                            new Action(delegate ()
+                            {
+                                htconditions.Add("SITE_CD", cbSite.EditValue.ToString());
+                            }));
+                        htconditions.Add("SYS_CD", "000007");
+                        dtDBInfo = work.SelectDBInfo(htconditions);
+                    }
+
+                    if (dtDBInfo.Rows.Count == 1)
+                    {
+                        if (!dtDBInfo.Rows[0][0].ToString().Equals(""))
+                        {
+                            string strSiteIP = dtDBInfo.Rows[0][0].ToString();
+                            //네트워크 정상 비정상 체크
+                            if (PingChecker(strSiteIP))
+                            {
+                                Dispatcher.Invoke(DispatcherPriority.ApplicationIdle,
+                                    new Action(delegate ()
+                                    {
+                                        imgConnAbnormal.Visibility = Visibility.Collapsed;
+                                    }));
+                            }
+                            else
+                            {
+                                Dispatcher.Invoke(DispatcherPriority.ApplicationIdle,
+                                    new Action(delegate ()
+                                    {
+                                        imgConnAbnormal.Visibility = Visibility.Visible;
+                                    }));
+                            }
+                        }
+                    }
+                }
+                else
+                {
+                    Dispatcher.Invoke(DispatcherPriority.ApplicationIdle,
+                        new Action(delegate ()
+                        {
+                            imgConnAbnormal.Visibility = Visibility.Visible;
+                        }));
+                }
+            }
+            catch (Exception ex)
+            {
+                Messages.ShowErrMsgBoxLog(ex);
+            }
+        }
 
         #endregion
 
 
         #region =========== 기능 ===============
+
+        private void InitializeEvent()
+        {
+            /// 1.이벤트 초기화
+            btnLogin.Click += BtnLogin_Click; //로그인버튼 이벤트 추가
+            btnClose.Click += BtnClose_Click; //닫기버튼
+
+            btnDataBaseInfoEdit.Click += BtnDataBaseInfoEdit_Click;  //DB연결 설정팝업
+            pwdPW.KeyDown += PwdPW_KeyDown; //엔터키
+            bdTitle.PreviewMouseDown += BdTitle_PreviewMouseDown; //창드래그
+        }
 
         /// <summary>
         /// 데이터 초기화
@@ -293,49 +401,48 @@ namespace GTI.WFMS.Main.View
             }
 
 
+            ///// 3.접속상태체크
+            //try
+            //{
+            //    if (cbSite.EditValue != null) //사업소가 없으면 접속실패
+            //    {
+            //        if (dtDBInfo == null)
+            //        {
+            //            htconditions.Clear();
+            //            htconditions.Add("SITE_CD", cbSite.EditValue.ToString());
+            //            htconditions.Add("SYS_CD", "000007");
+            //            dtDBInfo = work.SelectDBInfo(htconditions);
+            //        }
 
-            /// 3.접속상태체크
-            try
-            {
-                if (cbSite.EditValue != null) //사업소가 없으면 접속실패
-                {
-                    if (dtDBInfo == null)
-                    {
-                        htconditions.Clear();
-                        htconditions.Add("SITE_CD", cbSite.EditValue.ToString());
-                        htconditions.Add("SYS_CD", "000007");
-                        dtDBInfo = work.SelectDBInfo(htconditions);
-                    }
-
-                    if (dtDBInfo.Rows.Count == 1)
-                    {
-                        if (!dtDBInfo.Rows[0][0].ToString().Equals(""))
-                        {
-                            string strSiteIP = dtDBInfo.Rows[0][0].ToString();
-                            //네트워크 정상 비정상 체크
-                            if (PingChecker(strSiteIP))
-                            {
-                                imgConnAbnormal.Visibility = Visibility.Collapsed;
-                                imgConnNormal.Visibility = Visibility.Visible;
-                            }
-                            else
-                            {
-                                imgConnAbnormal.Visibility = Visibility.Visible;
-                                imgConnNormal.Visibility = Visibility.Collapsed;
-                            }
-                        }
-                    }
-                }
-                else
-                {
-                    imgConnAbnormal.Visibility = Visibility.Visible;
-                    imgConnNormal.Visibility = Visibility.Collapsed;
-                }
-            }
-            catch (Exception ex)
-            {
-                Messages.ShowErrMsgBoxLog(ex);
-            }
+            //        if (dtDBInfo.Rows.Count == 1)
+            //        {
+            //            if (!dtDBInfo.Rows[0][0].ToString().Equals(""))
+            //            {
+            //                string strSiteIP = dtDBInfo.Rows[0][0].ToString();
+            //                //네트워크 정상 비정상 체크
+            //                if (PingChecker(strSiteIP))
+            //                {
+            //                    imgConnAbnormal.Visibility = Visibility.Collapsed;
+            //                    imgConnNormal.Visibility = Visibility.Visible;
+            //                }
+            //                else
+            //                {
+            //                    imgConnAbnormal.Visibility = Visibility.Visible;
+            //                    imgConnNormal.Visibility = Visibility.Collapsed;
+            //                }
+            //            }
+            //        }
+            //    }
+            //    else
+            //    {
+            //        imgConnAbnormal.Visibility = Visibility.Visible;
+            //        imgConnNormal.Visibility = Visibility.Collapsed;
+            //    }
+            //}
+            //catch (Exception ex)
+            //{
+            //    Messages.ShowErrMsgBoxLog(ex);
+            //}
 
             txtID.Focus();
         }

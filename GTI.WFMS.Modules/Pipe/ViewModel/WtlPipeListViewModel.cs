@@ -90,7 +90,7 @@ namespace GTI.WFMS.Modules.Pipe.ViewModel
 
         public DelegateCommand<object> SearchCommand { get; set; }
         public DelegateCommand<object> ResetCommand { get; set; }
-        
+
         public DelegateCommand<object> btnCmd { get; set; }
         #endregion
 
@@ -103,7 +103,7 @@ namespace GTI.WFMS.Modules.Pipe.ViewModel
         DataTable dtresult = new DataTable(); //조회결과 데이터
 
 
-        WtlPipeList wtlPipeList;
+        WtlPipeListView wtlPipeListView;
         ComboBoxEdit cbMNG_CDE; DataTable dtMNG_CDE = new DataTable();
         ComboBoxEdit cbHJD_CDE; DataTable dtHJD_CDE = new DataTable();
         ComboBoxEdit cbMOP_CDE; DataTable dtMOP_CDE = new DataTable();
@@ -132,7 +132,7 @@ namespace GTI.WFMS.Modules.Pipe.ViewModel
             LoadedCommand = new DelegateCommand<object>(OnLoaded);
             SearchCommand = new DelegateCommand<object>(SearchAction);
             ResetCommand = new DelegateCommand<object>(ResetAction);
-            
+
             btnCmd = new DelegateCommand<object>(btnMethod);
 
 
@@ -176,25 +176,25 @@ namespace GTI.WFMS.Modules.Pipe.ViewModel
             var values = (object[])obj;
 
             //1. 화면객체 인스턴스
-            wtlPipeList = values[0] as WtlPipeList ;
+            wtlPipeListView = values[0] as WtlPipeListView;
 
-            cbMNG_CDE = wtlPipeList.cbMNG_CDE;
-            cbHJD_CDE = wtlPipeList.cbHJD_CDE;
-            cbMOP_CDE = wtlPipeList.cbMOP_CDE;
-            cbJHT_CDE = wtlPipeList.cbJHT_CDE;
-            txtFTR_IDN = wtlPipeList.txtFTR_IDN;
-            txtCNT_NUM = wtlPipeList.txtCNT_NUM;
-            txtSHT_NUM = wtlPipeList.txtSHT_NUM;
-            txtPIP_DIP = wtlPipeList.txtPIP_DIP;
+            cbMNG_CDE = wtlPipeListView.cbMNG_CDE;
+            cbHJD_CDE = wtlPipeListView.cbHJD_CDE;
+            cbMOP_CDE = wtlPipeListView.cbMOP_CDE;
+            cbJHT_CDE = wtlPipeListView.cbJHT_CDE;
+            txtFTR_IDN = wtlPipeListView.txtFTR_IDN;
+            txtCNT_NUM = wtlPipeListView.txtCNT_NUM;
+            txtSHT_NUM = wtlPipeListView.txtSHT_NUM;
+            txtPIP_DIP = wtlPipeListView.txtPIP_DIP;
 
-            dtIST_YMD_FROM = wtlPipeList.dtIST_YMD_FROM;
-            dtIST_YMD_TO = wtlPipeList.dtIST_YMD_TO;
+            dtIST_YMD_FROM = wtlPipeListView.dtIST_YMD_FROM;
+            dtIST_YMD_TO = wtlPipeListView.dtIST_YMD_TO;
             dtIST_YMD_FROM.DisplayFormatString = "yyyy-MM-dd";
             dtIST_YMD_TO.DisplayFormatString = "yyyy-MM-dd";
             //dtIST_YMD_FROM.EditValue = DateTime.Today.AddYears(-10);
             //dtIST_YMD_TO.EditValue = DateTime.Today;
 
-            grid = wtlPipeList.grid;
+            grid = wtlPipeListView.grid;
 
 
             //2.화면데이터객체 초기화
@@ -256,7 +256,7 @@ namespace GTI.WFMS.Modules.Pipe.ViewModel
                 //조회버튼으로 조회는 버튼위치(PageIndex) 초기화
                 else
                 {
-                    PageIndex = -1; 
+                    PageIndex = -1;
                 }
                 BizUtil.SelectListPage(conditions, page_idx, delegate (DataTable dt) {
                     // TotalCnt 설정
@@ -284,7 +284,7 @@ namespace GTI.WFMS.Modules.Pipe.ViewModel
             }
         }
 
-        
+
         /// <summary>
         /// 초기화
         /// </summary>
@@ -318,7 +318,8 @@ namespace GTI.WFMS.Modules.Pipe.ViewModel
         /// </summary>
         private void InitDataBinding()
         {
-            try { 
+            try
+            {
                 // cbMNG_CDE
                 BizUtil.SetCmbCode(cbMNG_CDE, "MNG_CDE", true);
 
@@ -381,7 +382,7 @@ namespace GTI.WFMS.Modules.Pipe.ViewModel
 
             string name_space = "GTI.WFMS.Modules.Pipe.Model";
             string class_name = "PipeDtl";
-            
+
             Hashtable param = new Hashtable();
             param.Add("sqlId", "SelectWtlPipeDtl");
             param.Add("FTR_CDE", "SA001");
@@ -390,9 +391,9 @@ namespace GTI.WFMS.Modules.Pipe.ViewModel
             DataRow dr = dt.Rows[0];
 
             String sb = "";
-            sb += "name_space " + name_space + "\r\n";
+            sb += "namespace " + name_space + "\r\n";
             sb += "{ " + "\r\n";
-            sb += " class " + class_name + ":INotifyPropertyChanged" + "\r\n";
+            sb += " public class " + class_name + ": CmmDtl, INotifyPropertyChanged" + "\r\n";
             sb += " { " + "\r\n";
             sb += "     /// <summary>" + "\r\n";
             sb += "     /// 인터페이스 구현부분" + "\r\n";
@@ -402,7 +403,7 @@ namespace GTI.WFMS.Modules.Pipe.ViewModel
             sb += "         { " + "\r\n";
             sb += "             if (PropertyChanged != null)" + "\r\n";
             sb += "             { " + "\r\n";
-            sb += "                 PropertyChanged(this, new PropertyChangedEventArgs(propertyName));" + "\r\n";           
+            sb += "                 PropertyChanged(this, new PropertyChangedEventArgs(propertyName));" + "\r\n";
             sb += "             } " + "\r\n";
             sb += "         } " + "\r\n";
 
@@ -419,22 +420,29 @@ namespace GTI.WFMS.Modules.Pipe.ViewModel
 
                 //type 결정
                 string type_name = "string";
-                switch (dr[col].GetType().Name.ToLower())
+                if (col.ColumnName.Contains("_AMT"))
                 {
-                    case "string":
-                        type_name = "string";
-                        break;
-                    case "int":
-                        type_name = "int";
-                        break;
-                    case "decimal":
-                        type_name = "int";
-                        break;
-                    case "double":
-                        type_name = "double";
-                        break;
-                    default:
-                        break;
+                    type_name = "decimal";
+                }
+                else
+                {
+                    switch (dr[col].GetType().Name.ToLower())
+                    {
+                        case "string":
+                            type_name = "string";
+                            break;
+                        case "int":
+                            type_name = "int";
+                            break;
+                        case "decimal":
+                            type_name = "decimal";
+                            break;
+                        case "double":
+                            type_name = "double";
+                            break;
+                        default:
+                            break;
+                    }
                 }
 
 

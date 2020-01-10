@@ -1,4 +1,5 @@
 ﻿using Esri.ArcGISRuntime.Mapping;
+using GTIFramework.Common.Utils.ViewEffect;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -24,11 +25,13 @@ namespace GTI.WFMS.GIS.Module
     {
         public PopFct()
         {
+
+
             InitializeComponent();
 
 
-            
 
+            //마우스드래그이벤트 위한 처리
             var thumb = new Thumb
             {
                 Width = 0,
@@ -46,6 +49,7 @@ namespace GTI.WFMS.GIS.Module
                 HorizontalOffset += e.HorizontalChange;
                 VerticalOffset += e.VerticalChange;
             };
+
 
         }
 

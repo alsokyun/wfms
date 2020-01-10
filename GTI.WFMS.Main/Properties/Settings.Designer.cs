@@ -46,5 +46,17 @@ namespace GTI.WFMS.Main.Properties {
                 this["bSaveID"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("GTINavyTheme")]
+        public string strThemeName {
+            get {
+                return ((string)(this["strThemeName"]));
+            }
+            set {
+                this["strThemeName"] = value;
+            }
+        }
     }
 }

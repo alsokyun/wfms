@@ -1,0 +1,158 @@
+﻿<Window x:Class="GTI.WFMS.Modules.Pop.View.FileMngView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             
+            xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
+            xmlns:cv="clr-namespace:GTI.WFMS.Models.FileUtils;assembly=GTI.WFMS.Models"
+            xmlns:vd="clr-namespace:GTI.WFMS.Modules.Pop.ViewModel"      
+            xmlns:cm="clr-namespace:GTIFramework.Common.Utils.Converters;assembly=GTIFramework"
+       
+            mc:Ignorable="d" 
+            d:DesignHeight="200" d:DesignWidth="450"
+        
+            xmlns:dxg="http://schemas.devexpress.com/winfx/2008/xaml/grid"
+            xmlns:dxe="http://schemas.devexpress.com/winfx/2008/xaml/editors"
+            xmlns:dxmvvm="http://schemas.devexpress.com/winfx/2008/xaml/mvvm"
+       
+            DataContext="{dxmvvm:ViewModelSource Type={x:Type vd:FileMngViewModel}}"
+       
+       Width="550" Height="300"
+       >
+    <Window.Resources>
+        <ResourceDictionary>
+            <cm:MultiValueConverter x:Key="multiValueConverter"/>
+        </ResourceDictionary>
+    </Window.Resources>
+
+
+    <Grid Background="{DynamicResource PopCOLOR2Brush}">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="30"/>
+            <RowDefinition Height="40"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+
+        <Label Grid.Row="0" Content="첨부파일" FontSize="17" FontWeight="Bold" Foreground="White" 
+               HorizontalAlignment="Left" VerticalAlignment="Center" Padding="10 0 0 0" />
+
+        <StackPanel Grid.Row="1" Orientation="Horizontal" HorizontalAlignment="Right">
+            <!--파일키-->
+            <TextBlock x:Name="txtFIL_SEQ" Text="{Binding FIL_SEQ, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Width="30" Visibility="Collapsed" />
+
+            <Button Content="파일추가" Command="{Binding FindFileCmd}"></Button>
+            <Button Content="저장" Command="{Binding SaveCmd}"></Button>
+            <Button Content="닫기" x:Name="btnClose" Click="BtnClose_Click"></Button>
+        </StackPanel>
+
+        <Grid Grid.Row="2" x:Name="gridContent" >
+
+            <dxg:GridControl AutoGenerateColumns="AddNew"
+                        EnableSmartColumnsGeneration="False"
+                        ItemsSource="{Binding Items}"
+                        SelectionMode="Cell">
+
+                <dxg:GridControl.View>
+                    <dxg:TableView x:Name="gv"
+                                AllowDragDrop="True"
+                                GiveRecordDragFeedback="OnGiveRecordDragFeedback"
+                                AllowPerPixelScrolling="True"
+                                ShowTotalSummary="True" ShowDragDropHint="False" ShowBandsInCustomizationForm="False" ShowGroupPanel="False">
+                        <dxmvvm:Interaction.Behaviors>
+                            <dxmvvm:EventToCommand
+                        Command="{Binding DragRecordOverCommand}"
+                        EventArgsConverter="{cv:DragRecordOverEventArgsConverter}"
+                        EventName="DragRecordOver"
+                        PassEventArgsToCommand="True" />
+                            <dxmvvm:EventToCommand
+                        Command="{Binding DropRecordCommand}"
+                        EventArgsConverter="{cv:DropRecordEventArgsConverter}"
+                        EventName="DropRecord"
+                        PassEventArgsToCommand="True" />
+                            <dxmvvm:EventToCommand
+                        Command="{Binding StartRecordDragCommand}"
+                        EventArgsConverter="{cv:StartRecordDragEventArgsConverter}"
+                        EventName="StartRecordDrag"
+                        PassEventArgsToCommand="True" />
+                            <dxmvvm:EventToCommand
+                        Command="{Binding GiveRecordDragFeedbackCommand}"
+                        EventArgsConverter="{cv:GiveRecordDragFeedbackEventArgsConverter}"
+                        EventName="GiveRecordDragFeedback"
+                        PassEventArgsToCommand="True" />
+                            <dxmvvm:EventToCommand
+                        Command="{Binding CompleteRecordDragDropCommand}"
+                        EventArgsConverter="{cv:CompleteRecordDragDropEventArgsConverter}"
+                        EventName="CompleteRecordDragDrop"
+                        PassEventArgsToCommand="True" />
+                        </dxmvvm:Interaction.Behaviors>
+
+                    </dxg:TableView>
+                </dxg:GridControl.View>
+
+
+                <dxg:GridColumn Header="파일명" Width="20*" FieldName="Name" HorizontalHeaderContentAlignment="Center">
+                    <dxg:GridColumn.EditSettings>
+                        <dxe:TextEditSettings HorizontalContentAlignment="Center"/>
+                    </dxg:GridColumn.EditSettings>
+                </dxg:GridColumn>
+                <dxg:GridColumn Header="사이즈" Width="5*" FieldName="Length" HorizontalHeaderContentAlignment="Center">
+                    <dxg:GridColumn.EditSettings>
+                        <dxe:TextEditSettings HorizontalContentAlignment="Right"/>
+                    </dxg:GridColumn.EditSettings>
+                </dxg:GridColumn>
+                <dxg:GridColumn Header="확장자" Width="5*" FieldName="Extension" HorizontalHeaderContentAlignment="Center">
+                    <dxg:GridColumn.EditSettings>
+                        <dxe:TextEditSettings HorizontalContentAlignment="Center"/>
+                    </dxg:GridColumn.EditSettings>
+                </dxg:GridColumn>
+                <dxg:GridColumn Header="다운로드" Width="5*" FieldName="" HorizontalHeaderContentAlignment="Center">
+                    <dxg:GridColumn.CellTemplate>
+                        <DataTemplate>
+                            <Button Content="DownLoad" Command="{Binding DownloadCmd}" CommandParameter="{Binding RowData.Row.FullName}" />
+                        </DataTemplate>
+                    </dxg:GridColumn.CellTemplate>
+                </dxg:GridColumn>
+                <dxg:GridColumn Header="삭제" Width="3*" FieldName="" HorizontalHeaderContentAlignment="Center">
+                    <dxg:GridColumn.CellTemplate>
+                        <DataTemplate>
+                            <Button Content="X" Click="Button_Click"/>
+                        </DataTemplate>
+                    </dxg:GridColumn.CellTemplate>
+                </dxg:GridColumn>
+                <dxg:GridColumn Header="" Width="1" FieldName="Directory" HorizontalHeaderContentAlignment="Center" Visible="False"/>
+                <dxg:GridColumn Header="" Width="1" FieldName="DirectoryName" HorizontalHeaderContentAlignment="Center" Visible="False"/>
+                <dxg:GridColumn Header="" Width="1" FieldName="IsReadOnly" HorizontalHeaderContentAlignment="Center" Visible="False"/>
+                <dxg:GridColumn Header="" Width="1" FieldName="Exists" HorizontalHeaderContentAlignment="Center" Visible="False"/>
+                <dxg:GridColumn Header="" Width="1" FieldName="FullName" HorizontalHeaderContentAlignment="Center" Visible="False"/>
+                <dxg:GridColumn Header="" Width="1" FieldName="Exists" HorizontalHeaderContentAlignment="Center" Visible="False"/>
+                <dxg:GridColumn Header="" Width="1" FieldName="CreationTime" HorizontalHeaderContentAlignment="Center" Visible="False"/>
+                <dxg:GridColumn Header="" Width="1" FieldName="CreationTimeUtc" HorizontalHeaderContentAlignment="Center" Visible="False"/>
+                <dxg:GridColumn Header="" Width="1" FieldName="LastAccessTime" HorizontalHeaderContentAlignment="Center" Visible="False"/>
+                <dxg:GridColumn Header="" Width="1" FieldName="LastAccessTimeUtc" HorizontalHeaderContentAlignment="Center" Visible="False"/>
+                <dxg:GridColumn Header="" Width="1" FieldName="LastWriteTime" HorizontalHeaderContentAlignment="Center" Visible="False"/>
+                <dxg:GridColumn Header="" Width="1" FieldName="LastWriteTimeUtc" HorizontalHeaderContentAlignment="Center" Visible="False"/>
+                <dxg:GridColumn Header="" Width="1" FieldName="Attributes" HorizontalHeaderContentAlignment="Center" Visible="False"/>
+
+            </dxg:GridControl>
+        </Grid>
+
+    </Grid>
+
+
+    <!--뷰와 연결된 뷰모델로 Loaded 이벤트전파-->
+    <i:Interaction.Triggers>
+        <i:EventTrigger EventName="Loaded">
+            <i:InvokeCommandAction Command="{Binding LoadedCommand}">
+                <i:InvokeCommandAction.CommandParameter>
+                    <MultiBinding Converter="{StaticResource multiValueConverter}">
+                        <Binding ElementName="gv"/>
+                    </MultiBinding>
+                </i:InvokeCommandAction.CommandParameter>
+            </i:InvokeCommandAction>
+        </i:EventTrigger>
+    </i:Interaction.Triggers>
+
+
+
+</Window>
