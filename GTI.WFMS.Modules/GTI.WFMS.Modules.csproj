@@ -8,7 +8,7 @@
     <OutputType>Library</OutputType>
     <RootNamespace>GTI.WFMS.Modules</RootNamespace>
     <AssemblyName>GTI.WFMS.Modules</AssemblyName>
-    <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <AutoGenerateBindingRedirects>false</AutoGenerateBindingRedirects>
     <Deterministic>true</Deterministic>
@@ -149,7 +149,19 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Pipe\View\ValvFacAddView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Pipe\View\ValvFacListView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
     <Page Include="Pipe\View\WtlPipeAddView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Pipe\View\ValvFacDtlView.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
@@ -158,8 +170,8 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Pipe\View\WtlPipeListView.xaml">
-      <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
     </Page>
   </ItemGroup>
   <ItemGroup>
@@ -220,11 +232,23 @@
     <Compile Include="Main\PopMain.xaml.cs">
       <DependentUpon>PopMain.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Pipe\ViewModel\ValvFacAddViewModel.cs" />
+    <Compile Include="Pipe\ViewModel\ValvFacListViewModel.cs" />
     <Compile Include="Pipe\ViewModel\WtlPipeAddViewModel.cs" />
+    <Compile Include="Pipe\ViewModel\ValvFacDtlViewModel.cs" />
     <Compile Include="Pipe\ViewModel\WtlPipeDtlViewModel.cs" />
     <Compile Include="Pipe\ViewModel\WtlPipeListViewModel.cs" />
+    <Compile Include="Pipe\View\ValvFacAddView.xaml.cs">
+      <DependentUpon>ValvFacAddView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Pipe\View\ValvFacListView.xaml.cs">
+      <DependentUpon>ValvFacListView.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Pipe\View\WtlPipeAddView.xaml.cs">
       <DependentUpon>WtlPipeAddView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Pipe\View\ValvFacDtlView.xaml.cs">
+      <DependentUpon>ValvFacDtlView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Pipe\View\WtlPipeDtlView.xaml.cs">
       <DependentUpon>WtlPipeDtlView.xaml</DependentUpon>

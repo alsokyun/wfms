@@ -20,7 +20,15 @@ namespace GTI.WFMS.GIS
     {
         public MapMainView()
         {
-            InitializeComponent();
+            try
+            {
+                InitializeComponent();
+
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.ToString());
+            }
 
 
             //스타일로딩

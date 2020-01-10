@@ -400,5 +400,9 @@ namespace GTI.WFMS.Main.View
 
         #endregion
 
+        private void BtnLogin_Click_1(object sender, RoutedEventArgs e)
+        {
+
+        }
     }
 }

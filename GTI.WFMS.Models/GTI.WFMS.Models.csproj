@@ -8,7 +8,7 @@
     <OutputType>Library</OutputType>
     <RootNamespace>GTI.WFMS.Models</RootNamespace>
     <AssemblyName>GTI.WFMS.Models</AssemblyName>
-    <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <AutoGenerateBindingRedirects>false</AutoGenerateBindingRedirects>
     <Deterministic>true</Deterministic>
@@ -99,6 +99,10 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
       <SubType>Designer</SubType>
     </Content>
+    <Content Include="Pipe\Dao\Maps\ValvFacMap.xml">
+      <SubType>Designer</SubType>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Content Include="Pipe\Dao\Maps\PipeMap.xml">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
       <SubType>Designer</SubType>
@@ -127,6 +131,7 @@
     <Compile Include="Main\Dao\MainDao.cs" />
     <Compile Include="Main\Work\MainWork.cs" />
     <Compile Include="Pipe\Dao\PipeDao.cs" />
+    <Compile Include="Pipe\Model\ValvFacDtl.cs" />
     <Compile Include="Pipe\Model\PipeDtl.cs" />
     <Compile Include="Pipe\Work\PipeWork.cs" />
   </ItemGroup>

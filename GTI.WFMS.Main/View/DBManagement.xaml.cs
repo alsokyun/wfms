@@ -326,5 +326,10 @@ namespace GTI.WFMS.Main.View
             }
         }
         #endregion
+
+        private void BtnConnTest_Click_1(object sender, RoutedEventArgs e)
+        {
+
+        }
     }
 }

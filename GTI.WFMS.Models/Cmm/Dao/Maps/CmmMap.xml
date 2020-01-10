@@ -92,5 +92,12 @@
       WHERE FTR_CDE = #CODE#
     </select>
 
+    <!--시설물코드 List -->
+    <select id ="Select_FTR_LIST" parameterClass="Hashtable" resultClass ="Hashtable">
+      SELECT FTR_CDE, FTR_NAM FROM V_FTR_CDE
+      WHERE 1=1
+      ORDER BY FTR_NAM
+    </select>
+
   </statements>
 </sqlMap>
