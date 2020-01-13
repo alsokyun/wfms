@@ -1,14 +1,12 @@
-﻿<UserControl xmlns:dxe="http://schemas.devexpress.com/winfx/2008/xaml/editors"  xmlns:dxg="http://schemas.devexpress.com/winfx/2008/xaml/grid"  x:Class="GTI.WFMS.Modules.Link.View.ChscResSubListView"
+﻿<UserControl xmlns:dxe="http://schemas.devexpress.com/winfx/2008/xaml/editors"  xmlns:dxg="http://schemas.devexpress.com/winfx/2008/xaml/grid"  
+             x:Class="GTI.WFMS.Modules.Link.View.ChscResSubListView"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-             xmlns:local="clr-namespace:GTI.WFMS.Modules.Link.View"
              mc:Ignorable="d" 
              d:DesignHeight="300" d:DesignWidth="900"
              
-             xmlns:vm="clr-namespace:GTI.WFMS.Modules.Link.ViewModel"
-             xmlns:cm="clr-namespace:GTIFramework.Common.Utils.Converters;assembly=GTIFramework"
              xmlns:cv="clr-namespace:GTI.WFMS.Models.Common;assembly=GTI.WFMS.Models"
              >
 
@@ -41,15 +39,13 @@
                 </dxg:GridColumn.CellTemplate>
             </dxg:GridColumn>
             <dxg:GridColumn Header="지형지물" Width="5*" FieldName="FTR_NAM" HorizontalHeaderContentAlignment="Center">
-                <dxg:GridColumn.CellTemplate>
-                    <DataTemplate>
-                        <TextBox />
-                    </DataTemplate>
-                </dxg:GridColumn.CellTemplate>
+                <dxg:GridColumn.EditSettings>
+                    <dxe:TextEditSettings HorizontalContentAlignment="Center"/>
+                </dxg:GridColumn.EditSettings>
             </dxg:GridColumn>
             <dxg:GridColumn Header="보수일자" Width="3*" FieldName="RPR_YMD" HorizontalHeaderContentAlignment="Center">
                 <dxg:GridColumn.EditSettings>
-                    <dxe:TextEditSettings HorizontalContentAlignment="Center"/>
+                    <dxe:TextEditSettings HorizontalContentAlignment="Center" MaskType="DateTime" Mask="yyyy-MM-dd" />
                 </dxg:GridColumn.EditSettings>
             </dxg:GridColumn>
             <dxg:GridColumn Header="보수구분" Width="4*" FieldName="RPR_CAT_NAM" HorizontalHeaderContentAlignment="Center">

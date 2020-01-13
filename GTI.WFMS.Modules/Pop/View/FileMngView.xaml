@@ -6,8 +6,8 @@
              
             xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
             xmlns:cv="clr-namespace:GTI.WFMS.Models.FileUtils;assembly=GTI.WFMS.Models"
-            xmlns:vd="clr-namespace:GTI.WFMS.Modules.Pop.ViewModel"      
             xmlns:cm="clr-namespace:GTIFramework.Common.Utils.Converters;assembly=GTIFramework"
+            xmlns:vd="clr-namespace:GTI.WFMS.Modules.Pop.ViewModel"
        
             mc:Ignorable="d" 
             d:DesignHeight="200" d:DesignWidth="450"
@@ -15,9 +15,10 @@
             xmlns:dxg="http://schemas.devexpress.com/winfx/2008/xaml/grid"
             xmlns:dxe="http://schemas.devexpress.com/winfx/2008/xaml/editors"
             xmlns:dxmvvm="http://schemas.devexpress.com/winfx/2008/xaml/mvvm"
+            xmlns:dx="http://schemas.devexpress.com/winfx/2008/xaml/core"
        
             DataContext="{dxmvvm:ViewModelSource Type={x:Type vd:FileMngViewModel}}"
-       
+       x:Name="fileMngView"
        Width="550" Height="300"
        >
     <Window.Resources>
@@ -29,20 +30,20 @@
 
     <Grid Background="{DynamicResource PopCOLOR2Brush}">
         <Grid.RowDefinitions>
-            <RowDefinition Height="30"/>
             <RowDefinition Height="40"/>
+            <RowDefinition Height="5"/>
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
 
         <Label Grid.Row="0" Content="첨부파일" FontSize="17" FontWeight="Bold" Foreground="White" 
                HorizontalAlignment="Left" VerticalAlignment="Center" Padding="10 0 0 0" />
 
-        <StackPanel Grid.Row="1" Orientation="Horizontal" HorizontalAlignment="Right">
+        <StackPanel Grid.Row="0" Orientation="Horizontal" HorizontalAlignment="Right">
             <!--파일키-->
             <TextBlock x:Name="txtFIL_SEQ" Text="{Binding FIL_SEQ, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Width="30" Visibility="Collapsed" />
 
-            <Button Content="파일추가" Command="{Binding FindFileCmd}"></Button>
-            <Button Content="저장" Command="{Binding SaveCmd}"></Button>
+            <Button Content="파일선택" Command="{Binding FindFileCmd}"></Button>
+            <Button Content="업로드" Command="{Binding SaveCmd}"></Button>
             <Button Content="닫기" x:Name="btnClose" Click="BtnClose_Click"></Button>
         </StackPanel>
 
@@ -109,33 +110,36 @@
                 <dxg:GridColumn Header="다운로드" Width="5*" FieldName="" HorizontalHeaderContentAlignment="Center">
                     <dxg:GridColumn.CellTemplate>
                         <DataTemplate>
-                            <Button Content="DownLoad" Command="{Binding DownloadCmd}" CommandParameter="{Binding RowData.Row.FullName}" />
+                            <Button Content="DownLoad" Command="{Binding View.DataContext.DownloadCmd}" CommandParameter="{Binding RowData.Row.Name}" />
                         </DataTemplate>
                     </dxg:GridColumn.CellTemplate>
                 </dxg:GridColumn>
                 <dxg:GridColumn Header="삭제" Width="3*" FieldName="" HorizontalHeaderContentAlignment="Center">
                     <dxg:GridColumn.CellTemplate>
                         <DataTemplate>
-                            <Button Content="X" Click="Button_Click"/>
+                            <Button Content="X" Command="{Binding View.DataContext.RemoveCmd}" CommandParameter="{Binding RowData.Row.FullName}"/>
                         </DataTemplate>
                     </dxg:GridColumn.CellTemplate>
                 </dxg:GridColumn>
-                <dxg:GridColumn Header="" Width="1" FieldName="Directory" HorizontalHeaderContentAlignment="Center" Visible="False"/>
-                <dxg:GridColumn Header="" Width="1" FieldName="DirectoryName" HorizontalHeaderContentAlignment="Center" Visible="False"/>
-                <dxg:GridColumn Header="" Width="1" FieldName="IsReadOnly" HorizontalHeaderContentAlignment="Center" Visible="False"/>
-                <dxg:GridColumn Header="" Width="1" FieldName="Exists" HorizontalHeaderContentAlignment="Center" Visible="False"/>
-                <dxg:GridColumn Header="" Width="1" FieldName="FullName" HorizontalHeaderContentAlignment="Center" Visible="False"/>
-                <dxg:GridColumn Header="" Width="1" FieldName="Exists" HorizontalHeaderContentAlignment="Center" Visible="False"/>
-                <dxg:GridColumn Header="" Width="1" FieldName="CreationTime" HorizontalHeaderContentAlignment="Center" Visible="False"/>
-                <dxg:GridColumn Header="" Width="1" FieldName="CreationTimeUtc" HorizontalHeaderContentAlignment="Center" Visible="False"/>
-                <dxg:GridColumn Header="" Width="1" FieldName="LastAccessTime" HorizontalHeaderContentAlignment="Center" Visible="False"/>
-                <dxg:GridColumn Header="" Width="1" FieldName="LastAccessTimeUtc" HorizontalHeaderContentAlignment="Center" Visible="False"/>
-                <dxg:GridColumn Header="" Width="1" FieldName="LastWriteTime" HorizontalHeaderContentAlignment="Center" Visible="False"/>
-                <dxg:GridColumn Header="" Width="1" FieldName="LastWriteTimeUtc" HorizontalHeaderContentAlignment="Center" Visible="False"/>
-                <dxg:GridColumn Header="" Width="1" FieldName="Attributes" HorizontalHeaderContentAlignment="Center" Visible="False"/>
+                <dxg:GridColumn Header="" Width="1" FieldName="SEQ" Visible="False"/>
+                <dxg:GridColumn Header="" Width="1" FieldName="Directory" Visible="False"/>
+                <dxg:GridColumn Header="" Width="1" FieldName="DirectoryName" Visible="False"/>
+                <dxg:GridColumn Header="" Width="1" FieldName="IsReadOnly" Visible="False"/>
+                <dxg:GridColumn Header="" Width="1" FieldName="Exists" Visible="False"/>
+                <dxg:GridColumn Header="" Width="1" FieldName="FullName" Visible="False"/>
+                <dxg:GridColumn Header="" Width="1" FieldName="Exists" Visible="False"/>
+                <dxg:GridColumn Header="" Width="1" FieldName="CreationTime" Visible="False"/>
+                <dxg:GridColumn Header="" Width="1" FieldName="CreationTimeUtc" Visible="False"/>
+                <dxg:GridColumn Header="" Width="1" FieldName="LastAccessTime" Visible="False"/>
+                <dxg:GridColumn Header="" Width="1" FieldName="LastAccessTimeUtc" Visible="False"/>
+                <dxg:GridColumn Header="" Width="1" FieldName="LastWriteTime" Visible="False"/>
+                <dxg:GridColumn Header="" Width="1" FieldName="LastWriteTimeUtc" Visible="False"/>
+                <dxg:GridColumn Header="" Width="1" FieldName="Attributes" Visible="False"/>
 
             </dxg:GridControl>
         </Grid>
+
+        <dx:WaitIndicator x:Name="waitindicator" Grid.Row="2" DeferedVisibility="False" Content="처리중..."/>
 
     </Grid>
 
@@ -146,7 +150,7 @@
             <i:InvokeCommandAction Command="{Binding LoadedCommand}">
                 <i:InvokeCommandAction.CommandParameter>
                     <MultiBinding Converter="{StaticResource multiValueConverter}">
-                        <Binding ElementName="gv"/>
+                        <Binding ElementName="fileMngView"/>
                     </MultiBinding>
                 </i:InvokeCommandAction.CommandParameter>
             </i:InvokeCommandAction>

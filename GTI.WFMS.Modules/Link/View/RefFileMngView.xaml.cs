@@ -28,7 +28,6 @@ namespace GTI.WFMS.Modules.Link.View
 
             this.BIZ_ID = _BIZ_ID;
 
-            fileMngView = new FileMngView(null);
 
             //초기조회
             DataTable dt = new DataTable();
@@ -85,20 +84,23 @@ namespace GTI.WFMS.Modules.Link.View
 
             try
             {
-                //FIL_SEQ 리턴
-                // Code in main window
+                // 파일첨부윈도우
                 FileMngView fileMngView = new FileMngView(null);
                 fileMngView.Owner = Window.GetWindow(this) ;
 
                 
+                //FIL_SEQ 리턴
                 if (fileMngView.ShowDialog() is bool)
                 {
                     string FIL_SEQ = fileMngView.txtFIL_SEQ.Text;
-                    AddFilSeqRow(FIL_SEQ); //첨부파일 한건추가
+
+                    //저장버튼으로 닫힘
+                    if (!FmsUtil.IsNull(FIL_SEQ))
+                    {
+                        AddFilSeqRow(FIL_SEQ); //첨부파일 한건추가
+                    }
+                    //닫기버튼으로 닫힘
                 }
-                
-
-
 
 
                 //팝업열기 & 위치
@@ -121,10 +123,31 @@ namespace GTI.WFMS.Modules.Link.View
             //grid.SetCellValue(gv.FocusedRowHandle, "PAY_YMD", Convert.ToDateTime(DateTime.Today).ToString("yyyy-MM-dd"));
         }
 
+
+        //첨부파일 한건 row 추가
         private void AddFilSeqRow(string fIL_SEQ)
         {
-            throw new NotImplementedException();
+            if (FmsUtil.IsNull(fIL_SEQ))
+            {
+                Messages.ShowInfoMsgBox("파일ID가 없습니다.");
+                return;
+            }
+
+            DataRow drNew = ((DataTable)grid.ItemsSource).NewRow();
+            drNew["FIL_SEQ"] = fIL_SEQ;
+            drNew["TIT_NAM"] = "";
+            drNew["CRE_YMD"] = Convert.ToDateTime(DateTime.Today).ToString("yyyy-MM-dd");
+            drNew["CRE_USR"] = "";
+            drNew["CTNT"] = "";
+
+            ((DataTable)grid.ItemsSource).Rows.Add(drNew);
+            grid.View.FocusedRowHandle = ((DataTable)grid.ItemsSource).Rows.Count - 1; //그리드ROW position
         }
+
+
+
+        // 첨부파일 한건추가
+
 
         //행삭제 - FIL_SEQ 직접삭제처리
         private void BtnDel_Click(object sender, RoutedEventArgs e)
@@ -210,7 +233,9 @@ namespace GTI.WFMS.Modules.Link.View
                     param.Add("FIL_SEQ", Convert.ToInt32(row["FIL_SEQ"]));
 
                     param.Add("TIT_NAM", row["TIT_NAM"].ToString());
-                    param.Add("UPD_YMD", row["UPD_YMD"].ToString());
+                    param.Add("CRE_YMD", row["CRE_YMD"].ToString());
+                    param.Add("CRE_USR", row["CRE_USR"].ToString());
+                    param.Add("CTNT", row["CTNT"].ToString());
                 }
                 else
                 {
@@ -255,13 +280,28 @@ namespace GTI.WFMS.Modules.Link.View
             {
                 FIL_SEQ = ((DataRowView)gc.CurrentItem).Row["FIL_SEQ"].ToString();
 
+                // 파일첨부윈도우
+                FileMngView fileMngView = new FileMngView(FIL_SEQ);
+                fileMngView.Owner = Window.GetWindow(this);
+
+
+                //FIL_SEQ 리턴
+                if (fileMngView.ShowDialog() is bool)
+                {
+                    FIL_SEQ = fileMngView.txtFIL_SEQ.Text;
+
+                    //AddFilSeqRow(FIL_SEQ); //첨부파일 한건추가할 필요없음
+                }
+
+
+
                 //팝업열기 & 위치
                 //fileMngView.IsOpen = false;
 
                 //fileMngView = new FileMngView(FIL_SEQ);
                 //fileMngView.PlacementRectangle = new Rect(100, 100, 550, 400);
                 //fileMngView.IsOpen = true;
-                fileMngView.DataContext = this;
+                //fileMngView.DataContext = this;
             }
             catch (Exception ex)
             {
