@@ -21,7 +21,7 @@ using GTIFramework.Common.Utils.Converters;
 
 namespace GTI.WFMS.Modules.Pipe.ViewModel
 {
-    class FireFacListViewModel : INotifyPropertyChanged
+    class WtsMnhoListViewModel : INotifyPropertyChanged
     {
 
         #region ==========  페이징관련 INotifyPropertyChanged  ==========
@@ -109,16 +109,18 @@ namespace GTI.WFMS.Modules.Pipe.ViewModel
         DataTable dtresult = new DataTable(); //조회결과 데이터
 
 
-        FireFacListView fireFacListView;
+        WtsMnhoListView wtsMnhoListView;
         ComboBoxEdit cbMNG_CDE; DataTable dtMNG_CDE = new DataTable();
         ComboBoxEdit cbHJD_CDE; DataTable dtHJD_CDE = new DataTable();
-        ComboBoxEdit cbMOF_CDE; DataTable dtMOF_CDE = new DataTable();
+        ComboBoxEdit cbSOM_CDE; DataTable dsSOM_CDE = new DataTable();
+        ComboBoxEdit cbMHS_CDE; DataTable dsMHS_CDE = new DataTable();
 
         TextEdit txtFTR_IDN;
         TextEdit txtCNT_NUM;
         TextEdit txtSHT_NUM;
-        TextEdit txtFIR_DIP;
-        TextEdit txtSUP_HIT;
+        TextEdit txtMAN_STD;
+        TextEdit txtANG_DIR;
+
 
         DateEdit dtIST_YMD_FROM;
         DateEdit dtIST_YMD_TO;
@@ -132,6 +134,7 @@ namespace GTI.WFMS.Modules.Pipe.ViewModel
         string strExcelFormPath = AppDomain.CurrentDomain.BaseDirectory + "/Resources/Excel/FmsBaseExcel.xlsx";
         DataTable exceldt;
 
+
         #endregion
 
 
@@ -139,7 +142,7 @@ namespace GTI.WFMS.Modules.Pipe.ViewModel
         /// <summary>
         /// 생성자
         /// </summary>
-        public FireFacListViewModel()
+        public WtsMnhoListViewModel()
         {
 
             LoadedCommand = new DelegateCommand<object>(OnLoaded);
@@ -190,28 +193,29 @@ namespace GTI.WFMS.Modules.Pipe.ViewModel
             var values = (object[])obj;
 
             //1. 화면객체 인스턴스
-            fireFacListView = values[0] as FireFacListView;
+            wtsMnhoListView = values[0] as WtsMnhoListView;
 
-            cbMNG_CDE = fireFacListView.cbMNG_CDE;      //0.관리기관
-            cbHJD_CDE = fireFacListView.cbHJD_CDE;      //2.행정동
-            cbMOF_CDE = fireFacListView.cbMOF_CDE;      //7.형식
+            cbMNG_CDE = wtsMnhoListView.cbMNG_CDE;      //0.관리기관
+            cbHJD_CDE = wtsMnhoListView.cbHJD_CDE;      //2.행정동
+            cbSOM_CDE = wtsMnhoListView.cbSOM_CDE;      //8.맨홀종류
+            cbMHS_CDE = wtsMnhoListView.cbMHS_CDE;      //9.맨홀형태
 
-            txtFTR_IDN = fireFacListView.txtFTR_IDN;    //1.관리번호           
-            txtCNT_NUM = fireFacListView.txtCNT_NUM;    //3.공사번호
-            txtSHT_NUM = fireFacListView.txtSHT_NUM;    //4.도엽번호
-            txtFIR_DIP = fireFacListView.txtFIR_DIP;    //8.소화전구경
-            txtSUP_HIT = fireFacListView.txtSUP_HIT;    //9.급수탑높이(m)
-            
-
-            dtIST_YMD_FROM = fireFacListView.dtIST_YMD_FROM;    //5.설치일자(이상)
-            dtIST_YMD_TO = fireFacListView.dtIST_YMD_TO;        //6.설치일자(이하)
+            txtFTR_IDN = wtsMnhoListView.txtFTR_IDN;    //1.관리번호           
+            txtCNT_NUM = wtsMnhoListView.txtCNT_NUM;    //3.공사번호
+            txtSHT_NUM = wtsMnhoListView.txtSHT_NUM;    //4.도엽번호
+            txtMAN_STD = wtsMnhoListView.txtMAN_STD;    //7.규격
+            txtANG_DIR = wtsMnhoListView.txtANG_DIR;    //10.방향각
+                       
+            dtIST_YMD_FROM = wtsMnhoListView.dtIST_YMD_FROM;    //5.설치일자(이상)
+            dtIST_YMD_TO = wtsMnhoListView.dtIST_YMD_TO;        //6.설치일자(이하)
             dtIST_YMD_FROM.DisplayFormatString = "yyyy-MM-dd";
             dtIST_YMD_TO.DisplayFormatString = "yyyy-MM-dd";
+                      
 
             //dtIST_YMD_FROM.EditValue = DateTime.Today.AddYears(-10);
             //dtIST_YMD_TO.EditValue = DateTime.Today;
 
-            grid = fireFacListView.grid;
+            grid = wtsMnhoListView.grid;
 
 
             //2.화면데이터객체 초기화
@@ -220,8 +224,7 @@ namespace GTI.WFMS.Modules.Pipe.ViewModel
 
             //3.권한처리
             permissionApply();
-
-
+            
             //4.초기조회
             SearchAction(null);
         }
@@ -240,13 +243,14 @@ namespace GTI.WFMS.Modules.Pipe.ViewModel
                 Hashtable conditions = new Hashtable();
                 conditions.Add("MNG_CDE", cbMNG_CDE.EditValue.ToString().Trim());
                 conditions.Add("HJD_CDE", cbHJD_CDE.EditValue.ToString().Trim());
-                conditions.Add("MOF_CDE", cbMOF_CDE.EditValue.ToString().Trim());
+                conditions.Add("SOM_CDE", cbSOM_CDE.EditValue.ToString().Trim());
+                conditions.Add("MHS_CDE", cbMHS_CDE.EditValue.ToString().Trim());
 
                 conditions.Add("FTR_IDN", FmsUtil.Trim(txtFTR_IDN.EditValue));
                 conditions.Add("CNT_NUM", txtCNT_NUM.Text.Trim());
                 conditions.Add("SHT_NUM", txtSHT_NUM.Text.Trim());
-                conditions.Add("FIR_DIP", txtFIR_DIP.Text.Trim());
-                conditions.Add("SUP_HIT", txtSUP_HIT.Text.Trim());
+                conditions.Add("MAN_STD", txtMAN_STD.Text.Trim());
+                conditions.Add("ANG_DIR", txtANG_DIR.Text.Trim());
 
 
                 try
@@ -259,7 +263,7 @@ namespace GTI.WFMS.Modules.Pipe.ViewModel
                 conditions.Add("firstIndex", 0);
                 conditions.Add("lastIndex", 1000);
 
-                conditions.Add("sqlId", "SelectFireFacList");
+                conditions.Add("sqlId", "SelectWtsMnhoList");
     
                 /*
                     조회후 페이징소스 업데이트
@@ -293,7 +297,6 @@ namespace GTI.WFMS.Modules.Pipe.ViewModel
                 });
 
 
-
             }
             catch (Exception ex)
             {
@@ -310,13 +313,14 @@ namespace GTI.WFMS.Modules.Pipe.ViewModel
         {
             cbMNG_CDE.SelectedIndex = 0;
             cbHJD_CDE.SelectedIndex = 0;
-            cbMOF_CDE.SelectedIndex = 0;
+            cbSOM_CDE.SelectedIndex = 0;
+            cbMHS_CDE.SelectedIndex = 0;           
 
             txtFTR_IDN.Text = "";
             txtCNT_NUM.Text = "";
             txtSHT_NUM.Text = "";
-            txtFIR_DIP.Text = "";
-            txtSUP_HIT.Text = "";
+            txtMAN_STD.Text = "";
+            txtANG_DIR.Text = "";
 
             dtIST_YMD_FROM.EditValue = null;
             dtIST_YMD_TO.EditValue = null;
@@ -336,13 +340,14 @@ namespace GTI.WFMS.Modules.Pipe.ViewModel
                 Hashtable conditions = new Hashtable();
                 conditions.Add("MNG_CDE", cbMNG_CDE.EditValue.ToString().Trim());
                 conditions.Add("HJD_CDE", cbHJD_CDE.EditValue.ToString().Trim());
-                conditions.Add("MOF_CDE", cbMOF_CDE.EditValue.ToString().Trim());
+                conditions.Add("SOM_CDE", cbSOM_CDE.EditValue.ToString().Trim());
+                conditions.Add("MHS_CDE", cbMHS_CDE.EditValue.ToString().Trim());
 
                 conditions.Add("FTR_IDN", FmsUtil.Trim(txtFTR_IDN.EditValue));
                 conditions.Add("CNT_NUM", txtCNT_NUM.Text.Trim());
                 conditions.Add("SHT_NUM", txtSHT_NUM.Text.Trim());
-                conditions.Add("FIR_DIP", txtFIR_DIP.Text.Trim());
-                conditions.Add("SUP_HIT", txtSUP_HIT.Text.Trim());
+                conditions.Add("MAN_STD", txtMAN_STD.Text.Trim());
+                conditions.Add("ANG_DIR", txtANG_DIR.Text.Trim());
 
                 try
                 {
@@ -354,7 +359,7 @@ namespace GTI.WFMS.Modules.Pipe.ViewModel
                 conditions.Add("page", 0);
                 conditions.Add("rows", 1000000);
 
-                conditions.Add("sqlId", "SelectFireFacList");
+                conditions.Add("sqlId", "SelectWtsMnhoList");
 
                 exceldt = BizUtil.SelectList(conditions);
 
@@ -363,7 +368,7 @@ namespace GTI.WFMS.Modules.Pipe.ViewModel
                 saveFileDialog.Title = "저장경로를 지정하세요.";
 
                 //초기 파일명 지정
-                saveFileDialog.FileName = DateTime.Now.ToString("yyyyMMdd") + "_" + "소방시설목록.xlsx";
+                saveFileDialog.FileName = DateTime.Now.ToString("yyyyMMdd") + "_" + "상수맨홀목록.xlsx";
 
                 saveFileDialog.OverwritePrompt = true;
                 saveFileDialog.Filter = "Excel|*.xlsx";
@@ -388,36 +393,36 @@ namespace GTI.WFMS.Modules.Pipe.ViewModel
         {
             try
             {
-                fireFacListView.Dispatcher.Invoke(DispatcherPriority.ApplicationIdle,
+                wtsMnhoListView.Dispatcher.Invoke(DispatcherPriority.ApplicationIdle,
                 new Action((delegate ()
                 {
-                    (fireFacListView.FindName("waitindicator") as WaitIndicator).DeferedVisibility = true;
+                    (wtsMnhoListView.FindName("waitindicator") as WaitIndicator).DeferedVisibility = true;
                 })));
                 
 
                 //엑셀 표 데이터
-                DataTable dtExceltTableData = exceldt.DefaultView.ToTable(false, new string[] { "IS_GEOMETRY", "FTR_NAM", "MNG_NAM", "FTR_IDN", "HJD_NAM", "CNT_NUM", "SHT_NUM", "IST_YMD", "MOF_NAM", "FIR_DIP", "SUP_HIT" });
+                DataTable dtExceltTableData = exceldt.DefaultView.ToTable(false, new string[] { "IS_GEOMETRY", "FTR_NAM", "MNG_NAM", "FTR_IDN", "HJD_NAM", "CNT_NUM", "SHT_NUM", "IST_YMD", "MAN_STD", "SOM_NAM", "MHS_NAM", "ANG_DIR" });
 
                 int[] tablePointXY = { 3, 1 };
                 
 
                 //엑셀 유틸 호출
                 //ExcelUtil.ExcelTabulation(strFileName, strExcelFormPath, startPointXY, strSearchCondition, dtExceltTableData);
-                ExcelUtil.ExcelGrid(strExcelFormPath, strFileName, "소방시설목록", dtExceltTableData, tablePointXY, grid, true);
+                ExcelUtil.ExcelGrid(strExcelFormPath, strFileName, "상수맨홀목록", dtExceltTableData, tablePointXY, grid, true);
 
-                fireFacListView.Dispatcher.Invoke(DispatcherPriority.ApplicationIdle,
+                wtsMnhoListView.Dispatcher.Invoke(DispatcherPriority.ApplicationIdle,
                    new Action((delegate ()
                    {
-                       (fireFacListView.FindName("waitindicator") as WaitIndicator).DeferedVisibility = false;
+                       (wtsMnhoListView.FindName("waitindicator") as WaitIndicator).DeferedVisibility = false;
                        Messages.ShowInfoMsgBox("엑셀 다운로드가 완료되었습니다.");
                    })));
             }
             catch (Exception ex)
             {
-                fireFacListView.Dispatcher.Invoke(DispatcherPriority.ApplicationIdle,
+                wtsMnhoListView.Dispatcher.Invoke(DispatcherPriority.ApplicationIdle,
                     new Action((delegate ()
                     {
-                        (fireFacListView.FindName("waitindicator") as WaitIndicator).DeferedVisibility = false;
+                        (wtsMnhoListView.FindName("waitindicator") as WaitIndicator).DeferedVisibility = false;
                         Messages.ShowErrMsgBoxLog(ex);
                     })));
             }
@@ -438,18 +443,19 @@ namespace GTI.WFMS.Modules.Pipe.ViewModel
             {
 
 
-                cbMNG_CDE = fireFacListView.cbMNG_CDE;      //0.관리기관
-                cbHJD_CDE = fireFacListView.cbHJD_CDE;      //2.행정동
-                cbMOF_CDE = fireFacListView.cbMOF_CDE;      //7.형식
+                cbMNG_CDE = wtsMnhoListView.cbMNG_CDE;      //0.관리기관
+                cbHJD_CDE = wtsMnhoListView.cbHJD_CDE;      //2.행정동
+                cbSOM_CDE = wtsMnhoListView.cbSOM_CDE;      //8.맨홀종류
+                cbMHS_CDE = wtsMnhoListView.cbMHS_CDE;      //9.맨홀형태
+                 
+                txtFTR_IDN = wtsMnhoListView.txtFTR_IDN;    //1.관리번호           
+                txtCNT_NUM = wtsMnhoListView.txtCNT_NUM;    //3.공사번호
+                txtSHT_NUM = wtsMnhoListView.txtSHT_NUM;    //4.도엽번호
+                txtMAN_STD = wtsMnhoListView.txtMAN_STD;    //7.규격
+                txtANG_DIR = wtsMnhoListView.txtANG_DIR;    //10.방향각
 
-                txtFTR_IDN = fireFacListView.txtFTR_IDN;    //1.관리번호           
-                txtCNT_NUM = fireFacListView.txtCNT_NUM;    //3.공사번호
-                txtSHT_NUM = fireFacListView.txtSHT_NUM;    //4.도엽번호
-                txtFIR_DIP = fireFacListView.txtFIR_DIP;    //8.소화전구경
-                txtSUP_HIT = fireFacListView.txtSUP_HIT;    //9.급수탑높이(m)
-
-                dtIST_YMD_FROM = fireFacListView.dtIST_YMD_FROM;    //5.설치일자(이상)
-                dtIST_YMD_TO = fireFacListView.dtIST_YMD_TO;        //6.설치일자(이하)
+                dtIST_YMD_FROM = wtsMnhoListView.dtIST_YMD_FROM;    //5.설치일자(이상)
+                dtIST_YMD_TO = wtsMnhoListView.dtIST_YMD_TO;        //6.설치일자(이하)
                 dtIST_YMD_FROM.DisplayFormatString = "yyyy-MM-dd";
                 dtIST_YMD_TO.DisplayFormatString = "yyyy-MM-dd";
 
@@ -459,8 +465,12 @@ namespace GTI.WFMS.Modules.Pipe.ViewModel
                 // cbHJD_CDE    2.행정동
                 BizUtil.SetCombo(cbHJD_CDE, "Select_ADAR_LIST", "HJD_CDE", "HJD_NAM", true);
 
-                // cbMOF_CDE    7.형식
-                BizUtil.SetCmbCode(cbMOF_CDE, "MOF_CDE", true, "250016");
+                // cbSOM_CDE    8.맨홀종류
+                BizUtil.SetCmbCode(cbSOM_CDE, "SOM_CDE", true);
+
+                // cbSOM_CDE    9.맨홀방법
+                BizUtil.SetCmbCode(cbMHS_CDE, "MHS_CDE", true);
+
             }
             catch (Exception ex)
             {
@@ -514,9 +524,9 @@ namespace GTI.WFMS.Modules.Pipe.ViewModel
             string class_name = "ValvFacDtl";
 
             Hashtable param = new Hashtable();
-            param.Add("sqlId", "SelectFireFacDtl");
-            param.Add("FTR_CDE", "SA119");
-            param.Add("FTR_IDN", "666");
+            param.Add("sqlId", "SelectWtsMnhoDtl");
+            param.Add("FTR_CDE", "SA100");
+            param.Add("FTR_IDN", "10");
             DataTable dt = BizUtil.SelectList(param);
             DataRow dr = dt.Rows[0];
 

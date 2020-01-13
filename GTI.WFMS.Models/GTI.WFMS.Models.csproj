@@ -99,6 +99,10 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
       <SubType>Designer</SubType>
     </Content>
+    <Content Include="Pipe\Dao\Maps\WtsMnhoMap.xml">
+      <SubType>Designer</SubType>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Content Include="Pipe\Dao\Maps\FireFacMap.xml">
       <SubType>Designer</SubType>
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
@@ -135,6 +139,7 @@
     <Compile Include="Main\Dao\MainDao.cs" />
     <Compile Include="Main\Work\MainWork.cs" />
     <Compile Include="Pipe\Dao\PipeDao.cs" />
+    <Compile Include="Pipe\Model\WtsMnhoDtl.cs" />
     <Compile Include="Pipe\Model\FireFacDtl.cs" />
     <Compile Include="Pipe\Model\ValvFacDtl.cs" />
     <Compile Include="Pipe\Model\PipeDtl.cs" />

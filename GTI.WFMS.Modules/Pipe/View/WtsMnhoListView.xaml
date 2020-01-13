@@ -1,4 +1,4 @@
-﻿<Page x:Class="GTI.WFMS.Modules.Pipe.View.FireFacListView"
+﻿<Page x:Class="GTI.WFMS.Modules.Pipe.View.WtsMnhoListView"
         xmlns:dxe="http://schemas.devexpress.com/winfx/2008/xaml/editors"  
         xmlns:dxg="http://schemas.devexpress.com/winfx/2008/xaml/grid"  
         xmlns:dx="http://schemas.devexpress.com/winfx/2008/xaml/core"
@@ -15,14 +15,14 @@
         xmlns:vm="clr-namespace:GTI.WFMS.Modules.Pipe.ViewModel"
         xmlns:cm="clr-namespace:GTIFramework.Common.Utils.Converters;assembly=GTIFramework"
         xmlns:common="clr-namespace:GTI.WFMS.Models.Common;assembly=GTI.WFMS.Models"
-        x:Name="fireFacListView"
+        x:Name="wtsMnhoListView"
 
       >
 
     <!--뷰모델연결처리
     -->
     <Page.DataContext>
-        <vm:FireFacListViewModel/>
+        <vm:WtsMnhoListViewModel/>
     </Page.DataContext>
  
 
@@ -53,7 +53,7 @@
 
         <Border Grid.Row="0" Grid.RowSpan="3" Grid.Column="1" Background="{DynamicResource TileCOLOR2Brush}" />
 
-        <Grid Grid.Row="1" Background="{DynamicResource PopupCOLOR3Brush}" Height="400" VerticalAlignment="Top" >
+        <Grid Grid.Row="1" Background="{DynamicResource PopupCOLOR3Brush}" Height="440" VerticalAlignment="Top" >
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="120"/>
                 <ColumnDefinition Width="*"/>
@@ -69,7 +69,7 @@
                 <RowDefinition Height="40" />
                 <RowDefinition Height="40" />
                 <RowDefinition Height="40" />
-
+                <RowDefinition Height="40" />
             </Grid.RowDefinitions>
 
             <!--테이블구분선-->
@@ -93,6 +93,8 @@
             <Border Grid.Row="8" Grid.Column="2" BorderThickness="0,0,0,1" BorderBrush="{DynamicResource PopCOLOR3Brush}" Margin="0,0,0,0"/>
             <Border Grid.Row="9" Grid.Column="0" BorderThickness="0,0,1,1" BorderBrush="{DynamicResource PopCOLOR3Brush}" Margin="0,0,0,0"/>
             <Border Grid.Row="9" Grid.Column="2" BorderThickness="0,0,0,1" BorderBrush="{DynamicResource PopCOLOR3Brush}" Margin="0,0,0,0"/>
+            <Border Grid.Row="10" Grid.Column="0" BorderThickness="0,0,1,1" BorderBrush="{DynamicResource PopCOLOR3Brush}" Margin="0,0,0,0"/>
+            <Border Grid.Row="10" Grid.Column="2" BorderThickness="0,0,0,1" BorderBrush="{DynamicResource PopCOLOR3Brush}" Margin="0,0,0,0"/>
 
             <!--라벨&입력창-->
             <Label Grid.Row="0" Grid.Column="0" Content="관리기관" Style="{DynamicResource ResourceKey=HeadLabel}"/>
@@ -139,26 +141,29 @@
             <Label Grid.Row="6" Grid.Column="0" Content="설치일자[이하]" Style="{DynamicResource ResourceKey=HeadLabel}"/>
             <dxe:DateEdit  Grid.Row="6" Grid.Column="2" Style="{DynamicResource ResourceKey=HeadDateEdit}" x:Name="dtIST_YMD_TO" />
 
-            <Label Grid.Row="7" Grid.Column="0" Content="형식" Style="{DynamicResource ResourceKey=HeadLabel}"/>
-            <dxe:ComboBoxEdit Grid.Row="7" Grid.Column="2" x:Name="cbMOF_CDE" DisplayMember="NM" ValueMember="DTL_CD" Style="{DynamicResource ResourceKey=SrchComboBox}" 
+            <Label Grid.Row="7" Grid.Column="0" Content="규격" Style="{DynamicResource ResourceKey=HeadLabel}"/>
+            <dxe:TextEdit Grid.Row="7" Grid.Column="2" x:Name="txtMAN_STD" Style="{DynamicResource ResourceKey=SrchTextEdit}"  HorizontalAlignment="Center" >
+                <dxe:TextEdit.InputBindings>
+                    <KeyBinding Key="Enter" Command="{Binding SearchCommand}">
+                    </KeyBinding>
+                </dxe:TextEdit.InputBindings>
+            </dxe:TextEdit>
+
+            <Label Grid.Row="8" Grid.Column="0" Content="맨홀종류" Style="{DynamicResource ResourceKey=HeadLabel}"/>
+            <dxe:ComboBoxEdit Grid.Row="8" Grid.Column="2" x:Name="cbSOM_CDE" DisplayMember="NM" ValueMember="DTL_CD" Style="{DynamicResource ResourceKey=SrchComboBox}" 
                                 HorizontalAlignment="Center" />
 
-            <Label Grid.Row="8" Grid.Column="0" Content="소화전구경" Style="{DynamicResource ResourceKey=HeadLabel}"/>
-            <dxe:TextEdit Grid.Row="8" Grid.Column="2" x:Name="txtFIR_DIP" Style="{DynamicResource ResourceKey=SrchTextEdit}"  HorizontalAlignment="Center" >
+            <Label Grid.Row="9" Grid.Column="0" Content="맨홀형태" Style="{DynamicResource ResourceKey=HeadLabel}"/>
+            <dxe:ComboBoxEdit Grid.Row="9" Grid.Column="2" x:Name="cbMHS_CDE" DisplayMember="NM" ValueMember="DTL_CD" Style="{DynamicResource ResourceKey=SrchComboBox}" 
+                                HorizontalAlignment="Center" />
+
+            <Label Grid.Row="10" Grid.Column="0" Content="방향각" Style="{DynamicResource ResourceKey=HeadLabel}"/>
+            <dxe:TextEdit Grid.Row="10" Grid.Column="2" x:Name="txtANG_DIR" Style="{DynamicResource ResourceKey=SrchTextEdit}"  HorizontalAlignment="Center" >
                 <dxe:TextEdit.InputBindings>
                     <KeyBinding Key="Enter" Command="{Binding SearchCommand}">
                     </KeyBinding>
                 </dxe:TextEdit.InputBindings>
             </dxe:TextEdit>
-
-            <Label Grid.Row="9" Grid.Column="0" Content="급수탑높이(m)" Style="{DynamicResource ResourceKey=HeadLabel}"/>
-            <dxe:TextEdit Grid.Row="9" Grid.Column="2" x:Name="txtSUP_HIT" Style="{DynamicResource ResourceKey=SrchTextEdit}"  HorizontalAlignment="Center" >
-                <dxe:TextEdit.InputBindings>
-                    <KeyBinding Key="Enter" Command="{Binding SearchCommand}">
-                    </KeyBinding>
-                </dxe:TextEdit.InputBindings>
-            </dxe:TextEdit>
-
 
         </Grid>
 
@@ -283,21 +288,27 @@
                 </dxg:GridColumn.EditSettings>
             </dxg:GridColumn>
 
-            <dxg:GridColumn Header="형식" Width="3*" FieldName="MOF_NAM" HorizontalHeaderContentAlignment="Center">
+            <dxg:GridColumn Header="규격" Width="2*" FieldName="MAN_STD" HorizontalHeaderContentAlignment="Center">
                 <dxg:GridColumn.EditSettings>
                     <dxe:TextEditSettings HorizontalContentAlignment="Left"/>
                 </dxg:GridColumn.EditSettings>
             </dxg:GridColumn>
 
-            <dxg:GridColumn Header="소화전구경" Width="3*" FieldName="FIR_DIP" HorizontalHeaderContentAlignment="Center">
+            <dxg:GridColumn Header="맨홀종류" Width="3*" FieldName="SOM_NAM" HorizontalHeaderContentAlignment="Center">
                 <dxg:GridColumn.EditSettings>
                     <dxe:TextEditSettings HorizontalContentAlignment="Center"/>
                 </dxg:GridColumn.EditSettings>
             </dxg:GridColumn>
 
-            <dxg:GridColumn Header="급수탑높이(m)" Width="3*" FieldName="SUP_HIT" HorizontalHeaderContentAlignment="Center">
+            <dxg:GridColumn Header="맨홀형태" Width="3*" FieldName="MHS_NAM" HorizontalHeaderContentAlignment="Center">
                 <dxg:GridColumn.EditSettings>
                     <dxe:TextEditSettings HorizontalContentAlignment="Center"/>
+                </dxg:GridColumn.EditSettings>
+            </dxg:GridColumn>
+
+            <dxg:GridColumn Header="방향각" Width="2*" FieldName="ANG_DIR" HorizontalHeaderContentAlignment="Center">
+                <dxg:GridColumn.EditSettings>
+                    <dxe:TextEditSettings HorizontalContentAlignment="Left"/>
                 </dxg:GridColumn.EditSettings>
             </dxg:GridColumn>
 
@@ -332,7 +343,7 @@
             <i:InvokeCommandAction Command="{Binding LoadedCommand}">
                 <i:InvokeCommandAction.CommandParameter>
                     <MultiBinding Converter="{StaticResource multiValueConverter}">
-                        <Binding ElementName="fireFacListView"/>
+                        <Binding ElementName="wtsMnhoListView"/>
                     </MultiBinding>
                 </i:InvokeCommandAction.CommandParameter>
             </i:InvokeCommandAction>
