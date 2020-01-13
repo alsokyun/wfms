@@ -14,7 +14,7 @@ using System.Windows.Controls;
 
 namespace GTI.WFMS.Modules.Pipe.ViewModel
 {
-    public class ValvFacAddViewModel : ValvFacDtl
+    public class FireFacAddViewModel : FireFacDtl
     {
 
 
@@ -31,17 +31,11 @@ namespace GTI.WFMS.Modules.Pipe.ViewModel
 
 
         #region ==========  Member 정의 ==========
-        ValvFacAddView valvFacAddView;
+        FireFacAddView fireFacAddView;
         ComboBoxEdit cbFTR_CDE; DataTable dtFTR_CDE = new DataTable();		//지형지물
         ComboBoxEdit cbHJD_CDE; DataTable dtHJD_CDE = new DataTable();		//행정동
         ComboBoxEdit cbMNG_CDE; DataTable dtMNG_CDE = new DataTable();		//관리기관
-        ComboBoxEdit cbVAL_MOF; DataTable dtVAL_MOF = new DataTable();		//형식
-        ComboBoxEdit cbVAL_MOP; DataTable dtVAL_MOP = new DataTable();		//관재질
-        ComboBoxEdit cbSAE_CDE; DataTable dtSAE_CDE = new DataTable();		//제수변회전방향
-        ComboBoxEdit cbMTH_CDE; DataTable dtMTH_CDE = new DataTable();		//제수변구동방법
-        ComboBoxEdit cbVAL_FOR; DataTable dtVAL_FOR = new DataTable();		//시설물형태
-        ComboBoxEdit cbCST_CDE; DataTable dtCST_CDE = new DataTable();		//이상상태
-        ComboBoxEdit cbOFF_CDE; DataTable dtOFF_CDE = new DataTable();		//개폐여부
+        ComboBoxEdit cbMOF_CDE; DataTable dtMOF_CDE = new DataTable();		//형식
 
         Button btnBack;
         Button btnSave;
@@ -52,7 +46,7 @@ namespace GTI.WFMS.Modules.Pipe.ViewModel
 
 
         /// 생성자
-        public ValvFacAddViewModel()
+        public FireFacAddViewModel()
         {
             this.LoadedCommand = new DelegateCommand<object>(OnLoaded);
             this.SaveCommand = new DelegateCommand<object>(OnSave);
@@ -78,20 +72,14 @@ namespace GTI.WFMS.Modules.Pipe.ViewModel
                 if (obj == null) return;
                 var values = (object[])obj;
 
-                valvFacAddView = values[0] as ValvFacAddView;
-                cbFTR_CDE = valvFacAddView.cbFTR_CDE;   //지형지물
-                cbHJD_CDE = valvFacAddView.cbHJD_CDE;   //행정동
-                cbMNG_CDE = valvFacAddView.cbMNG_CDE;   //관리기관
-                cbVAL_MOF = valvFacAddView.cbVAL_MOF;   //형식
-                cbVAL_MOP = valvFacAddView.cbVAL_MOP;   //관재질
-                cbSAE_CDE = valvFacAddView.cbSAE_CDE;   //제수변회전방향
-                cbMTH_CDE = valvFacAddView.cbMTH_CDE;   //제수변구동방법
-                cbVAL_FOR = valvFacAddView.cbVAL_FOR;   //시설물형태
-                cbCST_CDE = valvFacAddView.cbCST_CDE;   //이상상태
-                cbOFF_CDE = valvFacAddView.cbOFF_CDE;   //개폐여부
+                fireFacAddView = values[0] as FireFacAddView;
+                cbFTR_CDE = fireFacAddView.cbFTR_CDE;   //지형지물
+                cbHJD_CDE = fireFacAddView.cbHJD_CDE;   //행정동
+                cbMNG_CDE = fireFacAddView.cbMNG_CDE;   //관리기관
+                cbMOF_CDE = fireFacAddView.cbMOF_CDE;   //형식
 
-                btnBack = valvFacAddView.btnBack;
-                btnSave = valvFacAddView.btnSave;
+                btnBack = fireFacAddView.btnBack;
+                btnSave = fireFacAddView.btnSave;
 
                 //2.화면데이터객체 초기화
                 InitDataBinding();
@@ -102,15 +90,15 @@ namespace GTI.WFMS.Modules.Pipe.ViewModel
 
                 // 4.초기조회 - 신규관리번호 채번
                 Hashtable param = new Hashtable();
-                param.Add("sqlId", "SelectValvFacFTR_IDN");
+                param.Add("sqlId", "SelectFireFacFTR_IDN");
 
-                ValvFacDtl result = new ValvFacDtl();
-                result = BizUtil.SelectObject(param) as ValvFacDtl;
+                FireFacDtl result = new FireFacDtl();
+                result = BizUtil.SelectObject(param) as FireFacDtl;
 
 
                 //채번결과 매칭
                 this.FTR_IDN = result.FTR_IDN;
-                this.FTR_CDE = "SA200";
+                this.FTR_CDE = "SA119";
 
                 this.IST_YMD = Convert.ToDateTime(DateTime.Today).ToString("yyyy-MM-dd");
             }
@@ -131,14 +119,14 @@ namespace GTI.WFMS.Modules.Pipe.ViewModel
         {
 
             // 필수체크 (Tag에 필수체크 표시한 EditBox, ComboBox 대상으로 수행)
-            if (!BizUtil.ValidReq(valvFacAddView)) return;
+            if (!BizUtil.ValidReq(fireFacAddView)) return;
 
 
             if (Messages.ShowYesNoMsgBox("저장하시겠습니까?") != MessageBoxResult.Yes) return;
 
             try
             {
-                BizUtil.Update2(this, "insertValvFacDtl");
+                BizUtil.Update2(this, "insertFireFacDtl");
             }
             catch (Exception e)
             {
@@ -175,7 +163,30 @@ namespace GTI.WFMS.Modules.Pipe.ViewModel
             try
             {
                 // cbFTR_CDE 지형지물
-                BizUtil.SetCombo(cbFTR_CDE, "Select_FTR_LIST", "FTR_CDE", "FTR_NAM", false);
+                //BizUtil.SetCombo(cbFTR_CDE, "Select_FTR_LIST", "FTR_CDE", "FTR_NAM", false);
+
+                DataTable dt = new DataTable();
+
+                dt.Columns.Add("FTR_CDE", typeof(String));
+                dt.Columns.Add("FTR_NAM", typeof(String));
+
+                DataRow dr = dt.NewRow();
+                dr["FTR_CDE"] = "SA118";
+                dr["FTR_NAM"] = "급수전";
+                dt.Rows.InsertAt(dr, 0);
+
+                dr = dt.NewRow();
+                dr["FTR_CDE"] = "SA119";
+                dr["FTR_NAM"] = "소화전";
+                dt.Rows.InsertAt(dr, 0);
+
+
+                // combo객체 Cd/Nm 필드매핑
+                cbFTR_CDE.DisplayMember = "FTR_NAM";
+                cbFTR_CDE.ValueMember = "FTR_CDE";
+
+                cbFTR_CDE.ItemsSource = dt;
+                cbFTR_CDE.SelectedIndex = 0;
 
                 // cbHJD_CDE 행정동
                 BizUtil.SetCombo(cbHJD_CDE, "Select_ADAR_LIST", "HJD_CDE", "HJD_NAM", true);
@@ -184,26 +195,8 @@ namespace GTI.WFMS.Modules.Pipe.ViewModel
                 BizUtil.SetCmbCode(cbMNG_CDE, "MNG_CDE", true);
 
 
-                // cbVAL_MOF 형식
-                BizUtil.SetCmbCode(cbVAL_MOF, "MOF_CDE", true, "250016");
-
-                // cbVAL_MOP 관재질
-                BizUtil.SetCmbCode(cbVAL_MOP, "MOP_CDE", true, "250015");
-
-                // cbSAE_CDE    제수변회전방향
-                BizUtil.SetCmbCode(cbSAE_CDE, "SAE_CDE", true);
-
-                // cbMTH_CDE    제수변구동방법
-                BizUtil.SetCmbCode(cbMTH_CDE, "MTH_CDE", true);
-
-                // cbVAL_FOR    시설물형태(=구조물형태)
-                BizUtil.SetCmbCode(cbVAL_FOR, "FOR_CDE", true);
-
-                // cbCST_CDE    이상상태
-                BizUtil.SetCmbCode(cbCST_CDE, "CST_CDE", true);
-
-                // cbOFF_CDE    개폐여부
-                BizUtil.SetCmbCode(cbOFF_CDE, "OFF_CDE", true);
+                // cbMOF_CDE 형식
+                BizUtil.SetCmbCode(cbMOF_CDE, "MOF_CDE", true, "250019");
 
             }
             catch (Exception ex)

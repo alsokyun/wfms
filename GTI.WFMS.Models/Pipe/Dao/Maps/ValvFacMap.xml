@@ -2,68 +2,68 @@
 <sqlMap namespace="Main" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://ibatis.apache.org/mapping">
   <statements>
 
-    <!--상수관로-->
+    <!--변류시설-->
     <select id ="SelectValvFacList" parameterClass="Hashtable" resultClass ="Hashtable">
       /* ValvFacMap.SelectValvFacList 변류시설 목록*/
 
       WITH C AS (
       SELECT COUNT(1) AS ROWCNT
-        FROM INFOFMS.WTL_VALV_PS A
-       WHERE 1=1
-        <!-- 조건1. 관리기관 -->
-        <isNotEmpty prepend="AND" property="MNG_CDE">
-          A.MNG_CDE = #MNG_CDE#
-        </isNotEmpty>
+      FROM INFOFMS.WTL_VALV_PS A
+      WHERE 1=1
+      <!-- 조건1. 관리기관 -->
+      <isNotEmpty prepend="AND" property="MNG_CDE">
+        A.MNG_CDE = #MNG_CDE#
+      </isNotEmpty>
 
-        <!-- 조건2. 관리번호 -->
-        <isNotEmpty prepend="AND" property="searchCondition2">
-          A.FTR_IDN = #FTR_IDN#
-        </isNotEmpty>
+      <!-- 조건2. 관리번호 -->
+      <isNotEmpty prepend="AND" property="searchCondition2">
+        A.FTR_IDN = #FTR_IDN#
+      </isNotEmpty>
 
-        <!-- 조건3. 행정읍면동 -->
-        <isNotEmpty prepend="AND" property="HJD_CDE">
-          A.HJD_CDE = #HJD_CDE#
-        </isNotEmpty>
+      <!-- 조건3. 행정읍면동 -->
+      <isNotEmpty prepend="AND" property="HJD_CDE">
+        A.HJD_CDE = #HJD_CDE#
+      </isNotEmpty>
 
-        <!-- 조건4. 공사번호 -->
-        <isNotEmpty prepend="AND" property="CNT_NUM">
-          A.CNT_NUM = #CNT_NUM#
-        </isNotEmpty>
+      <!-- 조건4. 공사번호 -->
+      <isNotEmpty prepend="AND" property="CNT_NUM">
+        A.CNT_NUM = #CNT_NUM#
+      </isNotEmpty>
 
-        <!-- 조건5. 도엽번호 -->
-        <isNotEmpty prepend="AND" property="SHT_NUM">
-          A.SHT_NUM = #SHT_NUM#
-        </isNotEmpty>
+      <!-- 조건5. 도엽번호 -->
+      <isNotEmpty prepend="AND" property="SHT_NUM">
+        A.SHT_NUM = #SHT_NUM#
+      </isNotEmpty>
 
-        <!-- 조건6. 설치일자[이상] -->
-        <isNotEmpty prepend="AND" property="IST_YMD_FROM">
-          A.IST_YMD <![CDATA[>=]]> decode(length(#IST_YMD_FROM#), 10, to_char(to_date(#IST_YMD_FROM#, 'yyyy-MM-dd'), 'yyyyMMdd'), '')
-        </isNotEmpty>
+      <!-- 조건6. 설치일자[이상] -->
+      <isNotEmpty prepend="AND" property="IST_YMD_FROM">
+        A.IST_YMD <![CDATA[>=]]> decode(length(#IST_YMD_FROM#), 10, to_char(to_date(#IST_YMD_FROM#, 'yyyy-MM-dd'), 'yyyyMMdd'), '')
+      </isNotEmpty>
 
-        <!-- 조건7. 설치일자[이하] -->
-        <isNotEmpty prepend="AND" property="IST_YMD_TO">
-          A.IST_YMD <![CDATA[<=]]> decode(length(#IST_YMD_TO#), 10, to_char(to_date(#IST_YMD_TO#, 'yyyy-MM-dd'), 'yyyyMMdd'), '')
-        </isNotEmpty>
+      <!-- 조건7. 설치일자[이하] -->
+      <isNotEmpty prepend="AND" property="IST_YMD_TO">
+        A.IST_YMD <![CDATA[<=]]> decode(length(#IST_YMD_TO#), 10, to_char(to_date(#IST_YMD_TO#, 'yyyy-MM-dd'), 'yyyyMMdd'), '')
+      </isNotEmpty>
 
-        <!-- 조건8. 형식 -->
-        <isNotEmpty prepend="AND" property="VAL_MOF">
-          A.VAL_MOF = #VAL_MOF#
-        </isNotEmpty>
+      <!-- 조건8. 형식 -->
+      <isNotEmpty prepend="AND" property="VAL_MOF">
+        A.VAL_MOF = #VAL_MOF#
+      </isNotEmpty>
 
-        <!-- 조건9. 관재질 -->
-        <isNotEmpty prepend="AND" property="VAL_MOP">
-          A.VAL_MOP = #VAL_MOP#
-        </isNotEmpty>
+      <!-- 조건9. 관재질 -->
+      <isNotEmpty prepend="AND" property="VAL_MOP">
+        A.VAL_MOP = #VAL_MOP#
+      </isNotEmpty>
 
-        <!-- 조건10. 구경 -->
-        <isNotEmpty prepend="AND" property="VAL_DIP">
-          A.VAL_DIP = #VAL_DIP#
-        </isNotEmpty>
+      <!-- 조건10. 구경 -->
+      <isNotEmpty prepend="AND" property="VAL_DIP">
+        A.VAL_DIP = #VAL_DIP#
+      </isNotEmpty>
 
-        <!-- 조건11. 시설물형태 -->
-        <isNotEmpty prepend="AND" property="VAL_FOR">
-          A.VAL_FOR = #VAL_FOR#
-        </isNotEmpty>
+      <!-- 조건11. 시설물형태 -->
+      <isNotEmpty prepend="AND" property="VAL_FOR">
+        A.VAL_FOR = #VAL_FOR#
+      </isNotEmpty>
       )
 
       SELECT C.ROWCNT, X.*  FROM (
@@ -103,65 +103,65 @@
       FROM INFOFMS.WTL_VALV_PS A
       WHERE 1=1
       <!-- 조건1. 관리기관 -->
-        <isNotEmpty prepend="AND" property="MNG_CDE">
-          A.MNG_CDE = #MNG_CDE#
-        </isNotEmpty>
+      <isNotEmpty prepend="AND" property="MNG_CDE">
+        A.MNG_CDE = #MNG_CDE#
+      </isNotEmpty>
 
-        <!-- 조건2. 관리번호 -->
-        <isNotEmpty prepend="AND" property="searchCondition2">
-          A.FTR_IDN = #FTR_IDN#
-        </isNotEmpty>
+      <!-- 조건2. 관리번호 -->
+      <isNotEmpty prepend="AND" property="searchCondition2">
+        A.FTR_IDN = #FTR_IDN#
+      </isNotEmpty>
 
-        <!-- 조건3. 행정읍면동 -->
-        <isNotEmpty prepend="AND" property="HJD_CDE">
-          A.HJD_CDE = #HJD_CDE#
-        </isNotEmpty>
+      <!-- 조건3. 행정읍면동 -->
+      <isNotEmpty prepend="AND" property="HJD_CDE">
+        A.HJD_CDE = #HJD_CDE#
+      </isNotEmpty>
 
-        <!-- 조건4. 공사번호 -->
-        <isNotEmpty prepend="AND" property="CNT_NUM">
-          A.CNT_NUM = #CNT_NUM#
-        </isNotEmpty>
+      <!-- 조건4. 공사번호 -->
+      <isNotEmpty prepend="AND" property="CNT_NUM">
+        A.CNT_NUM = #CNT_NUM#
+      </isNotEmpty>
 
-        <!-- 조건5. 도엽번호 -->
-        <isNotEmpty prepend="AND" property="SHT_NUM">
-          A.SHT_NUM = #SHT_NUM#
-        </isNotEmpty>
+      <!-- 조건5. 도엽번호 -->
+      <isNotEmpty prepend="AND" property="SHT_NUM">
+        A.SHT_NUM = #SHT_NUM#
+      </isNotEmpty>
 
-        <!-- 조건6. 설치일자[이상] -->
-        <isNotEmpty prepend="AND" property="IST_YMD_FROM">
-          A.IST_YMD <![CDATA[>=]]> decode(length(#IST_YMD_FROM#), 10, to_char(to_date(#IST_YMD_FROM#, 'yyyy-MM-dd'), 'yyyyMMdd'), '')
-        </isNotEmpty>
+      <!-- 조건6. 설치일자[이상] -->
+      <isNotEmpty prepend="AND" property="IST_YMD_FROM">
+        A.IST_YMD <![CDATA[>=]]> decode(length(#IST_YMD_FROM#), 10, to_char(to_date(#IST_YMD_FROM#, 'yyyy-MM-dd'), 'yyyyMMdd'), '')
+      </isNotEmpty>
 
-        <!-- 조건7. 설치일자[이하] -->
-        <isNotEmpty prepend="AND" property="IST_YMD_TO">
-          A.IST_YMD <![CDATA[<=]]> decode(length(#IST_YMD_TO#), 10, to_char(to_date(#IST_YMD_TO#, 'yyyy-MM-dd'), 'yyyyMMdd'), '')
-        </isNotEmpty>
+      <!-- 조건7. 설치일자[이하] -->
+      <isNotEmpty prepend="AND" property="IST_YMD_TO">
+        A.IST_YMD <![CDATA[<=]]> decode(length(#IST_YMD_TO#), 10, to_char(to_date(#IST_YMD_TO#, 'yyyy-MM-dd'), 'yyyyMMdd'), '')
+      </isNotEmpty>
 
-        <!-- 조건8. 형식 -->
-        <isNotEmpty prepend="AND" property="VAL_MOF">
-          A.VAL_MOF = #VAL_MOF#
-        </isNotEmpty>
+      <!-- 조건8. 형식 -->
+      <isNotEmpty prepend="AND" property="VAL_MOF">
+        A.VAL_MOF = #VAL_MOF#
+      </isNotEmpty>
 
-        <!-- 조건9. 관재질 -->
-        <isNotEmpty prepend="AND" property="VAL_MOP">
-          A.VAL_MOP = #VAL_MOP#
-        </isNotEmpty>
+      <!-- 조건9. 관재질 -->
+      <isNotEmpty prepend="AND" property="VAL_MOP">
+        A.VAL_MOP = #VAL_MOP#
+      </isNotEmpty>
 
-        <!-- 조건10. 구경 -->
-        <isNotEmpty prepend="AND" property="VAL_DIP">
-          A.VAL_DIP = #VAL_DIP#
-        </isNotEmpty>
+      <!-- 조건10. 구경 -->
+      <isNotEmpty prepend="AND" property="VAL_DIP">
+        A.VAL_DIP = #VAL_DIP#
+      </isNotEmpty>
 
-        <!-- 조건11. 시설물형태 -->
-        <isNotEmpty prepend="AND" property="VAL_FOR">
-          A.VAL_FOR = #VAL_FOR#
-        </isNotEmpty>
+      <!-- 조건11. 시설물형태 -->
+      <isNotEmpty prepend="AND" property="VAL_FOR">
+        A.VAL_FOR = #VAL_FOR#
+      </isNotEmpty>
 
-        ORDER BY FTR_IDN DESC
+      ORDER BY FTR_IDN DESC
 
 
-    ) X JOIN C ON 1=1
-    WHERE RN &lt;= ($page$+1) * $rows$
+      ) X JOIN C ON 1=1
+      WHERE RN &lt;= ($page$+1) * $rows$
       AND RN &gt;= ($page$) * $rows$ + 1
 
     </select>
@@ -215,35 +215,35 @@
     <!--변류시설 상세추가-->
     <update id="insertValvFacDtl" parameterClass="GTI.WFMS.Models.Pipe.Model.ValvFacDtl">
       INSERT INTO INFOFMS.WTL_VALV_PS
-      ( 
-          FTR_CDE
-        , FTR_IDN
-        , HJD_CDE
-        , SHT_NUM
-        , MNG_CDE
-        , IST_YMD
-        , VAL_MOF
-        , VAL_MOP
-        , VAL_DIP
-        , SAE_CDE
-        , TRO_CNT
-        , CRO_CNT
-        , MTH_CDE
-        , VAL_FOR
-        , VAL_STD
-        , VAL_SAF
-        , PRD_NAM
-        , PIP_CDE
-        , PIP_IDN
-        , CST_CDE
-        , OFF_CDE
-        , CNT_NUM
-        , SYS_CHK
-        , ANG_DIR 
-      )
-      VALUES 
       (
-        #FTR_CDE#
+      FTR_CDE
+      , FTR_IDN
+      , HJD_CDE
+      , SHT_NUM
+      , MNG_CDE
+      , IST_YMD
+      , VAL_MOF
+      , VAL_MOP
+      , VAL_DIP
+      , SAE_CDE
+      , TRO_CNT
+      , CRO_CNT
+      , MTH_CDE
+      , VAL_FOR
+      , VAL_STD
+      , VAL_SAF
+      , PRD_NAM
+      , PIP_CDE
+      , PIP_IDN
+      , CST_CDE
+      , OFF_CDE
+      , CNT_NUM
+      , SYS_CHK
+      , ANG_DIR
+      )
+      VALUES
+      (
+      #FTR_CDE#
       , #FTR_IDN#
       , #HJD_CDE#
       , #SHT_NUM#
@@ -266,7 +266,7 @@
       , #OFF_CDE#
       , #CNT_NUM#
       , #SYS_CHK#
-      , #ANG_DIR# 
+      , #ANG_DIR#
       )
     </update>
 
@@ -304,17 +304,17 @@
     <update id="deleteValvFacDtl" parameterClass="GTI.WFMS.Models.Pipe.Model.ValvFacDtl">
       /* 변류시설 상세 삭제 */
       DELETE INFOFMS.WTL_VALV_PS
-       WHERE FTR_CDE = #FTR_CDE#
-         AND FTR_IDN = #FTR_IDN#
+      WHERE FTR_CDE = #FTR_CDE#
+      AND FTR_IDN = #FTR_IDN#
     </update>
 
     <!--변류시설 관리번호 채번-->
     <select id ="SelectValvFacFTR_IDN" parameterClass="Hashtable" resultClass ="GTI.WFMS.Models.Pipe.Model.ValvFacDtl">
       /* 변류시설 관리번호 채번 */
-      SELECT NVL(MAX(FTR_IDN),0)+1 AS FTR_IDN FROM INFOFMS.WTL_VALV_PS 
-       WHERE 1=1
+      SELECT NVL(MAX(FTR_IDN),0)+1 AS FTR_IDN FROM INFOFMS.WTL_VALV_PS
+      WHERE 1=1
     </select>
 
   </statements>
-  
+
 </sqlMap>

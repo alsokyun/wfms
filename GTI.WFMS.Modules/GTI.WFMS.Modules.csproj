@@ -149,7 +149,19 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Pipe\View\FireFacAddView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
     <Page Include="Pipe\View\ValvFacAddView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Pipe\View\FireFacListView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Pipe\View\FireFacDtlView.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
@@ -232,14 +244,26 @@
     <Compile Include="Main\PopMain.xaml.cs">
       <DependentUpon>PopMain.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Pipe\ViewModel\FireFacAddViewModel.cs" />
     <Compile Include="Pipe\ViewModel\ValvFacAddViewModel.cs" />
+    <Compile Include="Pipe\ViewModel\FireFacListViewModel.cs" />
+    <Compile Include="Pipe\ViewModel\FireFacDtlViewModel.cs" />
     <Compile Include="Pipe\ViewModel\ValvFacListViewModel.cs" />
     <Compile Include="Pipe\ViewModel\WtlPipeAddViewModel.cs" />
     <Compile Include="Pipe\ViewModel\ValvFacDtlViewModel.cs" />
     <Compile Include="Pipe\ViewModel\WtlPipeDtlViewModel.cs" />
     <Compile Include="Pipe\ViewModel\WtlPipeListViewModel.cs" />
+    <Compile Include="Pipe\View\FireFacAddView.xaml.cs">
+      <DependentUpon>FireFacAddView.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Pipe\View\ValvFacAddView.xaml.cs">
       <DependentUpon>ValvFacAddView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Pipe\View\FireFacListView.xaml.cs">
+      <DependentUpon>FireFacListView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Pipe\View\FireFacDtlView.xaml.cs">
+      <DependentUpon>FireFacDtlView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Pipe\View\ValvFacListView.xaml.cs">
       <DependentUpon>ValvFacListView.xaml</DependentUpon>
