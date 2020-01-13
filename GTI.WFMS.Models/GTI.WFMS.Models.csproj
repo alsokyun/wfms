@@ -99,9 +99,19 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
       <SubType>Designer</SubType>
     </Content>
+    <Content Include="Pipe\Dao\Maps\FireFacMap.xml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Pipe\Dao\Maps\ValvFacMap.xml">
+      <SubType>Designer</SubType>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Content Include="Pipe\Dao\Maps\PipeMap.xml">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
       <SubType>Designer</SubType>
+    </Content>
+    <Content Include="Pipe\Dao\Maps\WtsMnhoMap.xml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
   </ItemGroup>
   <ItemGroup>
@@ -129,7 +139,10 @@
     <Compile Include="Main\Dao\MainDao.cs" />
     <Compile Include="Main\Work\MainWork.cs" />
     <Compile Include="Pipe\Dao\PipeDao.cs" />
+    <Compile Include="Pipe\Model\FireFacDtl.cs" />
     <Compile Include="Pipe\Model\PipeDtl.cs" />
+    <Compile Include="Pipe\Model\ValvFacDtl.cs" />
+    <Compile Include="Pipe\Model\WtsMnhoDtl.cs" />
     <Compile Include="Pipe\Work\PipeWork.cs" />
   </ItemGroup>
   <ItemGroup>
