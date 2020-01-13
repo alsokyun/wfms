@@ -215,7 +215,6 @@
     <Compile Include="Cnst\View\CnstMngDtlView.xaml.cs">
       <DependentUpon>CnstMngDtlView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Link\ViewModel\ChscResSubListViewModel.cs" />
     <Compile Include="Link\View\ChscResSubListView.xaml.cs">
       <DependentUpon>ChscResSubListView.xaml</DependentUpon>
     </Compile>
@@ -259,6 +258,8 @@
   <ItemGroup>
     <EmbeddedResource Include="Properties\Licenses.licx" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Folder Include="Link\ViewModel\" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

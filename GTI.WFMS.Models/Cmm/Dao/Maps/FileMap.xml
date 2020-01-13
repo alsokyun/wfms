@@ -55,17 +55,23 @@
       <isNotEmpty property="GRP_TYP">
         , GRP_TYP = #GRP_TYP#
       </isNotEmpty>
-    <isNotEmpty property="TIT_NAM">
-	      , TIT_NAM = #TIT_NAM#
-	      </isNotEmpty>
-	      <isNotEmpty property="CTNT">
-	      , CTNT = #CTNT#
-	      </isNotEmpty>
-	
-	  WHEN NOT MATCHED THEN
-	      INSERT 
-	              (BIZ_ID, FIL_SEQ
-				  <isNotEmpty property="GRP_TYP">
+      <isNotEmpty property="TIT_NAM">
+	        , TIT_NAM = #TIT_NAM#
+	        </isNotEmpty>
+      <isNotEmpty property="CTNT">
+        , CTNT = #CTNT#
+      </isNotEmpty>
+      <isNotEmpty property="UPD_YMD">
+        , UPD_YMD = to_char(to_date(#UPD_YMD#, 'yyyy-MM-dd'), 'yyyyMMdd'), '')
+      </isNotEmpty>
+      <isNotEmpty property="UPD_USR">
+        , UPD_USR = #UPD_USR#
+      </isNotEmpty>
+
+    WHEN NOT MATCHED THEN
+    INSERT
+    (BIZ_ID, FIL_SEQ
+    <isNotEmpty property="GRP_TYP">
 					    , GRP_TYP 
 				  </isNotEmpty>				
 		      <isNotEmpty property="TIT_NAM">
@@ -74,13 +80,16 @@
 		      <isNotEmpty property="CTNT">
 		          , CTNT
 		      </isNotEmpty>
-          <isNotEmpty property="UPD_YMD">
-            , UPD_YMD
-          </isNotEmpty>
-        , CRE_USR, CRE_YMD )
+        <isNotEmpty property="UPD_YMD">
+          , UPD_YMD
+        </isNotEmpty>
+        <isNotEmpty property="UPD_USR">
+          , UPD_USR
+        </isNotEmpty>
+    , CRE_USR, CRE_YMD )
     VALUES
-      ( #BIZ_ID#, #FIL_SEQ#
-        <isNotEmpty property="GRP_TYP">
+    ( #BIZ_ID#, #FIL_SEQ#
+    <isNotEmpty property="GRP_TYP">
 				    ,#GRP_TYP#
 				</isNotEmpty>				
 		    <isNotEmpty property="TIT_NAM">
@@ -92,7 +101,10 @@
         <isNotEmpty property="UPD_YMD">
           , decode(length(#UPD_YMD#), 10, to_char(to_date(#UPD_YMD#, 'yyyy-MM-dd'), 'yyyyMMdd'), '')
         </isNotEmpty>
-        , #ID#, TO_CHAR(SYSDATE, 'yyyyMMdd'))
+        <isNotEmpty property="UPD_USR">
+          , #UPD_USR#
+        </isNotEmpty>
+      , #ID#, TO_CHAR(SYSDATE, 'yyyyMMdd'))
   </update>	
 
 
@@ -117,6 +129,9 @@
       FROM FMS_FILE_DTL
       WHERE 1=1
       AND FIL_SEQ = #FIL_SEQ#
+      <isNotEmpty property="SEQ">
+        AND SEQ = #SEQ#
+      </isNotEmpty>
     </select>
     
     
@@ -125,6 +140,9 @@
     <update id="DeleteFileSeq" parameterClass="Hashtable">
       DELETE FROM FMS_FILE_DTL WHERE 1=1
       AND FIL_SEQ = #FIL_SEQ#
+      <isNotEmpty property="SEQ">
+        AND SEQ = #SEQ#
+      </isNotEmpty>
     </update>
 
 

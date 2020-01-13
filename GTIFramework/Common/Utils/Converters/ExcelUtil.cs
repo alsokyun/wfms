@@ -1649,22 +1649,36 @@ namespace GTIFramework.Common.Utils.Converters
                 int intEndX_Bnd = tablePointXY[0];
                 int intEndY_Bnd = tablePointXY[1];
 
+                //출력컬럼수
+                int cnt = 0;
+
                 foreach (GridColumn gcol in columnList)
                 {
                     string strColHeader = string.Empty;
                     bool bColVisible = false;
+                    bool bColPrint = true;
                     string wid = string.Empty;
 
                     gridControl.Dispatcher.Invoke(DispatcherPriority.Normal, new Action(delegate
                     {
                         strColHeader = gcol.Header.ToString();
-                        bColVisible = gcol.Visible;
+                        try
+                        {
+                            bColPrint = !"PrintN".Equals(gcol.Tag.ToString());
+                        }
+                        catch (Exception){}
+
+                        bColVisible = gcol.Visible && bColPrint;
                         wid = gcol.Width.ToString();
                     }));
+
+                    
 
                     //가시적으로 표현되는 컬럼만 엑셀로 내보낸다.
                     if (bColVisible == true)
                     {
+                        cnt++;
+
                         Excel.Range rangeHeader = null;
 
                         //range 끝 좌표 x값만 +1 증가시킨 후 merge
@@ -1684,11 +1698,34 @@ namespace GTIFramework.Common.Utils.Converters
                         {
                             rangeHeader.Borders.LineStyle = Excel.XlLineStyle.xlContinuous;
                             rangeHeader.Interior.Color = Color.Gray;
-                            
+
                             //rangeHeader.Columns.AutoFit();
                             //컬럼width비율에 따라 폭조정
-                            int width = Convert.ToInt16(wid.Replace("*",""));
-                            rangeHeader.Columns.ColumnWidth = 5* width;
+                            int width = 0;
+                            if (wid.Contains("*"))
+                            {
+                                width = Convert.ToInt16(wid.Replace("*",""));
+                                try
+                                {
+                                    rangeHeader.Columns.ColumnWidth = 5* width; //사이즈 255넘어가면 30
+                                }
+                                catch (Exception)
+                                {
+                                    rangeHeader.Columns.ColumnWidth = 30;
+                                }
+                            }
+                            else
+                            {
+                                width = Convert.ToInt16(wid);
+                                try
+                                {
+                                    rangeHeader.Columns.ColumnWidth = width/5; //사이즈 255넘어가면 30
+                                }
+                                catch (Exception)
+                                {
+                                    rangeHeader.Columns.ColumnWidth = 30;
+                                }
+                            }
                             rangeHeader.HorizontalAlignment = Excel.XlHAlign.xlHAlignCenter;
                         }
 

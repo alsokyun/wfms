@@ -1,5 +1,6 @@
 ﻿using DevExpress.Xpf.Core;
 using GTI.WFMS.Modules.Main;
+using GTI.WFMS.Modules.Pop.ViewModel;
 using GTIFramework.Common.Utils.ViewEffect;
 using System.ComponentModel;
 using System.Windows;
@@ -14,15 +15,11 @@ namespace GTI.WFMS.Modules.Pop.View
     public partial class FileMngView : Window
     {
 
-        public string R_FILE_SEQ { get; set; }
-
-
         /// <summary>
         /// 생성자
         /// </summary>
         public FileMngView(string FIL_SEQ)
         {
-
 
             InitializeComponent();
 
@@ -33,8 +30,6 @@ namespace GTI.WFMS.Modules.Pop.View
 
             //파일키저장
             txtFIL_SEQ.Text = FIL_SEQ;
-            txtFIL_SEQ.Text = "-1";
-
         }
 
         //닫기
@@ -61,10 +56,6 @@ namespace GTI.WFMS.Modules.Pop.View
             e.Handled = true;
         }
 
-        // 그리드 파일 행삭제
-        private void Button_Click(object sender, RoutedEventArgs e)
-        {
-            gv.DeleteRow(gv.FocusedRowHandle);
-        }
+
     }
 }

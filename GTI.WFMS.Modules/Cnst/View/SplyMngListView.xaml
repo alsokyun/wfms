@@ -218,14 +218,11 @@
                 </dxg:GridColumn>
 
 
-
-
-
             </dxg:GridControl>
 
+            
+            
             <dx:WaitIndicator x:Name="waitindicator" Grid.Row="0" Grid.RowSpan="2" Grid.Column="2" DeferedVisibility="False" Content="처리중..."/>
-
-
 
 
             <dxe:DataPager x:Name="DataPager" Grid.Row="2" Grid.Column="2"  HorizontalAlignment="Center" NumericButtonCount="10"

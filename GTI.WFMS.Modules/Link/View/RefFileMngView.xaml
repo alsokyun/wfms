@@ -35,7 +35,7 @@
 
 
         <dxg:GridControl Grid.Row="1" x:Name="grid" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" 
-                         MouseDoubleClick="Grid_MouseDoubleClick">
+                         MouseDoubleClick="Grid_MouseDoubleClick" >
 
             <dxg:GridControl.View>
                 <dxg:TableView x:Name="gv"
@@ -69,23 +69,23 @@
                 <dxg:GridColumn.CellTemplate>
                     <DataTemplate>
                         <dxe:TextEdit Style="{DynamicResource ResourceKey=GrdTextEdit}"   
-                            EditValue="{Binding  RowData.TIT_NAM}"/>
+                            EditValue="{Binding  RowData.Row.TIT_NAM}"/>
                     </DataTemplate>
                 </dxg:GridColumn.CellTemplate>
             </dxg:GridColumn>
-            <dxg:GridColumn Header="저장일자" Width="4*" FieldName="CRE_YMD" HorizontalHeaderContentAlignment="Center">
+            <dxg:GridColumn Header="저장일자" Width="4*" FieldName="UPD_YMD" HorizontalHeaderContentAlignment="Center">
                 <dxg:GridColumn.CellTemplate>
                     <DataTemplate>
                         <dxe:TextEdit Style="{DynamicResource ResourceKey=GrdTextEdit}"   
-                            EditValue="{Binding  RowData.CRE_YMD}"/>
+                            EditValue="{Binding  RowData.Row.UPD_YMD}"/>
                     </DataTemplate>
                 </dxg:GridColumn.CellTemplate>
             </dxg:GridColumn>
-            <dxg:GridColumn Header="등록자" Width="4*" FieldName="CRE_USR" HorizontalHeaderContentAlignment="Center">
+            <dxg:GridColumn Header="등록자" Width="4*" FieldName="UPD_USR" HorizontalHeaderContentAlignment="Center">
                 <dxg:GridColumn.CellTemplate>
                     <DataTemplate>
                         <dxe:TextEdit Style="{DynamicResource ResourceKey=GrdTextEdit}"   
-                            EditValue="{Binding  RowData.CRE_USR}"/>
+                            EditValue="{Binding  RowData.Row.UPD_USR}"/>
                     </DataTemplate>
                 </dxg:GridColumn.CellTemplate>
             </dxg:GridColumn>
@@ -93,7 +93,7 @@
                 <dxg:GridColumn.CellTemplate>
                     <DataTemplate>
                         <dxe:TextEdit Style="{DynamicResource ResourceKey=GrdTextEdit}"   
-                            EditValue="{Binding  RowData.CTNT}"/>
+                            EditValue="{Binding  RowData.Row.CTNT}"/>
                     </DataTemplate>
                 </dxg:GridColumn.CellTemplate>
             </dxg:GridColumn>
