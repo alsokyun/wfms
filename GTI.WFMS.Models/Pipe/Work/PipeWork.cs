@@ -18,5 +18,24 @@ namespace GTI.WFMS.Models.Pipe.Work
             return dao.SelectWtlPipeList(conditions);
         }
 
+        /// <summary>
+        /// 변류시설조회
+        /// </summary>
+        /// <param name="conditions"></param>
+        /// <returns></returns>
+        public DataTable SelectValvFacList(Hashtable conditions)
+        {
+            return dao.SelectValvFacList(conditions);
+        }
+
+        /// <summary>
+        /// 소방시설조회
+        /// </summary>
+        /// <param name="conditions"></param>
+        /// <returns></returns>
+        public DataTable SelectFireFacList(Hashtable conditions)
+        {
+            return dao.SelectFireFacList(conditions);
+        }
     }
 }

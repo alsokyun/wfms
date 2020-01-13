@@ -1,0 +1,262 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<sqlMap namespace="Main" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://ibatis.apache.org/mapping">
+  <statements>
+
+    <!--소방시설-->
+    <select id ="SelectFireFacList" parameterClass="Hashtable" resultClass ="Hashtable">
+      /* FireFacMap.SelectFireFacList 소방시설 목록*/
+
+      WITH C AS (
+      SELECT COUNT(1) AS ROWCNT
+      FROM INFOFMS.WTL_FIRE_PS A
+      WHERE 1=1
+      <!-- 조건1. 관리기관 -->
+        <isNotEmpty prepend="AND" property="MNG_CDE">
+          A.MNG_CDE = #MNG_CDE#
+        </isNotEmpty>
+
+        <!-- 조건2. 관리번호 -->
+        <isNotEmpty prepend="AND" property="searchCondition2">
+          A.FTR_IDN = #FTR_IDN#
+        </isNotEmpty>
+
+        <!-- 조건3. 행정읍면동 -->
+        <isNotEmpty prepend="AND" property="HJD_CDE">
+          A.HJD_CDE = #HJD_CDE#
+        </isNotEmpty>
+
+        <!-- 조건4. 공사번호 -->
+        <isNotEmpty prepend="AND" property="CNT_NUM">
+          A.CNT_NUM = #CNT_NUM#
+        </isNotEmpty>
+
+        <!-- 조건5. 도엽번호 -->
+        <isNotEmpty prepend="AND" property="SHT_NUM">
+          A.SHT_NUM = #SHT_NUM#
+        </isNotEmpty>
+
+        <!-- 조건6. 설치일자[이상] -->
+        <isNotEmpty prepend="AND" property="IST_YMD_FROM">
+          A.IST_YMD <![CDATA[>=]]> decode(length(#IST_YMD_FROM#), 10, to_char(to_date(#IST_YMD_FROM#, 'yyyy-MM-dd'), 'yyyyMMdd'), '')
+        </isNotEmpty>
+
+        <!-- 조건7. 설치일자[이하] -->
+        <isNotEmpty prepend="AND" property="IST_YMD_TO">
+          A.IST_YMD <![CDATA[<=]]> decode(length(#IST_YMD_TO#), 10, to_char(to_date(#IST_YMD_TO#, 'yyyy-MM-dd'), 'yyyyMMdd'), '')
+        </isNotEmpty>
+
+        <!-- 조건8. 소화전구경 -->
+        <isNotEmpty prepend="AND" property="MOF_CDE">
+          A.MOF_CDE = #MOF_CDE#
+        </isNotEmpty>
+
+        <!-- 조건9. 급수탑높이 -->
+        <isNotEmpty prepend="AND" property="SUP_HIT">
+          A.SUP_HIT = #SUP_HIT#
+        </isNotEmpty>
+
+        <!-- 조건10. 공사번호 -->
+        <isNotEmpty prepend="AND" property="CNT_NUM">
+          A.CNT_NUM = #CNT_NUM#
+        </isNotEmpty>
+
+        <!-- 조건11. 수용가번호 -->
+        <isNotEmpty prepend="AND" property="HOM_NUM">
+          A.HOM_NUM = #HOM_NUM#
+        </isNotEmpty>
+      )
+
+      SELECT C.ROWCNT, X.*  FROM (
+
+      SELECT
+            ROW_NUMBER() OVER( ORDER BY A.FTR_IDN DESC ) AS RN
+          , A.FTR_CDE
+          , (SELECT FTR_NAM FROM INFOFMS.V_FTR_CDE WHERE FTR_CDE = A.FTR_CDE) AS FTR_NAM
+          , A.FTR_IDN
+          , A.HJD_CDE
+          , (SELECT HJD_NAM FROM INFOFMS.CMT_ADAR_MA WHERE HJD_CDE = A.HJD_CDE) AS HJD_NAM
+          , A.SHT_NUM
+          , A.MNG_CDE
+          , (SELECT NM FROM INFOUSER.CD_DTL_INFO WHERE MST_CD = '250101' AND DTL_CD = A.MNG_CDE ) AS MNG_NAM
+          , decode(length(A.IST_YMD), 8, to_char(to_date(A.IST_YMD, 'yyyyMMdd'), 'yyyy-MM-dd'), '') AS IST_YMD
+          , A.HOM_NUM
+          , A.MOF_CDE
+          , (SELECT NM FROM INFOUSER.CD_DTL_INFO WHERE MST_CD = '250019' AND DTL_CD = A.MOF_CDE ) AS MOF_NAM
+          , A.FIR_DIP
+          , A.PIP_DIP
+          , A.SUP_HIT
+          , A.CNT_NUM
+          , A.SYS_CHK
+          , A.ANG_DIR
+          , CASE WHEN ST_ISVALID(A.GEOM) = 1 THEN 'Y' ELSE 'N' END AS IS_GEOMETRY
+       FROM INFOFMS.WTL_FIRE_PS A
+      WHERE 1=1
+      <!-- 조건1. 관리기관 -->
+        <isNotEmpty prepend="AND" property="MNG_CDE">
+          A.MNG_CDE = #MNG_CDE#
+        </isNotEmpty>
+
+        <!-- 조건2. 관리번호 -->
+        <isNotEmpty prepend="AND" property="searchCondition2">
+          A.FTR_IDN = #FTR_IDN#
+        </isNotEmpty>
+
+        <!-- 조건3. 행정읍면동 -->
+        <isNotEmpty prepend="AND" property="HJD_CDE">
+          A.HJD_CDE = #HJD_CDE#
+        </isNotEmpty>
+
+        <!-- 조건4. 공사번호 -->
+        <isNotEmpty prepend="AND" property="CNT_NUM">
+          A.CNT_NUM = #CNT_NUM#
+        </isNotEmpty>
+
+        <!-- 조건5. 도엽번호 -->
+        <isNotEmpty prepend="AND" property="SHT_NUM">
+          A.SHT_NUM = #SHT_NUM#
+        </isNotEmpty>
+
+        <!-- 조건6. 설치일자[이상] -->
+        <isNotEmpty prepend="AND" property="IST_YMD_FROM">
+          A.IST_YMD <![CDATA[>=]]> decode(length(#IST_YMD_FROM#), 10, to_char(to_date(#IST_YMD_FROM#, 'yyyy-MM-dd'), 'yyyyMMdd'), '')
+        </isNotEmpty>
+
+        <!-- 조건7. 설치일자[이하] -->
+        <isNotEmpty prepend="AND" property="IST_YMD_TO">
+          A.IST_YMD <![CDATA[<=]]> decode(length(#IST_YMD_TO#), 10, to_char(to_date(#IST_YMD_TO#, 'yyyy-MM-dd'), 'yyyyMMdd'), '')
+        </isNotEmpty>
+
+        <!-- 조건8. 소화전구경 -->
+        <isNotEmpty prepend="AND" property="MOF_CDE">
+          A.MOF_CDE = #MOF_CDE#
+        </isNotEmpty>
+
+        <!-- 조건9. 급수탑높이 -->
+        <isNotEmpty prepend="AND" property="SUP_HIT">
+          A.SUP_HIT = #SUP_HIT#
+        </isNotEmpty>
+
+        <!-- 조건10. 공사번호 -->
+        <isNotEmpty prepend="AND" property="CNT_NUM">
+          A.CNT_NUM = #CNT_NUM#
+        </isNotEmpty>
+
+        <!-- 조건11. 수용가번호 -->
+        <isNotEmpty prepend="AND" property="HOM_NUM">
+          A.HOM_NUM = #HOM_NUM#
+        </isNotEmpty>
+
+        ORDER BY FTR_IDN DESC
+
+
+    ) X JOIN C ON 1=1
+    WHERE RN &lt;= ($page$+1) * $rows$
+      AND RN &gt;= ($page$) * $rows$ + 1
+
+    </select>
+
+    <select id="SelectFireFacDtl"  parameterClass="Hashtable" resultClass ="GTI.WFMS.Models.Pipe.Model.FireFacDtl">
+      /* FireFacMap.SelectFireFacDtl 소방시설 상세정보*/
+      <![CDATA[
+			SELECT A.FTR_CDE
+          , (SELECT FTR_NAM FROM INFOFMS.V_FTR_CDE WHERE FTR_CDE = A.FTR_CDE) AS FTR_NAM
+          , A.FTR_IDN
+          , A.HJD_CDE
+          , (SELECT HJD_NAM FROM INFOFMS.CMT_ADAR_MA WHERE HJD_CDE = A.HJD_CDE) AS HJD_NAM
+          , A.SHT_NUM
+          , A.MNG_CDE
+          , (SELECT NM FROM INFOUSER.CD_DTL_INFO WHERE MST_CD = '250101' AND DTL_CD = A.MNG_CDE ) AS MNG_NAM
+          , decode(length(A.IST_YMD), 8, to_char(to_date(A.IST_YMD, 'yyyyMMdd'), 'yyyy-MM-dd'), '') AS IST_YMD
+          , A.HOM_NUM
+          , A.MOF_CDE
+          , (SELECT NM FROM INFOUSER.CD_DTL_INFO WHERE MST_CD = '250019' AND DTL_CD = A.MOF_CDE ) AS MOF_NAM
+          , A.FIR_DIP
+          , A.PIP_DIP
+          , A.SUP_HIT
+          , A.CNT_NUM
+          , A.SYS_CHK
+          , decode(A.SYS_CHK,'1','유','무') as SYS_CHK_NAM
+          , A.ANG_DIR
+       FROM INFOFMS.WTL_FIRE_PS A 
+			WHERE 1=1
+        AND FTR_CDE = #FTR_CDE# 
+				AND FTR_IDN = #FTR_IDN#
+			]]>
+    </select>
+
+    <!--소방시설 상세추가-->
+    <update id="insertFireFacDtl" parameterClass="GTI.WFMS.Models.Pipe.Model.FireFacDtl">
+      INSERT INTO INFOFMS.WTL_FIRE_PS
+      (
+        FTR_CDE
+      , FTR_IDN
+      , HJD_CDE
+      , SHT_NUM
+      , MNG_CDE
+      , IST_YMD
+      , HOM_NUM
+      , MOF_CDE
+      , FIR_DIP
+      , PIP_DIP
+      , SUP_HIT
+      , CNT_NUM
+      , SYS_CHK
+      , ANG_DIR
+      )
+      VALUES
+      (
+        #FTR_CDE#
+      , #FTR_IDN#
+      , #HJD_CDE#
+      , #SHT_NUM#
+      , #MNG_CDE#
+      , decode(length(#IST_YMD#), 10, to_char(to_date(#IST_YMD#, 'yyyy-MM-dd'), 'yyyyMMdd'), '')
+      , #HOM_NUM#
+      , #MOF_CDE#
+      , #FIR_DIP#
+      , #PIP_DIP#
+      , #SUP_HIT#
+      , #CNT_NUM#
+      , #SYS_CHK#
+      , #ANG_DIR#
+      )
+    </update>
+
+    <!--소방시설 상세저장-->
+    <update id="updateFireFacDtl" parameterClass="GTI.WFMS.Models.Pipe.Model.FireFacDtl">
+      /* 소방시설 상세 수정 */
+      UPDATE INFOFMS.WTL_FIRE_PS
+      SET HJD_CDE = #HJD_CDE#
+      , SHT_NUM = #SHT_NUM#
+      , MNG_CDE = #MNG_CDE#
+      , IST_YMD = decode(length(#IST_YMD#), 10, to_char(to_date(#IST_YMD#, 'yyyy-MM-dd'), 'yyyyMMdd'), '')
+      , HOM_NUM = #HOM_NUM#
+      , MOF_CDE = #MOF_CDE#
+      , FIR_DIP = #FIR_DIP#
+      , PIP_DIP = #PIP_DIP#
+      , SUP_HIT = #SUP_HIT#
+      , CNT_NUM = #CNT_NUM#
+      , SYS_CHK = #SYS_CHK#
+      , ANG_DIR = #ANG_DIR#
+      WHERE FTR_CDE = #FTR_CDE#
+      AND	FTR_IDN = #FTR_IDN#
+    </update>
+
+    <!--소방시설 상세삭제-->
+    <update id="deleteFireFacDtl" parameterClass="GTI.WFMS.Models.Pipe.Model.FireFacDtl">
+      /* 소방시설 상세 삭제 */
+      DELETE INFOFMS.WTL_VALV_PS
+       WHERE FTR_CDE = #FTR_CDE#
+         AND FTR_IDN = #FTR_IDN#
+    </update>
+
+    <!--소방시설 관리번호 채번-->
+    <select id ="SelectFireFacFTR_IDN" parameterClass="Hashtable" resultClass ="GTI.WFMS.Models.Pipe.Model.FireFacDtl">
+      /* 소방시설 관리번호 채번 */
+      SELECT NVL(MAX(FTR_IDN),0)+1 AS FTR_IDN FROM INFOFMS.WTL_FIRE_PS
+      WHERE 1=1
+    </select>
+
+  </statements>
+  
+</sqlMap>

@@ -24,5 +24,11 @@ namespace GTI.WFMS.Models.Cmm.Work
             return dao.Select_ADAR_LIST(conditions);
         }
 
+        //지형지물 List
+        public DataTable Select_FTR_LIST(Hashtable conditions)
+        {
+            return dao.Select_FTR_LIST(conditions);
+        }
+
     }
 }
