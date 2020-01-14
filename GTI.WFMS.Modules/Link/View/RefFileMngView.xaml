@@ -28,9 +28,9 @@
 
 
         <StackPanel Grid.Row="0" Orientation="Horizontal" HorizontalAlignment="Right" Margin="0 0 5 3">
-            <Button x:Name="btnAdd" Content="추가" Click="BtnAdd_Click"  />
-            <Button x:Name="btnDel" Content="삭제" Click="BtnDel_Click"  />
-            <Button x:Name="btnReg" Content="저장" Click="BtnReg_Click"  />
+            <Button x:Name="btnAdd" Content="추가" Style="{DynamicResource ResourceKey=GrdAddButton}" Click="BtnAdd_Click"  />
+            <Button x:Name="btnDel" Content="삭제" Style="{DynamicResource ResourceKey=GrdDelButton}" Click="BtnDel_Click"  />
+            <Button x:Name="btnReg" Content="저장" Style="{DynamicResource ResourceKey=GrdRegButton}" Click="BtnReg_Click"  />
         </StackPanel>
 
 

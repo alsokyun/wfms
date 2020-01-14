@@ -16,6 +16,7 @@ using System.Windows.Threading;
 using DevExpress.Xpf.Core;
 using GTIFramework.Common.Utils.Converters;
 using System.Threading;
+using System.Collections.Generic;
 
 namespace GTI.WFMS.Modules.Cnst.ViewModel
 {
@@ -122,6 +123,8 @@ namespace GTI.WFMS.Modules.Cnst.ViewModel
         string strFileName;
         string strExcelFormPath = AppDomain.CurrentDomain.BaseDirectory + "/Resources/Excel/FmsBaseExcel.xlsx";
         DataTable exceldt;
+        GridColumn[] columnList;
+        List<string> listCols;
         #endregion
 
 
@@ -338,6 +341,20 @@ namespace GTI.WFMS.Modules.Cnst.ViewModel
                 exceldt = BizUtil.SelectList(conditions);
 
 
+                //그리드헤더정보 추출
+                columnList = new GridColumn[grid.Columns.Count];
+                grid.Columns.CopyTo(columnList, 0);
+                listCols = new List<string>(); //컬럼헤더정보 가져오기
+                foreach (GridColumn gcol in columnList)
+                {
+                    try
+                    {
+                        if ("PrintN".Equals(gcol.Tag.ToString())) continue; //엑셀출력제외컬럼
+                    }
+                    catch (Exception) { }
+
+                    listCols.Add(gcol.FieldName.ToString());
+                }
 
 
                 saveFileDialog = null;
@@ -377,9 +394,8 @@ namespace GTI.WFMS.Modules.Cnst.ViewModel
                     })));
 
 
-
                 //엑셀 표 데이터
-                DataTable dtExceltTableData = exceldt.DefaultView.ToTable(false, new string[] { "CNT_NUM", "HJD_NAM", "OPR_NAM", "TOT_AMT", "BEG_YMD", "FNS_YMD" });
+                DataTable dtExceltTableData = exceldt.DefaultView.ToTable(false, listCols.ToArray());
 
                 int[] tablePointXY = { 3, 1 };
 

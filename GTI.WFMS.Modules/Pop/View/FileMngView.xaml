@@ -31,8 +31,8 @@
     <Grid Background="{DynamicResource PopCOLOR2Brush}">
         <Grid.RowDefinitions>
             <RowDefinition Height="40"/>
-            <RowDefinition Height="5"/>
             <RowDefinition Height="*"/>
+            <RowDefinition Height="40"/>
         </Grid.RowDefinitions>
 
         <Label Grid.Row="0" Content="첨부파일" FontSize="17" FontWeight="Bold" Foreground="White" 
@@ -42,12 +42,9 @@
             <!--파일키-->
             <TextBlock x:Name="txtFIL_SEQ" Text="{Binding FIL_SEQ, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Width="30" Visibility="Collapsed" />
 
-            <Button Content="파일선택" Command="{Binding FindFileCmd}"></Button>
-            <Button Content="업로드" Command="{Binding SaveCmd}"></Button>
-            <Button Content="닫기" x:Name="btnClose" Click="BtnClose_Click"></Button>
         </StackPanel>
 
-        <Grid Grid.Row="2" x:Name="gridContent" >
+        <Grid Grid.Row="1" x:Name="gridContent" >
 
             <dxg:GridControl AutoGenerateColumns="AddNew"
                         EnableSmartColumnsGeneration="False"
@@ -139,7 +136,15 @@
             </dxg:GridControl>
         </Grid>
 
-        <dx:WaitIndicator x:Name="waitindicator" Grid.Row="2" DeferedVisibility="False" Content="처리중..."/>
+        <dx:WaitIndicator x:Name="waitindicator" Grid.Row="1" DeferedVisibility="False" Content="처리중..."/>
+
+        <Grid Grid.Row="2" >
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Margin="0 5 5 5">
+                <Button Content="파일선택" Command="{Binding FindFileCmd}"></Button>
+                <Button Content="저장" Command="{Binding SaveCmd}"></Button>
+                <Button Content="닫기" x:Name="btnClose" Click="BtnClose_Click"></Button>
+            </StackPanel>
+        </Grid>
 
     </Grid>
 
