@@ -18,6 +18,7 @@ using System.Threading;
 using System.Windows.Threading;
 using DevExpress.Xpf.Core;
 using GTIFramework.Common.Utils.Converters;
+using System.Collections.Generic;
 
 namespace GTI.WFMS.Modules.Pipe.ViewModel
 {
@@ -134,6 +135,8 @@ namespace GTI.WFMS.Modules.Pipe.ViewModel
         string strExcelFormPath = AppDomain.CurrentDomain.BaseDirectory + "/Resources/Excel/FmsBaseExcel.xlsx";
         DataTable exceldt;
 
+        GridColumn[] columnList;
+        List<string> listCols;
 
         #endregion
 
@@ -373,6 +376,21 @@ namespace GTI.WFMS.Modules.Pipe.ViewModel
                 saveFileDialog.OverwritePrompt = true;
                 saveFileDialog.Filter = "Excel|*.xlsx";
 
+                //그리드헤더정보 추출
+                columnList = new GridColumn[grid.Columns.Count];
+                grid.Columns.CopyTo(columnList, 0);
+                listCols = new List<string>(); //컬럼헤더정보 가져오기
+                foreach (GridColumn gcol in columnList)
+                {
+                    try
+                    {
+                        if ("PrintN".Equals(gcol.Tag.ToString())) continue; //엑셀출력제외컬럼
+                    }
+                    catch (Exception) { }
+
+                    listCols.Add(gcol.FieldName.ToString());
+                }
+
                 if (saveFileDialog.ShowDialog() == System.Windows.Forms.DialogResult.OK)
                 {
                     strFileName = saveFileDialog.FileName;
@@ -399,12 +417,9 @@ namespace GTI.WFMS.Modules.Pipe.ViewModel
                     (wtsMnhoListView.FindName("waitindicator") as WaitIndicator).DeferedVisibility = true;
                 })));
                 
-
                 //엑셀 표 데이터
-                DataTable dtExceltTableData = exceldt.DefaultView.ToTable(false, new string[] { "IS_GEOMETRY", "FTR_NAM", "MNG_NAM", "FTR_IDN", "HJD_NAM", "CNT_NUM", "SHT_NUM", "IST_YMD", "MAN_STD", "SOM_NAM", "MHS_NAM", "ANG_DIR" });
-
                 int[] tablePointXY = { 3, 1 };
-                
+                DataTable dtExceltTableData = exceldt.DefaultView.ToTable(false, listCols.ToArray());
 
                 //엑셀 유틸 호출
                 //ExcelUtil.ExcelTabulation(strFileName, strExcelFormPath, startPointXY, strSearchCondition, dtExceltTableData);

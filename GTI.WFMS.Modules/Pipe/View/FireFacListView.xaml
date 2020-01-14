@@ -222,6 +222,10 @@
                                 AllowPerPixelScrolling="False"  
                                 ShowHorizontalLines="True"
                                 AllowPaging="False"
+                               
+                                VerticalScrollbarVisibility="Disabled"
+                                HorizontalScrollbarVisibility="Visible"
+                                AutoWidth="False"
                                        
                                 ShowIndicator="False" 
                                 ShowGroupPanel="False" 
@@ -235,69 +239,73 @@
                 </dxg:TableView>
             </dxg:GridControl.View>
 
-            <dxg:GridColumn Header="위치" Width="2*" FieldName="IS_GEOMETRY" HorizontalHeaderContentAlignment="Center">
+            <dxg:GridColumn Header="위치" Width="33" FieldName="IS_GEOMETRY" HorizontalHeaderContentAlignment="Center" Fixed="Left" Tag="PrintN">
+                <dxg:GridColumn.CellTemplate>
+                    <DataTemplate>
+                        <Button Style="{DynamicResource ResourceKey=PositionButton}" 
+                                Command="{Binding View.DataContext.cellPosCmd}" CommandParameter="{Binding RowData.Row.FTR_IDN}">
+                        </Button>
+                    </DataTemplate>
+                </dxg:GridColumn.CellTemplate>
+            </dxg:GridColumn>
+
+            <dxg:GridColumn Header="지형지물" Width="100" FieldName="FTR_NAM" HorizontalHeaderContentAlignment="Center">
                 <dxg:GridColumn.EditSettings>
                     <dxe:TextEditSettings HorizontalContentAlignment="Center"/>
                 </dxg:GridColumn.EditSettings>
             </dxg:GridColumn>
 
-            <dxg:GridColumn Header="지형지물" Width="4*" FieldName="FTR_NAM" HorizontalHeaderContentAlignment="Center">
-                <dxg:GridColumn.EditSettings>
-                    <dxe:TextEditSettings HorizontalContentAlignment="Left"/>
-                </dxg:GridColumn.EditSettings>
-            </dxg:GridColumn>
-
-            <dxg:GridColumn Header="관리기관" Width="5*" FieldName="MNG_NAM" HorizontalHeaderContentAlignment="Center">
-                <dxg:GridColumn.EditSettings>
-                    <dxe:TextEditSettings HorizontalContentAlignment="Left"/>
-                </dxg:GridColumn.EditSettings>
-            </dxg:GridColumn>
-
-            <dxg:GridColumn Header="관리번호" Width="3*" FieldName="FTR_IDN" HorizontalHeaderContentAlignment="Center">
+            <dxg:GridColumn Header="관리기관" Width="130" FieldName="MNG_NAM" HorizontalHeaderContentAlignment="Center">
                 <dxg:GridColumn.EditSettings>
                     <dxe:TextEditSettings HorizontalContentAlignment="Center"/>
                 </dxg:GridColumn.EditSettings>
             </dxg:GridColumn>
 
-            <dxg:GridColumn Header="행정동" Width="3*" FieldName="HJD_NAM" HorizontalHeaderContentAlignment="Center">
-                <dxg:GridColumn.EditSettings>
-                    <dxe:TextEditSettings HorizontalContentAlignment="Left"/>
-                </dxg:GridColumn.EditSettings>
-            </dxg:GridColumn>
-
-            <dxg:GridColumn Header="공사번호" Width="3*" FieldName="CNT_NUM" HorizontalHeaderContentAlignment="Center">
+            <dxg:GridColumn Header="관리번호" Width="70" FieldName="FTR_IDN" HorizontalHeaderContentAlignment="Center">
                 <dxg:GridColumn.EditSettings>
                     <dxe:TextEditSettings HorizontalContentAlignment="Center"/>
                 </dxg:GridColumn.EditSettings>
             </dxg:GridColumn>
 
-            <dxg:GridColumn Header="도엽번호" Width="3*" FieldName="SHT_NUM" HorizontalHeaderContentAlignment="Center">
+            <dxg:GridColumn Header="행정동" Width="100" FieldName="HJD_NAM" HorizontalHeaderContentAlignment="Center">
                 <dxg:GridColumn.EditSettings>
                     <dxe:TextEditSettings HorizontalContentAlignment="Center"/>
                 </dxg:GridColumn.EditSettings>
             </dxg:GridColumn>
 
-            <dxg:GridColumn Header="설치일자" Width="3*" FieldName="IST_YMD" HorizontalHeaderContentAlignment="Center">
+            <dxg:GridColumn Header="공사번호" Width="100" FieldName="CNT_NUM" HorizontalHeaderContentAlignment="Center">
                 <dxg:GridColumn.EditSettings>
                     <dxe:TextEditSettings HorizontalContentAlignment="Center"/>
                 </dxg:GridColumn.EditSettings>
             </dxg:GridColumn>
 
-            <dxg:GridColumn Header="형식" Width="3*" FieldName="MOF_NAM" HorizontalHeaderContentAlignment="Center">
-                <dxg:GridColumn.EditSettings>
-                    <dxe:TextEditSettings HorizontalContentAlignment="Left"/>
-                </dxg:GridColumn.EditSettings>
-            </dxg:GridColumn>
-
-            <dxg:GridColumn Header="소화전구경" Width="3*" FieldName="FIR_DIP" HorizontalHeaderContentAlignment="Center">
+            <dxg:GridColumn Header="도엽번호" Width="100" FieldName="SHT_NUM" HorizontalHeaderContentAlignment="Center">
                 <dxg:GridColumn.EditSettings>
                     <dxe:TextEditSettings HorizontalContentAlignment="Center"/>
                 </dxg:GridColumn.EditSettings>
             </dxg:GridColumn>
 
-            <dxg:GridColumn Header="급수탑높이(m)" Width="3*" FieldName="SUP_HIT" HorizontalHeaderContentAlignment="Center">
+            <dxg:GridColumn Header="설치일자" Width="90" FieldName="IST_YMD" HorizontalHeaderContentAlignment="Center">
                 <dxg:GridColumn.EditSettings>
                     <dxe:TextEditSettings HorizontalContentAlignment="Center"/>
+                </dxg:GridColumn.EditSettings>
+            </dxg:GridColumn>
+
+            <dxg:GridColumn Header="형식" Width="100" FieldName="MOF_NAM" HorizontalHeaderContentAlignment="Center">
+                <dxg:GridColumn.EditSettings>
+                    <dxe:TextEditSettings HorizontalContentAlignment="Center"/>
+                </dxg:GridColumn.EditSettings>
+            </dxg:GridColumn>
+
+            <dxg:GridColumn Header="소화전구경" Width="100" FieldName="FIR_DIP" HorizontalHeaderContentAlignment="Center">
+                <dxg:GridColumn.EditSettings>
+                    <dxe:TextEditSettings HorizontalContentAlignment="Right"/>
+                </dxg:GridColumn.EditSettings>
+            </dxg:GridColumn>
+
+            <dxg:GridColumn Header="급수탑높이(m)" Width="100" FieldName="SUP_HIT" HorizontalHeaderContentAlignment="Center">
+                <dxg:GridColumn.EditSettings>
+                    <dxe:TextEditSettings HorizontalContentAlignment="Right"/>
                 </dxg:GridColumn.EditSettings>
             </dxg:GridColumn>
 
