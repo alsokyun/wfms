@@ -102,11 +102,21 @@
     <Content Include="Pipe\Dao\Maps\FireFacMap.xml">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <Content Include="Pipe\Dao\Maps\WtprMtMap.xml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Pipe\Dao\Maps\StndPiMap.xml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Content Include="Pipe\Dao\Maps\ValvFacMap.xml">
       <SubType>Designer</SubType>
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="Pipe\Dao\Maps\PipeMap.xml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      <SubType>Designer</SubType>
+    </Content>
+    <Content Include="Pipe\Dao\Maps\FlowMtMap.xml">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
       <SubType>Designer</SubType>
     </Content>
@@ -140,8 +150,11 @@
     <Compile Include="Main\Work\MainWork.cs" />
     <Compile Include="Pipe\Dao\PipeDao.cs" />
     <Compile Include="Pipe\Model\FireFacDtl.cs" />
+    <Compile Include="Pipe\Model\WtprMtDtl.cs" />
+    <Compile Include="Pipe\Model\StndPiDtl.cs" />
     <Compile Include="Pipe\Model\PipeDtl.cs" />
     <Compile Include="Pipe\Model\ValvFacDtl.cs" />
+    <Compile Include="Pipe\Model\FlowMtDtl .cs" />
     <Compile Include="Pipe\Model\WtsMnhoDtl.cs" />
     <Compile Include="Pipe\Work\PipeWork.cs" />
   </ItemGroup>
