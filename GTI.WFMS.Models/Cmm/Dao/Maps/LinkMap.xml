@@ -68,5 +68,28 @@
     </select>
 
 
+    <!--부속시설 세부현황 조회-->
+    <select id="SelectCmmWttAttaDtList" resultClass="Hashtable">
+      SELECT
+      ATT_IDN
+      , FTR_CDE
+      , FTR_IDN
+      , ATT_NAM
+      , ATT_DES
+      , ATTA_SEQ
+      FROM WTT_ATTA_DT
+      WHERE 1=1
+      AND FTR_CDE=#FTR_CDE#
+      AND FTR_CDE=#FTR_CDE#
+      <isNotEmpty prepend="AND" property="ATT_IDN">
+        ATT_IDN = #ATT_IDN#
+      </isNotEmpty>
+      <isNotEmpty prepend="AND" property="FTR_CDE">
+        FTR_CDE LIKE '%' || #FTR_CDE# || '%'
+      </isNotEmpty>
+      ORDER BY ATT_IDN DESC
+    </select>
+
+
   </statements>
 </sqlMap>
