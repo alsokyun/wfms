@@ -22,7 +22,7 @@ using System.Collections.Generic;
 
 namespace GTI.WFMS.Modules.Pipe.ViewModel
 {
-    class FlowMtListViewModel : INotifyPropertyChanged
+    class StndPiListViewModel : INotifyPropertyChanged
     {
 
         #region ==========  페이징관련 INotifyPropertyChanged  ==========
@@ -110,17 +110,17 @@ namespace GTI.WFMS.Modules.Pipe.ViewModel
         DataTable dtresult = new DataTable(); //조회결과 데이터
 
 
-        FlowMtListView flowMtListView;
+        StndPiListView stndPiListView;
         ComboBoxEdit cbMNG_CDE; DataTable dtMNG_CDE = new DataTable();
         ComboBoxEdit cbHJD_CDE; DataTable dtHJD_CDE = new DataTable();
-        ComboBoxEdit cbGAG_CDE; DataTable dsSOM_CDE = new DataTable();
-        ComboBoxEdit cbMOF_CDE; DataTable dsMOF_CDE = new DataTable();
+        ComboBoxEdit cbSTP_MOP; DataTable dsSOM_CDE = new DataTable();
+        ComboBoxEdit cbVAL_MOF; DataTable dsMOF_CDE = new DataTable();
 
         TextEdit txtFTR_IDN;
         TextEdit txtCNT_NUM;
         TextEdit txtSHT_NUM;
-        TextEdit txtFLO_DIP;
-        TextEdit txtPRD_NAM;
+        TextEdit txtSTD_DIP;
+        TextEdit txtSTP_ALT;
 
 
 
@@ -146,7 +146,7 @@ namespace GTI.WFMS.Modules.Pipe.ViewModel
         /// <summary>
         /// 생성자
         /// </summary>
-        public FlowMtListViewModel()
+        public StndPiListViewModel()
         {
 
             LoadedCommand = new DelegateCommand<object>(OnLoaded);
@@ -197,21 +197,21 @@ namespace GTI.WFMS.Modules.Pipe.ViewModel
             var values = (object[])obj;
 
             //1. 화면객체 인스턴스
-            flowMtListView = values[0] as FlowMtListView;
+            stndPiListView = values[0] as StndPiListView;
 
-            cbMNG_CDE = flowMtListView.cbMNG_CDE;      //0.관리기관
-            cbHJD_CDE = flowMtListView.cbHJD_CDE;      //2.행정동
-            cbGAG_CDE = flowMtListView.cbGAG_CDE;      //7.유량계종류
-            cbMOF_CDE = flowMtListView.cbMOF_CDE;      //8.형식
+            cbMNG_CDE = stndPiListView.cbMNG_CDE;      //0.관리기관
+            cbHJD_CDE = stndPiListView.cbHJD_CDE;      //2.행정동
+            cbSTP_MOP = stndPiListView.cbSTP_MOP;      //7.관재질
+            cbVAL_MOF = stndPiListView.cbVAL_MOF;      //8.형식
 
-            txtFTR_IDN = flowMtListView.txtFTR_IDN;    //1.관리번호           
-            txtCNT_NUM = flowMtListView.txtCNT_NUM;    //3.공사번호
-            txtSHT_NUM = flowMtListView.txtSHT_NUM;    //4.도엽번호
-            txtFLO_DIP = flowMtListView.txtFLO_DIP;    //9.구경
-            txtPRD_NAM = flowMtListView.txtPRD_NAM;    //10.제작회사명
+            txtFTR_IDN = stndPiListView.txtFTR_IDN;    //1.관리번호           
+            txtCNT_NUM = stndPiListView.txtCNT_NUM;    //3.공사번호
+            txtSHT_NUM = stndPiListView.txtSHT_NUM;    //4.도엽번호
+            txtSTD_DIP = stndPiListView.txtSTD_DIP;    //9.구경
+            txtSTP_ALT = stndPiListView.txtSTP_ALT;    //10.표고
                        
-            dtIST_YMD_FROM = flowMtListView.dtIST_YMD_FROM;    //5.설치일자(이상)
-            dtIST_YMD_TO = flowMtListView.dtIST_YMD_TO;        //6.설치일자(이하)
+            dtIST_YMD_FROM = stndPiListView.dtIST_YMD_FROM;    //5.설치일자(이상)
+            dtIST_YMD_TO = stndPiListView.dtIST_YMD_TO;        //6.설치일자(이하)
             dtIST_YMD_FROM.DisplayFormatString = "yyyy-MM-dd";
             dtIST_YMD_TO.DisplayFormatString = "yyyy-MM-dd";
                       
@@ -219,7 +219,7 @@ namespace GTI.WFMS.Modules.Pipe.ViewModel
             //dtIST_YMD_FROM.EditValue = DateTime.Today.AddYears(-10);
             //dtIST_YMD_TO.EditValue = DateTime.Today;
 
-            grid = flowMtListView.grid;
+            grid = stndPiListView.grid;
 
 
             //2.화면데이터객체 초기화
@@ -247,14 +247,14 @@ namespace GTI.WFMS.Modules.Pipe.ViewModel
                 Hashtable conditions = new Hashtable();
                 conditions.Add("MNG_CDE", cbMNG_CDE.EditValue.ToString().Trim());
                 conditions.Add("HJD_CDE", cbHJD_CDE.EditValue.ToString().Trim());
-                conditions.Add("SOM_CDE", cbGAG_CDE.EditValue.ToString().Trim());
-                conditions.Add("MOF_CDE", cbMOF_CDE.EditValue.ToString().Trim());
+                conditions.Add("SOM_CDE", cbSTP_MOP.EditValue.ToString().Trim());
+                conditions.Add("MOF_CDE", cbVAL_MOF.EditValue.ToString().Trim());
 
                 conditions.Add("FTR_IDN", FmsUtil.Trim(txtFTR_IDN.EditValue));
                 conditions.Add("CNT_NUM", txtCNT_NUM.Text.Trim());
                 conditions.Add("SHT_NUM", txtSHT_NUM.Text.Trim());
-                conditions.Add("FLO_DIP", txtFLO_DIP.Text.Trim());
-                conditions.Add("PRD_NAM", txtPRD_NAM.Text.Trim());
+                conditions.Add("FLO_DIP", txtSTD_DIP.Text.Trim());
+                conditions.Add("PRD_NAM", txtSTP_ALT.Text.Trim());
 
 
                 try
@@ -267,7 +267,7 @@ namespace GTI.WFMS.Modules.Pipe.ViewModel
                 conditions.Add("firstIndex", 0);
                 conditions.Add("lastIndex", 1000);
 
-                conditions.Add("sqlId", "SelectFlowMtList");
+                conditions.Add("sqlId", "SelectStndPiList");
     
                 /*
                     조회후 페이징소스 업데이트
@@ -317,14 +317,14 @@ namespace GTI.WFMS.Modules.Pipe.ViewModel
         {
             cbMNG_CDE.SelectedIndex = 0;
             cbHJD_CDE.SelectedIndex = 0;
-            cbGAG_CDE.SelectedIndex = 0;
-            cbMOF_CDE.SelectedIndex = 0;           
+            cbSTP_MOP.SelectedIndex = 0;
+            cbVAL_MOF.SelectedIndex = 0;           
 
             txtFTR_IDN.Text = "";
             txtCNT_NUM.Text = "";
             txtSHT_NUM.Text = "";
-            txtFLO_DIP.Text = "";
-            txtPRD_NAM.Text = "";
+            txtSTD_DIP.Text = "";
+            txtSTP_ALT.Text = "";
 
             dtIST_YMD_FROM.EditValue = null;
             dtIST_YMD_TO.EditValue = null;
@@ -344,14 +344,14 @@ namespace GTI.WFMS.Modules.Pipe.ViewModel
                 Hashtable conditions = new Hashtable();
                 conditions.Add("MNG_CDE", cbMNG_CDE.EditValue.ToString().Trim());
                 conditions.Add("HJD_CDE", cbHJD_CDE.EditValue.ToString().Trim());
-                conditions.Add("SOM_CDE", cbGAG_CDE.EditValue.ToString().Trim());
-                conditions.Add("MOF_CDE", cbMOF_CDE.EditValue.ToString().Trim());
+                conditions.Add("SOM_CDE", cbSTP_MOP.EditValue.ToString().Trim());
+                conditions.Add("MOF_CDE", cbVAL_MOF.EditValue.ToString().Trim());
 
                 conditions.Add("FTR_IDN", FmsUtil.Trim(txtFTR_IDN.EditValue));
                 conditions.Add("CNT_NUM", txtCNT_NUM.Text.Trim());
                 conditions.Add("SHT_NUM", txtSHT_NUM.Text.Trim());
-                conditions.Add("FLO_DIP", txtFLO_DIP.Text.Trim());
-                conditions.Add("PRD_NAM", txtPRD_NAM.Text.Trim());
+                conditions.Add("FLO_DIP", txtSTD_DIP.Text.Trim());
+                conditions.Add("PRD_NAM", txtSTP_ALT.Text.Trim());
 
                 try
                 {
@@ -363,7 +363,7 @@ namespace GTI.WFMS.Modules.Pipe.ViewModel
                 conditions.Add("page", 0);
                 conditions.Add("rows", 1000000);
 
-                conditions.Add("sqlId", "SelectFlowMtList");
+                conditions.Add("sqlId", "SelectStndPiList");
 
                 exceldt = BizUtil.SelectList(conditions);
 
@@ -412,10 +412,10 @@ namespace GTI.WFMS.Modules.Pipe.ViewModel
         {
             try
             {
-                flowMtListView.Dispatcher.Invoke(DispatcherPriority.ApplicationIdle,
+                stndPiListView.Dispatcher.Invoke(DispatcherPriority.ApplicationIdle,
                 new Action((delegate ()
                 {
-                    (flowMtListView.FindName("waitindicator") as WaitIndicator).DeferedVisibility = true;
+                    (stndPiListView.FindName("waitindicator") as WaitIndicator).DeferedVisibility = true;
                 })));
                 
                 //엑셀 표 데이터
@@ -426,19 +426,19 @@ namespace GTI.WFMS.Modules.Pipe.ViewModel
                 //ExcelUtil.ExcelTabulation(strFileName, strExcelFormPath, startPointXY, strSearchCondition, dtExceltTableData);
                 ExcelUtil.ExcelGrid(strExcelFormPath, strFileName, "유량계목록", dtExceltTableData, tablePointXY, grid, true);
 
-                flowMtListView.Dispatcher.Invoke(DispatcherPriority.ApplicationIdle,
+                stndPiListView.Dispatcher.Invoke(DispatcherPriority.ApplicationIdle,
                    new Action((delegate ()
                    {
-                       (flowMtListView.FindName("waitindicator") as WaitIndicator).DeferedVisibility = false;
+                       (stndPiListView.FindName("waitindicator") as WaitIndicator).DeferedVisibility = false;
                        Messages.ShowInfoMsgBox("엑셀 다운로드가 완료되었습니다.");
                    })));
             }
             catch (Exception ex)
             {
-                flowMtListView.Dispatcher.Invoke(DispatcherPriority.ApplicationIdle,
+                stndPiListView.Dispatcher.Invoke(DispatcherPriority.ApplicationIdle,
                     new Action((delegate ()
                     {
-                        (flowMtListView.FindName("waitindicator") as WaitIndicator).DeferedVisibility = false;
+                        (stndPiListView.FindName("waitindicator") as WaitIndicator).DeferedVisibility = false;
                         Messages.ShowErrMsgBoxLog(ex);
                     })));
             }
@@ -459,19 +459,19 @@ namespace GTI.WFMS.Modules.Pipe.ViewModel
             {
 
 
-                cbMNG_CDE = flowMtListView.cbMNG_CDE;      //0.관리기관
-                cbHJD_CDE = flowMtListView.cbHJD_CDE;      //2.행정동
-                cbGAG_CDE = flowMtListView.cbGAG_CDE;      //7.유량계종류
-                cbMOF_CDE = flowMtListView.cbMOF_CDE;      //8.형식
+                cbMNG_CDE = stndPiListView.cbMNG_CDE;      //0.관리기관
+                cbHJD_CDE = stndPiListView.cbHJD_CDE;      //2.행정동
+                cbSTP_MOP = stndPiListView.cbSTP_MOP;      //7.관재질
+                cbVAL_MOF = stndPiListView.cbVAL_MOF;      //8.형식
                  
-                txtFTR_IDN = flowMtListView.txtFTR_IDN;    //1.관리번호           
-                txtCNT_NUM = flowMtListView.txtCNT_NUM;    //3.공사번호
-                txtSHT_NUM = flowMtListView.txtSHT_NUM;    //4.도엽번호
-                txtFLO_DIP = flowMtListView.txtFLO_DIP;    //9.구경
-                txtPRD_NAM = flowMtListView.txtPRD_NAM;    //10.제작회사명
+                txtFTR_IDN = stndPiListView.txtFTR_IDN;    //1.관리번호           
+                txtCNT_NUM = stndPiListView.txtCNT_NUM;    //3.공사번호
+                txtSHT_NUM = stndPiListView.txtSHT_NUM;    //4.도엽번호
+                txtSTD_DIP = stndPiListView.txtSTD_DIP;    //9.구경
+                txtSTP_ALT = stndPiListView.txtSTP_ALT;    //10.표고
 
-                dtIST_YMD_FROM = flowMtListView.dtIST_YMD_FROM;    //5.설치일자(이상)
-                dtIST_YMD_TO = flowMtListView.dtIST_YMD_TO;        //6.설치일자(이하)
+                dtIST_YMD_FROM = stndPiListView.dtIST_YMD_FROM;    //5.설치일자(이상)
+                dtIST_YMD_TO = stndPiListView.dtIST_YMD_TO;        //6.설치일자(이하)
                 dtIST_YMD_FROM.DisplayFormatString = "yyyy-MM-dd";
                 dtIST_YMD_TO.DisplayFormatString = "yyyy-MM-dd";
 
@@ -481,11 +481,11 @@ namespace GTI.WFMS.Modules.Pipe.ViewModel
                 // cbHJD_CDE    2.행정동
                 BizUtil.SetCombo(cbHJD_CDE, "Select_ADAR_LIST", "HJD_CDE", "HJD_NAM", true);
 
-                // cbGAG_CDE    7.유량계종류
-                BizUtil.SetCmbCode(cbGAG_CDE, "GAG_CDE", true);
+                // cbSTP_MOP    7.관재질
+                BizUtil.SetCmbCode(cbSTP_MOP, "MOP_CDE", true, "250102");
 
-                // cbGAG_CDE    8.형식
-                BizUtil.SetCmbCode(cbMOF_CDE, "MOF_CDE", true, "250035");
+                // cbSTP_MOP    8.형식
+                BizUtil.SetCmbCode(cbVAL_MOF, "MOF_CDE", true, "250035");
 
             }
             catch (Exception ex)
@@ -540,9 +540,9 @@ namespace GTI.WFMS.Modules.Pipe.ViewModel
             string class_name = "ValvFacDtl";
 
             Hashtable param = new Hashtable();
-            param.Add("sqlId", "SelectFlowMtList");
-            param.Add("FTR_CDE", "SA117");
-            param.Add("FTR_IDN", "10");
+            param.Add("sqlId", "SelectStndPiList");
+            param.Add("FTR_CDE", "SA007");
+            param.Add("FTR_IDN", "1");
             DataTable dt = BizUtil.SelectList(param);
             DataRow dr = dt.Rows[0];
 
