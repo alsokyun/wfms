@@ -161,6 +161,18 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
+    <Page Include="Pipe\View\StndPiAddView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Pipe\View\StndPiDtlView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Pipe\View\StndPiListView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
     <Page Include="Pipe\View\ValvFacAddView.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -279,6 +291,9 @@
     <Compile Include="Pipe\ViewModel\FireFacAddViewModel.cs" />
     <Compile Include="Pipe\ViewModel\FireFacDtlViewModel.cs" />
     <Compile Include="Pipe\ViewModel\FireFacListViewModel.cs" />
+    <Compile Include="Pipe\ViewModel\StndPiAddViewModel.cs" />
+    <Compile Include="Pipe\ViewModel\StndPiDtlViewModel.cs" />
+    <Compile Include="Pipe\ViewModel\StndPiListViewModel.cs" />
     <Compile Include="Pipe\ViewModel\ValvFacAddViewModel.cs" />
     <Compile Include="Pipe\ViewModel\ValvFacDtlViewModel.cs" />
     <Compile Include="Pipe\ViewModel\ValvFacListViewModel.cs" />
@@ -299,6 +314,15 @@
     </Compile>
     <Compile Include="Pipe\View\FireFacListView.xaml.cs">
       <DependentUpon>FireFacListView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Pipe\View\StndPiAddView.xaml.cs">
+      <DependentUpon>StndPiAddView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Pipe\View\StndPiDtlView.xaml.cs">
+      <DependentUpon>StndPiDtlView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Pipe\View\StndPiListView.xaml.cs">
+      <DependentUpon>StndPiListView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Pipe\View\ValvFacAddView.xaml.cs">
       <DependentUpon>ValvFacAddView.xaml</DependentUpon>
