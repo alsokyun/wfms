@@ -189,11 +189,23 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Pipe\View\FlowMtAddView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
     <Page Include="Pipe\View\WtsMnhoAddView.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
+    <Page Include="Pipe\View\FlowMtDtlView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
     <Page Include="Pipe\View\WtsMnhoDtlView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Pipe\View\FlowMtListView.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
@@ -280,8 +292,11 @@
     <Compile Include="Pipe\ViewModel\WtlPipeAddViewModel.cs" />
     <Compile Include="Pipe\ViewModel\WtlPipeDtlViewModel.cs" />
     <Compile Include="Pipe\ViewModel\WtlPipeListViewModel.cs" />
+    <Compile Include="Pipe\ViewModel\FlowMtAddViewModel.cs" />
     <Compile Include="Pipe\ViewModel\WtsMnhoAddViewModel.cs" />
+    <Compile Include="Pipe\ViewModel\FlowMtDtlViewModel .cs" />
     <Compile Include="Pipe\ViewModel\WtsMnhoDtlViewModel.cs" />
+    <Compile Include="Pipe\ViewModel\FlowMtListViewModel.cs" />
     <Compile Include="Pipe\ViewModel\WtsMnhoListViewModel.cs" />
     <Compile Include="Pipe\View\FireFacAddView.xaml.cs">
       <DependentUpon>FireFacAddView.xaml</DependentUpon>
@@ -310,11 +325,20 @@
     <Compile Include="Pipe\View\WtlPipeListView.xaml.cs">
       <DependentUpon>WtlPipeListView.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Pipe\View\FlowMtAddView.xaml.cs">
+      <DependentUpon>FlowMtAddView.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Pipe\View\WtsMnhoAddView.xaml.cs">
       <DependentUpon>WtsMnhoAddView.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Pipe\View\FlowMtDtlView.xaml.cs">
+      <DependentUpon>FlowMtDtlView.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Pipe\View\WtsMnhoDtlView.xaml.cs">
       <DependentUpon>WtsMnhoDtlView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Pipe\View\FlowMtListView.xaml.cs">
+      <DependentUpon>FlowMtListView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Pipe\View\WtsMnhoListView.xaml.cs">
       <DependentUpon>WtsMnhoListView.xaml</DependentUpon>
