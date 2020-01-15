@@ -16,35 +16,68 @@
             xmlns:dxe="http://schemas.devexpress.com/winfx/2008/xaml/editors"
             xmlns:dxmvvm="http://schemas.devexpress.com/winfx/2008/xaml/mvvm"
             xmlns:dx="http://schemas.devexpress.com/winfx/2008/xaml/core"
-       
+               
             DataContext="{dxmvvm:ViewModelSource Type={x:Type vd:FileMngViewModel}}"
-       x:Name="fileMngView"
-       Width="550" Height="300"
+            x:Name="fileMngView"
+        
+       Style="{DynamicResource PopupWindow}" 
+       WindowStyle="None"  
+       Width="550" Height="350"
        >
     <Window.Resources>
         <ResourceDictionary>
             <cm:MultiValueConverter x:Key="multiValueConverter"/>
+            <!--그리드헤서스타일-->
+            <Style TargetType="dxg:GridColumnHeader">
+                <Setter Property="Background" Value="#192942"/>
+                <Setter Property="Foreground" Value="White"/>
+            </Style>
+            <Style TargetType="dxg:TableView">
+                <Setter Property="Background" Value="#293e5a"/>
+                <Setter Property="Foreground" Value="White"/>
+            </Style>
+            <Style TargetType="Button" x:Key="popBtn">
+                <Setter Property="Width" Value="Auto"/>
+                <Setter Property="Height" Value="30"/>
+                <Setter Property="Margin" Value="5,0,0,0"/>
+                <Setter Property="Background" Value="#234532"/>
+                <Setter Property="Foreground" Value="Black"/>
+            </Style>
+
         </ResourceDictionary>
     </Window.Resources>
 
 
-    <Grid Background="{DynamicResource PopCOLOR2Brush}">
+    <Grid >
         <Grid.RowDefinitions>
             <RowDefinition Height="40"/>
+            <RowDefinition Height="30"/>
             <RowDefinition Height="*"/>
             <RowDefinition Height="40"/>
         </Grid.RowDefinitions>
 
-        <Label Grid.Row="0" Content="첨부파일" FontSize="17" FontWeight="Bold" Foreground="White" 
-               HorizontalAlignment="Left" VerticalAlignment="Center" Padding="10 0 0 0" />
+        <Grid Grid.Row="0" Background="{DynamicResource PopCOLOR2Brush}" >
+            <Grid.InputBindings>
+                <MouseBinding MouseAction="LeftClick" Command="{Binding WindowMoveCommand}" 
+                              CommandParameter="{Binding RelativeSource={RelativeSource AncestorType={x:Type Window}, Mode=FindAncestor}}"/>
+            </Grid.InputBindings>
+            <Label Content="첨부파일" FontSize="17" FontWeight="Bold" Foreground="White" 
+                   HorizontalAlignment="Left" VerticalAlignment="Center" Padding="10 0 0 0" />
+        </Grid>
 
-        <StackPanel Grid.Row="0" Orientation="Horizontal" HorizontalAlignment="Right">
+        <Button Grid.Row="0" Style="{DynamicResource XSignCloseButton}" Margin="0,10,10,0" 
+                x:Name="btnClose" Click="BtnClose_Click" />
+
+        <StackPanel Grid.Row="1" Orientation="Horizontal" HorizontalAlignment="Left" Margin="5 0 0 0">
+            <Image Style="{DynamicResource TitleCircle}"/>
+            <Label Content="파일목록" Style="{DynamicResource ResourceKey=CircleTitleLabel}"/>
             <!--파일키-->
             <TextBlock x:Name="txtFIL_SEQ" Text="{Binding FIL_SEQ, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Width="30" Visibility="Collapsed" />
-
         </StackPanel>
 
-        <Grid Grid.Row="1" x:Name="gridContent" >
+
+
+        <Grid Grid.Row="2" x:Name="gridContent" Margin="0 1 0 0">
 
             <dxg:GridControl AutoGenerateColumns="AddNew"
                         EnableSmartColumnsGeneration="False"
@@ -52,11 +85,13 @@
                         SelectionMode="Cell">
 
                 <dxg:GridControl.View>
-                    <dxg:TableView x:Name="gv"
+                    <dxg:TableView x:Name="gv" 
                                 AllowDragDrop="True"
                                 GiveRecordDragFeedback="OnGiveRecordDragFeedback"
                                 AllowPerPixelScrolling="True"
-                                ShowTotalSummary="True" ShowDragDropHint="False" ShowBandsInCustomizationForm="False" ShowGroupPanel="False">
+                                ShowTotalSummary="False" ShowDragDropHint="False" ShowBandsInCustomizationForm="False" ShowGroupPanel="False"
+                                VerticalScrollbarVisibility="Auto"   >
+                        
                         <dxmvvm:Interaction.Behaviors>
                             <dxmvvm:EventToCommand
                         Command="{Binding DragRecordOverCommand}"
@@ -94,12 +129,12 @@
                         <dxe:TextEditSettings HorizontalContentAlignment="Center"/>
                     </dxg:GridColumn.EditSettings>
                 </dxg:GridColumn>
-                <dxg:GridColumn Header="사이즈" Width="5*" FieldName="Length" HorizontalHeaderContentAlignment="Center">
+                <dxg:GridColumn Header="사이즈" Width="7*" FieldName="Length" HorizontalHeaderContentAlignment="Center">
                     <dxg:GridColumn.EditSettings>
                         <dxe:TextEditSettings HorizontalContentAlignment="Right"/>
                     </dxg:GridColumn.EditSettings>
                 </dxg:GridColumn>
-                <dxg:GridColumn Header="확장자" Width="5*" FieldName="Extension" HorizontalHeaderContentAlignment="Center">
+                <dxg:GridColumn Header="확장자" Width="4*" FieldName="Extension" HorizontalHeaderContentAlignment="Center">
                     <dxg:GridColumn.EditSettings>
                         <dxe:TextEditSettings HorizontalContentAlignment="Center"/>
                     </dxg:GridColumn.EditSettings>
@@ -107,14 +142,16 @@
                 <dxg:GridColumn Header="다운로드" Width="5*" FieldName="" HorizontalHeaderContentAlignment="Center">
                     <dxg:GridColumn.CellTemplate>
                         <DataTemplate>
-                            <Button Content="DownLoad" Command="{Binding View.DataContext.DownloadCmd}" CommandParameter="{Binding RowData.Row.Name}" />
+                            <Button Content="DownLoad" Style="{DynamicResource ResourceKey=GrdRegButton}"
+                                    Command="{Binding View.DataContext.DownloadCmd}" CommandParameter="{Binding RowData.Row.Name}" />
                         </DataTemplate>
                     </dxg:GridColumn.CellTemplate>
                 </dxg:GridColumn>
                 <dxg:GridColumn Header="삭제" Width="3*" FieldName="" HorizontalHeaderContentAlignment="Center">
                     <dxg:GridColumn.CellTemplate>
                         <DataTemplate>
-                            <Button Content="X" Command="{Binding View.DataContext.RemoveCmd}" CommandParameter="{Binding RowData.Row.FullName}"/>
+                            <Button Content="" Style="{DynamicResource ResourceKey=GrdDelButton}"
+                                    Command="{Binding View.DataContext.RemoveCmd}" CommandParameter="{Binding RowData.Row.FullName}"/>
                         </DataTemplate>
                     </dxg:GridColumn.CellTemplate>
                 </dxg:GridColumn>
@@ -138,11 +175,11 @@
 
         <dx:WaitIndicator x:Name="waitindicator" Grid.Row="1" DeferedVisibility="False" Content="처리중..."/>
 
-        <Grid Grid.Row="2" >
-            <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Margin="0 5 5 5">
-                <Button Content="파일선택" Command="{Binding FindFileCmd}"></Button>
-                <Button Content="저장" Command="{Binding SaveCmd}"></Button>
-                <Button Content="닫기" x:Name="btnClose" Click="BtnClose_Click"></Button>
+        <Grid Grid.Row="3" >
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Margin="0 5 10 5">
+                <Button Content="파일선택" Command="{Binding FindFileCmd}" Style="{StaticResource popBtn}" Background="{StaticResource PopCOLOR1Brush}"></Button>
+                <Button Content="저장" Command="{Binding SaveCmd}" Style="{StaticResource popBtn}" Background="{StaticResource PopCOLOR1Brush}">
+                </Button>
             </StackPanel>
         </Grid>
 
