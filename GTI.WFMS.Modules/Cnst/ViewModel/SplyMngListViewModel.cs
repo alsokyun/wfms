@@ -485,12 +485,15 @@ namespace GTI.WFMS.Modules.Cnst.ViewModel
         {
 
 
-            string name_space = "GTI.WFMS.Modules.Cnst.Model";
-            string class_name = "SplyDtl";
+            string name_space = "GTI.WFMS.Models.Fctl.Model";
+            string class_name = "WttAttaDt";
             
             Hashtable param = new Hashtable();
-            param.Add("sqlId", "SelectWttSplyMaDtl");
-            param.Add("CNT_NUM", "SA20130005");
+            param.Add("sqlId", "SelectCmmWttAttaDtList");
+            param.Add("FTR_CDE", "SA206");
+            param.Add("FTR_IDN", 80);
+            param.Add("ATT_IDN", 11313);
+            
             DataTable dt = BizUtil.SelectList(param);
             DataRow dr = dt.Rows[0];
 

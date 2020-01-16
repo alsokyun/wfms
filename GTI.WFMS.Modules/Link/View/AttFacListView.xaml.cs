@@ -18,12 +18,11 @@ namespace GTI.WFMS.Modules.Link.View
     {
 
         private string FTR_CDE;
-        private string FTR_IDN;
-        private FileMngView fileMngView; //첨부파일팝업
+        private int FTR_IDN;
 
 
 
-        public AttFacListView(string _FTR_CDE, string _FTR_IDN)
+        public AttFacListView(string _FTR_CDE, int _FTR_IDN)
         {
             InitializeComponent();
 
@@ -47,7 +46,7 @@ namespace GTI.WFMS.Modules.Link.View
             DataTable dt = new DataTable();
 
             Hashtable param = new Hashtable();
-            param.Add("sqlId", "SelectCmmWttAttaDtList");
+            param.Add("sqlId", "SelectCmmWttAttaDt");
 
             param.Add("FTR_CDE", FTR_CDE);
             param.Add("FTR_IDN", FTR_IDN);
@@ -67,33 +66,17 @@ namespace GTI.WFMS.Modules.Link.View
             try
             {
                 // 파일첨부윈도우
-                FileMngView fileMngView = new FileMngView(null);
-                fileMngView.Owner = Window.GetWindow(this) ;
+                AttFacDtlView attFacDtlView = new AttFacDtlView(FTR_CDE, FTR_IDN, -1);
+                attFacDtlView.Owner = Window.GetWindow(this) ;
 
                 
                 //FIL_SEQ 리턴
-                if (fileMngView.ShowDialog() is bool)
+                if (attFacDtlView.ShowDialog() is bool)
                 {
-                    string FIL_SEQ = fileMngView.txtFIL_SEQ.Text;
-
-                    //저장버튼으로 닫힘
-                    if (!FmsUtil.IsNull(FIL_SEQ))
-                    {
-                        //부속시설재조회
-                        initModel();
-                    }
-                    //닫기버튼으로 닫힘
+                    //부속시설재조회
+                    initModel();
                 }
 
-
-                //팝업열기 & 위치
-                //fileMngView.IsOpen = false;
-
-                //fileMngView = new FileMngView(null);
-                //fileMngView.PlacementRectangle = new Rect(100, 100, 655, 405);
-                //fileMngView.IsOpen = true;
-
-                //fileMngView.DataContext = this;
             }
             catch (Exception ex)
             {
@@ -118,35 +101,24 @@ namespace GTI.WFMS.Modules.Link.View
         //선택된 항목으로 페이지이동
         private void Grid_MouseDoubleClick(object sender, MouseButtonEventArgs e)
         {
-            string FIL_SEQ = "";
+            string ATTA_SEQ = "";
             GridControl gc = sender as GridControl;
 
             try
             {
-                FIL_SEQ = ((DataRowView)gc.CurrentItem).Row["FIL_SEQ"].ToString();
+                ATTA_SEQ = ((DataRowView)gc.CurrentItem).Row["ATTA_SEQ"].ToString();
 
-                // 파일첨부윈도우
-                FileMngView fileMngView = new FileMngView(FIL_SEQ);
-                fileMngView.Owner = Window.GetWindow(this);
+                // 부속세부시설윈도우
+                AttFacDtlView attFacDtlView = new AttFacDtlView(FTR_CDE, FTR_IDN, Convert.ToInt32(ATTA_SEQ) );
+                attFacDtlView.Owner = Window.GetWindow(this);
 
 
                 //FIL_SEQ 리턴
-                if (fileMngView.ShowDialog() is bool)
+                if (attFacDtlView.ShowDialog() is bool)
                 {
-                    FIL_SEQ = fileMngView.txtFIL_SEQ.Text;
-
-                    //AddFilSeqRow(FIL_SEQ); //첨부파일 한건추가할 필요없음
+                    //부속시설재조회
+                    initModel();
                 }
-
-
-
-                //팝업열기 & 위치
-                //fileMngView.IsOpen = false;
-
-                //fileMngView = new FileMngView(FIL_SEQ);
-                //fileMngView.PlacementRectangle = new Rect(100, 100, 550, 400);
-                //fileMngView.IsOpen = true;
-                //fileMngView.DataContext = this;
             }
             catch (Exception ex)
             {

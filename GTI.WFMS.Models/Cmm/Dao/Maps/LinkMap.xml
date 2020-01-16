@@ -69,7 +69,7 @@
 
 
     <!--부속시설 세부현황 조회-->
-    <select id="SelectCmmWttAttaDtList" resultClass="Hashtable">
+    <select id="SelectCmmWttAttaDt" resultClass="GTI.WFMS.Models.Fctl.Model.WttAttaDt">
       SELECT
       A.ATT_IDN
       , A.FTR_CDE	,F.FTR_NAM
@@ -83,18 +83,18 @@
       WHERE 1=1
       AND A.FTR_CDE=#FTR_CDE#
       AND A.FTR_IDN=#FTR_IDN#
-      <isNotEmpty prepend="AND" property="ATT_IDN">
-        A.ATT_IDN = #ATT_IDN#
+      <isNotEmpty prepend="AND" property="ATTA_SEQ">
+        A.ATTA_SEQ = #ATTA_SEQ#
       </isNotEmpty>
-      <isNotEmpty prepend="AND" property="FTR_CDE">
-        A.FTR_CDE LIKE '%' || #FTR_CDE# || '%'
+      <isNotEmpty prepend="AND" property="ATT_IDN">
+        A.ATT_IDN like #ATT_IDN# || '%'
       </isNotEmpty>
       ORDER BY A.ATT_IDN DESC
     </select>
 
     
     <!-- 부속시설 저장 -->
-    <update id="SaveWttAttaDt" parameterClass="Hashtable">
+    <update id="SaveWttAttaDt" parameterClass="GTI.WFMS.Models.Fctl.Model.WttAttaDt">
       MERGE INTO WTT_ATTA_DT
       USING DUAL ON ( FTR_CDE=#FTR_CDE# AND FTR_IDN=#FTR_IDN# AND ATTA_SEQ=#ATTA_SEQ#  )
 
@@ -118,16 +118,22 @@
       )
       VALUES ( #FTR_CDE#
       , #FTR_IDN#
-      , (SELECT NVL(MAX(PAY_NUM),0)+1 as PAY_NUM FROM WTT_ATTA_DT WHERE FTR_CDE=#FTR_CDE# AND FTR_IDN=#FTR_IDN#)
+      , (SELECT NVL(MAX(ATTA_SEQ),0)+1 as ATTA_SEQ FROM WTT_ATTA_DT )
       , #ATT_IDN#
       , #ATT_NAM#
       , #ATT_DES#
       , #CRE_YY#
       )
-    </update>    
+    </update>
 
 
-
+    <!-- 부속시설 저장 -->
+    <update id="DeleteWttAttaDt" parameterClass="GTI.WFMS.Models.Fctl.Model.WttAttaDt">
+      DELETE FROM WTT_ATTA_DT WHERE 1=1
+      AND FTR_CDE=#FTR_CDE# 
+      AND FTR_IDN=#FTR_IDN# 
+      AND ATTA_SEQ=#ATTA_SEQ#
+    </update>
 
   </statements>
 </sqlMap>

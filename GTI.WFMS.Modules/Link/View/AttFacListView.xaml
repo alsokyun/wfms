@@ -75,6 +75,13 @@
                     <dxe:TextEditSettings HorizontalContentAlignment="Center"/>
                 </dxg:GridColumn.EditSettings>
             </dxg:GridColumn>
+
+            <dxg:GridColumn Header="" Width="1" FieldName="ATTA_SEQ"  Visible="False">
+                <dxg:GridColumn.EditSettings>
+                    <dxe:TextEditSettings />
+                </dxg:GridColumn.EditSettings>
+            </dxg:GridColumn>
+
         </dxg:GridControl>
 
     </Grid>
