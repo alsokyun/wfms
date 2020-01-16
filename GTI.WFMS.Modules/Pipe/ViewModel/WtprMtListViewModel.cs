@@ -22,7 +22,7 @@ using System.Collections.Generic;
 
 namespace GTI.WFMS.Modules.Pipe.ViewModel
 {
-    class FlowMtListViewModel : INotifyPropertyChanged
+    class WtprMtListViewModel : INotifyPropertyChanged
     {
 
         #region ==========  페이징관련 INotifyPropertyChanged  ==========
@@ -110,16 +110,16 @@ namespace GTI.WFMS.Modules.Pipe.ViewModel
         DataTable dtresult = new DataTable(); //조회결과 데이터
 
 
-        FlowMtListView flowMtListView;
+        WtprMtListView wtprMtListView;
         ComboBoxEdit cbMNG_CDE; DataTable dtMNG_CDE = new DataTable();
         ComboBoxEdit cbHJD_CDE; DataTable dtHJD_CDE = new DataTable();
-        ComboBoxEdit cbGAG_CDE; DataTable dsGAG_CDE = new DataTable();
+        ComboBoxEdit cbPGA_CDE; DataTable dsPGA_CDE = new DataTable();
         ComboBoxEdit cbMOF_CDE; DataTable dsMOF_CDE = new DataTable();
 
         TextEdit txtFTR_IDN;
         TextEdit txtCNT_NUM;
         TextEdit txtSHT_NUM;
-        TextEdit txtFLO_DIP;
+        TextEdit txtPGA_DIP;
         TextEdit txtPRD_NAM;
 
 
@@ -146,7 +146,7 @@ namespace GTI.WFMS.Modules.Pipe.ViewModel
         /// <summary>
         /// 생성자
         /// </summary>
-        public FlowMtListViewModel()
+        public WtprMtListViewModel()
         {
 
             LoadedCommand = new DelegateCommand<object>(OnLoaded);
@@ -197,21 +197,21 @@ namespace GTI.WFMS.Modules.Pipe.ViewModel
             var values = (object[])obj;
 
             //1. 화면객체 인스턴스
-            flowMtListView = values[0] as FlowMtListView;
+            wtprMtListView = values[0] as WtprMtListView;
 
-            cbMNG_CDE = flowMtListView.cbMNG_CDE;      //0.관리기관
-            cbHJD_CDE = flowMtListView.cbHJD_CDE;      //2.행정동
-            cbGAG_CDE = flowMtListView.cbGAG_CDE;      //7.유량계종류
-            cbMOF_CDE = flowMtListView.cbMOF_CDE;      //8.형식
+            cbMNG_CDE = wtprMtListView.cbMNG_CDE;      //0.관리기관
+            cbHJD_CDE = wtprMtListView.cbHJD_CDE;      //2.행정동
+            cbPGA_CDE = wtprMtListView.cbPGA_CDE;      //7.수압계종류
+            cbMOF_CDE = wtprMtListView.cbMOF_CDE;      //8.형식
 
-            txtFTR_IDN = flowMtListView.txtFTR_IDN;    //1.관리번호           
-            txtCNT_NUM = flowMtListView.txtCNT_NUM;    //3.공사번호
-            txtSHT_NUM = flowMtListView.txtSHT_NUM;    //4.도엽번호
-            txtFLO_DIP = flowMtListView.txtFLO_DIP;    //9.구경
-            txtPRD_NAM = flowMtListView.txtPRD_NAM;    //10.제작회사명
+            txtFTR_IDN = wtprMtListView.txtFTR_IDN;    //1.관리번호           
+            txtCNT_NUM = wtprMtListView.txtCNT_NUM;    //3.공사번호
+            txtSHT_NUM = wtprMtListView.txtSHT_NUM;    //4.도엽번호
+            txtPGA_DIP = wtprMtListView.txtPGA_DIP;    //9.구경
+            txtPRD_NAM = wtprMtListView.txtPRD_NAM;    //10.제작회사명
                        
-            dtIST_YMD_FROM = flowMtListView.dtIST_YMD_FROM;    //5.설치일자(이상)
-            dtIST_YMD_TO = flowMtListView.dtIST_YMD_TO;        //6.설치일자(이하)
+            dtIST_YMD_FROM = wtprMtListView.dtIST_YMD_FROM;    //5.설치일자(이상)
+            dtIST_YMD_TO = wtprMtListView.dtIST_YMD_TO;        //6.설치일자(이하)
             dtIST_YMD_FROM.DisplayFormatString = "yyyy-MM-dd";
             dtIST_YMD_TO.DisplayFormatString = "yyyy-MM-dd";
                       
@@ -219,7 +219,7 @@ namespace GTI.WFMS.Modules.Pipe.ViewModel
             //dtIST_YMD_FROM.EditValue = DateTime.Today.AddYears(-10);
             //dtIST_YMD_TO.EditValue = DateTime.Today;
 
-            grid = flowMtListView.grid;
+            grid = wtprMtListView.grid;
 
 
             //2.화면데이터객체 초기화
@@ -247,13 +247,13 @@ namespace GTI.WFMS.Modules.Pipe.ViewModel
                 Hashtable conditions = new Hashtable();
                 conditions.Add("MNG_CDE", cbMNG_CDE.EditValue.ToString().Trim());
                 conditions.Add("HJD_CDE", cbHJD_CDE.EditValue.ToString().Trim());
-                conditions.Add("SOM_CDE", cbGAG_CDE.EditValue.ToString().Trim());
+                conditions.Add("SOM_CDE", cbPGA_CDE.EditValue.ToString().Trim());
                 conditions.Add("MOF_CDE", cbMOF_CDE.EditValue.ToString().Trim());
 
                 conditions.Add("FTR_IDN", FmsUtil.Trim(txtFTR_IDN.EditValue));
                 conditions.Add("CNT_NUM", txtCNT_NUM.Text.Trim());
                 conditions.Add("SHT_NUM", txtSHT_NUM.Text.Trim());
-                conditions.Add("FLO_DIP", txtFLO_DIP.Text.Trim());
+                conditions.Add("PGA_DIP", txtPGA_DIP.Text.Trim());
                 conditions.Add("PRD_NAM", txtPRD_NAM.Text.Trim());
 
 
@@ -267,7 +267,7 @@ namespace GTI.WFMS.Modules.Pipe.ViewModel
                 conditions.Add("firstIndex", 0);
                 conditions.Add("lastIndex", 1000);
 
-                conditions.Add("sqlId", "SelectFlowMtList");
+                conditions.Add("sqlId", "SelectWtprMtList");
     
                 /*
                     조회후 페이징소스 업데이트
@@ -317,13 +317,13 @@ namespace GTI.WFMS.Modules.Pipe.ViewModel
         {
             cbMNG_CDE.SelectedIndex = 0;
             cbHJD_CDE.SelectedIndex = 0;
-            cbGAG_CDE.SelectedIndex = 0;
+            cbPGA_CDE.SelectedIndex = 0;
             cbMOF_CDE.SelectedIndex = 0;           
 
             txtFTR_IDN.Text = "";
             txtCNT_NUM.Text = "";
             txtSHT_NUM.Text = "";
-            txtFLO_DIP.Text = "";
+            txtPGA_DIP.Text = "";
             txtPRD_NAM.Text = "";
 
             dtIST_YMD_FROM.EditValue = null;
@@ -344,13 +344,13 @@ namespace GTI.WFMS.Modules.Pipe.ViewModel
                 Hashtable conditions = new Hashtable();
                 conditions.Add("MNG_CDE", cbMNG_CDE.EditValue.ToString().Trim());
                 conditions.Add("HJD_CDE", cbHJD_CDE.EditValue.ToString().Trim());
-                conditions.Add("SOM_CDE", cbGAG_CDE.EditValue.ToString().Trim());
+                conditions.Add("SOM_CDE", cbPGA_CDE.EditValue.ToString().Trim());
                 conditions.Add("MOF_CDE", cbMOF_CDE.EditValue.ToString().Trim());
 
                 conditions.Add("FTR_IDN", FmsUtil.Trim(txtFTR_IDN.EditValue));
                 conditions.Add("CNT_NUM", txtCNT_NUM.Text.Trim());
                 conditions.Add("SHT_NUM", txtSHT_NUM.Text.Trim());
-                conditions.Add("FLO_DIP", txtFLO_DIP.Text.Trim());
+                conditions.Add("PGA_DIP", txtPGA_DIP.Text.Trim());
                 conditions.Add("PRD_NAM", txtPRD_NAM.Text.Trim());
 
                 try
@@ -363,7 +363,7 @@ namespace GTI.WFMS.Modules.Pipe.ViewModel
                 conditions.Add("page", 0);
                 conditions.Add("rows", 1000000);
 
-                conditions.Add("sqlId", "SelectFlowMtList");
+                conditions.Add("sqlId", "SelectWtprMtList");
 
                 exceldt = BizUtil.SelectList(conditions);
 
@@ -372,7 +372,7 @@ namespace GTI.WFMS.Modules.Pipe.ViewModel
                 saveFileDialog.Title = "저장경로를 지정하세요.";
 
                 //초기 파일명 지정
-                saveFileDialog.FileName = DateTime.Now.ToString("yyyyMMdd") + "_" + "유량계목록.xlsx";
+                saveFileDialog.FileName = DateTime.Now.ToString("yyyyMMdd") + "_" + "수압계목록.xlsx";
 
                 saveFileDialog.OverwritePrompt = true;
                 saveFileDialog.Filter = "Excel|*.xlsx";
@@ -412,10 +412,10 @@ namespace GTI.WFMS.Modules.Pipe.ViewModel
         {
             try
             {
-                flowMtListView.Dispatcher.Invoke(DispatcherPriority.ApplicationIdle,
+                wtprMtListView.Dispatcher.Invoke(DispatcherPriority.ApplicationIdle,
                 new Action((delegate ()
                 {
-                    (flowMtListView.FindName("waitindicator") as WaitIndicator).DeferedVisibility = true;
+                    (wtprMtListView.FindName("waitindicator") as WaitIndicator).DeferedVisibility = true;
                 })));
                 
                 //엑셀 표 데이터
@@ -424,21 +424,21 @@ namespace GTI.WFMS.Modules.Pipe.ViewModel
 
                 //엑셀 유틸 호출
                 //ExcelUtil.ExcelTabulation(strFileName, strExcelFormPath, startPointXY, strSearchCondition, dtExceltTableData);
-                ExcelUtil.ExcelGrid(strExcelFormPath, strFileName, "유량계목록", dtExceltTableData, tablePointXY, grid, true);
+                ExcelUtil.ExcelGrid(strExcelFormPath, strFileName, "수압계목록", dtExceltTableData, tablePointXY, grid, true);
 
-                flowMtListView.Dispatcher.Invoke(DispatcherPriority.ApplicationIdle,
+                wtprMtListView.Dispatcher.Invoke(DispatcherPriority.ApplicationIdle,
                    new Action((delegate ()
                    {
-                       (flowMtListView.FindName("waitindicator") as WaitIndicator).DeferedVisibility = false;
+                       (wtprMtListView.FindName("waitindicator") as WaitIndicator).DeferedVisibility = false;
                        Messages.ShowInfoMsgBox("엑셀 다운로드가 완료되었습니다.");
                    })));
             }
             catch (Exception ex)
             {
-                flowMtListView.Dispatcher.Invoke(DispatcherPriority.ApplicationIdle,
+                wtprMtListView.Dispatcher.Invoke(DispatcherPriority.ApplicationIdle,
                     new Action((delegate ()
                     {
-                        (flowMtListView.FindName("waitindicator") as WaitIndicator).DeferedVisibility = false;
+                        (wtprMtListView.FindName("waitindicator") as WaitIndicator).DeferedVisibility = false;
                         Messages.ShowErrMsgBoxLog(ex);
                     })));
             }
@@ -459,19 +459,19 @@ namespace GTI.WFMS.Modules.Pipe.ViewModel
             {
 
 
-                cbMNG_CDE = flowMtListView.cbMNG_CDE;      //0.관리기관
-                cbHJD_CDE = flowMtListView.cbHJD_CDE;      //2.행정동
-                cbGAG_CDE = flowMtListView.cbGAG_CDE;      //7.유량계종류
-                cbMOF_CDE = flowMtListView.cbMOF_CDE;      //8.형식
+                cbMNG_CDE = wtprMtListView.cbMNG_CDE;      //0.관리기관
+                cbHJD_CDE = wtprMtListView.cbHJD_CDE;      //2.행정동
+                cbPGA_CDE = wtprMtListView.cbPGA_CDE;      //7.수압계종류
+                cbMOF_CDE = wtprMtListView.cbMOF_CDE;      //8.형식
                  
-                txtFTR_IDN = flowMtListView.txtFTR_IDN;    //1.관리번호           
-                txtCNT_NUM = flowMtListView.txtCNT_NUM;    //3.공사번호
-                txtSHT_NUM = flowMtListView.txtSHT_NUM;    //4.도엽번호
-                txtFLO_DIP = flowMtListView.txtFLO_DIP;    //9.구경
-                txtPRD_NAM = flowMtListView.txtPRD_NAM;    //10.제작회사명
+                txtFTR_IDN = wtprMtListView.txtFTR_IDN;    //1.관리번호           
+                txtCNT_NUM = wtprMtListView.txtCNT_NUM;    //3.공사번호
+                txtSHT_NUM = wtprMtListView.txtSHT_NUM;    //4.도엽번호
+                txtPGA_DIP = wtprMtListView.txtPGA_DIP;    //9.구경
+                txtPRD_NAM = wtprMtListView.txtPRD_NAM;    //10.제작회사명
 
-                dtIST_YMD_FROM = flowMtListView.dtIST_YMD_FROM;    //5.설치일자(이상)
-                dtIST_YMD_TO = flowMtListView.dtIST_YMD_TO;        //6.설치일자(이하)
+                dtIST_YMD_FROM = wtprMtListView.dtIST_YMD_FROM;    //5.설치일자(이상)
+                dtIST_YMD_TO = wtprMtListView.dtIST_YMD_TO;        //6.설치일자(이하)
                 dtIST_YMD_FROM.DisplayFormatString = "yyyy-MM-dd";
                 dtIST_YMD_TO.DisplayFormatString = "yyyy-MM-dd";
 
@@ -481,10 +481,10 @@ namespace GTI.WFMS.Modules.Pipe.ViewModel
                 // cbHJD_CDE    2.행정동
                 BizUtil.SetCombo(cbHJD_CDE, "Select_ADAR_LIST", "HJD_CDE", "HJD_NAM", true);
 
-                // cbGAG_CDE    7.유량계종류
-                BizUtil.SetCmbCode(cbGAG_CDE, "GAG_CDE", true);
+                // cbPGA_CDE    7.수압계종류
+                BizUtil.SetCmbCode(cbPGA_CDE, "PGA_CDE", true);
 
-                // cbGAG_CDE    8.형식
+                // cbPGA_CDE    8.형식
                 BizUtil.SetCmbCode(cbMOF_CDE, "MOF_CDE", true, "250035");
 
             }
@@ -540,7 +540,7 @@ namespace GTI.WFMS.Modules.Pipe.ViewModel
             string class_name = "ValvFacDtl";
 
             Hashtable param = new Hashtable();
-            param.Add("sqlId", "SelectFlowMtList");
+            param.Add("sqlId", "SelectWtprMtList");
             param.Add("FTR_CDE", "SA117");
             param.Add("FTR_IDN", "10");
             DataTable dt = BizUtil.SelectList(param);

@@ -107,6 +107,7 @@
     </Content>
     <Content Include="Pipe\Dao\Maps\StndPiMap.xml">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      <SubType>Designer</SubType>
     </Content>
     <Content Include="Pipe\Dao\Maps\ValvFacMap.xml">
       <SubType>Designer</SubType>

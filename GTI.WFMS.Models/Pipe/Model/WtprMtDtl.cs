@@ -117,24 +117,24 @@ namespace GTI.WFMS.Models.Pipe.Model
                 OnPropertyChanged("IST_YMD");
             }
         }
-        private string __GAG_CDE;
-        public string GAG_CDE
+        private string __PGA_CDE;
+        public string PGA_CDE
         {
-            get { return __GAG_CDE; }
+            get { return __PGA_CDE; }
             set
             {
-                this.__GAG_CDE = value;
-                OnPropertyChanged("GAG_CDE");
+                this.__PGA_CDE = value;
+                OnPropertyChanged("PGA_CDE");
             }
         }
-        private string __GAG_NAM;
-        public string GAG_NAM
+        private string __PGA_NAM;
+        public string PGA_NAM
         {
-            get { return __GAG_NAM; }
+            get { return __PGA_NAM; }
             set
             {
-                this.__GAG_NAM = value;
-                OnPropertyChanged("GAG_NAM");
+                this.__PGA_NAM = value;
+                OnPropertyChanged("PGA_NAM");
             }
         }
         private string __MOF_CDE;
@@ -157,14 +157,54 @@ namespace GTI.WFMS.Models.Pipe.Model
                 OnPropertyChanged("MOF_NAM");
             }
         }
-        private decimal __FLO_DIP;
-        public decimal FLO_DIP
+        private decimal __PGA_DIP;
+        public decimal PGA_DIP
         {
-            get { return __FLO_DIP; }
+            get { return __PGA_DIP; }
             set
             {
-                this.__FLO_DIP = value;
-                OnPropertyChanged("FLO_DIP");
+                this.__PGA_DIP = value;
+                OnPropertyChanged("PGA_DIP");
+            }
+        }
+        private decimal __STD_SAF;
+        public decimal STD_SAF
+        {
+            get { return __STD_SAF; }
+            set
+            {
+                this.__STD_SAF = value;
+                OnPropertyChanged("STD_SAF");
+            }
+        }
+        private decimal __AVG_SAF;
+        public decimal AVG_SAF
+        {
+            get { return __AVG_SAF; }
+            set
+            {
+                this.__AVG_SAF = value;
+                OnPropertyChanged("AVG_SAF");
+            }
+        }
+        private decimal __MSR_SAF;
+        public decimal MSR_SAF
+        {
+            get { return __MSR_SAF; }
+            set
+            {
+                this.__MSR_SAF = value;
+                OnPropertyChanged("MSR_SAF");
+            }
+        }
+        private decimal __PIP_DIP;
+        public decimal PIP_DIP
+        {
+            get { return __PIP_DIP; }
+            set
+            {
+                this.__PIP_DIP = value;
+                OnPropertyChanged("PIP_DIP");
             }
         }
         private string __PRD_NAM;
@@ -185,6 +225,16 @@ namespace GTI.WFMS.Models.Pipe.Model
             {
                 this.__PIP_CDE = value;
                 OnPropertyChanged("PIP_CDE");
+            }
+        }
+        private int __PIP_IDN;
+        public int PIP_IDN
+        {
+            get { return __PIP_IDN; }
+            set
+            {
+                this.__PIP_IDN = value;
+                OnPropertyChanged("PIP_IDN");
             }
         }
         private string __CNT_NUM;
@@ -226,26 +276,6 @@ namespace GTI.WFMS.Models.Pipe.Model
                 this.__ANG_DIR = value;
                 OnPropertyChanged("ANG_DIR");
             }
-        }
-        private int __PIP_IDN;
-        public int PIP_IDN
-        {
-            get { return __PIP_IDN; }
-            set
-            {
-                this.__PIP_IDN = value;
-                OnPropertyChanged("PIP_IDN");
-            }
-        }
-        private string __SHT_CDE;
-        public string SHT_CDE
-        {
-            get { return __SHT_CDE; }
-            set
-            {
-                this.__SHT_CDE = value;
-                OnPropertyChanged("SHT_CDE");
-            }
-        }
+        }        
     }
 }

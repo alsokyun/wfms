@@ -10,7 +10,7 @@
       SELECT COUNT(1) AS ROWCNT
       FROM INFOFMS.WTL_FLOW_PS A
       WHERE 1=1
-      <!-- 조건1. 관리기관 -->
+        <!-- 조건1. 관리기관 -->
         <isNotEmpty prepend="AND" property="MNG_CDE">
           A.MNG_CDE = #MNG_CDE#
         </isNotEmpty>
@@ -92,7 +92,7 @@
             , CASE WHEN ST_ISVALID(A.GEOM) = 1 THEN 'Y' ELSE 'N' END AS IS_GEOMETRY
          FROM INFOFMS.WTL_FLOW_PS A
         WHERE 1=1
-      <!-- 조건1. 관리기관 -->
+        <!-- 조건1. 관리기관 -->
         <isNotEmpty prepend="AND" property="MNG_CDE">
           A.MNG_CDE = #MNG_CDE#
         </isNotEmpty>
@@ -127,24 +127,24 @@
           A.IST_YMD <![CDATA[<=]]> decode(length(#IST_YMD_TO#), 10, to_char(to_date(#IST_YMD_TO#, 'yyyy-MM-dd'), 'yyyyMMdd'), '')
         </isNotEmpty>
 
-        <!-- 조건8. 규격 -->
-        <isNotEmpty prepend="AND" property="MAN_STD">
-          A.MAN_STD = #MAN_STD#
+        <!-- 조건8. 유량계종류 -->
+        <isNotEmpty prepend="AND" property="GAG_CDE">
+          A.GAG_CDE = #GAG_CDE#
         </isNotEmpty>
 
-        <!-- 조건9. 맨홀종류 -->
-        <isNotEmpty prepend="AND" property="SOM_CDE">
-          A.SOM_CDE = #SOM_CDE#
+        <!-- 조건9. 형식 -->
+        <isNotEmpty prepend="AND" property="MOF_CDE">
+          A.MOF_CDE = #MOF_CDE#
         </isNotEmpty>
 
-        <!-- 조건10. 맨홀형태 -->
-        <isNotEmpty prepend="AND" property="MHS_CDE">
-          A.MHS_CDE = #MHS_CDE#
+        <!-- 조건10. 구경 -->
+        <isNotEmpty prepend="AND" property="FLO_DIP">
+          A.FLO_DIP = #FLO_DIP#
         </isNotEmpty>
 
-        <!-- 조건11. 방향각 -->
-        <isNotEmpty prepend="AND" property="ANG_DIR">
-          A.ANG_DIR = #ANG_DIR#
+        <!-- 조건11. 제작회사명 -->
+        <isNotEmpty prepend="AND" property="PRD_NAM">
+          A.PRD_NAM = #PRD_NAM#
         </isNotEmpty>
 
         ORDER BY FTR_IDN DESC
