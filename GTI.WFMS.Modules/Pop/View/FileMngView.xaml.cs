@@ -56,6 +56,5 @@ namespace GTI.WFMS.Modules.Pop.View
             e.Handled = true;
         }
 
-
     }
 }

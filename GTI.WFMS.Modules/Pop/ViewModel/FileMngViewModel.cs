@@ -18,6 +18,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Input;
 using System.Windows.Threading;
 
 namespace GTI.WFMS.Modules.Pop.ViewModel
@@ -166,6 +167,29 @@ namespace GTI.WFMS.Modules.Pop.ViewModel
             });
 
 
+            //윈도우 마우스드래그
+            WindowMoveCommand = new DelegateCommand<object>(delegate (object obj)
+            {
+                try
+                {
+                    if (Mouse.LeftButton == MouseButtonState.Pressed)
+                    {
+                        if (fileMngView.WindowState == WindowState.Maximized)
+                        {
+                            fileMngView.Top = Mouse.GetPosition(fileMngView).Y - System.Windows.Forms.Cursor.Position.Y - 6;
+                            fileMngView.Left = System.Windows.Forms.Cursor.Position.X - Mouse.GetPosition(fileMngView).X + 20;
+
+                            fileMngView.WindowState = WindowState.Normal;
+                        }
+                        fileMngView.DragMove();
+                    }
+                }
+                catch (Exception ex)
+                {
+                    Messages.ShowErrMsgBoxLog(ex);
+                }
+            });
+
 
 
         }
@@ -226,7 +250,9 @@ namespace GTI.WFMS.Modules.Pop.ViewModel
         public RelayCommand<object> RemoveCmd { get; set; } 
         public RelayCommand<object> FindFileCmd { get; set; }
         public RelayCommand<object> DownloadCmd { get; set; }
-        
+
+        public DelegateCommand<object> WindowMoveCommand { get; set; }
+
         private string __FIL_SEQ;
 
 

@@ -141,6 +141,10 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
+    <Page Include="Link\View\AttFacListView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
     <Page Include="Link\View\RefFileMngView.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -233,13 +237,13 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="Pop\View\FileMngView.xaml">
+    <Page Include="Pop\View\AttFacDtlView.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="Pop\View\UserControl1.xaml">
-      <SubType>Designer</SubType>
+    <Page Include="Pop\View\FileMngView.xaml">
       <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
     </Page>
   </ItemGroup>
   <ItemGroup>
@@ -293,6 +297,9 @@
     </Compile>
     <Compile Include="Link\View\ChscResSubListView.xaml.cs">
       <DependentUpon>ChscResSubListView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Link\View\AttFacListView.xaml.cs">
+      <DependentUpon>AttFacListView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Link\View\RefFileMngView.xaml.cs">
       <DependentUpon>RefFileMngView.xaml</DependentUpon>
@@ -385,11 +392,11 @@
       <DependentUpon>WtsMnhoListView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Pop\ViewModel\FileMngViewModel.cs" />
+    <Compile Include="Pop\View\AttFacDtlView.xaml.cs">
+      <DependentUpon>AttFacDtlView.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Pop\View\FileMngView.xaml.cs">
       <DependentUpon>FileMngView.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Pop\View\UserControl1.xaml.cs">
-      <DependentUpon>UserControl1.xaml</DependentUpon>
     </Compile>
   </ItemGroup>
   <ItemGroup>

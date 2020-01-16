@@ -71,24 +71,62 @@
     <!--부속시설 세부현황 조회-->
     <select id="SelectCmmWttAttaDtList" resultClass="Hashtable">
       SELECT
-      ATT_IDN
-      , FTR_CDE
-      , FTR_IDN
-      , ATT_NAM
-      , ATT_DES
-      , ATTA_SEQ
-      FROM WTT_ATTA_DT
+      A.ATT_IDN
+      , A.FTR_CDE	,F.FTR_NAM
+      , A.FTR_IDN
+      , A.ATT_NAM
+      , A.ATT_DES
+      , A.ATTA_SEQ
+      , A.CRE_YY
+      FROM WTT_ATTA_DT A
+      LEFT JOIN INFOFMS.V_FTR_CDE F ON A.FTR_CDE = F.FTR_CDE
       WHERE 1=1
-      AND FTR_CDE=#FTR_CDE#
-      AND FTR_CDE=#FTR_CDE#
+      AND A.FTR_CDE=#FTR_CDE#
+      AND A.FTR_IDN=#FTR_IDN#
       <isNotEmpty prepend="AND" property="ATT_IDN">
-        ATT_IDN = #ATT_IDN#
+        A.ATT_IDN = #ATT_IDN#
       </isNotEmpty>
       <isNotEmpty prepend="AND" property="FTR_CDE">
-        FTR_CDE LIKE '%' || #FTR_CDE# || '%'
+        A.FTR_CDE LIKE '%' || #FTR_CDE# || '%'
       </isNotEmpty>
-      ORDER BY ATT_IDN DESC
+      ORDER BY A.ATT_IDN DESC
     </select>
+
+    
+    <!-- 부속시설 저장 -->
+    <update id="SaveWttAttaDt" parameterClass="Hashtable">
+      MERGE INTO WTT_ATTA_DT
+      USING DUAL ON ( FTR_CDE=#FTR_CDE# AND FTR_IDN=#FTR_IDN# AND ATTA_SEQ=#ATTA_SEQ#  )
+
+      WHEN MATCHED THEN
+
+      UPDATE
+      SET ATT_IDN=#ATT_IDN#
+      , ATT_NAM=#ATT_NAM#
+      , ATT_DES=#ATT_DES#
+      , CRE_YY = #CRE_YY#
+
+      WHEN NOT MATCHED THEN
+      INSERT
+      ( FTR_CDE
+      , FTR_IDN
+      , ATTA_SEQ
+      , ATT_IDN
+      , ATT_NAM
+      , ATT_DES
+      , CRE_YY
+      )
+      VALUES ( #FTR_CDE#
+      , #FTR_IDN#
+      , (SELECT NVL(MAX(PAY_NUM),0)+1 as PAY_NUM FROM WTT_ATTA_DT WHERE FTR_CDE=#FTR_CDE# AND FTR_IDN=#FTR_IDN#)
+      , #ATT_IDN#
+      , #ATT_NAM#
+      , #ATT_DES#
+      , #CRE_YY#
+      )
+    </update>    
+
+
 
 
   </statements>
