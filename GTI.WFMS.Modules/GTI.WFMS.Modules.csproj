@@ -161,6 +161,18 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
+    <Page Include="Pipe\View\WtprMtAddView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Pipe\View\WtprMtDtlView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Pipe\View\WtprMtListView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
     <Page Include="Pipe\View\StndPiAddView.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -291,6 +303,9 @@
     <Compile Include="Pipe\ViewModel\FireFacAddViewModel.cs" />
     <Compile Include="Pipe\ViewModel\FireFacDtlViewModel.cs" />
     <Compile Include="Pipe\ViewModel\FireFacListViewModel.cs" />
+    <Compile Include="Pipe\ViewModel\WtprMtAddViewModel.cs" />
+    <Compile Include="Pipe\ViewModel\WtprMtDtlViewModel.cs" />
+    <Compile Include="Pipe\ViewModel\WtprMtListViewModel.cs" />
     <Compile Include="Pipe\ViewModel\StndPiAddViewModel.cs" />
     <Compile Include="Pipe\ViewModel\StndPiDtlViewModel.cs" />
     <Compile Include="Pipe\ViewModel\StndPiListViewModel.cs" />
@@ -314,6 +329,15 @@
     </Compile>
     <Compile Include="Pipe\View\FireFacListView.xaml.cs">
       <DependentUpon>FireFacListView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Pipe\View\WtprMtAddView.xaml.cs">
+      <DependentUpon>WtprMtAddView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Pipe\View\WtprMtDtlView.xaml.cs">
+      <DependentUpon>WtprMtDtlView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Pipe\View\WtprMtListView.xaml.cs">
+      <DependentUpon>WtprMtListView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Pipe\View\StndPiAddView.xaml.cs">
       <DependentUpon>StndPiAddView.xaml</DependentUpon>
