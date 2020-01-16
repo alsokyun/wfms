@@ -66,6 +66,12 @@ namespace GTI.WFMS.Modules.Pipe.View
             DXTabItem tab03 = new DXTabItem();
             tab03.Header = "누수지점 및 복구내역";
             tabSubMenu.Items.Add(tab03);
+
+            DXTabItem tab04 = new DXTabItem();
+            tab04.Header = "부속시설세부현황";
+            tab04.Content = new AttFacListView(FTR_CDE, FTR_IDN);
+            tabSubMenu.Items.Add(tab04);
+
         }
 
         // 목록으로 뒤로가기

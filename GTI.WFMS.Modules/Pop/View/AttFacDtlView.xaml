@@ -1,4 +1,5 @@
-﻿<Window xmlns:dxe="http://schemas.devexpress.com/winfx/2008/xaml/editors"  x:Class="GTI.WFMS.Modules.Pop.View.AttFacDtlView"
+﻿<Window xmlns:dxe="http://schemas.devexpress.com/winfx/2008/xaml/editors"  
+        x:Class="GTI.WFMS.Modules.Pop.View.AttFacDtlView"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
@@ -7,17 +8,30 @@
         Title="AttFacDtlView" Height="380" Width="600"
         
         xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
-
+        xmlns:vm="clr-namespace:GTI.WFMS.Modules.Pop.ViewModel"
+        xmlns:cm="clr-namespace:GTIFramework.Common.Utils.Converters;assembly=GTIFramework"
         
         WindowStyle="None" WindowStartupLocation="CenterScreen"
         Style="{DynamicResource PopupWindow}"
+        x:Name="attFacDtlView"
         >
 
+    <Window.DataContext>
+        <vm:AttFacDtlViewModel/>
+    </Window.DataContext>
+
+    <Window.Resources>
+        <cm:MultiValueConverter x:Key="multiValueConverter"/>
+    </Window.Resources>
+
     <DockPanel >
-        <Grid DockPanel.Dock="Top" Height="40" Margin="10 0 5 0" x:Name="bdTitle">
-            <Label Grid.Row="1" Content="세부부속시설 관리" FontSize="18" FontWeight="Bold" Foreground="White" HorizontalAlignment="Left" VerticalAlignment="Center"/>
-            <Button x:Name="btnXSignClose" Grid.Row="1" Grid.Column="3" Grid.ColumnSpan="3" Style="{DynamicResource XSignCloseButton}" Margin="0,10,10,0"/>
-        </Grid>
+        <DockPanel DockPanel.Dock="Top" Height="40" Margin="10 0 5 0">
+            <Label DockPanel.Dock="Left" Content="세부부속시설 관리                                                                             end" 
+                   FontSize="18" FontWeight="Bold" Foreground="White"  
+                   Width="530" VerticalContentAlignment="Center"
+                   x:Name="bdTitle" PreviewMouseLeftButtonDown="BdTitle_PreviewMouseLeftButtonDown"/>
+            <Button DockPanel.Dock="Right" x:Name="btnClose" Style="{DynamicResource XSignCloseButton}" Margin="10" Click="BtnClose_Click" />
+        </DockPanel>
 
         <Grid  Background="{DynamicResource PopCOLOR2Brush}" >
             <Grid.RowDefinitions>
@@ -86,35 +100,48 @@
 
 
                 <Label Grid.Row="0" Grid.Column="0" Content="관리번호" Style="{DynamicResource ResourceKey=GridLabelReq}"/>
-                <dxe:TextEdit Grid.Row="0" Grid.Column="1" Style="{DynamicResource ResourceKey=GrdTextEdit}"  
-                          x:Name="txtFTR_IDN" EditValue="{Binding FTR_IDN}"/>
+                <dxe:TextEdit Grid.Row="0" Grid.Column="1" Style="{DynamicResource ResourceKey=GrdTextEdit}"  IsEnabled="False"
+                          x:Name="txtFTR_IDN" EditValue="{Binding FTR_IDN, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+
                 <Label Grid.Row="0" Grid.Column="2" Content="지형지물" Style="{DynamicResource ResourceKey=GridLabelReq}"/>
-                <dxe:TextEdit Grid.Row="0" Grid.Column="3" Style="{DynamicResource ResourceKey=GrdTextEdit}"  
+                <dxe:TextEdit Grid.Row="0" Grid.Column="3" Style="{DynamicResource ResourceKey=GrdTextEdit}"  IsEnabled="False" 
                           x:Name="txtFTR_NAM" EditValue="{Binding FTR_NAM}"/>
+                <!--키값-->
+                <TextBlock Grid.Row="0" Grid.Column="3" x:Name="txtFTR_CDE" Text="{Binding FTR_CDE, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Visibility="Collapsed"/>
+                <TextBlock Grid.Row="0" Grid.Column="3" x:Name="txtATTA_SEQ" Text="{Binding ATTA_SEQ, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Visibility="Collapsed"/>
 
                 <Label Grid.Row="1" Grid.Column="0" Content="세부시설번호" Style="{DynamicResource ResourceKey=GridLabelReq}"/>
-                <dxe:TextEdit Grid.Row="1" Grid.Column="1" Style="{DynamicResource ResourceKey=GrdTextEdit}"  
-                          x:Name="txtATT_IDN" EditValue="{Binding ATT_IDN}"/>
+                <dxe:TextEdit Grid.Row="1" Grid.Column="1" Style="{DynamicResource ResourceKey=GrdTextEdit}" Tag="세부시설번호"
+                          x:Name="txtATT_IDN" EditValue="{Binding ATT_IDN, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+
                 <Label Grid.Row="1" Grid.Column="2" Content="설치년도" Style="{DynamicResource ResourceKey=GridLabel}"/>
                 <dxe:ComboBoxEdit Grid.Row="1" Grid.Column="3" Style="{DynamicResource ResourceKey=GrdComboBox}" 
                               x:Name="cbCRE_YY" EditValue="{Binding CRE_YY,Mode=TwoWay}" />
 
                 <Label Grid.Row="2" Grid.Column="0" Content="세부시설명" Style="{DynamicResource ResourceKey=GridLabel}"/>
                 <dxe:TextEdit Grid.Row="2" Grid.Column="1" Grid.ColumnSpan="3" Style="{DynamicResource ResourceKey=GrdTextEdit}"  
-                          x:Name="txtATT_NAM" EditValue="{Binding ATT_NAM}"/>
+                          x:Name="txtATT_NAM" EditValue="{Binding ATT_NAM,Mode=TwoWay}"/>
 
                 <Label Grid.Row="3" Grid.Column="0" Content="시설개요" Style="{DynamicResource ResourceKey=GridLabel}"/>
                 <dxe:TextEdit Grid.Row="3" Grid.Column="1" Grid.ColumnSpan="3" Style="{DynamicResource ResourceKey=GrdTextEdit}"  
-                          x:Name="txtATT_DES" EditValue="{Binding ATT_DES}" 
-                          TextWrapping="Wrap" AcceptsReturn="True" VerticalContentAlignment="Top" Height="86"
-                          />
+                          x:Name="txtATT_DES" EditValue="{Binding ATT_DES,Mode=TwoWay}" Height="90"
+                            VerticalContentAlignment="Top" AcceptsReturn="True" AcceptsTab="True" TextWrapping="WrapWithOverflow"
+                              />
+
             </Grid>
 
 
         </Grid>
-        
+
     </DockPanel>
-    
+
+
+    <!--뷰와 연결된 뷰모델로 Loaded 이벤트전파-->
+    <i:Interaction.Triggers>
+        <i:EventTrigger EventName="Loaded">
+            <i:InvokeCommandAction Command="{Binding LoadedCommand}" CommandParameter="{Binding ElementName=attFacDtlView}"/>
+        </i:EventTrigger>
+    </i:Interaction.Triggers>
 
 
 

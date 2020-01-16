@@ -344,6 +344,7 @@
       <DependentUpon>WtsMnhoListView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Pop\ViewModel\FileMngViewModel.cs" />
+    <Compile Include="Pop\ViewModel\AttFacDtlViewModel.cs" />
     <Compile Include="Pop\View\AttFacDtlView.xaml.cs">
       <DependentUpon>AttFacDtlView.xaml</DependentUpon>
     </Compile>

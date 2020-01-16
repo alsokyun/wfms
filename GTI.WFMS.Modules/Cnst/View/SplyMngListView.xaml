@@ -237,12 +237,8 @@
         </dxe:DataPager>
 
 
-        <Button Grid.Row="2" Grid.Column="2" Content="VM생성" Width="50" Height="30" HorizontalAlignment="Left">
-            <i:Interaction.Triggers>
-                <i:EventTrigger EventName="Click">
-                    <i:InvokeCommandAction Command="{Binding btnCmd}" />
-                </i:EventTrigger>
-            </i:Interaction.Triggers>
+        <Button Grid.Row="2" Grid.Column="2" Content="VM생성" Command="{Binding btnCmd}" 
+                Width="50" Height="30" HorizontalAlignment="Left">
         </Button>
 
     </Grid>
