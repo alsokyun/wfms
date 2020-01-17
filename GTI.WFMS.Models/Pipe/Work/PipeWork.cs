@@ -37,6 +37,5 @@ namespace GTI.WFMS.Models.Pipe.Work
         {
             return dao.SelectFireFacList(conditions);
         }
-
     }
 }

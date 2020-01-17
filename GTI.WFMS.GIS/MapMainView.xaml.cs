@@ -1,11 +1,5 @@
-﻿using Esri.ArcGISRuntime.Data;
-using Esri.ArcGISRuntime.Mapping;
-using Esri.ArcGISRuntime.Symbology;
-using GTIFramework.Common.Utils.ViewEffect;
+﻿using GTIFramework.Common.Utils.ViewEffect;
 using System;
-using System.Collections.Generic;
-using System.Drawing;
-using System.IO;
 using System.Windows;
 using System.Windows.Controls;
 
@@ -20,15 +14,7 @@ namespace GTI.WFMS.GIS
     {
         public MapMainView()
         {
-            try
-            {
-                InitializeComponent();
-
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine(ex.ToString());
-            }
+            InitializeComponent();
 
 
             //스타일로딩

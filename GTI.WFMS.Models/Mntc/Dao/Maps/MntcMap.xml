@@ -1,0 +1,71 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<sqlMap namespace="Main" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://ibatis.apache.org/mapping">
+  <statements>
+
+    <!--점검목록-->
+    <select id="SelectChscMaList"  resultClass="Hashtable">
+      SELECT A.SCL_NUM
+      , A.SCL_CDE
+      , C2.NM AS SCL_NM
+      , A.SCL_STAT_CDE
+      , nvl(C.NM,'점검등록') AS SCL_STAT_NM
+
+      , case when A.SCL_STAT_CDE = 'SCL_STAT_CDE01' then '35495f'
+      when A.SCL_STAT_CDE = 'SCL_STAT_CDE02' then '3b81cb'
+      when A.SCL_STAT_CDE = 'SCL_STAT_CDE03' then 'fd7e02'
+      else '35495f' end AS COLOR
+
+      , A.MNG_CDE, A.TIT_NAM
+      ,case when length(A.STA_YMD) = 8 then substr(A.STA_YMD,1,4) || '-' || substr(A.STA_YMD,5,2) || '-' || substr(A.STA_YMD,7,2) else '' end  as STA_YMD
+      ,case when length(A.END_YMD) = 8 then substr(A.END_YMD,1,4) || '-' || substr(A.END_YMD,5,2) || '-' || substr(A.END_YMD,7,2) else '' end  as END_YMD
+      , A.CKM_GRP_NM, A.CKM_PEO, A.CHK_CTNT
+      ,case when length(A.CHK_APR_YMD) = 8 then substr(A.CHK_APR_YMD,1,4) || '-' || substr(A.CHK_APR_YMD,5,2) || '-' || substr(A.CHK_APR_YMD,7,2) else '' end  as CHK_APR_YMD
+      ,case when length(A.CHK_APR_USR) = 8 then substr(A.CHK_APR_USR,1,4) || '-' || substr(A.CHK_APR_USR,5,2) || '-' || substr(A.CHK_APR_USR,7,2) else '' end  as CHK_APR_USR
+      ,case when length(A.CHK_CMP_YMD) = 8 then substr(A.CHK_CMP_YMD,1,4) || '-' || substr(A.CHK_CMP_YMD,5,2) || '-' || substr(A.CHK_CMP_YMD,7,2) else '' end  as CHK_CMP_YMD
+      ,case when length(A.CHK_RESULT_YMD) = 8 then substr(A.CHK_RESULT_YMD,1,4) || '-' || substr(A.CHK_RESULT_YMD,5,2) || '-' || substr(A.CHK_RESULT_YMD,7,2) else '' end  as CHK_RESULT_YMD
+      , U.USER_NM
+      , to_char(A.CRE_YMD,'yyyy-mm-dd') CRE_YMD
+      , A.CRE_USR
+      , to_char(A.UPD_YMD,'yyyy-mm-dd') UPD_YMD
+      , A.UPD_USR
+
+      FROM FMS_CHSC_MA A
+      LEFT JOIN INFOUSER.CD_DTL_INFO C ON A.SCL_STAT_CDE = C.DTL_CD
+      LEFT JOIN INFOUSER.CD_DTL_INFO C2 ON A.SCL_CDE = C2.DTL_CD
+      LEFT JOIN INFOUSER.SYS_USER_INFO U ON A.CRE_USR = U.USER_ID
+      WHERE 1=1
+      <isNotEmpty prepend="AND" property="MNG_CDE">
+        A.MNG_CDE LIKE #MNG_CDE#
+      </isNotEmpty>
+      <isNotEmpty prepend="AND" property="SCL_CDE">
+        A.SCL_CDE LIKE #SCL_CDE#
+      </isNotEmpty>
+      <isNotEmpty prepend="AND" property="SCL_STAT_CDE">
+        A.SCL_STAT_CDE LIKE #SCL_STAT_CDE#
+      </isNotEmpty>
+
+      <isNotEmpty prepend="AND" property="TIT_NAM">
+        A.TIT_NAM LIKE '%' || #TIT_NAM# || '%'
+      </isNotEmpty>
+      <isNotEmpty prepend="AND" property="CKM_PEO">
+        A.CKM_PEO LIKE '%' || #CKM_PEO# || '%'
+      </isNotEmpty>
+
+      <isNotEmpty prepend="AND" property="STA_YMD">
+        A.STA_YMD <![CDATA[>=]]> TO_CHAR(TO_DATE(#STA_YMD#, 'yyyy-MM-dd'), 'yyyyMMdd')
+      </isNotEmpty>
+      <isNotEmpty prepend="AND" property="END_YMD">
+        A.END_YMD <![CDATA[<=]]> TO_CHAR(TO_DATE(#END_YMD#, 'yyyy-MM-dd'), 'yyyyMMdd')
+      </isNotEmpty>
+
+
+    </select>
+
+
+    <!--급수전대장 삭제-->
+    <update id="_deleteSplyDtl" parameterClass="GTI.WFMS.Modules.Cnst.Model.SplyDtl">
+    </update>
+
+  </statements>
+  
+</sqlMap>

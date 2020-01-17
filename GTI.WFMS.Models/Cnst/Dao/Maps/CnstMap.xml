@@ -369,16 +369,17 @@
 
       <!-- 공사비지급내역 목록	 -->
     <select id ="SelectWttCostDtList" parameterClass="Hashtable" resultClass ="Hashtable">
-			SELECT COST_SEQ,
-				CNT_NUM, 
-				PAY_NUM, 
-				PTY_CDE, 
-				decode(length(PAY_YMD), 8, to_char(to_date(PAY_YMD, 'yyyyMMdd'), 'yyyy-MM-dd'), '') AS PAY_YMD, 
-				PAY_AMT
-				
-			FROM WTT_COST_DT
-			WHERE 1=1 
-			<isNotEmpty prepend="AND">
+      SELECT COST_SEQ,
+      CNT_NUM,
+      PAY_NUM,
+      PTY_CDE,
+      NVL(PAY_YMD, '') AS PAY_YMD,
+      PAY_AMT
+      , NULL AS CHK
+
+      FROM WTT_COST_DT
+      WHERE 1=1
+      <isNotEmpty prepend="AND">
 				CNT_NUM = #CNT_NUM#
 			</isNotEmpty>
 			
@@ -427,22 +428,23 @@
 
     <!-- 설정변경내역 목록	 -->
     <select id ="SelectWttChngDtList" parameterClass="Hashtable" resultClass ="Hashtable">
-			SELECT
-				  CNT_NUM
-				, CHNG_SEQ
-				, CHG_NUM
-				, decode(length(CHG_YMD), 8, to_char(to_date(CHG_YMD, 'yyyyMMdd'), 'yyyy-MM-dd'), '') AS CHG_YMD
-				, INC_AMT
-				, IGV_AMT
-				, CHG_AMT
-				, CHG_DES
-				, CGV_DES
-				, ATT_USR
-				, decode(length(ATT_TIM), 8, to_char(to_date(ATT_TIM, 'yyyyMMdd'), 'yyyy-MM-dd'), '') AS ATT_TIM
-			FROM WTT_CHNG_DT
-					
-			WHERE 1=1
-			<isNotEmpty prepend="AND">
+      SELECT
+      CNT_NUM
+      , CHNG_SEQ
+      , CHG_NUM
+      , decode(length(CHG_YMD), 8, to_char(to_date(CHG_YMD, 'yyyyMMdd'), 'yyyy-MM-dd'), '') AS CHG_YMD
+      , INC_AMT
+      , IGV_AMT
+      , CHG_AMT
+      , CHG_DES
+      , CGV_DES
+      , ATT_USR
+      , decode(length(ATT_TIM), 8, to_char(to_date(ATT_TIM, 'yyyyMMdd'), 'yyyy-MM-dd'), '') AS ATT_TIM
+      , NULL AS CHK
+      FROM WTT_CHNG_DT
+
+      WHERE 1=1
+      <isNotEmpty prepend="AND">
 				CNT_NUM = #CNT_NUM#
 			</isNotEmpty>
 			
@@ -505,18 +507,35 @@
 
     <!-- 공사하도급 목록	 -->
     <select id ="SelectWttSubcDtList" parameterClass="Hashtable" resultClass ="Hashtable">
-			SELECT	CNT_NUM, SUBC_SEQ
-					, SUB_NUM
-					, SUB_NAM
-					, PSB_NAM
-					, SUB_ADR
-					, SUB_TEL
-			FROM WTT_SUBC_DT
-			WHERE 1=1
-			<isNotEmpty prepend="AND">
-				CNT_NUM = #CNT_NUM#
-			</isNotEmpty>
-			ORDER BY SUB_NUM DESC
+      SELECT	CNT_NUM, SUBC_SEQ
+      , SUB_NUM
+      , SUB_NAM
+      , PSB_NAM
+      , SUB_ADR
+      , SUB_TEL
+      , NULL AS CHK
+      FROM WTT_SUBC_DT
+      WHERE 1=1
+      <isNotEmpty prepend="AND">
+        CNT_NUM = #CNT_NUM#
+      </isNotEmpty>
+      ORDER BY SUB_NUM DESC
+    </select>
+
+    <!-- 공사하도급 목록	 -->
+    <select id ="SelectWttSubcDtList2" parameterClass="Hashtable" resultClass ="GTI.WFMS.Modules.Cnst.Model.WttSubcDt">
+      SELECT	CNT_NUM, SUBC_SEQ
+      , SUB_NUM
+      , SUB_NAM
+      , PSB_NAM
+      , SUB_ADR
+      , SUB_TEL
+      FROM WTT_SUBC_DT
+      WHERE 1=1
+      <isNotEmpty prepend="AND">
+        CNT_NUM = #CNT_NUM#
+      </isNotEmpty>
+      ORDER BY SUB_NUM DESC
     </select>
 
     <update id="DeleteWttSubcDt"  parameterClass="Hashtable">
@@ -568,6 +587,7 @@
 			, decode(length(FLA_YMD), 8, to_char(to_date(FLA_YMD, 'yyyyMMdd'), 'yyyy-MM-dd'), '') AS FLA_YMD
 			, decode(length(RPR_YMD), 8, to_char(to_date(RPR_YMD, 'yyyyMMdd'), 'yyyy-MM-dd'), '') AS RPR_YMD
 			, RPR_DES
+      , NULL AS CHK
 		FROM WTT_FLAW_DT
 		WHERE 1=1
 		<isNotEmpty prepend="AND">

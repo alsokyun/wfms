@@ -1,4 +1,5 @@
-﻿using System.Windows.Controls;
+﻿using GTIFramework.Common.Utils.ViewEffect;
+using System.Windows.Controls;
 
 namespace GTI.WFMS.Modules.Adm
 {
@@ -10,6 +11,9 @@ namespace GTI.WFMS.Modules.Adm
         public UcCodeMngView()
         {
             InitializeComponent();
+
+            // 테마일괄적용...
+            ThemeApply.Themeapply(this);
         }
     }
 }

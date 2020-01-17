@@ -200,7 +200,7 @@ namespace GTI.WFMS.Modules.Adm
             {
                 DataRow drNew = ((DataTable)MSTgrid.ItemsSource).NewRow();
                 drNew["MST_CD"] = "";
-                drNew["CD_NM"] = "";
+                drNew["NM"] = "";
                 drNew["ETC"] = "";
                 drNew["ORD"] = "0";
                 drNew["USE_YN"] = "Y";
@@ -228,7 +228,7 @@ namespace GTI.WFMS.Modules.Adm
                 foreach (DataRow dr in ((DataTable)MSTgrid.ItemsSource).Rows)
                 {
                     dr["MST_CD"] = dr["MST_CD"].ToString().Trim();
-                    dr["CD_NM"] = dr["CD_NM"].ToString().Trim();
+                    dr["NM"] = dr["NM"].ToString().Trim();
                     if (!dr["ORD"].ToString().Equals(""))
                     {
                         dr["ORD"] = dr["ORD"].ToString().Trim();
@@ -241,7 +241,7 @@ namespace GTI.WFMS.Modules.Adm
                         return;
                     }
 
-                    if (dr["CD_NM"].ToString().Equals(""))
+                    if (dr["NM"].ToString().Equals(""))
                     {
                         Messages.ShowInfoMsgBox("상위코드명은 필수 입력 항목입니다.");
                         return;
@@ -254,7 +254,7 @@ namespace GTI.WFMS.Modules.Adm
                     {
                         conditions.Clear();
                         conditions.Add("MST_CD", dr["MST_CD"].ToString());
-                        conditions.Add("CD_NM", dr["CD_NM"].ToString());
+                        conditions.Add("NM", dr["NM"].ToString());
 
                         conditions.Add("USE_YN", dr["USE_YN"].ToString());//토글컨버터적용됨
 
@@ -302,7 +302,7 @@ namespace GTI.WFMS.Modules.Adm
                     drNew["MST_CD"] = SEL_MST_CD ;
                     drNew["USE_YN"] = "Y";
                     drNew["DTL_CD"] = "";
-                    drNew["CD_NM"] = "";
+                    drNew["NM"] = "";
                     drNew["ETC"] = "";
                     drNew["ORD"] = "0";
                     ((DataTable)DTLgrid.ItemsSource).Rows.Add(drNew);
@@ -340,7 +340,7 @@ namespace GTI.WFMS.Modules.Adm
                 foreach (DataRow dr in ((DataTable)DTLgrid.ItemsSource).Rows)
                 {
                     dr["DTL_CD"] = dr["DTL_CD"].ToString().Trim();
-                    dr["CD_NM"] = dr["CD_NM"].ToString().Trim();
+                    dr["NM"] = dr["NM"].ToString().Trim();
                     if (!dr["ORD"].ToString().Equals(""))
                     {
                         dr["ORD"] = dr["ORD"].ToString().Trim();
@@ -353,7 +353,7 @@ namespace GTI.WFMS.Modules.Adm
                         return;
                     }
 
-                    if (dr["CD_NM"].ToString().Equals(""))
+                    if (dr["NM"].ToString().Equals(""))
                     {
                         Messages.ShowInfoMsgBox("하위코드명은 필수 입력 항목입니다.");
                         return;
@@ -367,7 +367,7 @@ namespace GTI.WFMS.Modules.Adm
                         conditions.Clear();
                         conditions.Add("MST_CD", dr["MST_CD"].ToString());
                         conditions.Add("DTL_CD", dr["DTL_CD"].ToString());
-                        conditions.Add("CD_NM", dr["CD_NM"].ToString());
+                        conditions.Add("NM", dr["NM"].ToString());
 
                         conditions.Add("USE_YN", dr["USE_YN"].ToString());//토글컨버터적용됨
 

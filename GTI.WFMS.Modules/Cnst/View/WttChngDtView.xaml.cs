@@ -68,7 +68,19 @@ namespace GTI.WFMS.Modules.Cnst.View
         /// <param name="e"></param>
         private void AllChk_Checked(object sender, RoutedEventArgs e)
         {
-
+            //CheckEdit ce = sender as CheckEdit;
+            //bool chk = ce.IsChecked is bool;
+            foreach (DataRow dr in ((DataTable)grid.ItemsSource).Rows)
+            {
+                dr["CHK"] = "Y";
+            }
+        }
+        private void AllChk_Unchecked(object sender, RoutedEventArgs e)
+        {
+            foreach (DataRow dr in ((DataTable)grid.ItemsSource).Rows)
+            {
+                dr["CHK"] = "N";
+            }
         }
 
 
@@ -83,7 +95,58 @@ namespace GTI.WFMS.Modules.Cnst.View
         //행삭제
         private void BtnDel_Click(object sender, RoutedEventArgs e)
         {
-            gv.DeleteRow(gv.FocusedRowHandle);
+            //gv.DeleteRow(gv.FocusedRowHandle);
+
+            //데이터 직접삭제처리
+            try
+            {
+                bool isChecked = false;
+                foreach (DataRow dr in ((DataTable)grid.ItemsSource).Rows)
+                {
+                    if ("Y".Equals(dr["CHK"]))
+                    {
+                        isChecked = true;
+                        break;
+                    }
+                }
+                if (!isChecked)
+                {
+                    Messages.ShowInfoMsgBox("선택된 항목이 없습니다.");
+                    return;
+                }
+
+
+                if (Messages.ShowYesNoMsgBox("선택 항목을 삭제 하시겠습니까?") == MessageBoxResult.Yes)
+                {
+                    for (int i = ((DataTable)grid.ItemsSource).Rows.Count - 1; i >= 0; i--)
+                    {
+                        Hashtable conditions = new Hashtable();
+                        try
+                        {
+                            if ("Y".Equals(((DataTable)grid.ItemsSource).Rows[i]["CHK"]))
+                            {
+                                conditions.Clear();
+                                conditions.Add("sqlId", "DeleteWttChngDt");
+                                conditions.Add("CNT_NUM", ((DataTable)grid.ItemsSource).Rows[i]["CNT_NUM"].ToString());
+                                conditions.Add("CHNG_SEQ", ((DataTable)grid.ItemsSource).Rows[i]["CHNG_SEQ"].ToString());
+
+                                BizUtil.Update(conditions);
+
+                                ((DataTable)grid.ItemsSource).Rows.RemoveAt(i);
+                            }
+                        }
+                        catch (Exception ex)
+                        {
+                        }
+                    }
+
+                    Messages.ShowOkMsgBox();
+                }
+            }
+            catch (Exception ex)
+            {
+                Messages.ShowErrMsgBoxLog(ex);
+            }
         }
 
 
@@ -92,11 +155,12 @@ namespace GTI.WFMS.Modules.Cnst.View
         {
             if (Messages.ShowYesNoMsgBox("저장하시겠습니까?") != MessageBoxResult.Yes) return;
 
-            //기존 공사비 삭제
             Hashtable param = new Hashtable();
+            /*기존 공사비 삭제
             param.Add("sqlId", "DeleteWttChngDt");
             param.Add("CNT_NUM", CNT_NUM);
             BizUtil.Update(param);
+             */
 
             //그리드 저장
             DataTable dt = grid.ItemsSource as DataTable;

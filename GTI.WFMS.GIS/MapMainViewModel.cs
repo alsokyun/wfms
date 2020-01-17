@@ -55,7 +55,7 @@ namespace GTI.WFMS.GIS
                 //지도초기화
                 InitMap();
 
-                
+
                 //시설물레이어DIV 초기화작업
                 InitDivLayer();
 
@@ -76,7 +76,7 @@ namespace GTI.WFMS.GIS
 
                 //ShowLocalServerLayer(mapView, doc.Tag.ToString(), chk);
                 ShowShapeLayer(mapView, doc.Tag.ToString(), chk);
-                
+
 
                 //선택된 레이어저장
                 try
@@ -90,7 +90,7 @@ namespace GTI.WFMS.GIS
                         _selectedLayers.Remove(doc.Tag.ToString());
                     }
                 }
-                catch (Exception){}
+                catch (Exception) { }
             });
 
             //팝업레이어 토글처리
@@ -137,7 +137,7 @@ namespace GTI.WFMS.GIS
                 // 울산행정구역 표시
                 //ShowLocalServerLayer(mapView, "BML_GADM_AS", true);
                 ShowShapeLayer(mapView, "BML_GADM_AS", true);
-                
+
 
                 //3.열여있는 시설물정보창 닫기
                 popFct.IsOpen = false;
@@ -161,7 +161,7 @@ namespace GTI.WFMS.GIS
                 switch (btn.Content.ToString())
                 {
                     case "추가":
-                        if (_selectedLayers.Count<1)
+                        if (_selectedLayers.Count < 1)
                         {
                             MessageBox.Show("시설물을 선택하세요.");
                             return;
@@ -174,7 +174,7 @@ namespace GTI.WFMS.GIS
 
 
                         //라인피처인 경우 - SketchEditor 를 GraphicOverlay에 생성한다
-                        if (_selectedLayers[0].Equals("WTL_PIPE_LM") || _selectedLayers[0].Equals("WTL_SPLY_LS")) 
+                        if (_selectedLayers[0].Equals("WTL_PIPE_LM") || _selectedLayers[0].Equals("WTL_SPLY_LS"))
                         {
                             try
                             {
@@ -182,12 +182,12 @@ namespace GTI.WFMS.GIS
                                 Esri.ArcGISRuntime.Geometry.Geometry geometry = await mapView.SketchEditor.StartAsync(SketchCreationMode.Polyline, true); //맵에 신규geometry 얻어오기
 
                                 // Create and add a graphic from the geometry the user drew
-                                SimpleLineSymbol symbol ;
+                                SimpleLineSymbol symbol;
                                 if (_selectedLayers[0].Equals("WTL_PIPE_LM"))
                                 {
-                                    symbol  = new SimpleLineSymbol(SimpleLineSymbolStyle.Solid, System.Drawing.Color.SkyBlue, 2);
+                                    symbol = new SimpleLineSymbol(SimpleLineSymbolStyle.Solid, System.Drawing.Color.SkyBlue, 2);
                                 }
-                                else 
+                                else
                                 {
                                     symbol = new SimpleLineSymbol(SimpleLineSymbolStyle.Solid, System.Drawing.Color.SkyBlue, 2);
                                 }
@@ -297,7 +297,7 @@ namespace GTI.WFMS.GIS
 
             });
 
-            
+
 
         }
 
@@ -314,7 +314,7 @@ namespace GTI.WFMS.GIS
                 Width = 0,
                 Height = 0,
             };
-            
+
             StackPanel stContent = this.divLayer.FindName("stContent") as StackPanel;
             stContent.Children.Add(thumb);
 
@@ -349,7 +349,7 @@ namespace GTI.WFMS.GIS
         public RelayCommand<object> toggleCmd { get; set; }
         public RelayCommand<object> closeCmd { get; set; }
         public RelayCommand<object> resetCmd { get; set; }
-        
+
         public RelayCommand<object> btnCmd { get; set; }
         public RelayCommand<object> completeCmd { get; set; }
         public RelayCommand<object> clearCmd { get; set; }
@@ -488,7 +488,14 @@ namespace GTI.WFMS.GIS
                 //Field Field_FTR_IDN = new Field(FieldType.Int32, "FTR_IDN", "관리번호", 10);
                 //Field Field_SHT_NUM = new Field(FieldType.Text, "SHT_NUM", "도엽번호", 50);
 
-                _addedFeature.SetAttributeValue("FTR_CDE", "SA110");
+                string ftr_cde = "SA118";
+                try
+                {
+                    //ftr_cde = _selectedLayers[0].Split(',')[0];
+                }
+                catch (Exception){}
+                
+                _addedFeature.SetAttributeValue("FTR_CDE", ftr_cde);
                 _addedFeature.SetAttributeValue("FTR_IDN", 999f);
                 _addedFeature.SetAttributeValue("SHT_NUM", "99999");
                 _addedFeature.SetAttributeValue("SHT_NUM", "99999");
@@ -699,8 +706,17 @@ namespace GTI.WFMS.GIS
                 IdentifyLayerResult IR_WTL_GAIN_PS = await mapView.IdentifyLayerAsync(layers["WTL_GAIN_PS"], e.Position, 20, false);
                 IdentifyLayerResult IR_WTL_SERV_PS = await mapView.IdentifyLayerAsync(layers["WTL_SERV_PS"], e.Position, 20, false);
                 IdentifyLayerResult IR_WTL_FLOW_PS = await mapView.IdentifyLayerAsync(layers["WTL_FLOW_PS"], e.Position, 20, false);
-                IdentifyLayerResult IR_WTL_FIRE_PS = await mapView.IdentifyLayerAsync(layers["WTL_FIRE_PS"], e.Position, 20, false);
-                IdentifyLayerResult IR_WTL_VALV_PS = await mapView.IdentifyLayerAsync(layers["WTL_VALV_PS"], e.Position, 20, false);
+                IdentifyLayerResult IR_WTL_FIRE_PS_SA118 = await mapView.IdentifyLayerAsync(layers["WTL_FIRE_PS,FTR_CDE='SA118'"], e.Position, 20, false);
+                IdentifyLayerResult IR_WTL_FIRE_PS_SA119 = await mapView.IdentifyLayerAsync(layers["WTL_FIRE_PS,FTR_CDE='SA119'"], e.Position, 20, false);
+
+                IdentifyLayerResult IR_WTL_VALV_PS_SA200 = await mapView.IdentifyLayerAsync(layers["WTL_VALV_PS,FTR_CDE='SA200'"], e.Position, 20, false);
+                IdentifyLayerResult IR_WTL_VALV_PS_SA201 = await mapView.IdentifyLayerAsync(layers["WTL_VALV_PS,FTR_CDE='SA201'"], e.Position, 20, false);
+                IdentifyLayerResult IR_WTL_VALV_PS_SA202 = await mapView.IdentifyLayerAsync(layers["WTL_VALV_PS,FTR_CDE='SA202'"], e.Position, 20, false);
+                IdentifyLayerResult IR_WTL_VALV_PS_SA203 = await mapView.IdentifyLayerAsync(layers["WTL_VALV_PS,FTR_CDE='SA203'"], e.Position, 20, false);
+                IdentifyLayerResult IR_WTL_VALV_PS_SA204 = await mapView.IdentifyLayerAsync(layers["WTL_VALV_PS,FTR_CDE='SA204'"], e.Position, 20, false);
+                IdentifyLayerResult IR_WTL_VALV_PS_SA205 = await mapView.IdentifyLayerAsync(layers["WTL_VALV_PS,FTR_CDE='SA205'"], e.Position, 20, false);
+                IdentifyLayerResult IR_WTL_VALV_PS_SA206 = await mapView.IdentifyLayerAsync(layers["WTL_VALV_PS,FTR_CDE='SA206'"], e.Position, 20, false);
+                
                 IdentifyLayerResult IR_WTL_RSRV_PS = await mapView.IdentifyLayerAsync(layers["WTL_RSRV_PS"], e.Position, 20, false);
                 IdentifyLayerResult IR_WTL_PRGA_PS = await mapView.IdentifyLayerAsync(layers["WTL_PRGA_PS"], e.Position, 20, false);
                 IdentifyLayerResult IR_WTL_META_PS = await mapView.IdentifyLayerAsync(layers["WTL_META_PS"], e.Position, 20, false);
@@ -743,15 +759,50 @@ namespace GTI.WFMS.GIS
                     identifiedFeature = (Feature)IR_WTL_FLOW_PS.GeoElements[0];
                     layer = layers["WTL_FLOW_PS"];
                 }
-                else if (IR_WTL_FIRE_PS.GeoElements.Any())
+                else if (IR_WTL_FIRE_PS_SA118.GeoElements.Any())
                 {
-                    identifiedFeature = (Feature)IR_WTL_FIRE_PS.GeoElements[0];
-                    layer = layers["WTL_FIRE_PS"];
+                    identifiedFeature = (Feature)IR_WTL_FIRE_PS_SA118.GeoElements[0];
+                    layer = layers["WTL_FIRE_PS,FTR_CDE='SA118'"];
                 }
-                else if (IR_WTL_VALV_PS.GeoElements.Any())
+                else if (IR_WTL_FIRE_PS_SA119.GeoElements.Any())
                 {
-                    identifiedFeature = (Feature)IR_WTL_VALV_PS.GeoElements[0];
-                    layer = layers["WTL_VALV_PS"];
+                    identifiedFeature = (Feature)IR_WTL_FIRE_PS_SA119.GeoElements[0];
+                    layer = layers["WTL_FIRE_PS,FTR_CDE='SA119'"];
+                }
+                else if (IR_WTL_VALV_PS_SA200.GeoElements.Any())
+                {
+                    identifiedFeature = (Feature)IR_WTL_VALV_PS_SA200.GeoElements[0];
+                    layer = layers["WTL_VALV_PS,FTR_CDE='SA200'"];
+                }
+                else if (IR_WTL_VALV_PS_SA201.GeoElements.Any())
+                {
+                    identifiedFeature = (Feature)IR_WTL_VALV_PS_SA201.GeoElements[0];
+                    layer = layers["WTL_VALV_PS,FTR_CDE='SA201'"];
+                }
+                else if (IR_WTL_VALV_PS_SA202.GeoElements.Any())
+                {
+                    identifiedFeature = (Feature)IR_WTL_VALV_PS_SA202.GeoElements[0];
+                    layer = layers["WTL_VALV_PS,FTR_CDE='SA202'"];
+                }
+                else if (IR_WTL_VALV_PS_SA203.GeoElements.Any())
+                {
+                    identifiedFeature = (Feature)IR_WTL_VALV_PS_SA203.GeoElements[0];
+                    layer = layers["WTL_VALV_PS,FTR_CDE='SA203'"];
+                }
+                else if (IR_WTL_VALV_PS_SA204.GeoElements.Any())
+                {
+                    identifiedFeature = (Feature)IR_WTL_VALV_PS_SA204.GeoElements[0];
+                    layer = layers["WTL_VALV_PS,FTR_CDE='SA204'"];
+                }
+                else if (IR_WTL_VALV_PS_SA205.GeoElements.Any())
+                {
+                    identifiedFeature = (Feature)IR_WTL_VALV_PS_SA205.GeoElements[0];
+                    layer = layers["WTL_VALV_PS,FTR_CDE='SA205'"];
+                }
+                else if (IR_WTL_VALV_PS_SA206.GeoElements.Any())
+                {
+                    identifiedFeature = (Feature)IR_WTL_VALV_PS_SA206.GeoElements[0];
+                    layer = layers["WTL_VALV_PS,FTR_CDE='SA206'"];
                 }
                 else if (IR_WTL_RSRV_PS.GeoElements.Any())
                 {

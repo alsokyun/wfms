@@ -60,8 +60,8 @@ namespace GTI.WFMS.Modules.Cnst.View
 
             DXTabItem tab02 = new DXTabItem();
             tab02.Header = "파일첨부";
+            tab02.Content = new RefFileMngView(CNT_NUM);
             tabSubMenu.Items.Add(tab02);
-
         }
 
         // 목록으로 뒤로가기

@@ -8,7 +8,7 @@
     <OutputType>Library</OutputType>
     <RootNamespace>GTI.WFMS.Models</RootNamespace>
     <AssemblyName>GTI.WFMS.Models</AssemblyName>
-    <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <AutoGenerateBindingRedirects>false</AutoGenerateBindingRedirects>
     <Deterministic>true</Deterministic>
@@ -94,18 +94,24 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
       <SubType>Designer</SubType>
     </Content>
+    <Content Include="Mntc\Dao\Maps\MntcMap.xml">
+      <SubType>Designer</SubType>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Content Include="Lib\Interop.SHDocVw.dll" />
     <Content Include="Main\Dao\Maps\MainMap.xml">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
       <SubType>Designer</SubType>
     </Content>
-    <Content Include="Pipe\Dao\Maps\WtsMnhoMap.xml">
-      <SubType>Designer</SubType>
+    <Content Include="Pipe\Dao\Maps\FireFacMap.xml">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <Content Include="Pipe\Dao\Maps\FireFacMap.xml">
-      <SubType>Designer</SubType>
+    <Content Include="Pipe\Dao\Maps\WtprMtMap.xml">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Pipe\Dao\Maps\StndPiMap.xml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      <SubType>Designer</SubType>
     </Content>
     <Content Include="Pipe\Dao\Maps\ValvFacMap.xml">
       <SubType>Designer</SubType>
@@ -114,6 +120,13 @@
     <Content Include="Pipe\Dao\Maps\PipeMap.xml">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
       <SubType>Designer</SubType>
+    </Content>
+    <Content Include="Pipe\Dao\Maps\FlowMtMap.xml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      <SubType>Designer</SubType>
+    </Content>
+    <Content Include="Pipe\Dao\Maps\WtsMnhoMap.xml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
   </ItemGroup>
   <ItemGroup>
@@ -126,11 +139,14 @@
     <Compile Include="Cmm\Work\CmmWork.cs" />
     <Compile Include="Cnst\Model\CnstDtl.cs" />
     <Compile Include="Cnst\Model\SplyDtl.cs" />
+    <Compile Include="Cnst\Model\WttSubcDt.cs" />
     <Compile Include="Common\BizUtil.cs" />
     <Compile Include="Common\FmsUtil.cs" />
     <Compile Include="Common\FmsValueConverter.cs" />
+    <Compile Include="Common\Integer.cs" />
     <Compile Include="Common\RelayCommand.cs" />
     <Compile Include="Common\SourcesBehavior.cs" />
+    <Compile Include="Fclt\Model\WttAttaDt.cs" />
     <Compile Include="FileUtils\CompleteRecordDragDropEventArgsConverter.cs" />
     <Compile Include="FileUtils\DragRecordOverEventArgsConverter.cs" />
     <Compile Include="FileUtils\DropRecordEventArgsConverter.cs" />
@@ -138,11 +154,15 @@
     <Compile Include="FileUtils\StartRecordDragEventArgsConverter.cs" />
     <Compile Include="Main\Dao\MainDao.cs" />
     <Compile Include="Main\Work\MainWork.cs" />
+    <Compile Include="Mntc\Model\ChscMaDtl.cs" />
     <Compile Include="Pipe\Dao\PipeDao.cs" />
-    <Compile Include="Pipe\Model\WtsMnhoDtl.cs" />
     <Compile Include="Pipe\Model\FireFacDtl.cs" />
-    <Compile Include="Pipe\Model\ValvFacDtl.cs" />
+    <Compile Include="Pipe\Model\WtprMtDtl.cs" />
+    <Compile Include="Pipe\Model\StndPiDtl.cs" />
     <Compile Include="Pipe\Model\PipeDtl.cs" />
+    <Compile Include="Pipe\Model\ValvFacDtl.cs" />
+    <Compile Include="Pipe\Model\FlowMtDtl .cs" />
+    <Compile Include="Pipe\Model\WtsMnhoDtl.cs" />
     <Compile Include="Pipe\Work\PipeWork.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -163,6 +183,8 @@
     <None Include="app.config" />
     <None Include="packages.config" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Folder Include="Fclt\Dao\Maps\" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

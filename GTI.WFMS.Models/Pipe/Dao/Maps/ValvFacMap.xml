@@ -2,7 +2,7 @@
 <sqlMap namespace="Main" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://ibatis.apache.org/mapping">
   <statements>
 
-    <!--변류시설-->
+    <!--상수관로-->
     <select id ="SelectValvFacList" parameterClass="Hashtable" resultClass ="Hashtable">
       /* ValvFacMap.SelectValvFacList 변류시설 목록*/
 

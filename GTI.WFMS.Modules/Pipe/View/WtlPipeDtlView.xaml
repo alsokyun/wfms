@@ -19,7 +19,7 @@
 
     <!--뷰와 뷰모델 바인딩-->
     <Page.DataContext>
-        <vm:WtlPipeDtlViewModel />
+        <vm:WtlPipeDtlViewModel/>
     </Page.DataContext>
     
 

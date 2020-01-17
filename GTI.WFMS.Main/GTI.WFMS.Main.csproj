@@ -159,7 +159,6 @@
     <Compile Include="Bootstrapper.cs" />
     <Compile Include="Settings.cs" />
     <Compile Include="ViewModels\MainWinViewModel.cs" />
-    <Compile Include="ViewModels\FileMngViewModel.cs" />
     <Compile Include="View\DBManagement.xaml.cs">
       <DependentUpon>DBManagement.xaml</DependentUpon>
     </Compile>
@@ -168,9 +167,6 @@
     </Compile>
     <Compile Include="View\MainWin.xaml.cs">
       <DependentUpon>MainWin.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="View\Pop\FileMngView.xaml.cs">
-      <DependentUpon>FileMngView.xaml</DependentUpon>
     </Compile>
     <Compile Include="View\Pop\PopupQuickMenuMng.xaml.cs">
       <DependentUpon>PopupQuickMenuMng.xaml</DependentUpon>
@@ -238,10 +234,6 @@
     <Page Include="View\MainWin.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="View\Pop\FileMngView.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
     </Page>
     <Page Include="View\Pop\PopupQuickMenuMng.xaml">
       <Generator>MSBuild:Compile</Generator>

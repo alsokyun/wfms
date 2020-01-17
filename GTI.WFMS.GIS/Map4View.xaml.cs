@@ -59,6 +59,7 @@ namespace GTI.WFMS.GIS
             // Create the UI, setup the control references and execute initialization.
             Initialize();
 
+            //Initialize_LocalServer();
         }
 
         private void Initialize()
@@ -509,7 +510,124 @@ namespace GTI.WFMS.GIS
 
 
 
-        
+
+        #region ============ LocalServer (start) 관련부분 ==============
+
+        //// Hold a reference to the local feature service; the ServiceFeatureTable will be loaded from this service
+        //public LocalFeatureService _localFeatureService;
+
+        //public async void Initialize_LocalServer()
+        //{
+
+        //    try
+        //    {
+        //        // LocalServer must not be running when setting the data path.
+        //        if (LocalServer.Instance.Status == LocalServerStatus.Started)
+        //        {
+        //            await LocalServer.Instance.StopAsync();
+        //        }
+
+        //        // Set the local data path - must be done before starting. On most systems, this will be C:\EsriSamples\AppData.
+        //        // This path should be kept short to avoid Windows path length limitations.
+        //        string tempDataPathRoot = Directory.GetParent(Environment.GetFolderPath(Environment.SpecialFolder.Windows)).FullName;
+        //        string tempDataPath = Path.Combine(tempDataPathRoot, "EsriSamples", "AppData");
+        //        Directory.CreateDirectory(tempDataPath); // CreateDirectory won't overwrite if it already exists.
+        //        LocalServer.Instance.AppDataPath = tempDataPath;
+
+        //        // Start the local server instance
+        //        await LocalServer.Instance.StartAsync();
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        MessageBox.Show(String.Format("Please ensure that local server is installed prior to using the sample. See instructions in readme.md. Message: {0}", ex.Message), "Local Server failed to start");
+        //        return;
+        //    }
+
+        //    // Load the sample data and get the path
+        //    string myfeatureServicePath = GetFeatureLayerPath();
+
+        //    // Create the feature service to serve the local data
+        //    _localFeatureService = new LocalFeatureService(myfeatureServicePath);
+
+        //    // Listen to feature service status changes
+        //    _localFeatureService.StatusChanged += _localFeatureService_StatusChanged;
+
+        //    // Start the feature service
+        //    try
+        //    {
+        //        await _localFeatureService.StartAsync();
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        MessageBox.Show(ex.Message, "The feature service failed to load");
+        //    }
+        //}
+
+        //private async void _localFeatureService_StatusChanged(object sender, StatusChangedEventArgs e)
+        //{
+        //    // Load the map from the service once ready
+        //    if (e.Status == LocalServerStatus.Started)
+        //    {
+        //        //서버올라오면 geodatabase 동기화연결 시작...
+        //        _featureServiceUri = _localFeatureService.Url;
+
+        //        try
+        //        {
+        //            // Create a task for generating a geodatabase (GeodatabaseSyncTask).
+        //            _gdbSyncTask = await GeodatabaseSyncTask.CreateAsync(_featureServiceUri);
+
+        //            // Add all graphics from the service to the map.
+        //            foreach (IdInfo layer in _gdbSyncTask.ServiceInfo.LayerInfos)
+        //            {
+        //                // Get the URL for this particular layer.
+        //                Uri onlineTableUri = new Uri(_featureServiceUri + "/" + layer.Id);
+
+        //                // Create the ServiceFeatureTable.
+        //                ServiceFeatureTable onlineTable = new ServiceFeatureTable(onlineTableUri);
+
+        //                // Wait for the table to load.
+        //                await onlineTable.LoadAsync();
+
+        //                // Skip tables that aren't for point features.{
+        //                if (onlineTable.GeometryType != GeometryType.Point)
+        //                {
+        //                    continue;
+        //                }
+
+        //                // Add the layer to the map's operational layers if load succeeds.
+        //                if (onlineTable.LoadStatus == LoadStatus.Loaded)
+        //                {
+        //                    MyMapView.Map.OperationalLayers.Add(new FeatureLayer(onlineTable));
+        //                }
+        //            }
+
+        //            // Update the graphic - needed in case the user decides not to interact before pressing the button.
+        //            UpdateMapExtent();
+
+        //            // Enable the generate button.
+        //            MyGenerateButton.IsEnabled = true;
+        //        }
+        //        catch (Exception ex)
+        //        {
+        //            MessageBox.Show(ex.ToString(), "Error");
+        //        }
+
+        //    }
+        //}
+
+
+        //// mpk 패키지파일의 위치 가져오기
+        //private static string GetFeatureLayerPath()
+        //{
+        //    //return DataManager.GetDataFolder("4e94fec734434d1288e6ebe36c3c461f", "PointsOfInterest.mpk");
+        //    //return GetDataFolder("4e94fec734434d1288e6ebe36c3c461f", "PointsOfInterest.mpk");
+        //    return GetDataFolder("shape", "fms.mpk");
+        //}
+
+
+        #endregion
+
+
 
     }
 }

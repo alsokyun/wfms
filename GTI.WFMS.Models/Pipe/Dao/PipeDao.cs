@@ -37,6 +37,5 @@ namespace GTI.WFMS.Models.Pipe.Dao
         {
             return DBManager.QueryForTable("SelectFireFacList", conditions);
         }
-
     }
 }

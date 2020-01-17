@@ -52,7 +52,7 @@ namespace GTI.WFMS.Modules.Cnst.View
 
             /* 탭항목 동적추가
             */
-            //tabSubMenu.Items.Clear();
+            tabSubMenu.Items.Clear();
 
             DXTabItem tab01 = new DXTabItem();
             tab01.Header = "공사비지급내역";
@@ -76,6 +76,7 @@ namespace GTI.WFMS.Modules.Cnst.View
 
             DXTabItem tab05 = new DXTabItem();
             tab05.Header = "사진첨부";
+            tab05.Content = new RefFileMngView(CNT_NUM);
             tabSubMenu.Items.Add(tab05);
 
             DXTabItem tab06 = new DXTabItem();

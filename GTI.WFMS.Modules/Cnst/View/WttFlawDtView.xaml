@@ -15,6 +15,7 @@
 
     <UserControl.Resources>
         <cv:RownumConverter x:Key="rownumConverter" />
+        <cv:ToggleConverter x:Key="toggleConverter" />
     </UserControl.Resources>
 
 
@@ -53,41 +54,40 @@
             </dxg:GridControl.View>
 
 
-            <dxg:GridColumn Header="" Width="1*" HorizontalHeaderContentAlignment="Center">
+            <dxg:GridColumn Header="" Width="1*" HorizontalHeaderContentAlignment="Center" AllowEditing="True">
                 <dxg:GridColumn.HeaderTemplate>
                     <DataTemplate>
                         <dxe:CheckEdit x:Name="allChk"  
-                                NullValue="false" IsThreeState="False"  EditMode="InplaceActive" Checked="AllChk_Checked"/>
+                                NullValue="false" IsThreeState="False"  EditMode="InplaceActive" Checked="AllChk_Checked" Unchecked="AllChk_Unchecked"/>
                     </DataTemplate>
                 </dxg:GridColumn.HeaderTemplate>
                 <dxg:GridColumn.CellTemplate>
                     <DataTemplate>
-                        <dxe:CheckEdit EditValue="{Binding RowData.Row.CHK,TargetNullValue=false}"  
-                                NullValue="false" IsThreeState="False"  EditMode="InplaceActive"/>
+                        <dxe:CheckEdit EditValue="{Binding RowData.Row.CHK, Mode=TwoWay, Converter={StaticResource toggleConverter}}" HorizontalAlignment="Center" />
                     </DataTemplate>
                 </dxg:GridColumn.CellTemplate>
             </dxg:GridColumn>
-            <dxg:GridColumn Header="하자발생일자" Width="3*" FieldName="FLA_YMD" HorizontalHeaderContentAlignment="Center">
+            <dxg:GridColumn Header="하자발생일자" Width="3*" FieldName="FLA_YMD" HorizontalHeaderContentAlignment="Center" AllowEditing="True">
                 <dxg:GridColumn.CellTemplate>
                     <DataTemplate>
                         <dxe:DateEdit Style="{DynamicResource ResourceKey=GrdDateEdit}" DisplayFormatString="yyyy-MM-dd"
-                            EditValue="{Binding RowData.FLA_YMD, Mode=TwoWay}"  />
+                            EditValue="{Binding RowData.Row.FLA_YMD, Mode=TwoWay}"  />
                     </DataTemplate>
                 </dxg:GridColumn.CellTemplate>
             </dxg:GridColumn>
-            <dxg:GridColumn Header="하자보수일자" Width="3*" FieldName="RPR_YMD" HorizontalHeaderContentAlignment="Center">
+            <dxg:GridColumn Header="하자보수일자" Width="3*" FieldName="RPR_YMD" HorizontalHeaderContentAlignment="Center" AllowEditing="True">
                 <dxg:GridColumn.CellTemplate>
                     <DataTemplate>
                         <dxe:DateEdit Style="{DynamicResource ResourceKey=GrdDateEdit}" DisplayFormatString="yyyy-MM-dd"
-                            EditValue="{Binding RowData.RPR_YMD, Mode=TwoWay}"  />
+                            EditValue="{Binding RowData.Row.RPR_YMD, Mode=TwoWay}"  />
                     </DataTemplate>
                 </dxg:GridColumn.CellTemplate>
             </dxg:GridColumn>
-            <dxg:GridColumn Header="하자보수내용" Width="4*" FieldName="RPR_DES" HorizontalHeaderContentAlignment="Center">
+            <dxg:GridColumn Header="하자보수내용" Width="4*" FieldName="RPR_DES" HorizontalHeaderContentAlignment="Center" AllowEditing="True">
                 <dxg:GridColumn.CellTemplate>
                     <DataTemplate>
                         <dxe:TextEdit Style="{DynamicResource ResourceKey=GrdTextEdit}"   
-                            EditValue="{Binding  RowData.RPR_DES, Mode=TwoWay}"/>
+                            EditValue="{Binding  RowData.Row.RPR_DES, Mode=TwoWay}"/>
                     </DataTemplate>
                 </dxg:GridColumn.CellTemplate>
             </dxg:GridColumn>

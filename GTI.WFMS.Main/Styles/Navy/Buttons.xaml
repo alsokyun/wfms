@@ -1812,4 +1812,20 @@
         </Style.Triggers>
     </Style>
 
+    <!--위치 버튼 (이미지)-->
+    <Style TargetType="Button" x:Key="PositionButton">
+        <Setter Property="Width" Value="18"/>
+        <Setter Property="Height" Value="18"/>
+        <Setter Property="Margin" Value="0,0,0,0"/>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate>
+                    <Grid>
+                        <Image Source="/Resources/Navy/Images/Image/icon_position.png"/>
+                    </Grid>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
 </ResourceDictionary>

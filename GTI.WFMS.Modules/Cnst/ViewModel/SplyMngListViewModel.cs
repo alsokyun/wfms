@@ -16,6 +16,7 @@ using System.Windows.Threading;
 using DevExpress.Xpf.Core;
 using GTIFramework.Common.Utils.Converters;
 using System.Threading;
+using System.Collections.Generic;
 
 namespace GTI.WFMS.Modules.Cnst.ViewModel
 {
@@ -122,6 +123,8 @@ namespace GTI.WFMS.Modules.Cnst.ViewModel
         string strFileName;
         string strExcelFormPath = AppDomain.CurrentDomain.BaseDirectory + "/Resources/Excel/FmsBaseExcel.xlsx";
         DataTable exceldt;
+        GridColumn[] columnList;
+        List<string> listCols;
         #endregion
 
 
@@ -337,6 +340,23 @@ namespace GTI.WFMS.Modules.Cnst.ViewModel
 
                 exceldt = BizUtil.SelectList(conditions);
 
+
+                //그리드헤더정보 추출
+                columnList = new GridColumn[grid.Columns.Count];
+                grid.Columns.CopyTo(columnList, 0);
+                listCols = new List<string>(); //컬럼헤더정보 가져오기
+                foreach (GridColumn gcol in columnList)
+                {
+                    try
+                    {
+                        if ("PrintN".Equals(gcol.Tag.ToString())) continue; //엑셀출력제외컬럼
+                    }
+                    catch (Exception) { }
+
+                    listCols.Add(gcol.FieldName.ToString());
+                }
+
+
                 saveFileDialog = null;
                 saveFileDialog = new System.Windows.Forms.SaveFileDialog();
                 saveFileDialog.Title = "저장경로를 지정하세요.";
@@ -374,9 +394,8 @@ namespace GTI.WFMS.Modules.Cnst.ViewModel
                     })));
 
 
-
                 //엑셀 표 데이터
-                DataTable dtExceltTableData = exceldt.DefaultView.ToTable(false, new string[] { "CNT_NUM", "HJD_NAM", "OPR_NAM", "TOT_AMT", "BEG_YMD", "FNS_YMD" });
+                DataTable dtExceltTableData = exceldt.DefaultView.ToTable(false, listCols.ToArray());
 
                 int[] tablePointXY = { 3, 1 };
 
@@ -466,12 +485,13 @@ namespace GTI.WFMS.Modules.Cnst.ViewModel
         {
 
 
-            string name_space = "GTI.WFMS.Modules.Cnst.Model";
-            string class_name = "SplyDtl";
+            string name_space = "GTI.WFMS.Models.Mntc.Model";
+            string class_name = "ChscMaDtl";
             
             Hashtable param = new Hashtable();
-            param.Add("sqlId", "SelectWttSplyMaDtl");
-            param.Add("CNT_NUM", "SA20130005");
+            param.Add("sqlId", "SelectChscMaList");
+            param.Add("SCL_NUM", 5);
+            
             DataTable dt = BizUtil.SelectList(param);
             DataRow dr = dt.Rows[0];
 
@@ -484,7 +504,7 @@ namespace GTI.WFMS.Modules.Cnst.ViewModel
             sb += "     /// 인터페이스 구현부분" + "\r\n";
             sb += "     /// </summary>" + "\r\n";
             sb += "     public event PropertyChangedEventHandler PropertyChanged;" + "\r\n";
-            sb += "     protected void OnPropertyChanged(string propertyName)" + "\r\n";
+            sb += "     protected void RaisePropertyChanged(string propertyName)" + "\r\n";
             sb += "         { " + "\r\n";
             sb += "             if (PropertyChanged != null)" + "\r\n";
             sb += "             { " + "\r\n";
@@ -505,7 +525,7 @@ namespace GTI.WFMS.Modules.Cnst.ViewModel
 
                 //type 결정
                 string type_name = "string";
-                if (col.ColumnName.Contains("_AMT"))
+                if (col.ColumnName.Contains("_AMT") || col.ColumnName.Contains("_DIP") || col.ColumnName.Contains("_DIR"))
                 {
                     type_name = "decimal";
                 }
@@ -538,7 +558,7 @@ namespace GTI.WFMS.Modules.Cnst.ViewModel
                 sb += "         set " + "\r\n";
                 sb += "         { " + "\r\n";
                 sb += "         this.__" + col + " = value;" + "\r\n";
-                sb += "         OnPropertyChanged(\"" + col + "\"); " + "\r\n";
+                sb += "         RaisePropertyChanged(\"" + col + "\"); " + "\r\n";
                 sb += "         } " + "\r\n";
                 sb += "     } " + "\r\n";
             }

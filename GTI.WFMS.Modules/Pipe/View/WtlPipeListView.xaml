@@ -9,15 +9,16 @@
         mc:Ignorable="d" 
         d:DesignHeight="585" d:DesignWidth="1100"
       
+        xmlns:common="clr-namespace:GTI.WFMS.Models.Common;assembly=GTI.WFMS.Models"
         xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
         xmlns:ei="http://schemas.microsoft.com/expression/2010/interactions"
         xmlns:vm="clr-namespace:GTI.WFMS.Modules.Pipe.ViewModel"
         xmlns:cm="clr-namespace:GTIFramework.Common.Utils.Converters;assembly=GTIFramework"
-        xmlns:common="clr-namespace:GTI.WFMS.Models.Common;assembly=GTI.WFMS.Models"
-        x:Name="wtlPipeListView"
+        xmlns:dx="http://schemas.devexpress.com/winfx/2008/xaml/core"
+        
+      x:Name="wtlPipeListView"      >
 
-      >
-
+    
     <!--뷰모델연결처리
     -->
     <Page.DataContext>
@@ -188,7 +189,7 @@
 
         <StackPanel Grid.Row="0" Grid.Column="2" Orientation="Horizontal" HorizontalAlignment="Right" Margin="0 0 10 0">
             <Button x:Name="btnAdd" Style="{DynamicResource ResourceKey=AddButton}" Click="BtnAdd_Click" />
-            <Button x:Name="btnExcel" Style="{DynamicResource ResourceKey=ExcelDownButton}"  />
+            <Button x:Name="btnExcel" Style="{DynamicResource ResourceKey=ExcelDownButton}"  Command="{Binding ExcelCmd}" />
         </StackPanel>
 
 
@@ -217,7 +218,11 @@
                                 AllowPerPixelScrolling="False"  
                                 ShowHorizontalLines="True"
                                 AllowPaging="False"
-                                       
+                               
+                               VerticalScrollbarVisibility="Disabled"
+                               HorizontalScrollbarVisibility="Visible"
+                               AutoWidth="False"
+                               
                                 ShowIndicator="False" 
                                 ShowGroupPanel="False" 
                                 AllowBandMultiRow="False" 
@@ -230,69 +235,73 @@
                 </dxg:TableView>
             </dxg:GridControl.View>
 
-            <dxg:GridColumn Header="위치" Width="1*" FieldName="IS_GEOMETRY" HorizontalHeaderContentAlignment="Center">
+            <dxg:GridColumn Header="위치" Width="33" FieldName="IS_GEOMETRY" HorizontalHeaderContentAlignment="Center" Fixed="Left" Tag="PrintN">
+                <dxg:GridColumn.CellTemplate>
+                    <DataTemplate>
+                        <Button Style="{DynamicResource ResourceKey=PositionButton}" 
+                                Command="{Binding View.DataContext.cellPosCmd}" CommandParameter="{Binding RowData.Row.FTR_IDN}">
+                        </Button>
+                    </DataTemplate>
+                </dxg:GridColumn.CellTemplate>
+            </dxg:GridColumn>
+
+            <dxg:GridColumn Header="지형지물" Width="100" FieldName="FTR_NAM" HorizontalHeaderContentAlignment="Center">
                 <dxg:GridColumn.EditSettings>
                     <dxe:TextEditSettings HorizontalContentAlignment="Center"/>
                 </dxg:GridColumn.EditSettings>
             </dxg:GridColumn>
 
-            <dxg:GridColumn Header="지형지물" Width="5*" FieldName="FTR_NAM" HorizontalHeaderContentAlignment="Center">
+            <dxg:GridColumn Header="관리기관" Width="130" FieldName="MNG_NAM" HorizontalHeaderContentAlignment="Center">
                 <dxg:GridColumn.EditSettings>
                     <dxe:TextEditSettings HorizontalContentAlignment="Center"/>
                 </dxg:GridColumn.EditSettings>
             </dxg:GridColumn>
 
-            <dxg:GridColumn Header="관리기관" Width="5*" FieldName="MNG_NAM" HorizontalHeaderContentAlignment="Center">
+            <dxg:GridColumn Header="관리번호" Width="70" FieldName="FTR_IDN" HorizontalHeaderContentAlignment="Center">
                 <dxg:GridColumn.EditSettings>
                     <dxe:TextEditSettings HorizontalContentAlignment="Center"/>
                 </dxg:GridColumn.EditSettings>
             </dxg:GridColumn>
 
-            <dxg:GridColumn Header="관리번호" Width="3*" FieldName="FTR_IDN" HorizontalHeaderContentAlignment="Center">
-                <dxg:GridColumn.EditSettings>
-                    <dxe:TextEditSettings HorizontalContentAlignment="Left"/>
-                </dxg:GridColumn.EditSettings>
-            </dxg:GridColumn>
-
-            <dxg:GridColumn Header="행정동" Width="3*" FieldName="HJD_NAM" HorizontalHeaderContentAlignment="Center">
-                <dxg:GridColumn.EditSettings>
-                    <dxe:TextEditSettings HorizontalContentAlignment="Left"/>
-                </dxg:GridColumn.EditSettings>
-            </dxg:GridColumn>
-
-            <dxg:GridColumn Header="공사번호" Width="3*" FieldName="CNT_NUM" HorizontalHeaderContentAlignment="Center">
+            <dxg:GridColumn Header="행정동" Width="100" FieldName="HJD_NAM" HorizontalHeaderContentAlignment="Center">
                 <dxg:GridColumn.EditSettings>
                     <dxe:TextEditSettings HorizontalContentAlignment="Center"/>
                 </dxg:GridColumn.EditSettings>
             </dxg:GridColumn>
 
-            <dxg:GridColumn Header="도엽번호" Width="3*" FieldName="SHT_NUM" HorizontalHeaderContentAlignment="Center">
+            <dxg:GridColumn Header="공사번호" Width="100" FieldName="CNT_NUM" HorizontalHeaderContentAlignment="Center">
                 <dxg:GridColumn.EditSettings>
                     <dxe:TextEditSettings HorizontalContentAlignment="Center"/>
                 </dxg:GridColumn.EditSettings>
             </dxg:GridColumn>
 
-            <dxg:GridColumn Header="설치일자" Width="3*" FieldName="IST_YMD" HorizontalHeaderContentAlignment="Center">
+            <dxg:GridColumn Header="도엽번호" Width="100" FieldName="SHT_NUM" HorizontalHeaderContentAlignment="Center">
+                <dxg:GridColumn.EditSettings>
+                    <dxe:TextEditSettings HorizontalContentAlignment="Center"/>
+                </dxg:GridColumn.EditSettings>
+            </dxg:GridColumn>
+
+            <dxg:GridColumn Header="설치일자" Width="70" FieldName="IST_YMD" HorizontalHeaderContentAlignment="Center">
+                <dxg:GridColumn.EditSettings>
+                    <dxe:TextEditSettings HorizontalContentAlignment="Center" MaskType="DateTime" Mask="yyyy-MM-dd" MaskUseAsDisplayFormat="False"/>
+                </dxg:GridColumn.EditSettings>
+            </dxg:GridColumn>
+
+            <dxg:GridColumn Header="관재질" Width="200" FieldName="MOP_NAM" HorizontalHeaderContentAlignment="Center">
                 <dxg:GridColumn.EditSettings>
                     <dxe:TextEditSettings HorizontalContentAlignment="Left"/>
                 </dxg:GridColumn.EditSettings>
             </dxg:GridColumn>
 
-            <dxg:GridColumn Header="관재질" Width="3*" FieldName="MOP_NAM" HorizontalHeaderContentAlignment="Center">
+            <dxg:GridColumn Header="접합종류" Width="100" FieldName="JHT_NAM" HorizontalHeaderContentAlignment="Center">
                 <dxg:GridColumn.EditSettings>
-                    <dxe:TextEditSettings HorizontalContentAlignment="Left"/>
+                    <dxe:TextEditSettings HorizontalContentAlignment="Center"/>
                 </dxg:GridColumn.EditSettings>
             </dxg:GridColumn>
 
-            <dxg:GridColumn Header="접합종류" Width="3*" FieldName="JHT_NAM" HorizontalHeaderContentAlignment="Center">
+            <dxg:GridColumn Header="구경" Width="50" FieldName="PIP_DIP" HorizontalHeaderContentAlignment="Center">
                 <dxg:GridColumn.EditSettings>
-                    <dxe:TextEditSettings HorizontalContentAlignment="Left"/>
-                </dxg:GridColumn.EditSettings>
-            </dxg:GridColumn>
-
-            <dxg:GridColumn Header="구경" Width="2*" FieldName="PIP_DIP" HorizontalHeaderContentAlignment="Center">
-                <dxg:GridColumn.EditSettings>
-                    <dxe:TextEditSettings HorizontalContentAlignment="Left"/>
+                    <dxe:TextEditSettings HorizontalContentAlignment="Center"/>
                 </dxg:GridColumn.EditSettings>
             </dxg:GridColumn>
 
@@ -301,6 +310,7 @@
 
 
 
+        <dx:WaitIndicator x:Name="waitindicator" Grid.Row="0" Grid.RowSpan="2" Grid.Column="2" DeferedVisibility="False" Content="처리중..."/>
 
 
 
@@ -312,7 +322,7 @@
         </dxe:DataPager>
 
 
-        <Button Grid.Row="2" Grid.Column="2" Content="VM생성" Width="50" Height="30" HorizontalAlignment="Left">
+        <Button Grid.Row="2" Grid.Column="2" Content="VM생성" Width="50" Height="30" HorizontalAlignment="Left" Visibility="Collapsed">
             <i:Interaction.Triggers>
                 <i:EventTrigger EventName="Click">
                     <i:InvokeCommandAction Command="{Binding btnCmd}" />

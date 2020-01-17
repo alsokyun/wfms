@@ -388,11 +388,11 @@ namespace GTI.WFMS.Modules.Cnst.ViewModel
 
 
             string name_space = "GTI.WFMS.Modules.Cnst.Model";
-            string class_name = "CnstDtl";
+            string class_name = "WttSubcDt";
             
             Hashtable param = new Hashtable();
-            param.Add("sqlId", "SelectWttConsMaDtl");
-            param.Add("CNT_NUM", "SA20080072");
+            param.Add("sqlId", "SelectWttSubcDtList");
+            param.Add("CNT_NUM", "SA20171002");
             DataTable dt = BizUtil.SelectList(param);
             DataRow dr = dt.Rows[0];
 
