@@ -2,13 +2,13 @@
 <sqlMap namespace="Main" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://ibatis.apache.org/mapping">
   <statements>
 
-    <!--유량계-->
-    <select id ="SelectFlowMtList" parameterClass="Hashtable" resultClass ="Hashtable">
-      /* FlowMtMap.SelectFlowMtList 유량계 목록*/
+    <!--취수장-->
+    <select id ="SelectIntkStList" parameterClass="Hashtable" resultClass ="Hashtable">
+      /* IntkStMap.SelectIntkStList 취수장 목록*/
 
       WITH C AS (
       SELECT COUNT(1) AS ROWCNT
-      FROM INFOFMS.WTL_FLOW_PS A
+      FROM INFOFMS.WTL_GAIN_PS A
       WHERE 1=1
         <!-- 조건1. 관리기관 -->
         <isNotEmpty prepend="AND" property="MNG_CDE">
@@ -45,9 +45,9 @@
           A.IST_YMD <![CDATA[<=]]> decode(length(#IST_YMD_TO#), 10, to_char(to_date(#IST_YMD_TO#, 'yyyy-MM-dd'), 'yyyyMMdd'), '')
         </isNotEmpty>
 
-        <!-- 조건8. 유량계종류 -->
-        <isNotEmpty prepend="AND" property="GAG_CDE">
-          A.GAG_CDE = #GAG_CDE#
+        <!-- 조건8. 취수장종류 -->
+        <isNotEmpty prepend="AND" property="PGA_CDE">
+          A.PGA_CDE = #PGA_CDE#
         </isNotEmpty>
 
         <!-- 조건9. 형식 -->
@@ -56,8 +56,8 @@
         </isNotEmpty>
 
         <!-- 조건10. 구경 -->
-        <isNotEmpty prepend="AND" property="FLO_DIP">
-          A.FLO_DIP = #FLO_DIP#
+        <isNotEmpty prepend="AND" property="PGA_DIP">
+          A.PGA_DIP = #PGA_DIP#
         </isNotEmpty>
 
         <!-- 조건11. 제작회사명 -->
@@ -68,31 +68,35 @@
 
       SELECT C.ROWCNT, X.*  FROM (
 
-       SELECT ROW_NUMBER() OVER( ORDER BY A.FTR_IDN DESC ) AS RN
-            , A.FTR_CDE
-            , (SELECT FTR_NAM FROM INFOFMS.V_FTR_CDE WHERE FTR_CDE = A.FTR_CDE) AS FTR_NAM
-            , A.FTR_IDN
-            , A.HJD_CDE
-            , (SELECT HJD_NAM FROM INFOFMS.CMT_ADAR_MA WHERE HJD_CDE = A.HJD_CDE) AS HJD_NAM
-            , A.SHT_NUM
-            , A.MNG_CDE
-            , (SELECT NM FROM INFOUSER.CD_DTL_INFO WHERE MST_CD = '250101' AND DTL_CD = A.MNG_CDE ) AS MNG_NAM
-            , decode(length(A.IST_YMD), 8, to_char(to_date(A.IST_YMD, 'yyyyMMdd'), 'yyyy-MM-dd'), '') AS IST_YMD
-            , A.GAG_CDE
-            , (SELECT NM FROM INFOUSER.CD_DTL_INFO WHERE MST_CD = '250061' AND DTL_CD = A.GAG_CDE ) AS GAG_NAM
-            , A.MOF_CDE
-            , (SELECT NM FROM INFOUSER.CD_DTL_INFO WHERE MST_CD = '250035' AND DTL_CD = A.MOF_CDE ) AS MOF_NAM
-            , A.FLO_DIP
-            , A.PRD_NAM
-            , A.PIP_CDE
-            , A.CNT_NUM
-            , A.SYS_CHK
-            , A.ANG_DIR
-            , A.SHT_CDE
-            , CASE WHEN ST_ISVALID(A.GEOM) = 1 THEN 'Y' ELSE 'N' END AS IS_GEOMETRY
-         FROM INFOFMS.WTL_FLOW_PS A
-        WHERE 1=1
-        <!-- 조건1. 관리기관 -->
+      SELECT ROW_NUMBER() OVER( ORDER BY A.FTR_IDN DESC ) AS RN
+      , A.FTR_CDE
+      , (SELECT FTR_NAM FROM INFOFMS.V_FTR_CDE WHERE FTR_CDE = A.FTR_CDE) AS FTR_NAM
+      , A.FTR_IDN
+      , A.HJD_CDE
+      , (SELECT HJD_NAM FROM INFOFMS.CMT_ADAR_MA WHERE HJD_CDE = A.HJD_CDE) AS HJD_NAM
+      , A.SHT_NUM
+      , A.MNG_CDE
+      , (SELECT NM FROM INFOUSER.CD_DTL_INFO WHERE MST_CD = '250101' AND DTL_CD = A.MNG_CDE ) AS MNG_NAM
+      , decode(length(A.IST_YMD), 8, to_char(to_date(A.IST_YMD, 'yyyyMMdd'), 'yyyy-MM-dd'), '') AS IST_YMD
+      , A.PGA_CDE
+      , (SELECT NM FROM INFOUSER.CD_DTL_INFO WHERE MST_CD = '250057' AND DTL_CD = A.PGA_CDE ) AS PGA_NAM
+      , A.MOF_CDE
+      , (SELECT NM FROM INFOUSER.CD_DTL_INFO WHERE MST_CD = '250035' AND DTL_CD = A.MOF_CDE ) AS MOF_NAM
+      , A.PGA_DIP
+      , A.STD_SAF
+      , A.AVG_SAF
+      , A.MSR_SAF
+      , A.PIP_DIP
+      , A.PRD_NAM
+      , A.PIP_CDE
+      , A.PIP_IDN
+      , A.CNT_NUM
+      , A.SYS_CHK
+      , A.ANG_DIR
+      , CASE WHEN ST_ISVALID(A.GEOM) = 1 THEN 'Y' ELSE 'N' END AS IS_GEOMETRY
+      FROM INFOFMS.WTL_GAIN_PS A
+      WHERE 1=1
+      <!-- 조건1. 관리기관 -->
         <isNotEmpty prepend="AND" property="MNG_CDE">
           A.MNG_CDE = #MNG_CDE#
         </isNotEmpty>
@@ -127,9 +131,9 @@
           A.IST_YMD <![CDATA[<=]]> decode(length(#IST_YMD_TO#), 10, to_char(to_date(#IST_YMD_TO#, 'yyyy-MM-dd'), 'yyyyMMdd'), '')
         </isNotEmpty>
 
-        <!-- 조건8. 유량계종류 -->
-        <isNotEmpty prepend="AND" property="GAG_CDE">
-          A.GAG_CDE = #GAG_CDE#
+        <!-- 조건8. 취수장종류 -->
+        <isNotEmpty prepend="AND" property="PGA_CDE">
+          A.PGA_CDE = #PGA_CDE#
         </isNotEmpty>
 
         <!-- 조건9. 형식 -->
@@ -138,8 +142,8 @@
         </isNotEmpty>
 
         <!-- 조건10. 구경 -->
-        <isNotEmpty prepend="AND" property="FLO_DIP">
-          A.FLO_DIP = #FLO_DIP#
+        <isNotEmpty prepend="AND" property="PGA_DIP">
+          A.PGA_DIP = #PGA_DIP#
         </isNotEmpty>
 
         <!-- 조건11. 제작회사명 -->
@@ -156,8 +160,8 @@
 
     </select>
 
-    <select id="SelectFlowMtDtl"  parameterClass="Hashtable" resultClass ="GTI.WFMS.Models.Pipe.Model.FlowMtDtl">
-      /* FlowMtMap.SelectFlowMtDtl 유량계 상세정보*/
+    <select id="SelectIntkStDtl"  parameterClass="Hashtable" resultClass ="GTI.WFMS.Models.Fclt.Model.IntkStDtl">
+      /* IntkStMap.SelectIntkStDtl 취수장 상세정보*/
       <![CDATA[
 			SELECT A.FTR_CDE
           , (SELECT FTR_NAM FROM INFOFMS.V_FTR_CDE WHERE FTR_CDE = A.FTR_CDE) AS FTR_NAM
@@ -168,44 +172,51 @@
           , A.MNG_CDE
           , (SELECT NM FROM INFOUSER.CD_DTL_INFO WHERE MST_CD = '250101' AND DTL_CD = A.MNG_CDE ) AS MNG_NAM
           , decode(length(A.IST_YMD), 8, to_char(to_date(A.IST_YMD, 'yyyyMMdd'), 'yyyy-MM-dd'), '') AS IST_YMD
-          , A.GAG_CDE
-          , (SELECT NM FROM INFOUSER.CD_DTL_INFO WHERE MST_CD = '250061' AND DTL_CD = A.GAG_CDE ) AS GAG_NAM
+          , A.PGA_CDE
+          , (SELECT NM FROM INFOUSER.CD_DTL_INFO WHERE MST_CD = '250061' AND DTL_CD = A.PGA_CDE ) AS GAG_NAM
           , A.MOF_CDE
           , (SELECT NM FROM INFOUSER.CD_DTL_INFO WHERE MST_CD = '250004' AND DTL_CD = A.MOF_CDE ) AS MOF_NAM
-          , A.FLO_DIP
+          , A.PGA_DIP
+          , A.STD_SAF
+          , A.AVG_SAF
+          , A.MSR_SAF
+          , A.PIP_DIP
           , A.PRD_NAM
-          , A.PIP_CDE      
+          , A.PIP_CDE
+          , A.PIP_IDN
           , A.CNT_NUM
           , A.SYS_CHK
           , A.ANG_DIR
-          , A.SHT_CDE
           , decode(A.SYS_CHK,'1','유','무') as SYS_CHK_NAM
-       FROM INFOFMS.WTL_FLOW_PS A 
+       FROM INFOFMS.WTL_GAIN_PS A 
 			WHERE 1=1
         AND FTR_CDE = #FTR_CDE# 
 				AND FTR_IDN = #FTR_IDN#
 			]]>
     </select>
 
-    <!--유량계 상세추가-->
-    <update id="insertFlowMtDtl" parameterClass="GTI.WFMS.Models.Pipe.Model.FlowMtDtl">
-      INSERT INTO INFOFMS.WTL_FLOW_PS
+    <!--취수장 상세추가-->
+    <update id="insertIntkStDtl" parameterClass="GTI.WFMS.Models.Fclt.Model.IntkStDtl">
+      INSERT INTO INFOFMS.WTL_GAIN_PS
       ( FTR_CDE
       , FTR_IDN
       , HJD_CDE
       , SHT_NUM
       , MNG_CDE
       , IST_YMD
-      , GAG_CDE
+      , PGA_CDE
       , MOF_CDE
-      , FLO_DIP
+      , PGA_DIP
+      , STD_SAF
+      , AVG_SAF
+      , MSR_SAF
+      , PIP_DIP
       , PRD_NAM
       , PIP_CDE
+      , PIP_IDN
       , CNT_NUM
       , SYS_CHK
       , ANG_DIR
-      , PIP_IDN
-      , SHT_CDE
       )
       VALUES
       ( #FTR_CDE#
@@ -214,53 +225,59 @@
       , #SHT_NUM#
       , #MNG_CDE#
       , decode(length(#IST_YMD#), 10, to_char(to_date(#IST_YMD#, 'yyyy-MM-dd'), 'yyyyMMdd'), '')
-      , #GAG_CDE#
+      , #PGA_CDE#
       , #MOF_CDE#
-      , #FLO_DIP#
+      , #PGA_DIP#
+      , #STD_SAF#
+      , #AVG_SAF#
+      , #MSR_SAF#
+      , #PIP_DIP#
       , #PRD_NAM#
       , #PIP_CDE#
+      , #PIP_IDN#
       , #CNT_NUM#
       , #SYS_CHK#
       , #ANG_DIR#
-      , #PIP_IDN#
-      , #SHT_CDE#
       )
     </update>
 
-    <!--유량계 상세저장-->
-    <update id="updateFlowMtDtl" parameterClass="GTI.WFMS.Models.Pipe.Model.FlowMtDtl">
-      /* 유량계 상세 수정 */
-      UPDATE INFOFMS.WTL_FLOW_PS
-        SET HJD_CDE = #HJD_CDE#
-          , SHT_NUM = #SHT_NUM#
-          , MNG_CDE = #MNG_CDE#
-          , IST_YMD = decode(length(#IST_YMD#), 10, to_char(to_date(#IST_YMD#, 'yyyy-MM-dd'), 'yyyyMMdd'), '')
-          , GAG_CDE = #GAG_CDE#
-          , MOF_CDE = #MOF_CDE#
-          , FLO_DIP = #FLO_DIP#
-          , PRD_NAM = #PRD_NAM#
-          , PIP_CDE = #PIP_CDE#
-          , CNT_NUM = #CNT_NUM#
-          , SYS_CHK = #SYS_CHK#
-          , ANG_DIR = #ANG_DIR#
-          , PIP_IDN = #PIP_IDN#
-          , SHT_CDE = #SHT_CDE#
+    <!--취수장 상세저장-->
+    <update id="updateIntkStDtl" parameterClass="GTI.WFMS.Models.Fclt.Model.IntkStDtl">
+      /* 취수장 상세 수정 */
+      UPDATE INFOFMS.WTL_GAIN_PS
+      SET HJD_CDE = #HJD_CDE#
+        , SHT_NUM = #SHT_NUM#
+        , MNG_CDE = #MNG_CDE#
+        , IST_YMD = decode(length(#IST_YMD#), 10, to_char(to_date(#IST_YMD#, 'yyyy-MM-dd'), 'yyyyMMdd'), '')
+        , PGA_CDE = #PGA_CDE#
+        , MOF_CDE = #MOF_CDE#
+        , PGA_DIP = #PGA_DIP#
+        , STD_SAF = #STD_SAF#
+        , AVG_SAF = #AVG_SAF#
+        , MSR_SAF = #MSR_SAF#
+        , PIP_DIP = #PIP_DIP#
+        , PRD_NAM = #PRD_NAM#
+        , PIP_CDE = #PIP_CDE#
+        , PIP_IDN = #PIP_IDN#
+        , CNT_NUM = #CNT_NUM#
+        , SYS_CHK = #SYS_CHK#
+        , ANG_DIR = #ANG_DIR#
       WHERE FTR_CDE = #FTR_CDE#
-        AND	FTR_IDN = #FTR_IDN#
+      AND	FTR_IDN = #FTR_IDN#
     </update>
 
-    <!--유량계 상세삭제-->
-    <update id="deleteFlowMtDtl" parameterClass="GTI.WFMS.Models.Pipe.Model.FlowMtDtl">
-      /* 유량계 상세 삭제 */
-      DELETE INFOFMS.WTL_FLOW_PS
+    <!--취수장 상세삭제-->
+    <update id="deleteIntkStDtl" parameterClass="GTI.WFMS.Models.Fclt.Model.IntkStDtl">
+      /* 취수장 상세 삭제 */
+      DELETE INFOFMS.WTL_GAIN_PS
       WHERE FTR_CDE = #FTR_CDE#
       AND FTR_IDN = #FTR_IDN#
     </update>
 
-    <!--유량계 관리번호 채번-->
-    <select id ="SelectFlowMtFTR_IDN" parameterClass="Hashtable" resultClass ="GTI.WFMS.Models.Pipe.Model.FlowMtDtl">
-      /* 유량계 관리번호 채번 */
-      SELECT NVL(MAX(FTR_IDN),0)+1 AS FTR_IDN FROM INFOFMS.WTL_FLOW_PS
+    <!--취수장 관리번호 채번-->
+    <select id ="SelectIntkStFTR_IDN" parameterClass="Hashtable" resultClass ="GTI.WFMS.Models.Fclt.Model.IntkStDtl">
+      /* 취수장 관리번호 채번 */
+      SELECT NVL(MAX(FTR_IDN),0)+1 AS FTR_IDN FROM INFOFMS.WTL_GAIN_PS
       WHERE 1=1
     </select>
 

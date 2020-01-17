@@ -16,7 +16,7 @@
         </isNotEmpty>
 
         <!-- 조건2. 관리번호 -->
-        <isNotEmpty prepend="AND" property="searchCondition2">
+        <isNotEmpty prepend="AND" property="FTR_IDN">
           A.FTR_IDN = #FTR_IDN#
         </isNotEmpty>
 
@@ -102,7 +102,7 @@
         </isNotEmpty>
 
         <!-- 조건2. 관리번호 -->
-        <isNotEmpty prepend="AND" property="searchCondition2">
+        <isNotEmpty prepend="AND" property="FTR_IDN">
           A.FTR_IDN = #FTR_IDN#
         </isNotEmpty>
 
@@ -269,9 +269,9 @@
     <!--수압계 상세삭제-->
     <update id="deleteWtprMtDtl" parameterClass="GTI.WFMS.Models.Pipe.Model.WtprMtDtl">
       /* 수압계 상세 삭제 */
-      DELETE INFOFMS.WTL_VALV_PS
-       WHERE FTR_CDE = #FTR_CDE#
-         AND FTR_IDN = #FTR_IDN#
+      DELETE INFOFMS.WTL_PRGA_PS
+      WHERE FTR_CDE = #FTR_CDE#
+      AND FTR_IDN = #FTR_IDN#
     </update>
 
     <!--수압계 관리번호 채번-->

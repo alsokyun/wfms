@@ -137,6 +137,18 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
+    <Page Include="Fclt\view\WtrSourAddView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Fclt\view\WtrSourDtlView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Fclt\view\WtrSourListView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
     <Page Include="Link\View\ChscResSubListView.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -295,6 +307,18 @@
     <Compile Include="Cnst\View\CnstMngDtlView.xaml.cs">
       <DependentUpon>CnstMngDtlView.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Fclt\viewModel\WtrSourAddViewModel.cs" />
+    <Compile Include="Fclt\viewModel\WtrSourDtlViewModel.cs" />
+    <Compile Include="Fclt\viewModel\WtrSourListViewModel.cs" />
+    <Compile Include="Fclt\view\WtrSourAddView.xaml.cs">
+      <DependentUpon>WtrSourAddView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Fclt\view\WtrSourDtlView.xaml.cs">
+      <DependentUpon>WtrSourDtlView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Fclt\view\WtrSourListView.xaml.cs">
+      <DependentUpon>WtrSourListView.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Link\View\ChscResSubListView.xaml.cs">
       <DependentUpon>ChscResSubListView.xaml</DependentUpon>
     </Compile>
@@ -419,8 +443,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Link\ViewModel\" />
-    <Folder Include="Mntc\ViewModel\" />
-    <Folder Include="Mntc\View\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
