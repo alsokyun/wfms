@@ -94,6 +94,10 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
       <SubType>Designer</SubType>
     </Content>
+    <Content Include="Mntc\Dao\Maps\MntcMap.xml">
+      <SubType>Designer</SubType>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Content Include="Lib\Interop.SHDocVw.dll" />
     <Content Include="Main\Dao\Maps\MainMap.xml">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
@@ -150,6 +154,7 @@
     <Compile Include="FileUtils\StartRecordDragEventArgsConverter.cs" />
     <Compile Include="Main\Dao\MainDao.cs" />
     <Compile Include="Main\Work\MainWork.cs" />
+    <Compile Include="Mntc\Model\ChscMaDtl.cs" />
     <Compile Include="Pipe\Dao\PipeDao.cs" />
     <Compile Include="Pipe\Model\FireFacDtl.cs" />
     <Compile Include="Pipe\Model\WtprMtDtl.cs" />

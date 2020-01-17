@@ -423,24 +423,34 @@ namespace GTI.WFMS.Main
                                     Messages.ShowErrMsgBox("잘못된 메뉴경로입니다.");
                                     return;
                                 }
-                                try
-                                {
-                                    pmain = new PopMain(dr[0]["MNU_PATH"].ToString());
-                                }
-                                catch (Exception)
-                                {
-                                    return;
-                                }
 
-                                Label lbTitle = pmain.FindName("lbTitle") as Label;//화면타이틀
-                                lbTitle.Content = dr[0]["MNU_NM"].ToString();
+                                //점검달력은 윈도우형태로 팝업
+                                if ("Mntc/View/ChkSchListView.xaml".Equals(dr[0]["MNU_PATH"]))
+                                {
 
-                                pmain.PlacementTarget = borderTop;
-                                pmain.Placement = PlacementMode.Bottom;
-                                pmain.VerticalOffset = 100;
-                                pmain.Placement = PlacementMode.Left;
-                                pmain.HorizontalOffset = 100;
-                                pmain.IsOpen = true;
+                                }
+                                //일반 업무화면은 Page 형태의 팝업
+                                else
+                                {
+                                    try
+                                    {
+                                        pmain = new PopMain(dr[0]["MNU_PATH"].ToString());
+                                    }
+                                    catch (Exception)
+                                    {
+                                        return;
+                                    }
+
+                                    Label lbTitle = pmain.FindName("lbTitle") as Label;//화면타이틀
+                                    lbTitle.Content = dr[0]["MNU_NM"].ToString();
+
+                                    pmain.PlacementTarget = borderTop;
+                                    pmain.Placement = PlacementMode.Bottom;
+                                    pmain.VerticalOffset = 100;
+                                    pmain.Placement = PlacementMode.Left;
+                                    pmain.HorizontalOffset = 100;
+                                    pmain.IsOpen = true;
+                                }
 
 
                             }
