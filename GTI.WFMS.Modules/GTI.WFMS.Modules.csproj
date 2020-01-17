@@ -419,6 +419,8 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Link\ViewModel\" />
+    <Folder Include="Mntc\ViewModel\" />
+    <Folder Include="Mntc\View\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

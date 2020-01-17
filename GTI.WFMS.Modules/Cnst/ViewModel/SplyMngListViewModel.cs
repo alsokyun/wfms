@@ -485,14 +485,12 @@ namespace GTI.WFMS.Modules.Cnst.ViewModel
         {
 
 
-            string name_space = "GTI.WFMS.Models.Fctl.Model";
-            string class_name = "WttAttaDt";
+            string name_space = "GTI.WFMS.Models.Mntc.Model";
+            string class_name = "ChscMaDtl";
             
             Hashtable param = new Hashtable();
-            param.Add("sqlId", "SelectCmmWttAttaDtList");
-            param.Add("FTR_CDE", "SA206");
-            param.Add("FTR_IDN", 80);
-            param.Add("ATT_IDN", 11313);
+            param.Add("sqlId", "SelectChscMaList");
+            param.Add("SCL_NUM", 5);
             
             DataTable dt = BizUtil.SelectList(param);
             DataRow dr = dt.Rows[0];
@@ -506,7 +504,7 @@ namespace GTI.WFMS.Modules.Cnst.ViewModel
             sb += "     /// 인터페이스 구현부분" + "\r\n";
             sb += "     /// </summary>" + "\r\n";
             sb += "     public event PropertyChangedEventHandler PropertyChanged;" + "\r\n";
-            sb += "     protected void OnPropertyChanged(string propertyName)" + "\r\n";
+            sb += "     protected void RaisePropertyChanged(string propertyName)" + "\r\n";
             sb += "         { " + "\r\n";
             sb += "             if (PropertyChanged != null)" + "\r\n";
             sb += "             { " + "\r\n";
@@ -560,7 +558,7 @@ namespace GTI.WFMS.Modules.Cnst.ViewModel
                 sb += "         set " + "\r\n";
                 sb += "         { " + "\r\n";
                 sb += "         this.__" + col + " = value;" + "\r\n";
-                sb += "         OnPropertyChanged(\"" + col + "\"); " + "\r\n";
+                sb += "         RaisePropertyChanged(\"" + col + "\"); " + "\r\n";
                 sb += "         } " + "\r\n";
                 sb += "     } " + "\r\n";
             }
