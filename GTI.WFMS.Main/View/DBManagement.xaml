@@ -94,7 +94,7 @@
         <!--접속 비밀번호-->
         <Label Grid.Row="9" Grid.Column="3" Content="접속 비밀번호" Style="{DynamicResource PopupLabel}"/>
         <dxe:PasswordBoxEdit x:Name="pwdConnPW" Grid.Row="9" Grid.Column="4" Text="{Binding null}" MaxLength="20" Style="{DynamicResource GirdPasswordBox}"/>
-        <Button x:Name="btnConnTest" Grid.Row="11" Grid.Column="3" Style="{DynamicResource ConnTestButton}" Click="BtnConnTest_Click_1"/>
+        <Button x:Name="btnConnTest" Grid.Row="11" Grid.Column="3" Style="{DynamicResource ConnTestButton}"/>
 
         <StackPanel Grid.Row="11" Grid.Column="4" Orientation="Horizontal" HorizontalAlignment="Right" VerticalAlignment="Center">
             <Button x:Name="btnSave" Style="{DynamicResource PopupSaveButton}"/>

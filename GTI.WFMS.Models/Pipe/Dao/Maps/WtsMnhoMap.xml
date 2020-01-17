@@ -16,7 +16,7 @@
         </isNotEmpty>
 
         <!-- 조건2. 관리번호 -->
-        <isNotEmpty prepend="AND" property="searchCondition2">
+        <isNotEmpty prepend="AND" property="FTR_IDN">
           A.FTR_IDN = #FTR_IDN#
         </isNotEmpty>
 
@@ -96,7 +96,7 @@
         </isNotEmpty>
 
         <!-- 조건2. 관리번호 -->
-        <isNotEmpty prepend="AND" property="searchCondition2">
+        <isNotEmpty prepend="AND" property="FTR_IDN">
           A.FTR_IDN = #FTR_IDN#
         </isNotEmpty>
 
@@ -237,9 +237,9 @@
     <!--상수맨홀 상세삭제-->
     <update id="deleteWtsMnhoDtl" parameterClass="GTI.WFMS.Models.Pipe.Model.WtsMnhoDtl">
       /* 상수맨홀 상세 삭제 */
-      DELETE INFOFMS.WTL_VALV_PS
-       WHERE FTR_CDE = #FTR_CDE#
-         AND FTR_IDN = #FTR_IDN#
+      DELETE INFOFMS.WTL_MANH_PS
+      WHERE FTR_CDE = #FTR_CDE#
+      AND FTR_IDN = #FTR_IDN#
     </update>
 
     <!--상수맨홀 관리번호 채번-->
