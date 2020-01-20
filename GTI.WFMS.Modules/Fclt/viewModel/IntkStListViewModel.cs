@@ -21,7 +21,7 @@ using System.Collections.Generic;
 
 namespace GTI.WFMS.Modules.Fclt.ViewModel
 {
-    class FiltPltListViewModel : INotifyPropertyChanged
+    class IntkStListViewModel : INotifyPropertyChanged
     {
 
         #region ==========  페이징관련 INotifyPropertyChanged  ==========
@@ -108,18 +108,18 @@ namespace GTI.WFMS.Modules.Fclt.ViewModel
         DataTable dtresult = new DataTable(); //조회결과 데이터
 
 
-        FiltPltListView filtPltListView;
+        IntkStListView intkStListView;
         ComboBoxEdit cbMNG_CDE; DataTable dtMNG_CDE = new DataTable();
         ComboBoxEdit cbHJD_CDE; DataTable dtHJD_CDE = new DataTable();
         ComboBoxEdit cbWSR_CDE; DataTable dsWSR_CDE = new DataTable();
+        ComboBoxEdit cbWRW_CDE; DataTable dsWRW_CDE = new DataTable();
 
         TextEdit txtFTR_IDN;
         TextEdit txtCNT_NUM;
         TextEdit txtSHT_NUM;
 
-        TextEdit txtPUR_NAM;
         TextEdit txtGAI_NAM;
-        TextEdit txtSRV_NAM;
+        TextEdit txtWSS_NAM;
                
         DateEdit dtFNS_YMD_FROM;
         DateEdit dtFNS_YMD_TO;
@@ -143,7 +143,7 @@ namespace GTI.WFMS.Modules.Fclt.ViewModel
         /// <summary>
         /// 생성자
         /// </summary>
-        public FiltPltListViewModel()
+        public IntkStListViewModel()
         {
 
             LoadedCommand = new DelegateCommand<object>(OnLoaded);
@@ -194,21 +194,21 @@ namespace GTI.WFMS.Modules.Fclt.ViewModel
             var values = (object[])obj;
 
             //1. 화면객체 인스턴스
-            filtPltListView = values[0] as FiltPltListView;
+            intkStListView = values[0] as IntkStListView;
 
-            cbMNG_CDE = filtPltListView.cbMNG_CDE;      //0.관리기관
-            cbHJD_CDE = filtPltListView.cbHJD_CDE;      //2.행정동
-            cbWSR_CDE = filtPltListView.cbWSR_CDE;      //8.수원구분
+            cbMNG_CDE = intkStListView.cbMNG_CDE;      //0.관리기관
+            cbHJD_CDE = intkStListView.cbHJD_CDE;      //2.행정동
+            cbWSR_CDE = intkStListView.cbWSR_CDE;      //8.수원구분
+            cbWRW_CDE = intkStListView.cbWRW_CDE;      //10.도수방법
 
-            txtFTR_IDN = filtPltListView.txtFTR_IDN;    //1.관리번호           
-            txtCNT_NUM = filtPltListView.txtCNT_NUM;    //3.공사번호
-            txtSHT_NUM = filtPltListView.txtSHT_NUM;    //4.도엽번호
-            txtPUR_NAM = filtPltListView.txtPUR_NAM;    //7.정수장명
-            txtGAI_NAM = filtPltListView.txtGAI_NAM;    //9.취수장명
-            txtSRV_NAM = filtPltListView.txtSRV_NAM;    //10.배수지명
+            txtFTR_IDN = intkStListView.txtFTR_IDN;    //1.관리번호           
+            txtCNT_NUM = intkStListView.txtCNT_NUM;    //3.공사번호
+            txtSHT_NUM = intkStListView.txtSHT_NUM;    //4.도엽번호
+            txtGAI_NAM = intkStListView.txtGAI_NAM;    //7.취수장명
+            txtWSS_NAM = intkStListView.txtWSS_NAM;    //9.수계명
 
-            dtFNS_YMD_FROM = filtPltListView.dtFNS_YMD_FROM;    //5.준공일자(이상)
-            dtFNS_YMD_TO = filtPltListView.dtFNS_YMD_TO;        //6.준공일자(이하)
+            dtFNS_YMD_FROM = intkStListView.dtFNS_YMD_FROM;    //5.준공일자(이상)
+            dtFNS_YMD_TO = intkStListView.dtFNS_YMD_TO;        //6.준공일자(이하)
             dtFNS_YMD_FROM.DisplayFormatString = "yyyy-MM-dd";
             dtFNS_YMD_TO.DisplayFormatString = "yyyy-MM-dd";
                       
@@ -216,7 +216,7 @@ namespace GTI.WFMS.Modules.Fclt.ViewModel
             //dtFNS_YMD_FROM.EditValue = DateTime.Today.AddYears(-10);
             //dtFNS_YMD_TO.EditValue = DateTime.Today;
 
-            grid = filtPltListView.grid;
+            grid = intkStListView.grid;
 
 
             //2.화면데이터객체 초기화
@@ -245,13 +245,13 @@ namespace GTI.WFMS.Modules.Fclt.ViewModel
                 conditions.Add("MNG_CDE", cbMNG_CDE.EditValue.ToString().Trim());
                 conditions.Add("HJD_CDE", cbHJD_CDE.EditValue.ToString().Trim());
                 conditions.Add("WSR_CDE", cbWSR_CDE.EditValue.ToString().Trim());
+                conditions.Add("WRW_CDE", cbWRW_CDE.EditValue.ToString().Trim());
 
                 conditions.Add("FTR_IDN", FmsUtil.Trim(txtFTR_IDN.EditValue));
                 conditions.Add("CNT_NUM", txtCNT_NUM.Text.Trim());
                 conditions.Add("SHT_NUM", txtSHT_NUM.Text.Trim());
-                conditions.Add("PUR_NAM", txtPUR_NAM.Text.Trim());
                 conditions.Add("GAI_NAM", txtGAI_NAM.Text.Trim());
-                conditions.Add("SRV_NAM", txtSRV_NAM.Text.Trim());
+                conditions.Add("WSS_NAM", txtWSS_NAM.Text.Trim());
                 
 
                 try
@@ -264,7 +264,7 @@ namespace GTI.WFMS.Modules.Fclt.ViewModel
                 conditions.Add("firstIndex", 0);
                 conditions.Add("lastIndex", 1000);
 
-                conditions.Add("sqlId", "SelectFiltPltList");
+                conditions.Add("sqlId", "SelectIntkStList");
     
                 /*
                     조회후 페이징소스 업데이트
@@ -320,9 +320,8 @@ namespace GTI.WFMS.Modules.Fclt.ViewModel
             txtFTR_IDN.Text = "";
             txtCNT_NUM.Text = "";
             txtSHT_NUM.Text = "";
-            txtPUR_NAM.Text = "";
             txtGAI_NAM.Text = "";
-            txtSRV_NAM.Text = "";
+            txtWSS_NAM.Text = "";
             
             dtFNS_YMD_FROM.EditValue = null;
             dtFNS_YMD_TO.EditValue = null;
@@ -347,9 +346,8 @@ namespace GTI.WFMS.Modules.Fclt.ViewModel
                 conditions.Add("FTR_IDN", FmsUtil.Trim(txtFTR_IDN.EditValue));
                 conditions.Add("CNT_NUM", txtCNT_NUM.Text.Trim());
                 conditions.Add("SHT_NUM", txtSHT_NUM.Text.Trim());
-                conditions.Add("PUR_NAM", txtPUR_NAM.Text.Trim());
                 conditions.Add("GAI_NAM", txtGAI_NAM.Text.Trim());
-                conditions.Add("SRV_NAM", txtSRV_NAM.Text.Trim());
+                conditions.Add("WSS_NAM", txtWSS_NAM.Text.Trim());
 
                 
                 try
@@ -362,7 +360,7 @@ namespace GTI.WFMS.Modules.Fclt.ViewModel
                 conditions.Add("page", 0);
                 conditions.Add("rows", 1000000);
 
-                conditions.Add("sqlId", "SelectFiltPltList");
+                conditions.Add("sqlId", "SelectIntkStList");
 
                 exceldt = BizUtil.SelectList(conditions);
 
@@ -371,7 +369,7 @@ namespace GTI.WFMS.Modules.Fclt.ViewModel
                 saveFileDialog.Title = "저장경로를 지정하세요.";
 
                 //초기 파일명 지정
-                saveFileDialog.FileName = DateTime.Now.ToString("yyyyMMdd") + "_" + "정수장목록.xlsx";
+                saveFileDialog.FileName = DateTime.Now.ToString("yyyyMMdd") + "_" + "취수장목록.xlsx";
 
                 saveFileDialog.OverwritePrompt = true;
                 saveFileDialog.Filter = "Excel|*.xlsx";
@@ -411,10 +409,10 @@ namespace GTI.WFMS.Modules.Fclt.ViewModel
         {
             try
             {
-                filtPltListView.Dispatcher.Invoke(DispatcherPriority.ApplicationIdle,
+                intkStListView.Dispatcher.Invoke(DispatcherPriority.ApplicationIdle,
                 new Action((delegate ()
                 {
-                    (filtPltListView.FindName("waitindicator") as WaitIndicator).DeferedVisibility = true;
+                    (intkStListView.FindName("waitindicator") as WaitIndicator).DeferedVisibility = true;
                 })));
                 
                 //엑셀 표 데이터
@@ -423,21 +421,21 @@ namespace GTI.WFMS.Modules.Fclt.ViewModel
 
                 //엑셀 유틸 호출
                 //ExcelUtil.ExcelTabulation(strFileName, strExcelFormPath, startPointXY, strSearchCondition, dtExceltTableData);
-                ExcelUtil.ExcelGrid(strExcelFormPath, strFileName, "정수장목록", dtExceltTableData, tablePointXY, grid, true);
+                ExcelUtil.ExcelGrid(strExcelFormPath, strFileName, "취수장목록", dtExceltTableData, tablePointXY, grid, true);
 
-                filtPltListView.Dispatcher.Invoke(DispatcherPriority.ApplicationIdle,
+                intkStListView.Dispatcher.Invoke(DispatcherPriority.ApplicationIdle,
                    new Action((delegate ()
                    {
-                       (filtPltListView.FindName("waitindicator") as WaitIndicator).DeferedVisibility = false;
+                       (intkStListView.FindName("waitindicator") as WaitIndicator).DeferedVisibility = false;
                        Messages.ShowInfoMsgBox("엑셀 다운로드가 완료되었습니다.");
                    })));
             }
             catch (Exception ex)
             {
-                filtPltListView.Dispatcher.Invoke(DispatcherPriority.ApplicationIdle,
+                intkStListView.Dispatcher.Invoke(DispatcherPriority.ApplicationIdle,
                     new Action((delegate ()
                     {
-                        (filtPltListView.FindName("waitindicator") as WaitIndicator).DeferedVisibility = false;
+                        (intkStListView.FindName("waitindicator") as WaitIndicator).DeferedVisibility = false;
                         Messages.ShowErrMsgBoxLog(ex);
                     })));
             }
@@ -458,19 +456,19 @@ namespace GTI.WFMS.Modules.Fclt.ViewModel
             {
 
 
-                cbMNG_CDE = filtPltListView.cbMNG_CDE;      //0.관리기관
-                cbHJD_CDE = filtPltListView.cbHJD_CDE;      //2.행정동
-                cbWSR_CDE = filtPltListView.cbWSR_CDE;      //8.수원구분
+                cbMNG_CDE = intkStListView.cbMNG_CDE;      //0.관리기관
+                cbHJD_CDE = intkStListView.cbHJD_CDE;      //2.행정동
+                cbWSR_CDE = intkStListView.cbWSR_CDE;      //8.수원구분
+                cbWRW_CDE = intkStListView.cbWRW_CDE;      //10.도수방법
 
-                txtFTR_IDN = filtPltListView.txtFTR_IDN;    //1.관리번호           
-                txtCNT_NUM = filtPltListView.txtCNT_NUM;    //3.공사번호
-                txtSHT_NUM = filtPltListView.txtSHT_NUM;    //4.도엽번호
-                txtPUR_NAM = filtPltListView.txtPUR_NAM;    //7.정수장명
-                txtGAI_NAM = filtPltListView.txtGAI_NAM;    //9.취수장명
-                txtSRV_NAM = filtPltListView.txtSRV_NAM;    //10.유효저수량(t)
+                txtFTR_IDN = intkStListView.txtFTR_IDN;    //1.관리번호           
+                txtCNT_NUM = intkStListView.txtCNT_NUM;    //3.공사번호
+                txtSHT_NUM = intkStListView.txtSHT_NUM;    //4.도엽번호
+                txtGAI_NAM = intkStListView.txtGAI_NAM;    //7.취수장명
+                txtWSS_NAM = intkStListView.txtWSS_NAM;    //9.수계명
 
-                dtFNS_YMD_FROM = filtPltListView.dtFNS_YMD_FROM;    //5.준공일자(이상)
-                dtFNS_YMD_TO = filtPltListView.dtFNS_YMD_TO;        //6.준공일자(이하)
+                dtFNS_YMD_FROM = intkStListView.dtFNS_YMD_FROM;    //5.준공일자(이상)
+                dtFNS_YMD_TO = intkStListView.dtFNS_YMD_TO;        //6.준공일자(이하)
                 dtFNS_YMD_FROM.DisplayFormatString = "yyyy-MM-dd";
                 dtFNS_YMD_TO.DisplayFormatString = "yyyy-MM-dd";
 
@@ -482,6 +480,9 @@ namespace GTI.WFMS.Modules.Fclt.ViewModel
 
                 // cbWSR_CDE    8.수원구분
                 BizUtil.SetCmbCode(cbWSR_CDE, "WSR_CDE", true);
+
+                // cbWSR_CDE    10.수원구분
+                BizUtil.SetCmbCode(cbWRW_CDE, "WRW_CDE", true);
 
             }
             catch (Exception ex)
@@ -533,11 +534,11 @@ namespace GTI.WFMS.Modules.Fclt.ViewModel
 
 
             string name_space = "GTI.WFMS.Modules.Fclt.Model";
-            string class_name = "ValvFacDtl";
+            string class_name = "IntkStDtl";
 
             Hashtable param = new Hashtable();
-            param.Add("sqlId", "SelectFiltPltList");
-            param.Add("FTR_CDE", "SA113");
+            param.Add("sqlId", "SelectIntkStList");
+            param.Add("FTR_CDE", "SA112");
             param.Add("FTR_IDN", "1");
             DataTable dt = BizUtil.SelectList(param);
             DataRow dr = dt.Rows[0];

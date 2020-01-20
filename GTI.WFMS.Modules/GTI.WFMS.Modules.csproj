@@ -137,7 +137,19 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
+    <Page Include="Fclt\view\IntkStAddView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
     <Page Include="Fclt\view\FiltPltAddView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Fclt\view\IntkStDtlView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Fclt\view\IntkStListView.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
@@ -319,14 +331,26 @@
     <Compile Include="Cnst\View\CnstMngDtlView.xaml.cs">
       <DependentUpon>CnstMngDtlView.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Fclt\viewModel\IntkStAddViewModel.cs" />
     <Compile Include="Fclt\viewModel\FiltPltAddViewModel.cs" />
+    <Compile Include="Fclt\viewModel\IntkStDtlViewModel.cs" />
+    <Compile Include="Fclt\viewModel\IntkStListViewModel.cs" />
     <Compile Include="Fclt\viewModel\WtrSourAddViewModel.cs" />
     <Compile Include="Fclt\viewModel\FiltPltDtlViewModel.cs" />
     <Compile Include="Fclt\viewModel\WtrSourDtlViewModel.cs" />
     <Compile Include="Fclt\viewModel\FiltPltListViewModel.cs" />
     <Compile Include="Fclt\viewModel\WtrSourListViewModel.cs" />
+    <Compile Include="Fclt\view\IntkStAddView.xaml.cs">
+      <DependentUpon>IntkStAddView.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Fclt\view\FiltPltAddView.xaml.cs">
       <DependentUpon>FiltPltAddView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Fclt\view\IntkStDtlView.xaml.cs">
+      <DependentUpon>IntkStDtlView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Fclt\view\IntkStListView.xaml.cs">
+      <DependentUpon>IntkStListView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Fclt\view\WtrSourAddView.xaml.cs">
       <DependentUpon>WtrSourAddView.xaml</DependentUpon>
