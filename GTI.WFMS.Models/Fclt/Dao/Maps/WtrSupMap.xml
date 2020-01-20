@@ -35,68 +35,68 @@
           A.SHT_NUM = #SHT_NUM#
         </isNotEmpty>
 
-        <!-- 조건6. 설치일자[이상] -->
-        <isNotEmpty prepend="AND" property="IST_YMD_FROM">
-          A.IST_YMD <![CDATA[>=]]> decode(length(#IST_YMD_FROM#), 10, to_char(to_date(#IST_YMD_FROM#, 'yyyy-MM-dd'), 'yyyyMMdd'), '')
+        <!-- 조건6. 준공일자[이상] -->
+        <isNotEmpty prepend="AND" property="FNS_YMD_FROM">
+          A.FNS_YMD <![CDATA[>=]]> decode(length(#FNS_YMD_FROM#), 10, to_char(to_date(#FNS_YMD_FROM#, 'yyyy-MM-dd'), 'yyyyMMdd'), '')
         </isNotEmpty>
 
-        <!-- 조건7. 설치일자[이하] -->
-        <isNotEmpty prepend="AND" property="IST_YMD_TO">
-          A.IST_YMD <![CDATA[<=]]> decode(length(#IST_YMD_TO#), 10, to_char(to_date(#IST_YMD_TO#, 'yyyy-MM-dd'), 'yyyyMMdd'), '')
+        <!-- 조건7. 준공일자[이하] -->
+        <isNotEmpty prepend="AND" property="FNS_YMD_TO">
+          A.FNS_YMD <![CDATA[<=]]> decode(length(#FNS_YMD_TO#), 10, to_char(to_date(#FNS_YMD_TO#, 'yyyy-MM-dd'), 'yyyyMMdd'), '')
         </isNotEmpty>
 
-        <!-- 조건8. 배수지종류 -->
-        <isNotEmpty prepend="AND" property="PGA_CDE">
-          A.PGA_CDE = #PGA_CDE#
+        <!-- 조건8. 배수지명 -->
+        <isNotEmpty prepend="AND" property="SAG_CDE">
+          A.SAG_CDE LIKE '%' || #SAG_CDE# || '%'
         </isNotEmpty>
 
-        <!-- 조건9. 형식 -->
-        <isNotEmpty prepend="AND" property="MOF_CDE">
-          A.MOF_CDE = #MOF_CDE#
+        <!-- 조건9. 관리방법 -->
+        <isNotEmpty prepend="AND" property="SAG_CDE">
+          A.SAG_CDE = #SAG_CDE#
         </isNotEmpty>
 
-        <!-- 조건10. 구경 -->
-        <isNotEmpty prepend="AND" property="PGA_DIP">
-          A.PGA_DIP = #PGA_DIP#
+        <!-- 조건10. 배수지제어방법 -->
+        <isNotEmpty prepend="AND" property="SCW_CDE">
+          A.SCW_CDE = #SCW_CDE#
         </isNotEmpty>
 
-        <!-- 조건11. 제작회사명 -->
-        <isNotEmpty prepend="AND" property="PRD_NAM">
-          A.PRD_NAM = #PRD_NAM#
+        <!-- 조건11. 정수장명 -->
+        <isNotEmpty prepend="AND" property="PUR_NAM">
+          A.PUR_NAM LIKE '%' || #PUR_NAM# || '%'
         </isNotEmpty>
       )
 
       SELECT C.ROWCNT, X.*  FROM (
 
-      SELECT ROW_NUMBER() OVER( ORDER BY A.FTR_IDN DESC ) AS RN
-      , A.FTR_CDE
-      , (SELECT FTR_NAM FROM INFOFMS.V_FTR_CDE WHERE FTR_CDE = A.FTR_CDE) AS FTR_NAM
-      , A.FTR_IDN
-      , A.HJD_CDE
-      , (SELECT HJD_NAM FROM INFOFMS.CMT_ADAR_MA WHERE HJD_CDE = A.HJD_CDE) AS HJD_NAM
-      , A.SHT_NUM
-      , A.MNG_CDE
-      , (SELECT NM FROM INFOUSER.CD_DTL_INFO WHERE MST_CD = '250101' AND DTL_CD = A.MNG_CDE ) AS MNG_NAM
-      , decode(length(A.IST_YMD), 8, to_char(to_date(A.IST_YMD, 'yyyyMMdd'), 'yyyy-MM-dd'), '') AS IST_YMD
-      , A.PGA_CDE
-      , (SELECT NM FROM INFOUSER.CD_DTL_INFO WHERE MST_CD = '250057' AND DTL_CD = A.PGA_CDE ) AS PGA_NAM
-      , A.MOF_CDE
-      , (SELECT NM FROM INFOUSER.CD_DTL_INFO WHERE MST_CD = '250035' AND DTL_CD = A.MOF_CDE ) AS MOF_NAM
-      , A.PGA_DIP
-      , A.STD_SAF
-      , A.AVG_SAF
-      , A.MSR_SAF
-      , A.PIP_DIP
-      , A.PRD_NAM
-      , A.PIP_CDE
-      , A.PIP_IDN
-      , A.CNT_NUM
-      , A.SYS_CHK
-      , A.ANG_DIR
-      , CASE WHEN ST_ISVALID(A.GEOM) = 1 THEN 'Y' ELSE 'N' END AS IS_GEOMETRY
-      FROM INFOFMS.WTL_SERV_PS A
-      WHERE 1=1
-      <!-- 조건1. 관리기관 -->
+       SELECT ROW_NUMBER() OVER( ORDER BY A.FTR_IDN DESC ) AS RN
+            , A.FTR_CDE
+            , (SELECT FTR_NAM FROM INFOFMS.V_FTR_CDE WHERE FTR_CDE = A.FTR_CDE) AS FTR_NAM
+            , A.FTR_IDN
+            , A.HJD_CDE
+            , (SELECT HJD_NAM FROM INFOFMS.CMT_ADAR_MA WHERE HJD_CDE = A.HJD_CDE) AS HJD_NAM
+            , A.SHT_NUM
+            , A.MNG_CDE
+            , (SELECT NM FROM INFOUSER.CD_DTL_INFO WHERE MST_CD = '250101' AND DTL_CD = A.MNG_CDE ) AS MNG_NAM
+            , decode(length(A.FNS_YMD), 8, to_char(to_date(A.FNS_YMD, 'yyyyMMdd'), 'yyyy-MM-dd'), '') AS FNS_YMD
+            , A.SRV_NAM
+            , A.PUR_NAM
+            , A.SAG_CDE
+            , (SELECT NM FROM INFOUSER.CD_DTL_INFO WHERE MST_CD = '250005' AND DTL_CD = A.SAG_CDE ) AS SAG_NAM
+            , A.SRV_VOL
+            , A.HGH_WAL
+            , A.LOW_WAL
+            , A.ISR_VOL
+            , A.SUP_ARE
+            , A.SUP_POP
+            , A.SCW_CDE
+            , (SELECT NM FROM INFOUSER.CD_DTL_INFO WHERE MST_CD = '250052' AND DTL_CD = A.SCW_CDE ) AS SCW_NAM
+            , A.CNT_NUM
+            , A.SYS_CHK
+            , A.SRV_ARA
+            , CASE WHEN ST_ISVALID(A.GEOM) = 1 THEN 'Y' ELSE 'N' END AS IS_GEOMETRY
+         FROM INFOFMS.WTL_SERV_PS A
+        WHERE 1=1
+        <!-- 조건1. 관리기관 -->
         <isNotEmpty prepend="AND" property="MNG_CDE">
           A.MNG_CDE = #MNG_CDE#
         </isNotEmpty>
@@ -121,34 +121,34 @@
           A.SHT_NUM = #SHT_NUM#
         </isNotEmpty>
 
-        <!-- 조건6. 설치일자[이상] -->
-        <isNotEmpty prepend="AND" property="IST_YMD_FROM">
-          A.IST_YMD <![CDATA[>=]]> decode(length(#IST_YMD_FROM#), 10, to_char(to_date(#IST_YMD_FROM#, 'yyyy-MM-dd'), 'yyyyMMdd'), '')
+        <!-- 조건6. 준공일자[이상] -->
+        <isNotEmpty prepend="AND" property="FNS_YMD_FROM">
+          A.FNS_YMD <![CDATA[>=]]> decode(length(#FNS_YMD_FROM#), 10, to_char(to_date(#FNS_YMD_FROM#, 'yyyy-MM-dd'), 'yyyyMMdd'), '')
         </isNotEmpty>
 
-        <!-- 조건7. 설치일자[이하] -->
-        <isNotEmpty prepend="AND" property="IST_YMD_TO">
-          A.IST_YMD <![CDATA[<=]]> decode(length(#IST_YMD_TO#), 10, to_char(to_date(#IST_YMD_TO#, 'yyyy-MM-dd'), 'yyyyMMdd'), '')
+        <!-- 조건7. 준공일자[이하] -->
+        <isNotEmpty prepend="AND" property="FNS_YMD_TO">
+          A.FNS_YMD <![CDATA[<=]]> decode(length(#FNS_YMD_TO#), 10, to_char(to_date(#FNS_YMD_TO#, 'yyyy-MM-dd'), 'yyyyMMdd'), '')
         </isNotEmpty>
 
-        <!-- 조건8. 배수지종류 -->
-        <isNotEmpty prepend="AND" property="PGA_CDE">
-          A.PGA_CDE = #PGA_CDE#
+        <!-- 조건8. 배수지명 -->
+        <isNotEmpty prepend="AND" property="SAG_CDE">
+          A.SAG_CDE LIKE '%' || #SAG_CDE# || '%'
         </isNotEmpty>
 
-        <!-- 조건9. 형식 -->
-        <isNotEmpty prepend="AND" property="MOF_CDE">
-          A.MOF_CDE = #MOF_CDE#
+        <!-- 조건9. 관리방법 -->
+        <isNotEmpty prepend="AND" property="SAG_CDE">
+          A.SAG_CDE = #SAG_CDE#
         </isNotEmpty>
 
-        <!-- 조건10. 구경 -->
-        <isNotEmpty prepend="AND" property="PGA_DIP">
-          A.PGA_DIP = #PGA_DIP#
+        <!-- 조건10. 배수지제어방법 -->
+        <isNotEmpty prepend="AND" property="SCW_CDE">
+          A.SCW_CDE = #SCW_CDE#
         </isNotEmpty>
 
-        <!-- 조건11. 제작회사명 -->
-        <isNotEmpty prepend="AND" property="PRD_NAM">
-          A.PRD_NAM = #PRD_NAM#
+        <!-- 조건11. 정수장명 -->
+        <isNotEmpty prepend="AND" property="PUR_NAM">
+          A.PUR_NAM LIKE '%' || #PUR_NAM# || '%'
         </isNotEmpty>
 
         ORDER BY FTR_IDN DESC
@@ -163,81 +163,81 @@
     <select id="SelectWtrSupDtl"  parameterClass="Hashtable" resultClass ="GTI.WFMS.Models.Fclt.Model.WtrSupDtl">
       /* WtrSupMap.SelectWtrSupDtl 배수지 상세정보*/
       <![CDATA[
-			SELECT A.FTR_CDE
-          , (SELECT FTR_NAM FROM INFOFMS.V_FTR_CDE WHERE FTR_CDE = A.FTR_CDE) AS FTR_NAM
-          , A.FTR_IDN
-          , A.HJD_CDE
-          , (SELECT HJD_NAM FROM INFOFMS.CMT_ADAR_MA WHERE HJD_CDE = A.HJD_CDE) AS HJD_NAM
-          , A.SHT_NUM
-          , A.MNG_CDE
-          , (SELECT NM FROM INFOUSER.CD_DTL_INFO WHERE MST_CD = '250101' AND DTL_CD = A.MNG_CDE ) AS MNG_NAM
-          , decode(length(A.IST_YMD), 8, to_char(to_date(A.IST_YMD, 'yyyyMMdd'), 'yyyy-MM-dd'), '') AS IST_YMD
-          , A.PGA_CDE
-          , (SELECT NM FROM INFOUSER.CD_DTL_INFO WHERE MST_CD = '250061' AND DTL_CD = A.PGA_CDE ) AS GAG_NAM
-          , A.MOF_CDE
-          , (SELECT NM FROM INFOUSER.CD_DTL_INFO WHERE MST_CD = '250004' AND DTL_CD = A.MOF_CDE ) AS MOF_NAM
-          , A.PGA_DIP
-          , A.STD_SAF
-          , A.AVG_SAF
-          , A.MSR_SAF
-          , A.PIP_DIP
-          , A.PRD_NAM
-          , A.PIP_CDE
-          , A.PIP_IDN
-          , A.CNT_NUM
-          , A.SYS_CHK
-          , A.ANG_DIR
-          , decode(A.SYS_CHK,'1','유','무') as SYS_CHK_NAM
-       FROM INFOFMS.WTL_SERV_PS A 
-			WHERE 1=1
-        AND FTR_CDE = #FTR_CDE# 
-				AND FTR_IDN = #FTR_IDN#
+			 SELECT A.FTR_CDE
+            , (SELECT FTR_NAM FROM INFOFMS.V_FTR_CDE WHERE FTR_CDE = A.FTR_CDE) AS FTR_NAM
+            , A.FTR_IDN
+            , A.HJD_CDE
+            , (SELECT HJD_NAM FROM INFOFMS.CMT_ADAR_MA WHERE HJD_CDE = A.HJD_CDE) AS HJD_NAM
+            , A.SHT_NUM
+            , A.MNG_CDE
+            , (SELECT NM FROM INFOUSER.CD_DTL_INFO WHERE MST_CD = '250101' AND DTL_CD = A.MNG_CDE ) AS MNG_NAM
+            , decode(length(A.FNS_YMD), 8, to_char(to_date(A.FNS_YMD, 'yyyyMMdd'), 'yyyy-MM-dd'), '') AS FNS_YMD
+            , A.SRV_NAM
+            , A.PUR_NAM
+            , A.SAG_CDE
+            , (SELECT NM FROM INFOUSER.CD_DTL_INFO WHERE MST_CD = '250005' AND DTL_CD = A.SAG_CDE ) AS SAG_NAM
+            , A.SRV_VOL
+            , A.HGH_WAL
+            , A.LOW_WAL
+            , A.ISR_VOL
+            , A.SUP_ARE
+            , A.SUP_POP
+            , A.SCW_CDE
+            , (SELECT NM FROM INFOUSER.CD_DTL_INFO WHERE MST_CD = '250052' AND DTL_CD = A.SCW_CDE ) AS SCW_NAM
+            , A.CNT_NUM
+            , A.SYS_CHK
+            , A.SRV_ARA
+            , decode(A.SYS_CHK,'1','유','무') as SYS_CHK_NAM
+         FROM INFOFMS.WTL_SERV_PS A 
+			  WHERE 1=1
+          AND FTR_CDE = #FTR_CDE# 
+				  AND FTR_IDN = #FTR_IDN#
 			]]>
     </select>
 
     <!--배수지 상세추가-->
     <update id="insertWtrSupDtl" parameterClass="GTI.WFMS.Models.Fclt.Model.WtrSupDtl">
       INSERT INTO INFOFMS.WTL_SERV_PS
-      ( FTR_CDE
-      , FTR_IDN
-      , HJD_CDE
-      , SHT_NUM
-      , MNG_CDE
-      , IST_YMD
-      , PGA_CDE
-      , MOF_CDE
-      , PGA_DIP
-      , STD_SAF
-      , AVG_SAF
-      , MSR_SAF
-      , PIP_DIP
-      , PRD_NAM
-      , PIP_CDE
-      , PIP_IDN
-      , CNT_NUM
-      , SYS_CHK
-      , ANG_DIR
+      (   FTR_CDE
+        , FTR_IDN
+        , HJD_CDE
+        , SHT_NUM
+        , MNG_CDE
+        , FNS_YMD
+        , SRV_NAM
+        , PUR_NAM
+        , SAG_CDE
+        , SRV_VOL
+        , HGH_WAL
+        , LOW_WAL
+        , ISR_VOL
+        , SUP_ARE
+        , SUP_POP
+        , SCW_CDE
+        , CNT_NUM
+        , SYS_CHK
+        , SRV_ARA
       )
       VALUES
-      ( #FTR_CDE#
-      , #FTR_IDN#
-      , #HJD_CDE#
-      , #SHT_NUM#
-      , #MNG_CDE#
-      , decode(length(#IST_YMD#), 10, to_char(to_date(#IST_YMD#, 'yyyy-MM-dd'), 'yyyyMMdd'), '')
-      , #PGA_CDE#
-      , #MOF_CDE#
-      , #PGA_DIP#
-      , #STD_SAF#
-      , #AVG_SAF#
-      , #MSR_SAF#
-      , #PIP_DIP#
-      , #PRD_NAM#
-      , #PIP_CDE#
-      , #PIP_IDN#
-      , #CNT_NUM#
-      , #SYS_CHK#
-      , #ANG_DIR#
+      (   #FTR_CDE#
+        , #FTR_IDN#
+        , #HJD_CDE#
+        , #SHT_NUM#
+        , #MNG_CDE#
+        , decode(length(#FNS_YMD#), 10, to_char(to_date(#FNS_YMD#, 'yyyy-MM-dd'), 'yyyyMMdd'), '')
+        , #SRV_NAM#
+        , #PUR_NAM#
+        , #SAG_CDE#
+        , #SRV_VOL#
+        , #HGH_WAL#
+        , #LOW_WAL#
+        , #ISR_VOL#
+        , #SUP_ARE#
+        , #SUP_POP#
+        , #SCW_CDE#
+        , #CNT_NUM#
+        , #SYS_CHK#
+        , #SRV_ARA#
       )
     </update>
 
@@ -248,20 +248,20 @@
       SET HJD_CDE = #HJD_CDE#
         , SHT_NUM = #SHT_NUM#
         , MNG_CDE = #MNG_CDE#
-        , IST_YMD = decode(length(#IST_YMD#), 10, to_char(to_date(#IST_YMD#, 'yyyy-MM-dd'), 'yyyyMMdd'), '')
-        , PGA_CDE = #PGA_CDE#
-        , MOF_CDE = #MOF_CDE#
-        , PGA_DIP = #PGA_DIP#
-        , STD_SAF = #STD_SAF#
-        , AVG_SAF = #AVG_SAF#
-        , MSR_SAF = #MSR_SAF#
-        , PIP_DIP = #PIP_DIP#
-        , PRD_NAM = #PRD_NAM#
-        , PIP_CDE = #PIP_CDE#
-        , PIP_IDN = #PIP_IDN#
-        , CNT_NUM = #CNT_NUM#
+        , FNS_YMD = decode(length(#FNS_YMD#), 10, to_char(to_date(#FNS_YMD#, 'yyyy-MM-dd'), 'yyyyMMdd'), '')
+        , SRV_NAM = #SRV_NAM#
+        , PUR_NAM = #PUR_NAM#
+        , SAG_CDE = #SAG_CDE#
+        , SRV_VOL = #SRV_VOL#
+        , HGH_WAL = #HGH_WAL#
+        , LOW_WAL = #LOW_WAL#
+        , ISR_VOL = #ISR_VOL#
+        , SUP_ARE = #SUP_ARE#
+        , SUP_POP = #SUP_POP#
+        , SCW_CDE = #SCW_CDE#
+        , CNT_NUM = #CNT_NUM#     
         , SYS_CHK = #SYS_CHK#
-        , ANG_DIR = #ANG_DIR#
+        , SRV_ARA = #SRV_ARA#
       WHERE FTR_CDE = #FTR_CDE#
       AND	FTR_IDN = #FTR_IDN#
     </update>

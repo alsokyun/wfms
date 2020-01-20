@@ -22,8 +22,6 @@ namespace GTI.WFMS.Models.Fclt.Model
             }
         }
 
-
-
         /// <summary>                                                                 
         /// 프로퍼티 부분                                                             
         /// </summary>                                                                
@@ -107,136 +105,138 @@ namespace GTI.WFMS.Models.Fclt.Model
                 OnPropertyChanged("MNG_NAM");
             }
         }
-        private string __IST_YMD;
-        public string IST_YMD
+        private string __FNS_YMD;
+        public string FNS_YMD
         {
-            get { return __IST_YMD; }
+            get { return __FNS_YMD; }
             set
             {
-                this.__IST_YMD = value;
-                OnPropertyChanged("IST_YMD");
+                this.__FNS_YMD = value;
+                OnPropertyChanged("FNS_YMD");
             }
         }
-        private string __PGA_CDE;
-        public string PGA_CDE
+        private string __GAI_NAM;
+        public string GAI_NAM
         {
-            get { return __PGA_CDE; }
+            get { return __GAI_NAM; }
             set
             {
-                this.__PGA_CDE = value;
-                OnPropertyChanged("PGA_CDE");
+                this.__GAI_NAM = value;
+                OnPropertyChanged("GAI_NAM");
             }
         }
-        private string __PGA_NAM;
-        public string PGA_NAM
+        private string __WSR_CDE;
+        public string WSR_CDE
         {
-            get { return __PGA_NAM; }
+            get { return __WSR_CDE; }
             set
             {
-                this.__PGA_NAM = value;
-                OnPropertyChanged("PGA_NAM");
+                this.__WSR_CDE = value;
+                OnPropertyChanged("WSR_CDE");
             }
         }
-        private string __MOF_CDE;
-        public string MOF_CDE
+        private string __WSR_NAM;
+        public string WSR_NAM
         {
-            get { return __MOF_CDE; }
+            get { return __WSR_NAM; }
             set
             {
-                this.__MOF_CDE = value;
-                OnPropertyChanged("MOF_CDE");
+                this.__WSR_NAM = value;
+                OnPropertyChanged("WSR_NAM");
             }
         }
-        private string __MOF_NAM;
-        public string MOF_NAM
+        private string __WSS_NAM;
+        public string WSS_NAM
         {
-            get { return __MOF_NAM; }
+            get { return __WSS_NAM; }
             set
             {
-                this.__MOF_NAM = value;
-                OnPropertyChanged("MOF_NAM");
+                this.__WSS_NAM = value;
+                OnPropertyChanged("WSS_NAM");
             }
         }
-        private decimal __PGA_DIP;
-        public decimal PGA_DIP
+        private decimal __AGA_VOL;
+        public decimal AGA_VOL
         {
-            get { return __PGA_DIP; }
+            get { return __AGA_VOL; }
             set
             {
-                this.__PGA_DIP = value;
-                OnPropertyChanged("PGA_DIP");
+                this.__AGA_VOL = value;
+                OnPropertyChanged("AGA_VOL");
             }
         }
-        private decimal __STD_SAF;
-        public decimal STD_SAF
+        private decimal __HGA_VOL;
+        public decimal HGA_VOL
         {
-            get { return __STD_SAF; }
+            get { return __HGA_VOL; }
             set
             {
-                this.__STD_SAF = value;
-                OnPropertyChanged("STD_SAF");
+                this.__HGA_VOL = value;
+                OnPropertyChanged("HGA_VOL");
             }
         }
-        private decimal __AVG_SAF;
-        public decimal AVG_SAF
+        private decimal __PMP_CNT;
+        public decimal PMP_CNT
         {
-            get { return __AVG_SAF; }
+            get { return __PMP_CNT; }
             set
             {
-                this.__AVG_SAF = value;
-                OnPropertyChanged("AVG_SAF");
+                this.__PMP_CNT = value;
+                OnPropertyChanged("PMP_CNT");
             }
         }
-        private decimal __MSR_SAF;
-        public decimal MSR_SAF
+        private decimal __GAI_ARA;
+        public decimal GAI_ARA
         {
-            get { return __MSR_SAF; }
+            get { return __GAI_ARA; }
             set
             {
-                this.__MSR_SAF = value;
-                OnPropertyChanged("MSR_SAF");
+                this.__GAI_ARA = value;
+                OnPropertyChanged("GAI_ARA");
             }
         }
-        private decimal __PIP_DIP;
-        public decimal PIP_DIP
+        private string __WRW_CDE;
+        public string WRW_CDE
         {
-            get { return __PIP_DIP; }
+            get { return __WRW_CDE; }
             set
             {
-                this.__PIP_DIP = value;
-                OnPropertyChanged("PIP_DIP");
+                this.__WRW_CDE = value;
+                OnPropertyChanged("WRW_CDE");
             }
         }
-        private string __PRD_NAM;
-        public string PRD_NAM
+        private string __WRW_NAM;
+        public string WRW_NAM
         {
-            get { return __PRD_NAM; }
+            get { return __WRW_NAM; }
             set
             {
-                this.__PRD_NAM = value;
-                OnPropertyChanged("PRD_NAM");
+                this.__WRW_NAM = value;
+                OnPropertyChanged("WRW_NAM");
             }
         }
-        private string __PIP_CDE;
-        public string PIP_CDE
+        private string __WGW_CDE;
+        public string WGW_CDE
         {
-            get { return __PIP_CDE; }
+            get { return __WGW_CDE; }
             set
             {
-                this.__PIP_CDE = value;
-                OnPropertyChanged("PIP_CDE");
+                this.__WGW_CDE = value;
+                OnPropertyChanged("WGW_CDE");
             }
         }
-        private int __PIP_IDN;
-        public int PIP_IDN
+        private string __WGW_NAM;
+        public string WGW_NAM
         {
-            get { return __PIP_IDN; }
+            get { return __WGW_NAM; }
             set
             {
-                this.__PIP_IDN = value;
-                OnPropertyChanged("PIP_IDN");
+                this.__WGW_NAM = value;
+                OnPropertyChanged("WGW_NAM");
             }
         }
+
+
         private string __CNT_NUM;
         public string CNT_NUM
         {
@@ -266,16 +266,6 @@ namespace GTI.WFMS.Models.Fclt.Model
                 this.__SYS_CHK_NAM = value;
                 OnPropertyChanged("SYS_CHK_NAM");
             }
-        }
-        private decimal __ANG_DIR;
-        public decimal ANG_DIR
-        {
-            get { return __ANG_DIR; }
-            set
-            {
-                this.__ANG_DIR = value;
-                OnPropertyChanged("ANG_DIR");
-            }
-        }        
+        }      
     }
 }

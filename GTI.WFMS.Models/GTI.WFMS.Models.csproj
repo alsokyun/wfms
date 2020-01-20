@@ -133,6 +133,7 @@
     </Content>
     <Content Include="Fclt\Dao\Maps\WtrSupMap.xml">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      <SubType>Designer</SubType>
     </Content>
     <Content Include="Fclt\Dao\Maps\IntkStMap.xml">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
