@@ -137,6 +137,10 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
+    <Page Include="Fclt\view\PrsPmpAddView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
     <Page Include="Fclt\view\IntkStAddView.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -145,7 +149,15 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
+    <Page Include="Fclt\view\PrsPmpDtlView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
     <Page Include="Fclt\view\IntkStDtlView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Fclt\view\PrsPmpListView.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
@@ -331,23 +343,35 @@
     <Compile Include="Cnst\View\CnstMngDtlView.xaml.cs">
       <DependentUpon>CnstMngDtlView.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Fclt\viewModel\PrsPmpAddViewModel.cs" />
     <Compile Include="Fclt\viewModel\IntkStAddViewModel.cs" />
     <Compile Include="Fclt\viewModel\FiltPltAddViewModel.cs" />
+    <Compile Include="Fclt\viewModel\PrsPmpDtlViewModel.cs" />
     <Compile Include="Fclt\viewModel\IntkStDtlViewModel.cs" />
+    <Compile Include="Fclt\viewModel\PrsPmpListViewModel.cs" />
     <Compile Include="Fclt\viewModel\IntkStListViewModel.cs" />
     <Compile Include="Fclt\viewModel\WtrSourAddViewModel.cs" />
     <Compile Include="Fclt\viewModel\FiltPltDtlViewModel.cs" />
     <Compile Include="Fclt\viewModel\WtrSourDtlViewModel.cs" />
     <Compile Include="Fclt\viewModel\FiltPltListViewModel.cs" />
     <Compile Include="Fclt\viewModel\WtrSourListViewModel.cs" />
+    <Compile Include="Fclt\view\PrsPmpAddView.xaml.cs">
+      <DependentUpon>PrsPmpAddView.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Fclt\view\IntkStAddView.xaml.cs">
       <DependentUpon>IntkStAddView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Fclt\view\FiltPltAddView.xaml.cs">
       <DependentUpon>FiltPltAddView.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Fclt\view\PrsPmpDtlView.xaml.cs">
+      <DependentUpon>PrsPmpDtlView.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Fclt\view\IntkStDtlView.xaml.cs">
       <DependentUpon>IntkStDtlView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Fclt\view\PrsPmpListView.xaml.cs">
+      <DependentUpon>PrsPmpListView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Fclt\view\IntkStListView.xaml.cs">
       <DependentUpon>IntkStListView.xaml</DependentUpon>
