@@ -16,7 +16,7 @@
              mc:Ignorable="d" 
              d:DesignHeight="400" d:DesignWidth="950"
       
-            x:Name="flowMtAddView"     
+            x:Name="wtrSourAddView"     
       >
 
     <!--뷰모델연결처리
@@ -43,7 +43,7 @@
             <i:InvokeCommandAction Command="{Binding LoadedCommand}">
                 <i:InvokeCommandAction.CommandParameter>
                     <MultiBinding Converter="{StaticResource multiValueConverter}">
-                        <Binding ElementName="flowMtAddView"/>
+                        <Binding ElementName="wtrSourAddView"/>
                     </MultiBinding>
                 </i:InvokeCommandAction.CommandParameter>
             </i:InvokeCommandAction>
@@ -217,7 +217,7 @@
 
             <Label Grid.Row="0" Grid.Column="0" Content="수원지명" Style="{DynamicResource ResourceKey=GridLabel}"/>
             <dxe:TextEdit Grid.Row="0" Grid.Column="1" Style="{DynamicResource ResourceKey=GrdTextEdit}"   
-                          x:Name="txtWSR_CDE" EditValue="{Binding WSR_CDE}"/>
+                          x:Name="txtHEA_NAM" EditValue="{Binding HEA_NAM}"/>
             <Label Grid.Row="0" Grid.Column="2" Content="수원구분" Style="{DynamicResource ResourceKey=GridLabel}"/>
             <dxe:ComboBoxEdit Grid.Row="0" Grid.Column="3" Style="{DynamicResource ResourceKey=GrdComboBox}" 
                               x:Name="cbWSR_CDE" EditValue="{Binding WSR_CDE}" />
