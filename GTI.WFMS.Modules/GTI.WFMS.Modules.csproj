@@ -165,6 +165,10 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
+    <Page Include="Fclt\view\WtrSupAddView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
     <Page Include="Fclt\view\WtrSourAddView.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -173,11 +177,19 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
+    <Page Include="Fclt\view\WtrSupDtlView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
     <Page Include="Fclt\view\WtrSourDtlView.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
     <Page Include="Fclt\view\FiltPltListView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Fclt\view\WtrSupListView.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
@@ -350,10 +362,13 @@
     <Compile Include="Fclt\viewModel\IntkStDtlViewModel.cs" />
     <Compile Include="Fclt\viewModel\PrsPmpListViewModel.cs" />
     <Compile Include="Fclt\viewModel\IntkStListViewModel.cs" />
+    <Compile Include="Fclt\viewModel\WtrSupAddViewModel.cs" />
     <Compile Include="Fclt\viewModel\WtrSourAddViewModel.cs" />
     <Compile Include="Fclt\viewModel\FiltPltDtlViewModel.cs" />
+    <Compile Include="Fclt\viewModel\WtrSupDtlViewModel.cs" />
     <Compile Include="Fclt\viewModel\WtrSourDtlViewModel.cs" />
     <Compile Include="Fclt\viewModel\FiltPltListViewModel.cs" />
+    <Compile Include="Fclt\viewModel\WtrSupListViewModel.cs" />
     <Compile Include="Fclt\viewModel\WtrSourListViewModel.cs" />
     <Compile Include="Fclt\view\PrsPmpAddView.xaml.cs">
       <DependentUpon>PrsPmpAddView.xaml</DependentUpon>
@@ -376,17 +391,26 @@
     <Compile Include="Fclt\view\IntkStListView.xaml.cs">
       <DependentUpon>IntkStListView.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Fclt\view\WtrSupAddView.xaml.cs">
+      <DependentUpon>WtrSupAddView.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Fclt\view\WtrSourAddView.xaml.cs">
       <DependentUpon>WtrSourAddView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Fclt\view\FiltPltDtlView.xaml.cs">
       <DependentUpon>FiltPltDtlView.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Fclt\view\WtrSupDtlView.xaml.cs">
+      <DependentUpon>WtrSupDtlView.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Fclt\view\WtrSourDtlView.xaml.cs">
       <DependentUpon>WtrSourDtlView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Fclt\view\FiltPltListView.xaml.cs">
       <DependentUpon>FiltPltListView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Fclt\view\WtrSupListView.xaml.cs">
+      <DependentUpon>WtrSupListView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Fclt\view\WtrSourListView.xaml.cs">
       <DependentUpon>WtrSourListView.xaml</DependentUpon>

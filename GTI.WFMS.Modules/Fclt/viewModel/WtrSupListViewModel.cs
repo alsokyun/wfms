@@ -21,7 +21,7 @@ using System.Collections.Generic;
 
 namespace GTI.WFMS.Modules.Fclt.ViewModel
 {
-    class WtrSourListViewModel : INotifyPropertyChanged
+    class WtrSupListViewModel : INotifyPropertyChanged
     {
 
         #region ==========  페이징관련 INotifyPropertyChanged  ==========
@@ -108,18 +108,18 @@ namespace GTI.WFMS.Modules.Fclt.ViewModel
         DataTable dtresult = new DataTable(); //조회결과 데이터
 
 
-        WtrSourListView wtrSourListView;
+        WtrSupListView wtrSupListView;
         ComboBoxEdit cbMNG_CDE; DataTable dtMNG_CDE = new DataTable();
         ComboBoxEdit cbHJD_CDE; DataTable dtHJD_CDE = new DataTable();
-        ComboBoxEdit cbWSR_CDE; DataTable dsWSR_CDE = new DataTable();
+        ComboBoxEdit cbSAG_CDE; DataTable dsSAG_CDE = new DataTable();
+        ComboBoxEdit cbSCW_CDE; DataTable dsSCW_CDE = new DataTable();
 
         TextEdit txtFTR_IDN;
         TextEdit txtCNT_NUM;
         TextEdit txtSHT_NUM;
 
-        TextEdit txtHEA_NAM;
-        TextEdit txtIRV_NAM;
-        TextEdit txtRSV_VOL;
+        TextEdit txtSRV_NAM;
+        TextEdit txtPUR_NAM;
                
         DateEdit dtFNS_YMD_FROM;
         DateEdit dtFNS_YMD_TO;
@@ -143,7 +143,7 @@ namespace GTI.WFMS.Modules.Fclt.ViewModel
         /// <summary>
         /// 생성자
         /// </summary>
-        public WtrSourListViewModel()
+        public WtrSupListViewModel()
         {
 
             LoadedCommand = new DelegateCommand<object>(OnLoaded);
@@ -194,21 +194,21 @@ namespace GTI.WFMS.Modules.Fclt.ViewModel
             var values = (object[])obj;
 
             //1. 화면객체 인스턴스
-            wtrSourListView = values[0] as WtrSourListView;
+            wtrSupListView = values[0] as WtrSupListView;
 
-            cbMNG_CDE = wtrSourListView.cbMNG_CDE;      //0.관리기관
-            cbHJD_CDE = wtrSourListView.cbHJD_CDE;      //2.행정동
-            cbWSR_CDE = wtrSourListView.cbWSR_CDE;      //8.수원구분
+            cbMNG_CDE = wtrSupListView.cbMNG_CDE;      //0.관리기관
+            cbHJD_CDE = wtrSupListView.cbHJD_CDE;      //2.행정동
+            cbSAG_CDE = wtrSupListView.cbSAG_CDE;      //8.관리방법
+            cbSCW_CDE = wtrSupListView.cbSCW_CDE;      //9.배수지제어방법
 
-            txtFTR_IDN = wtrSourListView.txtFTR_IDN;    //1.관리번호           
-            txtCNT_NUM = wtrSourListView.txtCNT_NUM;    //3.공사번호
-            txtSHT_NUM = wtrSourListView.txtSHT_NUM;    //4.도엽번호
-            txtHEA_NAM = wtrSourListView.txtHEA_NAM;    //7.수원지명
-            txtIRV_NAM = wtrSourListView.txtIRV_NAM;    //9.하천명
-            txtRSV_VOL = wtrSourListView.txtRSV_VOL;    //10.유효저수량(t)
+            txtFTR_IDN = wtrSupListView.txtFTR_IDN;    //1.관리번호           
+            txtCNT_NUM = wtrSupListView.txtCNT_NUM;    //3.공사번호
+            txtSHT_NUM = wtrSupListView.txtSHT_NUM;    //4.도엽번호
+            txtSRV_NAM = wtrSupListView.txtSRV_NAM;    //7.배수지명            
+            txtPUR_NAM = wtrSupListView.txtPUR_NAM;    //10.정수장명
 
-            dtFNS_YMD_FROM = wtrSourListView.dtFNS_YMD_FROM;    //5.준공일자(이상)
-            dtFNS_YMD_TO = wtrSourListView.dtFNS_YMD_TO;        //6.준공일자(이하)
+            dtFNS_YMD_FROM = wtrSupListView.dtFNS_YMD_FROM;    //5.준공일자(이상)
+            dtFNS_YMD_TO = wtrSupListView.dtFNS_YMD_TO;        //6.준공일자(이하)
             dtFNS_YMD_FROM.DisplayFormatString = "yyyy-MM-dd";
             dtFNS_YMD_TO.DisplayFormatString = "yyyy-MM-dd";
                       
@@ -216,7 +216,7 @@ namespace GTI.WFMS.Modules.Fclt.ViewModel
             //dtFNS_YMD_FROM.EditValue = DateTime.Today.AddYears(-10);
             //dtFNS_YMD_TO.EditValue = DateTime.Today;
 
-            grid = wtrSourListView.grid;
+            grid = wtrSupListView.grid;
 
 
             //2.화면데이터객체 초기화
@@ -244,14 +244,14 @@ namespace GTI.WFMS.Modules.Fclt.ViewModel
                 Hashtable conditions = new Hashtable();
                 conditions.Add("MNG_CDE", cbMNG_CDE.EditValue.ToString().Trim());
                 conditions.Add("HJD_CDE", cbHJD_CDE.EditValue.ToString().Trim());
-                conditions.Add("WSR_CDE", cbWSR_CDE.EditValue.ToString().Trim());
+                conditions.Add("SAG_CDE", cbSAG_CDE.EditValue.ToString().Trim());
+                conditions.Add("SCW_CDE", cbSCW_CDE.EditValue.ToString().Trim());
 
                 conditions.Add("FTR_IDN", FmsUtil.Trim(txtFTR_IDN.EditValue));
                 conditions.Add("CNT_NUM", txtCNT_NUM.Text.Trim());
                 conditions.Add("SHT_NUM", txtSHT_NUM.Text.Trim());
-                conditions.Add("HEA_NAM", txtHEA_NAM.Text.Trim());
-                conditions.Add("IRV_NAM", txtIRV_NAM.Text.Trim());
-                conditions.Add("RSV_VOL", txtRSV_VOL.Text.Trim());
+                conditions.Add("SRV_NAM", txtSRV_NAM.Text.Trim());
+                conditions.Add("PUR_NAM", txtPUR_NAM.Text.Trim());
                 
 
                 try
@@ -264,7 +264,7 @@ namespace GTI.WFMS.Modules.Fclt.ViewModel
                 conditions.Add("firstIndex", 0);
                 conditions.Add("lastIndex", 1000);
 
-                conditions.Add("sqlId", "SelectWtrSourList");
+                conditions.Add("sqlId", "SelectWtrSupList");
     
                 /*
                     조회후 페이징소스 업데이트
@@ -314,14 +314,14 @@ namespace GTI.WFMS.Modules.Fclt.ViewModel
         {
             cbMNG_CDE.SelectedIndex = 0;
             cbHJD_CDE.SelectedIndex = 0;
-            cbWSR_CDE.SelectedIndex = 0;         
+            cbSAG_CDE.SelectedIndex = 0;
+            cbSCW_CDE.SelectedIndex = 0;           
 
             txtFTR_IDN.Text = "";
             txtCNT_NUM.Text = "";
             txtSHT_NUM.Text = "";
-            txtHEA_NAM.Text = "";
-            txtIRV_NAM.Text = "";
-            txtRSV_VOL.Text = "";
+            txtSRV_NAM.Text = "";
+            txtPUR_NAM.Text = "";
             
             dtFNS_YMD_FROM.EditValue = null;
             dtFNS_YMD_TO.EditValue = null;
@@ -341,14 +341,14 @@ namespace GTI.WFMS.Modules.Fclt.ViewModel
                 Hashtable conditions = new Hashtable();
                 conditions.Add("MNG_CDE", cbMNG_CDE.EditValue.ToString().Trim());
                 conditions.Add("HJD_CDE", cbHJD_CDE.EditValue.ToString().Trim());
-                conditions.Add("WSR_CDE", cbWSR_CDE.EditValue.ToString().Trim());
+                conditions.Add("SAG_CDE", cbSAG_CDE.EditValue.ToString().Trim());
+                conditions.Add("SCW_CDE", cbSCW_CDE.EditValue.ToString().Trim());                
 
                 conditions.Add("FTR_IDN", FmsUtil.Trim(txtFTR_IDN.EditValue));
                 conditions.Add("CNT_NUM", txtCNT_NUM.Text.Trim());
                 conditions.Add("SHT_NUM", txtSHT_NUM.Text.Trim());
-                conditions.Add("HEA_NAM", txtHEA_NAM.Text.Trim());
-                conditions.Add("IRV_NAM", txtIRV_NAM.Text.Trim());
-                conditions.Add("RSV_VOL", txtRSV_VOL.Text.Trim());
+                conditions.Add("SRV_NAM", txtSRV_NAM.Text.Trim());
+                conditions.Add("PUR_NAM", txtPUR_NAM.Text.Trim());
 
                 
                 try
@@ -361,7 +361,7 @@ namespace GTI.WFMS.Modules.Fclt.ViewModel
                 conditions.Add("page", 0);
                 conditions.Add("rows", 1000000);
 
-                conditions.Add("sqlId", "SelectWtrSourList");
+                conditions.Add("sqlId", "SelectWtrSupList");
 
                 exceldt = BizUtil.SelectList(conditions);
 
@@ -370,7 +370,7 @@ namespace GTI.WFMS.Modules.Fclt.ViewModel
                 saveFileDialog.Title = "저장경로를 지정하세요.";
 
                 //초기 파일명 지정
-                saveFileDialog.FileName = DateTime.Now.ToString("yyyyMMdd") + "_" + "수원지목록.xlsx";
+                saveFileDialog.FileName = DateTime.Now.ToString("yyyyMMdd") + "_" + "배수지목록.xlsx";
 
                 saveFileDialog.OverwritePrompt = true;
                 saveFileDialog.Filter = "Excel|*.xlsx";
@@ -410,10 +410,10 @@ namespace GTI.WFMS.Modules.Fclt.ViewModel
         {
             try
             {
-                wtrSourListView.Dispatcher.Invoke(DispatcherPriority.ApplicationIdle,
+                wtrSupListView.Dispatcher.Invoke(DispatcherPriority.ApplicationIdle,
                 new Action((delegate ()
                 {
-                    (wtrSourListView.FindName("waitindicator") as WaitIndicator).DeferedVisibility = true;
+                    (wtrSupListView.FindName("waitindicator") as WaitIndicator).DeferedVisibility = true;
                 })));
                 
                 //엑셀 표 데이터
@@ -422,21 +422,21 @@ namespace GTI.WFMS.Modules.Fclt.ViewModel
 
                 //엑셀 유틸 호출
                 //ExcelUtil.ExcelTabulation(strFileName, strExcelFormPath, startPointXY, strSearchCondition, dtExceltTableData);
-                ExcelUtil.ExcelGrid(strExcelFormPath, strFileName, "수원지목록", dtExceltTableData, tablePointXY, grid, true);
+                ExcelUtil.ExcelGrid(strExcelFormPath, strFileName, "배수지목록", dtExceltTableData, tablePointXY, grid, true);
 
-                wtrSourListView.Dispatcher.Invoke(DispatcherPriority.ApplicationIdle,
+                wtrSupListView.Dispatcher.Invoke(DispatcherPriority.ApplicationIdle,
                    new Action((delegate ()
                    {
-                       (wtrSourListView.FindName("waitindicator") as WaitIndicator).DeferedVisibility = false;
+                       (wtrSupListView.FindName("waitindicator") as WaitIndicator).DeferedVisibility = false;
                        Messages.ShowInfoMsgBox("엑셀 다운로드가 완료되었습니다.");
                    })));
             }
             catch (Exception ex)
             {
-                wtrSourListView.Dispatcher.Invoke(DispatcherPriority.ApplicationIdle,
+                wtrSupListView.Dispatcher.Invoke(DispatcherPriority.ApplicationIdle,
                     new Action((delegate ()
                     {
-                        (wtrSourListView.FindName("waitindicator") as WaitIndicator).DeferedVisibility = false;
+                        (wtrSupListView.FindName("waitindicator") as WaitIndicator).DeferedVisibility = false;
                         Messages.ShowErrMsgBoxLog(ex);
                     })));
             }
@@ -457,19 +457,19 @@ namespace GTI.WFMS.Modules.Fclt.ViewModel
             {
 
 
-                cbMNG_CDE = wtrSourListView.cbMNG_CDE;      //0.관리기관
-                cbHJD_CDE = wtrSourListView.cbHJD_CDE;      //2.행정동
-                cbWSR_CDE = wtrSourListView.cbWSR_CDE;      //8.수원구분
+                cbMNG_CDE = wtrSupListView.cbMNG_CDE;      //0.관리기관
+                cbHJD_CDE = wtrSupListView.cbHJD_CDE;      //2.행정동
+                cbSAG_CDE = wtrSupListView.cbSAG_CDE;      //8.관리방법
+                cbSCW_CDE = wtrSupListView.cbSCW_CDE;      //9.배수지제어방법
 
-                txtFTR_IDN = wtrSourListView.txtFTR_IDN;    //1.관리번호           
-                txtCNT_NUM = wtrSourListView.txtCNT_NUM;    //3.공사번호
-                txtSHT_NUM = wtrSourListView.txtSHT_NUM;    //4.도엽번호
-                txtHEA_NAM = wtrSourListView.txtHEA_NAM;    //7.수원지명
-                txtIRV_NAM = wtrSourListView.txtIRV_NAM;    //9.하천명
-                txtRSV_VOL = wtrSourListView.txtRSV_VOL;    //10.유효저수량(t)
+                txtFTR_IDN = wtrSupListView.txtFTR_IDN;    //1.관리번호           
+                txtCNT_NUM = wtrSupListView.txtCNT_NUM;    //3.공사번호
+                txtSHT_NUM = wtrSupListView.txtSHT_NUM;    //4.도엽번호
+                txtSRV_NAM = wtrSupListView.txtSRV_NAM;    //7.배수지명
+                txtPUR_NAM = wtrSupListView.txtPUR_NAM;    //10.유효저수량(t)
 
-                dtFNS_YMD_FROM = wtrSourListView.dtFNS_YMD_FROM;    //5.준공일자(이상)
-                dtFNS_YMD_TO = wtrSourListView.dtFNS_YMD_TO;        //6.준공일자(이하)
+                dtFNS_YMD_FROM = wtrSupListView.dtFNS_YMD_FROM;    //5.준공일자(이상)
+                dtFNS_YMD_TO = wtrSupListView.dtFNS_YMD_TO;        //6.준공일자(이하)
                 dtFNS_YMD_FROM.DisplayFormatString = "yyyy-MM-dd";
                 dtFNS_YMD_TO.DisplayFormatString = "yyyy-MM-dd";
 
@@ -479,11 +479,11 @@ namespace GTI.WFMS.Modules.Fclt.ViewModel
                 // cbHJD_CDE    2.행정동
                 BizUtil.SetCombo(cbHJD_CDE, "Select_ADAR_LIST", "HJD_CDE", "HJD_NAM", true);
 
-                // cbWSR_CDE    7.수원구분
-                BizUtil.SetCmbCode(cbWSR_CDE, "WSR_CDE", true);
+                // cbSAG_CDE    7.관리방법
+                BizUtil.SetCmbCode(cbSAG_CDE, "SAG_CDE", true);
 
-                // cbWSR_CDE    8.수원구분
-                BizUtil.SetCmbCode(cbWSR_CDE, "WSR_CDE");
+                // cbSCW_CDE    9.배수지제어방법
+                BizUtil.SetCmbCode(cbSCW_CDE, "SCW_CDE", true);
 
             }
             catch (Exception ex)
@@ -538,8 +538,8 @@ namespace GTI.WFMS.Modules.Fclt.ViewModel
             string class_name = "ValvFacDtl";
 
             Hashtable param = new Hashtable();
-            param.Add("sqlId", "SelectWtrSourList");
-            param.Add("FTR_CDE", "SA117");
+            param.Add("sqlId", "SelectWtrSupList");
+            param.Add("FTR_CDE", "SA114");
             param.Add("FTR_IDN", "10");
             DataTable dt = BizUtil.SelectList(param);
             DataRow dr = dt.Rows[0];
