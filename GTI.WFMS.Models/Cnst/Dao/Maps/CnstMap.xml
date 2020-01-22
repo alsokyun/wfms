@@ -395,7 +395,7 @@
 
       UPDATE
       SET  PTY_CDE=#PTY_CDE#
-      , PAY_YMD=decode(length(#PAY_YMD#), 10, to_char(to_date(#PAY_YMD#, 'yyyy-MM-dd'), 'yyyyMMdd'), '')
+      , PAY_YMD = #PAY_YMD#
       , PAY_AMT=#PAY_AMT#
 
       WHEN NOT MATCHED THEN
@@ -411,7 +411,7 @@
       VALUES ( #CNT_NUM#
       , (SELECT NVL(MAX(PAY_NUM),0)+1 as PAY_NUM FROM WTT_COST_DT)
       , #PTY_CDE#
-      , decode(length(#PAY_YMD#), 10, to_char(to_date(#PAY_YMD#, 'yyyy-MM-dd'), 'yyyyMMdd'), '')
+      , #PAY_YMD#
       , #PAY_AMT#
       , (SELECT NVL(MAX(COST_SEQ),0)+1 as COST_SEQ FROM WTT_COST_DT)
       )
@@ -432,14 +432,14 @@
       CNT_NUM
       , CHNG_SEQ
       , CHG_NUM
-      , decode(length(CHG_YMD), 8, to_char(to_date(CHG_YMD, 'yyyyMMdd'), 'yyyy-MM-dd'), '') AS CHG_YMD
+      , CHG_YMD
       , INC_AMT
       , IGV_AMT
       , CHG_AMT
       , CHG_DES
       , CGV_DES
       , ATT_USR
-      , decode(length(ATT_TIM), 8, to_char(to_date(ATT_TIM, 'yyyyMMdd'), 'yyyy-MM-dd'), '') AS ATT_TIM
+      , ATT_TIM
       , NULL AS CHK
       FROM WTT_CHNG_DT
 
@@ -459,7 +459,7 @@
       WHEN MATCHED THEN
       UPDATE
       SET
-      CHG_YMD=decode(length(#CHG_YMD#), 10, to_char(to_date(#CHG_YMD#, 'yyyy-MM-dd'), 'yyyyMMdd'), '')
+      CHG_YMD=#CHG_YMD#
       , INC_AMT=#INC_AMT#
       , IGV_AMT=#IGV_AMT#
       , CHG_AMT=#CHG_AMT#
@@ -485,7 +485,7 @@
       (SELECT NVL(MAX(CHNG_SEQ),0)+1 as CHNG_SEQ FROM WTT_CHNG_DT)
       , #CNT_NUM#
       , (SELECT NVL(MAX(CHG_NUM),0)+1 as CHG_NUM FROM WTT_CHNG_DT)
-      , decode(length(#CHG_YMD#), 10, to_char(to_date(#CHG_YMD#, 'yyyy-MM-dd'), 'yyyyMMdd'), '')
+      , #CHG_YMD#
       , #INC_AMT#
       , #IGV_AMT#
       , #CHG_AMT#
@@ -581,16 +581,16 @@
 
     <!-- 하자보수 목록	 -->
     <select id ="SelectWttFlawDtList" parameterClass="Hashtable" resultClass ="Hashtable">
-		SELECT
-			CNT_NUM, FLAW_SEQ
-			, RPR_NUM
-			, decode(length(FLA_YMD), 8, to_char(to_date(FLA_YMD, 'yyyyMMdd'), 'yyyy-MM-dd'), '') AS FLA_YMD
-			, decode(length(RPR_YMD), 8, to_char(to_date(RPR_YMD, 'yyyyMMdd'), 'yyyy-MM-dd'), '') AS RPR_YMD
-			, RPR_DES
+      SELECT
+      CNT_NUM, FLAW_SEQ
+      , RPR_NUM
+      , FLA_YMD
+      , RPR_YMD
+      , RPR_DES
       , NULL AS CHK
-		FROM WTT_FLAW_DT
-		WHERE 1=1
-		<isNotEmpty prepend="AND">
+      FROM WTT_FLAW_DT
+      WHERE 1=1
+      <isNotEmpty prepend="AND">
 			CNT_NUM = #CNT_NUM#
 		</isNotEmpty>
 		ORDER BY RPR_NUM DESC
@@ -613,8 +613,8 @@
       WHEN MATCHED THEN
       UPDATE
       SET
-      FLA_YMD=decode(length(#FLA_YMD#), 10, to_char(to_date(#FLA_YMD#, 'yyyy-MM-dd'), 'yyyyMMdd'), '')
-      , RPR_YMD=decode(length(#RPR_YMD#), 10, to_char(to_date(#RPR_YMD#, 'yyyy-MM-dd'), 'yyyyMMdd'), '')
+      FLA_YMD=#FLA_YMD#
+      , RPR_YMD=#RPR_YMD#
       , RPR_DES=#RPR_DES#
 
       WHEN NOT MATCHED THEN
@@ -627,8 +627,8 @@
       , FLAW_SEQ )
       VALUES ( #CNT_NUM#
       , (SELECT nvl(MAX(RPR_NUM),0)+1 as RPR_NUM FROM WTT_FLAW_DT)
-      , decode(length(#FLA_YMD#), 10, to_char(to_date(#FLA_YMD#, 'yyyy-MM-dd'), 'yyyyMMdd'), '')
-      , decode(length(#RPR_YMD#), 10, to_char(to_date(#RPR_YMD#, 'yyyy-MM-dd'), 'yyyyMMdd'), '')
+      , #FLA_YMD#
+      , #RPR_YMD#
       , #RPR_DES#
       , (SELECT NVL(MAX(FLAW_SEQ),0)+1 as FLAW_SEQ FROM WTT_FLAW_DT) )
     </update>

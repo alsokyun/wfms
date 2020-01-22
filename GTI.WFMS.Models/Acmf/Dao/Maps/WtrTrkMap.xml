@@ -68,34 +68,34 @@
 
       SELECT C.ROWCNT, X.*  FROM (
 
-      SELECT ROW_NUMBER() OVER( ORDER BY A.FTR_IDN DESC ) AS RN
-      , A.FTR_CDE
-      , (SELECT FTR_NAM FROM INFOFMS.V_FTR_CDE WHERE FTR_CDE = A.FTR_CDE) AS FTR_NAM
-      , A.FTR_IDN
-      , A.HJD_CDE
-      , (SELECT HJD_NAM FROM INFOFMS.CMT_ADAR_MA WHERE HJD_CDE = A.HJD_CDE) AS HJD_NAM
-      , A.SHT_NUM
-      , A.MNG_CDE
-      , (SELECT NM FROM INFOUSER.CD_DTL_INFO WHERE MST_CD = '250101' AND DTL_CD = A.MNG_CDE ) AS MNG_NAM
-      , decode(length(A.FNS_YMD), 8, to_char(to_date(A.FNS_YMD, 'yyyyMMdd'), 'yyyy-MM-dd'), '') AS FNS_YMD
-      , decode(length(A.PMS_YMD), 8, to_char(to_date(A.PMS_YMD, 'yyyyMMdd'), 'yyyy-MM-dd'), '') AS PMS_YMD
-      , A.BLS_CDE
-      , (SELECT NM FROM INFOUSER.CD_DTL_INFO WHERE MST_CD = '250037' AND DTL_CD = A.BLS_CDE ) AS BLS_NAM
-      , A.RSR_NAM
-      , A.OWN_NAM
-      , A.OWN_ADR
-      , A.OWN_TEL
-      , A.MNG_NAM
-      , A.MNG_ADR
-      , A.MNG_TEL
-      , A.BLD_ARA
-      , A.TBL_ARA
-      , A.FAM_CNT
-      , A.BLD_ADR
-      , A.SYS_CHK
-      , CASE WHEN ST_ISVALID(A.GEOM) = 1 THEN 'Y' ELSE 'N' END AS IS_GEOMETRY
-      FROM INFOFMS.WTL_RSRV_PS A
-      WHERE 1=1
+       SELECT ROW_NUMBER() OVER( ORDER BY A.FTR_IDN DESC ) AS RN
+            , A.FTR_CDE
+            , (SELECT FTR_NAM FROM INFOFMS.V_FTR_CDE WHERE FTR_CDE = A.FTR_CDE) AS FTR_NAM
+            , A.FTR_IDN
+            , A.HJD_CDE
+            , (SELECT HJD_NAM FROM INFOFMS.CMT_ADAR_MA WHERE HJD_CDE = A.HJD_CDE) AS HJD_NAM
+            , A.SHT_NUM
+            , A.MNG_CDE
+            , (SELECT NM FROM INFOUSER.CD_DTL_INFO WHERE MST_CD = '250101' AND DTL_CD = A.MNG_CDE ) AS MNG_CDE_NAM
+            , decode(length(A.FNS_YMD), 8, to_char(to_date(A.FNS_YMD, 'yyyyMMdd'), 'yyyy-MM-dd'), '') AS FNS_YMD
+            , decode(length(A.PMS_YMD), 8, to_char(to_date(A.PMS_YMD, 'yyyyMMdd'), 'yyyy-MM-dd'), '') AS PMS_YMD
+            , A.BLS_CDE
+            , (SELECT NM FROM INFOUSER.CD_DTL_INFO WHERE MST_CD = '250037' AND DTL_CD = A.BLS_CDE ) AS BLS_NAM
+            , A.RSR_NAM
+            , A.OWN_NAM
+            , A.OWN_ADR
+            , A.OWN_TEL
+            , A.MNG_NAM
+            , A.MNG_ADR
+            , A.MNG_TEL
+            , A.BLD_ARA
+            , A.TBL_ARA
+            , A.FAM_CNT
+            , A.BLD_ADR
+            , A.SYS_CHK
+            , CASE WHEN ST_ISVALID(A.GEOM) = 1 THEN 'Y' ELSE 'N' END AS IS_GEOMETRY
+         FROM INFOFMS.WTL_RSRV_PS A
+        WHERE 1=1
       <!-- 조건1. 관리기관 -->
           <isNotEmpty prepend="AND" property="MNG_CDE">
             A.MNG_CDE = #MNG_CDE#
@@ -160,7 +160,7 @@
 
     </select>
 
-    <select id="SelectWtrTrkDtl"  parameterClass="Hashtable" resultClass ="GTI.WFMS.Models.Fclt.Model.WtrTrkDtl">
+    <select id="SelectWtrTrkDtl"  parameterClass="Hashtable" resultClass ="GTI.WFMS.Models.Acmf.Model.WtrTrkDtl">
       /* WtrTrkMap.SelectWtrTrkDtl 저수조 상세정보*/
       <![CDATA[
 		 	 SELECT A.FTR_CDE
@@ -170,20 +170,23 @@
             , (SELECT HJD_NAM FROM INFOFMS.CMT_ADAR_MA WHERE HJD_CDE = A.HJD_CDE) AS HJD_NAM
             , A.SHT_NUM
             , A.MNG_CDE
-            , (SELECT NM FROM INFOUSER.CD_DTL_INFO WHERE MST_CD = '250101' AND DTL_CD = A.MNG_CDE ) AS MNG_NAM
+            , (SELECT NM FROM INFOUSER.CD_DTL_INFO WHERE MST_CD = '250101' AND DTL_CD = A.MNG_CDE ) AS MNG_CDE_NAM
             , decode(length(A.FNS_YMD), 8, to_char(to_date(A.FNS_YMD, 'yyyyMMdd'), 'yyyy-MM-dd'), '') AS FNS_YMD
-            , A.SAA_CDE
-            , (SELECT NM FROM INFOUSER.CD_DTL_INFO WHERE MST_CD = '250018' AND DTL_CD = A.SAA_CDE ) AS SAA_NAM
-            , A.JHT_CDE
-            , (SELECT NM FROM INFOUSER.CD_DTL_INFO WHERE MST_CD = '250026' AND DTL_CD = A.JHT_CDE ) AS JHT_NAM
-            , A.CNT_NUM
+            , decode(length(A.PMS_YMD), 8, to_char(to_date(A.PMS_YMD, 'yyyyMMdd'), 'yyyy-MM-dd'), '') AS PMS_YMD
+            , A.BLS_CDE
+            , (SELECT NM FROM INFOUSER.CD_DTL_INFO WHERE MST_CD = '250037' AND DTL_CD = A.BLS_CDE ) AS BLS_NAM
+            , A.RSR_NAM
+            , A.OWN_NAM
+            , A.OWN_ADR
+            , A.OWN_TEL
+            , A.MNG_NAM
+            , A.MNG_ADR
+            , A.MNG_TEL
+            , A.BLD_ARA
+            , A.TBL_ARA
+            , A.FAM_CNT
+            , A.BLD_ADR
             , A.SYS_CHK
-            , A.PIP_LBL
-            , A.PIP_DIP
-            , A.MOP_CDE
-            , A.PIP_LEN
-            , A.LOW_DEP
-            , A.HGH_DEP
             , decode(A.SYS_CHK,'1','유','무') as SYS_CHK_NAM
          FROM INFOFMS.WTL_RSRV_PS A 
 			  WHERE 1=1
@@ -193,24 +196,28 @@
     </select>
 
     <!--저수조 상세추가-->
-    <update id="insertWtrTrkDtl" parameterClass="GTI.WFMS.Models.Fclt.Model.WtrTrkDtl">
+    <update id="insertWtrTrkDtl" parameterClass="GTI.WFMS.Models.Acmf.Model.WtrTrkDtl">
       INSERT INTO INFOFMS.WTL_RSRV_PS
       (   FTR_CDE
-        , FTR_IDN
-        , HJD_CDE
-        , SHT_NUM
-        , MNG_CDE
-        , FNS_YMD
-        , SAA_CDE
-        , JHT_CDE
-        , CNT_NUM
-        , SYS_CHK
-        , PIP_LBL
-        , PIP_DIP
-        , MOP_CDE
-        , PIP_LEN
-        , LOW_DEP
-        , HGH_DEP
+      , FTR_IDN
+      , HJD_CDE
+      , SHT_NUM
+      , MNG_CDE
+      , PMS_YMD
+      , FNS_YMD
+      , BLS_CDE
+      , RSR_NAM
+      , OWN_NAM
+      , OWN_ADR
+      , OWN_TEL
+      , MNG_NAM
+      , MNG_ADR
+      , MNG_TEL
+      , BLD_ARA
+      , TBL_ARA
+      , FAM_CNT
+      , BLD_ADR
+      , SYS_CHK
       )
       VALUES
       (   #FTR_CDE#
@@ -218,44 +225,52 @@
         , #HJD_CDE#
         , #SHT_NUM#
         , #MNG_CDE#
+        , decode(length(#PMS_YMD#), 10, to_char(to_date(#PMS_YMD#, 'yyyy-MM-dd'), 'yyyyMMdd'), '')
         , decode(length(#FNS_YMD#), 10, to_char(to_date(#FNS_YMD#, 'yyyy-MM-dd'), 'yyyyMMdd'), '')
-        , #SAA_CDE#
-        , #JHT_CDE#
-        , #CNT_NUM#
+        , #BLS_CDE#
+        , #RSR_NAM#
+        , #OWN_NAM#
+        , #OWN_ADR#
+        , #OWN_TEL#
+        , #MNG_NAM#
+        , #MNG_ADR#
+        , #MNG_TEL#
+        , #BLD_ARA#
+        , #TBL_ARA#
+        , #FAM_CNT#
+        , #BLD_ADR#
         , #SYS_CHK#
-        , #PIP_LBL#
-        , #PIP_DIP#
-        , #MOP_CDE#
-        , #PIP_LEN#
-        , #LOW_DEP#
-        , #HGH_DEP#
       )
     </update>
 
     <!--저수조 상세저장-->
-    <update id="updateWtrTrkDtl" parameterClass="GTI.WFMS.Models.Fclt.Model.WtrTrkDtl">
+    <update id="updateWtrTrkDtl" parameterClass="GTI.WFMS.Models.Acmf.Model.WtrTrkDtl">
       /* 저수조 상세 수정 */
       UPDATE INFOFMS.WTL_RSRV_PS
       SET HJD_CDE = #HJD_CDE#
         , SHT_NUM = #SHT_NUM#
         , MNG_CDE = #MNG_CDE#
+        , PMS_YMD = decode(length(#PMS_YMD#), 10, to_char(to_date(#PMS_YMD#, 'yyyy-MM-dd'), 'yyyyMMdd'), '')
         , FNS_YMD = decode(length(#FNS_YMD#), 10, to_char(to_date(#FNS_YMD#, 'yyyy-MM-dd'), 'yyyyMMdd'), '')
-        , SAA_CDE = #SAA_CDE#
-        , JHT_CDE = #JHT_CDE#
-        , CNT_NUM = #CNT_NUM#
-        , SYS_CHK = #SYS_CHK#
-        , PIP_LBL = #PIP_LBL#
-        , PIP_DIP = #PIP_DIP#
-        , MOP_CDE = #MOP_CDE#
-        , PIP_LEN = #PIP_LEN#
-        , LOW_DEP = #LOW_DEP#
-        , HGH_DEP = #HGH_DEP#
+        , BLS_CDE = #BLS_CDE#
+        , RSR_NAM = #RSR_NAM#
+        , OWN_NAM = #OWN_NAM#
+        , OWN_ADR = #OWN_ADR#
+        , OWN_TEL = #OWN_TEL#
+        , MNG_NAM = #MNG_NAM#
+        , MNG_ADR = #MNG_ADR#
+        , MNG_TEL = #MNG_TEL#
+        , BLD_ARA = #BLD_ARA#
+        TBL_ARA = #TBL_ARA#
+        FAM_CNT = #FAM_CNT#
+        BLD_ADR = #BLD_ADR#
+        SYS_CHK = #SYS_CHK#
       WHERE FTR_CDE = #FTR_CDE#
       AND	FTR_IDN = #FTR_IDN#
     </update>
 
     <!--저수조 상세삭제-->
-    <update id="deleteWtrTrkDtl" parameterClass="GTI.WFMS.Models.Fclt.Model.WtrTrkDtl">
+    <update id="deleteWtrTrkDtl" parameterClass="GTI.WFMS.Models.Acmf.Model.WtrTrkDtl">
       /* 저수조 상세 삭제 */
       DELETE INFOFMS.WTL_RSRV_PS
       WHERE FTR_CDE = #FTR_CDE#
@@ -263,7 +278,7 @@
     </update>
 
     <!--저수조 관리번호 채번-->
-    <select id ="SelectWtrTrkFTR_IDN" parameterClass="Hashtable" resultClass ="GTI.WFMS.Models.Fclt.Model.WtrTrkDtl">
+    <select id ="SelectWtrTrkFTR_IDN" parameterClass="Hashtable" resultClass ="GTI.WFMS.Models.Acmf.Model.WtrTrkDtl">
       /* 저수조 관리번호 채번 */
       SELECT NVL(MAX(FTR_IDN),0)+1 AS FTR_IDN FROM INFOFMS.WTL_RSRV_PS
       WHERE 1=1

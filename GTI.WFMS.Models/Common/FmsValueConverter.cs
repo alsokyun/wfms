@@ -111,6 +111,25 @@ namespace GTI.WFMS.Models.Common
             return System.Convert.ToDateTime(value).ToString("yyyy-MM-dd");
         }
     }
+    public class Date3StrConverter : IValueConverter
+    {
+        public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
+        {
+            try
+            {
+                return DateTime.ParseExact((string)value, "yyyyMMdd", null).ToString("yyyy-MM-dd");
+            }
+            catch (Exception)
+            {
+                return value;
+            }
+        }
+
+        public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
+        {
+            return System.Convert.ToDateTime(value).ToString("yyyyMMdd");
+        }
+    }
 
     public class S2StrConverter : IValueConverter
     {

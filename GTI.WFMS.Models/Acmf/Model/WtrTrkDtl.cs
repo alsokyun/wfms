@@ -6,7 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace GTI.WFMS.Models.Fclt.Model
+namespace GTI.WFMS.Models.Acmf.Model
 {
     public class WtrTrkDtl : CmmDtl, INotifyPropertyChanged
     {
@@ -97,6 +97,96 @@ namespace GTI.WFMS.Models.Fclt.Model
                 OnPropertyChanged("MNG_CDE");
             }
         }
+        private string __MNG_CDE_NAM;
+        public string MNG_CDENAM
+        {
+            get { return __MNG_CDE_NAM; }
+            set
+            {
+                this.__MNG_CDE_NAM = value;
+                OnPropertyChanged("MNG_CDE_NAM");
+            }
+        }
+        private string __FNS_YMD;
+        public string FNS_YMD
+        {
+            get { return __FNS_YMD; }
+            set
+            {
+                this.__FNS_YMD = value;
+                OnPropertyChanged("FNS_YMD");
+            }
+        }
+        private string __PMS_YMD;
+        public string PMS_YMD
+        {
+            get { return __PMS_YMD; }
+            set
+            {
+                this.__PMS_YMD = value;
+                OnPropertyChanged("PMS_YMD");
+            }
+        }
+        private string __BLS_CDE;
+        public string BLS_CDE
+        {
+            get { return __BLS_CDE; }
+            set
+            {
+                this.__BLS_CDE = value;
+                OnPropertyChanged("BLS_CDE");
+            }
+        }
+        private string __BLS_NAM;
+        public string BLS_NAM
+        {
+            get { return __BLS_NAM; }
+            set
+            {
+                this.__BLS_NAM = value;
+                OnPropertyChanged("BLS_NAM");
+            }
+        }
+        private string __RSR_NAM;
+        public string RSR_NAM
+        {
+            get { return __RSR_NAM; }
+            set
+            {
+                this.__RSR_NAM = value;
+                OnPropertyChanged("RSR_NAM");
+            }
+        }
+        private string __OWN_NAM;
+        public string OWN_NAM
+        {
+            get { return __OWN_NAM; }
+            set
+            {
+                this.__OWN_NAM = value;
+                OnPropertyChanged("OWN_NAM");
+            }
+        }
+        private string __OWN_ADR;
+        public string OWN_ADR
+        {
+            get { return __OWN_ADR; }
+            set
+            {
+                this.__OWN_ADR = value;
+                OnPropertyChanged("OWN_ADR");
+            }
+        }
+        private string __OWN_TEL;
+        public string OWN_TEL
+        {
+            get { return __OWN_TEL; }
+            set
+            {
+                this.__OWN_TEL = value;
+                OnPropertyChanged("OWN_TEL");
+            }
+        }
         private string __MNG_NAM;
         public string MNG_NAM
         {
@@ -107,64 +197,64 @@ namespace GTI.WFMS.Models.Fclt.Model
                 OnPropertyChanged("MNG_NAM");
             }
         }
-        private string __IST_YMD;
-        public string IST_YMD
+        private string __MNG_ADR;
+        public string MNG_ADR
         {
-            get { return __IST_YMD; }
+            get { return __MNG_ADR; }
             set
             {
-                this.__IST_YMD = value;
-                OnPropertyChanged("IST_YMD");
+                this.__MNG_ADR = value;
+                OnPropertyChanged("MNG_ADR");
             }
         }
-        private string __SAA_CDE;
-        public string SAA_CDE
+        private string __MNG_TEL;
+        public string MNG_TEL
         {
-            get { return __SAA_CDE; }
+            get { return __MNG_TEL; }
             set
             {
-                this.__SAA_CDE = value;
-                OnPropertyChanged("SAA_CDE");
+                this.__MNG_TEL = value;
+                OnPropertyChanged("MNG_TEL");
             }
         }
-        private string __SAA_NAM;
-        public string SAA_NAM
+        private decimal __BLD_ARA;
+        public decimal BLD_ARA
         {
-            get { return __SAA_NAM; }
+            get { return __BLD_ARA; }
             set
             {
-                this.__SAA_NAM = value;
-                OnPropertyChanged("SAA_NAM");
+                this.__BLD_ARA = value;
+                OnPropertyChanged("BLD_ARA");
             }
         }
-        private string __JHT_CDE;
-        public string JHT_CDE
+        private decimal __TBL_ARA;
+        public decimal TBL_ARA
         {
-            get { return __JHT_CDE; }
+            get { return __TBL_ARA; }
             set
             {
-                this.__JHT_CDE = value;
-                OnPropertyChanged("JHT_CDE");
+                this.__TBL_ARA = value;
+                OnPropertyChanged("TBL_ARA");
             }
         }
-        private string __JHT_NAM;
-        public string JHT_NAM
+        private decimal __FAM_CNT;
+        public decimal FAM_CNT
         {
-            get { return __JHT_NAM; }
+            get { return __FAM_CNT; }
             set
             {
-                this.__JHT_NAM = value;
-                OnPropertyChanged("JHT_NAM");
+                this.__FAM_CNT = value;
+                OnPropertyChanged("FAM_CNT");
             }
         }
-        private string __CNT_NUM;
-        public string CNT_NUM
+        private string __BLD_ADR;
+        public string BLD_ADR
         {
-            get { return __CNT_NUM; }
+            get { return __BLD_ADR; }
             set
             {
-                this.__CNT_NUM = value;
-                OnPropertyChanged("CNT_NUM");
+                this.__BLD_ADR = value;
+                OnPropertyChanged("BLD_ADR");
             }
         }
         private string __SYS_CHK;
@@ -185,76 +275,6 @@ namespace GTI.WFMS.Models.Fclt.Model
             {
                 this.__SYS_CHK_NAM = value;
                 OnPropertyChanged("SYS_CHK_NAM");
-            }
-        }
-        private string __PIP_LBL;
-        public string PIP_LBL
-        {
-            get { return __PIP_LBL; }
-            set
-            {
-                this.__PIP_LBL = value;
-                OnPropertyChanged("PIP_LBL");
-            }
-        }
-        private decimal __PIP_DIP;
-        public decimal PIP_DIP
-        {
-            get { return __PIP_DIP; }
-            set
-            {
-                this.__PIP_DIP = value;
-                OnPropertyChanged("PIP_DIP");
-            }
-        }
-        private string __MOP_CDE;
-        public string MOP_CDE
-        {
-            get { return __MOP_CDE; }
-            set
-            {
-                this.__MOP_CDE = value;
-                OnPropertyChanged("MOP_CDE");
-            }
-        }
-        private string __MOP_NAM;
-        public string MOP_NAM
-        {
-            get { return __MOP_NAM; }
-            set
-            {
-                this.__MOP_NAM = value;
-                OnPropertyChanged("MOP_NAM");
-            }
-        }
-        private decimal __PIP_LEN;
-        public decimal PIP_LEN
-        {
-            get { return __PIP_LEN; }
-            set
-            {
-                this.__PIP_LEN = value;
-                OnPropertyChanged("PIP_LEN");
-            }
-        }
-        private decimal __LOW_DEP;
-        public decimal LOW_DEP
-        {
-            get { return __LOW_DEP; }
-            set
-            {
-                this.__LOW_DEP = value;
-                OnPropertyChanged("LOW_DEP");
-            }
-        }
-        private decimal __HGH_DEP;
-        public decimal HGH_DEP
-        {
-            get { return __HGH_DEP; }
-            set
-            {
-                this.__HGH_DEP = value;
-                OnPropertyChanged("HGH_DEP");
             }
         }
     }

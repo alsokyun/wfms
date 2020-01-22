@@ -483,7 +483,7 @@ namespace GTI.WFMS.Modules.Fclt.ViewModel
                 BizUtil.SetCmbCode(cbWSR_CDE, "WSR_CDE", true);
 
                 // cbWSR_CDE    8.수원구분
-                BizUtil.SetCmbCode(cbWSR_CDE, "WSR_CDE");
+                BizUtil.SetCmbCode(cbWSR_CDE, "WSR_CDE", true);
 
             }
             catch (Exception ex)
