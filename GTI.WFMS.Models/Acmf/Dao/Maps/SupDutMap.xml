@@ -157,7 +157,7 @@
 
     </select>
 
-    <select id="SelectSupDutDtl"  parameterClass="Hashtable" resultClass ="GTI.WFMS.Models.Fclt.Model.SupDutDtl">
+    <select id="SelectSupDutDtl"  parameterClass="Hashtable" resultClass ="GTI.WFMS.Models.Acmf.Model.SupDutDtl">
       /* SupDutMap.SelectSupDutDtl 급수관로 상세정보*/
       <![CDATA[
 		 	 SELECT A.FTR_CDE
@@ -190,7 +190,7 @@
     </select>
 
     <!--급수관로 상세추가-->
-    <update id="insertSupDutDtl" parameterClass="GTI.WFMS.Models.Fclt.Model.SupDutDtl">
+    <update id="insertSupDutDtl" parameterClass="GTI.WFMS.Models.Acmf.Model.SupDutDtl">
       INSERT INTO INFOFMS.WTL_SPLY_LS
       (   FTR_CDE
         , FTR_IDN
@@ -230,29 +230,29 @@
     </update>
 
     <!--급수관로 상세저장-->
-    <update id="updateSupDutDtl" parameterClass="GTI.WFMS.Models.Fclt.Model.SupDutDtl">
+    <update id="updateSupDutDtl" parameterClass="GTI.WFMS.Models.Acmf.Model.SupDutDtl">
       /* 급수관로 상세 수정 */
       UPDATE INFOFMS.WTL_SPLY_LS
       SET HJD_CDE = #HJD_CDE#
-        , SHT_NUM = #SHT_NUM#
-        , MNG_CDE = #MNG_CDE#
-        , IST_YMD = decode(length(#FNS_YMD#), 10, to_char(to_date(#FNS_YMD#, 'yyyy-MM-dd'), 'yyyyMMdd'), '')
-        , SAA_CDE = #SAA_CDE#
-        , JHT_CDE = #JHT_CDE#
-        , CNT_NUM = #CNT_NUM#
-        , SYS_CHK = #SYS_CHK#
-        , PIP_LBL = #PIP_LBL#
-        , PIP_DIP = #PIP_DIP#
-        , MOP_CDE = #MOP_CDE#
-        , PIP_LEN = #PIP_LEN#
-        , LOW_DEP = #LOW_DEP#
-        , HGH_DEP = #HGH_DEP#
+      , SHT_NUM = #SHT_NUM#
+      , MNG_CDE = #MNG_CDE#
+      , IST_YMD = decode(length(#IST_YMD#), 10, to_char(to_date(#IST_YMD#, 'yyyy-MM-dd'), 'yyyyMMdd'), '')
+      , SAA_CDE = #SAA_CDE#
+      , JHT_CDE = #JHT_CDE#
+      , CNT_NUM = #CNT_NUM#
+      , SYS_CHK = #SYS_CHK#
+      , PIP_LBL = #PIP_LBL#
+      , PIP_DIP = #PIP_DIP#
+      , MOP_CDE = #MOP_CDE#
+      , PIP_LEN = #PIP_LEN#
+      , LOW_DEP = #LOW_DEP#
+      , HGH_DEP = #HGH_DEP#
       WHERE FTR_CDE = #FTR_CDE#
       AND	FTR_IDN = #FTR_IDN#
     </update>
 
     <!--급수관로 상세삭제-->
-    <update id="deleteSupDutDtl" parameterClass="GTI.WFMS.Models.Fclt.Model.SupDutDtl">
+    <update id="deleteSupDutDtl" parameterClass="GTI.WFMS.Models.Acmf.Model.SupDutDtl">
       /* 급수관로 상세 삭제 */
       DELETE INFOFMS.WTL_SPLY_LS
       WHERE FTR_CDE = #FTR_CDE#
@@ -260,7 +260,7 @@
     </update>
 
     <!--급수관로 관리번호 채번-->
-    <select id ="SelectSupDutFTR_IDN" parameterClass="Hashtable" resultClass ="GTI.WFMS.Models.Fclt.Model.SupDutDtl">
+    <select id ="SelectSupDutFTR_IDN" parameterClass="Hashtable" resultClass ="GTI.WFMS.Models.Acmf.Model.SupDutDtl">
       /* 급수관로 관리번호 채번 */
       SELECT NVL(MAX(FTR_IDN),0)+1 AS FTR_IDN FROM INFOFMS.WTL_SPLY_LS
       WHERE 1=1
