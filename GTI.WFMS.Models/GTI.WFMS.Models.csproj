@@ -74,6 +74,18 @@
     <Reference Include="WindowsBase" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Acmf\Dao\Maps\WtrTrkMap.xml">
+      <SubType>Designer</SubType>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Acmf\Dao\Maps\SupDutMap.xml">
+      <SubType>Designer</SubType>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Acmf\Dao\Maps\HydtMetrMap.xml">
+      <SubType>Designer</SubType>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Content Include="Adm\Dao\Maps\AdmMap.xml">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
       <SubType>Designer</SubType>
@@ -146,6 +158,9 @@
     </Content>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Acmf\Model\WtrTrkDtl.cs" />
+    <Compile Include="Acmf\Model\SupDutDtl.cs" />
+    <Compile Include="Acmf\Model\HydtMetrDtl.cs" />
     <Compile Include="Adm\Dao\AdmDao.cs" />
     <Compile Include="Adm\Work\AdmWork.cs" />
     <Compile Include="Cmm\Dao\CommonDao.cs" />
