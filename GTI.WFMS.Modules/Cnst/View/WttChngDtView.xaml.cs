@@ -89,8 +89,8 @@ namespace GTI.WFMS.Modules.Cnst.View
         {
             gv.AddNewRow();
             int newRowHandle = DataControlBase.NewItemRowHandle;
-            grid.SetCellValue(0, "CHG_YMD", Convert.ToDateTime(DateTime.Today).ToString("yyyy-MM-dd"));
-            grid.SetCellValue(0, "ATT_TIM", Convert.ToDateTime(DateTime.Today).ToString("yyyy-MM-dd"));
+            grid.SetCellValue(gv.FocusedRowHandle, "CHG_YMD", Convert.ToDateTime(DateTime.Today).ToString("yyyyMMdd"));
+            grid.SetCellValue(gv.FocusedRowHandle, "ATT_TIM", Convert.ToDateTime(DateTime.Today).ToString("yyyyMMdd"));
         }
         //행삭제
         private void BtnDel_Click(object sender, RoutedEventArgs e)

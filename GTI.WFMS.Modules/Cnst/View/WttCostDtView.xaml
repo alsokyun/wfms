@@ -15,6 +15,7 @@
     <UserControl.Resources>
         <cv:RownumConverter x:Key="rownumConverter" />
         <cv:ToggleConverter x:Key="toggleConverter" />
+        <cv:Date3StrConverter x:Key="date2StrConverter" />
     </UserControl.Resources>
 
 
@@ -70,7 +71,7 @@
             <dxg:GridColumn Header="지급구분" Width="4*" FieldName="PTY_CDE" HorizontalHeaderContentAlignment="Center"  AllowEditing="True">
                 <dxg:GridColumn.CellTemplate>
                     <DataTemplate>
-                        <dxe:ComboBoxEdit EditValue="{Binding RowData.Row.PTY_CDE, Mode=TwoWay}" ValueMember="DTL_CD" DisplayMember="NM"
+                        <dxe:ComboBoxEdit EditValue="{Binding RowData.Row.PTY_CDE, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" ValueMember="DTL_CD" DisplayMember="NM"
                                             Loaded="PTY_CDE_Loaded"  
                                     Style="{DynamicResource ResourceKey=GrdComboBox}" >
                             <dxe:ComboBoxEdit.ItemContainerStyle>
@@ -85,8 +86,8 @@
             <dxg:GridColumn Header="지급일자" Width="3*" FieldName="PAY_YMD" HorizontalHeaderContentAlignment="Center" AllowEditing="True">
                 <dxg:GridColumn.CellTemplate>
                     <DataTemplate>
-                        <dxe:DateEdit Style="{DynamicResource ResourceKey=GrdDateEdit}" DisplayFormatString="yyyy-MM-dd"
-                            EditValue="{Binding RowData.Row.PAY_YMD, Mode=TwoWay}"   />
+                        <dxe:DateEdit Style="{DynamicResource ResourceKey=GrdDateEdit}" 
+                            EditValue="{Binding RowData.Row.PAY_YMD, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, Converter={StaticResource date2StrConverter}}"   />
                     </DataTemplate>
                 </dxg:GridColumn.CellTemplate>
             </dxg:GridColumn>
@@ -94,7 +95,7 @@
                 <dxg:GridColumn.CellTemplate>
                     <DataTemplate>
                         <dxe:TextEdit  Style="{DynamicResource ResourceKey=GrdNumberEdit}"
-                            EditValue="{Binding  RowData.Row.PAY_AMT, Mode=TwoWay}" />
+                            EditValue="{Binding  RowData.Row.PAY_AMT, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged }" />
                     </DataTemplate>
                 </dxg:GridColumn.CellTemplate>
             </dxg:GridColumn>
