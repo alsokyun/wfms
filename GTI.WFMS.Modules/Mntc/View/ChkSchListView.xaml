@@ -1,0 +1,123 @@
+﻿<Window xmlns:dxe="http://schemas.devexpress.com/winfx/2008/xaml/editors"  
+        x:Class="GTI.WFMS.Modules.Mntc.View.ChkSchListView"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        mc:Ignorable="d"
+        Title="ChkSchListView" Height="600" Width="1100"
+        
+        xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
+        xmlns:vm="clr-namespace:GTI.WFMS.Modules.Mntc.ViewModel"
+        xmlns:cm="clr-namespace:GTIFramework.Common.Utils.Converters;assembly=GTIFramework"
+        xmlns:dxmvvm="http://schemas.devexpress.com/winfx/2008/xaml/mvvm" 
+        xmlns:dxsch="http://schemas.devexpress.com/winfx/2008/xaml/scheduling"
+        
+        
+        WindowStyle="None" WindowStartupLocation="CenterScreen"
+        Style="{DynamicResource PopupWindow}"
+        x:Name="chkSchListView"
+        DataContext="{dxmvvm:ViewModelSource vm:ChkSchListViewModel}"
+        >
+
+
+    <Window.Resources>
+    </Window.Resources>
+
+    <DockPanel >
+        <DockPanel DockPanel.Dock="Top" Height="40" Margin="10 0 5 0">
+            <Label DockPanel.Dock="Left" Content="점검일정조회" 
+                   Width="840" FontSize="18" FontWeight="Bold" Foreground="White"  
+                   VerticalContentAlignment="Center"
+                   x:Name="bdTitle" PreviewMouseLeftButtonDown="BdTitle_PreviewMouseLeftButtonDown"/>
+
+            <Button DockPanel.Dock="Right" x:Name="btnClose" Style="{DynamicResource XSignCloseButton}" Margin="10" Click="BtnClose_Click" />
+        </DockPanel>
+
+
+
+        <Grid  Background="{DynamicResource PopCOLOR2Brush}" >
+            <Grid.ColumnDefinitions >
+                <ColumnDefinition Width="200"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+
+            <Grid Grid.Column="0">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="220" />
+                    <RowDefinition Height="*" />
+                </Grid.RowDefinitions>
+
+                <dxe:DateNavigator Grid.Row="0" x:Name="datenavigator" VerticalAlignment="Stretch" CalendarView="Year" Visibility="Visible">
+                    <dxe:DateNavigator.StyleSettings>
+                        <dxsch:SchedulerDateNavigatorStyleSettings Scheduler="{Binding ElementName=scheduler}" 
+                                                                    CustomizeSpecialDates="SchedulerDateNavigatorStyleSettings_CustomizeSpecialDates" 
+                                                                    MaxSelectedConsecutiveWeeks="3" 
+                                                                    MaxSelectedNonConsecutiveDates="5"                                                                     
+                                                                   />
+                    </dxe:DateNavigator.StyleSettings>
+                </dxe:DateNavigator>
+
+                <Grid Grid.Row="1">
+                    <StackPanel Orientation="Horizontal" Height="40" HorizontalAlignment="Center">
+                        <Button Command="{Binding SearchCmd}">검색</Button>
+                        <Button Command="{Binding BackCmd}">달력으로</Button>
+                        <Button Command="{Binding ChscResCmd}">점검결과→</Button>
+                    </StackPanel>
+                </Grid>
+
+            </Grid>
+
+            <dxsch:SchedulerControl Grid.Column="1" x:Name="scheduler" 
+                                    GroupType="Resource" FirstDayOfWeek="Monday" ActiveViewIndex="3" WorkDays="WorkDays" 
+                                    DependencyPropertyChanged="schedulerControl_DependencyPropertyChanged"
+                                    SelectedAppointmentsSource="{Binding SelectedAppointment}" AllowAppointmentMultiSelect="False"      
+                                    ShowDateNavigationPanel="True"
+                                    >
+
+                <dxsch:SchedulerControl.DataSource>
+                    <dxsch:DataSource AppointmentsSource="{Binding ChscMaLst}" ResourcesSource="{Binding ResSrcs}"   >
+                        <dxsch:DataSource.AppointmentMappings>
+                            <dxsch:AppointmentMappings AllDay="AllDay" 
+                                                    Description="CHK_CTNT" 
+                                                    End="EndTime" 
+                                                    Id="SCL_NUM" 
+                                                    LabelId="SCL_CDE" 
+                                                    Location="MNG_CDE" 
+                                                    RecurrenceInfo="RecurrenceInfo" 
+                                                    Reminder="ReminderInfo" 
+                                                    ResourceId="ResourceId" 
+                                                    Start="StartTime" 
+                                                    StatusId="SCL_STAT_CDE" 
+                                                    Subject="TIT_NAM" 
+                                                    Type="Type">
+                                <dxsch:CustomFieldMapping Mapping="CKM_PEO" Name="CKM_PEO" />
+                            </dxsch:AppointmentMappings>
+                        </dxsch:DataSource.AppointmentMappings>
+                        <dxsch:DataSource.ResourceMappings>
+                            <dxsch:ResourceMappings Caption="Name" Id="Id" />
+                        </dxsch:DataSource.ResourceMappings>
+                    </dxsch:DataSource>
+                </dxsch:SchedulerControl.DataSource>
+
+
+
+
+
+            </dxsch:SchedulerControl>
+
+        </Grid>
+
+    </DockPanel>
+
+
+    <!--뷰와 연결된 뷰모델로 Loaded 이벤트전파-->
+    <i:Interaction.Triggers>
+        <i:EventTrigger EventName="Loaded">
+            <i:InvokeCommandAction Command="{Binding LoadedCommand}" CommandParameter="{Binding ElementName=chkSchListView}"/>
+        </i:EventTrigger>
+    </i:Interaction.Triggers>
+
+
+
+</Window>

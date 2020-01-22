@@ -3,6 +3,7 @@ using DevExpress.Xpf.Core;
 using GTI.WFMS.Models.Common;
 using GTI.WFMS.Models.Main.Work;
 using GTI.WFMS.Modules.Main;
+using GTI.WFMS.Modules.Mntc.View;
 using GTI.WNMS.Main.View.Pop;
 using GTIFramework.Common.Log;
 using GTIFramework.Common.MessageBox;
@@ -31,6 +32,7 @@ namespace GTI.WFMS.Main
         MainWin mainwin;
         PopMain pmain = new PopMain();
         Border borderTop = new Border();
+        ChkSchListView chkSchListView;
 
         private readonly IRegionManager regionManager;
 
@@ -191,7 +193,7 @@ namespace GTI.WFMS.Main
             foreach (AccordionItem item in accrMenu.Items)
             {
                 //메인윈도우에 객체를 삭제/추가한다...
-                mainwin.UnregisterName(item.Name); 
+                mainwin.UnregisterName(item.Name);
 
                 foreach (AccordionItem citem in item.Items)
                 {
@@ -229,7 +231,7 @@ namespace GTI.WFMS.Main
                         {
                             acctwoitem.Glyph = new BitmapImage(new Uri("/Resources/Blue/Images/MNUImage/" + r["MNU_IMG"].ToString(), UriKind.Relative));
                         }
-                        acctwoitem.Margin = new Thickness(3,0,3,0);
+                        acctwoitem.Margin = new Thickness(3, 0, 3, 0);
 
                         mainwin.RegisterName(acctwoitem.Name, acctwoitem); //메인윈도우에 객체를 추가한다...
                         accrMenu.Items.Add(acctwoitem);
@@ -417,30 +419,55 @@ namespace GTI.WFMS.Main
                                 /*2.Popup클래그 방식
                                  */
                                 pmain.IsOpen = false; //현재열려있는 팝업을 닫는다
+                                try
+                                {
+                                    chkSchListView.Close();
+                                }
+                                catch (Exception) { }
+
 
                                 if (FmsUtil.IsNull(dr[0]["MNU_PATH"].ToString()))
                                 {
                                     Messages.ShowErrMsgBox("잘못된 메뉴경로입니다.");
                                     return;
                                 }
-                                try
-                                {
-                                    pmain = new PopMain(dr[0]["MNU_PATH"].ToString());
-                                }
-                                catch (Exception)
-                                {
-                                    return;
-                                }
 
-                                Label lbTitle = pmain.FindName("lbTitle") as Label;//화면타이틀
-                                lbTitle.Content = dr[0]["MNU_NM"].ToString();
+                                //점검달력은 윈도우형태로 팝업
+                                if ("Mntc/View/ChkSchListView.xaml".Equals(dr[0]["MNU_PATH"]))
+                                {
+                                    // 점검달력윈도우
+                                    chkSchListView = new ChkSchListView();
 
-                                pmain.PlacementTarget = borderTop;
-                                pmain.Placement = PlacementMode.Bottom;
-                                pmain.VerticalOffset = 100;
-                                pmain.Placement = PlacementMode.Left;
-                                pmain.HorizontalOffset = 100;
-                                pmain.IsOpen = true;
+
+                                    //FIL_SEQ 리턴
+                                    if (chkSchListView.ShowDialog() is bool)
+                                    {
+                                        //재조회
+                                    }
+
+                                }
+                                //일반 업무화면은 Page 형태의 팝업
+                                else
+                                {
+                                    try
+                                    {
+                                        pmain = new PopMain(dr[0]["MNU_PATH"].ToString());
+                                    }
+                                    catch (Exception)
+                                    {
+                                        return;
+                                    }
+
+                                    Label lbTitle = pmain.FindName("lbTitle") as Label;//화면타이틀
+                                    lbTitle.Content = dr[0]["MNU_NM"].ToString();
+
+                                    pmain.PlacementTarget = borderTop;
+                                    pmain.Placement = PlacementMode.Bottom;
+                                    pmain.VerticalOffset = 100;
+                                    pmain.Placement = PlacementMode.Left;
+                                    pmain.HorizontalOffset = 100;
+                                    pmain.IsOpen = true;
+                                }
 
 
                             }
