@@ -109,7 +109,7 @@ namespace GTI.WFMS.Modules.Link.View
                 ATTA_SEQ = ((DataRowView)gc.CurrentItem).Row["ATTA_SEQ"].ToString();
 
                 // 부속세부시설윈도우
-                AttFacDtlView attFacDtlView = new AttFacDtlView(FTR_CDE, FTR_IDN, Convert.ToInt32(ATTA_SEQ) );
+                AttFacDtlView attFacDtlView = new AttFacDtlView(FTR_CDE, Convert.ToInt32(FTR_IDN), Convert.ToInt32(ATTA_SEQ));
                 attFacDtlView.Owner = Window.GetWindow(this);
 
 

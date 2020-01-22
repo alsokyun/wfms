@@ -1,0 +1,138 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<sqlMap namespace="Main" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://ibatis.apache.org/mapping">
+  <statements>
+
+    <!--점검목록-->
+    <select id="SelectChscMaList"  resultClass="GTI.WFMS.Models.Mntc.Model.ChscMaDtl">
+      SELECT A.SCL_NUM
+      , A.SCL_CDE
+      , C2.NM AS SCL_NM
+      , A.SCL_STAT_CDE
+      , nvl(C.NM,'점검등록') AS SCL_STAT_NM
+
+      , case when A.SCL_STAT_CDE = 'SCL_STAT_CDE01' then '35495f'
+      when A.SCL_STAT_CDE = 'SCL_STAT_CDE02' then '3b81cb'
+      when A.SCL_STAT_CDE = 'SCL_STAT_CDE03' then 'fd7e02'
+      else '35495f' end AS COLOR
+
+      , A.MNG_CDE, A.TIT_NAM
+      , A.STA_YMD
+      , A.END_YMD
+      , A.CKM_GRP_NM, A.CKM_PEO, A.CHK_CTNT
+      ,case when length(A.CHK_APR_YMD) = 8 then substr(A.CHK_APR_YMD,1,4) || '-' || substr(A.CHK_APR_YMD,5,2) || '-' || substr(A.CHK_APR_YMD,7,2) else '' end  as CHK_APR_YMD
+      ,case when length(A.CHK_APR_USR) = 8 then substr(A.CHK_APR_USR,1,4) || '-' || substr(A.CHK_APR_USR,5,2) || '-' || substr(A.CHK_APR_USR,7,2) else '' end  as CHK_APR_USR
+      ,case when length(A.CHK_CMP_YMD) = 8 then substr(A.CHK_CMP_YMD,1,4) || '-' || substr(A.CHK_CMP_YMD,5,2) || '-' || substr(A.CHK_CMP_YMD,7,2) else '' end  as CHK_CMP_YMD
+      ,case when length(A.CHK_RESULT_YMD) = 8 then substr(A.CHK_RESULT_YMD,1,4) || '-' || substr(A.CHK_RESULT_YMD,5,2) || '-' || substr(A.CHK_RESULT_YMD,7,2) else '' end  as CHK_RESULT_YMD
+      , U.USER_NM
+      , to_char(A.CRE_YMD,'yyyy-mm-dd') CRE_YMD
+      , A.CRE_USR
+      , to_char(A.UPD_YMD,'yyyy-mm-dd') UPD_YMD
+      , A.UPD_USR
+
+      FROM FMS_CHSC_MA A
+      LEFT JOIN INFOUSER.CD_DTL_INFO C ON A.SCL_STAT_CDE = C.DTL_CD AND C.ETC LIKE 'SCL_STAT_CDE'
+      LEFT JOIN INFOUSER.CD_DTL_INFO C2 ON A.SCL_CDE = C2.DTL_CD AND C2.ETC LIKE 'SCL_CDE'
+      LEFT JOIN INFOUSER.SYS_USER_INFO U ON A.CRE_USR = U.USER_ID
+      WHERE 1=1
+      <isNotEmpty prepend="AND" property="MNG_CDE">
+        A.MNG_CDE LIKE #MNG_CDE#
+      </isNotEmpty>
+      <isNotEmpty prepend="AND" property="SCL_CDE">
+        A.SCL_CDE LIKE #SCL_CDE#
+      </isNotEmpty>
+      <isNotEmpty prepend="AND" property="SCL_STAT_CDE">
+        A.SCL_STAT_CDE LIKE #SCL_STAT_CDE#
+      </isNotEmpty>
+
+      <isNotEmpty prepend="AND" property="TIT_NAM">
+        A.TIT_NAM LIKE '%' || #TIT_NAM# || '%'
+      </isNotEmpty>
+      <isNotEmpty prepend="AND" property="CKM_PEO">
+        A.CKM_PEO LIKE '%' || #CKM_PEO# || '%'
+      </isNotEmpty>
+
+      <isNotEmpty prepend="AND" property="STA_YMD">
+        A.STA_YMD <![CDATA[>=]]> TO_CHAR(TO_DATE(#STA_YMD#, 'yyyy-MM-dd'), 'yyyyMMdd')
+      </isNotEmpty>
+      <isNotEmpty prepend="AND" property="END_YMD">
+        A.END_YMD <![CDATA[<=]]> TO_CHAR(TO_DATE(#END_YMD#, 'yyyy-MM-dd'), 'yyyyMMdd')
+      </isNotEmpty>
+
+
+    </select>
+
+    <!--점검일정 저장-->
+    <update id="SaveChscMaDtl" parameterClass="GTI.WFMS.Models.Mntc.Model.ChscMaDtl">
+      MERGE INTO FMS_CHSC_MA
+      USING DUAL ON ( SCL_NUM=#SCL_NUM#)
+
+      WHEN MATCHED THEN
+      UPDATE
+      SET
+      UPD_YMD = sysdate
+      ,UPD_USR = #ID#
+      <isNotEmpty property="SCL_STAT_CDE">
+        ,SCL_STAT_CDE = #SCL_STAT_CDE#
+      </isNotEmpty>
+      <isNotEmpty property="MNG_CDE">
+        ,MNG_CDE = #MNG_CDE#
+      </isNotEmpty>
+      <isNotEmpty property="TIT_NAM">
+        ,TIT_NAM = #TIT_NAM#
+      </isNotEmpty>
+      <isNotEmpty property="STA_YMD">
+        ,STA_YMD = #STA_YMD#
+      </isNotEmpty>
+      <isNotEmpty property="END_YMD">
+        ,END_YMD = #END_YMD#
+      </isNotEmpty>
+      <isNotEmpty property="CKM_GRP_NM">
+        ,CKM_GRP_NM = #CKM_GRP_NM#
+      </isNotEmpty>
+      <isNotEmpty property="CKM_PEO">
+        ,CKM_PEO = #CKM_PEO#
+      </isNotEmpty>
+      <isNotEmpty property="CHK_CTNT">
+        ,CHK_CTNT = #CHK_CTNT#
+      </isNotEmpty>
+      <isNotEmpty property="CHK_APR_YMD">
+        ,CHK_APR_YMD = decode(length(#CHK_APR_YMD#), 10, to_char(to_date(#CHK_APR_YMD#, 'yyyy-MM-dd'), 'yyyyMMdd'), '')
+      </isNotEmpty>
+      <isNotEmpty property="CHK_APR_USR">
+        ,CHK_APR_USR = #CHK_APR_USR#
+      </isNotEmpty>
+      <isNotEmpty property="CHK_CMP_YMD">
+        ,CHK_CMP_YMD = decode(length(#CHK_CMP_YMD#), 10, to_char(to_date(#CHK_CMP_YMD#, 'yyyy-MM-dd'), 'yyyyMMdd'), '')
+      </isNotEmpty>
+      <isNotEmpty property="CHK_RESULT_YMD">
+        ,CHK_RESULT_YMD = #CHK_RESULT_YMD#
+      </isNotEmpty>
+
+      WHEN NOT MATCHED THEN
+      Insert (SCL_NUM, SCL_CDE,SCL_STAT_CDE,MNG_CDE,TIT_NAM,STA_YMD,END_YMD,CKM_GRP_NM,CKM_PEO
+      ,CHK_CTNT,CHK_APR_YMD,CHK_APR_USR,CHK_CMP_YMD,CHK_RESULT_YMD,CRE_YMD,CRE_USR,UPD_YMD,UPD_USR)
+      values(
+      (select nvl(max(SCL_NUM),0)+1 from FMS_CHSC_MA)
+      , #SCL_CDE#,	'SCL_STAT_CDE01', #MNG_CDE#, #TIT_NAM#
+      , #STA_YMD#
+      , #END_YMD#
+      , #CKM_GRP_NM#
+      , #CKM_PEO#, #CHK_CTNT#
+      , decode(length(#CHK_APR_YMD#), 10, to_char(to_date(#CHK_APR_YMD#, 'yyyy-MM-dd'), 'yyyyMMdd'), '')
+      , #CHK_APR_USR#
+      , decode(length(#CHK_CMP_YMD#), 10, to_char(to_date(#CHK_CMP_YMD#, 'yyyy-MM-dd'), 'yyyyMMdd'), '')
+      , #CHK_RESULT_YMD#
+      , sysdate, #ID#, sysdate, #ID#)
+    </update>
+
+
+    <!--점검일정 삭제-->
+    <update id="DeleteChscMaDtl" parameterClass="GTI.WFMS.Models.Mntc.Model.ChscMaDtl">
+      DELETE FROM FMS_CHSC_MA
+      WHERE SCL_NUM=#SCL_NUM#
+    </update>
+
+
+  </statements>
+  
+</sqlMap>

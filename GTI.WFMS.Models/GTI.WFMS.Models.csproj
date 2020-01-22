@@ -99,6 +99,9 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
       <SubType>Designer</SubType>
     </Content>
+    <Content Include="Mntc\Dao\Maps\MntcMap.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <Content Include="Pipe\Dao\Maps\FireFacMap.xml">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
@@ -167,6 +170,8 @@
     <Compile Include="FileUtils\StartRecordDragEventArgsConverter.cs" />
     <Compile Include="Main\Dao\MainDao.cs" />
     <Compile Include="Main\Work\MainWork.cs" />
+    <Compile Include="Mntc\Model\ChscMaDtl.cs" />
+    <Compile Include="Mntc\Model\ResSrc.cs" />
     <Compile Include="Pipe\Dao\PipeDao.cs" />
     <Compile Include="Pipe\Model\FireFacDtl.cs" />
     <Compile Include="Pipe\Model\WtprMtDtl.cs" />
@@ -195,7 +200,7 @@
     <None Include="..\GTI.WFMS.Main\bin\Debug\DBConfig\TIBEROConfig.config">
       <SubType>Designer</SubType>
       <Link>DBConfig\TIBEROConfig.config</Link>
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Include="app.config" />
     <None Include="packages.config" />
