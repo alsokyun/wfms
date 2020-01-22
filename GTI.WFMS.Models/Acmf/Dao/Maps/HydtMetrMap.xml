@@ -152,7 +152,7 @@
 
     </select>
 
-    <select id="SelectHydtMetrDtl"  parameterClass="Hashtable" resultClass ="GTI.WFMS.Models.Fclt.Model.HydtMetrDtl">
+    <select id="SelectHydtMetrDtl"  parameterClass="Hashtable" resultClass ="GTI.WFMS.Models.Acmf.Model.HydtMetrDtl">
       /* HydtMetrMap.SelectHydtMetrDtl 급수전계량기 상세정보*/
       <![CDATA[
 		 	 SELECT A.FTR_CDE
@@ -189,7 +189,7 @@
     </select>
 
     <!--급수전계량기 상세추가-->
-    <update id="insertHydtMetrDtl" parameterClass="GTI.WFMS.Models.Fclt.Model.HydtMetrDtl">
+    <update id="insertHydtMetrDtl" parameterClass="GTI.WFMS.Models.Acmf.Model.HydtMetrDtl">
       INSERT INTO INFOFMS.WTL_META_PS
       (   FTR_CDE
         , FTR_IDN
@@ -239,12 +239,12 @@
     </update>
 
     <!--급수전계량기 상세저장-->
-    <update id="updateHydtMetrDtl" parameterClass="GTI.WFMS.Models.Fclt.Model.HydtMetrDtl">
+    <update id="updateHydtMetrDtl" parameterClass="GTI.WFMS.Models.Acmf.Model.HydtMetrDtl">
       /* 급수전계량기 상세 수정 */
       UPDATE INFOFMS.WTL_META_PS
         SET HJD_CDE = #HJD_CDE#
           , SHT_NUM = #SHT_NUM#
-          , IST_YMD = decode(length(#FNS_YMD#), 10, to_char(to_date(#FNS_YMD#, 'yyyy-MM-dd'), 'yyyyMMdd'), '')
+          , IST_YMD = decode(length(#IST_YMD#), 10, to_char(to_date(#IST_YMD#, 'yyyy-MM-dd'), 'yyyyMMdd'), '')
           , HOM_NUM = #HOM_NUM#
           , HOM_NAM = #HOM_NAM#
           , HOM_CDE = #HOM_CDE#
@@ -266,7 +266,7 @@
     </update>
 
     <!--급수전계량기 상세삭제-->
-    <update id="deleteHydtMetrDtl" parameterClass="GTI.WFMS.Models.Fclt.Model.HydtMetrDtl">
+    <update id="deleteHydtMetrDtl" parameterClass="GTI.WFMS.Models.Acmf.Model.HydtMetrDtl">
       /* 급수전계량기 상세 삭제 */
       DELETE INFOFMS.WTL_META_PS
       WHERE FTR_CDE = #FTR_CDE#
@@ -274,7 +274,7 @@
     </update>
 
     <!--급수전계량기 관리번호 채번-->
-    <select id ="SelectHydtMetrFTR_IDN" parameterClass="Hashtable" resultClass ="GTI.WFMS.Models.Fclt.Model.HydtMetrDtl">
+    <select id ="SelectHydtMetrFTR_IDN" parameterClass="Hashtable" resultClass ="GTI.WFMS.Models.Acmf.Model.HydtMetrDtl">
       /* 급수전계량기 관리번호 채번 */
       SELECT NVL(MAX(FTR_IDN),0)+1 AS FTR_IDN FROM INFOFMS.WTL_META_PS
       WHERE 1=1

@@ -6,7 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace GTI.WFMS.Models.Fclt.Model
+namespace GTI.WFMS.Models.Acmf.Model
 {
     public class HydtMetrDtl : CmmDtl, INotifyPropertyChanged
     {
