@@ -10,7 +10,7 @@ namespace GTI.WFMS.Modules.Pop.View
     public partial class AttFacDtlView: Window
     {
 
-        //사업소 DB연결이 없으면
+        // 생성자
         public AttFacDtlView( string _FTR_CDE, int _FTR_IDN, int _ATTA_SEQ)
         {
             InitializeComponent();

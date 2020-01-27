@@ -47,9 +47,6 @@ namespace GTI.WFMS.Modules.Mntc.ViewModel
         public DelegateCommand<object> BackCmd { get; set; }
         
 
-
-
-
         #endregion
 
 
@@ -67,7 +64,7 @@ namespace GTI.WFMS.Modules.Mntc.ViewModel
 
 
 
-
+        #region ========== 생성자 ==========
         /// 생성자
         public ChkSchListViewModel()
         {
@@ -92,7 +89,7 @@ namespace GTI.WFMS.Modules.Mntc.ViewModel
 
                 //1.점검일정팝업호출
                 // 점검달력윈도우
-                chkSchDtlView = new ChkSchDtlView();
+                chkSchDtlView = new ChkSchDtlView(selChscMaDtl.SCL_NUM.ToString());
                 if (chkSchDtlView.ShowDialog() is bool)
                 {
                     //재조회
@@ -108,6 +105,7 @@ namespace GTI.WFMS.Modules.Mntc.ViewModel
         }
 
 
+        #endregion
 
 
 
@@ -193,102 +191,10 @@ namespace GTI.WFMS.Modules.Mntc.ViewModel
             {
                 selChscMaDtl = items[0];
             }
-        }
-
-
-        // 초기조회
-        private void InitModel()
-        {
-            try
+            else
             {
-                ChscMaLst.Clear();
+                selChscMaDtl = null;
             }
-            catch (Exception){}
-
-            //리소스소스
-            ResSrcs = new ObservableCollection<ResSrc>();
-            ResSrcs.Add(ResSrc.Create(Id: 1, Name: "점검일정"));
-
-
-            //점검스케줄
-            Hashtable param = new Hashtable();
-            param.Add("sqlId", "SelectChscMaList");
-
-            ChscMaLst = new ObservableCollection<ChscMaDtl>(BizUtil.SelectListObj<ChscMaDtl>(param));
-            //기존목록 이벤트핸들러 등록
-            /*
-             */
-            foreach (ChscMaDtl item in ChscMaLst)
-            {
-                item.PropertyChanged += ChscMaDtl_PropertyChanged;
-            }
-
-            //목록변경 이벤트핸들러 등록
-            ChscMaLst.CollectionChanged += Lst_CollectionChanged;
-        }
-
-
-
-
-        // 점검일정 목록저장
-        private void SaveSchdList()
-        {
-            //1.일정변경(추가)
-            foreach (ChscMaDtl dtl in newChscMaLst)
-            {
-                BizUtil.Update2(dtl, "SaveChscMaDtl");
-            }
-
-            //2.일정변경(삭제)
-            foreach (ChscMaDtl dtl in oldChscMaLst)
-            {
-                BizUtil.Update2(dtl, "DeleteChscMaDtl");
-            }
-
-            //재조회
-            //InitModel();
-        }
-
-
-        // 점검일정 단건저장
-        private void SaveSchdDtl(ChscMaDtl dtl)
-        {
-            //일정변경
-            BizUtil.Update2(dtl, "SaveChscMaDtl");
-            
-
-            //재조회
-            //InitModel();
-        }
-
-
-        /// <summary>
-        /// 저장작업
-        /// </summary>
-        /// <param name="obj"></param>
-        private void OnSave(object obj)
-        {
-
-            // 필수체크 (Tag에 필수체크 표시한 EditBox, ComboBox 대상으로 수행)
-            if(!BizUtil.ValidReq(chkSchListView))  return;
-
-
-            if (Messages.ShowYesNoMsgBox("저장하시겠습니까?") != MessageBoxResult.Yes) return;
-
-            try
-            {
-                //BizUtil.Update2(this, "SaveWttAttaDt");
-            }
-            catch (Exception e)
-            {
-                Messages.ShowErrMsgBox("저장 처리중 오류가 발생하였습니다.");
-                return;
-            }
-
-            Messages.ShowOkMsgBox();
-            //화면닫기
-            btnClose.RaiseEvent(new RoutedEventArgs(Button.ClickEvent));
-
         }
 
 
@@ -300,6 +206,7 @@ namespace GTI.WFMS.Modules.Mntc.ViewModel
 
 
         #region ============= 메소드정의 ================
+
 
 
         /// <summary>
@@ -345,6 +252,104 @@ namespace GTI.WFMS.Modules.Mntc.ViewModel
 
         }
 
+
+
+
+
+
+        // 초기조회
+        private void InitModel()
+        {
+            try
+            {
+                ChscMaLst.Clear();
+            }
+            catch (Exception) { }
+
+            //리소스소스
+            ResSrcs = new ObservableCollection<ResSrc>();
+            ResSrcs.Add(ResSrc.Create(Id: 1, Name: "점검일정"));
+
+
+            //점검스케줄
+            Hashtable param = new Hashtable();
+            param.Add("sqlId", "SelectChscMaList");
+
+            ChscMaLst = new ObservableCollection<ChscMaDtl>(BizUtil.SelectListObj<ChscMaDtl>(param));
+            //기존목록 이벤트핸들러 등록
+            /*
+             */
+            foreach (ChscMaDtl item in ChscMaLst)
+            {
+                item.PropertyChanged += ChscMaDtl_PropertyChanged;
+            }
+
+            //목록변경 이벤트핸들러 등록
+            ChscMaLst.CollectionChanged += Lst_CollectionChanged;
+        }
+
+
+
+        // 점검일정 목록저장
+        private void SaveSchdList()
+        {
+            //1.일정변경(추가)
+            foreach (ChscMaDtl dtl in newChscMaLst)
+            {
+                BizUtil.Update2(dtl, "SaveChscMaDtl");
+            }
+
+            //2.일정변경(삭제)
+            foreach (ChscMaDtl dtl in oldChscMaLst)
+            {
+                BizUtil.Update2(dtl, "DeleteChscMaDtl");
+            }
+
+            //재조회
+            //InitModel();
+        }
+
+
+        // 점검일정 단건저장
+        private void SaveSchdDtl(ChscMaDtl dtl)
+        {
+            //일정변경
+            BizUtil.Update2(dtl, "SaveChscMaDtl");
+
+
+            //재조회
+            //InitModel();
+        }
+
+
+        /// <summary>
+        /// 저장작업
+        /// </summary>
+        /// <param name="obj"></param>
+        private void OnSave(object obj)
+        {
+
+            // 필수체크 (Tag에 필수체크 표시한 EditBox, ComboBox 대상으로 수행)
+            if (!BizUtil.ValidReq(chkSchListView)) return;
+
+
+            if (Messages.ShowYesNoMsgBox("저장하시겠습니까?") != MessageBoxResult.Yes) return;
+
+            try
+            {
+                //BizUtil.Update2(this, "SaveWttAttaDt");
+            }
+            catch (Exception e)
+            {
+                Messages.ShowErrMsgBox("저장 처리중 오류가 발생하였습니다.");
+                return;
+            }
+
+            Messages.ShowOkMsgBox();
+            //화면닫기
+            btnClose.RaiseEvent(new RoutedEventArgs(Button.ClickEvent));
+
+        }
         #endregion
 
 

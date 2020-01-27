@@ -48,30 +48,24 @@
 
     WHEN MATCHED THEN
     UPDATE SET
-    UPD_USR = #ID#
+    UPD_USR = #UPD_USR#
       <isNotEmpty property="UPD_YMD">
-        , UPD_YMD = decode(length(#UPD_YMD#), 10, to_char(to_date(#UPD_YMD#, 'yyyy-MM-dd'), 'yyyyMMdd'), '')
+        , UPD_YMD = #UPD_YMD#
       </isNotEmpty>
       <isNotEmpty property="GRP_TYP">
         , GRP_TYP = #GRP_TYP#
       </isNotEmpty>
       <isNotEmpty property="TIT_NAM">
 	        , TIT_NAM = #TIT_NAM#
-	        </isNotEmpty>
+	    </isNotEmpty>
       <isNotEmpty property="CTNT">
         , CTNT = #CTNT#
-      </isNotEmpty>
-      <isNotEmpty property="UPD_YMD">
-        , UPD_YMD = to_char(to_date(#UPD_YMD#, 'yyyy-MM-dd'), 'yyyyMMdd'), '')
-      </isNotEmpty>
-      <isNotEmpty property="UPD_USR">
-        , UPD_USR = #UPD_USR#
       </isNotEmpty>
 
     WHEN NOT MATCHED THEN
     INSERT
-    (BIZ_ID, FIL_SEQ
-    <isNotEmpty property="GRP_TYP">
+      (BIZ_ID, FIL_SEQ
+          <isNotEmpty property="GRP_TYP">
 					    , GRP_TYP 
 				  </isNotEmpty>				
 		      <isNotEmpty property="TIT_NAM">
@@ -86,10 +80,10 @@
         <isNotEmpty property="UPD_USR">
           , UPD_USR
         </isNotEmpty>
-    , CRE_USR, CRE_YMD )
+      , CRE_USR, CRE_YMD )
     VALUES
     ( #BIZ_ID#, #FIL_SEQ#
-    <isNotEmpty property="GRP_TYP">
+        <isNotEmpty property="GRP_TYP">
 				    ,#GRP_TYP#
 				</isNotEmpty>				
 		    <isNotEmpty property="TIT_NAM">
@@ -99,7 +93,7 @@
 	        , #CTNT#
 		    </isNotEmpty>
         <isNotEmpty property="UPD_YMD">
-          , decode(length(#UPD_YMD#), 10, to_char(to_date(#UPD_YMD#, 'yyyy-MM-dd'), 'yyyyMMdd'), '')
+          , #UPD_YMD#
         </isNotEmpty>
         <isNotEmpty property="UPD_USR">
           , #UPD_USR#
