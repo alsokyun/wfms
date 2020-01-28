@@ -34,7 +34,7 @@ namespace GTI.WFMS.Modules.Pipe.ViewModel
         #region ==========  Member 정의 ==========
         FireFacDtlView valvFacDtlView;
       
-        ComboBoxEdit cbFTR_CDE; DataTable dtFTR_CDE = new DataTable();		//지형지물
+        //ComboBoxEdit cbFTR_CDE; DataTable dtFTR_CDE = new DataTable();		//지형지물
         ComboBoxEdit cbHJD_CDE; DataTable dtHJD_CDE = new DataTable();		//행정동
         ComboBoxEdit cbMNG_CDE; DataTable dtMNG_CDE = new DataTable();		//관리기관
         ComboBoxEdit cbMOF_CDE; DataTable dtMOF_CDE = new DataTable();		//형식
@@ -77,8 +77,9 @@ namespace GTI.WFMS.Modules.Pipe.ViewModel
                 var values = (object[])obj;
 
                 valvFacDtlView = values[0] as FireFacDtlView;
+
                 //cbFTR_CDE = valvFacDtlView.cbFTR_CDE;   //지형지물
-                //cbHJD_CDE = valvFacDtlView.cbHJD_CDE;   //행정동
+                cbHJD_CDE = valvFacDtlView.cbHJD_CDE;   //행정동
                 cbMNG_CDE = valvFacDtlView.cbMNG_CDE;   //관리기관
                 cbMOF_CDE = valvFacDtlView.cbMOF_CDE;   //형식
 
@@ -259,11 +260,10 @@ namespace GTI.WFMS.Modules.Pipe.ViewModel
                 //BizUtil.SetCombo(cbFTR_CDE, "Select_FTR_LIST", "FTR_CDE", "FTR_NAM", false);
 
                 // cbHJD_CDE 행정동
-                // BizUtil.SetCombo(cbHJD_CDE, "Select_ADAR_LIST", "HJD_CDE", "HJD_NAM", true);
+                BizUtil.SetCombo(cbHJD_CDE, "Select_ADAR_LIST", "HJD_CDE", "HJD_NAM", true);
 
                 // cbMNG_CDE 관리기관
                 BizUtil.SetCmbCode(cbMNG_CDE, "MNG_CDE", true);
-
 
                 // cbMOF_CDE 형식
                 BizUtil.SetCmbCode(cbMOF_CDE, "MOF_CDE", true, "250019");
