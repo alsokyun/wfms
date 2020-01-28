@@ -9,18 +9,18 @@
     <select id="selectChscResSubList" resultClass="Hashtable">
       /* selectChscResSubList - 유지보수(점검시설 결과) */
       SELECT
-          A.SCL_NUM
-          , A.FTR_CDE, F.FTR_NAM
-          , A.FTR_IDN
-          , A.RPR_YMD
-          , decode(length(A.RPR_YMD), 8, to_char(to_date(A.RPR_YMD, 'yyyyMMdd'), 'yyyy-MM-dd'), '') AS RPR_YMD_FMT
-          , A.RPR_CAT_CDE   /*보수구분*/
-          , C.NM AS RPR_CAT_NAM
-          , A.RPR_CUZ_CDE   /*보수사유*/
-          , C2.NM AS RPR_CUZ_NAM
-          , A.RPR_USR_NM    /*시공자명*/
-          , A.RPR_CTNT      /*보수내용*/
-          , A.FILE_SEQ
+      A.SCL_NUM
+      , A.FTR_CDE, F.FTR_NAM
+      , A.FTR_IDN
+      , A.RPR_YMD
+      , decode(length(A.RPR_YMD), 8, to_char(to_date(A.RPR_YMD, 'yyyyMMdd'), 'yyyy-MM-dd'), '') AS RPR_YMD_FMT
+      , A.RPR_CAT_CDE   /*보수구분*/
+      , C.NM AS RPR_CAT_NAM
+      , A.RPR_CUZ_CDE   /*보수사유*/
+      , C2.NM AS RPR_CUZ_NAM
+      , A.RPR_USR_NM    /*시공자명*/
+      , A.RPR_CTNT      /*보수내용*/
+      , A.FIL_SEQ
       FROM FMS_CHSC_FTR_RES A
       LEFT JOIN INFOFMS.V_FTR_CDE F ON A.FTR_CDE = F.FTR_CDE
       LEFT JOIN INFOUSER.CD_DTL_INFO C ON C.MST_CD = (SELECT MST_CD FROM INFOUSER.CD_MST_INFO WHERE ETC = 'RPR_CAT_CDE') AND C.DTL_CD = A.RPR_CAT_CDE

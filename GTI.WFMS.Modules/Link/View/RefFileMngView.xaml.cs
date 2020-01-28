@@ -21,7 +21,7 @@ namespace GTI.WFMS.Modules.Link.View
         private FileMngView fileMngView; //첨부파일팝업
 
 
-
+        // 뷰생성자
         public RefFileMngView(string _BIZ_ID)
         {
             InitializeComponent();
@@ -46,13 +46,7 @@ namespace GTI.WFMS.Modules.Link.View
 
 
 
-
-        //그리드행추가시 이벤트처리
-        private void AddingNewRow(object sender, System.ComponentModel.AddingNewEventArgs e)
-        {
-
-        }
-
+        
 
         /// <summary>
         /// 헤더 All 체크
@@ -61,8 +55,6 @@ namespace GTI.WFMS.Modules.Link.View
         /// <param name="e"></param>
         private void AllChk_Checked(object sender, RoutedEventArgs e)
         {
-            //CheckEdit ce = sender as CheckEdit;
-            //bool chk = ce.IsChecked is bool;
             foreach (DataRow dr in ((DataTable)grid.ItemsSource).Rows)
             {
                 dr["CHK"] = "Y";
@@ -233,8 +225,8 @@ namespace GTI.WFMS.Modules.Link.View
                     param.Add("FIL_SEQ", Convert.ToInt32(row["FIL_SEQ"]));
 
                     param.Add("TIT_NAM", row["TIT_NAM"].ToString());
-                    param.Add("CRE_YMD", row["CRE_YMD"].ToString());
-                    param.Add("CRE_USR", row["CRE_USR"].ToString());
+                    param.Add("UPD_YMD", row["UPD_YMD"].ToString());
+                    param.Add("UPD_USR", row["UPD_USR"].ToString());
                     param.Add("CTNT", row["CTNT"].ToString());
                 }
                 else
@@ -248,9 +240,9 @@ namespace GTI.WFMS.Modules.Link.View
                 {
                     BizUtil.Update(param);
                 }
-                catch (Exception)
+                catch (Exception ex)
                 {
-                    Messages.ShowErrMsgBox("저장 처리중 오류가 발생하였습니다.");
+                    Messages.ShowErrMsgBox("저장 처리중 오류가 발생하였습니다." + ex.ToString());
                     return;
                 }
 

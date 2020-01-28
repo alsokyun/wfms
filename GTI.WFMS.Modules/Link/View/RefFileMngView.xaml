@@ -13,6 +13,7 @@
     <UserControl.Resources>
         <cv:RownumConverter x:Key="rownumConverter" />
         <cv:ToggleConverter x:Key="toggleConverter" />
+        <cv:Date3StrConverter x:Key="date2StrConverter" />
     </UserControl.Resources>
 
 
@@ -76,8 +77,8 @@
             <dxg:GridColumn Header="저장일자" Width="4*" FieldName="UPD_YMD" HorizontalHeaderContentAlignment="Center">
                 <dxg:GridColumn.CellTemplate>
                     <DataTemplate>
-                        <dxe:TextEdit Style="{DynamicResource ResourceKey=GrdTextEdit}"   
-                            EditValue="{Binding  RowData.Row.UPD_YMD}"/>
+                        <dxe:DateEdit Style="{DynamicResource ResourceKey=GrdDateEdit}" 
+                            EditValue="{Binding RowData.Row.UPD_YMD, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged , Converter={StaticResource date2StrConverter}}"   />
                     </DataTemplate>
                 </dxg:GridColumn.CellTemplate>
             </dxg:GridColumn>

@@ -133,6 +133,157 @@
     </update>
 
 
+
+
+
+
+    <!-- 점검결과리스트-->
+    <select id="SelectChscResultList"  resultClass="Hashtable">
+      SELECT R.SCL_NUM
+      , R.FTR_CDE, R.FTR_IDN, R.SEQ
+      , VN.FTR_NAM
+      , R.RPR_YMD
+      , R.RPR_CAT_CDE, C.CD_NM RPR_CAT_NM
+      , R.RPR_CUZ_CDE, C2.CD_NM RPR_CUZ_NM
+      , R.RPR_USR_NM, R.RPR_CTNT
+      , V.HJD_CDE, H.HJD_NAM
+      , R.FIL_SEQ
+      , F.FIL_NM
+      , NULL AS CHK
+      FROM FMS_CHSC_FTR_RES R
+      LEFT JOIN V_FTR V ON R.FTR_CDE = V.FTR_CDE AND R.FTR_IDN = V.FTR_IDN
+      LEFT JOIN V_FTR_CDE VN ON R.FTR_CDE = VN.FTR_CDE
+      LEFT JOIN CMT_ADAR_MA H ON H.HJD_CDE = V.HJD_CDE
+      LEFT JOIN CD_DTL_INFO C ON R.RPR_CAT_CDE = C.DTL_CD
+      LEFT JOIN CD_DTL_INFO C2 ON R.RPR_CUZ_CDE = C.DTL_CD
+      LEFT JOIN FMS_FILE_MST F ON F.FIL_SEQ = R.FIL_SEQ
+      WHERE R.SCL_NUM = #SCL_NUM#
+      ORDER BY R.CRE_YMD, R.FTR_CDE, R.FTR_IDN, R.SEQ
+
+    </select>
+
+
+    <!-- 점검결과 상세 리스트 저장 -->
+    <update id="SaveChscResult" parameterClass="Hashtable">
+      MERGE INTO FMS_CHSC_FTR_RES
+      USING DUAL ON ( SCL_NUM=#SCL_NUM# AND FTR_CDE=#FTR_CDE# AND FTR_IDN=#FTR_IDN# AND SEQ = #SEQ# )
+
+      WHEN MATCHED THEN
+
+      UPDATE  SET
+      RPR_YMD			= replace(#RPR_YMD#,'-','')
+      ,RPR_CAT_CDE	= #RPR_CAT_CDE#
+      ,RPR_CUZ_CDE    = #RPR_CUZ_CDE#
+      ,RPR_USR_NM     = #RPR_USR_NM#
+      ,RPR_CTNT       = #RPR_CTNT#
+      ,FIL_SEQ       = #FIL_SEQ#
+      ,UPD_YMD        = sysdate
+      ,UPD_USR        = #ID#
+
+      WHEN NOT MATCHED THEN
+      INSERT
+      ( SCL_NUM
+      , FTR_CDE
+      , FTR_IDN
+      , SEQ
+      , RPR_YMD
+      , RPR_CAT_CDE
+      , RPR_CUZ_CDE
+      , RPR_USR_NM
+      , RPR_CTNT
+      , FIL_SEQ
+      , CRE_YMD
+      , CRE_USR
+      , UPD_YMD
+      , UPD_USR
+      )
+      VALUES (
+      #SCL_NUM#, #FTR_CDE#, #FTR_IDN#, (select nvl(max(SEQ),0)+1 from FMS_CHSC_FTR_RES where SCL_NUM=#SCL_NUM# AND FTR_CDE=#FTR_CDE# AND FTR_IDN=#FTR_IDN# )
+      , replace(#RPR_YMD#,'-',''), #RPR_CAT_CDE#, #RPR_CUZ_CDE#, #RPR_USR_NM#, #RPR_CTNT#, #FIL_SEQ#
+      , sysdate, #ID#, sysdate, #ID#
+      )
+
+
+    </update>    
+
+    <!-- 점검결과 상세 삭제 -->
+    <update id="DeleteChscResult" parameterClass="Hashtable">
+      DELETE FMS_CHSC_FTR_RES
+      WHERE 1=1
+      AND SCL_NUM=#SCL_NUM#
+      AND FTR_CDE=#FTR_CDE#
+      AND FTR_IDN=#FTR_IDN#
+      AND SEQ = #SEQ#
+    </update>
+    
+
+    <!-- 소모품 사용내역 리스트 -->
+    <select id="SelectPdhUseList"  resultClass="Hashtable">
+      SELECT H.PDH_HT_NUM, H.PDH_NUM, H.FTR_CDE, H.FTR_IDN, H.SCL_NUM, H.SEQ
+      , H.PDH_CNT, H.PDH_AMT
+      , P.PDT_NAM
+      , P.PDT_MDL_STD
+      
+      FROM FMS_PDJT_HT H
+      INNER JOIN FMS_PDJT_MA P ON P.PDH_NUM = H.PDH_NUM
+      WHERE 1=1
+      AND H.SCL_NUM =#SCL_NUM# 
+      AND H.FTR_CDE = #FTR_CDE# 
+      AND H.FTR_IDN = #FTR_IDN# 
+      AND H.SEQ = #SEQ#
+      AND P.PDT_CAT_CDE = #PDT_CAT_CDE#
+      ORDER BY H.PDH_HT_NUM
+    </select>
+
+    <!-- 소모품내역 삭제 -->
+    <update id="DeletePdjtHt" parameterClass="Hashtable">
+      DELETE FROM FMS_PDJT_HT
+      WHERE 1=1
+      AND SCL_NUM=#SCL_NUM#
+      AND FTR_CDE=#FTR_CDE#
+      AND FTR_IDN=#FTR_IDN#
+      AND SEQ = #SEQ#
+      AND PDH_HT_NUM = #PDH_HT_NUM#
+    </update>
+
+
+    <!-- 소모품/오일 저장 -->
+    <update id="SavePdjtHt" parameterClass="Hashtable">
+      MERGE INTO FMS_PDJT_HT
+      USING DUAL ON ( PDH_HT_NUM = #PDH_HT_NUM# AND PDH_NUM = #PDH_NUM#  AND SCL_NUM=#SCL_NUM# AND FTR_CDE=#FTR_CDE# AND FTR_IDN=#FTR_IDN# AND SEQ = #SEQ#)
+
+      WHEN MATCHED THEN
+
+      UPDATE  SET
+      PDH_CNT = #PDH_CNT#
+      , PDH_AMT = #PDH_AMT#
+      ,UPD_YMD = sysdate
+      ,UPD_USR = #ID#
+
+      WHEN NOT MATCHED THEN
+      INSERT
+      ( PDH_HT_NUM
+      , PDH_NUM, FTR_CDE, FTR_IDN, SCL_NUM, SEQ
+      , PDH_CNT, PDH_AMT, CRE_YMD, CRE_USR, UPD_YMD, UPD_USR)
+      VALUES (
+      (select nvl(max(PDH_HT_NUM),0)+1 from FMS_PDJT_HT)
+      , #PDH_NUM#, #FTR_CDE#, #FTR_IDN#, #SCL_NUM#, #SEQ#
+      , #PDH_CNT#, #PDH_AMT#
+      , sysdate, #ID#, sysdate, #ID#
+      )
+    </update>
+
+
+    <!-- 소모품 코드-->
+    <select id="SelectPdhList"  resultClass="Hashtable">
+      SELECT PDH_NUM, PDT_CAT_CDE, PDT_NAM, PDE_NAM, PDT_MDL_STD, PDT_MNF, PDT_MDL, PDT_UNT
+      FROM FMS_PDJT_MA
+      WHERE 1=1
+      AND PDT_CAT_CDE = #PDT_CAT_CDE#
+      AND USE_YN != 'N'
+    </select>
+
+
   </statements>
   
 </sqlMap>

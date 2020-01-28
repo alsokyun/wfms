@@ -238,6 +238,10 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
+    <Page Include="Mntc\View\PdjtHtView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
     <Page Include="Pipe\View\FireFacAddView.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -323,6 +327,10 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Include="Pop\View\AttFacDtlView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Pop\View\FtrSelView.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
@@ -471,6 +479,9 @@
     <Compile Include="Mntc\View\ChkSchListView.xaml.cs">
       <DependentUpon>ChkSchListView.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Mntc\View\PdjtHtView.xaml.cs">
+      <DependentUpon>PdjtHtView.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Pipe\ViewModel\FireFacAddViewModel.cs" />
     <Compile Include="Pipe\ViewModel\FireFacDtlViewModel.cs" />
     <Compile Include="Pipe\ViewModel\FireFacListViewModel.cs" />
@@ -559,6 +570,9 @@
     <Compile Include="Pop\ViewModel\AttFacDtlViewModel.cs" />
     <Compile Include="Pop\View\AttFacDtlView.xaml.cs">
       <DependentUpon>AttFacDtlView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Pop\View\FtrSelView.xaml.cs">
+      <DependentUpon>FtrSelView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Pop\View\FileMngView.xaml.cs">
       <DependentUpon>FileMngView.xaml</DependentUpon>
