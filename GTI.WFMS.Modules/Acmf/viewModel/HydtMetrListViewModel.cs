@@ -365,7 +365,7 @@ namespace GTI.WFMS.Modules.Acmf.ViewModel
                 saveFileDialog.Title = "저장경로를 지정하세요.";
 
                 //초기 파일명 지정
-                saveFileDialog.FileName = DateTime.Now.ToString("yyyyMMdd") + "_" + "정수장목록.xlsx";
+                saveFileDialog.FileName = DateTime.Now.ToString("yyyyMMdd") + "_" + "급수전계량기목록.xlsx";
 
                 saveFileDialog.OverwritePrompt = true;
                 saveFileDialog.Filter = "Excel|*.xlsx";
@@ -417,7 +417,7 @@ namespace GTI.WFMS.Modules.Acmf.ViewModel
 
                 //엑셀 유틸 호출
                 //ExcelUtil.ExcelTabulation(strFileName, strExcelFormPath, startPointXY, strSearchCondition, dtExceltTableData);
-                ExcelUtil.ExcelGrid(strExcelFormPath, strFileName, "정수장목록", dtExceltTableData, tablePointXY, grid, true);
+                ExcelUtil.ExcelGrid(strExcelFormPath, strFileName, "급수전계량기목록", dtExceltTableData, tablePointXY, grid, true);
 
                 hydtMetrListView.Dispatcher.Invoke(DispatcherPriority.ApplicationIdle,
                    new Action((delegate ()

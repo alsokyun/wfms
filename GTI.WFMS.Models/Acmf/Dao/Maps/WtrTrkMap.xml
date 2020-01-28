@@ -261,10 +261,10 @@
         , MNG_ADR = #MNG_ADR#
         , MNG_TEL = #MNG_TEL#
         , BLD_ARA = #BLD_ARA#
-        TBL_ARA = #TBL_ARA#
-        FAM_CNT = #FAM_CNT#
-        BLD_ADR = #BLD_ADR#
-        SYS_CHK = #SYS_CHK#
+        , TBL_ARA = #TBL_ARA#
+        , FAM_CNT = #FAM_CNT#
+        , BLD_ADR = #BLD_ADR#
+        , SYS_CHK = #SYS_CHK#
       WHERE FTR_CDE = #FTR_CDE#
       AND	FTR_IDN = #FTR_IDN#
     </update>

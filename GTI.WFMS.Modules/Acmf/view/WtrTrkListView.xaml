@@ -1,4 +1,4 @@
-﻿<Page x:Class="GTI.WFMS.Modules.Acmf.View.HydtMetrListView"
+﻿<Page x:Class="GTI.WFMS.Modules.Acmf.View.WtrTrkListView"
         xmlns:dxe="http://schemas.devexpress.com/winfx/2008/xaml/editors"  
         xmlns:dxg="http://schemas.devexpress.com/winfx/2008/xaml/grid"  
         xmlns:dx="http://schemas.devexpress.com/winfx/2008/xaml/core"
@@ -15,14 +15,14 @@
         xmlns:vm="clr-namespace:GTI.WFMS.Modules.Acmf.ViewModel"
         xmlns:cm="clr-namespace:GTIFramework.Common.Utils.Converters;assembly=GTIFramework"
         xmlns:common="clr-namespace:GTI.WFMS.Models.Common;assembly=GTI.WFMS.Models"
-        x:Name="hydtMetrListView"
+        x:Name="wtrTrkListView"
 
       >
 
     <!--뷰모델연결처리
     -->
     <Page.DataContext>
-        <vm:HydtMetrListViewModel/>
+        <vm:WtrTrkListViewModel/>
     </Page.DataContext>
 
     <Page.Resources>
@@ -52,12 +52,13 @@
 
         <Border Grid.Row="0" Grid.RowSpan="3" Grid.Column="1" Background="{DynamicResource TileCOLOR2Brush}" />
 
-        <Grid Grid.Row="1" Background="{DynamicResource PopupCOLOR3Brush}" Height="400" VerticalAlignment="Top" >
+        <Grid Grid.Row="1" Background="{DynamicResource PopupCOLOR3Brush}" Height="440" VerticalAlignment="Top" >
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="120"/>
                 <ColumnDefinition Width="*"/>
             </Grid.ColumnDefinitions>
             <Grid.RowDefinitions>
+                <RowDefinition Height="40" />
                 <RowDefinition Height="40" />
                 <RowDefinition Height="40" />
                 <RowDefinition Height="40" />
@@ -91,10 +92,16 @@
             <Border Grid.Row="8" Grid.Column="2" BorderThickness="0,0,0,1" BorderBrush="{DynamicResource PopCOLOR3Brush}" Margin="0,0,0,0"/>
             <Border Grid.Row="9" Grid.Column="0" BorderThickness="0,0,1,1" BorderBrush="{DynamicResource PopCOLOR3Brush}" Margin="0,0,0,0"/>
             <Border Grid.Row="9" Grid.Column="2" BorderThickness="0,0,0,1" BorderBrush="{DynamicResource PopCOLOR3Brush}" Margin="0,0,0,0"/>
+            <Border Grid.Row="10" Grid.Column="0" BorderThickness="0,0,1,1" BorderBrush="{DynamicResource PopCOLOR3Brush}" Margin="0,0,0,0"/>
+            <Border Grid.Row="10" Grid.Column="2" BorderThickness="0,0,0,1" BorderBrush="{DynamicResource PopCOLOR3Brush}" Margin="0,0,0,0"/>
 
             <!--라벨&입력창-->
-            <Label Grid.Row="0" Grid.Column="0" Content="관리번호" Style="{DynamicResource ResourceKey=HeadLabel}"/>
-            <dxe:TextEdit Grid.Row="0" Grid.Column="2" x:Name="txtFTR_IDN" Style="{DynamicResource ResourceKey=SrchTextEdit}"  HorizontalAlignment="Center" >
+            <Label Grid.Row="0" Grid.Column="0" Content="관리기관" Style="{DynamicResource ResourceKey=HeadLabel}"/>
+            <dxe:ComboBoxEdit Grid.Row="0" Grid.Column="2" x:Name="cbMNG_CDE" DisplayMember="NM" ValueMember="DTL_CD" Style="{DynamicResource ResourceKey=SrchComboBox}" 
+                                HorizontalAlignment="Center" />
+
+            <Label Grid.Row="1" Grid.Column="0" Content="관리번호" Style="{DynamicResource ResourceKey=HeadLabel}"/>
+            <dxe:TextEdit Grid.Row="1" Grid.Column="2" x:Name="txtFTR_IDN" Style="{DynamicResource ResourceKey=SrchTextEdit}"  HorizontalAlignment="Center" >
                 <dxe:TextEdit.InputBindings>
                     <KeyBinding Key="Enter" Command="{Binding SearchCommand}">
                         <KeyBinding.CommandParameter>
@@ -105,18 +112,10 @@
                 </dxe:TextEdit.InputBindings>
             </dxe:TextEdit>
 
-            <Label Grid.Row="1" Grid.Column="0" Content="행정동" Style="{DynamicResource ResourceKey=HeadLabel}"/>
-            <dxe:ComboBoxEdit Grid.Row="1" Grid.Column="2" x:Name="cbHJD_CDE" Style="{DynamicResource ResourceKey=SrchComboBox}" 
+            <Label Grid.Row="2" Grid.Column="0" Content="행정동" Style="{DynamicResource ResourceKey=HeadLabel}"/>
+            <dxe:ComboBoxEdit Grid.Row="2" Grid.Column="2" x:Name="cbHJD_CDE" Style="{DynamicResource ResourceKey=SrchComboBox}" 
                                 HorizontalAlignment="Center" />
-
-            <Label Grid.Row="2" Grid.Column="0" Content="공사번호" Style="{DynamicResource ResourceKey=HeadLabel}"/>
-            <dxe:TextEdit Grid.Row="2" Grid.Column="2" x:Name="txtCNT_NUM" Style="{DynamicResource ResourceKey=SrchTextEdit}"  HorizontalAlignment="Center" >
-                <dxe:TextEdit.InputBindings>
-                    <KeyBinding Key="Enter" Command="{Binding SearchCommand}">
-                    </KeyBinding>
-                </dxe:TextEdit.InputBindings>
-            </dxe:TextEdit>
-
+            
             <Label Grid.Row="3" Grid.Column="0" Content="도엽번호" Style="{DynamicResource ResourceKey=HeadLabel}"/>
             <dxe:TextEdit Grid.Row="3" Grid.Column="2" x:Name="txtSHT_NUM" Style="{DynamicResource ResourceKey=SrchTextEdit}"  HorizontalAlignment="Center" >
                 <dxe:TextEdit.InputBindings>
@@ -126,37 +125,40 @@
             </dxe:TextEdit>
 
             <Label Grid.Row="4" Grid.Column="0" Content="준공일자[이상]" Style="{DynamicResource ResourceKey=HeadLabel}"/>
-            <dxe:DateEdit  Grid.Row="4" Grid.Column="2" Style="{DynamicResource ResourceKey=HeadDateEdit}" x:Name="dtIST_YMD_FROM" >
+            <dxe:DateEdit  Grid.Row="4" Grid.Column="2" Style="{DynamicResource ResourceKey=HeadDateEdit}" x:Name="dtFNS_YMD_FROM" >
             </dxe:DateEdit>
 
-
             <Label Grid.Row="5" Grid.Column="0" Content="준공일자[이하]" Style="{DynamicResource ResourceKey=HeadLabel}"/>
-            <dxe:DateEdit  Grid.Row="5" Grid.Column="2" Style="{DynamicResource ResourceKey=HeadDateEdit}" x:Name="dtIST_YMD_TO" />
+            <dxe:DateEdit  Grid.Row="5" Grid.Column="2" Style="{DynamicResource ResourceKey=HeadDateEdit}" x:Name="dtFNS_YMD_TO" />
 
-            <Label Grid.Row="6" Grid.Column="0" Content="수용가번호" Style="{DynamicResource ResourceKey=HeadLabel}"/>
-            <dxe:TextEdit Grid.Row="6" Grid.Column="2" x:Name="txtHOM_NUM" Style="{DynamicResource ResourceKey=SrchTextEdit}"  HorizontalAlignment="Center" >
+            <Label Grid.Row="6" Grid.Column="0" Content="허가일자" Style="{DynamicResource ResourceKey=HeadLabel}"/>
+            <dxe:DateEdit  Grid.Row="6" Grid.Column="2" Style="{DynamicResource ResourceKey=HeadDateEdit}" x:Name="dtPMS_YMD" />
+           
+            <Label Grid.Row="7" Grid.Column="0" Content="저주소명" Style="{DynamicResource ResourceKey=HeadLabel}"/>
+            <dxe:TextEdit Grid.Row="7" Grid.Column="2" x:Name="txtRSR_NAM" Style="{DynamicResource ResourceKey=SrchTextEdit}"  HorizontalAlignment="Center" >
                 <dxe:TextEdit.InputBindings>
                     <KeyBinding Key="Enter" Command="{Binding SearchCommand}">
                     </KeyBinding>
                 </dxe:TextEdit.InputBindings>
             </dxe:TextEdit>
 
-            <Label Grid.Row="7" Grid.Column="0" Content="수용가성명" Style="{DynamicResource ResourceKey=HeadLabel}"/>
-            <dxe:TextEdit Grid.Row="7" Grid.Column="2" x:Name="txtHOM_NAM" Style="{DynamicResource ResourceKey=SrchTextEdit}"  HorizontalAlignment="Center" >
+            <Label Grid.Row="8" Grid.Column="0" Content="관리자" Style="{DynamicResource ResourceKey=HeadLabel}"/>
+            <dxe:TextEdit Grid.Row="8" Grid.Column="2" x:Name="txtMNG_NAM" Style="{DynamicResource ResourceKey=SrchTextEdit}"  HorizontalAlignment="Center" >
                 <dxe:TextEdit.InputBindings>
                     <KeyBinding Key="Enter" Command="{Binding SearchCommand}">
                     </KeyBinding>
                 </dxe:TextEdit.InputBindings>
             </dxe:TextEdit>
 
-            <Label Grid.Row="8" Grid.Column="0" Content="수용행정동" Style="{DynamicResource ResourceKey=HeadLabel}"/>
-            <dxe:ComboBoxEdit Grid.Row="8" Grid.Column="2" x:Name="cbHOM_CDE" Style="{DynamicResource ResourceKey=SrchComboBox}" 
-                                HorizontalAlignment="Center" />
+            <Label Grid.Row="9" Grid.Column="0" Content="건물주소" Style="{DynamicResource ResourceKey=HeadLabel}"/>
+            <dxe:TextEdit Grid.Row="9" Grid.Column="2" x:Name="txtBLD_ADR" Style="{DynamicResource ResourceKey=SrchTextEdit}"  HorizontalAlignment="Center" >
+                <dxe:TextEdit.InputBindings>
+                    <KeyBinding Key="Enter" Command="{Binding SearchCommand}">
+                    </KeyBinding>
+                </dxe:TextEdit.InputBindings>
+            </dxe:TextEdit>
 
-            <Label Grid.Row="9" Grid.Column="0" Content="형식" Style="{DynamicResource ResourceKey=HeadLabel}"/>
-            <dxe:ComboBoxEdit Grid.Row="9" Grid.Column="2" x:Name="cbMOF_CDE" Style="{DynamicResource ResourceKey=SrchComboBox}" 
-                                HorizontalAlignment="Center" />
-
+            <Label Grid.Row="10" Grid.Column="0" Content="" Style="{DynamicResource ResourceKey=HeadLabel}"/>
 
         </Grid>
 
@@ -252,7 +254,13 @@
                     <dxe:TextEditSettings HorizontalContentAlignment="Center"/>
                 </dxg:GridColumn.EditSettings>
             </dxg:GridColumn>
-           
+
+            <dxg:GridColumn Header="관리기관" Width="130" FieldName="MNG_CDE_NAM" HorizontalHeaderContentAlignment="Center">
+                <dxg:GridColumn.EditSettings>
+                    <dxe:TextEditSettings HorizontalContentAlignment="Center"/>
+                </dxg:GridColumn.EditSettings>
+            </dxg:GridColumn>
+
             <dxg:GridColumn Header="관리번호" Width="70" FieldName="FTR_IDN" HorizontalHeaderContentAlignment="Center">
                 <dxg:GridColumn.EditSettings>
                     <dxe:TextEditSettings HorizontalContentAlignment="Center"/>
@@ -265,43 +273,43 @@
                 </dxg:GridColumn.EditSettings>
             </dxg:GridColumn>
 
-            <dxg:GridColumn Header="공사번호" Width="100" FieldName="CNT_NUM" HorizontalHeaderContentAlignment="Center">
-                <dxg:GridColumn.EditSettings>
-                    <dxe:TextEditSettings HorizontalContentAlignment="Center"/>
-                </dxg:GridColumn.EditSettings>
-            </dxg:GridColumn>
-
             <dxg:GridColumn Header="도엽번호" Width="100" FieldName="SHT_NUM" HorizontalHeaderContentAlignment="Center">
                 <dxg:GridColumn.EditSettings>
                     <dxe:TextEditSettings HorizontalContentAlignment="Center"/>
                 </dxg:GridColumn.EditSettings>
             </dxg:GridColumn>
 
-            <dxg:GridColumn Header="준공일자" Width="90" FieldName="IST_YMD" HorizontalHeaderContentAlignment="Center">
+            <dxg:GridColumn Header="준공일자" Width="90" FieldName="FNS_YMD" HorizontalHeaderContentAlignment="Center">
                 <dxg:GridColumn.EditSettings>
                     <dxe:TextEditSettings HorizontalContentAlignment="Center"/>
                 </dxg:GridColumn.EditSettings>
             </dxg:GridColumn>
 
-            <dxg:GridColumn Header="수용가번호" Width="100" FieldName="HOM_NUM" HorizontalHeaderContentAlignment="Center">
+            <dxg:GridColumn Header="허가일자" Width="100" FieldName="PMS_YMD" HorizontalHeaderContentAlignment="Center">
                 <dxg:GridColumn.EditSettings>
                     <dxe:TextEditSettings HorizontalContentAlignment="Center"/>
                 </dxg:GridColumn.EditSettings>
             </dxg:GridColumn>
 
-            <dxg:GridColumn Header="수용가성명" Width="100" FieldName="HOM_NAM" HorizontalHeaderContentAlignment="Center">
-                <dxg:GridColumn.EditSettings>
-                    <dxe:TextEditSettings HorizontalContentAlignment="Center"/>
-                </dxg:GridColumn.EditSettings>
-            </dxg:GridColumn>
-
-            <dxg:GridColumn Header="수용행정동" Width="50" FieldName="HOM_CDE_NAM" HorizontalHeaderContentAlignment="Center">
+            <dxg:GridColumn Header="저수조명" Width="100" FieldName="RSR_NAM" HorizontalHeaderContentAlignment="Center">
                 <dxg:GridColumn.EditSettings>
                     <dxe:TextEditSettings HorizontalContentAlignment="Left"/>
                 </dxg:GridColumn.EditSettings>
             </dxg:GridColumn>
 
-            <dxg:GridColumn Header="형식" Width="100" FieldName="MOF_NAM" HorizontalHeaderContentAlignment="Center">
+            <dxg:GridColumn Header="관리자" Width="50" FieldName="MNG_NAM" HorizontalHeaderContentAlignment="Center">
+                <dxg:GridColumn.EditSettings>
+                    <dxe:TextEditSettings HorizontalContentAlignment="Center"/>
+                </dxg:GridColumn.EditSettings>
+            </dxg:GridColumn>
+
+            <dxg:GridColumn Header="건물주소" Width="100" FieldName="BLD_ADR" HorizontalHeaderContentAlignment="Center">
+                <dxg:GridColumn.EditSettings>
+                    <dxe:TextEditSettings HorizontalContentAlignment="Left"/>
+                </dxg:GridColumn.EditSettings>
+            </dxg:GridColumn>
+
+            <dxg:GridColumn Header="소유자" Width="50" FieldName="OWN_NAM" HorizontalHeaderContentAlignment="Center">
                 <dxg:GridColumn.EditSettings>
                     <dxe:TextEditSettings HorizontalContentAlignment="Left"/>
                 </dxg:GridColumn.EditSettings>
@@ -338,7 +346,7 @@
             <i:InvokeCommandAction Command="{Binding LoadedCommand}">
                 <i:InvokeCommandAction.CommandParameter>
                     <MultiBinding Converter="{StaticResource multiValueConverter}">
-                        <Binding ElementName="hydtMetrListView"/>
+                        <Binding ElementName="wtrTrkListView"/>
                     </MultiBinding>
                 </i:InvokeCommandAction.CommandParameter>
             </i:InvokeCommandAction>

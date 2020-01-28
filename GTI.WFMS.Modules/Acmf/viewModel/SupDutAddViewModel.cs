@@ -14,7 +14,7 @@ using System.Windows.Controls;
 
 namespace GTI.WFMS.Modules.Acmf.ViewModel
 {
-    public class HydtMetrAddViewModel : HydtMetrDtl
+    public class SupDutAddViewModel : SupDutDtl
     {
 
 
@@ -31,13 +31,13 @@ namespace GTI.WFMS.Modules.Acmf.ViewModel
 
 
         #region ==========  Member 정의 ==========
-        HydtMetrAddView hydtMetrAddView;
-        ComboBoxEdit cbFTR_CDE; DataTable dtFTR_CDE = new DataTable();	    //지형지물
+        SupDutAddView supDutAddView;
+        //ComboBoxEdit cbFTR_CDE; DataTable dtFTR_CDE = new DataTable();	//지형지물
         ComboBoxEdit cbHJD_CDE; DataTable dtHJD_CDE = new DataTable();		//행정동
-        ComboBoxEdit cbHOM_CDE; DataTable dtHOM_CDE = new DataTable();      //수용가행정동
-        ComboBoxEdit cbSBI_CDE; DataTable dtSBI_CDE = new DataTable();      //업종
-        ComboBoxEdit cbMOF_CDE; DataTable dtMOF_CDE = new DataTable();      //형식
-
+        ComboBoxEdit cbMNG_CDE; DataTable dtMNG_CDE = new DataTable();      //관리기관
+        ComboBoxEdit cbSAA_CDE; DataTable dtSAA_CDE = new DataTable();      //관용도
+        ComboBoxEdit cbJHT_CDE; DataTable dtJHT_CDE = new DataTable();      //접합종류
+        
 
         Button btnBack;
         Button btnSave;
@@ -48,7 +48,7 @@ namespace GTI.WFMS.Modules.Acmf.ViewModel
 
 
         /// 생성자
-        public HydtMetrAddViewModel()
+        public SupDutAddViewModel()
         {
             this.LoadedCommand = new DelegateCommand<object>(OnLoaded);
             this.SaveCommand = new DelegateCommand<object>(OnSave);
@@ -74,15 +74,15 @@ namespace GTI.WFMS.Modules.Acmf.ViewModel
                 if (obj == null) return;
                 var values = (object[])obj;
 
-                hydtMetrAddView = values[0] as HydtMetrAddView;
-                cbFTR_CDE = hydtMetrAddView.cbFTR_CDE;     //지형지물
-                cbHJD_CDE = hydtMetrAddView.cbHJD_CDE;       //행정동
-                cbHOM_CDE = hydtMetrAddView.cbHOM_CDE;       //수용가행정동
-                cbSBI_CDE = hydtMetrAddView.cbSBI_CDE;       //업종
-                cbMOF_CDE = hydtMetrAddView.cbMOF_CDE;       //형식
+                supDutAddView = values[0] as SupDutAddView;
+               // cbFTR_CDE = supDutAddView.cbFTR_CDE;     //지형지물
+                cbHJD_CDE = supDutAddView.cbHJD_CDE;       //행정동
+                cbMNG_CDE = supDutAddView.cbMNG_CDE;       //관리기관
+                cbSAA_CDE = supDutAddView.cbSAA_CDE;       //관용도
+                cbJHT_CDE = supDutAddView.cbJHT_CDE;       //접합종류
 
-                btnBack = hydtMetrAddView.btnBack;
-                btnSave = hydtMetrAddView.btnSave;
+                btnBack = supDutAddView.btnBack;
+                btnSave = supDutAddView.btnSave;
 
                 //2.화면데이터객체 초기화
                 InitDataBinding();
@@ -93,15 +93,15 @@ namespace GTI.WFMS.Modules.Acmf.ViewModel
 
                 // 4.초기조회 - 신규관리번호 채번
                 Hashtable param = new Hashtable();
-                param.Add("sqlId", "SelectHydtMetrFTR_IDN");
+                param.Add("sqlId", "SelectSupDutFTR_IDN");
 
-                HydtMetrDtl result = new HydtMetrDtl();
-                result = BizUtil.SelectObject(param) as HydtMetrDtl;
+                SupDutDtl result = new SupDutDtl();
+                result = BizUtil.SelectObject(param) as SupDutDtl;
 
 
                 //채번결과 매칭
                 this.FTR_IDN = result.FTR_IDN;
-                this.FTR_CDE = "SA113";
+                this.FTR_CDE = "SA002";
 
                 this.IST_YMD = Convert.ToDateTime(DateTime.Today).ToString("yyyy-MM-dd");
             }
@@ -115,21 +115,21 @@ namespace GTI.WFMS.Modules.Acmf.ViewModel
 
 
         /// <summary>
-        /// 저장작업
+        /// 저장작업IST_YMD
         /// </summary>
         /// <param name="obj"></param>
         private void OnSave(object obj)
         {
 
             // 필수체크 (Tag에 필수체크 표시한 EditBox, ComboBox 대상으로 수행)
-            if (!BizUtil.ValidReq(hydtMetrAddView)) return;
+            if (!BizUtil.ValidReq(supDutAddView)) return;
 
 
             if (Messages.ShowYesNoMsgBox("저장하시겠습니까?") != MessageBoxResult.Yes) return;
 
             try
             {
-                BizUtil.Update2(this, "insertHydtMetrDtl");
+                BizUtil.Update2(this, "insertSupDutDtl");
             }
             catch (Exception e)
             {
@@ -166,19 +166,19 @@ namespace GTI.WFMS.Modules.Acmf.ViewModel
             try
             {
                 // cbFTR_CDE 지형지물
-                BizUtil.SetCombo(cbFTR_CDE, "Select_FTR_LIST", "FTR_CDE", "FTR_NAM", false);
+                //BizUtil.SetCombo(cbFTR_CDE, "Select_FTR_LIST", "FTR_CDE", "FTR_NAM", false);
 
                 // cbHJD_CDE 행정동
                 BizUtil.SetCombo(cbHJD_CDE, "Select_ADAR_LIST", "HJD_CDE", "HJD_NAM", true);
 
-                // cbHOM_CDE 수용가행정동
-                BizUtil.SetCombo(cbHOM_CDE, "Select_ADAR_LIST", "HJD_CDE", "HJD_NAM", true);
+                // cbMNG_CDE 관리기관
+                BizUtil.SetCmbCode(cbMNG_CDE, "MNG_CDE", true);
+                
+                // cbSAA_CDE 관용도
+                BizUtil.SetCmbCode(cbSAA_CDE, "SAA_CDE", true);
 
-                // cbSBI_CDE 업종
-                BizUtil.SetCmbCode(cbSBI_CDE, "SBI_CDE", true);
-
-                // cbMOF_CDE 형식
-                BizUtil.SetCmbCode(cbMOF_CDE, "MOF_CDE", true, "250035");
+                // cbJHT_CDE 접합종류
+                BizUtil.SetCmbCode(cbJHT_CDE, "JHT_CDE", true);
 
             }
             catch (Exception ex)

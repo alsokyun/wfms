@@ -90,6 +90,30 @@
     <Reference Include="WindowsBase" />
   </ItemGroup>
   <ItemGroup>
+    <Page Include="Acmf\view\WtrTrkAddView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Acmf\view\SupDutAddView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Acmf\view\WtrTrkDtlView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Acmf\view\SupDutDtlView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Acmf\view\WtrTrkListView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Acmf\view\SupDutListView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
     <Page Include="Acmf\view\HydtMetrAddView.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -340,9 +364,33 @@
     </Page>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Acmf\viewModel\WtrTrkAddViewModel.cs" />
+    <Compile Include="Acmf\viewModel\SupDutAddViewModel.cs" />
+    <Compile Include="Acmf\viewModel\WtrTrkDtlViewModel.cs" />
+    <Compile Include="Acmf\viewModel\SupDutDtlViewModel.cs" />
+    <Compile Include="Acmf\viewModel\WtrTrkListViewModel.cs" />
+    <Compile Include="Acmf\viewModel\SupDutListViewModel.cs" />
     <Compile Include="Acmf\viewModel\HydtMetrAddViewModel.cs" />
     <Compile Include="Acmf\viewModel\HydtMetrDtlViewModel.cs" />
     <Compile Include="Acmf\viewModel\HydtMetrListViewModel.cs" />
+    <Compile Include="Acmf\view\WtrTrkAddView.xaml.cs">
+      <DependentUpon>WtrTrkAddView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Acmf\view\SupDutAddView.xaml.cs">
+      <DependentUpon>SupDutAddView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Acmf\view\WtrTrkDtlView.xaml.cs">
+      <DependentUpon>WtrTrkDtlView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Acmf\view\SupDutDtlView.xaml.cs">
+      <DependentUpon>SupDutDtlView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Acmf\view\WtrTrkListView.xaml.cs">
+      <DependentUpon>WtrTrkListView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Acmf\view\SupDutListView.xaml.cs">
+      <DependentUpon>SupDutListView.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Acmf\view\HydtMetrAddView.xaml.cs">
       <DependentUpon>HydtMetrAddView.xaml</DependentUpon>
     </Compile>
