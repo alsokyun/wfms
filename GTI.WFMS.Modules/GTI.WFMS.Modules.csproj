@@ -90,6 +90,18 @@
     <Reference Include="WindowsBase" />
   </ItemGroup>
   <ItemGroup>
+    <Page Include="Acmf\view\HydtMetrAddView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Acmf\view\HydtMetrDtlView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Acmf\view\HydtMetrListView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
     <Page Include="Adm\View\Page1.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -320,6 +332,18 @@
     </Page>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Acmf\viewModel\HydtMetrAddViewModel.cs" />
+    <Compile Include="Acmf\viewModel\HydtMetrDtlViewModel.cs" />
+    <Compile Include="Acmf\viewModel\HydtMetrListViewModel.cs" />
+    <Compile Include="Acmf\view\HydtMetrAddView.xaml.cs">
+      <DependentUpon>HydtMetrAddView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Acmf\view\HydtMetrDtlView.xaml.cs">
+      <DependentUpon>HydtMetrDtlView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Acmf\view\HydtMetrListView.xaml.cs">
+      <DependentUpon>HydtMetrListView.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Adm\Model\SelectUser.cs" />
     <Compile Include="Adm\ViewModel\UcCodeMngViewModel.cs" />
     <Compile Include="Adm\ViewModel\UcPageViewModel.cs" />
