@@ -135,5 +135,84 @@
       AND ATTA_SEQ=#ATTA_SEQ#
     </update>
 
+
+
+    <!--시설물전체조회-->
+    <select id ="SelectFtrAllList" parameterClass="Hashtable" resultClass ="Hashtable">
+
+      WITH C AS (
+      SELECT COUNT(1) AS ROWCNT
+            
+              FROM V_FTR F
+              LEFT JOIN V_FTR_CDE D ON D.FTR_CDE = F.FTR_CDE
+              LEFT JOIN CMT_ADAR_MA H ON H.HJD_CDE = F.HJD_CDE
+              LEFT JOIN WTT_CONS_MA C ON C.CNT_NUM = F.CNT_NUM
+              WHERE 1=1
+
+              <isNotEmpty prepend="AND" property="FTR_IDN">
+                F.FTR_IDN = #FTR_IDN#
+              </isNotEmpty>
+              <isNotEmpty prepend="AND" property="FTR_CDE">
+                F.FTR_CDE = #FTR_CDE#
+              </isNotEmpty>
+              <isNotEmpty prepend="AND" property="FTR_NAM">
+                D.FTR_NAM LIKE '%' || #FTR_NAM# || '%'
+              </isNotEmpty>
+              <isNotEmpty prepend="AND" property="CNT_NUM">
+                F.CNT_NUM = #CNT_NUM#
+              </isNotEmpty>
+              <isNotEmpty prepend="AND" property="CNT_NAM">
+                C.CNT_NAM LIKE '%' || #CNT_NAM# || '%'
+              </isNotEmpty>
+              <isNotEmpty prepend="AND" property="HJD_CDE">
+                F.HJD_CDE = #HJD_CDE#
+              </isNotEmpty>
+
+      )
+
+      SELECT C.ROWCNT, X.*  FROM (
+
+      SELECT ROW_NUMBER() OVER( ORDER BY F.FTR_CDE, F.FTR_IDN ) AS RN
+      , F.FTR_IDN
+      , F.FTR_CDE, D.FTR_NAM
+      , F.HJD_CDE, H.HJD_NAM
+      , F.CNT_NUM, C.CNT_NAM
+      , F.TAB
+      , null AS CHK
+
+      FROM V_FTR F
+      LEFT JOIN V_FTR_CDE D ON D.FTR_CDE = F.FTR_CDE
+      LEFT JOIN CMT_ADAR_MA H ON H.HJD_CDE = F.HJD_CDE
+      LEFT JOIN WTT_CONS_MA C ON C.CNT_NUM = F.CNT_NUM
+      WHERE 1=1
+
+      <isNotEmpty prepend="AND" property="FTR_IDN">
+              F.FTR_IDN = #FTR_IDN#
+            </isNotEmpty>
+            <isNotEmpty prepend="AND" property="FTR_CDE">
+              F.FTR_CDE = #FTR_CDE#
+            </isNotEmpty>
+            <isNotEmpty prepend="AND" property="FTR_NAM">
+              D.FTR_NAM LIKE '%' || #FTR_NAM# || '%'
+            </isNotEmpty>
+            <isNotEmpty prepend="AND" property="CNT_NUM">
+              F.CNT_NUM = #CNT_NUM#
+            </isNotEmpty>
+            <isNotEmpty prepend="AND" property="CNT_NAM">
+              C.CNT_NAM LIKE '%' || #CNT_NAM# || '%'
+            </isNotEmpty>
+            <isNotEmpty prepend="AND" property="HJD_CDE">
+              F.HJD_CDE = #HJD_CDE#
+            </isNotEmpty>
+
+      ) X JOIN C ON 1=1
+      WHERE RN &lt;= ($page$+1) * $rows$
+      AND RN &gt;= ($page$) * $rows$ + 1
+
+    </select>
+
+
+
+
   </statements>
 </sqlMap>

@@ -41,7 +41,6 @@ namespace GTI.WFMS.Modules.Mntc.ViewModel
         /// Loaded Event
         /// </summary>
         public DelegateCommand<object> LoadedCommand { get; set; }
-        public DelegateCommand<object> SaveCommand { get; set; }
         public DelegateCommand<object> SearchCmd { get; set; }
         public DelegateCommand<object> ChscResCmd { get; set; }
         public DelegateCommand<object> BackCmd { get; set; }
@@ -53,9 +52,11 @@ namespace GTI.WFMS.Modules.Mntc.ViewModel
         #region ==========  Member 정의 ==========
         ChkSchListView chkSchListView;
         ChkSchDtlView chkSchDtlView;
-        ComboBoxEdit cbCRE_YY; DataTable dtCRE_YY;
-        Button btnSave;
-        Button btnClose;
+        ComboBoxEdit cbMNG_CDE; DataTable dtMNG_CDE = new DataTable();
+        ComboBoxEdit cbSCL_CDE; DataTable dtSCL_CDE = new DataTable();
+        ComboBoxEdit cbSCL_STAT_CDE; DataTable dtSCL_STAT_CDE = new DataTable();
+        TextEdit txtTIT_NAM;
+        TextEdit txtCKM_PEO;
 
         List<ChscMaDtl> newChscMaLst = new List<ChscMaDtl>(); //추가된 일정아이템
         List<ChscMaDtl> oldChscMaLst = new List<ChscMaDtl>(); //삭제된 일정아이템
@@ -69,11 +70,21 @@ namespace GTI.WFMS.Modules.Mntc.ViewModel
         public ChkSchListViewModel()
         {
             this.LoadedCommand = new DelegateCommand<object>(OnLoaded);
-            this.SaveCommand = new DelegateCommand<object>(OnSave);
 
+            this.SearchCmd = new DelegateCommand<object>(delegate (object obj) {
+                //재조회
+                InitModel();
+            });
             this.BackCmd = new DelegateCommand<object>(delegate(object obj) {
                 //달력 MonthView로 돌리기
                 chkSchListView.scheduler.ActiveViewIndex = 3; //MonthView
+                cbMNG_CDE.SelectedIndex = 0;
+                cbSCL_CDE.SelectedIndex = 0;
+                cbSCL_STAT_CDE.SelectedIndex = 0;
+                txtTIT_NAM.Text = "";
+                txtCKM_PEO.Text = "";
+                //재조회
+                InitModel();
             });          
             this.ChscResCmd = new DelegateCommand<object>(delegate(object obj) {
                 /*
@@ -83,7 +94,7 @@ namespace GTI.WFMS.Modules.Mntc.ViewModel
                 //0.일정선택체크
                 if(selChscMaDtl is null)
                 {
-                    Messages.ShowInfoMsgBox("등록할 일정을 선택하세요");
+                    Messages.ShowInfoMsgBox("점검일정을 선택하세요");
                     return;
                 }
 
@@ -118,16 +129,16 @@ namespace GTI.WFMS.Modules.Mntc.ViewModel
         /// <param name="obj"></param>
         private void OnLoaded(object obj)
         {
-            //throw new NotImplementedException();
-
             // 0.화면객체인스턴스화
             if (obj == null) return;
 
             chkSchListView = obj as ChkSchListView;
-            //cbCRE_YY = chkSchListView.cbCRE_YY;
-            btnClose = chkSchListView.btnClose;
+            cbMNG_CDE = chkSchListView.cbMNG_CDE;
+            cbSCL_CDE = chkSchListView.cbSCL_CDE;
+            cbSCL_STAT_CDE = chkSchListView.cbSCL_STAT_CDE;
+            txtTIT_NAM = chkSchListView.txtTIT_NAM;
+            txtCKM_PEO = chkSchListView.txtCKM_PEO;
             
-
             //2.화면데이터객체 초기화
             InitDataBinding();
 
@@ -171,10 +182,15 @@ namespace GTI.WFMS.Modules.Mntc.ViewModel
             SaveSchdList();
         }
 
-        // 추가된 데이터의 항목별 이벤트 변경처리
+        /// <summary>
+        /// 추가된 데이터의 항목별 이벤트 변경처리
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         void ChscMaDtl_PropertyChanged(object sender, PropertyChangedEventArgs e)
         {
-            if (e.PropertyName == "STA_YMD" || e.PropertyName == "END_YMD" || e.PropertyName == "TIT_NAM" || e.PropertyName == "CHK_CTNT")
+            if (e.PropertyName == "STA_YMD" || e.PropertyName == "END_YMD" || e.PropertyName == "TIT_NAM" || e.PropertyName == "CHK_CTNT"
+                 || e.PropertyName == "SCL_CDE" || e.PropertyName == "SCL_STAT_CDE")
             {
                 //변경저장
                 ChscMaDtl dtl = sender as ChscMaDtl;
@@ -210,22 +226,6 @@ namespace GTI.WFMS.Modules.Mntc.ViewModel
 
 
         /// <summary>
-        /// 초기조회 및 바인딩
-        /// </summary>
-        private void InitDataBinding()
-        {
-            try
-            {
-
-            }
-            catch (Exception ex)
-            {
-                Messages.ShowErrMsgBoxLog(ex);
-            }
-        }
-
-
-        /// <summary>
         /// 화면 권한처리
         /// </summary>
         private void permissionApply()
@@ -254,7 +254,24 @@ namespace GTI.WFMS.Modules.Mntc.ViewModel
 
 
 
-
+        // 초기조회 및 바인딩
+        private void InitDataBinding()
+        {
+            try
+            {
+                // cbMNG_CDE
+                BizUtil.SetCmbCode(cbMNG_CDE, "MNG_CDE", true);
+                // cbSCL_CDE
+                BizUtil.SetCmbCode(cbSCL_CDE, "SCL_CDE", true);
+                // cbSCL_STAT_CDE
+                BizUtil.SetCmbCode(cbSCL_STAT_CDE, "SCL_STAT_CDE", true);
+                
+            }
+            catch (Exception e)
+            {
+                Messages.ShowErrMsgBox(e.ToString());
+            }
+        }
 
 
         // 초기조회
@@ -274,7 +291,12 @@ namespace GTI.WFMS.Modules.Mntc.ViewModel
             //점검스케줄
             Hashtable param = new Hashtable();
             param.Add("sqlId", "SelectChscMaList");
-
+            param.Add("MNG_CDE", cbMNG_CDE.EditValue.ToString().Trim());
+            param.Add("SCL_CDE", cbSCL_CDE.EditValue.ToString().Trim());
+            param.Add("SCL_STAT_CDE", cbSCL_STAT_CDE.EditValue.ToString().Trim());
+            param.Add("TIT_NAM", txtTIT_NAM.Text.Trim());
+            param.Add("CKM_PEO", txtCKM_PEO.Text.Trim());
+            
             ChscMaLst = new ObservableCollection<ChscMaDtl>(BizUtil.SelectListObj<ChscMaDtl>(param));
             //기존목록 이벤트핸들러 등록
             /*
@@ -321,35 +343,6 @@ namespace GTI.WFMS.Modules.Mntc.ViewModel
             //InitModel();
         }
 
-
-        /// <summary>
-        /// 저장작업
-        /// </summary>
-        /// <param name="obj"></param>
-        private void OnSave(object obj)
-        {
-
-            // 필수체크 (Tag에 필수체크 표시한 EditBox, ComboBox 대상으로 수행)
-            if (!BizUtil.ValidReq(chkSchListView)) return;
-
-
-            if (Messages.ShowYesNoMsgBox("저장하시겠습니까?") != MessageBoxResult.Yes) return;
-
-            try
-            {
-                //BizUtil.Update2(this, "SaveWttAttaDt");
-            }
-            catch (Exception e)
-            {
-                Messages.ShowErrMsgBox("저장 처리중 오류가 발생하였습니다.");
-                return;
-            }
-
-            Messages.ShowOkMsgBox();
-            //화면닫기
-            btnClose.RaiseEvent(new RoutedEventArgs(Button.ClickEvent));
-
-        }
         #endregion
 
 

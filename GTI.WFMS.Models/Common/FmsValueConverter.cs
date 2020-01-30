@@ -121,7 +121,7 @@ namespace GTI.WFMS.Models.Common
             }
             catch (Exception)
             {
-                return value;
+                return null;
             }
         }
 
