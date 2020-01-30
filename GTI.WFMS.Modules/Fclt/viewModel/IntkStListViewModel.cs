@@ -315,7 +315,7 @@ namespace GTI.WFMS.Modules.Fclt.ViewModel
             cbMNG_CDE.SelectedIndex = 0;
             cbHJD_CDE.SelectedIndex = 0;
             cbWSR_CDE.SelectedIndex = 0;
-            cbWSR_CDE.SelectedIndex = 0;           
+            cbWRW_CDE.SelectedIndex = 0;           
 
             txtFTR_IDN.Text = "";
             txtCNT_NUM.Text = "";
@@ -342,6 +342,7 @@ namespace GTI.WFMS.Modules.Fclt.ViewModel
                 conditions.Add("MNG_CDE", cbMNG_CDE.EditValue.ToString().Trim());
                 conditions.Add("HJD_CDE", cbHJD_CDE.EditValue.ToString().Trim());
                 conditions.Add("WSR_CDE", cbWSR_CDE.EditValue.ToString().Trim());
+                conditions.Add("WRW_CDE", cbWRW_CDE.EditValue.ToString().Trim());
 
                 conditions.Add("FTR_IDN", FmsUtil.Trim(txtFTR_IDN.EditValue));
                 conditions.Add("CNT_NUM", txtCNT_NUM.Text.Trim());

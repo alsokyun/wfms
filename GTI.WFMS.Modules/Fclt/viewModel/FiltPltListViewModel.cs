@@ -314,8 +314,7 @@ namespace GTI.WFMS.Modules.Fclt.ViewModel
         {
             cbMNG_CDE.SelectedIndex = 0;
             cbHJD_CDE.SelectedIndex = 0;
-            cbWSR_CDE.SelectedIndex = 0;
-            cbWSR_CDE.SelectedIndex = 0;           
+            cbWSR_CDE.SelectedIndex = 0;        
 
             txtFTR_IDN.Text = "";
             txtCNT_NUM.Text = "";

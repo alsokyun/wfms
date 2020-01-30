@@ -112,7 +112,6 @@ namespace GTI.WFMS.Modules.Fclt.ViewModel
         ComboBoxEdit cbMNG_CDE; DataTable dtMNG_CDE = new DataTable();
         ComboBoxEdit cbHJD_CDE; DataTable dtHJD_CDE = new DataTable();
         ComboBoxEdit cbSAG_CDE; DataTable dsSAG_CDE = new DataTable();
-        ComboBoxEdit cbWRW_CDE; DataTable dsWRW_CDE = new DataTable();
 
         TextEdit txtFTR_IDN;
         TextEdit txtCNT_NUM;
@@ -200,7 +199,6 @@ namespace GTI.WFMS.Modules.Fclt.ViewModel
             cbMNG_CDE = prsPmpListView.cbMNG_CDE;      //0.관리기관
             cbHJD_CDE = prsPmpListView.cbHJD_CDE;      //2.행정동
             cbSAG_CDE = prsPmpListView.cbSAG_CDE;      //8.관리방법
-            
 
             txtFTR_IDN = prsPmpListView.txtFTR_IDN;    //1.관리번호           
             txtCNT_NUM = prsPmpListView.txtCNT_NUM;    //3.공사번호

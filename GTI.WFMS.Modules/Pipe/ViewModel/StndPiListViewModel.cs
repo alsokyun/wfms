@@ -372,7 +372,7 @@ namespace GTI.WFMS.Modules.Pipe.ViewModel
                 saveFileDialog.Title = "저장경로를 지정하세요.";
 
                 //초기 파일명 지정
-                saveFileDialog.FileName = DateTime.Now.ToString("yyyyMMdd") + "_" + "유량계목록.xlsx";
+                saveFileDialog.FileName = DateTime.Now.ToString("yyyyMMdd") + "_" + "스탠드파이프목록.xlsx";
 
                 saveFileDialog.OverwritePrompt = true;
                 saveFileDialog.Filter = "Excel|*.xlsx";
@@ -424,7 +424,7 @@ namespace GTI.WFMS.Modules.Pipe.ViewModel
 
                 //엑셀 유틸 호출
                 //ExcelUtil.ExcelTabulation(strFileName, strExcelFormPath, startPointXY, strSearchCondition, dtExceltTableData);
-                ExcelUtil.ExcelGrid(strExcelFormPath, strFileName, "유량계목록", dtExceltTableData, tablePointXY, grid, true);
+                ExcelUtil.ExcelGrid(strExcelFormPath, strFileName, "스탠드파이프목록", dtExceltTableData, tablePointXY, grid, true);
 
                 stndPiListView.Dispatcher.Invoke(DispatcherPriority.ApplicationIdle,
                    new Action((delegate ()
@@ -537,7 +537,7 @@ namespace GTI.WFMS.Modules.Pipe.ViewModel
 
 
             string name_space = "GTI.WFMS.Modules.Pipe.Model";
-            string class_name = "ValvFacDtl";
+            string class_name = "StndPiDtl";
 
             Hashtable param = new Hashtable();
             param.Add("sqlId", "SelectStndPiList");

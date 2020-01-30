@@ -536,7 +536,7 @@ namespace GTI.WFMS.Modules.Pipe.ViewModel
 
 
             string name_space = "GTI.WFMS.Modules.Pipe.Model";
-            string class_name = "ValvFacDtl";
+            string class_name = "WtsMnhoDtl";
 
             Hashtable param = new Hashtable();
             param.Add("sqlId", "SelectWtsMnhoDtl");

@@ -35,7 +35,7 @@ namespace GTI.WFMS.Modules.Pipe.ViewModel
         WtsMnhoDtlView wtsMnhoDtlView;
       
         //ComboBoxEdit cbFTR_CDE; DataTable dtFTR_CDE = new DataTable();	//지형지물
-        //ComboBoxEdit cbHJD_CDE; DataTable dtHJD_CDE = new DataTable();	//행정동
+        ComboBoxEdit cbHJD_CDE; DataTable dtHJD_CDE = new DataTable();	//행정동
         ComboBoxEdit cbMNG_CDE; DataTable dtMNG_CDE = new DataTable();		//관리기관
         ComboBoxEdit cbSOM_CDE; DataTable dtSOM_CDE = new DataTable();      //맨홀종류
         ComboBoxEdit cbMHS_CDE; DataTable dtMHS_CDE = new DataTable();      //맨홀종류
@@ -75,7 +75,7 @@ namespace GTI.WFMS.Modules.Pipe.ViewModel
 
                 wtsMnhoDtlView = values[0] as WtsMnhoDtlView;
                 //cbFTR_CDE = wtsMnhoDtlView.cbFTR_CDE;     //지형지물
-                //cbHJD_CDE = wtsMnhoDtlView.cbHJD_CDE;     //행정동
+                cbHJD_CDE = wtsMnhoDtlView.cbHJD_CDE;     //행정동
                 cbMNG_CDE = wtsMnhoDtlView.cbMNG_CDE;       //관리기관
                 cbSOM_CDE = wtsMnhoDtlView.cbSOM_CDE;       //맨홀종류
                 cbMHS_CDE = wtsMnhoDtlView.cbMHS_CDE;       //맨홀형태
@@ -257,11 +257,10 @@ namespace GTI.WFMS.Modules.Pipe.ViewModel
                 //BizUtil.SetCombo(cbFTR_CDE, "Select_FTR_LIST", "FTR_CDE", "FTR_NAM", false);
 
                 // cbHJD_CDE 행정동
-                // BizUtil.SetCombo(cbHJD_CDE, "Select_ADAR_LIST", "HJD_CDE", "HJD_NAM", true);
+                BizUtil.SetCombo(cbHJD_CDE, "Select_ADAR_LIST", "HJD_CDE", "HJD_NAM", true);
 
                 // cbMNG_CDE 관리기관
                 BizUtil.SetCmbCode(cbMNG_CDE, "MNG_CDE", true);
-
 
                 // cbSOM_CDE 맨홀종류
                 BizUtil.SetCmbCode(cbSOM_CDE, "SOM_CDE", true);

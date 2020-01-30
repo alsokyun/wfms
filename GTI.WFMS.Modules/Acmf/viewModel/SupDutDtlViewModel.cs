@@ -1,7 +1,7 @@
 ﻿using DevExpress.Xpf.Editors;
 using GTI.WFMS.Models.Common;
-using GTI.WFMS.Models.Pipe.Model;
-using GTI.WFMS.Modules.Pipe.View;
+using GTI.WFMS.Models.Acmf.Model;
+using GTI.WFMS.Modules.Acmf.View;
 using GTIFramework.Common.Log;
 using GTIFramework.Common.MessageBox;
 using Prism.Commands;
@@ -12,9 +12,9 @@ using System.Reflection;
 using System.Windows;
 using System.Windows.Controls;
 
-namespace GTI.WFMS.Modules.Pipe.ViewModel
+namespace GTI.WFMS.Modules.Acmf.ViewModel
 {
-    public class FireFacDtlViewModel : FireFacDtl
+    public class SupDutDtlViewModel : SupDutDtl
     {
 
 
@@ -32,13 +32,14 @@ namespace GTI.WFMS.Modules.Pipe.ViewModel
 
 
         #region ==========  Member 정의 ==========
-        FireFacDtlView valvFacDtlView;
+        SupDutDtlView supDutDtlView;
       
-        //ComboBoxEdit cbFTR_CDE; DataTable dtFTR_CDE = new DataTable();		//지형지물
-        ComboBoxEdit cbHJD_CDE; DataTable dtHJD_CDE = new DataTable();		//행정동
+        //ComboBoxEdit cbFTR_CDE; DataTable dtFTR_CDE = new DataTable();	//지형지물
+        ComboBoxEdit cbHJD_CDE; DataTable dtHJD_CDE = new DataTable();	    //행정동
         ComboBoxEdit cbMNG_CDE; DataTable dtMNG_CDE = new DataTable();		//관리기관
-        ComboBoxEdit cbMOF_CDE; DataTable dtMOF_CDE = new DataTable();		//형식
-        
+        ComboBoxEdit cbSAA_CDE; DataTable dtSAA_CDE = new DataTable();      //관용도
+        ComboBoxEdit cbJHT_CDE; DataTable dtJHT_CDE = new DataTable();      //접합종류
+
         Button btnBack;
         Button btnDelete;
         Button btnSave;
@@ -49,7 +50,7 @@ namespace GTI.WFMS.Modules.Pipe.ViewModel
 
 
         /// 생성자
-        public FireFacDtlViewModel()
+        public SupDutDtlViewModel()
         {
             this.LoadedCommand = new DelegateCommand<object>(OnLoaded);
             this.SaveCommand = new DelegateCommand<object>(OnSave);
@@ -57,11 +58,7 @@ namespace GTI.WFMS.Modules.Pipe.ViewModel
             this.BackCommand = new DelegateCommand<object>(OnBack);
             
         }
-
-
-
-
-
+        
         #region ==========  이벤트 핸들러 ==========
 
         /// <summary>
@@ -76,16 +73,16 @@ namespace GTI.WFMS.Modules.Pipe.ViewModel
                 if (obj == null) return;
                 var values = (object[])obj;
 
-                valvFacDtlView = values[0] as FireFacDtlView;
+                supDutDtlView = values[0] as SupDutDtlView;
+                //cbFTR_CDE = supDutDtlView.cbFTR_CDE;     //지형지물
+                cbHJD_CDE = supDutDtlView.cbHJD_CDE;     //행정동
+                cbMNG_CDE = supDutDtlView.cbMNG_CDE;       //관리기관
+                cbSAA_CDE = supDutDtlView.cbSAA_CDE;       //관용도
+                cbJHT_CDE = supDutDtlView.cbJHT_CDE;       //접합종류
 
-                //cbFTR_CDE = valvFacDtlView.cbFTR_CDE;   //지형지물
-                cbHJD_CDE = valvFacDtlView.cbHJD_CDE;   //행정동
-                cbMNG_CDE = valvFacDtlView.cbMNG_CDE;   //관리기관
-                cbMOF_CDE = valvFacDtlView.cbMOF_CDE;   //형식
-
-                btnBack = valvFacDtlView.btnBack;
-                btnDelete = valvFacDtlView.btnDelete;
-                btnSave = valvFacDtlView.btnSave;
+                btnBack = supDutDtlView.btnBack;
+                btnDelete = supDutDtlView.btnDelete;
+                btnSave = supDutDtlView.btnSave;
                 
                 //2.화면데이터객체 초기화
                 InitDataBinding();
@@ -97,12 +94,12 @@ namespace GTI.WFMS.Modules.Pipe.ViewModel
                 // 4.초기조회
                 //DataTable dt = new DataTable();
                 Hashtable param = new Hashtable();
-                param.Add("sqlId", "SelectFireFacDtl");
+                param.Add("sqlId", "SelectSupDutDtl");
                 param.Add("FTR_CDE", this.FTR_CDE);
                 param.Add("FTR_IDN", this.FTR_IDN);
 
-                FireFacDtl result = new FireFacDtl();
-                result = BizUtil.SelectObject(param) as FireFacDtl;
+                SupDutDtl result = new SupDutDtl();
+                result = BizUtil.SelectObject(param) as SupDutDtl;
                                
                 //결과를 뷰모델멤버로 매칭
                 Type dbmodel = result.GetType();
@@ -142,14 +139,14 @@ namespace GTI.WFMS.Modules.Pipe.ViewModel
         {
 
             // 필수체크 (Tag에 필수체크 표시한 EditBox, ComboBox 대상으로 수행)
-            if (!BizUtil.ValidReq(valvFacDtlView)) return;
+            if (!BizUtil.ValidReq(supDutDtlView)) return;
 
 
             if (Messages.ShowYesNoMsgBox("저장하시겠습니까?") != MessageBoxResult.Yes) return;
 
             try
             {
-                BizUtil.Update2(this, "updateFireFacDtl");
+                BizUtil.Update2(this, "updateSupDutDtl");
             }
             catch (Exception e)
             {
@@ -218,7 +215,7 @@ namespace GTI.WFMS.Modules.Pipe.ViewModel
             if (Messages.ShowYesNoMsgBox("변로를 삭제하시겠습니까?") != MessageBoxResult.Yes) return;
             try
             {
-                BizUtil.Update2(this, "deleteFireFacDtl");
+                BizUtil.Update2(this, "deleteSupDutDtl");
             }
             catch (Exception e)
             {
@@ -265,9 +262,11 @@ namespace GTI.WFMS.Modules.Pipe.ViewModel
                 // cbMNG_CDE 관리기관
                 BizUtil.SetCmbCode(cbMNG_CDE, "MNG_CDE", true);
 
-                // cbMOF_CDE 형식
-                BizUtil.SetCmbCode(cbMOF_CDE, "MOF_CDE", true, "250019");
+                // cbSAA_CDE 관용도
+                BizUtil.SetCmbCode(cbSAA_CDE, "SAA_CDE", true);
 
+                // cbJHT_CDE 접합종류
+                BizUtil.SetCmbCode(cbJHT_CDE, "JHT_CDE", true);
             }
             catch (Exception ex)
             {
