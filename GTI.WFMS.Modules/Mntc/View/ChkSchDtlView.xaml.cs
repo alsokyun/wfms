@@ -32,6 +32,7 @@ namespace GTI.WFMS.Modules.Mntc.View
             ThemeApply.Themeapply(this);
 
             this.SCL_NUM = _SCL_NUM;
+            txtSCL_NUM.EditValue = _SCL_NUM; //뷰의 바인딩을 통해 뷰모델값 변경동기화
 
             //초기조회
             InitMOdel();
@@ -100,15 +101,15 @@ namespace GTI.WFMS.Modules.Mntc.View
                 //FTR_IDN 리턴
                 if (ftrSelView.ShowDialog() is bool)
                 {
-                    //string FTR_IDN = ftrSelView.txtFTR_IDN.Text;
-                    //string FTR_CDE = ftrSelView.txtFTR_CDE.Text;
-                    //string FTR_NAM = ftrSelView.txtFTR_NAM.Text;
-                    //string HJD_NAM = ftrSelView.txtHJD_NAM.Text;
+                    string FTR_IDN = ftrSelView.txtFTR_IDN.Text;
+                    string FTR_CDE = ftrSelView.txtFTR_CDE.Text;
+                    string FTR_NAM = ftrSelView.txtFTR_NAM.Text;
+                    string HJD_NAM = ftrSelView.txtHJD_NAM.Text;
 
-                    string FTR_IDN = "117";
-                    string FTR_CDE = "SA117";
-                    string FTR_NAM = "유량계";
-                    string HJD_NAM = "북정동";
+                    //string FTR_IDN = "117";
+                    //string FTR_CDE = "SA117";
+                    //string FTR_NAM = "유량계";
+                    //string HJD_NAM = "북정동";
 
                     //저장버튼으로 닫힘
                     if (!FmsUtil.IsNull(FTR_IDN))
@@ -318,7 +319,7 @@ namespace GTI.WFMS.Modules.Mntc.View
 
             DXTabItem tab03 = new DXTabItem();
             tab03.Header = "주유/오일사용";
-            //tab03.Content = new WttChngDtView(SCL_NUM);
+            tab03.Content = new PdjtHt2View(SCL_NUM, SEL_FTR_CDE, SEL_FTR_IDN, SEL_SEQ);
             tabSubMenu.Items.Add(tab03);
         }
 

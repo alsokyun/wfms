@@ -19,10 +19,10 @@
       , A.STA_YMD
       , A.END_YMD
       , A.CKM_GRP_NM, A.CKM_PEO, A.CHK_CTNT
-      ,case when length(A.CHK_APR_YMD) = 8 then substr(A.CHK_APR_YMD,1,4) || '-' || substr(A.CHK_APR_YMD,5,2) || '-' || substr(A.CHK_APR_YMD,7,2) else '' end  as CHK_APR_YMD
-      ,case when length(A.CHK_APR_USR) = 8 then substr(A.CHK_APR_USR,1,4) || '-' || substr(A.CHK_APR_USR,5,2) || '-' || substr(A.CHK_APR_USR,7,2) else '' end  as CHK_APR_USR
-      ,case when length(A.CHK_CMP_YMD) = 8 then substr(A.CHK_CMP_YMD,1,4) || '-' || substr(A.CHK_CMP_YMD,5,2) || '-' || substr(A.CHK_CMP_YMD,7,2) else '' end  as CHK_CMP_YMD
-      ,case when length(A.CHK_RESULT_YMD) = 8 then substr(A.CHK_RESULT_YMD,1,4) || '-' || substr(A.CHK_RESULT_YMD,5,2) || '-' || substr(A.CHK_RESULT_YMD,7,2) else '' end  as CHK_RESULT_YMD
+      , A.CHK_APR_YMD
+      , A.CHK_APR_USR
+      , A.CHK_CMP_YMD
+      , A.CHK_RESULT_YMD
       , U.USER_NM
       , to_char(A.CRE_YMD,'yyyy-mm-dd') CRE_YMD
       , A.CRE_USR
@@ -30,10 +30,13 @@
       , A.UPD_USR
 
       FROM FMS_CHSC_MA A
-      LEFT JOIN INFOUSER.CD_DTL_INFO C ON A.SCL_STAT_CDE = C.DTL_CD AND C.ETC LIKE 'SCL_STAT_CDE'
-      LEFT JOIN INFOUSER.CD_DTL_INFO C2 ON A.SCL_CDE = C2.DTL_CD AND C2.ETC LIKE 'SCL_CDE'
+      LEFT JOIN INFOUSER.CD_DTL_INFO C ON A.SCL_STAT_CDE = C.DTL_CD AND C.MST_CD = (SELECT MST_CD FROM INFOUSER.CD_MST_INFO WHERE ETC = 'SCL_STAT_CDE')
+      LEFT JOIN INFOUSER.CD_DTL_INFO C2 ON A.SCL_CDE = C2.DTL_CD AND C2.MST_CD = (SELECT MST_CD FROM INFOUSER.CD_MST_INFO WHERE ETC = 'SCL_CDE')
       LEFT JOIN INFOUSER.SYS_USER_INFO U ON A.CRE_USR = U.USER_ID
       WHERE 1=1
+      <isNotEmpty prepend="AND" property="SCL_NUM">
+        A.SCL_NUM = #SCL_NUM#
+      </isNotEmpty>
       <isNotEmpty prepend="AND" property="MNG_CDE">
         A.MNG_CDE LIKE #MNG_CDE#
       </isNotEmpty>
@@ -74,6 +77,9 @@
       <isNotEmpty property="SCL_STAT_CDE">
         ,SCL_STAT_CDE = #SCL_STAT_CDE#
       </isNotEmpty>
+      <isNotEmpty property="SCL_CDE">
+        ,SCL_CDE = #SCL_CDE#
+      </isNotEmpty>
       <isNotEmpty property="MNG_CDE">
         ,MNG_CDE = #MNG_CDE#
       </isNotEmpty>
@@ -95,22 +101,10 @@
       <isNotEmpty property="CHK_CTNT">
         ,CHK_CTNT = #CHK_CTNT#
       </isNotEmpty>
-      <isNotEmpty property="CHK_APR_YMD">
-        ,CHK_APR_YMD = decode(length(#CHK_APR_YMD#), 10, to_char(to_date(#CHK_APR_YMD#, 'yyyy-MM-dd'), 'yyyyMMdd'), '')
-      </isNotEmpty>
-      <isNotEmpty property="CHK_APR_USR">
-        ,CHK_APR_USR = #CHK_APR_USR#
-      </isNotEmpty>
-      <isNotEmpty property="CHK_CMP_YMD">
-        ,CHK_CMP_YMD = decode(length(#CHK_CMP_YMD#), 10, to_char(to_date(#CHK_CMP_YMD#, 'yyyy-MM-dd'), 'yyyyMMdd'), '')
-      </isNotEmpty>
-      <isNotEmpty property="CHK_RESULT_YMD">
-        ,CHK_RESULT_YMD = #CHK_RESULT_YMD#
-      </isNotEmpty>
 
       WHEN NOT MATCHED THEN
       Insert (SCL_NUM, SCL_CDE,SCL_STAT_CDE,MNG_CDE,TIT_NAM,STA_YMD,END_YMD,CKM_GRP_NM,CKM_PEO
-      ,CHK_CTNT,CHK_APR_YMD,CHK_APR_USR,CHK_CMP_YMD,CHK_RESULT_YMD,CRE_YMD,CRE_USR,UPD_YMD,UPD_USR)
+      ,CHK_CTNT,CRE_YMD,CRE_USR,UPD_YMD,UPD_USR)
       values(
       (select nvl(max(SCL_NUM),0)+1 from FMS_CHSC_MA)
       , #SCL_CDE#,	'SCL_STAT_CDE01', #MNG_CDE#, #TIT_NAM#
@@ -118,10 +112,6 @@
       , #END_YMD#
       , #CKM_GRP_NM#
       , #CKM_PEO#, #CHK_CTNT#
-      , decode(length(#CHK_APR_YMD#), 10, to_char(to_date(#CHK_APR_YMD#, 'yyyy-MM-dd'), 'yyyyMMdd'), '')
-      , #CHK_APR_USR#
-      , decode(length(#CHK_CMP_YMD#), 10, to_char(to_date(#CHK_CMP_YMD#, 'yyyy-MM-dd'), 'yyyyMMdd'), '')
-      , #CHK_RESULT_YMD#
       , sysdate, #ID#, sysdate, #ID#)
     </update>
 
@@ -284,6 +274,20 @@
     </select>
 
 
+    
+	<!-- 점검일정 승인-->
+	<update id="UpdateChscMaAppr" parameterClass="GTI.WFMS.Models.Mntc.Model.ChscMaDtl">
+    UPDATE FMS_CHSC_MA
+    SET
+    SCL_STAT_CDE = 'SCLT02'
+    ,CHK_APR_YMD = to_char(sysdate,'yyyymmdd')
+    ,CHK_APR_USR = #ID#
+    ,UPD_YMD = sysdate
+    ,UPD_USR = #ID#
+    WHERE SCL_NUM = #SCL_NUM#
+  </update>
+    
+    
   </statements>
   
 </sqlMap>
