@@ -1,4 +1,5 @@
-﻿using GTI.WFMS.Models.Cmm.Model;
+﻿using DevExpress.DataAccess;
+using GTI.WFMS.Models.Cmm.Model;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -21,7 +22,6 @@ namespace GTI.WFMS.Models.Pipe.Model
                 PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
             }
         }
-
 
 
         /// <summary>                                                                 

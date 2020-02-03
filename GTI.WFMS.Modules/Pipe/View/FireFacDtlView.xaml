@@ -14,7 +14,7 @@
             xmlns:cm="clr-namespace:GTIFramework.Common.Utils.Converters;assembly=GTIFramework"
             xmlns:vm="clr-namespace:GTI.WFMS.Modules.Pipe.ViewModel"
             x:Name="fireFacDtlView"
-            xmlns:cv="clr-namespace:GTI.WFMS.Models.Common;assembly=GTI.WFMS.Models"     
+            xmlns:cv="clr-namespace:GTI.WFMS.Models.Common;assembly=GTI.WFMS.Models"   
       >
 
     <!--뷰와 뷰모델 바인딩-->
@@ -72,7 +72,7 @@
 
 
 
-    <Grid  Background="{DynamicResource PopCOLOR2Brush}" >
+    <Grid  Background="{DynamicResource PopCOLOR2Brush}" x:Name="grdMain">
         <Grid.RowDefinitions>
             <RowDefinition Height="40" />
             <RowDefinition Height="Auto" />
@@ -92,7 +92,7 @@
             <Button x:Name="btnPrint" Style="{DynamicResource ResourceKey=PrintButton}"  >
                 <i:Interaction.Triggers>
                     <i:EventTrigger EventName="Click">
-                        <i:InvokeCommandAction Command="{Binding SearchCommand}">
+                        <i:InvokeCommandAction Command="{Binding PrintCommand}">
                         </i:InvokeCommandAction>
                     </i:EventTrigger>
                 </i:Interaction.Triggers>
