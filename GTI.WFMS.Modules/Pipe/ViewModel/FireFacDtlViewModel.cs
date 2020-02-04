@@ -2,6 +2,7 @@
 using GTI.WFMS.Models.Common;
 using GTI.WFMS.Models.Pipe.Model;
 using GTI.WFMS.Modules.Pipe.View;
+using GTI.WFMS.Modules.Pipe.Report;
 using GTIFramework.Common.Log;
 using GTIFramework.Common.MessageBox;
 using Prism.Commands;
@@ -11,58 +12,54 @@ using System.Data;
 using System.Reflection;
 using System.Windows;
 using System.Windows.Controls;
+using DevExpress.XtraReports.UI;
+using System.Collections.Generic;
 
 namespace GTI.WFMS.Modules.Pipe.ViewModel
 {
-    public class FireFacDtlViewModel : FireFacDtl
+    public class FireFacDtlViewModel : FireFacDtl 
     {
-
-
+       
         #region ==========  Properties 정의 ==========
         /// <summary>
         /// Loaded Event
         /// </summary>
         public DelegateCommand<object> LoadedCommand { get; set; }
         public DelegateCommand<object> SaveCommand { get; set; }
+        public DelegateCommand<object> PrintCommand { get; set; }
         public DelegateCommand<object> DeleteCommand { get; set; }
         public DelegateCommand<object> BackCommand { get; set; }
-
-
+     
         #endregion
 
 
         #region ==========  Member 정의 ==========
-        FireFacDtlView valvFacDtlView;
+        FireFacDtlView fireFacDtlView;
       
-        //ComboBoxEdit cbFTR_CDE; DataTable dtFTR_CDE = new DataTable();		//지형지물
+        //ComboBoxEdit cbFTR_CDE; DataTable dtFTR_CDE = new DataTable();	//지형지물
         ComboBoxEdit cbHJD_CDE; DataTable dtHJD_CDE = new DataTable();		//행정동
         ComboBoxEdit cbMNG_CDE; DataTable dtMNG_CDE = new DataTable();		//관리기관
         ComboBoxEdit cbMOF_CDE; DataTable dtMOF_CDE = new DataTable();		//형식
         
         Button btnBack;
+        Button btnPrint;
         Button btnDelete;
         Button btnSave;
-        
+
         #endregion
-
-
-
-
+                     
         /// 생성자
         public FireFacDtlViewModel()
         {
             this.LoadedCommand = new DelegateCommand<object>(OnLoaded);
             this.SaveCommand = new DelegateCommand<object>(OnSave);
+            this.PrintCommand = new DelegateCommand<object>(OnPrint);
             this.DeleteCommand = new DelegateCommand<object>(OnDelete);
             this.BackCommand = new DelegateCommand<object>(OnBack);
             
         }
-
-
-
-
-
-        #region ==========  이벤트 핸들러 ==========
+                          
+                #region ==========  이벤트 핸들러 ==========
 
         /// <summary>
         /// 로딩작업
@@ -76,20 +73,20 @@ namespace GTI.WFMS.Modules.Pipe.ViewModel
                 if (obj == null) return;
                 var values = (object[])obj;
 
-                valvFacDtlView = values[0] as FireFacDtlView;
+                fireFacDtlView = values[0] as FireFacDtlView;
 
-                //cbFTR_CDE = valvFacDtlView.cbFTR_CDE;   //지형지물
-                cbHJD_CDE = valvFacDtlView.cbHJD_CDE;   //행정동
-                cbMNG_CDE = valvFacDtlView.cbMNG_CDE;   //관리기관
-                cbMOF_CDE = valvFacDtlView.cbMOF_CDE;   //형식
+                //cbFTR_CDE = fireFacDtlView.cbFTR_CDE;   //지형지물
+                cbHJD_CDE = fireFacDtlView.cbHJD_CDE;   //행정동
+                cbMNG_CDE = fireFacDtlView.cbMNG_CDE;   //관리기관
+                cbMOF_CDE = fireFacDtlView.cbMOF_CDE;   //형식
 
-                btnBack = valvFacDtlView.btnBack;
-                btnDelete = valvFacDtlView.btnDelete;
-                btnSave = valvFacDtlView.btnSave;
+                btnBack = fireFacDtlView.btnBack;
+                btnPrint = fireFacDtlView.btnPrint;
+                btnDelete = fireFacDtlView.btnDelete;
+                btnSave = fireFacDtlView.btnSave;
                 
                 //2.화면데이터객체 초기화
-                InitDataBinding();
-
+                InitDataBinding();                             
 
                 //3.권한처리
                 permissionApply();
@@ -142,7 +139,7 @@ namespace GTI.WFMS.Modules.Pipe.ViewModel
         {
 
             // 필수체크 (Tag에 필수체크 표시한 EditBox, ComboBox 대상으로 수행)
-            if (!BizUtil.ValidReq(valvFacDtlView)) return;
+            if (!BizUtil.ValidReq(fireFacDtlView)) return;
 
 
             if (Messages.ShowYesNoMsgBox("저장하시겠습니까?") != MessageBoxResult.Yes) return;
@@ -159,6 +156,61 @@ namespace GTI.WFMS.Modules.Pipe.ViewModel
             Messages.ShowOkMsgBox();
 
         }
+
+        /// <summary>
+        /// 인쇄작업
+        /// </summary>
+        /// <param name="obj"></param>
+        private void OnPrint(object obj)
+        {
+
+            // 필수체크 (Tag에 필수체크 표시한 EditBox, ComboBox 대상으로 수행)
+            //if (!BizUtil.ValidReq(fireFacDtlView)) return;
+
+
+            if (Messages.ShowYesNoMsgBox("인쇄하시겠습니까?") != MessageBoxResult.Yes) return;
+
+            try
+            {
+               
+                Hashtable param = new Hashtable();
+                param.Add("sqlId", "SelectFireFacDtl");
+                param.Add("FTR_CDE", this.FTR_CDE);
+                param.Add("FTR_IDN", this.FTR_IDN);
+
+                FireFacDtl result = new FireFacDtl();
+                result = BizUtil.SelectObject(param) as FireFacDtl;
+
+                List<FireFacDtl> list = new List<FireFacDtl>();
+                list.Add(result);
+
+
+                FireFacReport xr = new FireFacReport();
+                xr.DataSource = list;               
+
+                //XtraReport report = new FireFacReport();
+                //report.DataSource = result;
+
+                //report.ShowPreviewDialog();
+                //xr.ShowPrintStatusDialog = false;
+                //xr.Parameters["1234"].Value = "";
+                
+                using (ReportPrintTool rep = new ReportPrintTool(xr))
+                {
+                    rep.ShowPreviewDialog();
+                }
+
+            }
+            catch (Exception e)
+            {
+                Messages.ShowErrMsgBox("인쇄 처리중 오류가 발생하였습니다.");
+                return;
+            }
+            Messages.ShowOkMsgBox();
+
+        }
+
+ 
 
         /// <summary>
         /// 삭제처리
@@ -289,6 +341,7 @@ namespace GTI.WFMS.Modules.Pipe.ViewModel
                     case "W":
                         break;
                     case "R":
+                        btnPrint.Visibility = Visibility.Collapsed;
                         btnDelete.Visibility = Visibility.Collapsed;
                         btnSave.Visibility = Visibility.Collapsed;
                         break;

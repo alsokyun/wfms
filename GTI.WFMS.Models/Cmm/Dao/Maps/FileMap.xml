@@ -104,7 +104,7 @@
 
 
 
-      <!-- 첨부파일상세 목록	 -->
+    <!-- 첨부파일상세 목록	 -->
     <select id="SelectFileDtl"  resultClass="Hashtable">
       SELECT
       SEQ
@@ -123,6 +123,33 @@
       FROM FMS_FILE_DTL
       WHERE 1=1
       AND FIL_SEQ = #FIL_SEQ#
+      <isNotEmpty property="SEQ">
+        AND SEQ = #SEQ#
+      </isNotEmpty>
+    </select>
+
+    <!-- BizId 첨부파일 목록	 -->
+    <select id="SelectBizIdFileDtl"  resultClass="Hashtable">
+      SELECT
+      SEQ
+      , FIL_SEQ
+      , DWN_NAM
+      , UPF_NAM
+      , FIL_PTH
+      , FIL_TYP
+      , FIL_SIZ
+      , FIL_RST
+      , CUR_TFS
+      , CRE_YMD
+      , CRE_USR
+      , UPD_YMD
+      , UPD_USR
+      FROM FMS_FILE_DTL
+      WHERE 1=1
+      AND FIL_SEQ = (SELECT FIL_SEQ FROM INFOFMS.FMS_FILE_MAP WHERE BIZ_ID = #BIZ_ID# AND GRP_TYP = '111' AND ROWNUM = 1)
+      <isNotEmpty property="FIL_SEQ">
+      AND FIL_SEQ = #FIL_SEQ#
+      </isNotEmpty>
       <isNotEmpty property="SEQ">
         AND SEQ = #SEQ#
       </isNotEmpty>
