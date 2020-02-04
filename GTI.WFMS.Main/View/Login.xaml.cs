@@ -292,7 +292,11 @@ namespace GTI.WFMS.Main.View
                         Dispatcher.Invoke(DispatcherPriority.ApplicationIdle,
                             new Action(delegate ()
                             {
-                                htconditions.Add("SITE_CD", cbSite.EditValue.ToString());
+                                try
+                                {
+                                    htconditions.Add("SITE_CD", cbSite.EditValue.ToString());
+                                }
+                                catch (Exception){}
                             }));
                         htconditions.Add("SYS_CD", "000007");
                         dtDBInfo = work.SelectDBInfo(htconditions);
@@ -310,6 +314,7 @@ namespace GTI.WFMS.Main.View
                                     new Action(delegate ()
                                     {
                                         imgConnAbnormal.Visibility = Visibility.Collapsed;
+                                        imgConnNormal.Visibility = Visibility.Visible;
                                     }));
                             }
                             else
@@ -318,6 +323,7 @@ namespace GTI.WFMS.Main.View
                                     new Action(delegate ()
                                     {
                                         imgConnAbnormal.Visibility = Visibility.Visible;
+                                        imgConnNormal.Visibility = Visibility.Collapsed;
                                     }));
                             }
                         }
@@ -329,6 +335,7 @@ namespace GTI.WFMS.Main.View
                         new Action(delegate ()
                         {
                             imgConnAbnormal.Visibility = Visibility.Visible;
+                            imgConnNormal.Visibility = Visibility.Collapsed;
                         }));
                 }
             }
