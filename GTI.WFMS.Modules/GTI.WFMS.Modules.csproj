@@ -262,6 +262,10 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
+    <Page Include="Link\View\PhotoFileMngView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
     <Page Include="Link\View\RefFileMngView.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -534,6 +538,9 @@
     <Compile Include="Link\View\AttFacListView.xaml.cs">
       <DependentUpon>AttFacListView.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Link\View\PhotoFileMngView.xaml.cs">
+      <DependentUpon>PhotoFileMngView.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Link\View\RefFileMngView.xaml.cs">
       <DependentUpon>RefFileMngView.xaml</DependentUpon>
     </Compile>
@@ -682,6 +689,9 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Link\ViewModel\" />
+  </ItemGroup>
+  <ItemGroup>
+    <WCFMetadata Include="Connected Services\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
