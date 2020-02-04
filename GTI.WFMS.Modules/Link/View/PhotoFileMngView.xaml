@@ -8,8 +8,7 @@
              xmlns:dxlc="http://schemas.devexpress.com/winfx/2008/xaml/layoutcontrol"
              xmlns:local="clr-namespace:GTI.WFMS.Modules.Link.View"
              mc:Ignorable="d"       
-             d:DesignHeight="400"
-             d:DesignWidth="300"
+             d:DesignHeight="300" d:DesignWidth="900"
              DataContext="{Binding RelativeSource={RelativeSource Self}}"
              xmlns:cv="clr-namespace:GTI.WFMS.Models.Common;assembly=GTI.WFMS.Models"
              >
@@ -30,6 +29,7 @@
                             Background="#293e5a"
                             ShowLayerSeparators="True"
                             ItemsSizeChanged="layoutImagesItemsSizeChanged">
+        
         <dxlc:FlowLayoutControl.ItemTemplate>
             <DataTemplate>
                 <local:ImageContainer Content="{Binding}" Width="200" Height="200" HorizontalAlignment="Center" VerticalAlignment="Center" Cursor="Hand">
