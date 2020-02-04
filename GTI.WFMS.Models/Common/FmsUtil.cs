@@ -1,5 +1,7 @@
-﻿using System;
+﻿using Prism.Regions;
+using System;
 using System.Collections.Generic;
+using System.Data;
 using System.IO;
 using System.Linq;
 using System.Runtime.Serialization;
@@ -17,6 +19,8 @@ namespace GTI.WFMS.Models.Common
         /// </summary>
         public static int PageSize = 10; //페이지의 row 수
 
+        public static IRegionManager __regionManager;
+        public static Popup __popMain;
 
 
         /// <summary>
@@ -155,6 +159,7 @@ namespace GTI.WFMS.Models.Common
                 return (T)formatter.Deserialize(stream);
             }
         }
+
 
 
     }

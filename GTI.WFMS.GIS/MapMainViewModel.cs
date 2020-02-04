@@ -27,6 +27,9 @@ namespace GTI.WFMS.GIS
     public class MapMainViewModel : LayerModel, INotifyPropertyChanged
     {
 
+
+        #region ========== Members 정의 ==========
+
         // 선택한 피처 - 서버연계된Feature  
         //public ArcGISFeature _selectedFeature;
         public Feature _selectedFeature;
@@ -34,6 +37,83 @@ namespace GTI.WFMS.GIS
         // Graphics overlay to host sketch graphics
         private GraphicsOverlay _sketchOverlay;
         private Esri.ArcGISRuntime.Geometry.Geometry _geometry;
+
+
+        public event PropertyChangedEventHandler PropertyChanged;
+
+
+
+        // Coordinates for Ulsan
+        private MapPoint _ulsanCoords = new MapPoint(14389882.070911, 4239809.084922, SpatialReferences.WebMercator); //3857
+        //private MapPoint _londonCoords = new MapPoint(-13881.7678417696, 6710726.57374296, SpatialReferences.WebMercator);
+        //private MapPoint _ulsanCoords = new MapPoint(394216.933974, 223474.303376, SpatialReferences.WebMercator); //5181
+
+        //private double _ulsanScale = 8762.7156655228955;
+        //private double _ulsanScale = 150000;
+        private double _ulsanScale = 500000;
+
+        private FctDtl fctDtl = new FctDtl(); //시설물기본정보
+        private Popup divLayer = new Popup(); //시설물레이어DIV
+        private PopFct popFct = new PopFct(); //시설물정보DIV
+        private Button ClearButton = new Button();
+        private TextBox txtFTR_CDE = new TextBox();
+        private TextBox txtFTR_IDN = new TextBox();
+        #endregion
+
+
+
+        #region ========== 인터페이스 오버라이딩 ==========
+
+        /// <summary>
+        /// Raises the <see cref="MapViewModel.PropertyChanged" /> event
+        /// </summary>
+        /// <param name="propertyName">The name of the property that has changed</param>
+        protected void OnPropertyChanged([CallerMemberName] string propertyName = null)
+        {
+            var propertyChangedHandler = PropertyChanged;
+            if (propertyChangedHandler != null)
+                propertyChangedHandler(this, new PropertyChangedEventArgs(propertyName));
+        }
+        #endregion
+
+
+
+        #region ==========  Properties 정의 ==========
+
+        /// <summary>
+        /// Gets or sets the map
+        /// </summary>
+        public Map Map
+        {
+            get { return _map; }
+            set { _map = value; OnPropertyChanged(); }
+        }
+
+        public RelayCommand<object> loadedCmd { get; set; } //Loaded이벤트에서 ICommand 사용하여 뷰객체 전달받음
+        public RelayCommand<object> chkCmd { get; set; }
+        public RelayCommand<object> toggleCmd { get; set; }
+        public RelayCommand<object> closeCmd { get; set; }
+        public RelayCommand<object> resetCmd { get; set; }
+
+        public RelayCommand<object> btnCmd { get; set; }
+        public RelayCommand<object> completeCmd { get; set; }
+        public RelayCommand<object> clearCmd { get; set; }
+        public RelayCommand<object> findCmd { get; set; }
+
+        public FctDtl FctDtl
+        {
+            get { return this.fctDtl; }
+            set { this.fctDtl = value; }
+        }
+
+
+        #endregion
+
+
+
+
+               
+        #region ========== 생성자 ==========
 
         public MapMainViewModel()
         {
@@ -51,6 +131,9 @@ namespace GTI.WFMS.GIS
                 this.mapView = divGrid.FindName("mapView") as MapView;
                 this.divLayer = divGrid.FindName("divLayer") as Popup;
                 this.ClearButton = divGrid.FindName("ClearButton") as Button;
+
+                txtFTR_CDE = divGrid.FindName("txtFTR_CDE") as TextBox;
+                txtFTR_IDN = divGrid.FindName("txtFTR_IDN") as TextBox;
 
                 //지도초기화
                 InitMap();
@@ -297,13 +380,114 @@ namespace GTI.WFMS.GIS
 
             });
 
+            //시설물찾기
+            //findCmd = new RelayCommand<object>(FindAction);
 
+        }
+
+        /// <summary>
+        /// 해당시설물의 지도상위치 찾아가기
+        /// </summary>
+        /// <param name="FTR_CDE"></param>
+        /// <param name="FTR_IDN"></param>
+        /// <returns></returns>
+        public async Task findFtrAsync(string FTR_CDE, string FTR_IDN)
+        {
+
+            string layerNm = "";
+            try
+            {
+                layerNm = GetLayerNm(FTR_CDE);
+                if ("".Equals(layerNm))
+                {
+                    MessageBox.Show("잘못된 레이어입니다.");
+                    return;
+                }
+            }
+            catch (Exception)
+            {
+                MessageBox.Show("잘못된 레이어입니다.");
+                return;
+            }
+
+
+            //0.해당레이어표시 - 내부에서자동으로 로딩여부 체크함
+            ShowShapeLayer(mapView, GetLayerNm(FTR_CDE), true);
+
+            //1.해당레이어 가져오기
+            FeatureLayer layer = layers[GetLayerNm(FTR_CDE)];
+
+
+
+            // Remove any previous feature selections that may have been made.
+            layer.ClearSelection();
+
+            // Begin query process.
+            await QueryStateFeature(FTR_CDE, FTR_IDN, layer);
 
         }
 
 
 
+        #endregion
 
+
+        // 레이에서 해당 Feature 찾기
+        private async Task QueryStateFeature(string _FTR_CDE, string _FTR_IDN, FeatureLayer _featureLayer)
+        {
+            try
+            {
+                // 0.Feature 테이블 가져오기
+                FeatureTable _featureTable = _featureLayer.FeatureTable;
+
+
+
+                // Create a query parameters that will be used to Query the feature table.
+                QueryParameters queryParams = new QueryParameters();
+
+
+                // Construct and assign the where clause that will be used to query the feature table.
+                queryParams.WhereClause = "upper(FTR_CDE) = '" + _FTR_CDE + "' AND FTR_IDN = " + _FTR_IDN ;
+
+                // Query the feature table.
+                FeatureQueryResult queryResult = await _featureTable.QueryFeaturesAsync(queryParams);
+
+                // Cast the QueryResult to a List so the results can be interrogated.
+                List<Feature> features = queryResult.ToList();
+
+                if (features.Any())
+                {
+                    // Create an envelope.
+                    EnvelopeBuilder envBuilder = new EnvelopeBuilder(SpatialReferences.WebMercator);
+
+
+
+                    // Loop over each feature from the query result.
+                    foreach (Feature feature in features)
+                    {
+                        // Add the extent of each matching feature to the envelope.
+                        //envBuilder.UnionOf(feature.Geometry.Extent); //복수의 피처영역 합치기
+
+                        // Select each feature.
+                        _featureLayer.SelectFeature(feature);
+                        //해당피처로 이동
+                        await mapView.SetViewpointCenterAsync(feature.Geometry.Extent.GetCenter(), 10000);
+                    }
+
+                    // Zoom to the extent of the selected feature(s).
+                    //await mapView.SetViewpointGeometryAsync(envBuilder.ToGeometry(), 50);
+                    
+                }
+                else
+                {
+                    MessageBox.Show("해당 시설물 위치를 찾을 수 없습니다.");
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("An error occurred.\n" + ex, "Sample error");
+            }
+        }
 
 
         //시설물레이어DIV 초기화작업
@@ -331,76 +515,6 @@ namespace GTI.WFMS.GIS
 
         }
 
-
-
-        #region ==========  Properties 정의 ==========
-
-        /// <summary>
-        /// Gets or sets the map
-        /// </summary>
-        public Map Map
-        {
-            get { return _map; }
-            set { _map = value; OnPropertyChanged(); }
-        }
-
-        public RelayCommand<object> loadedCmd { get; set; } //Loaded이벤트에서 ICommand 사용하여 뷰객체 전달받음
-        public RelayCommand<object> chkCmd { get; set; }
-        public RelayCommand<object> toggleCmd { get; set; }
-        public RelayCommand<object> closeCmd { get; set; }
-        public RelayCommand<object> resetCmd { get; set; }
-
-        public RelayCommand<object> btnCmd { get; set; }
-        public RelayCommand<object> completeCmd { get; set; }
-        public RelayCommand<object> clearCmd { get; set; }
-
-        public FctDtl FctDtl
-        {
-            get { return this.fctDtl; }
-            set { this.fctDtl = value; }
-        }
-
-
-        #endregion
-
-
-
-
-        #region ========== Members 정의 ==========
-
-        public event PropertyChangedEventHandler PropertyChanged;
-
-
-
-        // Coordinates for Ulsan
-        private MapPoint _ulsanCoords = new MapPoint(14389882.070911, 4239809.084922, SpatialReferences.WebMercator); //3857
-        //private MapPoint _londonCoords = new MapPoint(-13881.7678417696, 6710726.57374296, SpatialReferences.WebMercator);
-        //private MapPoint _ulsanCoords = new MapPoint(394216.933974, 223474.303376, SpatialReferences.WebMercator); //5181
-
-        //private double _ulsanScale = 8762.7156655228955;
-        private double _ulsanScale = 150000;
-
-        private FctDtl fctDtl = new FctDtl(); //시설물기본정보
-        private Popup divLayer = new Popup(); //시설물레이어DIV
-        private PopFct popFct = new PopFct(); //시설물정보DIV
-        private Button ClearButton = new Button();
-        #endregion
-
-
-
-        #region ========== 인터페이스 오버라이딩 ==========
-
-        /// <summary>
-        /// Raises the <see cref="MapViewModel.PropertyChanged" /> event
-        /// </summary>
-        /// <param name="propertyName">The name of the property that has changed</param>
-        protected void OnPropertyChanged([CallerMemberName] string propertyName = null)
-        {
-            var propertyChangedHandler = PropertyChanged;
-            if (propertyChangedHandler != null)
-                propertyChangedHandler(this, new PropertyChangedEventArgs(propertyName));
-        }
-        #endregion
 
 
 

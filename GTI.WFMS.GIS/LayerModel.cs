@@ -84,245 +84,7 @@ namespace GTI.WFMS.GIS
 
 
 
-
-
-
-
-
-
-
-
-
-
-        /// <summary>
-        /// 레이어 보이기/끄기 - LocalServer버전
-        /// </summary>
-        /// <param name="_map"></param>
-        /// <param name="layer"></param>
-        /// <param name="chk"></param>
-        /*
-        public async void ShowLocalServerLayer(MapView _mapView, string _layerNm, bool chk)
-        {
-            try
-            {
-                // 0.해당레이어 가져오기
-                string filterExp = "";
-                string layerNm = "";
-
-                try
-                {
-                    string[] ary = _layerNm.Split(',');
-                    layerNm = ary[0]; //레이어테이블명
-                    filterExp = ary[1]; //필터표현식
-                }
-                catch (Exception e) { }
-
-                FeatureLayer layer = layers[layerNm];
-                //Type memberType = this.GetType();
-
-
-
-
-
-
-                // 1.레이어 ON
-                if (chk)
-                {
-
-
-                    if (_mapView.Map.OperationalLayers.Contains(layer))
-                    {
-                        //on상태 아무것도 안함
-                    }
-                    else
-                    {
-                        if (layer != null && layer.LoadStatus == LoadStatus.Loaded) //레이어객체 있으면 단순추가
-                        {
-                            // 필터링 인수있으면 하위시설물으로 필터
-                            if (!FmsUtil.IsNull(filterExp))
-                            {
-                                layer.DefinitionExpression = filterExp;
-                            }
-                            _mapView.Map.OperationalLayers.Add(layer);
-                        }
-                        else //레이어객체 없으면 Shape 로딩
-                        {
-
-                            if (LocalServer.Instance.Status == LocalServerStatus.Started)
-                            {
-                                // Get the path to the first layer - the local feature service url + layer ID
-                                string layerUrl = _localFeatureService.Url + "/" + GetLayerId(layerNm);
-
-                                // Create the ServiceFeatureTable
-                                ServiceFeatureTable myFeatureTable = new ServiceFeatureTable(new Uri(layerUrl));
-
-                                // Create the Feature Layer from the table
-                                FeatureLayer myFeatureLayer = new FeatureLayer(myFeatureTable);
-                                layers[layerNm] = myFeatureLayer; //생성한레이어를 딕셔너리에 저장
-
-                                // 필터링 인수있으면 하위시설물으로 필터
-                                if (!FmsUtil.IsNull(filterExp))
-                                {
-                                    myFeatureLayer.DefinitionExpression = filterExp;
-                                }
-
-
-                                // Add the layer to the map
-                                _mapView.Map.OperationalLayers.Add(myFeatureLayer);
-
-                                try
-                                {
-                                    // Wait for the layer to load
-                                    await myFeatureLayer.LoadAsync();
-
-                                    // Set the viewpoint on the MapView to show the layer data
-                                    await _mapView.SetViewpointGeometryAsync(myFeatureLayer.FullExtent, 50);
-
-
-                                }
-                                catch (Exception ex)
-                                {
-                                    MessageBox.Show(ex.ToString(), "Error");
-                                }
-                            }
-
-                        }
-                    }
-
-
-                }
-                // 2.레이어 OFF
-                else
-                {
-                    // 필터링 인수있으면 하위시설물으로 필터
-                    if (!FmsUtil.IsNull(filterExp))
-                    {
-                        layer.DefinitionExpression = filterExp;
-                    }
-
-                    if (_mapView.Map.OperationalLayers.Contains(layer))
-                    {
-                        _mapView.Map.OperationalLayers.Remove(layer);
-                    }
-                    else
-                    {
-                        //off상태 아무것도 안함
-                    }
-
-                }
-
-
-
-
-            }
-            catch (Exception e)
-            {
-                MessageBox.Show("레이어가 존재하지 않습니다.");
-            }
-        }
-        */
-
-
-        /// LocalServer에서 해당레이어의 LayerI 가져오기
-        public string GetLayerId(string layerNm)
-        {
-            string layerId = "1";
-            switch (layerNm)
-            {
-                case "WTL_STPI_PS":
-                    layerId = "1";
-                    break;
-                case "WTL_SERV_PS":
-                    layerId = "2";
-                    break;
-                case "WTL_RSRV_PS":
-                    layerId = "3";
-                    break;
-                case "WTL_PRES_PS":
-                    layerId = "4";
-                    break;
-                case "WTL_META_PS":
-                    layerId = "5";
-                    break;
-                case "WTL_MANH_PS":
-                    layerId = "6";
-                    break;
-                case "WTL_LEAK_PS":
-                    layerId = "7";
-                    break;
-                case "WTL_HEAD_PS":
-                    layerId = "8";
-                    break;
-                case "WTL_GAIN_PS":
-                    layerId = "9";
-                    break;
-                case "WTL_PRGA_PS":
-                    layerId = "10";
-                    break;
-                case "WTL_FLOW_PS":
-                    layerId = "11";
-                    break;
-                case "WTL_SPLY_LS":
-                    layerId = "12";
-                    break;
-                case "WTL_PIPE_LM":
-                    layerId = "13";
-                    break;
-                case "WTL_PURI_AS":
-                    layerId = "14";
-                    break;
-                case "BML_GADM_AS":
-                    layerId = "15";
-                    break;
-                case "WTL_FIRE_PS,FTR_CDE='SA118'":
-                    layerId = "16";
-                    break;
-                case "WTL_FIRE_PS,FTR_CDE='SA119'":
-                    layerId = "17";
-                    break;
-                case "WTL_VALV_PS,FTR_CDE='SA200'":
-                    layerId = "18";
-                    break;
-                case "WTL_VALV_PS,FTR_CDE='SA201'":
-                    layerId = "19";
-                    break;
-                case "WTL_VALV_PS,FTR_CDE='SA202'":
-                    layerId = "20";
-                    break;
-                case "WTL_VALV_PS,FTR_CDE='SA203'":
-                    layerId = "21";
-                    break;
-                case "WTL_VALV_PS,FTR_CDE='SA204'":
-                    layerId = "22";
-                    break;
-                case "WTL_VALV_PS,FTR_CDE='SA205'":
-                    layerId = "23";
-                    break;
-                case "WTL_VALV_PS,FTR_CDE='SA206'":
-                    layerId = "24";
-                    break;
-                default:
-                    break;
-            }
-            return layerId;
-        }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-        #region =========== shape 레이어 구성부분(mpk 방식으로 변경해서 사용안함)
+        #region =========== shape 레이어 구성부분 ==============
 
         /// <summary>
         /// Shape 레이어 보이기/끄기 - Shape버전
@@ -576,6 +338,273 @@ namespace GTI.WFMS.GIS
 
 
 
+
+
+
+        /// FTR_CDE에서 레이어명(테이블명) 가져오기
+        public string GetLayerNm(string FTR_CDE)
+        {
+            string layerNm = "";
+
+
+            switch (FTR_CDE)
+            {
+                case "SA001": layerNm = "WTL_PIPE_LM"; break;
+                case "SA002": layerNm = "WTL_SPLY_LS"; break;
+                case "SA003": layerNm = "WTL_STPI_PS"; break;
+                case "SA100": layerNm = "WTL_MANH_PS"; break;
+                case "SA110": layerNm = "WTL_HEAD_PS"; break;
+                case "SA112": layerNm = "WTL_GAIN_PS"; break;
+                case "SA113": layerNm = "WTL_PURI_AS"; break;
+                case "SA114": layerNm = "WTL_SERV_PS"; break;
+                case "SA117": layerNm = "WTL_FLOW_PS"; break;
+                case "SA118": layerNm = "WTL_FIRE_PS,FTR_CDE='SA118'"; break;
+                case "SA119": layerNm = "WTL_FIRE_PS,FTR_CDE='SA119'"; break;
+                case "SA120": layerNm = "WTL_RSRV_PS"; break;
+                case "SA121": layerNm = "WTL_PRGA_PS"; break;
+                case "SA122": layerNm = "WTL_META_PS"; break;
+                case "SA200": layerNm = "WTL_VALV_PS,FTR_CDE='SA200'"; break;
+                case "SA201": layerNm = "WTL_VALV_PS,FTR_CDE='SA201'"; break;
+                case "SA202": layerNm = "WTL_VALV_PS,FTR_CDE='SA202'"; break;
+                case "SA203": layerNm = "WTL_VALV_PS,FTR_CDE='SA203'"; break;
+                case "SA204": layerNm = "WTL_VALV_PS,FTR_CDE='SA204'"; break;
+                case "SA205": layerNm = "WTL_VALV_PS,FTR_CDE='SA205'"; break;
+                case "SA206": layerNm = "WTL_VALV_PS,FTR_CDE='SA206'"; break;
+                case "SA300": layerNm = "WTL_LEAK_PS"; break;
+
+                default:
+                    break;
+            }
+
+            return layerNm;
+        }
+
+
+
+
+
+
+
+
+
+
+
+        /// LocalServer에서 해당레이어의 LayerI 가져오기
+        /*
+        public string GetLayerId(string layerNm)
+        {
+            string layerId = "1";
+            switch (layerNm)
+            {
+                case "WTL_STPI_PS":
+                    layerId = "1";
+                    break;
+                case "WTL_SERV_PS":
+                    layerId = "2";
+                    break;
+                case "WTL_RSRV_PS":
+                    layerId = "3";
+                    break;
+                case "WTL_PRES_PS":
+                    layerId = "4";
+                    break;
+                case "WTL_META_PS":
+                    layerId = "5";
+                    break;
+                case "WTL_MANH_PS":
+                    layerId = "6";
+                    break;
+                case "WTL_LEAK_PS":
+                    layerId = "7";
+                    break;
+                case "WTL_HEAD_PS":
+                    layerId = "8";
+                    break;
+                case "WTL_GAIN_PS":
+                    layerId = "9";
+                    break;
+                case "WTL_PRGA_PS":
+                    layerId = "10";
+                    break;
+                case "WTL_FLOW_PS":
+                    layerId = "11";
+                    break;
+                case "WTL_SPLY_LS":
+                    layerId = "12";
+                    break;
+                case "WTL_PIPE_LM":
+                    layerId = "13";
+                    break;
+                case "WTL_PURI_AS":
+                    layerId = "14";
+                    break;
+                case "BML_GADM_AS":
+                    layerId = "15";
+                    break;
+                case "WTL_FIRE_PS,FTR_CDE='SA118'":
+                    layerId = "16";
+                    break;
+                case "WTL_FIRE_PS,FTR_CDE='SA119'":
+                    layerId = "17";
+                    break;
+                case "WTL_VALV_PS,FTR_CDE='SA200'":
+                    layerId = "18";
+                    break;
+                case "WTL_VALV_PS,FTR_CDE='SA201'":
+                    layerId = "19";
+                    break;
+                case "WTL_VALV_PS,FTR_CDE='SA202'":
+                    layerId = "20";
+                    break;
+                case "WTL_VALV_PS,FTR_CDE='SA203'":
+                    layerId = "21";
+                    break;
+                case "WTL_VALV_PS,FTR_CDE='SA204'":
+                    layerId = "22";
+                    break;
+                case "WTL_VALV_PS,FTR_CDE='SA205'":
+                    layerId = "23";
+                    break;
+                case "WTL_VALV_PS,FTR_CDE='SA206'":
+                    layerId = "24";
+                    break;
+                default:
+                    break;
+            }
+            return layerId;
+        }
+         */
+
+
+
+
+        /// <summary>
+        /// 레이어 보이기/끄기 - LocalServer버전
+        /// </summary>
+        /// <param name="_map"></param>
+        /// <param name="layer"></param>
+        /// <param name="chk"></param>
+        /*
+        public async void ShowLocalServerLayer(MapView _mapView, string _layerNm, bool chk)
+        {
+            try
+            {
+                // 0.해당레이어 가져오기
+                string filterExp = "";
+                string layerNm = "";
+
+                try
+                {
+                    string[] ary = _layerNm.Split(',');
+                    layerNm = ary[0]; //레이어테이블명
+                    filterExp = ary[1]; //필터표현식
+                }
+                catch (Exception e) { }
+
+                FeatureLayer layer = layers[layerNm];
+                //Type memberType = this.GetType();
+
+
+
+
+
+
+                // 1.레이어 ON
+                if (chk)
+                {
+
+
+                    if (_mapView.Map.OperationalLayers.Contains(layer))
+                    {
+                        //on상태 아무것도 안함
+                    }
+                    else
+                    {
+                        if (layer != null && layer.LoadStatus == LoadStatus.Loaded) //레이어객체 있으면 단순추가
+                        {
+                            // 필터링 인수있으면 하위시설물으로 필터
+                            if (!FmsUtil.IsNull(filterExp))
+                            {
+                                layer.DefinitionExpression = filterExp;
+                            }
+                            _mapView.Map.OperationalLayers.Add(layer);
+                        }
+                        else //레이어객체 없으면 Shape 로딩
+                        {
+
+                            if (LocalServer.Instance.Status == LocalServerStatus.Started)
+                            {
+                                // Get the path to the first layer - the local feature service url + layer ID
+                                string layerUrl = _localFeatureService.Url + "/" + GetLayerId(layerNm);
+
+                                // Create the ServiceFeatureTable
+                                ServiceFeatureTable myFeatureTable = new ServiceFeatureTable(new Uri(layerUrl));
+
+                                // Create the Feature Layer from the table
+                                FeatureLayer myFeatureLayer = new FeatureLayer(myFeatureTable);
+                                layers[layerNm] = myFeatureLayer; //생성한레이어를 딕셔너리에 저장
+
+                                // 필터링 인수있으면 하위시설물으로 필터
+                                if (!FmsUtil.IsNull(filterExp))
+                                {
+                                    myFeatureLayer.DefinitionExpression = filterExp;
+                                }
+
+
+                                // Add the layer to the map
+                                _mapView.Map.OperationalLayers.Add(myFeatureLayer);
+
+                                try
+                                {
+                                    // Wait for the layer to load
+                                    await myFeatureLayer.LoadAsync();
+
+                                    // Set the viewpoint on the MapView to show the layer data
+                                    await _mapView.SetViewpointGeometryAsync(myFeatureLayer.FullExtent, 50);
+
+
+                                }
+                                catch (Exception ex)
+                                {
+                                    MessageBox.Show(ex.ToString(), "Error");
+                                }
+                            }
+
+                        }
+                    }
+
+
+                }
+                // 2.레이어 OFF
+                else
+                {
+                    // 필터링 인수있으면 하위시설물으로 필터
+                    if (!FmsUtil.IsNull(filterExp))
+                    {
+                        layer.DefinitionExpression = filterExp;
+                    }
+
+                    if (_mapView.Map.OperationalLayers.Contains(layer))
+                    {
+                        _mapView.Map.OperationalLayers.Remove(layer);
+                    }
+                    else
+                    {
+                        //off상태 아무것도 안함
+                    }
+
+                }
+
+
+
+
+            }
+            catch (Exception e)
+            {
+                MessageBox.Show("레이어가 존재하지 않습니다.");
+            }
+        }
+        */
 
 
 

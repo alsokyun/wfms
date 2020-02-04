@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 
 using System.Windows;
+using System.Windows.Controls.Primitives;
 using DevExpress.Xpf.Core;
 
 using GTIFramework.Common.Log;
@@ -38,6 +39,7 @@ namespace GTIFramework.Common.MessageBox
         {
             return DXMessageBox.Show(srt, "확인", MessageBoxButton.YesNo, MessageBoxImage.Question);
         }
+
 
         /// <summary>
         /// 에러처리 NoLoging

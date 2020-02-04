@@ -15,6 +15,7 @@
         xmlns:vm="clr-namespace:GTI.WFMS.Modules.Pipe.ViewModel"
         xmlns:cm="clr-namespace:GTIFramework.Common.Utils.Converters;assembly=GTIFramework"
         xmlns:dx="http://schemas.devexpress.com/winfx/2008/xaml/core"
+        xmlns:cv="clr-namespace:GTI.WFMS.Models.Common;assembly=GTI.WFMS.Models"     
         
       x:Name="wtlPipeListView"      >
 
@@ -29,6 +30,7 @@
     <Page.Resources>
         <ResourceDictionary>
             <cm:MultiValueConverter x:Key="multiValueConverter"/>
+            <cv:Toggle2Converter x:Key="toggleConverter" />
         </ResourceDictionary>
     </Page.Resources>
 
@@ -196,7 +198,7 @@
         <Border  Grid.Row="1" Grid.Column="2"  BorderBrush="{DynamicResource PopCOLOR2Brush}" BorderThickness="1"/>
 
         <dxg:GridControl Grid.Row="1" Grid.Column="2" x:Name="grid" VerticalAlignment="Stretch" HorizontalAlignment="Stretch"
-                         MouseDoubleClick="Grid_MouseDoubleClick"
+                         MouseDoubleClick="Grid_MouseDoubleClick" 
                          ItemsSource="{Binding ElementName=DataPagerSource, Path=ActualSource}" >
 
             <i:Interaction.Triggers>
@@ -239,7 +241,8 @@
                 <dxg:GridColumn.CellTemplate>
                     <DataTemplate>
                         <Button Style="{DynamicResource ResourceKey=PositionButton}" 
-                                Command="{Binding View.DataContext.cellPosCmd}" CommandParameter="{Binding RowData.Row.FTR_IDN}">
+                                Command="{Binding View.DataContext.cellPosCmd}" CommandParameter="{Binding RowData.Row}"
+                                Visibility="{Binding RowData.IS_GEOMETRY, Converter={StaticResource ResourceKey=toggleConverter}}">
                         </Button>
                     </DataTemplate>
                 </dxg:GridColumn.CellTemplate>
