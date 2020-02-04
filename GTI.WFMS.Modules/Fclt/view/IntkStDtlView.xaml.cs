@@ -61,6 +61,7 @@ namespace GTI.WFMS.Modules.Fclt.View
 
             DXTabItem tab02 = new DXTabItem();
             tab02.Header = "사진첨부";
+            tab02.Content = new PhotoFileMngView(FTR_CDE + FTR_IDN);
             tabSubMenu.Items.Add(tab02);
 
             DXTabItem tab03 = new DXTabItem();
