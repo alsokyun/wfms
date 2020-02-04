@@ -449,11 +449,21 @@ namespace GTI.WFMS.GIS
                 // Construct and assign the where clause that will be used to query the feature table.
                 queryParams.WhereClause = "upper(FTR_CDE) = '" + _FTR_CDE + "' AND FTR_IDN = " + _FTR_IDN ;
 
-                // Query the feature table.
-                FeatureQueryResult queryResult = await _featureTable.QueryFeaturesAsync(queryParams);
 
-                // Cast the QueryResult to a List so the results can be interrogated.
-                List<Feature> features = queryResult.ToList();
+                List<Feature> features;
+                try
+                {
+                    // Query the feature table.
+                    FeatureQueryResult queryResult = await _featureTable.QueryFeaturesAsync(queryParams);
+
+                    // Cast the QueryResult to a List so the results can be interrogated.
+                    features = queryResult.ToList();
+                }
+                catch (Exception)
+                {
+                    Messages.ShowErrMsgBox("보호된 메모리 접근 에러..");
+                    return;
+                }
 
                 if (features.Any())
                 {
@@ -471,7 +481,7 @@ namespace GTI.WFMS.GIS
                         // Select each feature.
                         _featureLayer.SelectFeature(feature);
                         //해당피처로 이동
-                        await mapView.SetViewpointCenterAsync(feature.Geometry.Extent.GetCenter(), 20000);
+                        await mapView.SetViewpointCenterAsync(feature.Geometry.Extent.GetCenter(), 40000);
                     }
 
                     // Zoom to the extent of the selected feature(s).

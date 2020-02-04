@@ -19,6 +19,8 @@ using System.Windows.Threading;
 using DevExpress.Xpf.Core;
 using GTIFramework.Common.Utils.Converters;
 using System.Collections.Generic;
+using Prism.Regions;
+using GTI.WFMS.GIS;
 
 namespace GTI.WFMS.Modules.Pipe.ViewModel
 {
@@ -98,6 +100,7 @@ namespace GTI.WFMS.Modules.Pipe.ViewModel
         public DelegateCommand<object> ExcelCmd { get; set; }
         
         public DelegateCommand<object> btnCmd { get; set; }
+        public DelegateCommand<object> cellPosCmd { get; set; }
 
         #endregion
 
@@ -152,6 +155,28 @@ namespace GTI.WFMS.Modules.Pipe.ViewModel
 
             btnCmd = new DelegateCommand<object>(btnMethod);
             ExcelCmd = new DelegateCommand<object>(ExcelDownAction);
+            // 시설물 지도상 위치찾아가기
+            cellPosCmd = new DelegateCommand<object>(async delegate (object obj) {
+
+                DataRowView row = obj as DataRowView;
+                string FTR_IDN = row["FTR_IDN"].ToString();
+                string FTR_CDE = row["FTR_CDE"].ToString();
+                //MessageBox.Show("지도상 위치찾아가기..FTR_IDN - " + FTR_IDN + ", FTR_CDE - " + FTR_CDE);
+
+                IRegionManager regionManager = FmsUtil.__regionManager;
+                ViewsCollection views = regionManager.Regions["ContentRegion"].ActiveViews as ViewsCollection;
+
+                //MapMainViewMocel 인스턴스불러오기
+                foreach (var v in views)
+                {
+                    MapMainView mapMainView = v as MapMainView;
+                    MapMainViewModel vm = mapMainView.DataContext as MapMainViewModel;
+
+                    //Find 메소드수행
+                    await vm.findFtrAsync(FTR_CDE, FTR_IDN);
+                    break;
+                }
+            });
 
 
             // 조회데이터 초기화

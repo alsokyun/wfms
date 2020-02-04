@@ -55,7 +55,7 @@
     <Grid >
         <Grid.RowDefinitions>
             <RowDefinition Height="40"/>
-            <RowDefinition Height="30"/>
+            <RowDefinition Height="35"/>
             <RowDefinition Height="*"/>
             <RowDefinition Height="40"/>
         </Grid.RowDefinitions>
@@ -85,16 +85,18 @@
 
             <dxg:GridControl AutoGenerateColumns="AddNew"
                         EnableSmartColumnsGeneration="False"
-                        ItemsSource="{Binding Items}"
+                        ItemsSource="{Binding Items}" 
                         SelectionMode="Cell">
 
-                <dxg:GridControl.View>
+                <dxg:GridControl.View >
                     <dxg:TableView x:Name="gv" 
                                 AllowDragDrop="True"
                                 GiveRecordDragFeedback="OnGiveRecordDragFeedback"
                                 AllowPerPixelScrolling="True"
                                 ShowTotalSummary="False" ShowDragDropHint="False" ShowBandsInCustomizationForm="False" ShowGroupPanel="False"
-                                VerticalScrollbarVisibility="Auto"   >
+                                VerticalScrollbarVisibility="Auto"   
+                                Background="Green" HeaderPanelMinHeight="25" RowMinHeight="25" ShowIndicator="False"    
+                                >
                         
                         <dxmvvm:Interaction.Behaviors>
                             <dxmvvm:EventToCommand
@@ -133,9 +135,9 @@
                 </dxg:GridControl.View>
 
 
-                <dxg:GridColumn Header="파일명" Width="20*" FieldName="Name" HorizontalHeaderContentAlignment="Center">
+                <dxg:GridColumn Header="파일명" Width="20*"  FieldName="Name" HorizontalHeaderContentAlignment="Center">
                     <dxg:GridColumn.EditSettings>
-                        <dxe:TextEditSettings HorizontalContentAlignment="Center"/>
+                        <dxe:TextEditSettings HorizontalContentAlignment="Left"/>
                     </dxg:GridColumn.EditSettings>
                 </dxg:GridColumn>
                 <dxg:GridColumn Header="사이즈" Width="7*" FieldName="Length" HorizontalHeaderContentAlignment="Center">
@@ -156,7 +158,7 @@
                         </DataTemplate>
                     </dxg:GridColumn.CellTemplate>
                 </dxg:GridColumn>
-                <dxg:GridColumn Header="삭제" Width="3*" FieldName="Extension" HorizontalHeaderContentAlignment="Center">
+                <dxg:GridColumn Header="삭제" Width="4*" FieldName="Extension" HorizontalHeaderContentAlignment="Center">
                     <dxg:GridColumn.CellTemplate>
                         <DataTemplate>
                             <Button Content="Del" Style="{DynamicResource ResourceKey=GrdDelButton}"
