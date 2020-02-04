@@ -35,8 +35,7 @@ namespace GTI.WFMS.Modules.Pipe.View
 
             this.txtFTR_CDE.EditValue = FTR_CDE;
             this.txtFTR_IDN.EditValue = FTR_IDN;
-
-
+            
             //강제이벤트 발생
             //BackCmd backCmd = new BackCmd(_backCmd);
             backEvent += new BackCmd(_backCmd);
@@ -61,11 +60,14 @@ namespace GTI.WFMS.Modules.Pipe.View
 
             DXTabItem tab02 = new DXTabItem();
             tab02.Header = "사진첨부";
+            tab02.Content = new PhotoFileMngView(FTR_CDE + FTR_IDN);
             tabSubMenu.Items.Add(tab02);
 
             DXTabItem tab03 = new DXTabItem();
             tab03.Header = "누수지점 및 복구내역";
             tabSubMenu.Items.Add(tab03);
+
+
         }
 
         // 목록으로 뒤로가기

@@ -76,11 +76,12 @@ namespace GTI.WFMS.Modules.Cnst.View
 
             DXTabItem tab05 = new DXTabItem();
             tab05.Header = "사진첨부";
-            tab05.Content = new RefFileMngView(CNT_NUM);
+            tab05.Content = new PhotoFileMngView(CNT_NUM);            
             tabSubMenu.Items.Add(tab05);
 
             DXTabItem tab06 = new DXTabItem();
             tab06.Header = "참조자료";
+            tab06.Content = new RefFileMngView(CNT_NUM);
             tabSubMenu.Items.Add(tab06);
 
 
