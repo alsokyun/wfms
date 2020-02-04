@@ -116,36 +116,35 @@ namespace GTI.WFMS.Modules.Link.View
                     //저장버튼으로 닫힘
                     if (!FmsUtil.IsNull(pFIL_SEQ))
                     {
-                        Hashtable param = new Hashtable();
-
-                        param.Add("sqlId", "SaveFileMap");
-                        param.Add("BIZ_ID", this.BIZ_ID);
-                        param.Add("FIL_SEQ", Convert.ToInt32(pFIL_SEQ));
-                        param.Add("GRP_TYP", "111");                        
-                        param.Add("TIT_NAM", "사진첨부");
-                        param.Add("UPD_YMD", sToDay);
-                        param.Add("UPD_USR", Logs.strLogin_ID);
-                        param.Add("CTNT", "");
-
                         if (FmsUtil.IsNull(this.FIL_SEQ))
                         {
+                            Hashtable param = new Hashtable();
+
+                            param.Add("sqlId", "SaveFileMap");
+                            param.Add("BIZ_ID", this.BIZ_ID);
+                            param.Add("FIL_SEQ", Convert.ToInt32(pFIL_SEQ));
+                            param.Add("GRP_TYP", "111");
+                            param.Add("TIT_NAM", "사진첨부");
+                            param.Add("UPD_YMD", sToDay);
+                            param.Add("UPD_USR", Logs.strLogin_ID);
+                            param.Add("CTNT", "");
+
                             param.Add("CRE_YMD", sToDay);
                             param.Add("CRE_USR", Logs.strLogin_ID);
+
+                            //저장처리
+                            try
+                            {
+                                BizUtil.Update(param);
+
+                            }
+                            catch (Exception ex)
+                            {
+                                Messages.ShowErrMsgBox("저장 처리중 오류가 발생하였습니다." + ex.ToString());
+                                return;
+                            }
                         }
 
-                        //저장처리
-                        try
-                        {
-                            BizUtil.Update(param);
-                        }
-                        catch (Exception ex)
-                        {
-                            Messages.ShowErrMsgBox("저장 처리중 오류가 발생하였습니다." + ex.ToString());
-                            return;
-                        }
-
-                        //저장처리 성공
-                        Messages.ShowOkMsgBox();
                         InitModel();
                     }
                     //닫기버튼으로 닫힘
