@@ -33,6 +33,37 @@ namespace GTI.WFMS.Models.Common
         }
     }
 
+
+    /// <summary>
+    /// 토글스위치 매핑컨버터 - alsokyun
+    /// </summary>
+    public class Toggle3Converter : IValueConverter
+    {
+        public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
+        {
+            if ("Y".Equals(value))
+            {
+                return "Visible";
+            }
+            else
+            {
+                return "Hidden";
+            }
+        }
+
+        public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
+        {
+            bool val = (bool)value;
+            if (val)
+                return "Y";
+            else
+                return "N";
+
+        }
+    }
+
+
+
     /// <summary>
     /// 토글스위치 매핑컨버터 (1/0)- alsokyun
     /// </summary>
@@ -60,6 +91,7 @@ namespace GTI.WFMS.Models.Common
 
         }
     }
+
 
     /// <summary>
     /// Rownumber 컨버터 - alsokyun

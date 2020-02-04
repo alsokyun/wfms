@@ -30,7 +30,7 @@
     <Page.Resources>
         <ResourceDictionary>
             <cm:MultiValueConverter x:Key="multiValueConverter"/>
-            <cv:Toggle2Converter x:Key="toggleConverter" />
+            <cv:Toggle3Converter x:Key="toggleConverter" />
         </ResourceDictionary>
     </Page.Resources>
 
@@ -242,7 +242,7 @@
                     <DataTemplate>
                         <Button Style="{DynamicResource ResourceKey=PositionButton}" 
                                 Command="{Binding View.DataContext.cellPosCmd}" CommandParameter="{Binding RowData.Row}"
-                                Visibility="{Binding RowData.IS_GEOMETRY, Converter={StaticResource ResourceKey=toggleConverter}}">
+                                Visibility="{Binding RowData.Row.IS_GEOMETRY, Converter={StaticResource ResourceKey=toggleConverter}}" Margin="6,1,9,1">
                         </Button>
                     </DataTemplate>
                 </dxg:GridColumn.CellTemplate>

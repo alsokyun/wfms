@@ -471,7 +471,7 @@ namespace GTI.WFMS.GIS
                         // Select each feature.
                         _featureLayer.SelectFeature(feature);
                         //해당피처로 이동
-                        await mapView.SetViewpointCenterAsync(feature.Geometry.Extent.GetCenter(), 10000);
+                        await mapView.SetViewpointCenterAsync(feature.Geometry.Extent.GetCenter(), 20000);
                     }
 
                     // Zoom to the extent of the selected feature(s).

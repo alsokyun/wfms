@@ -160,7 +160,16 @@ namespace GTI.WFMS.Modules.Pipe.ViewModel
                 DataRowView row = obj as DataRowView;
                 string FTR_IDN = row["FTR_IDN"].ToString();
                 string FTR_CDE = row["FTR_CDE"].ToString();
+                string IS_GEOMETRY = row["IS_GEOMETRY"].ToString();
+
                 //MessageBox.Show("지도상 위치찾아가기..FTR_IDN - " + FTR_IDN + ", FTR_CDE - " + FTR_CDE);
+
+                if ("IS_GEOMETRY".Equals(IS_GEOMETRY))
+                {
+                    Messages.ShowInfoMsgBox("시설물 위치정보가 없습니다.");
+                    return;
+                }
+
 
                 IRegionManager regionManager = FmsUtil.__regionManager;
                 ViewsCollection views = regionManager.Regions["ContentRegion"].ActiveViews as ViewsCollection;
