@@ -56,7 +56,7 @@ namespace GTI.WFMS.Modules.Mntc.View
             param.Add("FTR_CDE", FTR_CDE);
             param.Add("FTR_IDN", FTR_IDN);
             param.Add("SEQ", SEQ);
-            param.Add("PDT_CAT_CDE", "PDT_CAT_CDE002"); //소모품
+            param.Add("PDT_CAT_CDE", "PDT02"); //소모품
             
 
             dt = BizUtil.SelectList(param);
@@ -86,7 +86,7 @@ namespace GTI.WFMS.Modules.Mntc.View
             param["sqlId"] = "SelectPdhList";
             param["ValueMember"] = "PDH_NUM";
             param["DisplayMember"] = "PDT_NAM";
-            param["PDT_CAT_CDE"] = "PDT_CAT_CDE002"; //오일류
+            param["PDT_CAT_CDE"] = "PDT02"; //오일류
             obj.ItemsSource = BizUtil.GetCombo(param);
 
             obj.SelectedIndexChanged += OnSelectedIndexChanged;

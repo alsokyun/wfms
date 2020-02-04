@@ -1,0 +1,116 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<sqlMap namespace="Main" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://ibatis.apache.org/mapping">
+  <statements>
+
+    <!--예비품/소모품 목록-->
+    <select id="SelectPdjtMaMngList" parameterClass="Hashtable" resultClass="Hashtable">
+      SELECT A.PDH_NUM
+      , A.PDT_CAT_CDE
+      , A.PDT_NAM
+      , A.PDE_NAM
+      , A.PDT_MDL_STD
+      , A.PDT_MNF
+      , A.PDT_MDL
+      , A.PDT_UNT
+      , NVL(A.USE_YN,'N') as USE_YN
+      , to_char(A.CRE_YMD,'YYYY-MM-DD HH24:MI:DD') AS CRE_YMD
+      , A.CRE_USR
+      , to_char(A.UDT_YMD,'YYYY-MM-DD HH24:MI:DD') AS UDT_YMD
+      , A.UDT_USR
+      , NULL AS CHK
+      , (SELECT COUNT(1) FROM FMS_PDJT_IN_HT WHERE PDH_NUM = A.PDH_NUM) AS CNT
+      FROM FMS_PDJT_MA A
+      WHERE 1=1
+
+      <isNotEmpty prepend="AND" property="PDT_NAM">
+        PDT_NAM like '%' ||  #PDT_NAM# || '%'
+      </isNotEmpty>
+      <isNotEmpty prepend="AND" property="PDT_MDL_STD">
+        PDT_MDL_STD like '%' ||  #PDT_MDL_STD# || '%'
+      </isNotEmpty>
+      <isNotEmpty prepend="AND" property="PDT_MNF">
+        PDT_MNF like '%' ||  #PDT_MNF# || '%'
+      </isNotEmpty>
+      <isNotEmpty prepend="AND" property="PDT_CAT_CDE">
+        PDT_CAT_CDE = #PDT_CAT_CDE#
+      </isNotEmpty>
+      ORDER BY PDH_NUM DESC
+    </select>
+
+
+    <!--소모품삭제-->
+    <update id="DeletePdjtMa" parameterClass="Hashtable">
+      DELETE FROM FMS_PDJT_MA WHERE 
+      PDH_NUM = #PDH_NUM#
+    </update>
+
+
+    <!--소모품저장-->
+    <update id="SavePdjtMa" parameterClass="Hashtable">
+      MERGE INTO FMS_PDJT_MA USING DUAL
+      ON (PDH_NUM = #PDH_NUM#)
+      
+      WHEN MATCHED THEN
+        UPDATE SET UDT_USR = #ID#
+      <isNotEmpty property="PDT_CAT_CDE">
+      , PDT_CAT_CDE = #PDT_CAT_CDE#
+      </isNotEmpty>
+      <isNotEmpty property="PDT_NAM">
+      , PDT_NAM  = #PDT_NAM#
+      </isNotEmpty>
+      <isNotEmpty property="PDE_NAM">
+      , PDE_NAM = #PDE_NAM#
+      </isNotEmpty>
+      <isNotEmpty property="PDT_MDL_STD">
+      , PDT_MDL_STD = #PDT_MDL_STD#
+      </isNotEmpty>
+      <isNotEmpty property="PDT_MNF">
+      , PDT_MNF = #PDT_MNF#
+      </isNotEmpty>
+      <isNotEmpty property="PDT_MDL">
+      , PDT_MDL = #PDT_MDL#
+      </isNotEmpty>
+      <isNotEmpty property="PDT_UNT">
+      , PDT_UNT = #PDT_UNT#
+      </isNotEmpty>
+      <isNotEmpty property="USE_YN">
+      , USE_YN  = nvl(#USE_YN#, 'Y')
+      </isNotEmpty>
+      , UDT_YMD = sysdate
+
+      WHEN NOT MATCHED THEN
+      INSERT (
+      PDH_NUM
+      , PDT_CAT_CDE
+      , PDT_NAM
+      , PDE_NAM
+      , PDT_MDL_STD
+      , PDT_MNF
+      , PDT_MDL
+      , PDT_UNT
+      , USE_YN
+      , CRE_YMD
+      , CRE_USR
+      , UDT_YMD
+      , UDT_USR )
+      VALUES (
+      NVL((SELECT NVL(MAX(PDH_NUM),0) + 1 FROM FMS_PDJT_MA),1)
+      , #PDT_CAT_CDE#
+      , #PDT_NAM#
+      , #PDE_NAM#
+      , #PDT_MDLStd#
+      , #PDT_MNF#
+      , #PDT_MDL#
+      , #PDT_UNT#
+      , nvl(#USE_YN#, 'Y')
+      , sysdate
+      , #ID#
+      , sysdate
+      , #ID#
+      )
+    </update>
+
+    
+  </statements>
+  
+</sqlMap>

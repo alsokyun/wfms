@@ -11,6 +11,7 @@
             xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
             xmlns:cv="clr-namespace:GTI.WFMS.Models.Common;assembly=GTI.WFMS.Models"
             xmlns:system="clr-namespace:System;assembly=mscorlib"
+            x:Name="mapMainView"
              >
 
     <!--뷰의 데이터컨텍스트 세팅-->
@@ -66,6 +67,7 @@
                         </i:EventTrigger>
                     </i:Interaction.Triggers>
                 </Button>
+                <!--기타버튼:사용안함
                 <Button x:Name="ClearButton" 
                         Content="Clear" IsEnabled="False"
                         Command="{Binding clearCmd}"/>
@@ -81,6 +83,7 @@
                 <Button x:Name="CancelButton" 
                     Content="Cancel"
                     Command="{Binding CancelCommand}"/>
+                -->
 
             </StackPanel>
         </Grid>

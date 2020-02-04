@@ -8,8 +8,6 @@
              mc:Ignorable="d" 
              d:DesignHeight="300" d:DesignWidth="900"
              
-             xmlns:vm="clr-namespace:GTI.WFMS.Modules.Mntc.ViewModel"
-             xmlns:cm="clr-namespace:GTIFramework.Common.Utils.Converters;assembly=GTIFramework"
              xmlns:cv="clr-namespace:GTI.WFMS.Models.Common;assembly=GTI.WFMS.Models"
              >
 

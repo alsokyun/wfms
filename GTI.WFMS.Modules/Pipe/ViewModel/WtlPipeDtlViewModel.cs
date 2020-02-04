@@ -166,6 +166,7 @@ namespace GTI.WFMS.Modules.Pipe.ViewModel
                 return;
             }
             Messages.ShowOkMsgBox();
+            //FmsUtil.__popMain.IsOpen = true;
 
         }
 

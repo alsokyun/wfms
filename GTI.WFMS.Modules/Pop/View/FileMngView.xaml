@@ -5,9 +5,10 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              
             xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
-            xmlns:cv="clr-namespace:GTI.WFMS.Models.FileUtils;assembly=GTI.WFMS.Models"
+            xmlns:cf="clr-namespace:GTI.WFMS.Models.FileUtils;assembly=GTI.WFMS.Models"
             xmlns:cm="clr-namespace:GTIFramework.Common.Utils.Converters;assembly=GTIFramework"
             xmlns:vd="clr-namespace:GTI.WFMS.Modules.Pop.ViewModel"
+            xmlns:cv="clr-namespace:GTI.WFMS.Models.Common;assembly=GTI.WFMS.Models"
        
             mc:Ignorable="d" 
             d:DesignHeight="200" d:DesignWidth="450"
@@ -27,7 +28,10 @@
     <Window.Resources>
         <ResourceDictionary>
             <cm:MultiValueConverter x:Key="multiValueConverter"/>
-            <!--그리드헤서스타일-->
+            <cv:RownumConverter x:Key="rownumConverter" />
+
+
+            <!--그리드헤더스타일-->
             <Style TargetType="dxg:GridColumnHeader">
                 <Setter Property="Background" Value="#192942"/>
                 <Setter Property="Foreground" Value="White"/>
@@ -77,7 +81,7 @@
 
 
 
-        <Grid Grid.Row="2" x:Name="gridContent" >
+        <Grid Grid.Row="2" x:Name="gridContent" Margin="5 0 5 0">
 
             <dxg:GridControl AutoGenerateColumns="AddNew"
                         EnableSmartColumnsGeneration="False"
@@ -94,30 +98,35 @@
                         
                         <dxmvvm:Interaction.Behaviors>
                             <dxmvvm:EventToCommand
-                        Command="{Binding DragRecordOverCommand}"
-                        EventArgsConverter="{cv:DragRecordOverEventArgsConverter}"
-                        EventName="DragRecordOver"
-                        PassEventArgsToCommand="True" />
+                                Command="{Binding DragRecordOverCommand}"
+                                EventArgsConverter="{cf:DragRecordOverEventArgsConverter}"
+                                EventName="DragRecordOver"
+                                PassEventArgsToCommand="True" />
+
                             <dxmvvm:EventToCommand
-                        Command="{Binding DropRecordCommand}"
-                        EventArgsConverter="{cv:DropRecordEventArgsConverter}"
-                        EventName="DropRecord"
-                        PassEventArgsToCommand="True" />
+                                Command="{Binding DropRecordCommand}"
+                                EventArgsConverter="{cf:DropRecordEventArgsConverter}"
+                                EventName="DropRecord"
+                                PassEventArgsToCommand="True" />
+
                             <dxmvvm:EventToCommand
-                        Command="{Binding StartRecordDragCommand}"
-                        EventArgsConverter="{cv:StartRecordDragEventArgsConverter}"
-                        EventName="StartRecordDrag"
-                        PassEventArgsToCommand="True" />
+                                Command="{Binding StartRecordDragCommand}"
+                                EventArgsConverter="{cf:StartRecordDragEventArgsConverter}"
+                                EventName="StartRecordDrag"
+                                PassEventArgsToCommand="True" />
+
                             <dxmvvm:EventToCommand
-                        Command="{Binding GiveRecordDragFeedbackCommand}"
-                        EventArgsConverter="{cv:GiveRecordDragFeedbackEventArgsConverter}"
-                        EventName="GiveRecordDragFeedback"
-                        PassEventArgsToCommand="True" />
+                                Command="{Binding GiveRecordDragFeedbackCommand}"
+                                EventArgsConverter="{cf:GiveRecordDragFeedbackEventArgsConverter}"
+                                EventName="GiveRecordDragFeedback"
+                                PassEventArgsToCommand="True" />
+
                             <dxmvvm:EventToCommand
-                        Command="{Binding CompleteRecordDragDropCommand}"
-                        EventArgsConverter="{cv:CompleteRecordDragDropEventArgsConverter}"
-                        EventName="CompleteRecordDragDrop"
-                        PassEventArgsToCommand="True" />
+                                Command="{Binding CompleteRecordDragDropCommand}"
+                                EventArgsConverter="{cf:CompleteRecordDragDropEventArgsConverter}"
+                                EventName="CompleteRecordDragDrop"
+                                PassEventArgsToCommand="True" />    
+                            
                         </dxmvvm:Interaction.Behaviors>
 
                     </dxg:TableView>
@@ -142,16 +151,16 @@
                 <dxg:GridColumn Header="다운로드" Width="5*" FieldName="" HorizontalHeaderContentAlignment="Center">
                     <dxg:GridColumn.CellTemplate>
                         <DataTemplate>
-                            <Button Content="DownLoad" Style="{DynamicResource ResourceKey=GrdRegButton}"
+                            <Button Content="DownLoad" Style="{DynamicResource ResourceKey=GrdDownButton}"
                                     Command="{Binding View.DataContext.DownloadCmd}" CommandParameter="{Binding RowData.Row.Name}" />
                         </DataTemplate>
                     </dxg:GridColumn.CellTemplate>
                 </dxg:GridColumn>
-                <dxg:GridColumn Header="삭제" Width="3*" FieldName="" HorizontalHeaderContentAlignment="Center">
+                <dxg:GridColumn Header="삭제" Width="3*" FieldName="Extension" HorizontalHeaderContentAlignment="Center">
                     <dxg:GridColumn.CellTemplate>
                         <DataTemplate>
-                            <Button Content="" Style="{DynamicResource ResourceKey=GrdDelButton}"
-                                    Command="{Binding View.DataContext.RemoveCmd}" CommandParameter="{Binding RowData.Row.FullName}"/>
+                            <Button Content="Del" Style="{DynamicResource ResourceKey=GrdDelButton}"
+                                    Command="{Binding View.DataContext.DelCmd}" CommandParameter="{Binding RowData.RowHandle.Value, Converter={StaticResource rownumConverter}}"/>
                         </DataTemplate>
                     </dxg:GridColumn.CellTemplate>
                 </dxg:GridColumn>
@@ -189,13 +198,7 @@
     <!--뷰와 연결된 뷰모델로 Loaded 이벤트전파-->
     <i:Interaction.Triggers>
         <i:EventTrigger EventName="Loaded">
-            <i:InvokeCommandAction Command="{Binding LoadedCommand}">
-                <i:InvokeCommandAction.CommandParameter>
-                    <MultiBinding Converter="{StaticResource multiValueConverter}">
-                        <Binding ElementName="fileMngView"/>
-                    </MultiBinding>
-                </i:InvokeCommandAction.CommandParameter>
-            </i:InvokeCommandAction>
+            <i:InvokeCommandAction Command="{Binding LoadedCommand}" CommandParameter="{Binding ElementName=fileMngView}"/>
         </i:EventTrigger>
     </i:Interaction.Triggers>
 

@@ -543,6 +543,8 @@
     <Resource Include="Resources\Navy\Images\Image\btn_print_on.png" />
     <Resource Include="Resources\Navy\Images\Image\icon_pos.png" />
     <Resource Include="Resources\Navy\Images\Image\icon_position.png" />
+    <Resource Include="Resources\Navy\Images\Image\btn_xs_down.png" />
+    <Resource Include="Resources\Navy\Images\Image\btn_xs_down_on.png" />
     <Content Include="Styles\Fonts\malgun.ttf">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>

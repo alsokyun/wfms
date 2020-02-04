@@ -8,7 +8,7 @@
     <OutputType>Library</OutputType>
     <RootNamespace>GTI.WFMS.Modules</RootNamespace>
     <AssemblyName>GTI.WFMS.Modules</AssemblyName>
-    <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <AutoGenerateBindingRedirects>false</AutoGenerateBindingRedirects>
     <Deterministic>true</Deterministic>
@@ -274,7 +274,15 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Main\View\PopWinView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
     <Page Include="Mntc\View\ChkSchDtlView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Mntc\View\PdjtMngListView.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
@@ -547,10 +555,17 @@
     <Compile Include="Main\PopMain.xaml.cs">
       <DependentUpon>PopMain.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Main\ViewModel\PopWinViewModel.cs" />
+    <Compile Include="Main\View\PopWinView.xaml.cs">
+      <DependentUpon>PopWinView.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Mntc\ViewModel\ChkSchDtlViewModel.cs" />
     <Compile Include="Mntc\ViewModel\ChkSchListViewModel.cs" />
     <Compile Include="Mntc\View\ChkSchDtlView.xaml.cs">
       <DependentUpon>ChkSchDtlView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Mntc\View\PdjtMngListView.xaml.cs">
+      <DependentUpon>PdjtMngListView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Mntc\View\ChkSchListView.xaml.cs">
       <DependentUpon>ChkSchListView.xaml</DependentUpon>
@@ -675,6 +690,10 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\GTI.WFMS.GIS\GTI.WFMS.GIS.csproj">
+      <Project>{28bcab02-61d3-4afc-be3a-713f062d3923}</Project>
+      <Name>GTI.WFMS.GIS</Name>
+    </ProjectReference>
     <ProjectReference Include="..\GTI.WFMS.Models\GTI.WFMS.Models.csproj">
       <Project>{f098cedb-9897-4ad2-8323-2405ef88e192}</Project>
       <Name>GTI.WFMS.Models</Name>

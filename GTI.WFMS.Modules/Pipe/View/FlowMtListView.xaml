@@ -249,7 +249,7 @@
                 <dxg:GridColumn.CellTemplate>
                     <DataTemplate>
                         <Button Style="{DynamicResource ResourceKey=PositionButton}" 
-                                Command="{Binding View.DataContext.cellPosCmd}" CommandParameter="{Binding RowData.Row.FTR_IDN}">
+                                Command="{Binding View.DataContext.cellPosCmd}" CommandParameter="{Binding RowData.Row}">
                         </Button>
                     </DataTemplate>
                 </dxg:GridColumn.CellTemplate>
