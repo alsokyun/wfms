@@ -19,50 +19,74 @@
         <cv:Date3StrConverter x:Key="date2StrConverter" />
     </UserControl.Resources>
 
-    <dxlc:FlowLayoutControl x:Name="layoutImages"
-                            ItemsSource="{Binding Images}"
-                            AllowItemMoving="True"
-                            AllowLayerSizing="True"
-                            AllowMaximizedElementMoving="True"
-                            AnimateItemMoving="True"
-                            DragScrolling="False"
-                            Background="#293e5a"
-                            ShowLayerSeparators="True"
-                            ItemsSizeChanged="layoutImagesItemsSizeChanged">
-        
-        <dxlc:FlowLayoutControl.ItemTemplate>
-            <DataTemplate>
-                <local:ImageContainer Content="{Binding}" Width="200" Height="200" HorizontalAlignment="Center" VerticalAlignment="Center" Cursor="Hand">
-                    <local:ImageContainer.Template>
-                        <ControlTemplate TargetType="local:ImageContainer">
-                            <Image x:Name="root" Source="{TemplateBinding Content}" RenderTransformOrigin="0.5,0.5">
-                                <Image.RenderTransform>
-                                    <ScaleTransform />
-                                </Image.RenderTransform>
-                                <VisualStateManager.VisualStateGroups>
-                                    <VisualStateGroup x:Name="CommonStates">
-                                        <VisualStateGroup.Transitions>
-                                            <VisualTransition To="MouseOver" GeneratedDuration="0:0:0.075" />
-                                            <VisualTransition From="MouseOver" GeneratedDuration="0:0:0.05" />
-                                        </VisualStateGroup.Transitions>
 
-                                        <VisualState x:Name="Normal" />
-                                        <VisualState x:Name="MouseOver">
-                                            <Storyboard>
-                                                <DoubleAnimation Storyboard.TargetName="root" Storyboard.TargetProperty="(RenderTransform).ScaleX" To="1.03" Duration="0" />
-                                                <DoubleAnimation Storyboard.TargetName="root" Storyboard.TargetProperty="(RenderTransform).ScaleY" To="1.03" Duration="0" />
-                                            </Storyboard>
-                                        </VisualState>
-                                        <VisualState x:Name="Pressed" />
-                                    </VisualStateGroup>
-                                </VisualStateManager.VisualStateGroups>
-                            </Image>
-                        </ControlTemplate>
-                    </local:ImageContainer.Template>
-                </local:ImageContainer>
-            </DataTemplate>
-        </dxlc:FlowLayoutControl.ItemTemplate>
-    </dxlc:FlowLayoutControl>
+    <Grid>
+
+        <Grid.RowDefinitions>
+            <RowDefinition Height="30" />
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+
+
+        <StackPanel Grid.Row="0" Orientation="Horizontal" HorizontalAlignment="Right" Margin="0 0 5 3">
+            <Button x:Name="btnReg" Style="{DynamicResource ResourceKey=GrdAddButton}" Content="사진파일관리" Click="BtnAdd_Click"  />
+        </StackPanel>
+
+
+        <Grid  Grid.Row="1" Background="{DynamicResource ResourceKey=BorderGridCOLOR2Brush}">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="211*"/>
+                <ColumnDefinition Width="14*"/>
+            </Grid.ColumnDefinitions>
+
+            <dxlc:FlowLayoutControl x:Name="layoutImages"
+                            ItemsSource="{Binding Images}"
+                            AllowItemMoving="False"
+                            AllowLayerSizing="False"
+                            AllowMaximizedElementMoving="False"
+                            AnimateItemMoving="False"
+                            DragScrolling="False"
+                            Background="#e0ebeb"
+                            ShowLayerSeparators="False"                       
+                            ItemsSizeChanged="layoutImagesItemsSizeChanged" Grid.ColumnSpan="2">
+
+                <dxlc:FlowLayoutControl.ItemTemplate>
+                    <DataTemplate>
+                        <local:ImageContainer Content="{Binding}" Width="200" Height="200" HorizontalAlignment="Center" VerticalAlignment="Center" Cursor="Hand">
+                            <local:ImageContainer.Template>
+                                <ControlTemplate TargetType="local:ImageContainer">
+                                    <Image x:Name="root" Source="{TemplateBinding Content}" RenderTransformOrigin="0.5,0.5">
+                                        <Image.RenderTransform>
+                                            <ScaleTransform />
+                                        </Image.RenderTransform>
+                                        <VisualStateManager.VisualStateGroups>
+                                            <VisualStateGroup x:Name="CommonStates">
+                                                <VisualStateGroup.Transitions>
+                                                    <VisualTransition To="MouseOver" GeneratedDuration="0:0:0.075" />
+                                                    <VisualTransition From="MouseOver" GeneratedDuration="0:0:0.05" />
+                                                </VisualStateGroup.Transitions>
+
+                                                <VisualState x:Name="Normal" />
+                                                <VisualState x:Name="MouseOver">
+                                                    <Storyboard>
+                                                        <DoubleAnimation Storyboard.TargetName="root" Storyboard.TargetProperty="(RenderTransform).ScaleX" To="1.03" Duration="0" />
+                                                        <DoubleAnimation Storyboard.TargetName="root" Storyboard.TargetProperty="(RenderTransform).ScaleY" To="1.03" Duration="0" />
+                                                    </Storyboard>
+                                                </VisualState>
+                                                <VisualState x:Name="Pressed" />
+                                            </VisualStateGroup>
+                                        </VisualStateManager.VisualStateGroups>
+                                    </Image>
+                                </ControlTemplate>
+                            </local:ImageContainer.Template>
+                        </local:ImageContainer>
+                    </DataTemplate>
+                </dxlc:FlowLayoutControl.ItemTemplate>
+            </dxlc:FlowLayoutControl>
+
+        </Grid>
+
+    </Grid>
 
 
 </UserControl>

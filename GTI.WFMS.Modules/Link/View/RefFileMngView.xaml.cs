@@ -29,6 +29,12 @@ namespace GTI.WFMS.Modules.Link.View
             this.BIZ_ID = _BIZ_ID;
 
 
+            InitModel();
+
+        }
+
+        private void InitModel()
+        {
             //초기조회
             DataTable dt = new DataTable();
 
@@ -46,7 +52,7 @@ namespace GTI.WFMS.Modules.Link.View
 
 
 
-        
+
 
         /// <summary>
         /// 헤더 All 체크
@@ -191,11 +197,14 @@ namespace GTI.WFMS.Modules.Link.View
                     }
 
                     Messages.ShowOkMsgBox();
+                    InitModel();
                 }
             }
             catch (Exception ex)
             {
                 Messages.ShowErrMsgBoxLog(ex);
+                InitModel();
+
             }
         }
 
@@ -249,6 +258,7 @@ namespace GTI.WFMS.Modules.Link.View
             }
             //저장처리 성공
             Messages.ShowOkMsgBox();
+            InitModel();
 
         }
 
@@ -298,6 +308,7 @@ namespace GTI.WFMS.Modules.Link.View
             catch (Exception ex)
             {
                 Messages.ShowErrMsgBox(ex.ToString());
+
             }
         }
 

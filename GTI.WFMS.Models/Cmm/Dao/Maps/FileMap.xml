@@ -130,28 +130,26 @@
 
     <!-- BizId 첨부파일 목록	 -->
     <select id="SelectBizIdFileDtl"  resultClass="Hashtable">
-      SELECT
-      SEQ
-      , FIL_SEQ
-      , DWN_NAM
-      , UPF_NAM
-      , FIL_PTH
-      , FIL_TYP
-      , FIL_SIZ
-      , FIL_RST
-      , CUR_TFS
-      , CRE_YMD
-      , CRE_USR
-      , UPD_YMD
-      , UPD_USR
-      FROM FMS_FILE_DTL
+      SELECT B.SEQ
+      , A.FIL_SEQ
+      , B.DWN_NAM
+      , B.UPF_NAM
+      , B.FIL_PTH
+      , B.FIL_TYP
+      , B.FIL_SIZ
+      , B.FIL_RST
+      , B.CUR_TFS
+      , B.CRE_YMD
+      , B.CRE_USR
+      , B.UPD_YMD
+      , B.UPD_USR
+      FROM INFOFMS.FMS_FILE_MAP A
+           LEFT JOIN FMS_FILE_DTL B ON (A.FIL_SEQ = B.FIL_SEQ )
       WHERE 1=1
-      AND FIL_SEQ = (SELECT FIL_SEQ FROM INFOFMS.FMS_FILE_MAP WHERE BIZ_ID = #BIZ_ID# AND GRP_TYP = '111' AND ROWNUM = 1)
+      AND A.BIZ_ID = #BIZ_ID#
+      AND A.GRP_TYP = '111'
       <isNotEmpty property="FIL_SEQ">
-      AND FIL_SEQ = #FIL_SEQ#
-      </isNotEmpty>
-      <isNotEmpty property="SEQ">
-        AND SEQ = #SEQ#
+      AND A.FIL_SEQ = #FIL_SEQ#
       </isNotEmpty>
     </select>
     
