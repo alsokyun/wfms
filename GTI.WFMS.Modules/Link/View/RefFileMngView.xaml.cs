@@ -29,27 +29,30 @@ namespace GTI.WFMS.Modules.Link.View
             this.BIZ_ID = _BIZ_ID;
 
 
+            //초기조회
             InitModel();
 
         }
 
+
+
+
+        //초기조회
         private void InitModel()
         {
-            //초기조회
             DataTable dt = new DataTable();
 
             Hashtable param = new Hashtable();
             param.Add("sqlId", "SelectFileMapList");
 
             param.Add("BIZ_ID", BIZ_ID);
+            param.Add("GRP_TYP", "112"); //일반파일
+
 
             dt = BizUtil.SelectList(param);
             grid.ItemsSource = dt;
 
         }
-
-
-
 
 
 
@@ -233,6 +236,7 @@ namespace GTI.WFMS.Modules.Link.View
                     param.Add("BIZ_ID", BIZ_ID);
                     param.Add("FIL_SEQ", Convert.ToInt32(row["FIL_SEQ"]));
 
+                    param.Add("GRP_TYP", "112"); //일반파일
                     param.Add("TIT_NAM", row["TIT_NAM"].ToString());
                     param.Add("UPD_YMD", row["UPD_YMD"].ToString());
                     param.Add("UPD_USR", row["UPD_USR"].ToString());
