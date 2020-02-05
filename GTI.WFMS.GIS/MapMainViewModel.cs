@@ -438,6 +438,7 @@ namespace GTI.WFMS.GIS
             try
             {
                 // 0.Feature 테이블 가져오기
+                //FeatureLayer __featureLayer = _featureLayer.Clone() as FeatureLayer;
                 FeatureTable _featureTable = _featureLayer.FeatureTable;
 
 
