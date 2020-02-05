@@ -16,9 +16,7 @@
         xmlns:cm="clr-namespace:GTIFramework.Common.Utils.Converters;assembly=GTIFramework"
         xmlns:cv="clr-namespace:GTI.WFMS.Models.Common;assembly=GTI.WFMS.Models"     
         xmlns:common="clr-namespace:GTI.WFMS.Models.Common;assembly=GTI.WFMS.Models"
-        x:Name="wtsMnhoListView"
-
-      >
+        x:Name="wtsMnhoListView" >
 
     <!--뷰모델연결처리
     -->
@@ -339,7 +337,7 @@
         </dxe:DataPager>
 
 
-        <Button Grid.Row="2" Grid.Column="2" Content="VM생성" Width="50" Height="30" HorizontalAlignment="Left">
+        <Button Grid.Row="2" Grid.Column="2" Content="VM생성" Width="50" Height="30" HorizontalAlignment="Left" Visibility="Hidden">
             <i:Interaction.Triggers>
                 <i:EventTrigger EventName="Click">
                     <i:InvokeCommandAction Command="{Binding btnCmd}" />

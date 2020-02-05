@@ -15,9 +15,8 @@
         xmlns:vm="clr-namespace:GTI.WFMS.Modules.Pipe.ViewModel"
         xmlns:cm="clr-namespace:GTIFramework.Common.Utils.Converters;assembly=GTIFramework"
         xmlns:common="clr-namespace:GTI.WFMS.Models.Common;assembly=GTI.WFMS.Models"
-        x:Name="wtprMtListView"
-
-      >
+        xmlns:cv="clr-namespace:GTI.WFMS.Models.Common;assembly=GTI.WFMS.Models" 
+        x:Name="wtprMtListView" >
 
     <!--뷰모델연결처리
     -->
@@ -29,6 +28,7 @@
     <Page.Resources>
         <ResourceDictionary>
             <cm:MultiValueConverter x:Key="multiValueConverter"/>
+            <cv:Toggle3Converter x:Key="toggleConverter" />
         </ResourceDictionary>
     </Page.Resources>
 
@@ -249,7 +249,8 @@
                 <dxg:GridColumn.CellTemplate>
                     <DataTemplate>
                         <Button Style="{DynamicResource ResourceKey=PositionButton}" 
-                                Command="{Binding View.DataContext.cellPosCmd}" CommandParameter="{Binding RowData.Row.FTR_IDN}">
+                                Command="{Binding View.DataContext.cellPosCmd}" CommandParameter="{Binding RowData.Row}"
+                                Visibility="{Binding RowData.Row.IS_GEOMETRY, Converter={StaticResource ResourceKey=toggleConverter}}" Margin="6,1,9,1">
                         </Button>
                     </DataTemplate>
                 </dxg:GridColumn.CellTemplate>
@@ -337,7 +338,7 @@
         </dxe:DataPager>
 
 
-        <Button Grid.Row="2" Grid.Column="2" Content="VM생성" Width="50" Height="30" HorizontalAlignment="Left">
+        <Button Grid.Row="2" Grid.Column="2" Content="VM생성" Width="50" Height="30" HorizontalAlignment="Left" Visibility="Hidden">
             <i:Interaction.Triggers>
                 <i:EventTrigger EventName="Click">
                     <i:InvokeCommandAction Command="{Binding btnCmd}" />
