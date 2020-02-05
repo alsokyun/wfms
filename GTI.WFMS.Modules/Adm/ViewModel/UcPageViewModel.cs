@@ -283,7 +283,7 @@ namespace GTI.WFMS.Modules.Adm
                     {
                         this.ItemCnt = (int)Math.Ceiling((double)Convert.ToInt16(dt.Rows[0]["ROWCNT"]) / FmsUtil.PageSize);
                     }
-                    catch (Exception e)
+                    catch (Exception )
                     {
                         this.ItemCnt = 0;
                     }
@@ -319,7 +319,7 @@ namespace GTI.WFMS.Modules.Adm
             // TotalCnt 설정
             try {
                 this.ItemCnt = (int)Math.Ceiling((double)Convert.ToInt16(dt.Rows[0]["ROWCNT"]) / FmsUtil.PageSize) ;
-            } catch (Exception e) {
+            } catch (Exception ) {
                 this.ItemCnt = 0;
             }
 

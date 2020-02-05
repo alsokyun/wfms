@@ -24,7 +24,6 @@ namespace GTI.WFMS.Modules.Acmf.View
     public partial class SupDutAddView : Page
     {
         public delegate void BackCmd(object sender, RoutedEventArgs e);
-        public event BackCmd backEvent;
 
         public SupDutAddView()
         {

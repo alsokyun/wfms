@@ -24,7 +24,6 @@ namespace GTI.WFMS.Modules.Fclt.View
     public partial class PrsPmpDtlView : Page
     {
         public delegate void BackCmd(object sender, RoutedEventArgs e);
-        public event BackCmd backEvent;
 
         public PrsPmpDtlView(string FTR_CDE, int FTR_IDN)
         {
@@ -37,12 +36,7 @@ namespace GTI.WFMS.Modules.Fclt.View
             this.txtFTR_IDN.EditValue = FTR_IDN;
 
 
-            //강제이벤트 발생
-            //BackCmd backCmd = new BackCmd(_backCmd);
-            backEvent += new BackCmd(_backCmd);
-            //backEvent(null, null);
-
-
+        
             //정상적인 버튼클릭 이벤트
             btnBack.Click += _backCmd;
             //btnBack.Click += delegate (object sender, RoutedEventArgs e) {

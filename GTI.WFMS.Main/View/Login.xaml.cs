@@ -242,7 +242,7 @@ namespace GTI.WFMS.Main.View
                 thread.Name = "thread";
                 thread.Start();
             }
-            catch (Exception ex)
+            catch (Exception )
             {
 
             }

@@ -24,7 +24,6 @@ namespace GTI.WFMS.Modules.Pipe.View
     public partial class WtprMtAddView : Page
     {
         public delegate void BackCmd(object sender, RoutedEventArgs e);
-        public event BackCmd backEvent;
 
         public WtprMtAddView()
         {

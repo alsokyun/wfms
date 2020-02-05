@@ -24,7 +24,6 @@ namespace GTI.WFMS.Modules.Cnst.View
     public partial class SplyDtlView : Page
     {
         public delegate void BackCmd(object sender, RoutedEventArgs e);
-        public event BackCmd backEvent;
 
         public SplyDtlView(string CNT_NUM)
         {
@@ -36,10 +35,6 @@ namespace GTI.WFMS.Modules.Cnst.View
             this.txtCNT_NUM.EditValue = CNT_NUM;
 
 
-            //강제이벤트 발생
-            //BackCmd backCmd = new BackCmd(_backCmd);
-            backEvent += new BackCmd(_backCmd);
-            //backEvent(null, null);
 
 
             //정상적인 버튼클릭 이벤트

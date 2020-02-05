@@ -36,28 +36,28 @@ namespace GTI.WFMS.Models.Cmm.Dao
                 ret = DBManager.QueryForTable(sqlId, conditions);
                 result.Add("dt", ret);
             }
-            catch (Exception e) { }
+            catch (Exception) { }
             try
             {
                 string sqlId = conditions["sqlId2"].ToString();
                 ret = DBManager.QueryForTable(sqlId, conditions);
                 result.Add("dt2", ret);
             }
-            catch (Exception e) { }
+            catch (Exception ) { }
             try
             {
                 string sqlId = conditions["sqlId4"].ToString();
                 ret = DBManager.QueryForTable(sqlId, conditions);
                 result.Add("dt4", ret);
             }
-            catch (Exception e) { }
+            catch (Exception ) { }
             try
             {
                 string sqlId = conditions["sqlId5"].ToString();
                 ret = DBManager.QueryForTable(sqlId, conditions);
                 result.Add("dt5", ret);
             }
-            catch (Exception e) { }
+            catch (Exception ) { }
 
             return result;
         }

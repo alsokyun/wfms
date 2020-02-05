@@ -24,7 +24,6 @@ namespace GTI.WFMS.Modules.Fclt.View
     public partial class FiltPltAddView : Page
     {
         public delegate void BackCmd(object sender, RoutedEventArgs e);
-        public event BackCmd backEvent;
 
         public FiltPltAddView()
         {

@@ -24,7 +24,6 @@ namespace GTI.WFMS.Modules.Acmf.View
     public partial class HydtMetrAddView : Page
     {
         public delegate void BackCmd(object sender, RoutedEventArgs e);
-        public event BackCmd backEvent;
 
         public HydtMetrAddView()
         {

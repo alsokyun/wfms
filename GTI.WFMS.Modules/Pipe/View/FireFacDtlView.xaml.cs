@@ -24,7 +24,6 @@ namespace GTI.WFMS.Modules.Pipe.View
     public partial class FireFacDtlView : Page
     {
         public delegate void BackCmd(object sender, RoutedEventArgs e);
-        public event BackCmd backEvent;
 
         public FireFacDtlView(string FTR_CDE, int FTR_IDN)
         {
@@ -38,7 +37,7 @@ namespace GTI.WFMS.Modules.Pipe.View
             
             //강제이벤트 발생
             //BackCmd backCmd = new BackCmd(_backCmd);
-            backEvent += new BackCmd(_backCmd);
+            //backEvent += new BackCmd(_backCmd);
             //backEvent(null, null);
 
 

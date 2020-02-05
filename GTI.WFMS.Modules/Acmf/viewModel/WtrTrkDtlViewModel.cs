@@ -147,7 +147,7 @@ namespace GTI.WFMS.Modules.Acmf.ViewModel
             {
                 BizUtil.Update2(this, "updateWtrTrkDtl");
             }
-            catch (Exception e)
+            catch (Exception )
             {
                 Messages.ShowErrMsgBox("저장 처리중 오류가 발생하였습니다.");
                 return;
@@ -218,7 +218,7 @@ namespace GTI.WFMS.Modules.Acmf.ViewModel
             }
             catch (Exception e)
             {
-                Messages.ShowErrMsgBox("삭제 처리중 오류가 발생하였습니다.");
+                Messages.ShowErrMsgBox("삭제 처리중 오류가 발생하였습니다." + e.Message);
                 return;
             }
             Messages.ShowOkMsgBox();

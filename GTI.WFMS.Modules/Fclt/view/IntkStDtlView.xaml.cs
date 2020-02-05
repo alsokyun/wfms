@@ -24,7 +24,6 @@ namespace GTI.WFMS.Modules.Fclt.View
     public partial class IntkStDtlView : Page
     {
         public delegate void BackCmd(object sender, RoutedEventArgs e);
-        public event BackCmd backEvent;
 
         public IntkStDtlView(string FTR_CDE, int FTR_IDN)
         {
@@ -36,11 +35,6 @@ namespace GTI.WFMS.Modules.Fclt.View
             this.txtFTR_CDE.EditValue = FTR_CDE;
             this.txtFTR_IDN.EditValue = FTR_IDN;
 
-
-            //강제이벤트 발생
-            //BackCmd backCmd = new BackCmd(_backCmd);
-            backEvent += new BackCmd(_backCmd);
-            //backEvent(null, null);
 
 
             //정상적인 버튼클릭 이벤트

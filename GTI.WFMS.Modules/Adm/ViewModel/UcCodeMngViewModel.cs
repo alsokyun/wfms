@@ -428,7 +428,7 @@ namespace GTI.WFMS.Modules.Adm
                                     ((DataTable)DTLgrid.ItemsSource).Rows.RemoveAt(i);
                                 }
                             }
-                            catch (Exception ex)
+                            catch (Exception )
                             {
                             }
                         }

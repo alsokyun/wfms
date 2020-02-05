@@ -24,7 +24,6 @@ namespace GTI.WFMS.Modules.Pipe.View
     public partial class FlowMtDtlView : Page
     {
         public delegate void BackCmd(object sender, RoutedEventArgs e);
-        public event BackCmd backEvent;
 
         public FlowMtDtlView(string FTR_CDE, int FTR_IDN)
         {
@@ -37,10 +36,6 @@ namespace GTI.WFMS.Modules.Pipe.View
             this.txtFTR_IDN.EditValue = FTR_IDN;
 
 
-            //강제이벤트 발생
-            //BackCmd backCmd = new BackCmd(_backCmd);
-            backEvent += new BackCmd(_backCmd);
-            //backEvent(null, null);
 
 
             //정상적인 버튼클릭 이벤트

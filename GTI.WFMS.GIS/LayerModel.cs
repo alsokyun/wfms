@@ -106,7 +106,7 @@ namespace GTI.WFMS.GIS
                     layerNm = ary[0]; //레이어테이블명
                     filterExp = ary[1]; //필터표현식
                 }
-                catch (Exception e) { }
+                catch (Exception ) { }
 
                 FeatureLayer layer = layers[_layerNm];
                 //Type memberType = this.GetType();
@@ -141,7 +141,7 @@ namespace GTI.WFMS.GIS
 
 
                             }
-                            catch (Exception e)
+                            catch (Exception )
                             {
                                 //throw e;
                             }
@@ -178,7 +178,7 @@ namespace GTI.WFMS.GIS
 
 
             }
-            catch (Exception e)
+            catch (Exception )
             {
                 MessageBox.Show("레이어가 존재하지 않습니다.");
             }
@@ -499,7 +499,7 @@ namespace GTI.WFMS.GIS
                     layerNm = ary[0]; //레이어테이블명
                     filterExp = ary[1]; //필터표현식
                 }
-                catch (Exception e) { }
+                catch (Exception ) { }
 
                 FeatureLayer layer = layers[layerNm];
                 //Type memberType = this.GetType();
@@ -599,7 +599,7 @@ namespace GTI.WFMS.GIS
 
 
             }
-            catch (Exception e)
+            catch (Exception )
             {
                 MessageBox.Show("레이어가 존재하지 않습니다.");
             }

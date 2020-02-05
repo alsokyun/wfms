@@ -86,7 +86,7 @@ namespace GTI.WFMS.Modules.Link.View
             try
             {
                 // 파일첨부윈도우
-                FileMngView fileMngView = new FileMngView(null);
+                fileMngView = new FileMngView(null);
                 fileMngView.Owner = Window.GetWindow(this) ;
 
                 
@@ -194,7 +194,7 @@ namespace GTI.WFMS.Modules.Link.View
                                 ((DataTable)grid.ItemsSource).Rows.RemoveAt(i);
                             }
                         }
-                        catch (Exception ex)
+                        catch (Exception )
                         {
                         }
                     }

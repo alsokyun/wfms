@@ -88,7 +88,7 @@ namespace GTI.WFMS.Modules.Cnst.View
         private void BtnAdd_Click(object sender, RoutedEventArgs e)
         {
             gv.AddNewRow();
-            int newRowHandle = DataControlBase.NewItemRowHandle;
+            //int newRowHandle = DataControlBase.NewItemRowHandle;
             grid.SetCellValue(gv.FocusedRowHandle, "FLA_YMD", Convert.ToDateTime(DateTime.Today).ToString("yyyyMMdd"));
             grid.SetCellValue(gv.FocusedRowHandle, "RPR_YMD", Convert.ToDateTime(DateTime.Today).ToString("yyyyMMdd"));
         }
@@ -135,7 +135,7 @@ namespace GTI.WFMS.Modules.Cnst.View
                                 ((DataTable)grid.ItemsSource).Rows.RemoveAt(i);
                             }
                         }
-                        catch (Exception ex)
+                        catch (Exception )
                         {
                         }
                     }

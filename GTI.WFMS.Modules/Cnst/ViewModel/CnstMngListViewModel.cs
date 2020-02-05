@@ -235,20 +235,20 @@ namespace GTI.WFMS.Modules.Cnst.ViewModel
                     conditions.Add("TCT_AMT_FROM", txtTCT_AMT_FROM.EditValue == null ? 0 : txtTCT_AMT_FROM.EditValue);
                     conditions.Add("TCT_AMT_TO", txtTCT_AMT_TO.EditValue == null ? 0 : txtTCT_AMT_TO.EditValue);
                 }
-                catch (Exception e) { }
+                catch (Exception ) { }
 
                 try
                 {
                     conditions.Add("BEG_YMD_FROM", dtBEG_YMD_FROM.EditValue == null ? null : Convert.ToDateTime(dtBEG_YMD_FROM.EditValue).ToString("yyyy-MM-dd"));
                     conditions.Add("BEG_YMD_TO", dtBEG_YMD_TO.EditValue == null ? null : Convert.ToDateTime(dtBEG_YMD_TO.EditValue).ToString("yyyy-MM-dd"));
                 }
-                catch (Exception e) { }
+                catch (Exception ) { }
                 try
                 {
                     conditions.Add("FNS_YMD_FROM", dtFNS_YMD_FROM.EditValue == null ? null : Convert.ToDateTime(dtFNS_YMD_FROM.EditValue).ToString("yyyy-MM-dd"));
                     conditions.Add("FNS_YMD_TO", dtFNS_YMD_TO.EditValue == null ? null : Convert.ToDateTime(dtFNS_YMD_TO.EditValue).ToString("yyyy-MM-dd"));
                 }
-                catch (Exception e) { }
+                catch (Exception ) { }
                 conditions.Add("CTT_CDE", cbCTT_CDE.EditValue.ToString().Trim());
                 conditions.Add("CNT_LOC", txtCNT_LOC.Text.Trim());
 
@@ -279,7 +279,7 @@ namespace GTI.WFMS.Modules.Cnst.ViewModel
                         this.TotalCnt = Convert.ToInt32(dt.Rows[0]["ROWCNT"]);
                         this.ItemCnt = (int)Math.Ceiling((double)this.TotalCnt / FmsUtil.PageSize);
                     }
-                    catch (Exception e)
+                    catch (Exception )
                     {
                         this.TotalCnt = 0;
                         this.ItemCnt = 0;

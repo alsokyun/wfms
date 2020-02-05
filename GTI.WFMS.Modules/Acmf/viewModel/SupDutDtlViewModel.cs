@@ -148,7 +148,7 @@ namespace GTI.WFMS.Modules.Acmf.ViewModel
             {
                 BizUtil.Update2(this, "updateSupDutDtl");
             }
-            catch (Exception e)
+            catch (Exception )
             {
                 Messages.ShowErrMsgBox("저장 처리중 오류가 발생하였습니다.");
                 return;
@@ -217,7 +217,7 @@ namespace GTI.WFMS.Modules.Acmf.ViewModel
             {
                 BizUtil.Update2(this, "deleteSupDutDtl");
             }
-            catch (Exception e)
+            catch (Exception )
             {
                 Messages.ShowErrMsgBox("삭제 처리중 오류가 발생하였습니다.");
                 return;

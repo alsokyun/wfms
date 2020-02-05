@@ -79,7 +79,7 @@ namespace GTIFramework.Analysis.WaterDataTransfer
 
                                 dtresult.Rows.Add(dradd.ItemArray);
                             }
-                            catch (Exception ex) { }
+                            catch (Exception ) { }
                         }
                     }
                 }

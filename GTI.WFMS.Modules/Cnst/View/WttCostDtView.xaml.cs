@@ -140,7 +140,7 @@ namespace GTI.WFMS.Modules.Cnst.View
                                 ((DataTable)grid.ItemsSource).Rows.RemoveAt(i);
                             }
                         }
-                        catch (Exception ex)
+                        catch (Exception )
                         {
                         }
                     }

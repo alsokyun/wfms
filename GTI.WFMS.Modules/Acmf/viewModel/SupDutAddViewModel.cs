@@ -133,7 +133,7 @@ namespace GTI.WFMS.Modules.Acmf.ViewModel
             }
             catch (Exception e)
             {
-                Messages.ShowErrMsgBox("저장 처리중 오류가 발생하였습니다.");
+                Messages.ShowErrMsgBox("저장 처리중 오류가 발생하였습니다." + e.Message);
                 return;
             }
             Messages.ShowOkMsgBox();

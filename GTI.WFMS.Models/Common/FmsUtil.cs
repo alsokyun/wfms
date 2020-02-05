@@ -38,7 +38,7 @@ namespace GTI.WFMS.Models.Common
                 str  = obj as string;
                 ret = String.IsNullOrWhiteSpace(str);
             }
-            catch (Exception e){}
+            catch (Exception ){}
 
 
             return ret;
@@ -63,7 +63,7 @@ namespace GTI.WFMS.Models.Common
                     str = rep;
                 }
             }
-            catch (Exception e) { }
+            catch (Exception ) { }
 
             return str;
         }
@@ -83,7 +83,7 @@ namespace GTI.WFMS.Models.Common
 
                 str = str.Trim();
             }
-            catch (Exception e) { }
+            catch (Exception ) { }
 
             return str;
         }

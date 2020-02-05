@@ -24,7 +24,6 @@ namespace GTI.WFMS.Modules.Fclt.View
     public partial class FiltPltDtlView : Page
     {
         public delegate void BackCmd(object sender, RoutedEventArgs e);
-        public event BackCmd backEvent;
 
         public FiltPltDtlView(string FTR_CDE, int FTR_IDN)
         {
@@ -39,7 +38,6 @@ namespace GTI.WFMS.Modules.Fclt.View
 
             //강제이벤트 발생
             //BackCmd backCmd = new BackCmd(_backCmd);
-            backEvent += new BackCmd(_backCmd);
             //backEvent(null, null);
 
 

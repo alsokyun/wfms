@@ -77,7 +77,7 @@ namespace GTI.WFMS.Main
 
                 ((sender as MenuItem).Parent as ContextMenu).IsOpen = false;
             }
-            catch (Exception ex)
+            catch (Exception )
             {
             }
         }
@@ -102,7 +102,7 @@ namespace GTI.WFMS.Main
 
                 ((sender as MenuItem).Parent as ContextMenu).IsOpen = false;
             }
-            catch (Exception ex)
+            catch (Exception )
             {
             }
         }

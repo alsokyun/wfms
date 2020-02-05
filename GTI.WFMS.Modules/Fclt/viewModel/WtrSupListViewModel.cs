@@ -284,7 +284,7 @@ namespace GTI.WFMS.Modules.Fclt.ViewModel
                     conditions.Add("FNS_YMD_FROM", dtFNS_YMD_FROM.EditValue == null ? null : Convert.ToDateTime(dtFNS_YMD_FROM.EditValue).ToString("yyyy-MM-dd"));
                     conditions.Add("FNS_YMD_TO", dtFNS_YMD_TO.EditValue == null ? null : Convert.ToDateTime(dtFNS_YMD_TO.EditValue).ToString("yyyy-MM-dd"));
                 }
-                catch (Exception e) { }
+                catch (Exception ) { }
 
                 conditions.Add("firstIndex", 0);
                 conditions.Add("lastIndex", 1000);
@@ -312,7 +312,7 @@ namespace GTI.WFMS.Modules.Fclt.ViewModel
                         this.TotalCnt = Convert.ToInt32(dt.Rows[0]["ROWCNT"]);
                         this.ItemCnt = (int)Math.Ceiling((double)this.TotalCnt / FmsUtil.PageSize);
                     }
-                    catch (Exception e)
+                    catch (Exception )
                     {
                         this.TotalCnt = 0;
                         this.ItemCnt = 0;
@@ -381,7 +381,7 @@ namespace GTI.WFMS.Modules.Fclt.ViewModel
                     conditions.Add("FNS_YMD_FROM", dtFNS_YMD_FROM.EditValue == null ? null : Convert.ToDateTime(dtFNS_YMD_FROM.EditValue).ToString("yyyy-MM-dd"));
                     conditions.Add("FNS_YMD_TO", dtFNS_YMD_TO.EditValue == null ? null : Convert.ToDateTime(dtFNS_YMD_TO.EditValue).ToString("yyyy-MM-dd"));
                 }
-                catch (Exception e) { }
+                catch (Exception ) { }
                 
                 conditions.Add("page", 0);
                 conditions.Add("rows", 1000000);

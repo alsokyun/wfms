@@ -134,7 +134,7 @@ namespace GTI.WFMS.Modules.Mntc.ViewModel
                 {
                     BizUtil.Update2(this, "SaveChscMaDtl");
                 }
-                catch (Exception e)
+                catch (Exception )
                 {
                     Messages.ShowErrMsgBox("저장 처리중 오류가 발생하였습니다.");
                     return;
@@ -197,7 +197,7 @@ namespace GTI.WFMS.Modules.Mntc.ViewModel
                 {
                     BizUtil.Update2(this, "UpdateChscMaAppr");
                 }
-                catch (Exception e)
+                catch (Exception )
                 {
                     Messages.ShowErrMsgBox("저장 처리중 오류가 발생하였습니다.");
                     return;

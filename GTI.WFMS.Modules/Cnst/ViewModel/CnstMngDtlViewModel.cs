@@ -150,7 +150,7 @@ namespace GTI.WFMS.Modules.Cnst.ViewModel
             {
                 BizUtil.Update2(this, "updateCnstMngDtl");
             }
-            catch (Exception e)
+            catch (Exception )
             {
                 Messages.ShowErrMsgBox("저장 처리중 오류가 발생하였습니다.");
                 return;
@@ -227,7 +227,7 @@ namespace GTI.WFMS.Modules.Cnst.ViewModel
             {
                 BizUtil.Update2(this, "deleteCnstMngDtl");
             }
-            catch (Exception e)
+            catch (Exception )
             {
                 Messages.ShowErrMsgBox("삭제 처리중 오류가 발생하였습니다.");
                 return;
