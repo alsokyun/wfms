@@ -119,10 +119,20 @@ namespace GTI.WFMS.Models.Common
         /// 데이터 업데이트 - Object
         /// </summary>
         /// <param name="obj"></param>
-        public static void Update2(CmmDtl  obj, string sqlId)
+        public static void Update2(CmmDtl obj, string sqlId)
         {
             obj.ID = Logs.strLogin_ID;
             dao.Update2(obj, sqlId);
+        }
+
+        /// <summary>
+        /// 데이터 인서트 - Object
+        /// </summary>
+        /// <param name="obj"></param>
+        public static void Insert2(CmmDtl obj, string sqlId)
+        {
+            obj.ID = Logs.strLogin_ID;
+            dao.Insert2(obj, sqlId);
         }
 
 

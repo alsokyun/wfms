@@ -18,7 +18,7 @@ namespace GTI.WFMS.Modules.Link.View
     {
 
         private string BIZ_ID;
-        private FileMngView fileMngView; //첨부파일팝업
+        private FilePopView fileMngView; //첨부파일팝업
 
 
         // 뷰생성자
@@ -86,7 +86,7 @@ namespace GTI.WFMS.Modules.Link.View
             try
             {
                 // 파일첨부윈도우
-                fileMngView = new FileMngView(null);
+                fileMngView = new FilePopView(null);
                 fileMngView.Owner = Window.GetWindow(this) ;
 
                 
@@ -107,7 +107,7 @@ namespace GTI.WFMS.Modules.Link.View
                 //팝업열기 & 위치
                 //fileMngView.IsOpen = false;
 
-                //fileMngView = new FileMngView(null);
+                //fileMngView = new FilePopView(null);
                 //fileMngView.PlacementRectangle = new Rect(100, 100, 655, 405);
                 //fileMngView.IsOpen = true;
 
@@ -287,7 +287,7 @@ namespace GTI.WFMS.Modules.Link.View
                 FIL_SEQ = ((DataRowView)gc.CurrentItem).Row["FIL_SEQ"].ToString();
 
                 // 파일첨부윈도우
-                FileMngView fileMngView = new FileMngView(FIL_SEQ);
+                FilePopView fileMngView = new FilePopView(FIL_SEQ);
                 fileMngView.Owner = Window.GetWindow(this);
 
 
@@ -304,7 +304,7 @@ namespace GTI.WFMS.Modules.Link.View
                 //팝업열기 & 위치
                 //fileMngView.IsOpen = false;
 
-                //fileMngView = new FileMngView(FIL_SEQ);
+                //fileMngView = new FilePopView(FIL_SEQ);
                 //fileMngView.PlacementRectangle = new Rect(100, 100, 550, 400);
                 //fileMngView.IsOpen = true;
                 //fileMngView.DataContext = this;

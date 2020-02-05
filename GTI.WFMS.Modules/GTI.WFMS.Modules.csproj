@@ -386,6 +386,10 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
+    <Page Include="Pop\View\FilePopView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
     <Page Include="Pop\View\FtrSelView.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -672,11 +676,15 @@
     <Compile Include="Pipe\XtraReport1.Designer.cs">
       <DependentUpon>XtraReport1.cs</DependentUpon>
     </Compile>
+    <Compile Include="Pop\ViewModel\FilePopViewModel.cs" />
     <Compile Include="Pop\ViewModel\FileMngViewModel.cs" />
     <Compile Include="Pop\ViewModel\AttFacDtlViewModel.cs" />
     <Compile Include="Pop\ViewModel\FtrSelViewModel.cs" />
     <Compile Include="Pop\View\AttFacDtlView.xaml.cs">
       <DependentUpon>AttFacDtlView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Pop\View\FilePopView.xaml.cs">
+      <DependentUpon>FilePopView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Pop\View\FtrSelView.xaml.cs">
       <DependentUpon>FtrSelView.xaml</DependentUpon>

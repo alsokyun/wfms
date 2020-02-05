@@ -99,7 +99,7 @@
           , #UPD_USR#
         </isNotEmpty>
       , #ID#, TO_CHAR(SYSDATE, 'yyyyMMdd'))
-  </update>	
+  </update>
 
 
 
@@ -127,6 +127,31 @@
         AND SEQ = #SEQ#
       </isNotEmpty>
     </select>
+    
+    <select id="SelectFileDtl2"  resultClass="GTI.WFMS.Models.Cmm.Model.FileDtl">
+      SELECT
+      SEQ
+      , FIL_SEQ
+      , DWN_NAM
+      , UPF_NAM
+      , FIL_PTH
+      , FIL_TYP
+      , FIL_SIZ
+      , FIL_RST
+      , CUR_TFS
+      , CRE_YMD
+      , CRE_USR
+      , UPD_YMD
+      , UPD_USR
+      FROM FMS_FILE_DTL
+      WHERE 1=1
+      AND FIL_SEQ = #FIL_SEQ#
+      <isNotEmpty property="SEQ">
+        AND SEQ = #SEQ#
+      </isNotEmpty>
+    </select>
+
+    
 
     <!-- BizId 첨부파일 목록	 -->
     <select id="SelectBizIdFileDtl"  resultClass="Hashtable">
@@ -203,7 +228,6 @@
       , FIL_TYP
       , FIL_SIZ
       , FIL_RST
-      , FIL_EXP
       , CUR_TFS
       , UPD_USR
       , UPD_YMD
@@ -217,7 +241,40 @@
       , #FIL_TYP#
       , #FIL_SIZ#
       , #FIL_RST#
-      , #FIL_EXP#
+      , '1'
+      , #ID#
+      , TO_CHAR(SYSDATE, 'yyyyMMdd')
+      , #ID#
+      , TO_CHAR(SYSDATE, 'yyyyMMdd') )
+    </insert>
+
+    <insert id="InsertFileDtl2" parameterClass="GTI.WFMS.Models.Cmm.Model.FileDtl">
+      <selectKey property="_seq" resultClass="int"  type="pre">
+        SELECT NVL(MAX(SEQ),0)+1 FROM FMS_FILE_DTL WHERE FIL_SEQ = #FIL_SEQ#
+      </selectKey>
+
+      INSERT INTO FMS_FILE_DTL
+      ( SEQ
+      , FIL_SEQ
+      , DWN_NAM
+      , UPF_NAM
+      , FIL_PTH
+      , FIL_TYP
+      , FIL_SIZ
+      , FIL_RST
+      , CUR_TFS
+      , UPD_USR
+      , UPD_YMD
+      , CRE_USR
+      , CRE_YMD )
+      VALUES ( #_seq#
+      , #FIL_SEQ#
+      , #DWN_NAM#
+      , #UPF_NAM#
+      , #FIL_PTH#
+      , #FIL_TYP#
+      , #FIL_SIZ#
+      , #FIL_RST#
       , '1'
       , #ID#
       , TO_CHAR(SYSDATE, 'yyyyMMdd')

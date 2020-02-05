@@ -1,4 +1,4 @@
-﻿<Window x:Class="GTI.WFMS.Modules.Pop.View.FileMngView"
+﻿<Window x:Class="GTI.WFMS.Modules.Pop.View.FilePopView"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
@@ -18,8 +18,8 @@
             xmlns:dxmvvm="http://schemas.devexpress.com/winfx/2008/xaml/mvvm"
             xmlns:dx="http://schemas.devexpress.com/winfx/2008/xaml/core"
                
-            DataContext="{dxmvvm:ViewModelSource Type={x:Type vd:FileMngViewModel}}"
-            x:Name="fileMngView"
+            DataContext="{dxmvvm:ViewModelSource Type={x:Type vd:FilePopViewModel}}"
+            x:Name="filePopView"
         
        Style="{DynamicResource PopupWindow}" 
        WindowStyle="None"  
@@ -86,9 +86,9 @@
 
         <Grid Grid.Row="2" x:Name="gridContent" Margin="5 0 5 0">
 
-            <dxg:GridControl AutoGenerateColumns="AddNew"
+            <dxg:GridControl 
                         EnableSmartColumnsGeneration="False"
-                        ItemsSource="{Binding Items}" 
+                        ItemsSource="{Binding ItemsSelect}" 
                         SelectionMode="Cell">
 
                 <dxg:GridControl.View >
@@ -138,54 +138,38 @@
                 </dxg:GridControl.View>
 
 
-                <dxg:GridColumn Header="파일명" Width="20*"  FieldName="Name" HorizontalHeaderContentAlignment="Center">
+                <dxg:GridColumn Header="파일명" Width="*"  FieldName="DWN_NAM" HorizontalHeaderContentAlignment="Center">
                     <dxg:GridColumn.EditSettings>
                         <dxe:TextEditSettings HorizontalContentAlignment="Left"/>
                     </dxg:GridColumn.EditSettings>
                 </dxg:GridColumn>
-                <dxg:GridColumn Header="사이즈(kb)" Width="7*" FieldName="Length" HorizontalHeaderContentAlignment="Center">
-                    <dxg:GridColumn.CellTemplate>
-                        <DataTemplate>
-                            <TextBlock Text="{Binding RowData.Row.Length, Converter={StaticResource fileLenConverter}}" HorizontalAlignment="Right" VerticalAlignment="Center"/>
-                        </DataTemplate>
-                    </dxg:GridColumn.CellTemplate>
-                </dxg:GridColumn>
-                <dxg:GridColumn Header="확장자" Width="4*" FieldName="Extension" HorizontalHeaderContentAlignment="Center">
+                <dxg:GridColumn Header="확장자" Width="70" FieldName="FIL_TYP" HorizontalHeaderContentAlignment="Center">
                     <dxg:GridColumn.EditSettings>
                         <dxe:TextEditSettings HorizontalContentAlignment="Center"/>
                     </dxg:GridColumn.EditSettings>
                 </dxg:GridColumn>
-                <dxg:GridColumn Header="다운로드" Width="5*" FieldName="" HorizontalHeaderContentAlignment="Center">
+                <dxg:GridColumn Header="사이즈" Width="100" FieldName="FIL_SIZ" HorizontalHeaderContentAlignment="Center">
+                    <dxg:GridColumn.EditSettings>
+                        <dxe:TextEditSettings HorizontalContentAlignment="Right"/>
+                    </dxg:GridColumn.EditSettings>
+                </dxg:GridColumn>
+                <dxg:GridColumn Header="다운로드" Width="70" FieldName="" HorizontalHeaderContentAlignment="Center">
                     <dxg:GridColumn.CellTemplate>
                         <DataTemplate>
                             <Button Content="DownLoad" Style="{DynamicResource ResourceKey=GrdDownButton}"
-                                    Command="{Binding View.DataContext.DownloadCmd}" CommandParameter="{Binding RowData.Row.Name}" />
+                                    Command="{Binding View.DataContext.DownloadCmd}" CommandParameter="{Binding RowData.Row}" />
                         </DataTemplate>
                     </dxg:GridColumn.CellTemplate>
                 </dxg:GridColumn>
-                <dxg:GridColumn Header="삭제" Width="4*" FieldName="Extension" HorizontalHeaderContentAlignment="Center">
+                <dxg:GridColumn Header="삭제" Width="70" FieldName="" HorizontalHeaderContentAlignment="Center">
                     <dxg:GridColumn.CellTemplate>
                         <DataTemplate>
                             <Button Content="Del" Style="{DynamicResource ResourceKey=GrdDelButton}"
-                                    Command="{Binding View.DataContext.DelCmd}"     
-                                    CommandParameter="{Binding RowData.RowHandle.Value, Converter={StaticResource rownumConverter}}"/>
+                                    Command="{Binding View.DataContext.DelCmd}" CommandParameter="{Binding RowData.Row.SEQ}"/>
                         </DataTemplate>
                     </dxg:GridColumn.CellTemplate>
                 </dxg:GridColumn>
                 <dxg:GridColumn Header="" Width="1" FieldName="SEQ" Visible="False"/>
-                <dxg:GridColumn Header="" Width="1" FieldName="Directory" Visible="False"/>
-                <dxg:GridColumn Header="" Width="1" FieldName="DirectoryName" Visible="False"/>
-                <dxg:GridColumn Header="" Width="1" FieldName="IsReadOnly" Visible="False"/>
-                <dxg:GridColumn Header="" Width="1" FieldName="Exists" Visible="False"/>
-                <dxg:GridColumn Header="" Width="1" FieldName="FullName" Visible="False"/>
-                <dxg:GridColumn Header="" Width="1" FieldName="Exists" Visible="False"/>
-                <dxg:GridColumn Header="" Width="1" FieldName="CreationTime" Visible="False"/>
-                <dxg:GridColumn Header="" Width="1" FieldName="CreationTimeUtc" Visible="False"/>
-                <dxg:GridColumn Header="" Width="1" FieldName="LastAccessTime" Visible="False"/>
-                <dxg:GridColumn Header="" Width="1" FieldName="LastAccessTimeUtc" Visible="False"/>
-                <dxg:GridColumn Header="" Width="1" FieldName="LastWriteTime" Visible="False"/>
-                <dxg:GridColumn Header="" Width="1" FieldName="LastWriteTimeUtc" Visible="False"/>
-                <dxg:GridColumn Header="" Width="1" FieldName="Attributes" Visible="False"/>
 
             </dxg:GridControl>
         </Grid>
@@ -206,7 +190,7 @@
     <!--뷰와 연결된 뷰모델로 Loaded 이벤트전파-->
     <i:Interaction.Triggers>
         <i:EventTrigger EventName="Loaded">
-            <i:InvokeCommandAction Command="{Binding LoadedCommand}" CommandParameter="{Binding ElementName=fileMngView}"/>
+            <i:InvokeCommandAction Command="{Binding LoadedCommand}" CommandParameter="{Binding ElementName=filePopView}"/>
         </i:EventTrigger>
     </i:Interaction.Triggers>
 

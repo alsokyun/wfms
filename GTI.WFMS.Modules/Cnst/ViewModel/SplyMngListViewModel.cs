@@ -485,14 +485,13 @@ namespace GTI.WFMS.Modules.Cnst.ViewModel
         {
 
 
-            string name_space = "GTI.WFMS.Models.Fctl.Model";
-            string class_name = "WttAttaDt";
+            string name_space = "GTI.WFMS.Models.Cmm.Model";
+            string class_name = "FileDtl";
             
             Hashtable param = new Hashtable();
-            param.Add("sqlId", "SelectCmmWttAttaDtList");
-            param.Add("FTR_CDE", "SA206");
-            param.Add("FTR_IDN", 80);
-            param.Add("ATT_IDN", 11313);
+            param.Add("sqlId", "SelectFileDtl");
+            param.Add("FIL_SEQ", 12);
+            param.Add("SEQ", 1);
             
             DataTable dt = BizUtil.SelectList(param);
             DataRow dr = dt.Rows[0];

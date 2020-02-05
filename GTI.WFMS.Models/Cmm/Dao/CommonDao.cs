@@ -111,5 +111,14 @@ namespace GTI.WFMS.Models.Cmm.Dao
         {
             DBManager.QueryForUpdate(sqlId, obj);
         }
+
+        /// <summary>
+        /// 데이터 인서트 단건 Object
+        /// </summary>
+        /// <param name="obj"></param>
+        internal void Insert2(object obj, string sqlId)
+        {
+            DBManager.QueryForInsert(sqlId, obj);
+        }
     }
 }
