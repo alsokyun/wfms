@@ -18,7 +18,7 @@ namespace GTI.WFMS.Modules.Link.View
     {
 
         private string BIZ_ID;
-        private FilePopView fileMngView; //첨부파일팝업
+        private FileMngView fileMngView; //첨부파일팝업
 
 
         // 뷰생성자
@@ -86,7 +86,7 @@ namespace GTI.WFMS.Modules.Link.View
             try
             {
                 // 파일첨부윈도우
-                fileMngView = new FilePopView(null);
+                fileMngView = new FileMngView(this.BIZ_ID, null);
                 fileMngView.Owner = Window.GetWindow(this) ;
 
                 
@@ -98,20 +98,13 @@ namespace GTI.WFMS.Modules.Link.View
                     //저장버튼으로 닫힘
                     if (!FmsUtil.IsNull(FIL_SEQ))
                     {
-                        AddFilSeqRow(FIL_SEQ); //첨부파일 한건추가
+                        //AddFilSeqRow(FIL_SEQ); //첨부파일 한건추가
+                        //조회그리드형으로 변경
+                        InitModel();
                     }
                     //닫기버튼으로 닫힘
                 }
 
-
-                //팝업열기 & 위치
-                //fileMngView.IsOpen = false;
-
-                //fileMngView = new FilePopView(null);
-                //fileMngView.PlacementRectangle = new Rect(100, 100, 655, 405);
-                //fileMngView.IsOpen = true;
-
-                //fileMngView.DataContext = this;
             }
             catch (Exception ex)
             {
@@ -287,7 +280,7 @@ namespace GTI.WFMS.Modules.Link.View
                 FIL_SEQ = ((DataRowView)gc.CurrentItem).Row["FIL_SEQ"].ToString();
 
                 // 파일첨부윈도우
-                FilePopView fileMngView = new FilePopView(FIL_SEQ);
+                FileMngView fileMngView = new FileMngView(BIZ_ID, FIL_SEQ);
                 fileMngView.Owner = Window.GetWindow(this);
 
 
@@ -304,7 +297,7 @@ namespace GTI.WFMS.Modules.Link.View
                 //팝업열기 & 위치
                 //fileMngView.IsOpen = false;
 
-                //fileMngView = new FilePopView(FIL_SEQ);
+                //fileMngView = new FileMngView(FIL_SEQ);
                 //fileMngView.PlacementRectangle = new Rect(100, 100, 550, 400);
                 //fileMngView.IsOpen = true;
                 //fileMngView.DataContext = this;

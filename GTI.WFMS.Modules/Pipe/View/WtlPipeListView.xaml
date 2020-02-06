@@ -31,6 +31,7 @@
         <ResourceDictionary>
             <cm:MultiValueConverter x:Key="multiValueConverter"/>
             <cv:Toggle3Converter x:Key="toggleConverter" />
+            <cv:Date3StrConverter x:Key="date3StrConverter" />
         </ResourceDictionary>
     </Page.Resources>
 
@@ -284,9 +285,9 @@
                 </dxg:GridColumn.EditSettings>
             </dxg:GridColumn>
 
-            <dxg:GridColumn Header="설치일자" Width="70" FieldName="IST_YMD" HorizontalHeaderContentAlignment="Center">
+            <dxg:GridColumn Header="설치일자" Width="100" FieldName="IST_YMD" HorizontalHeaderContentAlignment="Center">
                 <dxg:GridColumn.EditSettings>
-                    <dxe:TextEditSettings HorizontalContentAlignment="Center" MaskType="DateTime" Mask="yyyy-MM-dd" MaskUseAsDisplayFormat="False"/>
+                    <dxe:TextEditSettings HorizontalContentAlignment="Center" DisplayTextConverter="{StaticResource ResourceKey=date3StrConverter}" />
                 </dxg:GridColumn.EditSettings>
             </dxg:GridColumn>
 

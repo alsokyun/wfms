@@ -1684,6 +1684,7 @@
         <Setter Property="Margin" Value="10,0,10,0"/>
         <Setter Property="ShowBorder" Value="False"/>
         <Setter Property="MaskType" Value="Numeric"/>
+        <Setter Property="MaskUseAsDisplayFormat" Value="True"/>
         <Setter Property="EditTemplate">
             <Setter.Value>
                 <ControlTemplate>
@@ -1700,6 +1701,13 @@
                 </ControlTemplate>
             </Setter.Value>
         </Setter>
+    </Style>
+
+
+    <!--그리드 내 TextEditSettings (inner shadow)-->
+    <Style TargetType="{x:Type dxe:TextEditSettings}" x:Key="GrdNumberBlock">
+        <Setter Property="MaskType" Value="Numeric"/>
+        <Setter Property="MaskUseAsDisplayFormat" Value="True"/>
     </Style>
 
 

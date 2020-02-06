@@ -30,7 +30,6 @@
             <cm:MultiValueConverter x:Key="multiValueConverter"/>
             <cv:RownumConverter x:Key="rownumConverter" />
             <cv:FileLenConverter x:Key="fileLenConverter" />
-            <cv:FileNameConverter x:Key="fileNameConverter" />
 
             <!--그리드헤더스타일-->
             <Style TargetType="dxg:GridColumnHeader">

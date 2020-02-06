@@ -59,7 +59,7 @@ namespace GTI.WFMS.Modules.Link.View
                 for (int i = 0; i < dt.Rows.Count; i++)
                 {
                     DataRow row = dt.Rows[i];
-                    string ImgPathName = row["DWN_NAM"].ToString();
+                    string ImgPathName = row["UPF_NAM"].ToString();
 
                     this.FIL_SEQ = row["FIL_SEQ"].ToString();
 
@@ -104,7 +104,7 @@ namespace GTI.WFMS.Modules.Link.View
             try
             {
                 // 파일첨부윈도우
-                FileMngView fileMngView = new FileMngView(this.FIL_SEQ);
+                FilePopView fileMngView = new FilePopView(this.FIL_SEQ);
                 fileMngView.Owner = Window.GetWindow(this);
                 
                 //FIL_SEQ 리턴

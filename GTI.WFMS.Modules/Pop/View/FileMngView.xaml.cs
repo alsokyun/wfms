@@ -18,7 +18,7 @@ namespace GTI.WFMS.Modules.Pop.View
         /// <summary>
         /// 생성자
         /// </summary>
-        public FileMngView(string FIL_SEQ)
+        public FileMngView(string BIZ_ID, string FIL_SEQ)
         {
 
             InitializeComponent();
@@ -30,6 +30,8 @@ namespace GTI.WFMS.Modules.Pop.View
 
             //파일키저장
             txtFIL_SEQ.Text = FIL_SEQ;
+            txtBIZ_ID.Text = BIZ_ID;
+            
         }
 
         //닫기

@@ -210,29 +210,6 @@ namespace GTI.WFMS.Models.Common
         }
     }
 
-    /// <summary>
-    /// FileLenConverter - 원본파일명
-    /// </summary>
-    public class FileNameConverter : IValueConverter
-    {
-        public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
-        {
-            int idx = (int)value;
-            string name = "";
-            ObservableCollection<FileInfo> Items = new ObservableCollection<FileInfo>();
-
-            Items = parameter as ObservableCollection<FileInfo>;
-            FileInfo fi = Items[idx];
-            name = fi.FullName;
-
-            return name;
-        }
-
-        public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
-        {
-            return value;
-        }
-    }
 
 
 }

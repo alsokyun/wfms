@@ -33,12 +33,19 @@ namespace GTI.WFMS.Models.Common
             bool ret = false;
             string str = "";
 
+            if(obj == null)
+            {
+                return true;
+            }
+
             try
             {
-                str  = obj as string;
+                str  = obj.ToString();
                 ret = String.IsNullOrWhiteSpace(str);
             }
-            catch (Exception ){}
+            catch (Exception ){
+                ret = true;
+            }
 
 
             return ret;

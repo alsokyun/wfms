@@ -27,12 +27,33 @@
       ORDER BY M.FIL_SEQ
     </select>
 
+    <select id="SelectFileMap"  resultClass="GTI.WFMS.Models.Cmm.Model.FileMapDtl">
+      SELECT
+      M.BIZ_ID
+      , M.FIL_SEQ
+      , M.TIT_NAM
+      , M.GRP_TYP
+      , M.CRE_USR, U.USER_NM
+      , M.CRE_YMD
+      , M.UPD_USR
+      , M.UPD_YMD
+      , M.CTNT
+      , NULL AS CHK
+      FROM FMS_FILE_MAP M
+      LEFT JOIN INFOUSER.SYS_USER_INFO U ON M.CRE_USR = U.USER_ID
+      WHERE 1=1
+      AND M.BIZ_ID = #BIZ_ID#
+      AND M.FIL_SEQ = #FIL_SEQ#
+      <isNotEmpty property="GRP_TYP">
+        AND M.GRP_TYP = #GRP_TYP#
+      </isNotEmpty>
 
-    
-    
-    
-    
-    <!-- 업무파일정보 삭제 -->
+    </select>
+
+
+
+
+      <!-- 업무파일정보 삭제 -->
     <update id="DeleteFileMap" parameterClass="Hashtable">
       DELETE FROM FMS_FILE_MAP WHERE 1=1
         AND BIZ_ID = #BIZ_ID#
@@ -101,6 +122,65 @@
       , #ID#, TO_CHAR(SYSDATE, 'yyyyMMdd'))
   </update>
 
+    <!-- 업무파일 저장 : 오브젝트 -->
+    <update id="SaveFileMap2" parameterClass="GTI.WFMS.Models.Cmm.Model.FileDtl">
+      MERGE INTO FMS_FILE_MAP
+      USING DUAL ON ( BIZ_ID = #BIZ_ID# AND FIL_SEQ = #FIL_SEQ# )
+
+      WHEN MATCHED THEN
+      UPDATE SET
+      UPD_USR = #UPD_USR#
+      <isNotEmpty property="UPD_YMD">
+        , UPD_YMD = #UPD_YMD#
+      </isNotEmpty>
+      <isNotEmpty property="GRP_TYP">
+        , GRP_TYP = #GRP_TYP#
+      </isNotEmpty>
+      <isNotEmpty property="TIT_NAM">
+        , TIT_NAM = #TIT_NAM#
+      </isNotEmpty>
+      <isNotEmpty property="CTNT">
+        , CTNT = #CTNT#
+      </isNotEmpty>
+
+      WHEN NOT MATCHED THEN
+      INSERT
+      (BIZ_ID, FIL_SEQ
+      <isNotEmpty property="GRP_TYP">
+        , GRP_TYP
+      </isNotEmpty>
+      <isNotEmpty property="TIT_NAM">
+        , TIT_NAM
+      </isNotEmpty>
+      <isNotEmpty property="CTNT">
+        , CTNT
+      </isNotEmpty>
+      <isNotEmpty property="UPD_YMD">
+        , UPD_YMD
+      </isNotEmpty>
+      <isNotEmpty property="UPD_USR">
+        , UPD_USR
+      </isNotEmpty>
+      , CRE_USR, CRE_YMD )
+      VALUES
+      ( #BIZ_ID#, #FIL_SEQ#
+      <isNotEmpty property="GRP_TYP">
+        ,#GRP_TYP#
+      </isNotEmpty>
+      <isNotEmpty property="TIT_NAM">
+        , #TIT_NAM#
+      </isNotEmpty>
+      <isNotEmpty property="CTNT">
+        , #CTNT#
+      </isNotEmpty>
+      <isNotEmpty property="UPD_YMD">
+        , #UPD_YMD#
+      </isNotEmpty>
+      <isNotEmpty property="UPD_USR">
+        , #UPD_USR#
+      </isNotEmpty>
+      , #ID#, TO_CHAR(SYSDATE, 'yyyyMMdd'))
+    </update>
 
 
 

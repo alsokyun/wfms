@@ -227,49 +227,54 @@
                                 AllowColumnFiltering="False"
                                 IsColumnMenuEnabled="False" 
                                 AllowMoveColumnToDropArea="False" 
+                               
                                 ScrollViewer.VerticalScrollBarVisibility="Hidden"
+                                HorizontalScrollbarVisibility="Auto"
+                                VerticalScrollbarVisibility="Disabled"
+                                AutoWidth="False"
+                               
                                 >
                 </dxg:TableView>
             </dxg:GridControl.View>
 
-            <dxg:GridColumn Header="공사번호" Width="3*" FieldName="CNT_NUM" HorizontalHeaderContentAlignment="Center">
+            <dxg:GridColumn Header="공사번호" Width="100" FieldName="CNT_NUM" HorizontalHeaderContentAlignment="Center">
                 <dxg:GridColumn.EditSettings>
                     <dxe:TextEditSettings HorizontalContentAlignment="Center"/>
                 </dxg:GridColumn.EditSettings>
             </dxg:GridColumn>
 
-            <dxg:GridColumn Header="공사명" Width="10*" FieldName="CNT_NAM" HorizontalHeaderContentAlignment="Center">
+            <dxg:GridColumn Header="공사명" Width="200" FieldName="CNT_NAM" HorizontalHeaderContentAlignment="Center">
                 <dxg:GridColumn.EditSettings>
                     <dxe:TextEditSettings HorizontalContentAlignment="Left"/>
                 </dxg:GridColumn.EditSettings>
             </dxg:GridColumn>
 
-            <dxg:GridColumn Header="공사위치" Width="7*" FieldName="CNT_LOC" HorizontalHeaderContentAlignment="Center">
+            <dxg:GridColumn Header="공사위치" Width="170" FieldName="CNT_LOC" HorizontalHeaderContentAlignment="Center">
                 <dxg:GridColumn.EditSettings>
                     <dxe:TextEditSettings HorizontalContentAlignment="Left"/>
                 </dxg:GridColumn.EditSettings>
             </dxg:GridColumn>
 
-            <dxg:GridColumn Header="공사구분" Width="3*" FieldName="CNT_CDE_NAM" HorizontalHeaderContentAlignment="Center">
+            <dxg:GridColumn Header="공사구분" Width="130" FieldName="CNT_CDE_NAM" HorizontalHeaderContentAlignment="Center">
                 <dxg:GridColumn.EditSettings>
                     <dxe:TextEditSettings HorizontalContentAlignment="Center"/>
                 </dxg:GridColumn.EditSettings>
             </dxg:GridColumn>
 
 
-            <dxg:GridColumn Header="설계자" Width="3*" FieldName="DSN_NAM" HorizontalHeaderContentAlignment="Center">
+            <dxg:GridColumn Header="설계자" Width="100" FieldName="DSN_NAM" HorizontalHeaderContentAlignment="Center">
                 <dxg:GridColumn.EditSettings>
                     <dxe:TextEditSettings HorizontalContentAlignment="Left"/>
                 </dxg:GridColumn.EditSettings>
             </dxg:GridColumn>
 
-            <dxg:GridColumn Header="설계총액" Width="2*" FieldName="DSN_AMT" HorizontalHeaderContentAlignment="Center">
+            <dxg:GridColumn Header="설계총액" Width="100" FieldName="DSN_AMT" HorizontalHeaderContentAlignment="Center">
                 <dxg:GridColumn.EditSettings>
-                    <dxe:TextEditSettings HorizontalContentAlignment="Right"/>
+                    <dxe:TextEditSettings HorizontalContentAlignment="Right" Style="{DynamicResource GrdNumberBlock}" />
                 </dxg:GridColumn.EditSettings>
             </dxg:GridColumn>
-            
-            <dxg:GridColumn Header="계약방법" Width="3*" FieldName="CTT_NAM" HorizontalHeaderContentAlignment="Center">
+
+            <dxg:GridColumn Header="계약방법" Width="100" FieldName="CTT_NAM" HorizontalHeaderContentAlignment="Center">
                 <dxg:GridColumn.EditSettings>
                     <dxe:TextEditSettings HorizontalContentAlignment="Center"/>
                 </dxg:GridColumn.EditSettings>

@@ -386,15 +386,15 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
+    <Page Include="Pop\View\FileMngView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
     <Page Include="Pop\View\FilePopView.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
     <Page Include="Pop\View\FtrSelView.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="Pop\View\FileMngView.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
@@ -683,14 +683,14 @@
     <Compile Include="Pop\View\AttFacDtlView.xaml.cs">
       <DependentUpon>AttFacDtlView.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Pop\View\FileMngView.xaml.cs">
+      <DependentUpon>FileMngView.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Pop\View\FilePopView.xaml.cs">
       <DependentUpon>FilePopView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Pop\View\FtrSelView.xaml.cs">
       <DependentUpon>FtrSelView.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Pop\View\FileMngView.xaml.cs">
-      <DependentUpon>FileMngView.xaml</DependentUpon>
     </Compile>
   </ItemGroup>
   <ItemGroup>

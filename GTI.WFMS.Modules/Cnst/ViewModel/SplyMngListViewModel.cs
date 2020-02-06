@@ -486,12 +486,12 @@ namespace GTI.WFMS.Modules.Cnst.ViewModel
 
 
             string name_space = "GTI.WFMS.Models.Cmm.Model";
-            string class_name = "FileDtl";
+            string class_name = "FileMapDtl";
             
             Hashtable param = new Hashtable();
-            param.Add("sqlId", "SelectFileDtl");
-            param.Add("FIL_SEQ", 12);
-            param.Add("SEQ", 1);
+            param.Add("sqlId", "SelectFileMap");
+            param.Add("BIZ_ID", "SB20130009");
+            param.Add("FIL_SEQ", 114);
             
             DataTable dt = BizUtil.SelectList(param);
             DataRow dr = dt.Rows[0];
