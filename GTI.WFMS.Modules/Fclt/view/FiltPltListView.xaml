@@ -212,18 +212,6 @@
                             MouseDoubleClick="Grid_MouseDoubleClick"
                             ItemsSource="{Binding ElementName=DataPagerSource, Path=ActualSource}" >
 
-            <i:Interaction.Triggers>
-                <i:EventTrigger EventName="SelectedItemChanged">
-                    <i:InvokeCommandAction Command="{Binding gridSelectedItemChangedCommand}">
-                        <i:InvokeCommandAction.CommandParameter>
-                            <MultiBinding Converter="{StaticResource multiValueConverter}">
-                            </MultiBinding>
-                        </i:InvokeCommandAction.CommandParameter>
-                    </i:InvokeCommandAction>
-                </i:EventTrigger>
-            </i:Interaction.Triggers>
-
-
             <dxg:GridControl.View>
                 <dxg:TableView NavigationStyle="Row" 
                                 HeaderPanelMinHeight="30" 
