@@ -3,21 +3,17 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-             xmlns:local="clr-namespace:GTI.WFMS.Modules.Pipe.View"
-      
+             xmlns:local="clr-namespace:GTI.WFMS.Modules.Pipe.View"      
             xmlns:dxci="http://schemas.devexpress.com/winfx/2008/xaml/core/internal"
             xmlns:uccontent="clr-namespace:GTI.WFMS.Modules.Link.View"
             xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
             xmlns:cm="clr-namespace:GTIFramework.Common.Utils.Converters;assembly=GTIFramework"
             xmlns:vm="clr-namespace:GTI.WFMS.Modules.Pipe.ViewModel"
             xmlns:cv="clr-namespace:GTI.WFMS.Models.Common;assembly=GTI.WFMS.Models"     
-      xmlns:System="clr-namespace:System;assembly=mscorlib"  
+            xmlns:System="clr-namespace:System;assembly=mscorlib"  
             x:Class="GTI.WFMS.Modules.Pipe.View.WtprMtAddView"
-             mc:Ignorable="d" 
-             d:DesignHeight="400" d:DesignWidth="950"
-      
-            x:Name="flowMtAddView"     
-      >
+            mc:Ignorable="d" 
+            d:DesignHeight="400" d:DesignWidth="950" x:Name="wtprMtAddView"  >
 
     <!--페이지내 리소스정의-->
     <Page.Resources>
@@ -41,7 +37,7 @@
             <i:InvokeCommandAction Command="{Binding LoadedCommand}">
                 <i:InvokeCommandAction.CommandParameter>
                     <MultiBinding Converter="{StaticResource multiValueConverter}">
-                        <Binding ElementName="flowMtAddView"/>
+                        <Binding ElementName="wtprMtAddView"/>
                     </MultiBinding>
                 </i:InvokeCommandAction.CommandParameter>
             </i:InvokeCommandAction>
