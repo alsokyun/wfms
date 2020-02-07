@@ -299,11 +299,7 @@
 
             
             <Label Grid.Row="2" Grid.Column="2" Content="" Style="{DynamicResource ResourceKey=GridLabel}"/>
-
-            
-
             <Label Grid.Row="2" Grid.Column="4" Content="" Style="{DynamicResource ResourceKey=GridLabel}"/>
-
             <Label Grid.Row="2" Grid.Column="6" Content="" Style="{DynamicResource ResourceKey=GridLabel}"/>
 
         </Grid>

@@ -1,5 +1,6 @@
 ﻿using DevExpress.Xpf.Core;
 using GTI.WFMS.Modules.Link.View;
+using GTIFramework.Common.Utils.ViewEffect;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -22,14 +23,18 @@ namespace GTI.WFMS.Modules.Pipe.View
     /// </summary>
     public partial class WtlPipeAddView : Page
     {
+        public delegate void BackCmd(object sender, RoutedEventArgs e);
 
         public WtlPipeAddView()
         {
             InitializeComponent();
 
+            // 테마일괄적용...
+            ThemeApply.Themeapply(this);
 
             //정상적인 버튼클릭 이벤트
             btnBack.Click += _backCmd;
+
         }
 
         // 목록으로 뒤로가기

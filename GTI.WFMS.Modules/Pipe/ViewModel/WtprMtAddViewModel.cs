@@ -86,7 +86,6 @@ namespace GTI.WFMS.Modules.Pipe.ViewModel
                 //2.화면데이터객체 초기화
                 InitDataBinding();
 
-
                 //3.권한처리
                 permissionApply();
 
