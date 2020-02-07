@@ -58,5 +58,12 @@ namespace GTI.WFMS.Modules.Pop.View
             e.Handled = true;
         }
 
+        private void FilePhotoView_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.Key == Key.Escape)
+            {
+                this.Close();
+            }
+        }
     }
 }

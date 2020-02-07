@@ -13,6 +13,7 @@
         xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
 
         DataContext="{dxmvvm:ViewModelSource Type={x:Type vd:PopWinViewModel}}"
+        KeyDown="FilePhotoView_KeyDown"
         
         WindowStyle="None" WindowStartupLocation="CenterScreen"
         Style="{DynamicResource PopupWindow}"
