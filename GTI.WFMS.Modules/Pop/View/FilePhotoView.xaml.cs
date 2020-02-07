@@ -10,15 +10,15 @@ using System.Windows.Input;
 namespace GTI.WFMS.Modules.Pop.View
 {
     /// <summary>
-    /// FileMngView.xaml에 대한 상호 작용 논리
+    /// FilePhotoView.xaml에 대한 상호 작용 논리
     /// </summary>
-    public partial class FileMngView : Window
+    public partial class FilePhotoView : Window
     {
 
         /// <summary>
         /// 생성자
         /// </summary>
-        public FileMngView(string BIZ_ID, string FIL_SEQ)
+        public FilePhotoView(string BIZ_ID, string FIL_SEQ)
         {
 
             InitializeComponent();
@@ -58,11 +58,18 @@ namespace GTI.WFMS.Modules.Pop.View
             e.Handled = true;
         }
 
+        //미리보기 off
+        private void BtnOff_Click(object sender, RoutedEventArgs e)
+        {
+            grdImg.Visibility = Visibility.Hidden;
+        }
+
+        //Esc 닫기
         private void FilePhotoView_KeyDown(object sender, KeyEventArgs e)
         {
             if (e.Key == Key.Escape)
             {
-                this.Close();
+                grdImg.Visibility = Visibility.Hidden;
             }
         }
     }

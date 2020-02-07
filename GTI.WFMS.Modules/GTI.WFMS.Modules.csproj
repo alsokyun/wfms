@@ -262,6 +262,10 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
+    <Page Include="Link\View\ImgFileMngView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
     <Page Include="Link\View\PhotoFileMngView.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -383,6 +387,10 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Include="Pop\View\AttFacDtlView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Pop\View\FilePhotoView.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
@@ -550,6 +558,9 @@
     <Compile Include="Link\View\AttFacListView.xaml.cs">
       <DependentUpon>AttFacListView.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Link\View\ImgFileMngView.xaml.cs">
+      <DependentUpon>ImgFileMngView.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Link\View\PhotoFileMngView.xaml.cs">
       <DependentUpon>PhotoFileMngView.xaml</DependentUpon>
     </Compile>
@@ -676,12 +687,16 @@
     <Compile Include="Pipe\XtraReport1.Designer.cs">
       <DependentUpon>XtraReport1.cs</DependentUpon>
     </Compile>
+    <Compile Include="Pop\ViewModel\FilePhotoViewModel.cs" />
     <Compile Include="Pop\ViewModel\FilePopViewModel.cs" />
     <Compile Include="Pop\ViewModel\FileMngViewModel.cs" />
     <Compile Include="Pop\ViewModel\AttFacDtlViewModel.cs" />
     <Compile Include="Pop\ViewModel\FtrSelViewModel.cs" />
     <Compile Include="Pop\View\AttFacDtlView.xaml.cs">
       <DependentUpon>AttFacDtlView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Pop\View\FilePhotoView.xaml.cs">
+      <DependentUpon>FilePhotoView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Pop\View\FileMngView.xaml.cs">
       <DependentUpon>FileMngView.xaml</DependentUpon>

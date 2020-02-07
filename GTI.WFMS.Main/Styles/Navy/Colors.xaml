@@ -219,7 +219,6 @@
     <SolidColorBrush x:Key="PopCOLOR2Brush" Color="{DynamicResource PopCOLOR2}"/>
     <Color x:Key="PopCOLOR3">#20344E</Color>
     <SolidColorBrush x:Key="PopCOLOR3Brush" Color="{DynamicResource PopCOLOR3}"/>
-
-    
-
+    <Color x:Key="PopCOLOR4">#EEEEEE</Color>
+    <SolidColorBrush x:Key="PopCOLOR4Brush" Color="{DynamicResource PopCOLOR4}" Opacity="0.5"/>
 </ResourceDictionary>

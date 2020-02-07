@@ -21,6 +21,7 @@
                
             DataContext="{dxmvvm:ViewModelSource Type={x:Type vd:FileMngViewModel}}"
             x:Name="fileMngView"
+            KeyDown="FilePhotoView_KeyDown"
         
            Style="{DynamicResource PopupWindow}" 
            WindowStyle="None"  

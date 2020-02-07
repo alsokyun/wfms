@@ -1810,6 +1810,34 @@
             </Trigger>
         </Style.Triggers>
     </Style>
+    <!--그리드미리보기 버튼 (이미지)-->
+    <Style TargetType="Button" x:Key="GrdPreviewButton">
+        <Setter Property="Width" Value="28"/>
+        <Setter Property="Height" Value="30"/>
+        <Setter Property="Margin" Value="5,0,0,0"/>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate>
+                    <Grid>
+                        <Image Source="/Resources/Navy/Images/Image/btn_front3.png"/>
+                    </Grid>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+        <Style.Triggers>
+            <Trigger Property="IsMouseOver" Value="True">
+                <Setter Property="Template">
+                    <Setter.Value>
+                        <ControlTemplate>
+                            <Grid>
+                                <Image Source="/Resources/Navy/Images/Image/btn_front3_on.png"/>
+                            </Grid>
+                        </ControlTemplate>
+                    </Setter.Value>
+                </Setter>
+            </Trigger>
+        </Style.Triggers>
+    </Style>
 
     <!--발송 버튼 (이미지)-->
     <Style TargetType="Button" x:Key="PrintButton">
