@@ -1,0 +1,81 @@
+﻿<Popup x:Class="GTI.WFMS.GIS.Module.WTL_META_PS"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:GTI.WFMS.GIS.Module"
+             mc:Ignorable="d" 
+             d:DesignHeight="100" d:DesignWidth="250"
+        
+             xmlns:vm="clr-namespace:GTI.WFMS.GIS"
+       Width="250" Height="Auto"
+       >
+
+    <Popup.Resources>
+        <ResourceDictionary Source="../Styles/Navy/GisStyles.xaml" />
+    </Popup.Resources>
+
+    <Grid x:Name="gridContent" >
+        <StackPanel Background="White">
+            <Grid >
+                <Label Background="#144873" Foreground="White" Margin="5">시설물정보</Label>
+                <Button x:Name="btnClose" Content="닫기" HorizontalAlignment="Right" Margin="5" Click="BtnClose_Click">
+                </Button>
+            </Grid>
+
+
+            <Grid >
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="100"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="30" />
+                    <RowDefinition Height="30" />
+                    <RowDefinition Height="30" />
+                    <RowDefinition Height="30" />
+                    <RowDefinition Height="30" />
+                    <RowDefinition Height="30" />
+                </Grid.RowDefinitions>
+
+                <Border Grid.Row="0" Grid.Column="0"  Style="{StaticResource ResourceKey=DtlHeaderBorder}" />
+                <Label Grid.Row="0" Grid.Column="0" Content="시설물종류" Style="{StaticResource ResourceKey=GridLabel}"/>
+                <TextBox Grid.Row="0" Grid.Column="1" Text="{Binding FctDtl.FTR_NAM}" Style="{StaticResource ResourceKey=GridTextBox}" />
+
+                <Border Grid.Row="1" Grid.Column="0"  Style="{StaticResource ResourceKey=DtlHeaderBorder}" />
+                <Label Grid.Row="1" Grid.Column="0" Content="관리번호" Style="{StaticResource ResourceKey=GridLabel}"/>
+                <TextBox Grid.Row="1" Grid.Column="1" Text="{Binding FctDtl.FTR_IDN}" Style="{StaticResource ResourceKey=GridTextBox}" />
+
+
+                <Border Grid.Row="2" Grid.Column="0"  Style="{StaticResource ResourceKey=DtlHeaderBorder}" />
+                <Label Grid.Row="2" Grid.Column="0" Content="행정기관" Style="{StaticResource ResourceKey=GridLabel}"/>
+                <TextBox Grid.Row="2" Grid.Column="1" Text="{Binding FctDtl.HJD_NAM}" Style="{StaticResource ResourceKey=GridTextBox}" />
+
+                <Border Grid.Row="3" Grid.Column="0"  Style="{StaticResource ResourceKey=DtlHeaderBorder}" />
+                <Label Grid.Row="3" Grid.Column="0" Content="도엽번호" Style="{StaticResource ResourceKey=GridLabel}"/>
+                <TextBox Grid.Row="3" Grid.Column="1" Text="{Binding FctDtl.SHT_NUM}" Style="{StaticResource ResourceKey=GridTextBox}" />
+
+                <Border Grid.Row="4" Grid.Column="0"  Style="{StaticResource ResourceKey=DtlHeaderBorder}" />
+                <Label Grid.Row="4" Grid.Column="0" Content="설치일자" Style="{StaticResource ResourceKey=GridLabel}"/>
+                <TextBox Grid.Row="4" Grid.Column="1" Text="{Binding FctDtl.IST_YMD}" Style="{StaticResource ResourceKey=GridTextBox}" />
+
+                <Border Grid.Row="5" Grid.Column="0"  Style="{StaticResource ResourceKey=DtlHeaderBorder}" />
+                <Label Grid.Row="5" Grid.Column="0" Content="수용가번호" Style="{StaticResource ResourceKey=GridLabel}"/>
+                <TextBox Grid.Row="5" Grid.Column="1" Text="{Binding FctDtl.HOM_NUM}" Style="{StaticResource ResourceKey=GridTextBox}" />
+
+                <Border Grid.Row="6" Grid.Column="0"  Style="{StaticResource ResourceKey=DtlHeaderBorder}" />
+                <Label Grid.Row="6" Grid.Column="0" Content="수용가성명" Style="{StaticResource ResourceKey=GridLabel}"/>
+                <TextBox Grid.Row="6" Grid.Column="1" Text="{Binding FctDtl.HOM_NAM}" Style="{StaticResource ResourceKey=GridTextBox}" />
+
+            </Grid>
+
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Margin="10">
+                <Button>시설물대장</Button>
+
+            </StackPanel>
+
+        </StackPanel>
+    </Grid>
+
+
+</Popup>

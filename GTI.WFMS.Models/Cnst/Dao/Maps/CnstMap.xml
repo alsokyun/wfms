@@ -646,7 +646,7 @@
       WITH C AS (
       SELECT COUNT(1) AS ROWCNT
       FROM WTT_SPLY_MA A
-      LEFT JOIN INFOFMS.BML_HADM_AS H ON A.HJD_CDE = H.HJD_CDE
+      LEFT JOIN INFOFMS.CMT_ADAR_MA H ON A.HJD_CDE = H.HJD_CDE
 
       WHERE 1=1
       <isNotEmpty prepend="AND" property="CNT_NUM">
@@ -699,7 +699,7 @@
       , A.DFE_AMT
 
       FROM WTT_SPLY_MA A
-      LEFT JOIN INFOFMS.BML_HADM_AS H ON A.HJD_CDE = H.HJD_CDE
+      LEFT JOIN INFOFMS.CMT_ADAR_MA H ON A.HJD_CDE = H.HJD_CDE
 
       WHERE 1=1
       <isNotEmpty prepend="AND" property="CNT_NUM">

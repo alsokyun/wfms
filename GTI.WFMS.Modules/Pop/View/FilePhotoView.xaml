@@ -269,12 +269,12 @@
 
         </Grid>
 
-        <Grid Background="{DynamicResource PopCOLOR4Brush}" x:Name="grdImg" Visibility="Visible">
+        <Grid Background="{DynamicResource PopCOLOR4Brush}" x:Name="grdImg" Visibility="Visible" >
             <Button Style="{DynamicResource XSignCloseButton}" Margin="0,10,10,0" 
                 x:Name="btnOff" Click="BtnOff_Click" />
 
             <Border BorderThickness="4" BorderBrush="DodgerBlue"  HorizontalAlignment="Center" VerticalAlignment="Center">
-                <Image x:Name="imgView" Height="370"  Source="D:\GTI\FILE\2020020620052218.jpg" 
+                <Image x:Name="imgView" Height="370"  Source="2020020620052218.jpg" 
                        Stretch="Uniform"
                        RenderTransformOrigin="0.5,0.5"/>
             </Border>

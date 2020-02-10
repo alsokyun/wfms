@@ -1,6 +1,7 @@
 ﻿using DevExpress.Xpf.Accordion;
 using DevExpress.Xpf.Core;
 using GTI.WFMS.GIS;
+using GTI.WFMS.Models.Cmm.Model;
 using GTI.WFMS.Models.Common;
 using GTI.WFMS.Models.Main.Work;
 using GTI.WFMS.Modules.Main;
@@ -93,9 +94,9 @@ namespace GTI.WFMS.Main
         /// </summary>
         public DelegateCommand<object> QuickMngCommand { get; set; }
 
-        public DelegateCommand<object> FindCmd { get; set; }
+        public RelayCommand<object> CallPageCmd { get; set; }
 
-
+        
         #endregion
 
 
@@ -119,7 +120,12 @@ namespace GTI.WFMS.Main
             MenuShowHidenCommand = new DelegateCommand<object>(MenuShowHidenAction);
             QuickShowHidenCommand = new DelegateCommand<object>(QuickShowHidenAction);
             QuickMngCommand = new DelegateCommand<object>(QuickMngAction);
-            
+
+            //시설물팝업에서 시설물메뉴화면 호출작업
+            CallPageCmd = new RelayCommand<object>(delegate (object obj) {
+
+                FctDtl fctDtl = obj as FctDtl;
+            });
         }
 
 
@@ -842,6 +848,47 @@ namespace GTI.WFMS.Main
                 Messages.ShowErrMsgBoxLog(ex);
             }
         }
+
+
+
+
+
+        /// <summary>
+        /// GIS에서 메뉴화면선택 수동액션
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        public void SelMenuPage(string strSelectMenu)
+        {
+            try
+            {
+                //strSelectMenu = (sender as Button).Name.Replace("MN_", "");
+                AccordionControl accrMenu = mainwin.FindName("accrMenu") as AccordionControl;
+
+                DataRow[] dr = dtMenuList.Select("MNU_CD = '" + strSelectMenu + "' AND MNU_STEP = '3'");
+
+                if (dr.Length == 1)
+                {
+                    if (!Logs.htPermission[strSelectMenu].ToString().Equals("N"))
+                    {
+                        if (!dr[0]["MNU_PATH"].ToString().Equals(""))
+                        {
+                            //탑메뉴버튼 수동클릭
+                            btnMenu_Click(mainwin.FindName("MN_" + dr[0]["MNU_CD"].ToString().Substring(0, 4)), null);
+                            //레프트메뉴(아코디언) 표시
+                            accrMenu.SelectedItem = mainwin.FindName("MN_" + dr[0]["MNU_CD"].ToString());
+                            //레프트메뉴 수동선택
+                            MenuControlAction(null);
+                        }
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                Messages.ShowErrMsgBoxLog(ex);
+            }
+        }
+
 
         #endregion
     }

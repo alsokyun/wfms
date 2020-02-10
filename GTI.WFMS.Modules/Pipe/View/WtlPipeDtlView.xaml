@@ -92,7 +92,7 @@
             <Button x:Name="btnPrint" Style="{DynamicResource ResourceKey=PrintButton}"  >
                 <i:Interaction.Triggers>
                     <i:EventTrigger EventName="Click">
-                        <i:InvokeCommandAction Command="{Binding SearchCommand}">
+                        <i:InvokeCommandAction Command="{Binding }">
                         </i:InvokeCommandAction>
                     </i:EventTrigger>
                 </i:Interaction.Triggers>
@@ -299,11 +299,7 @@
 
             
             <Label Grid.Row="2" Grid.Column="2" Content="" Style="{DynamicResource ResourceKey=GridLabel}"/>
-
-            
-
             <Label Grid.Row="2" Grid.Column="4" Content="" Style="{DynamicResource ResourceKey=GridLabel}"/>
-
             <Label Grid.Row="2" Grid.Column="6" Content="" Style="{DynamicResource ResourceKey=GridLabel}"/>
 
         </Grid>
