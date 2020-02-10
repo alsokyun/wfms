@@ -18,6 +18,8 @@ using System.IO;
 using Esri.ArcGISRuntime.UI;
 using Esri.ArcGISRuntime.Symbology;
 using System.Threading.Tasks;
+using System.Collections;
+using Prism.Regions;
 
 namespace GTI.WFMS.GIS
 {
@@ -33,7 +35,8 @@ namespace GTI.WFMS.GIS
         // 선택한 피처 - 서버연계된Feature  
         //public ArcGISFeature _selectedFeature;
         public Feature _selectedFeature;
-        public List<string> _selectedLayers = new List<string>();
+        public string _selectedLayerNm = "";
+        public List<string> _selectedLayerNms = new List<string>();
         // Graphics overlay to host sketch graphics
         private GraphicsOverlay _sketchOverlay;
         private Esri.ArcGISRuntime.Geometry.Geometry _geometry;
@@ -52,9 +55,11 @@ namespace GTI.WFMS.GIS
         //private double _ulsanScale = 150000;
         private double _ulsanScale = 500000;
 
-        private FctDtl fctDtl = new FctDtl(); //시설물기본정보
+        //private FctDtl fctDtl = new FctDtl(); //시설물기본정보
+        private CmmDtl fctDtl = new CmmDtl(); //시설물기본정보
         private Popup divLayer = new Popup(); //시설물레이어DIV
-        private PopFct popFct = new PopFct(); //시설물정보DIV
+        //private PopFct popFct = new PopFct(); //시설물정보DIV
+        private Popup popFct = new Popup(); //시설물정보DIV
         private Button ClearButton = new Button();
         private TextBox txtFTR_CDE = new TextBox();
         private TextBox txtFTR_IDN = new TextBox();
@@ -96,11 +101,15 @@ namespace GTI.WFMS.GIS
         public RelayCommand<object> resetCmd { get; set; }
 
         public RelayCommand<object> btnCmd { get; set; }
+        
         public RelayCommand<object> completeCmd { get; set; }
         public RelayCommand<object> clearCmd { get; set; }
         public RelayCommand<object> findCmd { get; set; }
 
-        public FctDtl FctDtl
+        public RelayCommand<object> CallPageCmd { get; set; }//시설물팝업에서 시설물메뉴화면 호출작업
+
+
+        public CmmDtl FctDtl
         {
             get { return this.fctDtl; }
             set { this.fctDtl = value; }
@@ -166,11 +175,14 @@ namespace GTI.WFMS.GIS
                 {
                     if (chk)
                     {
-                        _selectedLayers.Add(doc.Tag.ToString());
+                        _selectedLayerNms.Add(doc.Tag.ToString());
+                        _selectedLayerNm = doc.Tag.ToString();
                     }
                     else
                     {
-                        _selectedLayers.Remove(doc.Tag.ToString());
+                        _selectedLayerNms.Remove(doc.Tag.ToString());
+                        _selectedLayerNm = _selectedLayerNms.LastOrDefault();
+
                     }
                 }
                 catch (Exception) { }
@@ -233,9 +245,27 @@ namespace GTI.WFMS.GIS
                     cb.IsChecked = false;
                 }
                 //선택된레이어 해제
-                _selectedLayers.Clear();
+                _selectedLayerNms.Clear();
+                _selectedLayerNm = "";
             });
 
+            //시설물팝업에서 시설물메뉴화면 호출작업
+            CallPageCmd = new RelayCommand<object>(delegate (object obj) {
+
+                FctDtl fctDtl = obj as FctDtl;
+
+                IRegionManager regionManager = FmsUtil.__regionManager;
+                ViewsCollection views = regionManager.Regions["ContentRegion"].ActiveViews as ViewsCollection;
+
+                foreach (var v in views)
+                {
+                    MapMainView mapMainView = v as MapMainView;
+                    //MainWinViewModel vm = ((System.Windows.Controls.Grid)((ContentControl)mapMainView.Parent).Parent).DataContext as MainWinViewModel;
+                    break;
+                }
+
+            });
+            
 
 
             btnCmd = new RelayCommand<object>(async delegate (object obj)
@@ -244,12 +274,12 @@ namespace GTI.WFMS.GIS
                 switch (btn.Content.ToString())
                 {
                     case "추가":
-                        if (_selectedLayers.Count < 1)
+                        if (_selectedLayerNms.Count < 1)
                         {
                             MessageBox.Show("시설물을 선택하세요.");
                             return;
                         }
-                        else if (_selectedLayers.Count > 1)
+                        else if (_selectedLayerNms.Count > 1)
                         {
                             MessageBox.Show("시설물을 하나만 선택하세요.");
                             return;
@@ -257,7 +287,7 @@ namespace GTI.WFMS.GIS
 
 
                         //라인피처인 경우 - SketchEditor 를 GraphicOverlay에 생성한다
-                        if (_selectedLayers[0].Equals("WTL_PIPE_LM") || _selectedLayers[0].Equals("WTL_SPLY_LS"))
+                        if (_selectedLayerNm.Equals("WTL_PIPE_LM") || _selectedLayerNm.Equals("WTL_SPLY_LS"))
                         {
                             try
                             {
@@ -266,7 +296,7 @@ namespace GTI.WFMS.GIS
 
                                 // Create and add a graphic from the geometry the user drew
                                 SimpleLineSymbol symbol;
-                                if (_selectedLayers[0].Equals("WTL_PIPE_LM"))
+                                if (_selectedLayerNm.Equals("WTL_PIPE_LM"))
                                 {
                                     symbol = new SimpleLineSymbol(SimpleLineSymbolStyle.Solid, System.Drawing.Color.SkyBlue, 2);
                                 }
@@ -591,7 +621,7 @@ namespace GTI.WFMS.GIS
 
 
                 // Get the path to the first layer - the local feature service url + layer ID
-                //string layerUrl = _localFeatureService.Url + "/" + GetLayerId(_selectedLayers[0]);
+                //string layerUrl = _localFeatureService.Url + "/" + GetLayerId(_selectedLayer);
 
                 // Create the ServiceFeatureTable
                 //ServiceFeatureTable serviceFeatureTable = new ServiceFeatureTable(new Uri(layerUrl));
@@ -601,7 +631,7 @@ namespace GTI.WFMS.GIS
                 //await featureLayer.LoadAsync();
 
 
-                FeatureTable layerTable = layers[_selectedLayers[0]].FeatureTable;
+                FeatureTable layerTable = layers[_selectedLayerNm].FeatureTable;
 
 
                 //피처추가
@@ -616,7 +646,7 @@ namespace GTI.WFMS.GIS
                 string ftr_cde = "SA118";
                 try
                 {
-                    //ftr_cde = _selectedLayers[0].Split(',')[0];
+                    //ftr_cde = _selectedLayer.Split(',')[0];
                 }
                 catch (Exception){}
                 
@@ -798,10 +828,6 @@ namespace GTI.WFMS.GIS
         {
             try
             {
-                FeatureLayer layer = new FeatureLayer(); //이벤트발생 레이어
-
-
-
                 // PopFct 객체 생성여부 체크관련 - 검증안됨
                 /*
                 if (App.Current.Windows.Count > 1)
@@ -816,153 +842,23 @@ namespace GTI.WFMS.GIS
                 }
                  */
 
-
-
-
                 /*
                 divLayerInfo.PlacementRectangle = new Rect(e.Position.X, e.Position.Y, 250, 300);
                 divLayerInfo.IsOpen = true;
                  */
 
+
+
+
+                // 위치에해당하는 피처찾은 결과
                 // Perform the identify operation.
-                IdentifyLayerResult IR_WTL_MANH_PS = await mapView.IdentifyLayerAsync(layers["WTL_MANH_PS"], e.Position, 20, false);
-                IdentifyLayerResult IR_WTL_STPI_PS = await mapView.IdentifyLayerAsync(layers["WTL_STPI_PS"], e.Position, 20, false);
-                IdentifyLayerResult IR_WTL_HEAD_PS = await mapView.IdentifyLayerAsync(layers["WTL_HEAD_PS"], e.Position, 20, false);
-                IdentifyLayerResult IR_WTL_GAIN_PS = await mapView.IdentifyLayerAsync(layers["WTL_GAIN_PS"], e.Position, 20, false);
-                IdentifyLayerResult IR_WTL_SERV_PS = await mapView.IdentifyLayerAsync(layers["WTL_SERV_PS"], e.Position, 20, false);
-                IdentifyLayerResult IR_WTL_FLOW_PS = await mapView.IdentifyLayerAsync(layers["WTL_FLOW_PS"], e.Position, 20, false);
-                IdentifyLayerResult IR_WTL_FIRE_PS_SA118 = await mapView.IdentifyLayerAsync(layers["WTL_FIRE_PS,FTR_CDE='SA118'"], e.Position, 20, false);
-                IdentifyLayerResult IR_WTL_FIRE_PS_SA119 = await mapView.IdentifyLayerAsync(layers["WTL_FIRE_PS,FTR_CDE='SA119'"], e.Position, 20, false);
+                IdentifyLayerResult IR_SEL = await mapView.IdentifyLayerAsync(layers[_selectedLayerNm], e.Position, 1, false);
 
-                IdentifyLayerResult IR_WTL_VALV_PS_SA200 = await mapView.IdentifyLayerAsync(layers["WTL_VALV_PS,FTR_CDE='SA200'"], e.Position, 20, false);
-                IdentifyLayerResult IR_WTL_VALV_PS_SA201 = await mapView.IdentifyLayerAsync(layers["WTL_VALV_PS,FTR_CDE='SA201'"], e.Position, 20, false);
-                IdentifyLayerResult IR_WTL_VALV_PS_SA202 = await mapView.IdentifyLayerAsync(layers["WTL_VALV_PS,FTR_CDE='SA202'"], e.Position, 20, false);
-                IdentifyLayerResult IR_WTL_VALV_PS_SA203 = await mapView.IdentifyLayerAsync(layers["WTL_VALV_PS,FTR_CDE='SA203'"], e.Position, 20, false);
-                IdentifyLayerResult IR_WTL_VALV_PS_SA204 = await mapView.IdentifyLayerAsync(layers["WTL_VALV_PS,FTR_CDE='SA204'"], e.Position, 20, false);
-                IdentifyLayerResult IR_WTL_VALV_PS_SA205 = await mapView.IdentifyLayerAsync(layers["WTL_VALV_PS,FTR_CDE='SA205'"], e.Position, 20, false);
-                IdentifyLayerResult IR_WTL_VALV_PS_SA206 = await mapView.IdentifyLayerAsync(layers["WTL_VALV_PS,FTR_CDE='SA206'"], e.Position, 20, false);
-                
-                IdentifyLayerResult IR_WTL_RSRV_PS = await mapView.IdentifyLayerAsync(layers["WTL_RSRV_PS"], e.Position, 20, false);
-                IdentifyLayerResult IR_WTL_PRGA_PS = await mapView.IdentifyLayerAsync(layers["WTL_PRGA_PS"], e.Position, 20, false);
-                IdentifyLayerResult IR_WTL_META_PS = await mapView.IdentifyLayerAsync(layers["WTL_META_PS"], e.Position, 20, false);
-                IdentifyLayerResult IR_WTL_LEAK_PS = await mapView.IdentifyLayerAsync(layers["WTL_LEAK_PS"], e.Position, 20, false);
-                IdentifyLayerResult IR_WTL_PIPE_LM = await mapView.IdentifyLayerAsync(layers["WTL_PIPE_LM"], e.Position, 20, false);
-                IdentifyLayerResult IR_WTL_SPLY_LS = await mapView.IdentifyLayerAsync(layers["WTL_SPLY_LS"], e.Position, 20, false);
-                IdentifyLayerResult IR_WTL_PURI_AS = await mapView.IdentifyLayerAsync(layers["WTL_PURI_AS"], e.Position, 20, false);
-
-                Feature identifiedFeature; //이벤트 타겟레이어
-
-
-
-                if (IR_WTL_STPI_PS.GeoElements.Any())
+                // 이벤트 타겟피처
+                Feature identifiedFeature; 
+                if (IR_SEL.GeoElements.Any())
                 {
-                    identifiedFeature = (Feature)IR_WTL_STPI_PS.GeoElements[0];
-                    layer = layers["WTL_STPI_PS"]; //선택한 레이어
-                }
-                else if (IR_WTL_MANH_PS.GeoElements.Any())
-                {
-                    identifiedFeature = (Feature)IR_WTL_MANH_PS.GeoElements[0];
-                    layer = layers["WTL_MANH_PS"];
-                }
-                else if (IR_WTL_HEAD_PS.GeoElements.Any())
-                {
-                    identifiedFeature = (Feature)IR_WTL_HEAD_PS.GeoElements[0];
-                    layer = layers["WTL_HEAD_PS"];
-                }
-                else if (IR_WTL_GAIN_PS.GeoElements.Any())
-                {
-                    identifiedFeature = (Feature)IR_WTL_GAIN_PS.GeoElements[0];
-                    layer = layers["WTL_GAIN_PS"];
-                }
-                else if (IR_WTL_SERV_PS.GeoElements.Any())
-                {
-                    identifiedFeature = (Feature)IR_WTL_SERV_PS.GeoElements[0];
-                    layer = layers["WTL_SERV_PS"];
-                }
-                else if (IR_WTL_FLOW_PS.GeoElements.Any())
-                {
-                    identifiedFeature = (Feature)IR_WTL_FLOW_PS.GeoElements[0];
-                    layer = layers["WTL_FLOW_PS"];
-                }
-                else if (IR_WTL_FIRE_PS_SA118.GeoElements.Any())
-                {
-                    identifiedFeature = (Feature)IR_WTL_FIRE_PS_SA118.GeoElements[0];
-                    layer = layers["WTL_FIRE_PS,FTR_CDE='SA118'"];
-                }
-                else if (IR_WTL_FIRE_PS_SA119.GeoElements.Any())
-                {
-                    identifiedFeature = (Feature)IR_WTL_FIRE_PS_SA119.GeoElements[0];
-                    layer = layers["WTL_FIRE_PS,FTR_CDE='SA119'"];
-                }
-                else if (IR_WTL_VALV_PS_SA200.GeoElements.Any())
-                {
-                    identifiedFeature = (Feature)IR_WTL_VALV_PS_SA200.GeoElements[0];
-                    layer = layers["WTL_VALV_PS,FTR_CDE='SA200'"];
-                }
-                else if (IR_WTL_VALV_PS_SA201.GeoElements.Any())
-                {
-                    identifiedFeature = (Feature)IR_WTL_VALV_PS_SA201.GeoElements[0];
-                    layer = layers["WTL_VALV_PS,FTR_CDE='SA201'"];
-                }
-                else if (IR_WTL_VALV_PS_SA202.GeoElements.Any())
-                {
-                    identifiedFeature = (Feature)IR_WTL_VALV_PS_SA202.GeoElements[0];
-                    layer = layers["WTL_VALV_PS,FTR_CDE='SA202'"];
-                }
-                else if (IR_WTL_VALV_PS_SA203.GeoElements.Any())
-                {
-                    identifiedFeature = (Feature)IR_WTL_VALV_PS_SA203.GeoElements[0];
-                    layer = layers["WTL_VALV_PS,FTR_CDE='SA203'"];
-                }
-                else if (IR_WTL_VALV_PS_SA204.GeoElements.Any())
-                {
-                    identifiedFeature = (Feature)IR_WTL_VALV_PS_SA204.GeoElements[0];
-                    layer = layers["WTL_VALV_PS,FTR_CDE='SA204'"];
-                }
-                else if (IR_WTL_VALV_PS_SA205.GeoElements.Any())
-                {
-                    identifiedFeature = (Feature)IR_WTL_VALV_PS_SA205.GeoElements[0];
-                    layer = layers["WTL_VALV_PS,FTR_CDE='SA205'"];
-                }
-                else if (IR_WTL_VALV_PS_SA206.GeoElements.Any())
-                {
-                    identifiedFeature = (Feature)IR_WTL_VALV_PS_SA206.GeoElements[0];
-                    layer = layers["WTL_VALV_PS,FTR_CDE='SA206'"];
-                }
-                else if (IR_WTL_RSRV_PS.GeoElements.Any())
-                {
-                    identifiedFeature = (Feature)IR_WTL_RSRV_PS.GeoElements[0];
-                    layer = layers["WTL_RSRV_PS"];
-                }
-                else if (IR_WTL_PRGA_PS.GeoElements.Any())
-                {
-                    identifiedFeature = (Feature)IR_WTL_PRGA_PS.GeoElements[0];
-                    layer = layers["WTL_PRGA_PS"];
-                }
-                else if (IR_WTL_META_PS.GeoElements.Any())
-                {
-                    identifiedFeature = (Feature)IR_WTL_META_PS.GeoElements[0];
-                    layer = layers["WTL_META_PS"];
-                }
-                else if (IR_WTL_LEAK_PS.GeoElements.Any())
-                {
-                    identifiedFeature = (Feature)IR_WTL_LEAK_PS.GeoElements[0];
-                    layer = layers["WTL_LEAK_PS"];
-                }
-                else if (IR_WTL_PIPE_LM.GeoElements.Any())
-                {
-                    identifiedFeature = (Feature)IR_WTL_PIPE_LM.GeoElements[0];
-                    layer = layers["WTL_PIPE_LM"];
-                }
-                else if (IR_WTL_SPLY_LS.GeoElements.Any())
-                {
-                    identifiedFeature = (Feature)IR_WTL_SPLY_LS.GeoElements[0];
-                    layer = layers["WTL_SPLY_LS"];
-                }
-                else if (IR_WTL_PURI_AS.GeoElements.Any())
-                {
-                    identifiedFeature = (Feature)IR_WTL_PURI_AS.GeoElements[0];
-                    layer = layers["WTL_PURI_AS"];
+                    identifiedFeature = (Feature)IR_SEL.GeoElements[0];
                 }
                 else
                 {
@@ -973,21 +869,21 @@ namespace GTI.WFMS.GIS
 
 
 
-                //선택해제
+                // 기존선택해제
                 if (_selectedFeature != null)
                 {
                     try
                     {
                         // Reset the selection.
-                        layer.ClearSelection();
+                        layers[_selectedLayerNm].ClearSelection();
                         _selectedFeature = null;
                     }
                     catch (Exception) { }
                 }
 
-                //선택처리
-                layer.SelectFeature(identifiedFeature); //시설물선택활성화 처리
-                                                        //_selectedFeature = (ArcGISFeature)identifiedFeature; //선택피처 ArcGISFeature 변환저장
+                // 선택처리
+                layers[_selectedLayerNm].SelectFeature(identifiedFeature); //시설물선택활성화 처리
+                //_selectedFeature = (ArcGISFeature)identifiedFeature; //선택피처 ArcGISFeature 변환저장
                 _selectedFeature = (Feature)identifiedFeature; //선택피처 ArcGISFeature 변환저장
 
 
@@ -995,44 +891,82 @@ namespace GTI.WFMS.GIS
 
 
 
-                //팝업열기 & 위치
-                popFct.IsOpen = false;
-
-                popFct = new PopFct();
-                popFct.PlacementRectangle = new Rect(e.Position.X + 300, e.Position.Y - 200, 250, 300);
-                popFct.IsOpen = true;
-                popFct.DataContext = this;
 
 
 
-                //선택된 레이어에서 속성정보 가져오기
-                //& 레이어정보 세팅
+                //0.선택된 레이어에서 속성정보 가져오기
                 try
                 {
-                    FctDtl.FTR_CDE = identifiedFeature.GetAttributeValue("FTR_CDE").ToString();
-                    FctDtl.FTR_NAM = BizUtil.GetCodeNm("Select_FTR_NM", FctDtl.FTR_CDE);
-                    FctDtl.FTR_IDN = Int32.Parse(identifiedFeature.GetAttributeValue("FTR_IDN").ToString());
-                    FctDtl.SHT_NUM = identifiedFeature.GetAttributeValue("SHT_NUM").ToString();
-                    FctDtl.HJD_CDE = identifiedFeature.GetAttributeValue("HJD_CDE").ToString();
-                    FctDtl.HJD_NAM = BizUtil.GetCodeNm("Select_ADAR_NM", FctDtl.HJD_CDE);
-                    FctDtl.MNG_CDE = identifiedFeature.GetAttributeValue("MNG_CDE").ToString();
-                    FctDtl.MNG_NAM = BizUtil.GetCdNm("250101", FctDtl.MNG_CDE);//관리기관
-                    FctDtl.IST_YMD = identifiedFeature.GetAttributeValue("IST_YMD").ToString();
+                    //this.FctDtl.FTR_CDE = identifiedFeature.GetAttributeValue("FTR_CDE").ToString();
+                    //this.FctDtl.FTR_IDN = Int32.Parse(identifiedFeature.GetAttributeValue("FTR_IDN").ToString());
+                    //this.FctDtl.FTR_NAM = BizUtil.GetCodeNm("Select_FTR_NM", this.FctDtl.FTR_CDE);
+                    //this.FctDtl.SHT_NUM = identifiedFeature.GetAttributeValue("SHT_NUM").ToString();
+                    //this.FctDtl.HJD_CDE = identifiedFeature.GetAttributeValue("HJD_CDE").ToString();
+                    //this.FctDtl.HJD_NAM = BizUtil.GetCodeNm("Select_ADAR_NM", this.FctDtl.HJD_CDE);
+                    //this.FctDtl.MNG_CDE = identifiedFeature.GetAttributeValue("MNG_CDE").ToString();
+                    //this.FctDtl.MNG_NAM = BizUtil.GetCdNm("250101", this.FctDtl.MNG_CDE);//관리기관
+                    //this.FctDtl.IST_YMD = identifiedFeature.GetAttributeValue("IST_YMD").ToString();
                 }
                 catch (Exception) { }
                 try
                 {
-                    FctDtl.MOP_CDE = identifiedFeature.GetAttributeValue("MOP_CDE").ToString();
-                    FctDtl.MOP_NAM = BizUtil.GetCdNm("250102", FctDtl.MOP_CDE);//관재질
-                    FctDtl.MOF_NAM = FctDtl.MOP_NAM; //무조건 MOF에 형식저장!
+                    //this.FctDtl.MOP_CDE = identifiedFeature.GetAttributeValue("MOP_CDE").ToString();
+                    //this.FctDtl.MOP_NAM = BizUtil.GetCdNm("250102", this.FctDtl.MOP_CDE);//관재질
+                    //this.FctDtl.MOF_NAM = this.FctDtl.MOP_NAM; //무조건 MOF에 형식저장!
                 }
                 catch (Exception) { }
                 try
                 {
-                    FctDtl.MOF_CDE = identifiedFeature.GetAttributeValue("MOF_CDE").ToString();
-                    FctDtl.MOF_NAM = BizUtil.GetCdNm("250004", FctDtl.MOF_CDE);//계량기형식
+                    //this.FctDtl.MOF_CDE = identifiedFeature.GetAttributeValue("MOF_CDE").ToString();
+                    //this.FctDtl.MOF_NAM = BizUtil.GetCdNm("250004", this.FctDtl.MOF_CDE);//계량기형식
                 }
                 catch (Exception) { }
+
+
+                //1.DB시설물조회 후 레이어정보 세팅
+                string _FTR_CDE = identifiedFeature.GetAttributeValue("FTR_CDE").ToString();
+                string _FTR_IDN = identifiedFeature.GetAttributeValue("FTR_IDN").ToString();
+                switch (_FTR_CDE)
+                {
+                    case "SA001":
+                        //팝업열기 & 위치
+                        popFct.IsOpen = false;
+
+                        popFct = new WTL_PIPE_LM();
+                        popFct.PlacementRectangle = new Rect(e.Position.X + 300, e.Position.Y - 200, 250, 300);
+                        popFct.IsOpen = true;
+                        popFct.DataContext = this;
+
+                        Hashtable param = new Hashtable();
+                        param.Add("FTR_CDE", _FTR_CDE);
+                        param.Add("FTR_IDN", _FTR_IDN);
+                        param.Add("sqlId", "SelectWtlPipeDtl2");
+
+                        this.FctDtl = BizUtil.SelectObject(param) as CmmDtl;
+                        break;
+
+                    case "SA117":
+                        //팝업열기 & 위치
+                        popFct.IsOpen = false;
+
+                        popFct = new WTL_FLOW_PS();
+                        popFct.PlacementRectangle = new Rect(e.Position.X + 300, e.Position.Y - 200, 250, 300);
+                        popFct.IsOpen = true;
+                        popFct.DataContext = this;
+
+                        param = new Hashtable();
+                        param.Add("FTR_CDE", _FTR_CDE);
+                        param.Add("FTR_IDN", _FTR_IDN);
+                        param.Add("sqlId", "SelectFlowMtDtl");
+
+                        this.FctDtl = BizUtil.SelectObject(param) as CmmDtl;
+                        break;
+
+                    default: 
+                        break;
+
+                }
+
             }
             catch (Exception)
             {

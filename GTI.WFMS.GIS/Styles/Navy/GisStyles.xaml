@@ -178,7 +178,14 @@
         <Setter Property="HorizontalAlignment" Value="Stretch"/>
         <Setter Property="VerticalAlignment" Value="Center"/>
         <Setter Property="Margin" Value="10,0,10,0"/>
-        
+    </Style>
+    <!--그리드 내 NumberEdit (inner shadow)-->
+    <Style TargetType="{x:Type TextBox}" x:Key="GridNumberBox">
+        <Setter Property="Width" Value="Auto"/>
+        <Setter Property="Height" Value="27"/>
+        <Setter Property="HorizontalAlignment" Value="Stretch"/>
+        <Setter Property="VerticalAlignment" Value="Center"/>
+        <Setter Property="Margin" Value="10,0,10,0"/>
     </Style>
 
 

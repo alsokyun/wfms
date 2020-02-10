@@ -22,6 +22,7 @@ namespace GTI.WFMS.Models.Common
         public static IRegionManager __regionManager;
         public static Popup __popMain;
 
+        
 
         /// <summary>
         /// IsNull 오브젝트형
