@@ -1,12 +1,15 @@
 ﻿using Prism.Regions;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Data;
 using System.IO;
 using System.Linq;
+using System.Reflection;
 using System.Runtime.Serialization;
 using System.Runtime.Serialization.Formatters.Binary;
 using System.Windows;
+using System.Windows.Controls;
 using System.Windows.Controls.Primitives;
 using System.Windows.Media;
 
@@ -168,6 +171,25 @@ namespace GTI.WFMS.Models.Common
             }
         }
 
+
+        /// <summary>
+        /// ContentControl 에 걸려있는 EventName 이벤트를 모두 제거
+        /// </summary>
+        /// <param name="b"></param>
+        /// <param name="EventName"></param>
+        public static void RemoveEvent(Control b, string EventName)
+        {
+            FieldInfo f1 = typeof(Control).GetField(EventName, BindingFlags.Static | BindingFlags.NonPublic);
+            if (f1 != null)
+            {
+                object obj = f1.GetValue(b);
+
+                PropertyInfo pi = b.GetType().GetProperty("Events", BindingFlags.NonPublic | BindingFlags.Instance);
+                EventHandlerList list = (EventHandlerList)pi.GetValue(b, null);
+
+                list.RemoveHandler(obj, list[obj]);
+            }
+        }
 
 
     }

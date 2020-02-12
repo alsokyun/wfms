@@ -270,6 +270,10 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
+    <Page Include="Link\View\PhoFileMngView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
     <Page Include="Link\View\RefFileMngView.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -564,6 +568,9 @@
     <Compile Include="Link\View\PhotoFileMngView.xaml.cs">
       <DependentUpon>PhotoFileMngView.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Link\View\PhoFileMngView.xaml.cs">
+      <DependentUpon>PhoFileMngView.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Link\View\RefFileMngView.xaml.cs">
       <DependentUpon>RefFileMngView.xaml</DependentUpon>
     </Compile>
@@ -597,9 +604,16 @@
     <Compile Include="Pipe\Report\FireFacReport.Designer.cs">
       <DependentUpon>FireFacReport.cs</DependentUpon>
     </Compile>
+    <Compile Include="Pipe\Report\WtlPipeDtlReport.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Pipe\Report\WtlPipeDtlReport.Designer.cs">
+      <DependentUpon>WtlPipeDtlReport.cs</DependentUpon>
+    </Compile>
     <Compile Include="Pipe\ViewModel\FireFacAddViewModel.cs" />
     <Compile Include="Pipe\ViewModel\FireFacDtlViewModel.cs" />
     <Compile Include="Pipe\ViewModel\FireFacListViewModel.cs" />
+    <Compile Include="Pipe\ViewModel\WtlPipeDtlViewMdl.cs" />
     <Compile Include="Pipe\ViewModel\WtprMtAddViewModel.cs" />
     <Compile Include="Pipe\ViewModel\WtprMtDtlViewModel.cs" />
     <Compile Include="Pipe\ViewModel\WtprMtListViewModel.cs" />
@@ -727,8 +741,8 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Pipe\Report\FireFacReport.resx">
-      <DependentUpon>FireFacReport.cs</DependentUpon>
+    <EmbeddedResource Include="Pipe\Report\WtlPipeDtlReport.resx">
+      <DependentUpon>WtlPipeDtlReport.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Licenses.licx" />
   </ItemGroup>

@@ -28,7 +28,7 @@
         </Grid.RowDefinitions>
 
 
-        <StackPanel Grid.Row="0" Orientation="Horizontal" HorizontalAlignment="Right" Margin="0 0 5 3">
+        <StackPanel Grid.Row="0" Orientation="Horizontal" HorizontalAlignment="Right" Margin="0 0 5 0">
             <Button x:Name="btnReg" Style="{DynamicResource ResourceKey=GrdAddButton}" Content="사진파일관리" Click="BtnAdd_Click"  />
         </StackPanel>
 

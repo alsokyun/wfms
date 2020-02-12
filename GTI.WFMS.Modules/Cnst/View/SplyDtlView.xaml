@@ -5,6 +5,7 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:GTI.WFMS.Modules.Cnst.View"
+             xmlns:link="clr-namespace:GTI.WFMS.Modules.Link.View"
              mc:Ignorable="d" 
              d:DesignHeight="550" d:DesignWidth="950"
       
@@ -14,6 +15,7 @@
             xmlns:vm="clr-namespace:GTI.WFMS.Modules.Cnst.ViewModel"
             x:Name="splyDtl"
             xmlns:cv="clr-namespace:GTI.WFMS.Models.Common;assembly=GTI.WFMS.Models"     
+            xmlns:sys="clr-namespace:System;assembly=mscorlib"
       >
 
     <!--뷰와 뷰모델 바인딩
@@ -164,10 +166,10 @@
 
 
             <Label Grid.Row="0" Grid.Column="0" Content="공사번호" Style="{DynamicResource ResourceKey=GridLabelReq}"/>
-            <dxe:TextEdit Grid.Row="0" Grid.Column="1" Style="{DynamicResource ResourceKey=GrdTextEdit}" Tag="공사번호" Width="90" HorizontalAlignment="Left"
+            <dxe:TextEdit Grid.Row="0" Grid.Column="1" Style="{DynamicResource ResourceKey=GrdTextEdit}" Tag="공사번호" Width="80" HorizontalAlignment="Left"
                           x:Name="txtCNT_NUM" EditValue="{Binding CNT_NUM, UpdateSourceTrigger=PropertyChanged}"/>
-            <Button Grid.Row="0" Grid.Column="1" HorizontalAlignment="Right" Width="Auto" Height="20" Padding="0" Margin="0 0 10 0"
-                    x:Name="btnDup" Command="{Binding DupCommand}" Content="{Binding Dup, Mode=TwoWay}" />
+            <Button Grid.Row="0" Grid.Column="1" HorizontalAlignment="Right" Width="Auto" Height="22" Padding="1" Margin="0 0 10 0"
+                    x:Name="btnDup" Command="{Binding DupCommand}" Content="체크" Style="{DynamicResource TxtButton}" FontWeight="Normal" />
 
             <Label Grid.Row="0" Grid.Column="2" Content="시공자명" Style="{DynamicResource ResourceKey=GridLabel}"/>
             <dxe:TextEdit Grid.Row="0" Grid.Column="3" Style="{DynamicResource ResourceKey=GrdTextEdit}"  
@@ -250,6 +252,9 @@
             </dx:DXTabItem>
 
         </dx:DXTabControl>
+
+        <dx:WaitIndicator x:Name="waitindicator" Grid.Row="1" DeferedVisibility="False" Content="Loading..."/>
+
     </Grid>
 
 

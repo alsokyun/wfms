@@ -32,7 +32,7 @@ namespace GTI.WFMS.GIS
         //private Map _map = new Map(SpatialReference.Create(5181));
         //private Map _map = new Map(SpatialReference.Create(3857)) { MinScale = 7000000.0 };
 
-        public MapView mapView = new MapView(); //뷰의 MapView
+        public MapView mapView; //뷰의 MapView
 
 
         /* 

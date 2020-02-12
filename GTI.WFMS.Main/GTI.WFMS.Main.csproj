@@ -545,6 +545,16 @@
     <Resource Include="Resources\Navy\Images\Image\icon_position.png" />
     <Resource Include="Resources\Navy\Images\Image\btn_xs_down.png" />
     <Resource Include="Resources\Navy\Images\Image\btn_xs_down_on.png" />
+    <Resource Include="Resources\Navy\Images\Image\btn_pop_file_reg.png" />
+    <Resource Include="Resources\Navy\Images\Image\btn_pop_file_reg_on.png" />
+    <Resource Include="Resources\Navy\Images\Image\btn_pop_file_sel.png" />
+    <Resource Include="Resources\Navy\Images\Image\btn_pop_file_sel_on.png" />
+    <Resource Include="Resources\Navy\Images\Image\btn_s_add.png" />
+    <Resource Include="Resources\Navy\Images\Image\btn_s_add_on.png" />
+    <Resource Include="Resources\Navy\Images\Image\btn_s_del.png" />
+    <Resource Include="Resources\Navy\Images\Image\btn_s_del_on.png" />
+    <Resource Include="Resources\Navy\Images\Image\btn_s_reg.png" />
+    <Resource Include="Resources\Navy\Images\Image\btn_s_reg_on.png" />
     <Content Include="Styles\Fonts\malgun.ttf">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>

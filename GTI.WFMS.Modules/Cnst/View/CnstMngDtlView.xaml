@@ -144,8 +144,8 @@
             <Border Grid.Row="0" Grid.Column="2" BorderThickness="0 1 1 1" BorderBrush="{DynamicResource MainBack1Brush1}" Background="{DynamicResource PopupCOLOR3Brush}"/>
             <Border Grid.Row="0" Grid.Column="3" BorderThickness="0 1 1 1" BorderBrush="{DynamicResource MainBack1Brush1}"/>
             <Border Grid.Row="0" Grid.Column="4" BorderThickness="0 1 1 1" BorderBrush="{DynamicResource MainBack1Brush1}" Background="{DynamicResource PopupCOLOR3Brush}"/>
-            <Border Grid.Row="0" Grid.Column="5" BorderThickness="0 0 0 1" BorderBrush="{DynamicResource MainBack1Brush1}"/>
-            <Border Grid.Row="0" Grid.Column="6" BorderThickness="0 0 0 1" BorderBrush="{DynamicResource MainBack1Brush1}" />
+            <Border Grid.Row="0" Grid.Column="5" BorderThickness="0 1 0 1" BorderBrush="{DynamicResource MainBack1Brush1}"/>
+            <Border Grid.Row="0" Grid.Column="6" BorderThickness="0 1 0 1" BorderBrush="{DynamicResource MainBack1Brush1}" />
             <Border Grid.Row="0" Grid.Column="7" BorderThickness="0 1 1 1" BorderBrush="{DynamicResource MainBack1Brush1}"/>
             <Border Grid.Row="1" Grid.Column="0" BorderThickness="1 0 1 1" BorderBrush="{DynamicResource MainBack1Brush1}" Background="{DynamicResource PopupCOLOR3Brush}"/>
             <Border Grid.Row="1" Grid.Column="1" BorderThickness="0 0 1 1" BorderBrush="{DynamicResource MainBack1Brush1}"/>

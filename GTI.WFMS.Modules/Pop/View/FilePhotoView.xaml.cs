@@ -31,7 +31,7 @@ namespace GTI.WFMS.Modules.Pop.View
             //파일키저장
             txtFIL_SEQ.Text = FIL_SEQ;
             txtBIZ_ID.Text = BIZ_ID;
-            
+
         }
 
         //닫기

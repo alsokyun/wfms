@@ -1700,6 +1700,90 @@
 
     <!--그리드추가 버튼 (이미지)-->
     <Style TargetType="Button" x:Key="GrdAddButton">
+        <Setter Property="Width" Value="52"/>
+        <Setter Property="Height" Value="20"/>
+        <Setter Property="Margin" Value="5,0,0,0"/>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate>
+                    <Grid>
+                        <Image Source="/Resources/Navy/Images/Image/btn_s_add.png"/>
+                    </Grid>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+        <Style.Triggers>
+            <Trigger Property="IsMouseOver" Value="True">
+                <Setter Property="Template">
+                    <Setter.Value>
+                        <ControlTemplate>
+                            <Grid>
+                                <Image Source="/Resources/Navy/Images/Image/btn_s_add_on.png"/>
+                            </Grid>
+                        </ControlTemplate>
+                    </Setter.Value>
+                </Setter>
+            </Trigger>
+        </Style.Triggers>
+    </Style>
+    <!--그리드삭제 버튼 (이미지)-->
+    <Style TargetType="Button" x:Key="GrdDelButton">
+        <Setter Property="Width" Value="52"/>
+        <Setter Property="Height" Value="20"/>
+        <Setter Property="Margin" Value="5,0,0,0"/>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate>
+                    <Grid>
+                        <Image Source="/Resources/Navy/Images/Image/btn_s_del.png"/>
+                    </Grid>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+        <Style.Triggers>
+            <Trigger Property="IsMouseOver" Value="True">
+                <Setter Property="Template">
+                    <Setter.Value>
+                        <ControlTemplate>
+                            <Grid>
+                                <Image Source="/Resources/Navy/Images/Image/btn_s_del_on.png"/>
+                            </Grid>
+                        </ControlTemplate>
+                    </Setter.Value>
+                </Setter>
+            </Trigger>
+        </Style.Triggers>
+    </Style>
+    <!--그리드저장 버튼 (이미지)-->
+    <Style TargetType="Button" x:Key="GrdRegButton">
+        <Setter Property="Width" Value="52"/>
+        <Setter Property="Height" Value="20"/>
+        <Setter Property="Margin" Value="5,0,0,0"/>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate>
+                    <Grid>
+                        <Image Source="/Resources/Navy/Images/Image/btn_s_reg.png"/>
+                    </Grid>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+        <Style.Triggers>
+            <Trigger Property="IsMouseOver" Value="True">
+                <Setter Property="Template">
+                    <Setter.Value>
+                        <ControlTemplate>
+                            <Grid>
+                                <Image Source="/Resources/Navy/Images/Image/btn_s_reg_on.png"/>
+                            </Grid>
+                        </ControlTemplate>
+                    </Setter.Value>
+                </Setter>
+            </Trigger>
+        </Style.Triggers>
+    </Style>
+    <!--그리드추가 버튼 (이미지)-->
+    <Style TargetType="Button" x:Key="GdAddButton">
         <Setter Property="Width" Value="20"/>
         <Setter Property="Height" Value="20"/>
         <Setter Property="Margin" Value="5,0,0,0"/>
@@ -1727,7 +1811,7 @@
         </Style.Triggers>
     </Style>
     <!--그리드삭제 버튼 (이미지)-->
-    <Style TargetType="Button" x:Key="GrdDelButton">
+    <Style TargetType="Button" x:Key="GdDelButton">
         <Setter Property="Width" Value="20"/>
         <Setter Property="Height" Value="20"/>
         <Setter Property="Margin" Value="5,0,0,0"/>
@@ -1755,15 +1839,15 @@
         </Style.Triggers>
     </Style>
     <!--그리드저장 버튼 (이미지)-->
-    <Style TargetType="Button" x:Key="GrdRegButton">
-        <Setter Property="Width" Value="20"/>
+    <Style TargetType="Button" x:Key="GdRegButton">
+        <Setter Property="Width" Value="52"/>
         <Setter Property="Height" Value="20"/>
         <Setter Property="Margin" Value="5,0,0,0"/>
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate>
                     <Grid>
-                        <Image Source="/Resources/Navy/Images/Image/btn_xs_regist.png"/>
+                        <Image Source="/Resources/Navy/Images/Image/btn_xs_register.png"/>
                     </Grid>
                 </ControlTemplate>
             </Setter.Value>
@@ -1774,14 +1858,14 @@
                     <Setter.Value>
                         <ControlTemplate>
                             <Grid>
-                                <Image Source="/Resources/Navy/Images/Image/btn_xs_regist_on.png"/>
+                                <Image Source="/Resources/Navy/Images/Image/btn_xs_register_on.png"/>
                             </Grid>
                         </ControlTemplate>
                     </Setter.Value>
                 </Setter>
             </Trigger>
         </Style.Triggers>
-    </Style>
+    </Style>    
     <!--그리드다운로드 버튼 (이미지)-->
     <Style TargetType="Button" x:Key="GrdDownButton">
         <Setter Property="Width" Value="20"/>
@@ -1883,5 +1967,86 @@
             </Setter.Value>
         </Setter>
     </Style>
+
+
+    <!--파일선택 버튼 (이미지)-->
+    <Style TargetType="Button" x:Key="FileSelButton">
+        <Setter Property="Width" Value="100"/>
+        <Setter Property="Height" Value="34"/>
+        <Setter Property="Margin" Value="5,0,0,0"/>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate>
+                    <Grid>
+                        <Image Source="/Resources/Navy/Images/Image/btn_pop_file_sel.png"/>
+                    </Grid>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+        <Style.Triggers>
+            <Trigger Property="IsMouseOver" Value="True">
+                <Setter Property="Template">
+                    <Setter.Value>
+                        <ControlTemplate>
+                            <Grid>
+                                <Image Source="/Resources/Navy/Images/Image/btn_pop_file_sel_on.png"/>
+                            </Grid>
+                        </ControlTemplate>
+                    </Setter.Value>
+                </Setter>
+            </Trigger>
+        </Style.Triggers>
+    </Style>
+
+    <!--파일선택 버튼 (이미지)-->
+    <Style TargetType="Button" x:Key="FileRegButton">
+        <Setter Property="Width" Value="100"/>
+        <Setter Property="Height" Value="34"/>
+        <Setter Property="Margin" Value="5,0,0,0"/>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate>
+                    <Grid>
+                        <Image Source="/Resources/Navy/Images/Image/btn_pop_file_reg.png"/>
+                    </Grid>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+        <Style.Triggers>
+            <Trigger Property="IsMouseOver" Value="True">
+                <Setter Property="Template">
+                    <Setter.Value>
+                        <ControlTemplate>
+                            <Grid>
+                                <Image Source="/Resources/Navy/Images/Image/btn_pop_file_reg_on.png"/>
+                            </Grid>
+                        </ControlTemplate>
+                    </Setter.Value>
+                </Setter>
+            </Trigger>
+        </Style.Triggers>
+    </Style>
+    <!--배경버튼 (가변텍스트)-->
+    <Style TargetType="Button" x:Key="TxtButton">
+        <Setter Property="Margin" Value="5,0,0,0"/>
+        <Setter Property="Foreground" Value="White"/>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type Button}">
+                    <Grid >
+                        <Border x:Name="border" CornerRadius="2" BorderThickness="1" Background="#115F96" Padding="2">
+                            <ContentPresenter HorizontalAlignment="Center"
+                                          VerticalAlignment="Center"
+                                          TextElement.FontWeight="Bold">
+                            </ContentPresenter>
+                        </Border>
+                    </Grid>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+
+
 
 </ResourceDictionary>
