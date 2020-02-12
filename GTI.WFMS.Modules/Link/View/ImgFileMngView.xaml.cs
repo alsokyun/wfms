@@ -41,6 +41,18 @@ namespace GTI.WFMS.Modules.Link.View
 
         }
 
+        // 뷰생성자
+        public ImgFileMngView()
+        {
+            InitializeComponent();
+
+            //this.BIZ_ID = _BIZ_ID;
+            this.FIL_SEQ = null;
+
+            InitModel();
+
+        }
+
         private void InitModel()
         {
             Hashtable param = new Hashtable();

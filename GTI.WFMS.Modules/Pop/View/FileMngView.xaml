@@ -46,14 +46,6 @@
                 <Setter Property="Foreground" Value="Black"/>
             </Style>
 
-            <Style TargetType="Button" x:Key="popBtn">
-                <Setter Property="Width" Value="Auto"/>
-                <Setter Property="Height" Value="30"/>
-                <Setter Property="Margin" Value="5,0,0,0"/>
-                <Setter Property="Background" Value="#234532"/>
-                <Setter Property="Foreground" Value="Black"/>
-            </Style>
-
         </ResourceDictionary>
     </Window.Resources>
 
@@ -94,9 +86,8 @@
             <Label Content="첨부내용" Style="{DynamicResource ResourceKey=CircleTitleLabel}"/>
         </StackPanel>
         <Grid Grid.Row="1" >
-            <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Margin="0 5 10 5">
-                <Button Content="저장" Command="{Binding SaveCmd}" Style="{StaticResource popBtn}" Background="{StaticResource PopCOLOR1Brush}">
-                </Button>
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Margin="0 0 10 0">
+                <Button Content="저장" Command="{Binding SaveCmd}" Style="{DynamicResource PopupSaveButton}"/>
             </StackPanel>
         </Grid>
 
@@ -161,10 +152,9 @@
             <Label Content="파일목록" Style="{DynamicResource ResourceKey=CircleTitleLabel}"/>
         </StackPanel>
         <Grid Grid.Row="3" >
-            <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Margin="0 5 10 5">
-                <Button Content="파일선택" Command="{Binding FindFileCmd}" Style="{StaticResource popBtn}" Background="{StaticResource PopCOLOR1Brush}"></Button>
-                <Button Content="파일저장" Command="{Binding SaveFileCmd}" Style="{StaticResource popBtn}" Background="{StaticResource PopCOLOR1Brush}">
-                </Button>
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Margin="0 0 10 0">
+                <Button Content="파일선택" Command="{Binding FindFileCmd}" Style="{DynamicResource FileSelButton}" />
+                <Button Content="파일저장" Command="{Binding SaveFileCmd}" Style="{DynamicResource FileRegButton}" />
             </StackPanel>
         </Grid>
 
@@ -248,7 +238,7 @@
                 <dxg:GridColumn Header="삭제" Width="70" FieldName="" HorizontalHeaderContentAlignment="Center">
                     <dxg:GridColumn.CellTemplate>
                         <DataTemplate>
-                            <Button Content="Del" Style="{DynamicResource ResourceKey=GrdDelButton}"
+                            <Button Content="Del" Style="{DynamicResource ResourceKey=GdDelButton}"
                                     Command="{Binding View.DataContext.DelCmd}" CommandParameter="{Binding RowData.Row.SEQ}"/>
                         </DataTemplate>
                     </dxg:GridColumn.CellTemplate>

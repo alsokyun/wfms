@@ -229,9 +229,6 @@ namespace GTI.WFMS.GIS
 
                 //2.레이어 클리어
                 mapView.Map.OperationalLayers.Clear();
-                // 울산행정구역 표시
-                //ShowLocalServerLayer(mapView, "BML_GADM_AS", true);
-                ShowShapeLayer(mapView, "BML_GADM_AS", true);
 
 
                 //3.열여있는 시설물정보창 닫기
@@ -598,6 +595,7 @@ namespace GTI.WFMS.GIS
             //맵뷰 클릭이벤트 설정
             mapView.GeoViewTapped -= handlerGeoViewTappedMoveFeature;
             mapView.GeoViewTapped -= handlerGeoViewTappedAddFeature;
+            mapView.GeoViewTapped -= handlerGeoViewTapped;
             mapView.GeoViewTapped += handlerGeoViewTapped;
 
 
@@ -669,6 +667,7 @@ namespace GTI.WFMS.GIS
                 //이벤트핸들러원복
                 mapView.GeoViewTapped -= handlerGeoViewTappedMoveFeature;
                 mapView.GeoViewTapped -= handlerGeoViewTappedAddFeature;
+                mapView.GeoViewTapped -= handlerGeoViewTapped;
                 mapView.GeoViewTapped += handlerGeoViewTapped;
             }
             catch (Exception ex)
@@ -813,7 +812,9 @@ namespace GTI.WFMS.GIS
             //이벤트핸들러원복
             mapView.GeoViewTapped -= handlerGeoViewTappedMoveFeature;
             mapView.GeoViewTapped -= handlerGeoViewTappedAddFeature;
+            mapView.GeoViewTapped -= handlerGeoViewTapped;
             mapView.GeoViewTapped += handlerGeoViewTapped;
+
 
         }
 
@@ -852,7 +853,7 @@ namespace GTI.WFMS.GIS
 
                 // 위치에해당하는 피처찾은 결과
                 // Perform the identify operation.
-                IdentifyLayerResult IR_SEL = await mapView.IdentifyLayerAsync(layers[_selectedLayerNm], e.Position, 1, false);
+                IdentifyLayerResult IR_SEL = await mapView.IdentifyLayerAsync(layers[_selectedLayerNm], e.Position, 5, false);
 
                 // 이벤트 타겟피처
                 Feature identifiedFeature; 
@@ -890,82 +891,20 @@ namespace GTI.WFMS.GIS
 
 
 
-
-
-
-
                 //0.선택된 레이어에서 속성정보 가져오기
-                try
-                {
-                    //this.FctDtl.FTR_CDE = identifiedFeature.GetAttributeValue("FTR_CDE").ToString();
-                    //this.FctDtl.FTR_IDN = Int32.Parse(identifiedFeature.GetAttributeValue("FTR_IDN").ToString());
-                    //this.FctDtl.FTR_NAM = BizUtil.GetCodeNm("Select_FTR_NM", this.FctDtl.FTR_CDE);
-                    //this.FctDtl.SHT_NUM = identifiedFeature.GetAttributeValue("SHT_NUM").ToString();
-                    //this.FctDtl.HJD_CDE = identifiedFeature.GetAttributeValue("HJD_CDE").ToString();
-                    //this.FctDtl.HJD_NAM = BizUtil.GetCodeNm("Select_ADAR_NM", this.FctDtl.HJD_CDE);
-                    //this.FctDtl.MNG_CDE = identifiedFeature.GetAttributeValue("MNG_CDE").ToString();
-                    //this.FctDtl.MNG_NAM = BizUtil.GetCdNm("250101", this.FctDtl.MNG_CDE);//관리기관
-                    //this.FctDtl.IST_YMD = identifiedFeature.GetAttributeValue("IST_YMD").ToString();
-                }
-                catch (Exception) { }
-                try
-                {
-                    //this.FctDtl.MOP_CDE = identifiedFeature.GetAttributeValue("MOP_CDE").ToString();
-                    //this.FctDtl.MOP_NAM = BizUtil.GetCdNm("250102", this.FctDtl.MOP_CDE);//관재질
-                    //this.FctDtl.MOF_NAM = this.FctDtl.MOP_NAM; //무조건 MOF에 형식저장!
-                }
-                catch (Exception) { }
-                try
-                {
-                    //this.FctDtl.MOF_CDE = identifiedFeature.GetAttributeValue("MOF_CDE").ToString();
-                    //this.FctDtl.MOF_NAM = BizUtil.GetCdNm("250004", this.FctDtl.MOF_CDE);//계량기형식
-                }
-                catch (Exception) { }
+                string _FTR_CDE = identifiedFeature.GetAttributeValue("FTR_CDE").ToString();
+                string _FTR_IDN = identifiedFeature.GetAttributeValue("FTR_IDN").ToString();
 
 
                 //1.DB시설물조회 후 레이어정보 세팅
-                string _FTR_CDE = identifiedFeature.GetAttributeValue("FTR_CDE").ToString();
-                string _FTR_IDN = identifiedFeature.GetAttributeValue("FTR_IDN").ToString();
-                switch (_FTR_CDE)
+                if (FmsUtil.IsNull(_FTR_CDE) || FmsUtil.IsNull(_FTR_IDN))
                 {
-                    case "SA001":
-                        //팝업열기 & 위치
-                        popFct.IsOpen = false;
-
-                        popFct = new WTL_PIPE_LM();
-                        popFct.PlacementRectangle = new Rect(e.Position.X + 300, e.Position.Y - 200, 250, 300);
-                        popFct.IsOpen = true;
-                        popFct.DataContext = this;
-
-                        Hashtable param = new Hashtable();
-                        param.Add("FTR_CDE", _FTR_CDE);
-                        param.Add("FTR_IDN", _FTR_IDN);
-                        param.Add("sqlId", "SelectWtlPipeDtl2");
-
-                        this.FctDtl = BizUtil.SelectObject(param) as CmmDtl;
-                        break;
-
-                    case "SA117":
-                        //팝업열기 & 위치
-                        popFct.IsOpen = false;
-
-                        popFct = new WTL_FLOW_PS();
-                        popFct.PlacementRectangle = new Rect(e.Position.X + 300, e.Position.Y - 200, 250, 300);
-                        popFct.IsOpen = true;
-                        popFct.DataContext = this;
-
-                        param = new Hashtable();
-                        param.Add("FTR_CDE", _FTR_CDE);
-                        param.Add("FTR_IDN", _FTR_IDN);
-                        param.Add("sqlId", "SelectFlowMtDtl");
-
-                        this.FctDtl = BizUtil.SelectObject(param) as CmmDtl;
-                        break;
-
-                    default: 
-                        break;
-
+                    Messages.ShowErrMsgBox("시설물 DB정보가 없습니다.");
+                    return;
                 }
+
+                // 시설물정보팝업 보이기
+                ShowFtrPop(_FTR_CDE, _FTR_IDN, e);
 
             }
             catch (Exception)
@@ -973,7 +912,263 @@ namespace GTI.WFMS.GIS
                 Console.WriteLine("레이어 featrue click error...");
             }
 
+        }
 
+
+
+        // 시설물정보팝업 보이기
+        private void ShowFtrPop(string fTR_CDE, string fTR_IDN, GeoViewInputEventArgs e)
+        {
+            Hashtable param = new Hashtable();
+            switch (fTR_CDE)
+            {
+                case "SA001": //상수관로
+                    //팝업열기 & 위치
+                    popFct.IsOpen = false;
+
+                    popFct = new WTL_PIPE_LM();
+                    popFct.PlacementRectangle = new Rect(e.Position.X + 300, e.Position.Y - 200, 250, 300);
+                    popFct.IsOpen = true;
+                    popFct.DataContext = this;
+
+                    param = new Hashtable();
+                    param.Add("FTR_CDE", fTR_CDE);
+                    param.Add("FTR_IDN", fTR_IDN);
+                    param.Add("sqlId", "SelectWtlPipeDtl2");
+
+                    this.FctDtl = BizUtil.SelectObject(param) as CmmDtl;
+                    break;
+
+                case "SA002": //급수관로
+                    //팝업열기 & 위치
+                    popFct.IsOpen = false;
+
+                    popFct = new WTL_SPLY_LS();
+                    popFct.PlacementRectangle = new Rect(e.Position.X + 300, e.Position.Y - 200, 250, 300);
+                    popFct.IsOpen = true;
+                    popFct.DataContext = this;
+
+                    param = new Hashtable();
+                    param.Add("FTR_CDE", fTR_CDE);
+                    param.Add("FTR_IDN", fTR_IDN);
+                    param.Add("sqlId", "SelectSupDutDtl");
+
+                    this.FctDtl = BizUtil.SelectObject(param) as CmmDtl;
+                    break;
+
+                case "SA003": //스탠파이프
+                    //팝업열기 & 위치
+                    popFct.IsOpen = false;
+
+                    popFct = new WTL_STPI_PS();
+                    popFct.PlacementRectangle = new Rect(e.Position.X + 300, e.Position.Y - 200, 250, 300);
+                    popFct.IsOpen = true;
+                    popFct.DataContext = this;
+
+                    param = new Hashtable();
+                    param.Add("FTR_CDE", fTR_CDE);
+                    param.Add("FTR_IDN", fTR_IDN);
+                    param.Add("sqlId", "SelectStndPiDtl");
+
+                    this.FctDtl = BizUtil.SelectObject(param) as CmmDtl;
+                    break;
+
+                case "SA100": //상수맨홀
+                    //팝업열기 & 위치
+                    popFct.IsOpen = false;
+
+                    popFct = new WTL_MANH_PS();
+                    popFct.PlacementRectangle = new Rect(e.Position.X + 300, e.Position.Y - 200, 250, 300);
+                    popFct.IsOpen = true;
+                    popFct.DataContext = this;
+
+                    param = new Hashtable();
+                    param.Add("FTR_CDE", fTR_CDE);
+                    param.Add("FTR_IDN", fTR_IDN);
+                    param.Add("sqlId", "SelectWtsMnhoDtl");
+
+                    this.FctDtl = BizUtil.SelectObject(param) as CmmDtl;
+                    break;
+
+                case "SA110": //수원지
+                    //팝업열기 & 위치
+                    popFct.IsOpen = false;
+
+                    popFct = new WTL_HEAD_PS();
+                    popFct.PlacementRectangle = new Rect(e.Position.X + 300, e.Position.Y - 200, 250, 300);
+                    popFct.IsOpen = true;
+                    popFct.DataContext = this;
+
+                    param = new Hashtable();
+                    param.Add("FTR_CDE", fTR_CDE);
+                    param.Add("FTR_IDN", fTR_IDN);
+                    param.Add("sqlId", "SelectWtrSourDtl");
+
+                    this.FctDtl = BizUtil.SelectObject(param) as CmmDtl;
+                    break;
+
+                case "SA112": //취수장
+                    //팝업열기 & 위치
+                    popFct.IsOpen = false;
+
+                    popFct = new WTL_GAIN_PS();
+                    popFct.PlacementRectangle = new Rect(e.Position.X + 300, e.Position.Y - 200, 250, 300);
+                    popFct.IsOpen = true;
+                    popFct.DataContext = this;
+
+                    param = new Hashtable();
+                    param.Add("FTR_CDE", fTR_CDE);
+                    param.Add("FTR_IDN", fTR_IDN);
+                    param.Add("sqlId", "SelectIntkStDtl");
+
+                    this.FctDtl = BizUtil.SelectObject(param) as CmmDtl;
+                    break;
+
+                case "SA113": //정수장
+                    //팝업열기 & 위치
+                    popFct.IsOpen = false;
+
+                    popFct = new WTL_PURI_AS();
+                    popFct.PlacementRectangle = new Rect(e.Position.X + 300, e.Position.Y - 200, 250, 300);
+                    popFct.IsOpen = true;
+                    popFct.DataContext = this;
+
+                    param = new Hashtable();
+                    param.Add("FTR_CDE", fTR_CDE);
+                    param.Add("FTR_IDN", fTR_IDN);
+                    param.Add("sqlId", "SelectFiltPltDtl");
+
+                    this.FctDtl = BizUtil.SelectObject(param) as CmmDtl;
+                    break;
+
+                case "SA114": //배수지
+                    //팝업열기 & 위치
+                    popFct.IsOpen = false;
+
+                    popFct = new WTL_PIPE_LM();
+                    popFct.PlacementRectangle = new Rect(e.Position.X + 300, e.Position.Y - 200, 250, 300);
+                    popFct.IsOpen = true;
+                    popFct.DataContext = this;
+
+                    param = new Hashtable();
+                    param.Add("FTR_CDE", fTR_CDE);
+                    param.Add("FTR_IDN", fTR_IDN);
+                    param.Add("sqlId", "SelectWtrSupDtl");
+
+                    this.FctDtl = BizUtil.SelectObject(param) as CmmDtl;
+                    break;
+
+
+                case "SA117": //유량계
+                    //팝업열기 & 위치
+                    popFct.IsOpen = false;
+
+                    popFct = new WTL_FLOW_PS();
+                    popFct.PlacementRectangle = new Rect(e.Position.X + 300, e.Position.Y - 200, 250, 300);
+                    popFct.IsOpen = true;
+                    popFct.DataContext = this;
+
+                    param = new Hashtable();
+                    param.Add("FTR_CDE", fTR_CDE);
+                    param.Add("FTR_IDN", fTR_IDN);
+                    param.Add("sqlId", "SelectFlowMtDtl");
+
+                    this.FctDtl = BizUtil.SelectObject(param) as CmmDtl;
+                    break;
+
+                case "SA118": case "SA119": //소화전,급수탑
+                    //팝업열기 & 위치
+                    popFct.IsOpen = false;
+
+                    popFct = new WTL_FIRE_PS();
+                    popFct.PlacementRectangle = new Rect(e.Position.X + 300, e.Position.Y - 200, 250, 300);
+                    popFct.IsOpen = true;
+                    popFct.DataContext = this;
+
+                    param = new Hashtable();
+                    param.Add("FTR_CDE", fTR_CDE);
+                    param.Add("FTR_IDN", fTR_IDN);
+                    param.Add("sqlId", "SelectFireFacDtl");
+
+                    this.FctDtl = BizUtil.SelectObject(param) as CmmDtl;
+                    break;
+
+
+                case "SA120": //저수조
+                    //팝업열기 & 위치
+                    popFct.IsOpen = false;
+
+                    popFct = new WTL_RSRV_PS();
+                    popFct.PlacementRectangle = new Rect(e.Position.X + 300, e.Position.Y - 200, 250, 300);
+                    popFct.IsOpen = true;
+                    popFct.DataContext = this;
+
+                    param = new Hashtable();
+                    param.Add("FTR_CDE", fTR_CDE);
+                    param.Add("FTR_IDN", fTR_IDN);
+                    param.Add("sqlId", "SelectWtrTrkDtl");
+
+                    this.FctDtl = BizUtil.SelectObject(param) as CmmDtl;
+                    break;
+
+
+                case "SA121": //수압계
+                    //팝업열기 & 위치
+                    popFct.IsOpen = false;
+
+                    popFct = new WTL_PRGA_PS();
+                    popFct.PlacementRectangle = new Rect(e.Position.X + 300, e.Position.Y - 200, 250, 300);
+                    popFct.IsOpen = true;
+                    popFct.DataContext = this;
+
+                    param = new Hashtable();
+                    param.Add("FTR_CDE", fTR_CDE);
+                    param.Add("FTR_IDN", fTR_IDN);
+                    param.Add("sqlId", "SelectWtprMtDtl");
+
+                    this.FctDtl = BizUtil.SelectObject(param) as CmmDtl;
+                    break;
+
+
+                case "SA122": //급수전계량기
+                    //팝업열기 & 위치
+                    popFct.IsOpen = false;
+
+                    popFct = new WTL_META_PS();
+                    popFct.PlacementRectangle = new Rect(e.Position.X + 300, e.Position.Y - 200, 250, 300);
+                    popFct.IsOpen = true;
+                    popFct.DataContext = this;
+
+                    param = new Hashtable();
+                    param.Add("FTR_CDE", fTR_CDE);
+                    param.Add("FTR_IDN", fTR_IDN);
+                    param.Add("sqlId", "SelectHydtMetrDtl");
+
+                    this.FctDtl = BizUtil.SelectObject(param) as CmmDtl;
+                    break;
+
+
+                case "SA200": case "SA201": case "SA202": case "SA203": case "SA204": case "SA205": case "SA206": //변류시설
+                    //팝업열기 & 위치
+                    popFct.IsOpen = false;
+
+                    popFct = new WTL_VALV_PS();
+                    popFct.PlacementRectangle = new Rect(e.Position.X + 300, e.Position.Y - 200, 250, 300);
+                    popFct.IsOpen = true;
+                    popFct.DataContext = this;
+
+                    param = new Hashtable();
+                    param.Add("FTR_CDE", fTR_CDE);
+                    param.Add("FTR_IDN", fTR_IDN);
+                    param.Add("sqlId", "SelectValvFacDtl");
+
+                    this.FctDtl = BizUtil.SelectObject(param) as CmmDtl;
+                    break;
+
+                default:
+                    break;
+
+            }
         }
 
 

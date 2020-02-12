@@ -1,6 +1,10 @@
-﻿using DevExpress.Xpf.Editors;
+﻿using DevExpress.DataAccess.ObjectBinding;
+using DevExpress.Xpf.Editors;
+using DevExpress.XtraReports.UI;
 using GTI.WFMS.Models.Common;
+using GTI.WFMS.Models.Fctl.Model;
 using GTI.WFMS.Models.Pipe.Model;
+using GTI.WFMS.Modules.Pipe.Report;
 using GTI.WFMS.Modules.Pipe.View;
 using GTIFramework.Common.Log;
 using GTIFramework.Common.MessageBox;
@@ -8,6 +12,7 @@ using Prism.Commands;
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Data;
 using System.Linq;
@@ -31,8 +36,10 @@ namespace GTI.WFMS.Modules.Pipe.ViewModel
         public DelegateCommand<object> SaveCommand { get; set; }
         public DelegateCommand<object> DeleteCommand { get; set; }
         public DelegateCommand<object> BackCommand { get; set; }
+        public DelegateCommand<object> PrintCmd { get; set; }
 
-
+        //public List<PipeDtl> LstDtl { get; set; }
+        public List<WttAttaDt> LstAttDt { get; set; }
         #endregion
 
 
@@ -59,7 +66,31 @@ namespace GTI.WFMS.Modules.Pipe.ViewModel
             this.SaveCommand = new DelegateCommand<object>(OnSave);
             this.DeleteCommand = new DelegateCommand<object>(OnDelete);
             this.BackCommand = new DelegateCommand<object>(OnBack);
-            
+
+            this.PrintCmd = new DelegateCommand<object>(delegate(object obj) {
+
+                //0.Datasource 새성
+                WtlPipeDtlViewMdl mdl = new WtlPipeDtlViewMdl(this.FTR_CDE, this.FTR_IDN);
+
+                //3.레포트호출
+                WtlPipeDtlReport report = new WtlPipeDtlReport();
+
+                ObjectDataSource ods = new ObjectDataSource();
+                ods.Name = "objectDataSource1";
+                ods.DataSource = mdl;
+
+                report.DataSource = ods;
+                report.ShowPreviewDialog();
+            });
+
+
+
+
+
+            //LstDtl = new List<PipeDtl>();
+            LstAttDt = new List<WttAttaDt>();
+
+
         }
 
 
@@ -98,47 +129,50 @@ namespace GTI.WFMS.Modules.Pipe.ViewModel
                 //3.권한처리
                 permissionApply();
 
+                //4.상세조회
+                InitModel();
 
 
-
-                // 4.초기조회
-                //DataTable dt = new DataTable();
-                Hashtable param = new Hashtable();
-                param.Add("sqlId", "SelectWtlPipeDtl2");
-                param.Add("FTR_CDE", this.FTR_CDE);
-                param.Add("FTR_IDN", this.FTR_IDN);
-
-                PipeDtl result = new PipeDtl();
-                result = BizUtil.SelectObject(param) as PipeDtl;
-
-
-
-                //결과를 뷰모델멤버로 매칭
-                Type dbmodel = result.GetType();
-                Type model = this.GetType();
-
-                //모델프로퍼티 순회
-                foreach (PropertyInfo prop in model.GetProperties())
-                {
-                    string propName = prop.Name;
-                    //db프로퍼티 순회
-                    foreach (PropertyInfo dbprop in dbmodel.GetProperties())
-                    {
-                        string colName = dbprop.Name;
-                        var colValue = dbprop.GetValue(result, null);
-                        if (colName.Equals(propName))
-                        {
-                            prop.SetValue(this, Convert.ChangeType(colValue, prop.PropertyType));
-                        }
-                    }
-                    Console.WriteLine(propName + " - " + prop.GetValue(this, null));
-                }
             }
             catch (Exception e)
             {
                 Console.WriteLine(e);
             }
 
+        }
+
+        private void InitModel()
+        {
+            //DataTable dt = new DataTable();
+            Hashtable param = new Hashtable();
+            param.Add("sqlId", "SelectWtlPipeDtl2");
+            param.Add("FTR_CDE", this.FTR_CDE);
+            param.Add("FTR_IDN", this.FTR_IDN);
+
+            PipeDtl result = new PipeDtl();
+            result = BizUtil.SelectObject(param) as PipeDtl;
+
+
+            //결과를 뷰모델멤버로 매칭
+            Type dbmodel = result.GetType();
+            Type model = this.GetType();
+
+            //모델프로퍼티 순회
+            foreach (PropertyInfo prop in model.GetProperties())
+            {
+                string propName = prop.Name;
+                //db프로퍼티 순회
+                foreach (PropertyInfo dbprop in dbmodel.GetProperties())
+                {
+                    string colName = dbprop.Name;
+                    var colValue = dbprop.GetValue(result, null);
+                    if (colName.Equals(propName))
+                    {
+                        prop.SetValue(this, Convert.ChangeType(colValue, prop.PropertyType));
+                    }
+                }
+                Console.WriteLine(propName + " - " + prop.GetValue(this, null));
+            }
         }
 
 

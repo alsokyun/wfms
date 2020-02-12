@@ -604,9 +604,16 @@
     <Compile Include="Pipe\Report\FireFacReport.Designer.cs">
       <DependentUpon>FireFacReport.cs</DependentUpon>
     </Compile>
+    <Compile Include="Pipe\Report\WtlPipeDtlReport.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Pipe\Report\WtlPipeDtlReport.Designer.cs">
+      <DependentUpon>WtlPipeDtlReport.cs</DependentUpon>
+    </Compile>
     <Compile Include="Pipe\ViewModel\FireFacAddViewModel.cs" />
     <Compile Include="Pipe\ViewModel\FireFacDtlViewModel.cs" />
     <Compile Include="Pipe\ViewModel\FireFacListViewModel.cs" />
+    <Compile Include="Pipe\ViewModel\WtlPipeDtlViewMdl.cs" />
     <Compile Include="Pipe\ViewModel\WtprMtAddViewModel.cs" />
     <Compile Include="Pipe\ViewModel\WtprMtDtlViewModel.cs" />
     <Compile Include="Pipe\ViewModel\WtprMtListViewModel.cs" />
@@ -734,6 +741,9 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <EmbeddedResource Include="Pipe\Report\WtlPipeDtlReport.resx">
+      <DependentUpon>WtlPipeDtlReport.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Properties\Licenses.licx" />
   </ItemGroup>
   <ItemGroup>
