@@ -727,6 +727,9 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <EmbeddedResource Include="Pipe\Report\FireFacReport.resx">
+      <DependentUpon>FireFacReport.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Properties\Licenses.licx" />
   </ItemGroup>
   <ItemGroup>
