@@ -245,15 +245,15 @@
             </dx:DXTabControl.BackgroundTemplate>
 
             <!--
-            -->
             <dx:DXTabItem Header="사진첨부">
             </dx:DXTabItem>
             <dx:DXTabItem Header="참조자료">
             </dx:DXTabItem>
 
+            -->
         </dx:DXTabControl>
 
-        <dx:WaitIndicator x:Name="waitindicator" Grid.Row="1" DeferedVisibility="False" Content="Loading..."/>
+        <dx:WaitIndicator x:Name="waitindicator" Grid.Row="2" DeferedVisibility="False" Content="Loading..."/>
 
     </Grid>
 
