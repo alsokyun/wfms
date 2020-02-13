@@ -16,12 +16,13 @@ using DevExpress.XtraReports.UI;
 using System.Collections.Generic;
 using GTI.WFMS.Models.Fctl.Model;
 using DevExpress.DataAccess.ObjectBinding;
+using GTI.WFMS.Models.Mntc.Model;
 
 namespace GTI.WFMS.Modules.Pipe.ViewModel
 {
     public class FireFacDtlViewModel : FireFacDtl 
     {
-        public List<WttAttaDt> LstAttDt { get; set; }
+        public List<FmsChscFtrRes> Tab01List { get; set; }
 
         #region ==========  Properties 정의 ==========
         /// <summary>
@@ -179,7 +180,6 @@ namespace GTI.WFMS.Modules.Pipe.ViewModel
                 FireFacDtlViewMdl mdl = new FireFacDtlViewMdl(this.FTR_CDE, this.FTR_IDN);
                 //1.Report 호출
                 FireFacReport report = new FireFacReport();
-
                 ObjectDataSource ods = new ObjectDataSource();
                 ods.Name = "objectDataSource1";
                 ods.DataSource = mdl;

@@ -32,7 +32,6 @@ namespace GTI.WFMS.Modules.Pipe.ViewModel
             try
             {
                 // 1.상세마스터
-                //DataTable dt = new DataTable();
                 Hashtable param = new Hashtable();
                 param.Add("sqlId", "SelectFireFacDtl");
                 param.Add("FTR_CDE", FTR_CDE);
@@ -65,12 +64,12 @@ namespace GTI.WFMS.Modules.Pipe.ViewModel
 
                 //2.유지보수(탭)
                 param = new Hashtable();
-                param.Add("sqlId", "ChscResSubListView");
+                param.Add("sqlId", "selectChscResSubList");
 
                 param.Add("FTR_CDE", FTR_CDE);
                 param.Add("FTR_IDN", FTR_IDN);
 
-                this.Tab01List = (List<FmsChscFtrRes>)BizUtil.SelectListObj<FmsChscFtrRes>(param);
+                this.Tab01List = (List<FmsChscFtrRes>) BizUtil.SelectListObj<FmsChscFtrRes>(param);
             }
             catch (Exception){}
 

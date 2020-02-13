@@ -32,7 +32,6 @@
             DevExpress.DataAccess.ObjectBinding.ObjectConstructorInfo objectConstructorInfo1 = new DevExpress.DataAccess.ObjectBinding.ObjectConstructorInfo();
             DevExpress.DataAccess.ObjectBinding.Parameter parameter1 = new DevExpress.DataAccess.ObjectBinding.Parameter();
             DevExpress.DataAccess.ObjectBinding.Parameter parameter2 = new DevExpress.DataAccess.ObjectBinding.Parameter();
-            this.objectDataSource1 = new DevExpress.DataAccess.ObjectBinding.ObjectDataSource(this.components);
             this.Title = new DevExpress.XtraReports.UI.XRControlStyle();
             this.DetailCaption1 = new DevExpress.XtraReports.UI.XRControlStyle();
             this.DetailData1 = new DevExpress.XtraReports.UI.XRControlStyle();
@@ -42,15 +41,13 @@
             this.PageInfo = new DevExpress.XtraReports.UI.XRControlStyle();
             this.TopMargin = new DevExpress.XtraReports.UI.TopMarginBand();
             this.BottomMargin = new DevExpress.XtraReports.UI.BottomMarginBand();
-            this.ReportHeader = new DevExpress.XtraReports.UI.ReportHeaderBand();
-            this.Detail = new DevExpress.XtraReports.UI.DetailBand();
-            this.DetailReport = new DevExpress.XtraReports.UI.DetailReportBand();
             this.pageInfo1 = new DevExpress.XtraReports.UI.XRPageInfo();
             this.pageInfo2 = new DevExpress.XtraReports.UI.XRPageInfo();
+            this.ReportHeader = new DevExpress.XtraReports.UI.ReportHeaderBand();
             this.label1 = new DevExpress.XtraReports.UI.XRLabel();
+            this.Detail = new DevExpress.XtraReports.UI.DetailBand();
             this.table1 = new DevExpress.XtraReports.UI.XRTable();
             this.tableRow1 = new DevExpress.XtraReports.UI.XRTableRow();
-            this.tableRow2 = new DevExpress.XtraReports.UI.XRTableRow();
             this.tableCell1 = new DevExpress.XtraReports.UI.XRTableCell();
             this.tableCell2 = new DevExpress.XtraReports.UI.XRTableCell();
             this.tableCell3 = new DevExpress.XtraReports.UI.XRTableCell();
@@ -63,6 +60,7 @@
             this.tableCell10 = new DevExpress.XtraReports.UI.XRTableCell();
             this.tableCell11 = new DevExpress.XtraReports.UI.XRTableCell();
             this.tableCell12 = new DevExpress.XtraReports.UI.XRTableCell();
+            this.tableRow2 = new DevExpress.XtraReports.UI.XRTableRow();
             this.tableCell13 = new DevExpress.XtraReports.UI.XRTableCell();
             this.tableCell14 = new DevExpress.XtraReports.UI.XRTableCell();
             this.tableCell15 = new DevExpress.XtraReports.UI.XRTableCell();
@@ -75,8 +73,8 @@
             this.tableCell22 = new DevExpress.XtraReports.UI.XRTableCell();
             this.tableCell23 = new DevExpress.XtraReports.UI.XRTableCell();
             this.tableCell24 = new DevExpress.XtraReports.UI.XRTableCell();
+            this.DetailReport = new DevExpress.XtraReports.UI.DetailReportBand();
             this.GroupHeader1 = new DevExpress.XtraReports.UI.GroupHeaderBand();
-            this.Detail1 = new DevExpress.XtraReports.UI.DetailBand();
             this.table2 = new DevExpress.XtraReports.UI.XRTable();
             this.tableRow3 = new DevExpress.XtraReports.UI.XRTableRow();
             this.tableCell25 = new DevExpress.XtraReports.UI.XRTableCell();
@@ -85,6 +83,7 @@
             this.tableCell28 = new DevExpress.XtraReports.UI.XRTableCell();
             this.tableCell29 = new DevExpress.XtraReports.UI.XRTableCell();
             this.tableCell30 = new DevExpress.XtraReports.UI.XRTableCell();
+            this.Detail1 = new DevExpress.XtraReports.UI.DetailBand();
             this.table3 = new DevExpress.XtraReports.UI.XRTable();
             this.tableRow4 = new DevExpress.XtraReports.UI.XRTableRow();
             this.tableCell31 = new DevExpress.XtraReports.UI.XRTableCell();
@@ -93,25 +92,12 @@
             this.tableCell34 = new DevExpress.XtraReports.UI.XRTableCell();
             this.tableCell35 = new DevExpress.XtraReports.UI.XRTableCell();
             this.tableCell36 = new DevExpress.XtraReports.UI.XRTableCell();
-            ((System.ComponentModel.ISupportInitialize)(this.objectDataSource1)).BeginInit();
+            this.objectDataSource1 = new DevExpress.DataAccess.ObjectBinding.ObjectDataSource(this.components);
             ((System.ComponentModel.ISupportInitialize)(this.table1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.table2)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.table3)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.objectDataSource1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this)).BeginInit();
-            // 
-            // objectDataSource1
-            // 
-            parameter1.Name = "FTR_CDE";
-            parameter1.Type = typeof(string);
-            parameter2.Name = "FTR_IDN";
-            parameter2.Type = typeof(int);
-            parameter2.ValueInfo = "0";
-            objectConstructorInfo1.Parameters.AddRange(new DevExpress.DataAccess.ObjectBinding.Parameter[] {
-            parameter1,
-            parameter2});
-            this.objectDataSource1.Constructor = objectConstructorInfo1;
-            this.objectDataSource1.DataSource = typeof(GTI.WFMS.Modules.Pipe.ViewModel.WtlPipeDtlViewMdl);
-            this.objectDataSource1.Name = "objectDataSource1";
             // 
             // Title
             // 
@@ -199,31 +185,6 @@
             this.pageInfo2});
             this.BottomMargin.Name = "BottomMargin";
             // 
-            // ReportHeader
-            // 
-            this.ReportHeader.Controls.AddRange(new DevExpress.XtraReports.UI.XRControl[] {
-            this.label1});
-            this.ReportHeader.HeightF = 60F;
-            this.ReportHeader.Name = "ReportHeader";
-            // 
-            // Detail
-            // 
-            this.Detail.Controls.AddRange(new DevExpress.XtraReports.UI.XRControl[] {
-            this.table1});
-            this.Detail.HeightF = 56F;
-            this.Detail.KeepTogether = true;
-            this.Detail.Name = "Detail";
-            // 
-            // DetailReport
-            // 
-            this.DetailReport.Bands.AddRange(new DevExpress.XtraReports.UI.Band[] {
-            this.GroupHeader1,
-            this.Detail1});
-            this.DetailReport.DataMember = "LstAttDt";
-            this.DetailReport.DataSource = this.objectDataSource1;
-            this.DetailReport.Level = 0;
-            this.DetailReport.Name = "DetailReport";
-            // 
             // pageInfo1
             // 
             this.pageInfo1.LocationFloat = new DevExpress.Utils.PointFloat(6F, 6F);
@@ -241,6 +202,13 @@
             this.pageInfo2.TextAlignment = DevExpress.XtraPrinting.TextAlignment.TopRight;
             this.pageInfo2.TextFormatString = "Page {0} of {1}";
             // 
+            // ReportHeader
+            // 
+            this.ReportHeader.Controls.AddRange(new DevExpress.XtraReports.UI.XRControl[] {
+            this.label1});
+            this.ReportHeader.HeightF = 60F;
+            this.ReportHeader.Name = "ReportHeader";
+            // 
             // label1
             // 
             this.label1.LocationFloat = new DevExpress.Utils.PointFloat(6F, 6F);
@@ -248,6 +216,14 @@
             this.label1.SizeF = new System.Drawing.SizeF(638F, 24.19433F);
             this.label1.StyleName = "Title";
             this.label1.Text = "Report Title";
+            // 
+            // Detail
+            // 
+            this.Detail.Controls.AddRange(new DevExpress.XtraReports.UI.XRControl[] {
+            this.table1});
+            this.Detail.HeightF = 56F;
+            this.Detail.KeepTogether = true;
+            this.Detail.Name = "Detail";
             // 
             // table1
             // 
@@ -275,24 +251,6 @@
             this.tableCell12});
             this.tableRow1.Name = "tableRow1";
             this.tableRow1.Weight = 0.5D;
-            // 
-            // tableRow2
-            // 
-            this.tableRow2.Cells.AddRange(new DevExpress.XtraReports.UI.XRTableCell[] {
-            this.tableCell13,
-            this.tableCell14,
-            this.tableCell15,
-            this.tableCell16,
-            this.tableCell17,
-            this.tableCell18,
-            this.tableCell19,
-            this.tableCell20,
-            this.tableCell21,
-            this.tableCell22,
-            this.tableCell23,
-            this.tableCell24});
-            this.tableRow2.Name = "tableRow2";
-            this.tableRow2.Weight = 0.5D;
             // 
             // tableCell1
             // 
@@ -385,6 +343,24 @@
             this.tableCell12.StyleName = "DetailCaption1";
             this.tableCell12.Text = "DUP";
             this.tableCell12.Weight = 0.054587959876427283D;
+            // 
+            // tableRow2
+            // 
+            this.tableRow2.Cells.AddRange(new DevExpress.XtraReports.UI.XRTableCell[] {
+            this.tableCell13,
+            this.tableCell14,
+            this.tableCell15,
+            this.tableCell16,
+            this.tableCell17,
+            this.tableCell18,
+            this.tableCell19,
+            this.tableCell20,
+            this.tableCell21,
+            this.tableCell22,
+            this.tableCell23,
+            this.tableCell24});
+            this.tableRow2.Name = "tableRow2";
+            this.tableRow2.Weight = 0.5D;
             // 
             // tableCell13
             // 
@@ -490,6 +466,16 @@
             this.tableCell24.StyleName = "DetailData1";
             this.tableCell24.Weight = 0.054587959876427283D;
             // 
+            // DetailReport
+            // 
+            this.DetailReport.Bands.AddRange(new DevExpress.XtraReports.UI.Band[] {
+            this.GroupHeader1,
+            this.Detail1});
+            this.DetailReport.DataMember = "LstAttDt";
+            this.DetailReport.DataSource = this.objectDataSource1;
+            this.DetailReport.Level = 0;
+            this.DetailReport.Name = "DetailReport";
+            // 
             // GroupHeader1
             // 
             this.GroupHeader1.Controls.AddRange(new DevExpress.XtraReports.UI.XRControl[] {
@@ -497,13 +483,6 @@
             this.GroupHeader1.GroupUnion = DevExpress.XtraReports.UI.GroupUnion.WithFirstDetail;
             this.GroupHeader1.HeightF = 28F;
             this.GroupHeader1.Name = "GroupHeader1";
-            // 
-            // Detail1
-            // 
-            this.Detail1.Controls.AddRange(new DevExpress.XtraReports.UI.XRControl[] {
-            this.table3});
-            this.Detail1.HeightF = 25F;
-            this.Detail1.Name = "Detail1";
             // 
             // table2
             // 
@@ -573,6 +552,13 @@
             this.tableCell30.Text = "ATT DES";
             this.tableCell30.Weight = 0.16753077580378606D;
             // 
+            // Detail1
+            // 
+            this.Detail1.Controls.AddRange(new DevExpress.XtraReports.UI.XRControl[] {
+            this.table3});
+            this.Detail1.HeightF = 25F;
+            this.Detail1.Name = "Detail1";
+            // 
             // table3
             // 
             this.table3.LocationFloat = new DevExpress.Utils.PointFloat(0F, 0F);
@@ -621,7 +607,7 @@
             new DevExpress.XtraReports.UI.ExpressionBinding("BeforePrint", "Text", "[FTR_NAM]")});
             this.tableCell33.Name = "tableCell33";
             this.tableCell33.StyleName = "DetailData2";
-            this.tableCell33.Weight = 0.17425973745492787D;
+            this.tableCell33.Weight = 0.16418976956552511D;
             // 
             // tableCell34
             // 
@@ -632,7 +618,7 @@
             this.tableCell34.StylePriority.UseTextAlignment = false;
             this.tableCell34.TextAlignment = DevExpress.XtraPrinting.TextAlignment.MiddleRight;
             this.tableCell34.TextFormatString = "{0:C2}";
-            this.tableCell34.Weight = 0.15737027681790866D;
+            this.tableCell34.Weight = 0.16744024470731142D;
             // 
             // tableCell35
             // 
@@ -649,6 +635,20 @@
             this.tableCell36.Name = "tableCell36";
             this.tableCell36.StyleName = "DetailData2";
             this.tableCell36.Weight = 0.16753079927884615D;
+            // 
+            // objectDataSource1
+            // 
+            parameter1.Name = "FTR_CDE";
+            parameter1.Type = typeof(string);
+            parameter2.Name = "FTR_IDN";
+            parameter2.Type = typeof(int);
+            parameter2.ValueInfo = "0";
+            objectConstructorInfo1.Parameters.AddRange(new DevExpress.DataAccess.ObjectBinding.Parameter[] {
+            parameter1,
+            parameter2});
+            this.objectDataSource1.Constructor = objectConstructorInfo1;
+            this.objectDataSource1.DataSource = typeof(GTI.WFMS.Modules.Pipe.ViewModel.WtlPipeDtlViewMdl);
+            this.objectDataSource1.Name = "objectDataSource1";
             // 
             // WtlPipeDtlReport
             // 
@@ -671,10 +671,10 @@
             this.DetailData3_Odd,
             this.PageInfo});
             this.Version = "19.1";
-            ((System.ComponentModel.ISupportInitialize)(this.objectDataSource1)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.table1)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.table2)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.table3)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.objectDataSource1)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this)).EndInit();
 
         }

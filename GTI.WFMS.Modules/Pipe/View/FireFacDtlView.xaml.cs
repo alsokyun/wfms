@@ -48,6 +48,7 @@ namespace GTI.WFMS.Modules.Pipe.View
             btnBack.Click += _backCmd;
 
             //탭항목 동적추가
+            waitindicator.DeferedVisibility = true;
             thread = new Thread(new ThreadStart(LoadFx));
             thread.Start();           
         }
@@ -83,18 +84,11 @@ namespace GTI.WFMS.Modules.Pipe.View
             try
             {
                 this.Dispatcher.Invoke(DispatcherPriority.ApplicationIdle,
-                    new Action((delegate ()
-                    {
-                        waitindicator.DeferedVisibility = true;
-                    })));
-
-
-                //탭항목 동적추가
-                MakeChild(_FTR_CDE, _FTR_IDN);
-
-                this.Dispatcher.Invoke(DispatcherPriority.ApplicationIdle,
                    new Action((delegate ()
                    {
+                       //탭항목 동적추가
+                       MakeChild(_FTR_CDE, _FTR_IDN);
+
                        waitindicator.DeferedVisibility = false;
                    })));
             }
