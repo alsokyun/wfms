@@ -290,6 +290,10 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
+    <Page Include="Mntc\View\PdjtUseDtlView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
     <Page Include="Mntc\View\PdjtMngListView.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -303,6 +307,10 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Include="Mntc\View\PdjtHtView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Mntc\View\PdjtUseListView.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
@@ -583,8 +591,12 @@
     </Compile>
     <Compile Include="Mntc\ViewModel\ChkSchDtlViewModel.cs" />
     <Compile Include="Mntc\ViewModel\ChkSchListViewModel.cs" />
+    <Compile Include="Mntc\ViewModel\PdjtUseListViewModel.cs" />
     <Compile Include="Mntc\View\ChkSchDtlView.xaml.cs">
       <DependentUpon>ChkSchDtlView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Mntc\View\PdjtUseDtlView.xaml.cs">
+      <DependentUpon>PdjtUseDtlView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Mntc\View\PdjtMngListView.xaml.cs">
       <DependentUpon>PdjtMngListView.xaml</DependentUpon>
@@ -597,6 +609,9 @@
     </Compile>
     <Compile Include="Mntc\View\PdjtHtView.xaml.cs">
       <DependentUpon>PdjtHtView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Mntc\View\PdjtUseListView.xaml.cs">
+      <DependentUpon>PdjtUseListView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Pipe\Report\FireFacReport.cs">
       <SubType>Component</SubType>
