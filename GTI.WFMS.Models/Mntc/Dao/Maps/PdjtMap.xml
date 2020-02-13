@@ -110,7 +110,204 @@
       )
     </update>
 
-    
+
+
+
+
+
+
+
+    <!--예비품소모품현황-->
+    <select id ="SelectPdjtMaUseHtList" parameterClass="Hashtable" resultClass ="Hashtable">
+
+      WITH C AS (
+      SELECT COUNT(1) AS ROWCNT
+      FROM (SELECT M.PDH_NUM        /*소모품일련번호*/
+      , M.PDT_NAM        /*품명*/
+      , M.PDT_MDL_STD    /*모델규격*/
+      , M.PDT_CAT_CDE    /*소모품구분*/
+      , B.NM AS PDT_CAT_CDE_NM
+      , M.PDE_NAM		/*품명(영)*/
+      , M.PDT_MNF		/*제조사*/
+      , M.PDT_MDL		/*모델*/
+      , M.PDT_UNT		/*단위*/
+      , NVL(SUM(D.IN_AMT),0) AS TOT_IN_AMT   /*총입고량*/
+      , NVL(SUM(A.PDH_CNT),0) AS TOT_PDH_CNT /*총사용량(소모품)*/
+      , NVL(SUM(A.PDH_AMT),0) AS TOT_PDH_AMT /*총사용량(오일)*/
+      , NVL(SUM(CASE WHEN M.PDT_CAT_CDE = 'PDT001' THEN A.PDH_CNT
+      WHEN M.PDT_CAT_CDE = 'PDT002' THEN A.PDH_AMT
+      ELSE 0 END),0) AS TOT_USE_AMT /*총사용량*/
+      FROM FMS_PDJT_MA M
+      LEFT JOIN FMS_PDJT_IN_HT	D /*소모품입고현황*/
+      ON (M.PDH_NUM = D.PDH_NUM)
+      LEFT JOIN FMS_PDJT_HT A /*점검시설 소모품사용*/
+      ON (M.PDH_NUM = A.PDH_NUM)
+      LEFT JOIN FMS_CHSC_MA AM /*점검일정마스터*/
+      ON (A.SCL_NUM = AM.SCL_NUM)
+      LEFT JOIN INFOUSER.CD_DTL_INFO B
+      ON (B.MST_CD = '250106' AND B.DTL_CD = M.PDT_CAT_CDE)
+      WHERE 1=1
+
+      <isNotEmpty prepend="AND" property="PDT_NAM">
+        M.PDT_NAM like '%' || #PDT_NAM#  || '%'
+      </isNotEmpty>
+      <isNotEmpty prepend="AND" property="PDT_MDL_STD">
+        M.PDT_MDL_STD like '%' || #PDT_MDL_STD#  || '%'
+      </isNotEmpty>
+      <isNotEmpty prepend="AND" property="PDT_CAT_CDE">
+        M.PDT_CAT_CDE like #PDT_CAT_CDE# || '%'
+      </isNotEmpty>
+
+      <isNotEmpty prepend="AND" property="STA_YMD">
+        AM.STA_YMD <![CDATA[  >= ]]> to_char(to_date(#STA_YMD#),'YYYYMMDD')
+      </isNotEmpty>
+      <isNotEmpty prepend="AND" property="END_YMD">
+        AM.END_YMD <![CDATA[  <= ]]> to_char(to_date(#END_YMD#),'YYYYMMDD')
+      </isNotEmpty>
+
+      AND M.USE_YN = 'Y'
+      GROUP BY M.PDH_NUM ,M.PDT_NAM ,M.PDT_MDL_STD, M.PDT_CAT_CDE, B.NM ,M.PDT_MNF ,M.PDE_NAM ,M.PDT_MDL ,M.PDT_UNT  )
+    )
+
+
+      SELECT C.ROWCNT, X.*  FROM (
+
+      SELECT ROW_NUMBER() OVER( ORDER BY PDH_NUM ) AS RN
+      ,PDH_NUM
+      ,PDT_NAM
+      ,PDT_MDL_STD
+      ,PDT_CAT_CDE
+      ,PDT_CAT_CDE_NM
+      ,PDE_NAM		/*품명(영)*/
+      ,PDT_MNF		/*제조사*/
+      ,PDT_MDL		/*모델*/
+      ,PDT_UNT		/*단위*/
+      ,TOT_IN_AMT
+      ,TOT_USE_AMT
+      ,TOT_IN_AMT - TOT_USE_AMT AS CUR_STCK_CNT  /*현재고*/
+      FROM (SELECT M.PDH_NUM        /*소모품일련번호*/
+      , M.PDT_NAM        /*품명*/
+      , M.PDT_MDL_STD    /*모델규격*/
+      , M.PDT_CAT_CDE    /*소모품구분*/
+      , B.NM AS PDT_CAT_CDE_NM
+      , M.PDE_NAM		/*품명(영)*/
+      , M.PDT_MNF		/*제조사*/
+      , M.PDT_MDL		/*모델*/
+      , M.PDT_UNT		/*단위*/
+      , NVL(SUM(D.IN_AMT),0) AS TOT_IN_AMT   /*총입고량*/
+      , NVL(SUM(A.PDH_CNT),0) AS TOT_PDH_CNT /*총사용량(소모품)*/
+      , NVL(SUM(A.PDH_AMT),0) AS TOT_PDH_AMT /*총사용량(오일)*/
+      , NVL(SUM(CASE WHEN M.PDT_CAT_CDE = 'PDT001' THEN A.PDH_CNT
+      WHEN M.PDT_CAT_CDE = 'PDT002' THEN A.PDH_AMT
+      ELSE 0 END),0) AS TOT_USE_AMT /*총사용량*/
+      FROM FMS_PDJT_MA M
+      LEFT JOIN FMS_PDJT_IN_HT	D /*소모품입고현황*/
+      ON (M.PDH_NUM = D.PDH_NUM)
+      LEFT JOIN FMS_PDJT_HT A /*점검시설 소모품사용*/
+      ON (M.PDH_NUM = A.PDH_NUM)
+      LEFT JOIN FMS_CHSC_MA AM /*점검일정마스터*/
+      ON (A.SCL_NUM = AM.SCL_NUM)
+      LEFT JOIN INFOUSER.CD_DTL_INFO B
+      ON (B.MST_CD = '250106' AND B.DTL_CD = M.PDT_CAT_CDE)
+      WHERE 1=1
+
+      <isNotEmpty prepend="AND" property="PDT_NAM">
+        M.PDT_NAM like '%' || #PDT_NAM#  || '%'
+      </isNotEmpty>
+      <isNotEmpty prepend="AND" property="PDT_MDL_STD">
+        M.PDT_MDL_STD like '%' || #PDT_MDL_STD#  || '%'
+      </isNotEmpty>
+      <isNotEmpty prepend="AND" property="PDT_CAT_CDE">
+        M.PDT_CAT_CDE like #PDT_CAT_CDE# || '%'
+      </isNotEmpty>
+
+      <isNotEmpty prepend="AND" property="STA_YMD">
+        AM.STA_YMD <![CDATA[  >= ]]> to_char(to_date(#STA_YMD#),'YYYYMMDD')
+      </isNotEmpty>
+      <isNotEmpty prepend="AND" property="END_YMD">
+        AM.END_YMD <![CDATA[  <= ]]> to_char(to_date(#END_YMD#),'YYYYMMDD')
+      </isNotEmpty>
+
+      AND M.USE_YN = 'Y'
+      GROUP BY M.PDH_NUM ,M.PDT_NAM ,M.PDT_MDL_STD, M.PDT_CAT_CDE, B.NM ,M.PDT_MNF ,M.PDE_NAM ,M.PDT_MDL ,M.PDT_UNT
+
+      )
+
+
+
+
+      ) X JOIN C ON 1=1
+      WHERE RN &lt;= ($page$+1) * $rows$
+      AND RN &gt;= ($page$) * $rows$ + 1
+
+    </select>
+
+
+
+
+    <select id="SelectPdjtMaUseHtDtlInfo" parameterClass="Hashtable" resultClass="Hashtable">
+      <![CDATA[ 
+		/* PdjtMa_SQL.selectPdjtMaUseHtDtlInfo - 소모품정보 */	
+			SELECT m.PDH_NUM
+		     , m.PDT_CAT_CDE
+		     , a.NM AS PDT_CAT_CDE_NM
+		     , m.PDT_NAM
+		     , m.PDE_NAM
+		     , m.PDT_MDL_STD
+		     , m.PDT_MNF
+		     , m.PDT_MDL
+		     , m.PDT_UNT
+		     , NVL(m.USE_YN,'N') as USE_YN
+		     , to_char(m.CRE_YMD,'YYYY-MM-DD HH24:MI:DD') AS CRE_YMD
+		     , m.CRE_USR
+		     , to_char(m.UDT_YMD,'YYYY-MM-DD HH24:MI:DD') AS UDT_YMD
+		     , m.UDT_USR
+		  FROM FMS_PDJT_MA m	/*소모품 마스터*/
+		       LEFT JOIN INFOUSER.CD_DTL_INFO a
+		         ON (a.MST_CD = '250106' AND a.DTL_CD = m.PDT_CAT_CDE)
+		 WHERE 1=1
+		]]>
+      <isNotEmpty prepend="AND" property="PDH_NUM">
+        m.PDH_NUM = #PDH_NUM#
+      </isNotEmpty>
+    </select>
+
+    <select id="SelectPdjtMaUseHtDtlList" parameterClass="Hashtable" resultClass="Hashtable">
+      <![CDATA[ 
+		/* PdjtMa_SQL.selectPdjtMaUseHtDtlList - 소모품입고현황 */	
+		SELECT M.PDH_NUM
+		     , M.PDT_CAT_CDE
+		     , A.FTR_CDE
+		     , FC.FTR_NAM
+		     , A.FTR_IDN
+		     , AR.RPR_CAT_CDE   /*보수구분*/
+		     , B.NM AS RPR_CAT_CDE_NM
+		     , TO_CHAR(A.CRE_YMD,'YYYY-MM-DD HH24:MI:DD') AS USE_YMD /*사용일자*/
+		     , CASE WHEN M.PDT_CAT_CDE = 'PDT_CAT_CDE001' THEN A.PDH_CNT 
+		            WHEN M.PDT_CAT_CDE = 'PDT_CAT_CDE002' THEN A.PDH_AMT 
+		            ELSE 0 END AS USE_CNT
+		     , A.PDH_CNT
+		     , A.PDH_AMT 
+		  FROM FMS_PDJT_MA M
+		       INNER JOIN FMS_PDJT_HT A /*점검시설 소모품사용*/
+		          ON (A.PDH_NUM = M.PDH_NUM)
+		       LEFT JOIN FMS_CHSC_FTR_RES AR	/*점검시설 결과*/
+		          ON (AR.SCL_NUM = A.SCL_NUM AND AR.FTR_CDE = A.FTR_CDE AND AR.FTR_IDN = A.FTR_IDN)
+		       LEFT JOIN V_FTR_CDE FC
+		          ON (FC.FTR_CDE = A.FTR_CDE)
+		       LEFT JOIN INFOUSER.CD_DTL_INFO B
+				  ON (B.MST_CD = '250103' AND B.DTL_CD = AR.RPR_CAT_CDE)       
+		 WHERE 1=1
+		]]>
+      <!-- 조건1. 입고일련번호 -->
+      <isNotEmpty prepend="AND" property="PDH_NUM">
+        M.PDH_NUM = #PDH_NUM#
+      </isNotEmpty>
+    </select>
+
+
+
+
   </statements>
   
 </sqlMap>

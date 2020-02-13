@@ -442,8 +442,8 @@ namespace GTI.WFMS.Main
 
 
 
-                                // 2.점검유지보수화면은 윈도우형태로 팝업
-                                if (dr[0]["MNU_PATH"].ToString().Contains("Mntc/View/"))
+                                // 2.점검관리,예비소모품관리 화면은 단독윈도우형태
+                                if (dr[0]["MNU_PATH"].ToString().Contains("Mntc/View/ChkSchListView.xaml") || dr[0]["MNU_PATH"].ToString().Contains("Mntc/View/PdjtMngListView.xaml"))
                                 {
                                     //클래스풀패키지명 만들기
                                     string className = "GTI.WFMS.Modules";
