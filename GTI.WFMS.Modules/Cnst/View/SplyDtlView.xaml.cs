@@ -51,17 +51,12 @@ namespace GTI.WFMS.Modules.Cnst.View
 
 
             //탭항목 동적추가
-            //InitTabAsync(CNT_NUM);
-
             thread = new Thread(new ThreadStart(LoadFx));
             thread.Start();
 
         }
 
-        private async Task InitTabAsync(string cNT_NUM)
-        {
-            //await MakeChild(cNT_NUM);
-        }
+     
 
         private void MakeChild(string cNT_NUM)
         {
