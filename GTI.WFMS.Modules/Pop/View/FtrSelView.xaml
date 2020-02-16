@@ -288,7 +288,7 @@
             <dxe:DataPager x:Name="DataPager" Grid.Row="2" Grid.Column="2"  HorizontalAlignment="Center" NumericButtonCount="10"
                            PageIndex="{Binding PageIndex, Mode=TwoWay}" Margin="0 0 0 0"  >
                 <i:Interaction.Behaviors>
-                    <!--<common:SourcesBehavior x:Name="DataPagerSource" Sources="{Binding PagedCollection}" ItemCnt="{Binding ItemCnt}"/>-->
+                    <common:SourcesBehavior x:Name="DataPagerSource" Sources="{Binding PagedCollection}" ItemCnt="{Binding ItemCnt}"/>
                 </i:Interaction.Behaviors>
             </dxe:DataPager>
 

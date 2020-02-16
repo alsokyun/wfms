@@ -15,7 +15,7 @@
     <UserControl.Resources>
         <cv:RownumConverter x:Key="rownumConverter" />
         <cv:ToggleConverter x:Key="toggleConverter" />
-        <cv:Date3StrConverter x:Key="date2StrConverter" />
+        <cv:Date3StrConverter x:Key="date3StrConverter" />
     </UserControl.Resources>
 
 
@@ -87,7 +87,7 @@
                 <dxg:GridColumn.CellTemplate>
                     <DataTemplate>
                         <dxe:DateEdit Style="{DynamicResource ResourceKey=GrdDateEdit}" 
-                            EditValue="{Binding RowData.Row.PAY_YMD, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged , Converter={StaticResource date2StrConverter}}"   />
+                            EditValue="{Binding RowData.Row.PAY_YMD, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged , Converter={StaticResource date3StrConverter}}"   />
                     </DataTemplate>
                 </dxg:GridColumn.CellTemplate>
             </dxg:GridColumn>

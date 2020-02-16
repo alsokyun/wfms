@@ -308,6 +308,373 @@
 
 
 
+
+    <!--태그매핑관리-->
+    <select id="SelectFtrTagMapList" parameterClass="Hashtable" resultClass="Hashtable">
+      SELECT M.ATTA_SEQ AS G2_ID  /*세부시설 일련번호*/
+      , M.FTR_CDE    /*지형지물번호*/
+      , M.FTR_IDN    /*관리번호*/
+      , M.ATT_IDN 	/*세부시설번호*/
+      , M.ATT_NAM    /*세부시설명*/
+      , M.ATT_DES    /*시설개요*/
+      , A.PRS_NAM    /*가압장명*/
+      , B.TAG_ID
+      , V.FTR_NAM    /*지형지물명*/
+      , CASE WHEN B.TAG_ID IS NOT NULL THEN 'Y' ELSE 'N' END TAG_YN
+      FROM WTT_ATTA_DT M /*부속시설 세부사항*/
+      INNER JOIN WTL_PRES_PS A /*가압장*/
+      ON (M.FTR_CDE = A.FTR_CDE AND M.FTR_IDN = A.FTR_IDN)
+      LEFT JOIN  FMS_FTR_TAG_MAP B /*시설물태그매핑*/
+      ON (M.FTR_CDE = B.FTR_CDE AND M.FTR_IDN = B.FTR_IDN AND M.ATTA_SEQ = B.G2_ID)
+      LEFT JOIN V_FTR_CDE V
+      ON (M.FTR_CDE = V.FTR_CDE)
+      WHERE 1=1
+      <isNotEmpty prepend="AND" property="FTR_IDN">
+        upper(M.FTR_IDN) LIKE '%' || upper(#FTR_IDN#) || '%'
+      </isNotEmpty>
+      <isNotEmpty prepend="AND" property="PRS_NAM">
+        upper(A.PRS_NAM) LIKE '%' || upper(#PRS_NAM# ) || '%'
+      </isNotEmpty>
+      <isNotEmpty prepend="AND" property="ATT_NAM">
+        upper(M.ATT_NAM) LIKE '%' || upper(#ATT_NAM#) || '%'
+      </isNotEmpty>
+      <isNotEmpty prepend="AND" property="TAG_ID">
+        upper(B.TAG_ID) LIKE '%' || upper(#TAG_ID#) || '%'
+      </isNotEmpty>
+							 ORDER BY M.ATTA_SEQ ,M.FTR_CDE ,M.FTR_IDN							   
+    </select>
+
+
+
+    <!--시설물태그매핑 저장-->
+    <update id="SaveFtrTagMap" parameterClass="Hashtable">		
+			MERGE
+			  INTO FMS_FTR_TAG_MAP USING DUAL 
+			ON (G2_ID = #G2_ID# AND FTR_CDE = #FTR_CDE# AND FTR_IDN = #FTR_IDN#)
+			WHEN MATCHED THEN
+			    UPDATE
+			      SET TAG_ID  = #TAG_ID#
+			        , UPD_YMD = sysdate
+			        , UPD_USR = #ID#
+
+    WHEN NOT MATCHED THEN
+			    INSERT (
+			           G2_ID
+			         , FTR_CDE
+			         , FTR_IDN
+			         , TAG_ID	         
+			         , CRE_YMD
+			         , CRE_USR
+			         , UPD_YMD
+			         , UPD_USR )
+			    VALUES (
+			          #G2_ID#
+			        , #FTR_CDE#
+			        , #FTR_IDN#
+			        , #TAG_ID#
+			        , sysdate
+			        , #ID#
+			        , sysdate
+			        , #ID#
+			    )    
+	</update>
+    
+
+  
+
+    <!--시설물가동현황-->
+    <select id ="SelectOptMtList" parameterClass="Hashtable" resultClass ="Hashtable">
+
+      WITH C AS (
+      SELECT COUNT(1) AS ROWCNT
+   						  FROM (
+						        SELECT M.ATTA_SEQ as G2_ID   /*세부시설 일련번호*/
+						             , M.FTR_CDE /*지형지물번호*/
+						             , M.FTR_IDN /*관리번호*/
+						             , M.ATT_IDN /*세부시설번호*/
+						             , M.ATT_NAM /*세부시설명*/
+						             , M.ATT_DES /*시설개요*/
+						             , M.CHK_PRD_CDE    /*점검주기구분*/
+						             , CD.CD_NM AS CHK_PRD_NAM
+						             , M.CHK_PRD_AMT    /*점검주기*/
+						             , CASE WHEN CHK_PRD_CDE IS NULL AND M.CHK_PRD_AMT IS NULL THEN ''
+						                    WHEN CHK_PRD_CDE IS NOT NULL AND M.CHK_PRD_AMT IS NULL THEN CD.CD_NM
+						                    WHEN CHK_PRD_CDE IS NOT NULL AND M.CHK_PRD_AMT IS NOT NULL THEN M.CHK_PRD_AMT || ' ' || CD.CD_NM
+						                    ELSE '' END AS CHK_PRD
+						             , A.PRS_NAM /*가압장명*/
+						             , B.TAG_ID
+						             , V.FTR_NAM /*지형지물명*/
+						             , TO_CHAR(TO_DATE(MAX(MA.CHK_RESULT_YMD),'YYYY-MM-DD'),'YYYY-MM-DD') AS CHK_RESULT_YMD /*점검결과등록일*/
+						             , SUM(T.RUN_TIME) AS TOT_RUN_TIME
+						          FROM WTT_ATTA_DT M /*부속시설 세부사항*/
+						               INNER JOIN WTL_PRES_PS A /*가압장*/
+						                  ON (M.FTR_CDE = A.FTR_CDE AND M.FTR_IDN = A.FTR_IDN) 
+						               INNER JOIN FMS_FTR_TAG_MAP B /*시설물태그매핑*/
+						                  ON (M.FTR_CDE = B.FTR_CDE AND M.FTR_IDN = B.FTR_IDN AND M.ATTA_SEQ = B.G2_ID) 
+						                LEFT JOIN V_FTR_CDE V ON (M.FTR_CDE = V.FTR_CDE)
+						                LEFT JOIN HMI_PUMP_RUN T ON (B.TAG_ID = T.TAG_ID)             
+						                LEFT JOIN FMS_CHSC_FTR_RES RES /*점검시설 결과*/
+						                  ON (RES.FTR_CDE = M.FTR_CDE AND RES.FTR_IDN = M.FTR_IDN) 
+						                LEFT JOIN FMS_CHSC_MA MA/*점검일정마스터*/
+						                  ON (MA.SCL_NUM = RES.SCL_NUM)
+						                LEFT JOIN CD_DTL_INFO CD
+                 							  ON (CD.MST_CD = 'CHK_PRD_CDE' AND CD.DTL_CD = M.CHK_PRD_CDE)
+						 		 WHERE 1=1
+								<isNotEmpty prepend="AND" property="FTR_IDN">
+									M.FTR_IDN LIKE '%' || #FTR_IDN# || '%'
+								</isNotEmpty>
+								<isNotEmpty prepend="AND" property="PRS_NAM">
+									A.PRS_NAM LIKE '%' || #PRS_NAM# || '%'
+								</isNotEmpty>										
+								<isNotEmpty prepend="AND" property="ATT_NAM">
+									M.ATT_NAM LIKE '%' || #ATT_NAM# || '%'
+								</isNotEmpty>	
+						
+							 GROUP BY M.ATTA_SEQ  
+					                , M.FTR_CDE
+					                , M.FTR_IDN
+					                , M.ATT_IDN
+					                , M.ATT_NAM
+					                , M.ATT_DES
+					                , M.CHK_PRD_CDE
+					                , CD.CD_NM
+					                , M.CHK_PRD_AMT
+					                , A.PRS_NAM
+					                , B.TAG_ID
+					                , V.FTR_NAM		
+					        ) M 
+      )
+
+      SELECT C.ROWCNT, X.*  FROM (
+
+      SELECT ROW_NUMBER() OVER( ORDER BY M.G2_ID DESC  , M.CHK_RESULT_YMD DESC ) AS RN
+						     , M.G2_ID  
+						     , M.FTR_CDE 
+						     , M.FTR_IDN 
+						     , M.ATT_IDN
+						     , M.ATT_NAM 
+						     , M.ATT_DES 
+						     , M.CHK_PRD_CDE
+    					     , M.CHK_PRD_NAM    
+	     				     , M.CHK_PRD_AMT  
+	     				     , M.CHK_PRD   
+						     , M.PRS_NAM 
+						     , M.TAG_ID
+						     , M.FTR_NAM 
+						     , M.TOT_RUN_TIME
+						     , M.CHK_RESULT_YMD
+						  FROM (
+						        SELECT M.ATTA_SEQ as G2_ID   /*세부시설 일련번호*/
+						             , M.FTR_CDE /*지형지물번호*/
+						             , M.FTR_IDN /*관리번호*/
+						             , M.ATT_IDN /*세부시설번호*/
+						             , M.ATT_NAM /*세부시설명*/
+						             , M.ATT_DES /*시설개요*/
+						             , M.CHK_PRD_CDE    /*점검주기구분*/
+						             , CD.CD_NM AS CHK_PRD_NAM
+						             , M.CHK_PRD_AMT    /*점검주기*/
+						             , CASE WHEN CHK_PRD_CDE IS NULL AND M.CHK_PRD_AMT IS NULL THEN ''
+						                    WHEN CHK_PRD_CDE IS NOT NULL AND M.CHK_PRD_AMT IS NULL THEN CD.CD_NM
+						                    WHEN CHK_PRD_CDE IS NOT NULL AND M.CHK_PRD_AMT IS NOT NULL THEN M.CHK_PRD_AMT || ' ' || CD.CD_NM
+						                    ELSE '' END AS CHK_PRD
+						             , A.PRS_NAM /*가압장명*/
+						             , B.TAG_ID
+						             , V.FTR_NAM /*지형지물명*/
+						             , TO_CHAR(TO_DATE(MAX(MA.CHK_RESULT_YMD),'YYYY-MM-DD'),'YYYY-MM-DD') AS CHK_RESULT_YMD /*점검결과등록일*/
+						             , SUM(T.RUN_TIME) AS TOT_RUN_TIME
+						          FROM WTT_ATTA_DT M /*부속시설 세부사항*/
+						               INNER JOIN WTL_PRES_PS A /*가압장*/
+						                  ON (M.FTR_CDE = A.FTR_CDE AND M.FTR_IDN = A.FTR_IDN) 
+						               INNER JOIN FMS_FTR_TAG_MAP B /*시설물태그매핑*/
+						                  ON (M.FTR_CDE = B.FTR_CDE AND M.FTR_IDN = B.FTR_IDN AND M.ATTA_SEQ = B.G2_ID) 
+						                LEFT JOIN V_FTR_CDE V ON (M.FTR_CDE = V.FTR_CDE)
+						                LEFT JOIN HMI_PUMP_RUN T ON (B.TAG_ID = T.TAG_ID)             
+						                LEFT JOIN FMS_CHSC_FTR_RES RES /*점검시설 결과*/
+						                  ON (RES.FTR_CDE = M.FTR_CDE AND RES.FTR_IDN = M.FTR_IDN) 
+						                LEFT JOIN FMS_CHSC_MA MA/*점검일정마스터*/
+						                  ON (MA.SCL_NUM = RES.SCL_NUM)
+						                LEFT JOIN CD_DTL_INFO CD
+                 							  ON (CD.MST_CD = 'CHK_PRD_CDE' AND CD.DTL_CD = M.CHK_PRD_CDE)
+						 		 WHERE 1=1
+								<isNotEmpty prepend="AND" property="FTR_IDN">
+									M.FTR_IDN LIKE '%' || #FTR_IDN# || '%'
+								</isNotEmpty>
+								<isNotEmpty prepend="AND" property="PRS_NAM">
+									A.PRS_NAM LIKE '%' || #PRS_NAM# || '%'
+								</isNotEmpty>										
+								<isNotEmpty prepend="AND" property="ATT_NAM">
+									M.ATT_NAM LIKE '%' || #ATT_NAM# || '%'
+								</isNotEmpty>	
+						
+							 GROUP BY M.ATTA_SEQ  
+					                , M.FTR_CDE
+					                , M.FTR_IDN
+					                , M.ATT_IDN
+					                , M.ATT_NAM
+					                , M.ATT_DES
+					                , M.CHK_PRD_CDE
+					                , CD.CD_NM
+					                , M.CHK_PRD_AMT
+					                , A.PRS_NAM
+					                , B.TAG_ID
+					                , V.FTR_NAM		
+					        ) M 
+					    				   
+
+
+      ) X JOIN C ON 1=1
+      WHERE RN &lt;= ($page$+1) * $rows$
+      AND RN &gt;= ($page$) * $rows$ + 1
+
+    </select>
+
+
+
+
+
+    <!--시설물 정보-->
+    <select id="SelectOptMtDtlInfo" parameterClass="Hashtable" resultClass="Hashtable">
+      <![CDATA[ 
+    SELECT M.ATTA_SEQ as G2_ID   /*세부시설 일련번호*/
+         , M.FTR_CDE /*지형지물번호*/
+         , M.FTR_IDN /*관리번호*/
+         , M.ATT_IDN /*세부시설번호*/
+         , M.ATT_NAM /*세부시설명*/
+         , M.ATT_DES /*시설개요*/
+         , M.CHK_PRD_CDE    /*점검주기구분*/
+         , M.CHK_PRD_AMT    /*점검주기*/
+         , A.PRS_NAM /*가압장명*/
+         , B.TAG_ID
+         , V.FTR_NAM /*지형지물명*/             
+      FROM WTT_ATTA_DT M /*부속시설 세부사항*/
+           INNER JOIN WTL_PRES_PS A /*가압장*/
+              ON (M.FTR_CDE = A.FTR_CDE AND M.FTR_IDN = A.FTR_IDN) 
+           INNER JOIN FMS_FTR_TAG_MAP B /*시설물태그매핑*/
+              ON (M.FTR_CDE = B.FTR_CDE AND M.FTR_IDN = B.FTR_IDN AND B.G2_ID = M.ATTA_SEQ) 
+            LEFT JOIN V_FTR_CDE V ON (M.FTR_CDE = V.FTR_CDE)
+     WHERE 1=1
+       AND M.ATTA_SEQ = #G2_ID#   
+	]]>
+    </select>
+
+    <!--가동시간-->
+    <select id="SelectOptMtDtlList" parameterClass="Hashtable" resultClass="Hashtable">
+      <![CDATA[ 
+    SELECT TAG_ID	/*태그ID*/
+	     , ON_TIME	/*가동시작일자*/
+	     , OFF_TIME	/*가동종료일자*/
+	     , TO_CHAR(TO_DATE(ON_TIME,'YYYY-MM-DD HH24:MI:SS'),'YYYY-MM-DD HH24:MI:SS') AS ON_TIME2 	/*가동시작일자*/
+	     , TO_CHAR(TO_DATE(OFF_TIME,'YYYY-MM-DD HH24:MI:SS'),'YYYY-MM-DD HH24:MI:SS') AS OFF_TIME2 	/*가동종료일자*/
+	     , RUN_TIME	/*시간*/
+	  FROM HMI_PUMP_RUN
+	 WHERE 1=1
+	   AND TAG_ID = #TAG_ID#
+	  ORDER BY ON_TIME DESC, OFF_TIME DESC
+   	]]>
+    </select>
+
+    <!--점검이력-->
+    <select id="SelectOptMtChkHtList" parameterClass="Hashtable" resultClass="Hashtable">
+      <![CDATA[ 
+    SELECT MA.SCL_NUM	/*점검 일련번호*/
+	     , TO_CHAR(TO_DATE(MA.CHK_RESULT_YMD,'YYYY-MM-DD'),'YYYY-MM-DD') AS CHK_RESULT_YMD /*점검일자*/ 
+	     , MA.SCL_CDE /*점검구분코드*/
+	     , CD.NM AS SCL_NAM /*점검구분명*/
+	     , MA.CHK_CTNT /*점검내용*/
+	  FROM FMS_CHSC_FTR_RES RES
+	       INNER JOIN FMS_CHSC_MA MA
+	          ON (RES.SCL_NUM = MA.SCL_NUM)
+	        LEFT JOIN INFOUSER.CD_DTL_INFO CD
+	          ON (CD.MST_CD = '250105' AND CD.DTL_CD = MA.SCL_CDE)
+	WHERE 1=1
+	  AND RES.FTR_CDE = #FTR_CDE#
+	  AND RES.FTR_IDN = #FTR_IDN#
+	  ORDER BY MA.CHK_RESULT_YMD DESC
+    ]]>
+    </select>
+
+    <!--세부시설의 점검주기 저장-->
+    <update id="UpdateOptMt" parameterClass="Hashtable">
+      <![CDATA[
+		UPDATE WTT_ATTA_DT /*세부시설*/ 
+	 	   SET CHK_PRD_CDE = #CHK_PRD_CDE#
+		     , CHK_PRD_AMT = #CHK_PRD_AMT#            
+		 WHERE 1=1
+		   AND ATTA_SEQ = #G2_ID#
+		]]>
+    </update>
+
+
+    <!--소모품입고현황 목록-->
+    <select id="SelectPdjtInHtPopList" parameterClass="Hashtable" resultClass="Hashtable">
+      <![CDATA[ 
+		SELECT IN_NUM
+		     , PDH_NUM
+		     , IN_AMT
+		     , IN_YMD
+		     , IN_ETC
+		     , to_char(CRE_YMD,'YYYY-MM-DD HH24:MI:DD') AS CRE_YMD
+		     , CRE_USR
+		     , to_char(UDT_YMD,'YYYY-MM-DD HH24:MI:DD') AS UDT_YMD
+		     , UDT_USR
+         , null as CHK
+		  FROM FMS_PDJT_IN_HT
+		 WHERE 1=1
+		   AND PDH_NUM = #PDH_NUM#
+		ORDER BY IN_NUM DESC, PDH_NUM DESC
+		]]>
+    </select>
+
+    <!--소모품입고현황 삭제-->
+    <update id="DeletePdjtInHtPop" parameterClass="Hashtable">
+      <![CDATA[
+		DELETE FROM FMS_PDJT_IN_HT 
+		 WHERE 1=1
+		   AND PDH_NUM=#PDH_NUM#
+		   AND IN_NUM=#IN_NUM#
+	]]>
+    </update>
+
+  <!--소모품입고현황 저장-->
+    <update id="SavePdjtInHtPop" parameterClass="Hashtable">
+      <![CDATA[
+			MERGE
+			  INTO FMS_PDJT_IN_HT USING DUAL 
+			ON (IN_NUM = #IN_NUM# AND PDH_NUM = #PDH_NUM#)
+			WHEN MATCHED THEN
+			    UPDATE
+			      SET IN_AMT  = #IN_AMT#
+			        , IN_YMD  = #IN_YMD#
+			        , IN_ETC  = #IN_ETC#
+			        , UDT_YMD = sysdate
+			        , UDT_USR = #ID#     
+		]]>
+      <![CDATA[		
+			WHEN NOT MATCHED THEN
+			    INSERT (
+			           IN_NUM
+			         , PDH_NUM
+			         , IN_AMT
+			         , IN_YMD
+			         , IN_ETC		         
+			         , CRE_YMD
+			         , CRE_USR
+			         , UDT_YMD
+			         , UDT_USR )
+			    VALUES (
+			          NVL((SELECT NVL(MAX(IN_NUM),0) + 1 FROM FMS_PDJT_IN_HT WHERE PDH_NUM=#PDH_NUM#),1) 
+			        , #PDH_NUM#
+			        , nvl(#IN_AMT#,0)
+			        , #IN_YMD#
+			        , #IN_ETC#
+			        , sysdate
+			        , #ID#
+			        , sysdate
+			        , #ID#
+			    )    
+		]]>
+    </update>
+
   </statements>
   
 </sqlMap>

@@ -290,6 +290,22 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
+    <Page Include="Mntc\View\OptMtListView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Mntc\View\OptMtDtlView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Mntc\View\PdjtStockView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Mntc\View\TagMapListView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
     <Page Include="Mntc\View\PdjtUseDtlView.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -591,9 +607,22 @@
     </Compile>
     <Compile Include="Mntc\ViewModel\ChkSchDtlViewModel.cs" />
     <Compile Include="Mntc\ViewModel\ChkSchListViewModel.cs" />
+    <Compile Include="Mntc\ViewModel\OptMtListViewModel.cs" />
     <Compile Include="Mntc\ViewModel\PdjtUseListViewModel.cs" />
     <Compile Include="Mntc\View\ChkSchDtlView.xaml.cs">
       <DependentUpon>ChkSchDtlView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Mntc\View\OptMtListView.xaml.cs">
+      <DependentUpon>OptMtListView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Mntc\View\OptMtDtlView.xaml.cs">
+      <DependentUpon>OptMtDtlView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Mntc\View\PdjtStockView.xaml.cs">
+      <DependentUpon>PdjtStockView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Mntc\View\TagMapListView.xaml.cs">
+      <DependentUpon>TagMapListView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Mntc\View\PdjtUseDtlView.xaml.cs">
       <DependentUpon>PdjtUseDtlView.xaml</DependentUpon>
