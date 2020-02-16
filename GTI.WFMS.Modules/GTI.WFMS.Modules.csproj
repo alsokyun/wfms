@@ -657,6 +657,7 @@
     <Compile Include="Pipe\ViewModel\FireFacAddViewModel.cs" />
     <Compile Include="Pipe\ViewModel\FireFacDtlViewModel.cs" />
     <Compile Include="Pipe\ViewModel\FireFacListViewModel.cs" />
+    <Compile Include="Pipe\ViewModel\FireFacDtlViewMdl.cs" />
     <Compile Include="Pipe\ViewModel\WtlPipeDtlViewMdl.cs" />
     <Compile Include="Pipe\ViewModel\WtprMtAddViewModel.cs" />
     <Compile Include="Pipe\ViewModel\WtprMtDtlViewModel.cs" />
@@ -739,12 +740,6 @@
     <Compile Include="Pipe\View\WtsMnhoListView.xaml.cs">
       <DependentUpon>WtsMnhoListView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Pipe\XtraReport1.cs">
-      <SubType>Component</SubType>
-    </Compile>
-    <Compile Include="Pipe\XtraReport1.Designer.cs">
-      <DependentUpon>XtraReport1.cs</DependentUpon>
-    </Compile>
     <Compile Include="Pop\ViewModel\FilePhotoViewModel.cs" />
     <Compile Include="Pop\ViewModel\FilePopViewModel.cs" />
     <Compile Include="Pop\ViewModel\FileMngViewModel.cs" />
@@ -785,6 +780,9 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <EmbeddedResource Include="Pipe\Report\FireFacReport.resx">
+      <DependentUpon>FireFacReport.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Pipe\Report\WtlPipeDtlReport.resx">
       <DependentUpon>WtlPipeDtlReport.cs</DependentUpon>
     </EmbeddedResource>

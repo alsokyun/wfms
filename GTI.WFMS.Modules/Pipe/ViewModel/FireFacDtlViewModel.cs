@@ -14,12 +14,16 @@ using System.Windows;
 using System.Windows.Controls;
 using DevExpress.XtraReports.UI;
 using System.Collections.Generic;
+using GTI.WFMS.Models.Fctl.Model;
+using DevExpress.DataAccess.ObjectBinding;
+using GTI.WFMS.Models.Mntc.Model;
 
 namespace GTI.WFMS.Modules.Pipe.ViewModel
 {
     public class FireFacDtlViewModel : FireFacDtl 
     {
-       
+        public List<FmsChscFtrRes> Tab01List { get; set; }
+
         #region ==========  Properties 정의 ==========
         /// <summary>
         /// Loaded Event
@@ -172,34 +176,16 @@ namespace GTI.WFMS.Modules.Pipe.ViewModel
 
             try
             {
-               
-                Hashtable param = new Hashtable();
-                param.Add("sqlId", "SelectFireFacDtl");
-                param.Add("FTR_CDE", this.FTR_CDE);
-                param.Add("FTR_IDN", this.FTR_IDN);
+                //0.Datasource 생성
+                FireFacDtlViewMdl mdl = new FireFacDtlViewMdl(this.FTR_CDE, this.FTR_IDN);
+                //1.Report 호출
+                FireFacReport report = new FireFacReport();
+                ObjectDataSource ods = new ObjectDataSource();
+                ods.Name = "objectDataSource1";
+                ods.DataSource = mdl;
 
-                FireFacDtl result = new FireFacDtl();
-                result = BizUtil.SelectObject(param) as FireFacDtl;
-
-                List<FireFacDtl> list = new List<FireFacDtl>();
-                list.Add(result);
-
-
-                FireFacReport xr = new FireFacReport();
-                //
-                xr.DataSource = list;               
-
-                //XtraReport report = new FireFacReport();
-                //report.DataSource = result;
-
-                //report.ShowPreviewDialog();
-                //xr.ShowPrintStatusDialog = false;
-                //xr.Parameters["1234"].Value = "";
-                
-                using (ReportPrintTool rep = new ReportPrintTool(xr))
-                {
-                    rep.ShowPreviewDialog();
-                }
+                report.DataSource = ods;
+                report.ShowPreviewDialog();
 
             }
             catch (Exception )
@@ -223,7 +209,6 @@ namespace GTI.WFMS.Modules.Pipe.ViewModel
             Hashtable param = new Hashtable();
             param.Add("sqlId" , "selectChscResSubList");
             param.Add("sqlId2", "selectFileMapList");
-            param.Add("sqlId3", "selectWtlLeakSubList");
 
             param.Add("FTR_CDE", this.FTR_CDE);
             param.Add("FTR_IDN", this.FTR_IDN);
@@ -232,7 +217,6 @@ namespace GTI.WFMS.Modules.Pipe.ViewModel
             Hashtable result = BizUtil.SelectLists(param);
             DataTable dt  = new DataTable();
             DataTable dt2 = new DataTable();
-            DataTable dt3 = new DataTable();
 
             try
             {
@@ -250,16 +234,6 @@ namespace GTI.WFMS.Modules.Pipe.ViewModel
                 if (dt2.Rows.Count > 0)
                 {
                     Messages.ShowErrMsgBox("파일첨부내역이 존재합니다.");
-                    return;
-                }
-            }
-            catch (Exception) { }
-            try
-            {
-                dt3 = result["dt3"] as DataTable;
-                if (dt3.Rows.Count > 0)
-                {
-                    Messages.ShowErrMsgBox("누수지점내역이 존재합니다.");
                     return;
                 }
             }
