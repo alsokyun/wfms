@@ -286,8 +286,20 @@
     ,UPD_USR = #ID#
     WHERE SCL_NUM = #SCL_NUM#
   </update>
-    
-    
+
+    <!-- 점검일정 결과등록-->
+    <update id="UpdateChscMaRes">
+      UPDATE FMS_CHSC_MA
+      SET
+      SCL_STAT_CDE = 'SCLT03' /*결과등록*/
+      ,CHK_CMP_YMD = to_char(sysdate,'yyyymmdd')
+      ,CHK_RESULT_YMD = to_char(sysdate,'yyyymmdd')
+      ,UPD_YMD = sysdate
+      ,UPD_USR = #ID#
+      WHERE SCL_NUM = #SCL_NUM#
+    </update>
+
+  
   </statements>
   
 </sqlMap>

@@ -203,7 +203,7 @@ namespace GTI.WFMS.Modules.Mntc.View
 
             Hashtable param = new Hashtable();
 
-            //그리드 저장
+            //1.그리드 저장
             DataTable dt = grid.ItemsSource as DataTable;
             foreach (DataRow row in dt.Rows)
             {
@@ -242,6 +242,14 @@ namespace GTI.WFMS.Modules.Mntc.View
                 }
 
             }
+
+            //2.점검마스터상태 변경
+            Hashtable pa = new Hashtable();
+            pa.Add("sqlId", "UpdateChscMaRes");
+            pa.Add("SCL_NUM", SCL_NUM);
+            BizUtil.Update(pa);
+            
+            
             //저장처리 성공
             Messages.ShowOkMsgBox();
 

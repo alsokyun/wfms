@@ -70,6 +70,9 @@
   <PropertyGroup>
     <SignManifests>true</SignManifests>
   </PropertyGroup>
+  <PropertyGroup>
+    <ApplicationIcon>InfoFMS.ico</ApplicationIcon>
+  </PropertyGroup>
   <ItemGroup>
     <Reference Include="CommonServiceLocator, Version=2.0.4.0, Culture=neutral, PublicKeyToken=489b6accfaf20ef0, processorArchitecture=MSIL">
       <HintPath>..\packages\CommonServiceLocator.2.0.4\lib\net46\CommonServiceLocator.dll</HintPath>
@@ -555,6 +558,7 @@
     <Resource Include="Resources\Navy\Images\Image\btn_s_del_on.png" />
     <Resource Include="Resources\Navy\Images\Image\btn_s_reg.png" />
     <Resource Include="Resources\Navy\Images\Image\btn_s_reg_on.png" />
+    <Resource Include="InfoFMS.ico" />
     <Content Include="Styles\Fonts\malgun.ttf">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
