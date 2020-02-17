@@ -6,9 +6,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace GTI.WFMS.Models.Mntc.Model
+namespace GTI.WFMS.Models.Cmm.Model
 {
-    public class FmsChscFtrRes : CmmDtl, INotifyPropertyChanged
+    public class LinkFmsChscFtrRes : CmmDtl, INotifyPropertyChanged
     {
         /// <summary>                                                                
         /// 인터페이스 구현부분                                                       

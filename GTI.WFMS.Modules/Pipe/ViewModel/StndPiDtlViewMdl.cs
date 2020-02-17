@@ -23,23 +23,23 @@ using System.Windows.Controls;
 
 namespace GTI.WFMS.Modules.Pipe.ViewModel
 {
-    public class FireFacDtlViewMdl : FireFacDtl
+    public class StndPiDtlViewMdl : StndPiDtl
     {
         public List<LinkFmsChscFtrRes> Tab01List { get; set; }
 
         /// 생성자
-        public FireFacDtlViewMdl(string FTR_CDE, int FTR_IDN)
+        public StndPiDtlViewMdl(string FTR_CDE, int FTR_IDN)
         {
             try
             {
                 // 1.상세마스터
                 Hashtable param = new Hashtable();
-                param.Add("sqlId", "SelectFireFacDtl");
+                param.Add("sqlId", "SelectStndPiDtl");
                 param.Add("FTR_CDE", FTR_CDE);
                 param.Add("FTR_IDN", FTR_IDN);
 
-                FireFacDtl result = new FireFacDtl();
-                result = BizUtil.SelectObject(param) as FireFacDtl;
+                StndPiDtl result = new StndPiDtl();
+                result = BizUtil.SelectObject(param) as StndPiDtl;
                 //결과를 뷰모델멤버로 매칭
                 Type dbmodel = result.GetType();
                 Type model = this.GetType();

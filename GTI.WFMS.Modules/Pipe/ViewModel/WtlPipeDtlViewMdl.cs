@@ -1,4 +1,5 @@
 ﻿using DevExpress.Xpf.Editors;
+using GTI.WFMS.Models.Cmm.Model;
 using GTI.WFMS.Models.Common;
 using GTI.WFMS.Models.Fctl.Model;
 using GTI.WFMS.Models.Pipe.Model;
@@ -22,10 +23,8 @@ namespace GTI.WFMS.Modules.Pipe.ViewModel
 {
     public class WtlPipeDtlViewMdl : PipeDtl
     {
-        public List<WttAttaDt> LstAttDt { get; set; }
-
-
-
+        public List<LinkFmsChscFtrRes> Tab01List { get; set; }
+        public List<LinkWtlLeakPs> Tab03List { get; set; }
 
         /// 생성자
         public WtlPipeDtlViewMdl(string FTR_CDE, int FTR_IDN)
@@ -64,14 +63,23 @@ namespace GTI.WFMS.Modules.Pipe.ViewModel
 
 
 
-                //2.부속시설리스트(탭)
+                //2.유지보수(탭1)
                 param = new Hashtable();
-                param.Add("sqlId", "SelectCmmWttAttaDt");
+                param.Add("sqlId", "selectChscResSubList");
 
                 param.Add("FTR_CDE", FTR_CDE);
                 param.Add("FTR_IDN", FTR_IDN);
 
-                this.LstAttDt = (List<WttAttaDt>)BizUtil.SelectListObj<WttAttaDt>(param);
+                this.Tab01List = (List<LinkFmsChscFtrRes>)BizUtil.SelectListObj<LinkFmsChscFtrRes>(param);
+
+                //3.누수지점(탭3)
+                param = new Hashtable();
+                param.Add("sqlId", "selectWtlLeakSubList");
+
+                param.Add("FTR_CDE", FTR_CDE);
+                param.Add("FTR_IDN", FTR_IDN);
+
+                this.Tab03List = (List<LinkWtlLeakPs>)BizUtil.SelectListObj<LinkWtlLeakPs>(param);
             }
             catch (Exception){}
 

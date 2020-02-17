@@ -92,7 +92,7 @@
             <Button x:Name="btnPrint" Style="{DynamicResource ResourceKey=PrintButton}"  >
                 <i:Interaction.Triggers>
                     <i:EventTrigger EventName="Click">
-                        <i:InvokeCommandAction Command="{Binding }">
+                        <i:InvokeCommandAction Command="{Binding PrintCommand}">
                         </i:InvokeCommandAction>
                     </i:EventTrigger>
                 </i:Interaction.Triggers>

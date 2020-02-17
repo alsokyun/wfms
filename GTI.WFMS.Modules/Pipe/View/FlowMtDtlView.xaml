@@ -92,7 +92,7 @@
             <Button x:Name="btnPrint" Style="{DynamicResource ResourceKey=PrintButton}"  >
                 <i:Interaction.Triggers>
                     <i:EventTrigger EventName="Click">
-                        <i:InvokeCommandAction Command="{Binding }">
+                        <i:InvokeCommandAction Command="{Binding PrintCommand}">
                         </i:InvokeCommandAction>
                     </i:EventTrigger>
                 </i:Interaction.Triggers>
@@ -304,16 +304,9 @@
                 </DataTemplate>
             </dx:DXTabControl.BackgroundTemplate>
 
-            <!--
-            <dx:DXTabItem Header="사진첨부">
-            </dx:DXTabItem>
-            <dx:DXTabItem Header="참조자료">
-            </dx:DXTabItem>
-            <dx:DXTabItem Header="누수지점 및 복구내역">
-            </dx:DXTabItem>
-            -->
-
         </dx:DXTabControl>
+
+        <dx:WaitIndicator x:Name="waitindicator" Grid.Row="4" DeferedVisibility="False" Content="Loading..."/>
     </Grid>
 
 

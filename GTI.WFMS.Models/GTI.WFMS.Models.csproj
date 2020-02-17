@@ -175,6 +175,7 @@
     <Compile Include="Cmm\Model\FctDtl.cs" />
     <Compile Include="Cmm\Model\FileDtl.cs" />
     <Compile Include="Cmm\Model\FileMapDtl.cs" />
+    <Compile Include="Cmm\Model\LinkWtlLeakPs.cs" />
     <Compile Include="Cmm\Work\CmmWork.cs" />
     <Compile Include="Cnst\Model\CnstDtl.cs" />
     <Compile Include="Cnst\Model\SplyDtl.cs" />
@@ -194,7 +195,7 @@
     <Compile Include="Main\Dao\MainDao.cs" />
     <Compile Include="Main\Work\MainWork.cs" />
     <Compile Include="Mntc\Model\ChscMaDtl.cs" />
-    <Compile Include="Mntc\Model\FmsChscFtrRes.cs" />
+    <Compile Include="Cmm\Model\LinkFmsChscFtrRes.cs" />
     <Compile Include="Mntc\Model\ResSrc.cs" />
     <Compile Include="Pipe\Dao\PipeDao.cs" />
     <Compile Include="Pipe\Model\FireFacDtl.cs" />

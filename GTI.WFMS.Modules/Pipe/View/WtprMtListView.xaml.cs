@@ -30,8 +30,7 @@ namespace GTI.WFMS.Modules.Pipe.View
             // 테마일괄적용...
             ThemeApply.Themeapply(this);
         }
-
-
+        
         //선택된 항목으로 페이지이동
         private void Grid_MouseDoubleClick(object sender, MouseButtonEventArgs e)
         {
