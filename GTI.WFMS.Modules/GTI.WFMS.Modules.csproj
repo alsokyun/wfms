@@ -491,11 +491,18 @@
       <DependentUpon>UcUserMngView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Adm\ViewModel\UcUserMngViewModel.cs" />
+    <Compile Include="Cnst\Report\CnstMngReport.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Cnst\Report\CnstMngReport.Designer.cs">
+      <DependentUpon>CnstMngReport.cs</DependentUpon>
+    </Compile>
     <Compile Include="Cnst\ViewModel\SplyMngListViewModel.cs" />
     <Compile Include="Cnst\ViewModel\CnstMngListViewModel.cs" />
     <Compile Include="Cnst\ViewModel\CnstMngDtlViewModel.cs" />
     <Compile Include="Cnst\ViewModel\SplyDtlViewModel.cs" />
     <Compile Include="Cnst\ViewModel\WttSubcDtViewModel.cs" />
+    <Compile Include="Cnst\ViewModel\CnstMngDtlViewMdl.cs" />
     <Compile Include="Cnst\View\SplyMngListView.xaml.cs">
       <DependentUpon>SplyMngListView.xaml</DependentUpon>
     </Compile>
@@ -815,6 +822,9 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <EmbeddedResource Include="Cnst\Report\CnstMngReport.resx">
+      <DependentUpon>CnstMngReport.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Pipe\Report\FireFacReport.resx">
       <DependentUpon>FireFacReport.cs</DependentUpon>
     </EmbeddedResource>

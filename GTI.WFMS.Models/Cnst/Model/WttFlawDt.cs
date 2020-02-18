@@ -1,9 +1,14 @@
 ﻿using GTI.WFMS.Models.Cmm.Model;
+using System;
+using System.Collections.Generic;
 using System.ComponentModel;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 
 namespace GTI.WFMS.Modules.Cnst.Model
 {
-    public class WttSubcDt : CmmDtl, INotifyPropertyChanged
+    public class WttFlawDt : CmmDtl, INotifyPropertyChanged
     {
         /// <summary>
         /// 인터페이스 구현부분
@@ -16,8 +21,6 @@ namespace GTI.WFMS.Modules.Cnst.Model
                 PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
             }
         }
-
-
 
         /// <summary>
         /// 프로퍼티 부분
@@ -42,6 +45,16 @@ namespace GTI.WFMS.Modules.Cnst.Model
                 OnPropertyChanged("RNO");
             }
         }
+        private decimal __FLAW_SEQ;
+        public decimal FLAW_SEQ
+        {
+            get { return __FLAW_SEQ; }
+            set
+            {
+                this.__FLAW_SEQ = value;
+                OnPropertyChanged("FLAW_SEQ");
+            }
+        }
         private string __CNT_NUM;
         public string CNT_NUM
         {
@@ -52,65 +65,66 @@ namespace GTI.WFMS.Modules.Cnst.Model
                 OnPropertyChanged("CNT_NUM");
             }
         }
-        private decimal __SUBC_SEQ;
-        public decimal SUBC_SEQ
+        private int __RPR_NUM;
+        public int RPR_NUM
         {
-            get { return __SUBC_SEQ; }
+            get { return __RPR_NUM; }
             set
             {
-                this.__SUBC_SEQ = value;
-                OnPropertyChanged("SUBC_SEQ");
+                this.__RPR_NUM = value;
+                OnPropertyChanged("RPR_NUM");
+            }
+        }        
+        private string __FLA_YMD;
+        public string FLA_YMD
+        {
+            get { return __FLA_YMD; }
+            set
+            {
+                this.__FLA_YMD = value;
+                OnPropertyChanged("FLA_YMD");
             }
         }
-        private decimal __SUB_NUM;
-        public decimal SUB_NUM
+        private string __FLA_YMD_FMT;
+        public string FLA_YMD_FMT
         {
-            get { return __SUB_NUM; }
+            get { return __FLA_YMD_FMT; }
             set
             {
-                this.__SUB_NUM = value;
-                OnPropertyChanged("SUB_NUM");
+                this.__FLA_YMD_FMT = value;
+                OnPropertyChanged("FLA_YMD_FMT");
             }
         }
-        private string __SUB_NAM;
-        public string SUB_NAM
+        private string __RPR_YMD;
+        public string RPR_YMD
         {
-            get { return __SUB_NAM; }
+            get { return __RPR_YMD; }
             set
             {
-                this.__SUB_NAM = value;
-                OnPropertyChanged("SUB_NAM");
+                this.__RPR_YMD = value;
+                OnPropertyChanged("RPR_YMD");
             }
         }
-        private string __PSB_NAM;
-        public string PSB_NAM
+        private string __RPR_YMD_FMT;
+        public string RPR_YMD_FMT
         {
-            get { return __PSB_NAM; }
+            get { return __RPR_YMD_FMT; }
             set
             {
-                this.__PSB_NAM = value;
-                OnPropertyChanged("PSB_NAM");
+                this.__RPR_YMD_FMT = value;
+                OnPropertyChanged("RPR_YMD_FMT");
             }
         }
-        private string __SUB_ADR;
-        public string SUB_ADR
+        private string __RPR_DES;
+        public string RPR_DES
         {
-            get { return __SUB_ADR; }
+            get { return __RPR_DES; }
             set
             {
-                this.__SUB_ADR = value;
-                OnPropertyChanged("SUB_ADR");
-            }
-        }
-        private string __SUB_TEL;
-        public string SUB_TEL
-        {
-            get { return __SUB_TEL; }
-            set
-            {
-                this.__SUB_TEL = value;
-                OnPropertyChanged("SUB_TEL");
+                this.__RPR_DES = value;
+                OnPropertyChanged("RPR_DES");
             }
         }
     }
+
 }

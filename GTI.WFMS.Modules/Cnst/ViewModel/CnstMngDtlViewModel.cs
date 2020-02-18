@@ -1,7 +1,11 @@
-﻿using DevExpress.Xpf.Editors;
+﻿using DevExpress.DataAccess.ObjectBinding;
+using DevExpress.Xpf.Editors;
+using DevExpress.XtraReports.UI;
 using GTI.WFMS.Models.Common;
 using GTI.WFMS.Modules.Cnst.Model;
+using GTI.WFMS.Modules.Cnst.Report;
 using GTI.WFMS.Modules.Cnst.View;
+using GTI.WFMS.Modules.Pipe.ViewModel;
 using GTIFramework.Common.Log;
 using GTIFramework.Common.MessageBox;
 using Prism.Commands;
@@ -21,7 +25,10 @@ namespace GTI.WFMS.Modules.Cnst.ViewModel
 {
     class CnstMngDtlViewModel : CnstDtl
     {
-
+        public List<WttCostDt> Tab01List { get; set; }
+        public List<WttChngDt> Tab02List { get; set; }
+        public List<WttSubcDt> Tab03List { get; set; }
+        public List<WttFlawDt> Tab04List { get; set; }
 
         #region ==========  Properties 정의 ==========
         /// <summary>
@@ -29,6 +36,7 @@ namespace GTI.WFMS.Modules.Cnst.ViewModel
         /// </summary>
         public DelegateCommand<object> LoadedCommand { get; set; }
         public DelegateCommand<object> SaveCommand { get; set; }
+        public DelegateCommand<object> PrintCommand { get; set; }
         public DelegateCommand<object> DeleteCommand { get; set; }
         public DelegateCommand<object> BackCommand { get; set; }
 
@@ -44,24 +52,19 @@ namespace GTI.WFMS.Modules.Cnst.ViewModel
         Button btnDelete;
         Button btnSave;
         
-        #endregion
-
-
-
+        #endregion                    
 
         /// 생성자
         public CnstMngDtlViewModel()
         {
             this.LoadedCommand = new DelegateCommand<object>(OnLoaded);
             this.SaveCommand = new DelegateCommand<object>(OnSave);
+            this.PrintCommand = new DelegateCommand<object>(OnPrint);
             this.DeleteCommand = new DelegateCommand<object>(OnDelete);
             this.BackCommand = new DelegateCommand<object>(OnBack);
             
         }
-
-
-
-
+                    
 
         #region ==========  이벤트 핸들러 ==========
 
@@ -157,6 +160,41 @@ namespace GTI.WFMS.Modules.Cnst.ViewModel
             }
             Messages.ShowOkMsgBox();
 
+        }
+
+        /// <summary>
+        /// 인쇄작업
+        /// </summary>
+        /// <param name="obj"></param>
+        private void OnPrint(object obj)
+        {
+            // 필수체크 (Tag에 필수체크 표시한 EditBox, ComboBox 대상으로 수행)
+            //if (!BizUtil.ValidReq(fireFacDtlView)) return;
+
+            //if (Messages.ShowYesNoMsgBox("인쇄하시겠습니까?") != MessageBoxResult.Yes) return;
+
+            try
+            {
+
+                //0.Datasource 생성
+                CnstMngDtlViewMdl mdl = new CnstMngDtlViewMdl(this.CNT_NUM);
+                //1.Report 호출
+                
+                CnstMngReport report = new CnstMngReport();
+                ObjectDataSource ods = new ObjectDataSource();
+                ods.Name = "objectDataSource1";
+                ods.DataSource = mdl;
+
+                report.DataSource = ods;
+                report.ShowPreviewDialog();
+                
+
+            }
+            catch (Exception)
+            {
+                Messages.ShowErrMsgBox("인쇄 처리중 오류가 발생하였습니다.");
+                return;
+            }
         }
 
         /// <summary>

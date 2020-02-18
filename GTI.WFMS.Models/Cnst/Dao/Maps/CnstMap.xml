@@ -368,22 +368,26 @@
     </update>
 
       <!-- 공사비지급내역 목록	 -->
-    <select id ="SelectWttCostDtList" parameterClass="Hashtable" resultClass ="Hashtable">
-      SELECT COST_SEQ,
-      CNT_NUM,
-      PAY_NUM,
-      PTY_CDE,
-      NVL(PAY_YMD, '') AS PAY_YMD,
-      PAY_AMT
+    <select id ="SelectWttCostDtList" parameterClass="Hashtable" resultClass="GTI.WFMS.Modules.Cnst.Model.WttCostDt">
+      SELECT ROWNUM AS RNO, M.*
+      FROM (
+      SELECT COST_SEQ
+      , CNT_NUM
+      , PAY_NUM
+      , PTY_CDE
+      , (SELECT NM FROM INFOUSER.CD_DTL_INFO WHERE MST_CD = '250066' AND DTL_CD = PTY_CDE ) AS PTY_NAM
+      , NVL(PAY_YMD, '') AS PAY_YMD
+      , decode(length(PAY_YMD), 8, to_char(to_date(PAY_YMD, 'yyyyMMdd'), 'yyyy-MM-dd'), '') as PAY_YMD_FMT
+      , PAY_AMT
       , NULL AS CHK
-
       FROM WTT_COST_DT
       WHERE 1=1
       <isNotEmpty prepend="AND">
-				CNT_NUM = #CNT_NUM#
-			</isNotEmpty>
+				        CNT_NUM = #CNT_NUM#
+			        </isNotEmpty>
 			
-			ORDER BY PAY_NUM DESC
+			        ORDER BY PAY_NUM DESC
+              ) M
     </select>
 
     <!-- 공사비지급내역 상세저장 -->
@@ -427,12 +431,13 @@
 
 
     <!-- 설정변경내역 목록	 -->
-    <select id ="SelectWttChngDtList" parameterClass="Hashtable" resultClass ="Hashtable">
-      SELECT
-      CNT_NUM
+    <select id ="SelectWttChngDtList" parameterClass="Hashtable" resultClass="GTI.WFMS.Modules.Cnst.Model.WttChngDt">
+      SELECT ROWNUM AS RNO, M.*
+      FROM ( SELECT CNT_NUM
       , CHNG_SEQ
       , CHG_NUM
       , CHG_YMD
+      , decode(length(CHG_YMD), 8, to_char(to_date(CHG_YMD, 'yyyyMMdd'), 'yyyy-MM-dd'), '') as CHG_YMD_FMT
       , INC_AMT
       , IGV_AMT
       , CHG_AMT
@@ -440,15 +445,16 @@
       , CGV_DES
       , ATT_USR
       , ATT_TIM
+      , decode(length(ATT_TIM), 8, to_char(to_date(ATT_TIM, 'yyyyMMdd'), 'yyyy-MM-dd'), '') as ATT_TIM_FMT
       , NULL AS CHK
       FROM WTT_CHNG_DT
-
       WHERE 1=1
       <isNotEmpty prepend="AND">
-				CNT_NUM = #CNT_NUM#
-			</isNotEmpty>
+				          CNT_NUM = #CNT_NUM#
+			          </isNotEmpty>
 			
-			ORDER BY CHG_NUM DESC
+			          ORDER BY CHG_NUM DESC
+           ) M
     </select>
 
     <!-- 설계변경내역 상세저장	 -->
@@ -524,18 +530,21 @@
 
     <!-- 공사하도급 목록	 -->
     <select id ="SelectWttSubcDtList2" parameterClass="Hashtable" resultClass ="GTI.WFMS.Modules.Cnst.Model.WttSubcDt">
-      SELECT	CNT_NUM, SUBC_SEQ
-      , SUB_NUM
-      , SUB_NAM
-      , PSB_NAM
-      , SUB_ADR
-      , SUB_TEL
-      FROM WTT_SUBC_DT
-      WHERE 1=1
-      <isNotEmpty prepend="AND">
-        CNT_NUM = #CNT_NUM#
-      </isNotEmpty>
-      ORDER BY SUB_NUM DESC
+     SELECT ROWNUM AS RNO, M.*
+       FROM (  SELECT CNT_NUM
+                    , SUBC_SEQ
+                    , SUB_NUM
+                    , SUB_NAM
+                    , PSB_NAM
+                    , SUB_ADR
+                    , SUB_TEL
+              FROM WTT_SUBC_DT
+              WHERE 1=1
+              <isNotEmpty prepend="AND">
+                CNT_NUM = #CNT_NUM#
+              </isNotEmpty>
+              ORDER BY SUB_NUM DESC
+            ) M
     </select>
 
     <update id="DeleteWttSubcDt"  parameterClass="Hashtable">
@@ -580,20 +589,23 @@
 
 
     <!-- 하자보수 목록	 -->
-    <select id ="SelectWttFlawDtList" parameterClass="Hashtable" resultClass ="Hashtable">
-      SELECT
-      CNT_NUM, FLAW_SEQ
-      , RPR_NUM
-      , FLA_YMD
-      , RPR_YMD
-      , RPR_DES
-      , NULL AS CHK
-      FROM WTT_FLAW_DT
-      WHERE 1=1
-      <isNotEmpty prepend="AND">
-			CNT_NUM = #CNT_NUM#
-		</isNotEmpty>
-		ORDER BY RPR_NUM DESC
+    <select id ="SelectWttFlawDtList" parameterClass="Hashtable" resultClass ="GTI.WFMS.Modules.Cnst.Model.WttFlawDt">
+      SELECT ROWNUM AS RNO, M.*
+       FROM (  SELECT CNT_NUM, FLAW_SEQ
+                    , RPR_NUM
+                    , FLA_YMD
+                    , decode(length(FLA_YMD), 8, to_char(to_date(FLA_YMD, 'yyyyMMdd'), 'yyyy-MM-dd'), '') as FLA_YMD_FMT
+                    , RPR_YMD
+                    , decode(length(RPR_YMD), 8, to_char(to_date(RPR_YMD, 'yyyyMMdd'), 'yyyy-MM-dd'), '') as RPR_YMD_FMT
+                    , RPR_DES
+                    , NULL AS CHK
+              FROM WTT_FLAW_DT
+              WHERE 1=1
+              <isNotEmpty prepend="AND">
+			        CNT_NUM = #CNT_NUM#
+		        </isNotEmpty>
+		        ORDER BY RPR_NUM DESC
+            ) M
     </select>
 
     <update id="DeleteWttFlawDt"  parameterClass="Hashtable">
