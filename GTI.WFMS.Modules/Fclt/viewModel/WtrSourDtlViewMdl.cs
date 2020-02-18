@@ -1,32 +1,32 @@
 ﻿using GTI.WFMS.Models.Cmm.Model;
 using GTI.WFMS.Models.Common;
-using GTI.WFMS.Models.Pipe.Model;
+using GTI.WFMS.Models.Fclt.Model;
+using GTI.WFMS.Models.Fctl.Model;
 using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Reflection;
 
-namespace GTI.WFMS.Modules.Pipe.ViewModel
+namespace GTI.WFMS.Modules.Fclt.ViewModel
 {
-    public class WtlPipeDtlViewMdl : PipeDtl
+    public class WtrSourDtlViewMdl : WtrSourDtl
     {
         public List<LinkFmsChscFtrRes> Tab01List { get; set; }
-        public List<LinkWtlLeakPs> Tab03List { get; set; }
+        public List<WttAttaDt> Tab02List { get; set; }
 
         /// 생성자
-        public WtlPipeDtlViewMdl(string FTR_CDE, int FTR_IDN)
+        public WtrSourDtlViewMdl(string FTR_CDE, int FTR_IDN)
         {
             try
             {
                 // 1.상세마스터
-                //DataTable dt = new DataTable();
                 Hashtable param = new Hashtable();
-                param.Add("sqlId", "SelectWtlPipeDtl2");
+                param.Add("sqlId", "SelectWtrSourDtl");
                 param.Add("FTR_CDE", FTR_CDE);
                 param.Add("FTR_IDN", FTR_IDN);
 
-                PipeDtl result = new PipeDtl();
-                result = BizUtil.SelectObject(param) as PipeDtl;
+                WtrSourDtl result = new WtrSourDtl();
+                result = BizUtil.SelectObject(param) as WtrSourDtl;
                 //결과를 뷰모델멤버로 매칭
                 Type dbmodel = result.GetType();
                 Type model = this.GetType();
@@ -48,25 +48,24 @@ namespace GTI.WFMS.Modules.Pipe.ViewModel
                     Console.WriteLine(propName + " - " + prop.GetValue(this, null));
                 }
 
-
-
-                //2.유지보수(탭1)
+                //2. Tab 정보
+                //유지보수
                 param = new Hashtable();
                 param.Add("sqlId", "selectChscResSubList");
 
                 param.Add("FTR_CDE", FTR_CDE);
                 param.Add("FTR_IDN", FTR_IDN);
 
-                this.Tab01List = (List<LinkFmsChscFtrRes>)BizUtil.SelectListObj<LinkFmsChscFtrRes>(param);
+                this.Tab01List = (List<LinkFmsChscFtrRes>) BizUtil.SelectListObj<LinkFmsChscFtrRes>(param);
 
-                //3.누수지점(탭3)
+                //부속시설 세부현황
                 param = new Hashtable();
-                param.Add("sqlId", "selectWtlLeakSubList");
+                param.Add("sqlId", "SelectCmmWttAttaDt");
 
                 param.Add("FTR_CDE", FTR_CDE);
                 param.Add("FTR_IDN", FTR_IDN);
 
-                this.Tab03List = (List<LinkWtlLeakPs>)BizUtil.SelectListObj<LinkWtlLeakPs>(param);
+                Tab02List = (List<WttAttaDt>) BizUtil.SelectListObj<WttAttaDt>(param);
             }
             catch (Exception){}
 

@@ -1,25 +1,24 @@
-﻿using DevExpress.Xpf.Editors;
+﻿using DevExpress.Xpf.Core;
+using DevExpress.Xpf.Editors;
 using DevExpress.Xpf.Grid;
+using GTI.WFMS.GIS;
 using GTI.WFMS.Models.Cmm.Work;
 using GTI.WFMS.Models.Common;
 using GTI.WFMS.Modules.Fclt.View;
 using GTIFramework.Common.Log;
 using GTIFramework.Common.MessageBox;
+using GTIFramework.Common.Utils.Converters;
 using Prism.Commands;
+using Prism.Regions;
 using System;
 using System.Collections;
-using System.Data;
-using System.Windows;
-using System.ComponentModel;
-using System.Collections.ObjectModel;
-using System.Windows.Navigation;
-using System.Threading;
-using System.Windows.Threading;
-using DevExpress.Xpf.Core;
-using GTIFramework.Common.Utils.Converters;
 using System.Collections.Generic;
-using Prism.Regions;
-using GTI.WFMS.GIS;
+using System.Collections.ObjectModel;
+using System.ComponentModel;
+using System.Data;
+using System.Threading;
+using System.Windows;
+using System.Windows.Threading;
 
 namespace GTI.WFMS.Modules.Fclt.ViewModel
 {

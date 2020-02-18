@@ -76,26 +76,28 @@
 
     <!--부속시설 세부현황 조회-->
     <select id="SelectCmmWttAttaDt" resultClass="GTI.WFMS.Models.Fctl.Model.WttAttaDt">
-      SELECT
-      A.ATT_IDN
-      , A.FTR_CDE	,F.FTR_NAM
-      , A.FTR_IDN
-      , A.ATT_NAM
-      , A.ATT_DES
-      , A.ATTA_SEQ
-      , A.CRE_YY
-      FROM WTT_ATTA_DT A
-      LEFT JOIN INFOFMS.V_FTR_CDE F ON A.FTR_CDE = F.FTR_CDE
-      WHERE 1=1
-      AND A.FTR_CDE=#FTR_CDE#
-      AND A.FTR_IDN=#FTR_IDN#
-      <isNotEmpty prepend="AND" property="ATTA_SEQ">
-        A.ATTA_SEQ = #ATTA_SEQ#
-      </isNotEmpty>
-      <isNotEmpty prepend="AND" property="ATT_IDN">
-        A.ATT_IDN like #ATT_IDN# || '%'
-      </isNotEmpty>
-      ORDER BY A.ATT_IDN DESC
+      SELECT ROWNUM AS RNO, M.*
+        FROM (SELECT A.ATT_IDN
+                   , A.FTR_CDE	
+                   , F.FTR_NAM
+                   , A.FTR_IDN
+                   , A.ATT_NAM
+                   , A.ATT_DES
+                   , A.ATTA_SEQ
+                   , A.CRE_YY
+                FROM WTT_ATTA_DT A
+                     LEFT JOIN INFOFMS.V_FTR_CDE F ON A.FTR_CDE = F.FTR_CDE
+               WHERE 1=1
+                 AND A.FTR_CDE=#FTR_CDE#
+                 AND A.FTR_IDN=#FTR_IDN#
+              <isNotEmpty prepend="AND" property="ATTA_SEQ">
+                A.ATTA_SEQ = #ATTA_SEQ#
+              </isNotEmpty>
+              <isNotEmpty prepend="AND" property="ATT_IDN">
+                A.ATT_IDN like #ATT_IDN# || '%'
+              </isNotEmpty>
+              ORDER BY A.ATT_IDN DESC
+            ) M
     </select>
 
     

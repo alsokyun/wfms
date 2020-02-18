@@ -527,6 +527,10 @@
     <Compile Include="Cnst\View\CnstMngDtlView.xaml.cs">
       <DependentUpon>CnstMngDtlView.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Fclt\viewModel\WtrSupDtlViewMdl.cs" />
+    <Compile Include="Fclt\viewModel\WtrSourDtlViewMdl.cs" />
+    <Compile Include="Fclt\viewModel\PrsPmpDtlViewMdl.cs" />
+    <Compile Include="Fclt\viewModel\IntkStDtlViewMdl.cs" />
     <Compile Include="Fclt\viewModel\PrsPmpAddViewModel.cs" />
     <Compile Include="Fclt\viewModel\IntkStAddViewModel.cs" />
     <Compile Include="Fclt\viewModel\FiltPltAddViewModel.cs" />
@@ -542,6 +546,7 @@
     <Compile Include="Fclt\viewModel\FiltPltListViewModel.cs" />
     <Compile Include="Fclt\viewModel\WtrSupListViewModel.cs" />
     <Compile Include="Fclt\viewModel\WtrSourListViewModel.cs" />
+    <Compile Include="Fclt\viewModel\FiltPltDtlViewMdl.cs" />
     <Compile Include="Fclt\view\PrsPmpAddView.xaml.cs">
       <DependentUpon>PrsPmpAddView.xaml</DependentUpon>
     </Compile>
@@ -849,6 +854,7 @@
     <EmbeddedResource Include="Properties\Licenses.licx" />
   </ItemGroup>
   <ItemGroup>
+    <Folder Include="Fclt\Report\" />
     <Folder Include="Link\ViewModel\" />
   </ItemGroup>
   <ItemGroup>

@@ -18,7 +18,7 @@ using System.Windows;
 using System.Windows.Controls;
 
 namespace GTI.WFMS.Modules.Pipe.ViewModel
-{    
+{
     public class WtsMnhoDtlViewModel : WtsMnhoDtl
     {
         public List<LinkFmsChscFtrRes> Tab01List { get; set; }

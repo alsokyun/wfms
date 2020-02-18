@@ -1,23 +1,21 @@
-﻿using DevExpress.Xpf.Editors;
+﻿using DevExpress.DataAccess.ObjectBinding;
+using DevExpress.Xpf.Editors;
+using DevExpress.XtraReports.UI;
+using GTI.WFMS.Models.Cmm.Model;
 using GTI.WFMS.Models.Common;
 using GTI.WFMS.Models.Pipe.Model;
-using GTI.WFMS.Modules.Pipe.View;
 using GTI.WFMS.Modules.Pipe.Report;
+using GTI.WFMS.Modules.Pipe.View;
 using GTIFramework.Common.Log;
 using GTIFramework.Common.MessageBox;
 using Prism.Commands;
 using System;
 using System.Collections;
+using System.Collections.Generic;
 using System.Data;
 using System.Reflection;
 using System.Windows;
 using System.Windows.Controls;
-using DevExpress.XtraReports.UI;
-using System.Collections.Generic;
-using GTI.WFMS.Models.Fctl.Model;
-using DevExpress.DataAccess.ObjectBinding;
-using GTI.WFMS.Models.Mntc.Model;
-using GTI.WFMS.Models.Cmm.Model;
 
 namespace GTI.WFMS.Modules.Pipe.ViewModel
 {
