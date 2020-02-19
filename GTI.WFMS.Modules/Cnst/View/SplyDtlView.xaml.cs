@@ -17,14 +17,14 @@ namespace GTI.WFMS.Modules.Cnst.View
     {
         public delegate void BackCmd(object sender, RoutedEventArgs e);
         Thread thread;
-        private string _CNT_NUM;
+        private string _SEQ;
 
-        public SplyDtlView(string CNT_NUM)
+        public SplyDtlView(string SEQ)
         {
             InitializeComponent();
 
-            _CNT_NUM = CNT_NUM;
-            this.txtCNT_NUM.EditValue = CNT_NUM;
+            _SEQ = SEQ;
+            this.txtCNT_NUM.EditValue = SEQ;
 
             // 테마일괄적용...
             ThemeApply.Themeapply(this);
@@ -67,7 +67,7 @@ namespace GTI.WFMS.Modules.Cnst.View
                     new Action((delegate ()
                     {
                         //탭항목 동적추가
-                        MakeTab(_CNT_NUM);
+                        MakeTab(_SEQ);
 
                         waitindicator.DeferedVisibility = false;
                     })));

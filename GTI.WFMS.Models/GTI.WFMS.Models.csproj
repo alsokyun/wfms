@@ -194,6 +194,7 @@
     <Compile Include="Main\Dao\MainDao.cs" />
     <Compile Include="Main\Work\MainWork.cs" />
     <Compile Include="Mntc\Model\ChscMaDtl.cs" />
+    <Compile Include="Mntc\Model\FaqDtl.cs" />
     <Compile Include="Mntc\Model\FmsChscFtrRes.cs" />
     <Compile Include="Mntc\Model\ResSrc.cs" />
     <Compile Include="Pipe\Dao\PipeDao.cs" />
