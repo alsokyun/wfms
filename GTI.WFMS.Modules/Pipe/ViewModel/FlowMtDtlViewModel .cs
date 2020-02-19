@@ -1,6 +1,9 @@
-﻿using DevExpress.Xpf.Editors;
+﻿using DevExpress.DataAccess.ObjectBinding;
+using DevExpress.Xpf.Editors;
+using DevExpress.XtraReports.UI;
 using GTI.WFMS.Models.Common;
 using GTI.WFMS.Models.Pipe.Model;
+using GTI.WFMS.Modules.Pipe.Report;
 using GTI.WFMS.Modules.Pipe.View;
 using GTIFramework.Common.Log;
 using GTIFramework.Common.MessageBox;
@@ -24,6 +27,7 @@ namespace GTI.WFMS.Modules.Pipe.ViewModel
         /// </summary>
         public DelegateCommand<object> LoadedCommand { get; set; }
         public DelegateCommand<object> SaveCommand { get; set; }
+        public DelegateCommand<object> PrintCommand { get; set; }
         public DelegateCommand<object> DeleteCommand { get; set; }
         public DelegateCommand<object> BackCommand { get; set; }
 
@@ -54,6 +58,7 @@ namespace GTI.WFMS.Modules.Pipe.ViewModel
         {
             this.LoadedCommand = new DelegateCommand<object>(OnLoaded);
             this.SaveCommand = new DelegateCommand<object>(OnSave);
+            this.PrintCommand = new DelegateCommand<object>(OnPrint);
             this.DeleteCommand = new DelegateCommand<object>(OnDelete);
             this.BackCommand = new DelegateCommand<object>(OnBack);
             
@@ -158,6 +163,38 @@ namespace GTI.WFMS.Modules.Pipe.ViewModel
         }
 
         /// <summary>
+        /// 인쇄작업
+        /// </summary>
+        /// <param name="obj"></param>
+        private void OnPrint(object obj)
+        {
+            // 필수체크 (Tag에 필수체크 표시한 EditBox, ComboBox 대상으로 수행)
+            //if (!BizUtil.ValidReq(flowMtDtlView)) return;
+
+            //if (Messages.ShowYesNoMsgBox("인쇄하시겠습니까?") != MessageBoxResult.Yes) return;
+
+            try
+            {
+                //0.Datasource 생성
+                FlowMtDtlViewMdl mdl = new FlowMtDtlViewMdl(this.FTR_CDE, this.FTR_IDN);
+                //1.Report 호출
+                FlowMtReport report = new FlowMtReport();
+                ObjectDataSource ods = new ObjectDataSource();
+                ods.Name = "objectDataSource1";
+                ods.DataSource = mdl;
+
+                report.DataSource = ods;
+                report.ShowPreviewDialog();
+
+            }
+            catch (Exception)
+            {
+                Messages.ShowErrMsgBox("인쇄 처리중 오류가 발생하였습니다.");
+                return;
+            }
+        }
+
+        /// <summary>
         /// 삭제처리
         /// </summary>
         /// <param name="obj"></param>
@@ -167,7 +204,6 @@ namespace GTI.WFMS.Modules.Pipe.ViewModel
             Hashtable param = new Hashtable();
             param.Add("sqlId" , "selectChscResSubList");
             param.Add("sqlId2", "selectFileMapList");
-            param.Add("sqlId3", "selectWtlLeakSubList");
 
             param.Add("FTR_CDE", this.FTR_CDE);
             param.Add("FTR_IDN", this.FTR_IDN);
@@ -176,7 +212,6 @@ namespace GTI.WFMS.Modules.Pipe.ViewModel
             Hashtable result = BizUtil.SelectLists(param);
             DataTable dt  = new DataTable();
             DataTable dt2 = new DataTable();
-            DataTable dt3 = new DataTable();
 
             try
             {
@@ -194,16 +229,6 @@ namespace GTI.WFMS.Modules.Pipe.ViewModel
                 if (dt2.Rows.Count > 0)
                 {
                     Messages.ShowErrMsgBox("파일첨부내역이 존재합니다.");
-                    return;
-                }
-            }
-            catch (Exception) { }
-            try
-            {
-                dt3 = result["dt3"] as DataTable;
-                if (dt3.Rows.Count > 0)
-                {
-                    Messages.ShowErrMsgBox("누수지점내역이 존재합니다.");
                     return;
                 }
             }

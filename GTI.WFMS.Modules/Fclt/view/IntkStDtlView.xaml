@@ -93,7 +93,7 @@
             <Button x:Name="btnPrint" Style="{DynamicResource ResourceKey=PrintButton}"  >
                 <i:Interaction.Triggers>
                     <i:EventTrigger EventName="Click">
-                        <i:InvokeCommandAction Command="{Binding }">
+                        <i:InvokeCommandAction Command="{Binding PrintCommand}">
                         </i:InvokeCommandAction>
                     </i:EventTrigger>
                 </i:Interaction.Triggers>
@@ -135,8 +135,6 @@
                 <RowDefinition Height="40" />
                 <RowDefinition Height="40" />                
             </Grid.RowDefinitions>
-
-
 
             <!--테이블구분선-->
             <Border Grid.Row="0" Grid.Column="0" BorderThickness="1 1 1 1" BorderBrush="{DynamicResource MainBack1Brush1}" Background="{DynamicResource PopupCOLOR3Brush}"/>
@@ -186,10 +184,7 @@
 
             <Label Grid.Row="1" Grid.Column="4" Content="" Style="{DynamicResource ResourceKey=GridLabel}" Margin="10,9,0,9"/>
             <Label Grid.Row="1" Grid.Column="6" Content="" Style="{DynamicResource ResourceKey=GridLabel}" Margin="10,9,0,9"/>
-
         </Grid>
-
-
 
         <StackPanel Grid.Row="2" Orientation="Horizontal" Margin="10 0 10 0">
             <StackPanel Orientation="Horizontal">
@@ -279,7 +274,6 @@
             <Label Grid.Row="2" Grid.Column="6" Content="" Style="{DynamicResource ResourceKey=GridLabel}"/>
         </Grid>
 
-
         <!--탭모듈-->
         <dx:DXTabControl Grid.Row="4" x:Name="tabSubMenu" TabContentCacheMode="CacheAllTabs" Padding="0" BorderBrush="#333333" Margin="10 0 10 10">
 
@@ -318,17 +312,9 @@
                     <dxci:TabBorder BorderThickness="1 2 1 1" BorderBrush="{DynamicResource BorderGridCOLOR2Brush}" BorderBackground="Transparent" ViewInfo="{Binding}"/>
                 </DataTemplate>
             </dx:DXTabControl.BackgroundTemplate>
-
-            <!--
-            <dx:DXTabItem Header="사진첨부">
-            </dx:DXTabItem>
-            <dx:DXTabItem Header="참조자료">
-            </dx:DXTabItem>
-            <dx:DXTabItem Header="누수지점 및 복구내역">
-            </dx:DXTabItem>
-            -->
-
         </dx:DXTabControl>
+
+        <dx:WaitIndicator x:Name="waitindicator" Grid.Row="4" DeferedVisibility="False" Content="Loading..."/>
     </Grid>
 
 

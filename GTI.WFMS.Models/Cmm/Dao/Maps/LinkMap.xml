@@ -3,7 +3,7 @@
   <statements>
     
     <!--유지보수상세내역-->
-    <select id="selectChscResSubList" resultClass="GTI.WFMS.Models.Mntc.Model.FmsChscFtrRes">
+    <select id="selectChscResSubList" resultClass="GTI.WFMS.Models.Cmm.Model.LinkFmsChscFtrRes">
       /* selectChscResSubList - 유지보수(점검시설 결과) */
       SELECT ROWNUM AS RNO
            , M.*
@@ -40,58 +40,64 @@
 
     
 
-    <select id="selectWtlLeakSubList" resultClass="Hashtable">
+    <select id="selectWtlLeakSubList" resultClass="GTI.WFMS.Models.Cmm.Model.LinkWtlLeakPs">
       /* selectWtlLeakSubList - 누수지점 서브 목록 화면 */
-      SELECT
-      FTR_CDE
-      , FTR_IDN
-      , HJD_CDE
-      , SHT_NUM
-      , RCV_NUM
-      , decode(length(LEK_YMD), 8, to_char(to_date(LEK_YMD, 'yyyyMMdd'), 'yyyy-MM-dd'), '') AS LEK_YMD
-      , LEK_LOC
-      , PIP_CDE
-      , PIP_IDN
-      , LRS_CDE
-      , LEP_CDE
-      , REP_YMD
-      , REP_EXP
-      , MAT_DES
-      , REP_NAM
-      , SYS_CHK
-      , LEK_EXP
-      , MOP_CDE
-      , PIP_DIP	/*관구경*/
-      FROM WTL_LEAK_PS
-      WHERE 1=1
-      AND FTR_CDE = #FTR_CDE#
-      AND FTR_IDN = #FTR_IDN#
-      ORDER BY  FTR_CDE DESC , FTR_IDN DESC;
+      SELECT ROWNUM AS RNO
+           , M.*
+       FROM (SELECT A.FTR_CDE
+                  , (SELECT FTR_NAM FROM INFOFMS.V_FTR_CDE WHERE FTR_CDE = A.FTR_CDE) AS FTR_NAM
+                  , A.FTR_IDN
+                  , A.HJD_CDE
+                  , (SELECT HJD_NAM FROM INFOFMS.CMT_ADAR_MA WHERE HJD_CDE = A.HJD_CDE) AS HJD_NAM
+                  , A.SHT_NUM
+                  , A.RCV_NUM
+                  , decode(length(LEK_YMD), 8, to_char(to_date(LEK_YMD, 'yyyyMMdd'), 'yyyy-MM-dd'), '') AS LEK_YMD
+                  , A.LEK_LOC
+                  , A.PIP_CDE
+                  , A.PIP_IDN
+                  , A.LRS_CDE
+                  , A.LEP_CDE
+                  , A.REP_YMD
+                  , A.REP_EXP
+                  , A.MAT_DES
+                  , A.REP_NAM
+                  , A.SYS_CHK
+                  , A.LEK_EXP
+                  , A.MOP_CDE
+                  , A.PIP_DIP	/*관구경*/
+                FROM WTL_LEAK_PS A
+               WHERE 1=1
+                 AND A.FTR_CDE = #FTR_CDE#
+                 AND A.FTR_IDN = #FTR_IDN#
+               ORDER BY  A.FTR_CDE DESC , A.FTR_IDN DESC
+            ) M
     </select>
 
 
     <!--부속시설 세부현황 조회-->
     <select id="SelectCmmWttAttaDt" resultClass="GTI.WFMS.Models.Fctl.Model.WttAttaDt">
-      SELECT
-      A.ATT_IDN
-      , A.FTR_CDE	,F.FTR_NAM
-      , A.FTR_IDN
-      , A.ATT_NAM
-      , A.ATT_DES
-      , A.ATTA_SEQ
-      , A.CRE_YY
-      FROM WTT_ATTA_DT A
-      LEFT JOIN INFOFMS.V_FTR_CDE F ON A.FTR_CDE = F.FTR_CDE
-      WHERE 1=1
-      AND A.FTR_CDE=#FTR_CDE#
-      AND A.FTR_IDN=#FTR_IDN#
-      <isNotEmpty prepend="AND" property="ATTA_SEQ">
-        A.ATTA_SEQ = #ATTA_SEQ#
-      </isNotEmpty>
-      <isNotEmpty prepend="AND" property="ATT_IDN">
-        A.ATT_IDN like #ATT_IDN# || '%'
-      </isNotEmpty>
-      ORDER BY A.ATT_IDN DESC
+      SELECT ROWNUM AS RNO, M.*
+        FROM (SELECT A.ATT_IDN
+                   , A.FTR_CDE	
+                   , F.FTR_NAM
+                   , A.FTR_IDN
+                   , A.ATT_NAM
+                   , A.ATT_DES
+                   , A.ATTA_SEQ
+                   , A.CRE_YY
+                FROM WTT_ATTA_DT A
+                     LEFT JOIN INFOFMS.V_FTR_CDE F ON A.FTR_CDE = F.FTR_CDE
+               WHERE 1=1
+                 AND A.FTR_CDE=#FTR_CDE#
+                 AND A.FTR_IDN=#FTR_IDN#
+              <isNotEmpty prepend="AND" property="ATTA_SEQ">
+                A.ATTA_SEQ = #ATTA_SEQ#
+              </isNotEmpty>
+              <isNotEmpty prepend="AND" property="ATT_IDN">
+                A.ATT_IDN like #ATT_IDN# || '%'
+              </isNotEmpty>
+              ORDER BY A.ATT_IDN DESC
+            ) M
     </select>
 
     

@@ -1,4 +1,7 @@
-﻿using DevExpress.Xpf.Editors;
+﻿using DevExpress.DataAccess.ObjectBinding;
+using DevExpress.Xpf.Editors;
+using DevExpress.XtraReports.UI;
+using GTI.WFMS.Models.Cmm.Model;
 using GTI.WFMS.Models.Common;
 using GTI.WFMS.Models.Pipe.Model;
 using GTI.WFMS.Modules.Pipe.View;
@@ -7,6 +10,7 @@ using GTIFramework.Common.MessageBox;
 using Prism.Commands;
 using System;
 using System.Collections;
+using System.Collections.Generic;
 using System.Data;
 using System.Reflection;
 using System.Windows;
@@ -16,7 +20,7 @@ namespace GTI.WFMS.Modules.Pipe.ViewModel
 {
     public class ValvFacDtlViewModel : ValvFacDtl
     {
-
+        public List<LinkFmsChscFtrRes> Tab01List { get; set; }
 
         #region ==========  Properties 정의 ==========
         /// <summary>
@@ -24,6 +28,7 @@ namespace GTI.WFMS.Modules.Pipe.ViewModel
         /// </summary>
         public DelegateCommand<object> LoadedCommand { get; set; }
         public DelegateCommand<object> SaveCommand { get; set; }
+        public DelegateCommand<object> PrintCommand { get; set; }
         public DelegateCommand<object> DeleteCommand { get; set; }
         public DelegateCommand<object> BackCommand { get; set; }
 
@@ -57,14 +62,11 @@ namespace GTI.WFMS.Modules.Pipe.ViewModel
         {
             this.LoadedCommand = new DelegateCommand<object>(OnLoaded);
             this.SaveCommand = new DelegateCommand<object>(OnSave);
+            this.PrintCommand = new DelegateCommand<object>(OnPrint);
             this.DeleteCommand = new DelegateCommand<object>(OnDelete);
             this.BackCommand = new DelegateCommand<object>(OnBack);
             
         }
-
-
-
-
 
         #region ==========  이벤트 핸들러 ==========
 
@@ -166,6 +168,40 @@ namespace GTI.WFMS.Modules.Pipe.ViewModel
                 return;
             }
             Messages.ShowOkMsgBox();
+
+        }
+
+        /// <summary>
+        /// 인쇄작업
+        /// </summary>
+        /// <param name="obj"></param>
+        private void OnPrint(object obj)
+        {
+
+            // 필수체크 (Tag에 필수체크 표시한 EditBox, ComboBox 대상으로 수행)
+            //if (!BizUtil.ValidReq(valvFacDtlView)) return;
+
+            //if (Messages.ShowYesNoMsgBox("인쇄하시겠습니까?") != MessageBoxResult.Yes) return;
+
+            try
+            {
+                //0.Datasource 생성
+                ValvFacDtlViewMdl mdl = new ValvFacDtlViewMdl(this.FTR_CDE, this.FTR_IDN);
+                //1.Report 호출
+
+                ValvFacReport report = new ValvFacReport();
+                ObjectDataSource ods = new ObjectDataSource();
+                ods.Name = "objectDataSource1";
+                ods.DataSource = mdl;
+
+                report.DataSource = ods;
+                report.ShowPreviewDialog();
+            }
+            catch (Exception)
+            {
+                Messages.ShowErrMsgBox("인쇄 처리중 오류가 발생하였습니다.");
+                return;
+            }
 
         }
 

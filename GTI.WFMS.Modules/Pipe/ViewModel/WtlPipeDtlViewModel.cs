@@ -12,13 +12,8 @@ using Prism.Commands;
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.ComponentModel;
 using System.Data;
-using System.Linq;
 using System.Reflection;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 
@@ -36,7 +31,7 @@ namespace GTI.WFMS.Modules.Pipe.ViewModel
         public DelegateCommand<object> SaveCommand { get; set; }
         public DelegateCommand<object> DeleteCommand { get; set; }
         public DelegateCommand<object> BackCommand { get; set; }
-        public DelegateCommand<object> PrintCmd { get; set; }
+        public DelegateCommand<object> PrintCommand { get; set; }
 
         //public List<PipeDtl> LstDtl { get; set; }
         public List<WttAttaDt> LstAttDt { get; set; }
@@ -67,7 +62,7 @@ namespace GTI.WFMS.Modules.Pipe.ViewModel
             this.DeleteCommand = new DelegateCommand<object>(OnDelete);
             this.BackCommand = new DelegateCommand<object>(OnBack);
 
-            this.PrintCmd = new DelegateCommand<object>(delegate(object obj) {
+            this.PrintCommand = new DelegateCommand<object>(delegate(object obj) {
 
                 //0.Datasource 새성
                 WtlPipeDtlViewMdl mdl = new WtlPipeDtlViewMdl(this.FTR_CDE, this.FTR_IDN);
@@ -205,6 +200,40 @@ namespace GTI.WFMS.Modules.Pipe.ViewModel
         }
 
         /// <summary>
+        /// 인쇄작업
+        /// </summary>
+        /// <param name="obj"></param>
+        private void OnPrint(object obj)
+        {
+
+            // 필수체크 (Tag에 필수체크 표시한 EditBox, ComboBox 대상으로 수행)
+            //if (!BizUtil.ValidReq(wtlPipeDtlView)) return;
+            
+            //if (Messages.ShowYesNoMsgBox("인쇄하시겠습니까?") != MessageBoxResult.Yes) return;
+
+            try
+            {
+                //0.Datasource 생성
+                FireFacDtlViewMdl mdl = new FireFacDtlViewMdl(this.FTR_CDE, this.FTR_IDN);
+                //1.Report 호출
+                FireFacReport report = new FireFacReport();
+                ObjectDataSource ods = new ObjectDataSource();
+                ods.Name = "objectDataSource1";
+                ods.DataSource = mdl;
+
+                report.DataSource = ods;
+                report.ShowPreviewDialog();
+
+            }
+            catch (Exception)
+            {
+                Messages.ShowErrMsgBox("인쇄 처리중 오류가 발생하였습니다.");
+                return;
+            }
+
+        }
+
+        /// <summary>
         /// 삭제처리
         /// </summary>
         /// <param name="obj"></param>
@@ -214,7 +243,7 @@ namespace GTI.WFMS.Modules.Pipe.ViewModel
             Hashtable param = new Hashtable();
             param.Add("sqlId", "selectChscResSubList");
             param.Add("sqlId2", "selectFileMapList");
-            param.Add("sqlId3", "selectWtlLeakSubList");
+
             param.Add("FTR_CDE", this.FTR_CDE);
             param.Add("FTR_IDN", this.FTR_IDN);
             param.Add("BIZ_ID", string.Concat(this.FTR_CDE , this.FTR_IDN) );
@@ -222,7 +251,6 @@ namespace GTI.WFMS.Modules.Pipe.ViewModel
             Hashtable result = BizUtil.SelectLists(param);
             DataTable dt = new DataTable();
             DataTable dt2 = new DataTable();
-            DataTable dt3 = new DataTable();
 
             try
             {
@@ -240,16 +268,6 @@ namespace GTI.WFMS.Modules.Pipe.ViewModel
                 if (dt2.Rows.Count > 0)
                 {
                     Messages.ShowErrMsgBox("파일첨부내역이 존재합니다.");
-                    return;
-                }
-            }
-            catch (Exception) { }
-            try
-            {
-                dt3 = result["dt3"] as DataTable;
-                if (dt3.Rows.Count > 0)
-                {
-                    Messages.ShowErrMsgBox("누수지점내역이 존재합니다.");
                     return;
                 }
             }

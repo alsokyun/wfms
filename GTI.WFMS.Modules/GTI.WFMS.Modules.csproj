@@ -503,11 +503,18 @@
       <DependentUpon>UcUserMngView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Adm\ViewModel\UcUserMngViewModel.cs" />
+    <Compile Include="Cnst\Report\CnstMngReport.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Cnst\Report\CnstMngReport.Designer.cs">
+      <DependentUpon>CnstMngReport.cs</DependentUpon>
+    </Compile>
     <Compile Include="Cnst\ViewModel\SplyMngListViewModel.cs" />
     <Compile Include="Cnst\ViewModel\CnstMngListViewModel.cs" />
     <Compile Include="Cnst\ViewModel\CnstMngDtlViewModel.cs" />
     <Compile Include="Cnst\ViewModel\SplyDtlViewModel.cs" />
     <Compile Include="Cnst\ViewModel\WttSubcDtViewModel.cs" />
+    <Compile Include="Cnst\ViewModel\CnstMngDtlViewMdl.cs" />
     <Compile Include="Cnst\View\SplyMngListView.xaml.cs">
       <DependentUpon>SplyMngListView.xaml</DependentUpon>
     </Compile>
@@ -532,6 +539,10 @@
     <Compile Include="Cnst\View\CnstMngDtlView.xaml.cs">
       <DependentUpon>CnstMngDtlView.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Fclt\viewModel\WtrSupDtlViewMdl.cs" />
+    <Compile Include="Fclt\viewModel\WtrSourDtlViewMdl.cs" />
+    <Compile Include="Fclt\viewModel\PrsPmpDtlViewMdl.cs" />
+    <Compile Include="Fclt\viewModel\IntkStDtlViewMdl.cs" />
     <Compile Include="Fclt\viewModel\PrsPmpAddViewModel.cs" />
     <Compile Include="Fclt\viewModel\IntkStAddViewModel.cs" />
     <Compile Include="Fclt\viewModel\FiltPltAddViewModel.cs" />
@@ -547,6 +558,7 @@
     <Compile Include="Fclt\viewModel\FiltPltListViewModel.cs" />
     <Compile Include="Fclt\viewModel\WtrSupListViewModel.cs" />
     <Compile Include="Fclt\viewModel\WtrSourListViewModel.cs" />
+    <Compile Include="Fclt\viewModel\FiltPltDtlViewMdl.cs" />
     <Compile Include="Fclt\view\PrsPmpAddView.xaml.cs">
       <DependentUpon>PrsPmpAddView.xaml</DependentUpon>
     </Compile>
@@ -668,13 +680,48 @@
     <Compile Include="Pipe\Report\FireFacReport.Designer.cs">
       <DependentUpon>FireFacReport.cs</DependentUpon>
     </Compile>
+    <Compile Include="Pipe\Report\FlowMtReport.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Pipe\Report\FlowMtReport.Designer.cs">
+      <DependentUpon>FlowMtReport.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Pipe\Report\StndPiReport.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Pipe\Report\StndPiReport.Designer.cs">
+      <DependentUpon>StndPiReport.cs</DependentUpon>
+    </Compile>
     <Compile Include="Pipe\Report\WtlPipeDtlReport.cs">
       <SubType>Component</SubType>
     </Compile>
     <Compile Include="Pipe\Report\WtlPipeDtlReport.Designer.cs">
       <DependentUpon>WtlPipeDtlReport.cs</DependentUpon>
     </Compile>
+    <Compile Include="Pipe\Report\ValvFacReport.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Pipe\Report\ValvFacReport.Designer.cs">
+      <DependentUpon>ValvFacReport.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Pipe\Report\WtprMtReport.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Pipe\Report\WtprMtReport.Designer.cs">
+      <DependentUpon>WtprMtReport.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Pipe\Report\WtsMnhoReport.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Pipe\Report\WtsMnhoReport.Designer.cs">
+      <DependentUpon>WtsMnhoReport.cs</DependentUpon>
+    </Compile>
     <Compile Include="Pipe\ViewModel\FireFacAddViewModel.cs" />
+    <Compile Include="Pipe\ViewModel\StndPiDtlViewMdl.cs" />
+    <Compile Include="Pipe\ViewModel\WtprMtDtlViewMdl.cs" />
+    <Compile Include="Pipe\ViewModel\FlowMtDtlViewMdl.cs" />
+    <Compile Include="Pipe\ViewModel\WtsMnhoDtlViewMdl.cs" />
+    <Compile Include="Pipe\ViewModel\ValvFacDtlViewMdl.cs" />
     <Compile Include="Pipe\ViewModel\FireFacDtlViewModel.cs" />
     <Compile Include="Pipe\ViewModel\FireFacListViewModel.cs" />
     <Compile Include="Pipe\ViewModel\FireFacDtlViewMdl.cs" />
@@ -800,15 +847,34 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <EmbeddedResource Include="Cnst\Report\CnstMngReport.resx">
+      <DependentUpon>CnstMngReport.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Pipe\Report\FireFacReport.resx">
       <DependentUpon>FireFacReport.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Pipe\Report\FlowMtReport.resx">
+      <DependentUpon>FlowMtReport.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Pipe\Report\StndPiReport.resx">
+      <DependentUpon>StndPiReport.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Pipe\Report\WtlPipeDtlReport.resx">
       <DependentUpon>WtlPipeDtlReport.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Pipe\Report\ValvFacReport.resx">
+      <DependentUpon>ValvFacReport.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Pipe\Report\WtprMtReport.resx">
+      <DependentUpon>WtprMtReport.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Pipe\Report\WtsMnhoReport.resx">
+      <DependentUpon>WtsMnhoReport.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Properties\Licenses.licx" />
   </ItemGroup>
   <ItemGroup>
+    <Folder Include="Fclt\Report\" />
     <Folder Include="Link\ViewModel\" />
   </ItemGroup>
   <ItemGroup>

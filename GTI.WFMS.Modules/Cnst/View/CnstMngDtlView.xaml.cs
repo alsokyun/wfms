@@ -27,6 +27,7 @@ namespace GTI.WFMS.Modules.Cnst.View
     {
         public delegate void BackCmd(object sender, RoutedEventArgs e);
         public event BackCmd backEvent;
+
         Thread thread;
         private string _CNT_NUM;
 
@@ -48,21 +49,13 @@ namespace GTI.WFMS.Modules.Cnst.View
 
             //정상적인 버튼클릭 이벤트
             btnBack.Click += _backCmd;
-            //btnBack.Click += delegate (object sender, RoutedEventArgs e) {
-            //    NavigationService.Navigate(new CnstMngListView());
-            //};
-            //btnBack.RaiseEvent(new RoutedEventArgs(Button.ClickEvent));
-
+           
 
             /* 탭항목 동적추가 */
             waitindicator.DeferedVisibility = true;
             thread = new Thread(new ThreadStart(LoadFx));
             thread.Start();
-
         }
-
-
-
 
         /// <summary>
         /// 엑셀다운로드 쓰레드 Function

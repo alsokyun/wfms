@@ -1,31 +1,17 @@
-﻿using DevExpress.Xpf.Editors;
+﻿using GTI.WFMS.Models.Cmm.Model;
 using GTI.WFMS.Models.Common;
-using GTI.WFMS.Models.Fctl.Model;
-using GTI.WFMS.Models.Mntc.Model;
 using GTI.WFMS.Models.Pipe.Model;
-using GTI.WFMS.Modules.Link.View;
-using GTI.WFMS.Modules.Pipe.View;
-using GTIFramework.Common.Log;
-using GTIFramework.Common.MessageBox;
-using Prism.Commands;
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Linq;
 using System.Reflection;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows;
-using System.Windows.Controls;
 
 namespace GTI.WFMS.Modules.Pipe.ViewModel
 {
     public class FireFacDtlViewMdl : FireFacDtl
     {
-        public List<FmsChscFtrRes> Tab01List { get; set; }
-               
+        public List<LinkFmsChscFtrRes> Tab01List { get; set; }
+
         /// 생성자
         public FireFacDtlViewMdl(string FTR_CDE, int FTR_IDN)
         {
@@ -69,7 +55,7 @@ namespace GTI.WFMS.Modules.Pipe.ViewModel
                 param.Add("FTR_CDE", FTR_CDE);
                 param.Add("FTR_IDN", FTR_IDN);
 
-                this.Tab01List = (List<FmsChscFtrRes>) BizUtil.SelectListObj<FmsChscFtrRes>(param);
+                this.Tab01List = (List<LinkFmsChscFtrRes>) BizUtil.SelectListObj<LinkFmsChscFtrRes>(param);
             }
             catch (Exception){}
 
