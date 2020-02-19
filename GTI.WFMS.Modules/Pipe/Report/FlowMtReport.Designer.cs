@@ -1007,7 +1007,7 @@
             this.xrTableCell1.Name = "xrTableCell1";
             this.xrTableCell1.StylePriority.UseBorders = false;
             this.xrTableCell1.Text = "xrTableCell1";
-            this.xrTableCell1.Weight = 0.16348933775383934D;
+            this.xrTableCell1.Weight = 0.16364177366191302D;
             // 
             // xrTableCell2
             // 
@@ -1021,7 +1021,7 @@
             this.xrTableCell2.Name = "xrTableCell2";
             this.xrTableCell2.StylePriority.UseBorders = false;
             this.xrTableCell2.Text = "xrTableCell2";
-            this.xrTableCell2.Weight = 0.34543200345367064D;
+            this.xrTableCell2.Weight = 0.34575378587001371D;
             // 
             // xrTableCell3
             // 
@@ -1035,7 +1035,7 @@
             this.xrTableCell3.Name = "xrTableCell3";
             this.xrTableCell3.StylePriority.UseBorders = false;
             this.xrTableCell3.Text = "xrTableCell3";
-            this.xrTableCell3.Weight = 0.37752161851128985D;
+            this.xrTableCell3.Weight = 0.379839137351953D;
             // 
             // xrTableCell7
             // 
@@ -1051,7 +1051,7 @@
             this.xrTableCell7.StylePriority.UseTextAlignment = false;
             this.xrTableCell7.Text = "xrTableCell7";
             this.xrTableCell7.TextAlignment = DevExpress.XtraPrinting.TextAlignment.MiddleCenter;
-            this.xrTableCell7.Weight = 0.45462755192230686D;
+            this.xrTableCell7.Weight = 0.45587899646335472D;
             // 
             // xrTableCell15
             // 
@@ -1067,7 +1067,7 @@
             this.xrTableCell15.StylePriority.UseTextAlignment = false;
             this.xrTableCell15.Text = "xrTableCell15";
             this.xrTableCell15.TextAlignment = DevExpress.XtraPrinting.TextAlignment.MiddleCenter;
-            this.xrTableCell15.Weight = 0.58712787660583055D;
+            this.xrTableCell15.Weight = 0.58767499840664583D;
             // 
             // xrTableCell16
             // 
@@ -1081,7 +1081,7 @@
             this.xrTableCell16.Name = "xrTableCell16";
             this.xrTableCell16.StylePriority.UseBorders = false;
             this.xrTableCell16.Text = "xrTableCell16";
-            this.xrTableCell16.Weight = 0.35545926033485686D;
+            this.xrTableCell16.Weight = 0.35299677631349513D;
             // 
             // xrTableCell17
             // 
@@ -1097,7 +1097,7 @@
             this.xrTableCell17.StylePriority.UseTextAlignment = false;
             this.xrTableCell17.Text = "xrTableCell17";
             this.xrTableCell17.TextAlignment = DevExpress.XtraPrinting.TextAlignment.MiddleLeft;
-            this.xrTableCell17.Weight = 0.71634235141820546D;
+            this.xrTableCell17.Weight = 0.71421453193262441D;
             // 
             // GroupHeader1
             // 

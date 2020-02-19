@@ -223,15 +223,11 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <None Include="..\GTI.WFMS.Main\bin\Debug\DBConfig\ORACLEConfig.config">
-      <Link>DBConfig\ORACLEConfig.config</Link>
-    </None>
-    <None Include="..\GTI.WFMS.Main\bin\Debug\DBConfig\TIBEROConfig.config">
-      <SubType>Designer</SubType>
-      <Link>DBConfig\TIBEROConfig.config</Link>
+    <None Include="app.config" />
+    <None Include="DBConfig\ORACLEConfig.config" />
+    <None Include="DBConfig\TIBEROConfig.config">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Include="app.config" />
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup />
