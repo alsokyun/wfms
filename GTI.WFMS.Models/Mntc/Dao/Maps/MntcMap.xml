@@ -161,7 +161,7 @@
       WHEN MATCHED THEN
 
       UPDATE  SET
-      RPR_YMD			= replace(#RPR_YMD#,'-','')
+      RPR_YMD			= REPLace(#RPR_YMD#,'-','')
       ,RPR_CAT_CDE	= #RPR_CAT_CDE#
       ,RPR_CUZ_CDE    = #RPR_CUZ_CDE#
       ,RPR_USR_NM     = #RPR_USR_NM#
@@ -189,7 +189,7 @@
       )
       VALUES (
       #SCL_NUM#, #FTR_CDE#, #FTR_IDN#, (select nvl(max(SEQ),0)+1 from FMS_CHSC_FTR_RES where SCL_NUM=#SCL_NUM# AND FTR_CDE=#FTR_CDE# AND FTR_IDN=#FTR_IDN# )
-      , replace(#RPR_YMD#,'-',''), #RPR_CAT_CDE#, #RPR_CUZ_CDE#, #RPR_USR_NM#, #RPR_CTNT#, #FIL_SEQ#
+      , REPLace(#RPR_YMD#,'-',''), #RPR_CAT_CDE#, #RPR_CUZ_CDE#, #RPR_USR_NM#, #RPR_CTNT#, #FIL_SEQ#
       , sysdate, #ID#, sysdate, #ID#
       )
 
@@ -299,7 +299,173 @@
       WHERE SCL_NUM = #SCL_NUM#
     </update>
 
-  
+
+
+
+
+
+    <!--FAQ 목록-->
+    <select id ="SelectFaqList" parameterClass="Hashtable" resultClass ="Hashtable">
+
+      WITH C AS (
+      SELECT COUNT(1) AS ROWCNT
+      FROM FAQ A
+      LEFT JOIN INFOUSER.CD_DTL_INFO B     ON A.FAQ_CAT_CDE = B.DTL_CD AND B.MST_CD = '250109'
+      LEFT JOIN INFOUSER.CD_DTL_INFO D     ON A.FAQ_CUZ_CDE = D.DTL_CD AND D.MST_CD = '250110'
+      LEFT JOIN V_FTR_CDE C ON C.FTR_CDE = A.FTR_CDE
+      LEFT JOIN INFOUSER.SYS_USER_INFO U ON A.REG_ID = U.USER_ID
+      WHERE A.DEL_YN = 'N'
+
+
+      <isNotEmpty prepend="AND" property="TTL">
+        A.TTL LIKE '%' || #TTL# || '%'
+      </isNotEmpty>
+      <isNotEmpty prepend="AND" property="FAQ_CAT_CDE">
+        A.FAQ_CAT_CDE LIKE #FAQ_CAT_CDE#
+      </isNotEmpty>
+      <isNotEmpty prepend="AND" property="FAQ_CUZ_CDE">
+        A.FAQ_CUZ_CDE LIKE #FAQ_CUZ_CDE#
+      </isNotEmpty>
+      <isNotEmpty prepend="AND" property="FTR_CDE">
+        A.FTR_CDE LIKE #FTR_CDE#
+      </isNotEmpty>
+      <isNotEmpty prepend="AND" property="QUESTION">
+        A.QUESTION LIKE '%' || #QUESTION# || '%'
+      </isNotEmpty>
+
+      )
+
+
+      SELECT C.ROWCNT, X.*  FROM (
+
+      SELECT ROW_NUMBER() OVER( ORDER BY A.SEQ ) AS RN
+      , A.SEQ
+      , A.FAQ_CAT_CDE
+      , B.NM AS FAQ_CAT_NM
+      , A.FAQ_CUZ_CDE
+      , D.NM AS FAQ_CUZ_NM
+      ,  A.FTR_CDE, C.FTR_NAM
+      , A.TTL
+      /*
+      , DBMS_LOB.SUBSTR(A.QUESTION, DBMS_LOB.GETLENGTH(A.QUESTION)) AS QUESTION
+      , DBMS_LOB.SUBSTR(A.REPL, DBMS_LOB.GETLENGTH(A.REPL)) AS REPL
+      */
+      , A.READ_CNT
+      , A.DEL_YN
+      , A.REG_ID
+      , U.USER_NM AS REG_NM
+      , TO_CHAR( A.REG_DT ,'YYYY-MM-DD') AS REG_DT
+      , A.EDT_ID
+      , A.EDT_DT
+      , ROW_NUMBER()OVER(ORDER BY A.SEQ ) AS ROW_ID
+      , ROW_NUMBER()OVER(ORDER BY A.SEQ DESC ) AS ROW_ID2
+      FROM FAQ A
+      LEFT JOIN INFOUSER.CD_DTL_INFO B     ON A.FAQ_CAT_CDE = B.DTL_CD AND B.MST_CD = '250109'
+      LEFT JOIN INFOUSER.CD_DTL_INFO D     ON A.FAQ_CUZ_CDE = D.DTL_CD AND D.MST_CD = '250110'
+      LEFT JOIN V_FTR_CDE C ON C.FTR_CDE = A.FTR_CDE
+      LEFT JOIN INFOUSER.SYS_USER_INFO U ON A.REG_ID = U.USER_ID
+      WHERE A.DEL_YN = 'N'
+
+
+      <isNotEmpty prepend="AND" property="TTL">
+        A.TTL LIKE '%' || #TTL# || '%'
+      </isNotEmpty>
+      <isNotEmpty prepend="AND" property="FAQ_CAT_CDE">
+        A.FAQ_CAT_CDE LIKE #FAQ_CAT_CDE#
+      </isNotEmpty>
+      <isNotEmpty prepend="AND" property="FAQ_CUZ_CDE">
+        A.FAQ_CUZ_CDE LIKE #FAQ_CUZ_CDE#
+      </isNotEmpty>
+      <isNotEmpty prepend="AND" property="FTR_CDE">
+        A.FTR_CDE LIKE #FTR_CDE#
+      </isNotEmpty>
+      <isNotEmpty prepend="AND" property="QUESTION">
+        A.QUESTION LIKE '%' || #QUESTION# || '%'
+      </isNotEmpty>
+      
+      
+
+      ) X JOIN C ON 1=1
+      WHERE RN &lt;= ($page$+1) * $rows$
+      AND RN &gt;= ($page$) * $rows$ + 1
+
+    </select>
+
+
+    <!--FAQ 상세-->
+    <select id ="SelectFaqDtl" parameterClass="Hashtable" resultClass ="GTI.WFMS.Modules.Mntc.Model.FaqDtl">
+      SELECT A.SEQ
+      , A.FAQ_CAT_CDE
+      , B.NM AS FAQ_CAT_NAM
+      , A.FAQ_CUZ_CDE
+      , C.NM AS FAQ_CUZ_NAM
+      , A.FTR_CDE
+      , D.FTR_NAM
+      , A.READ_CNT
+      , A.DEL_YN
+      , A.REG_ID
+      , TO_CHAR( A.REG_DT ,'YYYYMMDD') AS REG_DT
+      , U.USER_NM
+      , A.EDT_ID
+      , A.TTL
+      , DBMS_LOB.SUBSTR(A.QUESTION, DBMS_LOB.GETLENGTH(A.QUESTION)) AS QUESTION
+      , DBMS_LOB.SUBSTR(A.REPL, DBMS_LOB.GETLENGTH(A.REPL)) AS REPL
+      , '['|| B.NM ||'] ' || A.TTL AS TTL2
+      FROM FAQ A
+      LEFT JOIN INFOUSER.SYS_USER_INFO U ON A.REG_ID = U.USER_ID
+      LEFT JOIN INFOUSER.CD_DTL_INFO B     ON A.FAQ_CAT_CDE = B.DTL_CD AND B.MST_CD = '250109'
+      LEFT JOIN INFOUSER.CD_DTL_INFO C     ON A.FAQ_CUZ_CDE = C.DTL_CD AND C.MST_CD = '250110'
+      LEFT JOIN V_FTR_CDE D ON D.FTR_CDE = A.FTR_CDE
+      WHERE A.DEL_YN = 'N'
+
+      <isNotEmpty property="SEQ" prepend="AND" >
+        A.SEQ = #SEQ#
+      </isNotEmpty>
+    </select>    
+    
+    
+	<!-- FAQ 저장처리 -->
+    <update id="SaveFaqDtl" parameterClass="GTI.WFMS.Modules.Mntc.Model.FaqDtl">
+      MERGE INTO FAQ A
+      USING ( SELECT  #SEQ# AS SEQ
+      , #FAQ_CAT_CDE# AS FAQ_CAT_CDE
+      , #FAQ_CUZ_CDE# AS FAQ_CUZ_CDE
+      , #FTR_CDE# AS FTR_CDE
+      , #TTL# AS TTL
+      , #QUESTION# AS QUESTION
+      , #REPL# AS REPL
+      , #ID# AS REG_ID
+      FROM DUAL
+      )  B
+      ON ( A.SEQ = B.SEQ )
+      
+      WHEN MATCHED THEN
+      UPDATE set A.TTL             = B.TTL
+      , A.FTR_CDE = B.FTR_CDE
+      , A.FAQ_CAT_CDE = B.FAQ_CAT_CDE
+      , A.FAQ_CUZ_CDE = B.FAQ_CUZ_CDE
+      , A.QUESTION        = B.QUESTION
+      , A.REPL        	= B.REPL
+      , A.EDT_ID          = B.REG_ID
+      , A.EDT_DT          = SYSDATE
+      
+      WHEN NOT MATCHED THEN
+      INSERT( SEQ, FTR_CDE, FAQ_CAT_CDE, FAQ_CUZ_CDE, TTL, QUESTION, REPL, DEL_YN, REG_ID, REG_DT, EDT_ID, EDT_DT )
+      VALUES(
+      ( SELECT NVL(MAX(SEQ)+1 ,1 ) FROM FAQ )
+      , B.FTR_CDE  , B.FAQ_CAT_CDE  , B.FAQ_CUZ_CDE  , B.TTL  , B.QUESTION
+      , B.REPL    , 'N'    , B.REG_ID
+      , SYSDATE  , B.REG_ID , SYSDATE
+      )
+    </update>
+
+    <!--FAQ 삭제처리-->
+    <update id="DeleteFaqDtl" parameterClass="GTI.WFMS.Modules.Mntc.Model.FaqDtl">
+      DELETE FROM FAQ WHERE SEQ = #SEQ#
+    </update>
+
+
+
   </statements>
   
 </sqlMap>

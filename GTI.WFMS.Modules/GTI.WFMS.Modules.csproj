@@ -54,11 +54,14 @@
     <Reference Include="DevExpress.RichEdit.v19.1.Export, Version=19.1.6.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL" />
     <Reference Include="DevExpress.Sparkline.v19.1.Core, Version=19.1.6.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL" />
     <Reference Include="DevExpress.Xpf.Core.v19.1, Version=19.1.6.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL" />
+    <Reference Include="DevExpress.Xpf.Docking.v19.1, Version=19.1.6.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL" />
     <Reference Include="DevExpress.Xpf.Grid.v19.1, Version=19.1.6.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL" />
     <Reference Include="DevExpress.Xpf.Grid.v19.1.Core, Version=19.1.6.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL" />
+    <Reference Include="DevExpress.Xpf.Layout.v19.1.Core, Version=19.1.6.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL" />
     <Reference Include="DevExpress.Xpf.LayoutControl.v19.1, Version=19.1.6.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL" />
     <Reference Include="DevExpress.Xpf.Printing.v19.1, Version=19.1.6.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL" />
     <Reference Include="DevExpress.Xpf.Ribbon.v19.1, Version=19.1.6.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL" />
+    <Reference Include="DevExpress.Xpf.RichEdit.v19.1, Version=19.1.6.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL" />
     <Reference Include="DevExpress.Xpf.Scheduling.v19.1, Version=19.1.6.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL" />
     <Reference Include="DevExpress.Xpo.v19.1, Version=19.1.6.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a" />
     <Reference Include="DevExpress.XtraCharts.v19.1, Version=19.1.6.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL" />
@@ -87,6 +90,7 @@
     <Reference Include="System.Configuration" />
     <Reference Include="System.Data" />
     <Reference Include="System.Drawing" />
+    <Reference Include="System.Printing" />
     <Reference Include="System.ServiceModel" />
     <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Windows.Interactivity, Version=4.5.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
@@ -299,6 +303,14 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Include="Mntc\View\PdjtStockView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Mntc\View\FaqListView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Mntc\View\FaqDtlView.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
@@ -649,8 +661,10 @@
     </Compile>
     <Compile Include="Mntc\ViewModel\ChkSchDtlViewModel.cs" />
     <Compile Include="Mntc\ViewModel\ChkSchListViewModel.cs" />
+    <Compile Include="Mntc\ViewModel\FaqDtlViewModel.cs" />
     <Compile Include="Mntc\ViewModel\OptMtListViewModel.cs" />
     <Compile Include="Mntc\ViewModel\PdjtUseListViewModel.cs" />
+    <Compile Include="Mntc\ViewModel\FaqListViewModel.cs" />
     <Compile Include="Mntc\View\ChkSchDtlView.xaml.cs">
       <DependentUpon>ChkSchDtlView.xaml</DependentUpon>
     </Compile>
@@ -662,6 +676,12 @@
     </Compile>
     <Compile Include="Mntc\View\PdjtStockView.xaml.cs">
       <DependentUpon>PdjtStockView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Mntc\View\FaqListView.xaml.cs">
+      <DependentUpon>FaqListView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Mntc\View\FaqDtlView.xaml.cs">
+      <DependentUpon>FaqDtlView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Mntc\View\TagMapListView.xaml.cs">
       <DependentUpon>TagMapListView.xaml</DependentUpon>
