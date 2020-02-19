@@ -1,5 +1,6 @@
 ﻿using DevExpress.Mvvm;
 using DevExpress.Xpf.Editors;
+using DevExpress.Xpf.RichEdit;
 using GTI.WFMS.Models.Cmm.Model;
 using GTI.WFMS.Models.Common;
 using GTI.WFMS.Modules.Cnst.Model;
@@ -49,6 +50,7 @@ namespace GTI.WFMS.Modules.Mntc.ViewModel
         Button btnBack;
         Button btnDelete;
         Button btnSave;
+        RichEditControl richQUESTION;
 
         #endregion
 
@@ -86,7 +88,7 @@ namespace GTI.WFMS.Modules.Mntc.ViewModel
             btnBack = faqDtlView.btnBack;
             btnDelete = faqDtlView.btnDelete;
             btnSave = faqDtlView.btnSave;
-
+            richQUESTION = faqDtlView.richQUESTION;
 
             //2.화면데이터객체 초기화
             InitDataBinding();
@@ -99,6 +101,20 @@ namespace GTI.WFMS.Modules.Mntc.ViewModel
 
 
             // 4.초기조회
+            InitModel();
+
+        }
+
+
+
+
+
+
+        /// <summary>
+        /// 초기조회
+        /// </summary>
+        private void InitModel()
+        {
             Hashtable param = new Hashtable();
             param.Add("sqlId", "SelectFaqDtl");
             param.Add("SEQ", this.SEQ);
@@ -128,7 +144,6 @@ namespace GTI.WFMS.Modules.Mntc.ViewModel
                 }
                 //Console.WriteLine(propName + " - " + prop.GetValue(this,null));
             }
-
         }
 
 
@@ -149,15 +164,18 @@ namespace GTI.WFMS.Modules.Mntc.ViewModel
 
             try
             {
+                //this.QUESTION = richQUESTION.RtfText;
                 BizUtil.Update2(this, "SaveFaqDtl");
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-                Messages.ShowErrMsgBox("저장 처리중 오류가 발생하였습니다.");
+                Messages.ShowErrMsgBox("저장 처리중 오류가 발생하였습니다." + ex.Message);
+                InitModel();
                 return;
             }
-            Messages.ShowOkMsgBox();
 
+            Messages.ShowOkMsgBox();
+            InitModel();
         }
 
         /// <summary>

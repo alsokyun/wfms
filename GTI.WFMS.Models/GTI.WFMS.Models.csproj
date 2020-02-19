@@ -200,6 +200,7 @@
     <Compile Include="Main\Work\MainWork.cs" />
     <Compile Include="Mntc\Model\ChscMaDtl.cs" />
     <Compile Include="Cmm\Model\LinkFmsChscFtrRes.cs" />
+    <Compile Include="Mntc\Model\FaqDtl.cs" />
     <Compile Include="Mntc\Model\ResSrc.cs" />
     <Compile Include="Pipe\Dao\PipeDao.cs" />
     <Compile Include="Pipe\Model\FireFacDtl.cs" />
@@ -226,12 +227,10 @@
     <None Include="..\GTI.WFMS.Main\bin\Debug\DBConfig\ORACLEConfig.config">
       <Link>DBConfig\ORACLEConfig.config</Link>
     </None>
-    <None Include="..\GTI.WFMS.Main\bin\Debug\DBConfig\TIBEROConfig.config">
-      <SubType>Designer</SubType>
-      <Link>DBConfig\TIBEROConfig.config</Link>
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
     <None Include="app.config" />
+    <None Include="DBConfig\TIBEROConfig.config">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup />
