@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace GTI.WFMS.Modules.Mntc.Model
 {
-    public class FaqDtl : CmmDtl, INotifyPropertyChanged
+    public class FaqDtl : CmmDtl, INotifyPropertyChanged 
     {
         /// <summary>
         /// 인터페이스 구현부분

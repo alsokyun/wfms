@@ -408,8 +408,12 @@
       , U.USER_NM
       , A.EDT_ID
       , A.TTL
+      ,A.QUESTION
+      ,A.REPL
+      /*
       , DBMS_LOB.SUBSTR(A.QUESTION, DBMS_LOB.GETLENGTH(A.QUESTION)) AS QUESTION
       , DBMS_LOB.SUBSTR(A.REPL, DBMS_LOB.GETLENGTH(A.REPL)) AS REPL
+      */
       , '['|| B.NM ||'] ' || A.TTL AS TTL2
       FROM FAQ A
       LEFT JOIN INFOUSER.SYS_USER_INFO U ON A.REG_ID = U.USER_ID
@@ -426,36 +430,47 @@
     
 	<!-- FAQ 저장처리 -->
     <update id="SaveFaqDtl" parameterClass="GTI.WFMS.Modules.Mntc.Model.FaqDtl">
-      MERGE INTO FAQ A
-      USING ( SELECT  #SEQ# AS SEQ
-      , #FAQ_CAT_CDE# AS FAQ_CAT_CDE
-      , #FAQ_CUZ_CDE# AS FAQ_CUZ_CDE
-      , #FTR_CDE# AS FTR_CDE
-      , #TTL# AS TTL
-      , #QUESTION# AS QUESTION
-      , #REPL# AS REPL
-      , #ID# AS REG_ID
-      FROM DUAL
-      )  B
-      ON ( A.SEQ = B.SEQ )
-      
+      MERGE INTO FAQ 
+      USING DUAL ON (SEQ = #SEQ#)
+
       WHEN MATCHED THEN
-      UPDATE set A.TTL             = B.TTL
-      , A.FTR_CDE = B.FTR_CDE
-      , A.FAQ_CAT_CDE = B.FAQ_CAT_CDE
-      , A.FAQ_CUZ_CDE = B.FAQ_CUZ_CDE
-      , A.QUESTION        = B.QUESTION
-      , A.REPL        	= B.REPL
-      , A.EDT_ID          = B.REG_ID
-      , A.EDT_DT          = SYSDATE
-      
+      UPDATE set TTL = #TTL#
+      , FTR_CDE = #FTR_CDE#
+      , FAQ_CAT_CDE = #FAQ_CAT_CDE#
+      , FAQ_CUZ_CDE = #FAQ_CUZ_CDE#
+      , QUESTION = #QUESTION#
+      , REPL = #REPL#
+      , EDT_ID = #ID#
+      , EDT_DT = SYSDATE
+
       WHEN NOT MATCHED THEN
       INSERT( SEQ, FTR_CDE, FAQ_CAT_CDE, FAQ_CUZ_CDE, TTL, QUESTION, REPL, DEL_YN, REG_ID, REG_DT, EDT_ID, EDT_DT )
       VALUES(
       ( SELECT NVL(MAX(SEQ)+1 ,1 ) FROM FAQ )
-      , B.FTR_CDE  , B.FAQ_CAT_CDE  , B.FAQ_CUZ_CDE  , B.TTL  , B.QUESTION
-      , B.REPL    , 'N'    , B.REG_ID
-      , SYSDATE  , B.REG_ID , SYSDATE
+      , #FTR_CDE#  , #FAQ_CAT_CDE#  , #FAQ_CUZ_CDE#  , #TTL#
+      , #QUESTION#
+      , #REPL#
+      , 'N'    , #ID#
+      , SYSDATE  , #ID# , SYSDATE
+      )
+    </update>
+    
+	  <!-- FAQ 저장처리 -->
+    <update id="SaveFaqDtl_" >
+      MERGE INTO FAQ 
+      USING DUAL ON (SEQ = #SEQ#)
+
+      WHEN MATCHED THEN
+      UPDATE set TTL = #TTL#
+      , QUESTION = #QUESTION#
+      , REPL = #REPL#
+
+      WHEN NOT MATCHED THEN
+      INSERT( SEQ, QUESTION, REPL)
+      VALUES(
+      ( SELECT NVL(MAX(SEQ)+1 ,1 ) FROM FAQ )
+      , #QUESTION#
+      , #REPL#
       )
     </update>
 
@@ -465,6 +480,11 @@
     </update>
 
 
+    <!--<parameterMap id="faqParam" >
+      <parameter property="SEQ" classType="string" odbcType="VARCHAR"/>
+      <parameter property="QUESTION" classType="string" odbcType="CLOB"/>
+      <parameter property="REPL" classType="string" odbcType="CLOB"/>
+    </parameterMap>-->
 
   </statements>
   
