@@ -539,6 +539,36 @@
     <Compile Include="Cnst\View\CnstMngDtlView.xaml.cs">
       <DependentUpon>CnstMngDtlView.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Fclt\Report\FiltPltReport.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Fclt\Report\FiltPltReport.Designer.cs">
+      <DependentUpon>FiltPltReport.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Fclt\Report\IntkStReport.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Fclt\Report\IntkStReport.Designer.cs">
+      <DependentUpon>IntkStReport.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Fclt\Report\PrsPmpReport.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Fclt\Report\PrsPmpReport.Designer.cs">
+      <DependentUpon>PrsPmpReport.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Fclt\Report\WtrSourReport.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Fclt\Report\WtrSourReport.Designer.cs">
+      <DependentUpon>WtrSourReport.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Fclt\Report\WtrSupReport.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Fclt\Report\WtrSupReport.Designer.cs">
+      <DependentUpon>WtrSupReport.cs</DependentUpon>
+    </Compile>
     <Compile Include="Fclt\viewModel\WtrSupDtlViewMdl.cs" />
     <Compile Include="Fclt\viewModel\WtrSourDtlViewMdl.cs" />
     <Compile Include="Fclt\viewModel\PrsPmpDtlViewMdl.cs" />
@@ -850,6 +880,21 @@
     <EmbeddedResource Include="Cnst\Report\CnstMngReport.resx">
       <DependentUpon>CnstMngReport.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Fclt\Report\FiltPltReport.resx">
+      <DependentUpon>FiltPltReport.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Fclt\Report\IntkStReport.resx">
+      <DependentUpon>IntkStReport.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Fclt\Report\PrsPmpReport.resx">
+      <DependentUpon>PrsPmpReport.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Fclt\Report\WtrSourReport.resx">
+      <DependentUpon>WtrSourReport.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Fclt\Report\WtrSupReport.resx">
+      <DependentUpon>WtrSupReport.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Pipe\Report\FireFacReport.resx">
       <DependentUpon>FireFacReport.cs</DependentUpon>
     </EmbeddedResource>
@@ -874,7 +919,6 @@
     <EmbeddedResource Include="Properties\Licenses.licx" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Fclt\Report\" />
     <Folder Include="Link\ViewModel\" />
   </ItemGroup>
   <ItemGroup>

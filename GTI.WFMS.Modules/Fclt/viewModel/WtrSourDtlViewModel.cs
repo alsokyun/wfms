@@ -1,6 +1,9 @@
-﻿using DevExpress.Xpf.Editors;
+﻿using DevExpress.DataAccess.ObjectBinding;
+using DevExpress.Xpf.Editors;
+using DevExpress.XtraReports.UI;
 using GTI.WFMS.Models.Common;
 using GTI.WFMS.Models.Fclt.Model;
+using GTI.WFMS.Modules.Fclt.Report;
 using GTI.WFMS.Modules.Fclt.View;
 using GTIFramework.Common.Log;
 using GTIFramework.Common.MessageBox;
@@ -76,7 +79,7 @@ namespace GTI.WFMS.Modules.Fclt.ViewModel
 
                 wtrSourDtlView = values[0] as WtrSourDtlView;
                 //cbFTR_CDE = wtrSourDtlView.cbFTR_CDE;     //지형지물
-                cbHJD_CDE = wtrSourDtlView.cbHJD_CDE;     //행정동
+                cbHJD_CDE = wtrSourDtlView.cbHJD_CDE;       //행정동
                 cbMNG_CDE = wtrSourDtlView.cbMNG_CDE;       //관리기관
                 cbWSR_CDE = wtrSourDtlView.cbWSR_CDE;       //수원구분
 
@@ -129,8 +132,6 @@ namespace GTI.WFMS.Modules.Fclt.ViewModel
 
         }
 
-
-
         /// <summary>
         /// 저장작업
         /// </summary>
@@ -173,7 +174,6 @@ namespace GTI.WFMS.Modules.Fclt.ViewModel
                 //0.Datasource 생성
                 WtrSourDtlViewMdl mdl = new WtrSourDtlViewMdl(this.FTR_CDE, this.FTR_IDN);
                 //1.Report 호출
-                /*
                 WtrSourReport report = new WtrSourReport();
                 ObjectDataSource ods = new ObjectDataSource();
                 ods.Name = "objectDataSource1";
@@ -181,7 +181,6 @@ namespace GTI.WFMS.Modules.Fclt.ViewModel
 
                 report.DataSource = ods;
                 report.ShowPreviewDialog();
-                */
             }
             catch (Exception)
             {

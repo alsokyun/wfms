@@ -1,6 +1,9 @@
-﻿using DevExpress.Xpf.Editors;
+﻿using DevExpress.DataAccess.ObjectBinding;
+using DevExpress.Xpf.Editors;
+using DevExpress.XtraReports.UI;
 using GTI.WFMS.Models.Common;
 using GTI.WFMS.Models.Fclt.Model;
+using GTI.WFMS.Modules.Fclt.Report;
 using GTI.WFMS.Modules.Fclt.View;
 using GTIFramework.Common.Log;
 using GTIFramework.Common.MessageBox;
@@ -173,7 +176,6 @@ namespace GTI.WFMS.Modules.Fclt.ViewModel
                 //0.Datasource 생성
                 FiltPltDtlViewMdl mdl = new FiltPltDtlViewMdl(this.FTR_CDE, this.FTR_IDN);
                 //1.Report 호출
-                /*
                 FiltPltReport report = new FiltPltReport();
                 ObjectDataSource ods = new ObjectDataSource();
                 ods.Name = "objectDataSource1";
@@ -181,7 +183,6 @@ namespace GTI.WFMS.Modules.Fclt.ViewModel
 
                 report.DataSource = ods;
                 report.ShowPreviewDialog();
-                */
             }
             catch (Exception)
             {
