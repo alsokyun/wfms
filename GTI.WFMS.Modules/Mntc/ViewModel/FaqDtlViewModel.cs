@@ -142,7 +142,7 @@ namespace GTI.WFMS.Modules.Mntc.ViewModel
                         prop.SetValue(this, Convert.ChangeType(colValue, prop.PropertyType));
                     }
                 }
-                //Console.WriteLine(propName + " - " + prop.GetValue(this,null));
+                Console.WriteLine(propName + " - " + prop.GetValue(this,null));
             }
         }
 
