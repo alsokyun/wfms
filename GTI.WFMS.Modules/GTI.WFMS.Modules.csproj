@@ -919,6 +919,7 @@
     <EmbeddedResource Include="Properties\Licenses.licx" />
   </ItemGroup>
   <ItemGroup>
+    <Folder Include="Acmf\Report\" />
     <Folder Include="Link\ViewModel\" />
   </ItemGroup>
   <ItemGroup>
