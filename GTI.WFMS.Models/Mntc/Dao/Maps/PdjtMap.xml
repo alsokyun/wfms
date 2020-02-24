@@ -675,6 +675,256 @@
 		]]>
     </update>
 
+
+
+
+    <!--시설물노후도현황-->
+    <select id ="SelectOldMngList" parameterClass="Hashtable" resultClass ="Hashtable">
+
+      WITH C AS (
+      SELECT COUNT(1) AS ROWCNT
+      FROM (
+
+      SELECT M.ATTA_SEQ as G2_ID   /*세부시설 일련번호*/
+      , M.FTR_CDE /*지형지물번호*/
+      , M.FTR_IDN /*관리번호*/
+      , M.ATT_IDN /*세부시설번호*/
+      , M.ATT_NAM /*세부시설명*/
+      , M.ATT_DES /*시설개요*/
+      , M.CRE_YY  /*설치연도*/
+      , M.IMP_CDE /*주요도*/
+      , CD2.CD_NM AS IMP_NAM
+      , M.CHK_PRD_CDE    /*점검주기구분*/
+      , CD.CD_NM AS CHK_PRD_NAM
+      , M.CHK_PRD_AMT    /*점검주기*/
+      , CASE WHEN CHK_PRD_CDE IS NULL AND M.CHK_PRD_AMT IS NULL THEN ''
+      WHEN CHK_PRD_CDE IS NOT NULL AND M.CHK_PRD_AMT IS NULL THEN CD.CD_NM
+      WHEN CHK_PRD_CDE IS NOT NULL AND M.CHK_PRD_AMT IS NOT NULL THEN M.CHK_PRD_AMT || ' ' || CD.CD_NM
+      ELSE '' END AS CHK_PRD
+      , A.PRS_NAM        /*가압장명*/
+      , A.HJD_CDE
+      , H.HJD_NAM
+      , B.LMT_YEAR       /*내구연한*/
+      , V.FTR_NAM        /*지형지물명*/
+      , TO_CHAR(TO_DATE(MAX(MA.CHK_RESULT_YMD),'YYYY-MM-DD'),'YYYY-MM-DD') AS CHK_RESULT_YMD /*점검결과등록일*/
+      , CASE WHEN NVL(M.CRE_YY,0) = 0 OR NVL(B.LMT_YEAR,0) = 0 THEN null
+      ELSE ROUND(NVL(((TO_CHAR(SYSDATE,'YYYY') - NVL(M.CRE_YY,0))/NULLIF(NVL(B.LMT_YEAR,0),0)) * 100,0))
+      END AS OLD_RATE
+      FROM WTT_ATTA_DT M /*부속시설 세부사항*/
+      INNER JOIN WTL_PRES_PS A /*가압장*/
+      ON (M.FTR_CDE = A.FTR_CDE AND M.FTR_IDN = A.FTR_IDN)
+      INNER JOIN FMS_FTR_LMT B /*노후도관리*/
+      ON (M.FTR_CDE = B.FTR_CDE)
+      LEFT JOIN V_FTR_CDE V ON (M.FTR_CDE = V.FTR_CDE)
+      LEFT JOIN CMT_ADAR_MA H ON (H.HJD_CDE = A.HJD_CDE)
+      LEFT JOIN FMS_CHSC_FTR_RES RES /*점검시설 결과*/
+      ON (RES.FTR_CDE = M.FTR_CDE AND RES.FTR_IDN = M.FTR_IDN)
+      LEFT JOIN FMS_CHSC_MA MA/*점검일정마스터*/
+      ON (MA.SCL_NUM = RES.SCL_NUM)
+      LEFT JOIN CD_DTL_INFO CD
+      ON (CD.MST_CD = 'CHK_PRD_CDE' AND CD.DTL_CD = M.CHK_PRD_CDE)
+      LEFT JOIN CD_DTL_INFO CD2
+      ON (CD2.MST_CD = 'IMP_CDE' AND CD2.DTL_CD = M.IMP_CDE)
+      WHERE 1=1
+
+      <!-- 조건1. 관리번호 -->
+      <isNotEmpty prepend="AND" property="FTR_IDN">
+        M.FTR_IDN LIKE '%' || #FTR_IDN# || '%'
+      </isNotEmpty>
+
+      <!-- 조건2. 가압장명 -->
+      <isNotEmpty prepend="AND" property="PRS_NAM">
+        A.PRS_NAM LIKE '%' || #PRS_NAM# || '%'
+      </isNotEmpty>
+
+      <!-- 조건3. 세부시설명 -->
+      <isNotEmpty prepend="AND" property="ATT_NAM">
+        M.ATT_NAM LIKE '%' || #ATT_NAM# || '%'
+      </isNotEmpty>
+
+      GROUP BY M.ATTA_SEQ
+      , M.FTR_CDE
+      , M.FTR_IDN
+      , M.ATT_IDN
+      , M.ATT_NAM
+      , M.ATT_DES
+      , M.CRE_YY
+      , M.IMP_CDE
+      , CD2.CD_NM
+      , M.CHK_PRD_CDE
+      , CD.CD_NM
+      , M.CHK_PRD_AMT
+      , A.PRS_NAM
+      , A.HJD_CDE
+      , H.HJD_NAM
+      , B.LMT_YEAR
+      , V.FTR_NAM
+      ) M
+
+
+      )
+
+      SELECT C.ROWCNT, X.*  FROM (
+
+      SELECT ROW_NUMBER() OVER( ORDER BY NVL(M.CHK_RESULT_YMD,'0000') DESC	 ) AS RN
+      ,M.G2_ID
+      , M.FTR_CDE
+      , M.FTR_IDN
+      , M.ATT_IDN
+      , M.ATT_NAM
+      , M.ATT_DES
+      , M.CRE_YY
+      , M.IMP_CDE
+      , M.IMP_NAM
+      , M.CHK_PRD_CDE
+      , M.CHK_PRD_NAM
+      , M.CHK_PRD_AMT
+      , M.CHK_PRD
+      , M.PRS_NAM
+      , M.HJD_CDE
+      , M.HJD_NAM
+      , M.LMT_YEAR
+      , M.FTR_NAM
+      , M.CHK_RESULT_YMD
+      , M.OLD_RATE
+      <![CDATA[					
+      , CASE WHEN M.OLD_RATE IS NULL THEN ''
+      WHEN M.OLD_RATE <= 20 THEN 'A'
+      WHEN M.OLD_RATE > 20 OR M.OLD_RATE <= 40 THEN 'B'
+      WHEN M.OLD_RATE > 40 OR M.OLD_RATE <= 60 THEN 'C'
+      WHEN M.OLD_RATE > 60 OR M.OLD_RATE <= 80 THEN 'D'
+      WHEN M.OLD_RATE > 80 THEN 'E'
+      ELSE '' END AS OLD_LVL
+      ]]>
+
+      FROM (
+      SELECT M.ATTA_SEQ as G2_ID   /*세부시설 일련번호*/
+      , M.FTR_CDE /*지형지물번호*/
+      , M.FTR_IDN /*관리번호*/
+      , M.ATT_IDN /*세부시설번호*/
+      , M.ATT_NAM /*세부시설명*/
+      , M.ATT_DES /*시설개요*/
+      , M.CRE_YY  /*설치연도*/
+      , M.IMP_CDE /*주요도*/
+      , CD2.NM AS IMP_NAM
+      , M.CHK_PRD_CDE    /*점검주기구분*/
+      , CD.NM AS CHK_PRD_NAM
+      , M.CHK_PRD_AMT    /*점검주기*/
+      , CASE WHEN CHK_PRD_CDE IS NULL AND M.CHK_PRD_AMT IS NULL THEN ''
+      WHEN CHK_PRD_CDE IS NOT NULL AND M.CHK_PRD_AMT IS NULL THEN CD.NM
+      WHEN CHK_PRD_CDE IS NOT NULL AND M.CHK_PRD_AMT IS NOT NULL THEN M.CHK_PRD_AMT || ' ' || CD.NM
+      ELSE '' END AS CHK_PRD
+      , A.PRS_NAM        /*가압장명*/
+      , A.HJD_CDE
+      , H.HJD_NAM
+      , B.LMT_YEAR       /*내구연한*/
+      , V.FTR_NAM        /*지형지물명*/
+      , TO_CHAR(TO_DATE(MAX(MA.CHK_RESULT_YMD),'YYYY-MM-DD'),'YYYY-MM-DD') AS CHK_RESULT_YMD /*점검결과등록일*/
+      , CASE WHEN NVL(M.CRE_YY,0) = 0 OR NVL(B.LMT_YEAR,0) = 0 THEN null
+      ELSE ROUND(NVL(((TO_CHAR(SYSDATE,'YYYY') - NVL(M.CRE_YY,0))/NULLIF(NVL(B.LMT_YEAR,0),0)) * 100,0))
+      END AS OLD_RATE
+      FROM WTT_ATTA_DT M /*부속시설 세부사항*/
+      INNER JOIN WTL_PRES_PS A /*가압장*/
+      ON (M.FTR_CDE = A.FTR_CDE AND M.FTR_IDN = A.FTR_IDN)
+      INNER JOIN FMS_FTR_LMT B /*노후도관리*/
+      ON (M.FTR_CDE = B.FTR_CDE)
+      LEFT JOIN V_FTR_CDE V ON (M.FTR_CDE = V.FTR_CDE)
+      LEFT JOIN CMT_ADAR_MA H ON (H.HJD_CDE = A.HJD_CDE)
+      LEFT JOIN FMS_CHSC_FTR_RES RES /*점검시설 결과*/
+      ON (RES.FTR_CDE = M.FTR_CDE AND RES.FTR_IDN = M.FTR_IDN)
+      LEFT JOIN FMS_CHSC_MA MA/*점검일정마스터*/
+      ON (MA.SCL_NUM = RES.SCL_NUM)
+      LEFT JOIN INFOUSER.CD_DTL_INFO CD
+      ON (CD.MST_CD = '250108' AND CD.DTL_CD = M.CHK_PRD_CDE)
+      LEFT JOIN INFOUSER.CD_DTL_INFO CD2
+      ON (CD2.MST_CD = '250111' AND CD2.DTL_CD = M.IMP_CDE)
+      WHERE 1=1
+
+
+      GROUP BY M.ATTA_SEQ
+      , M.FTR_CDE
+      , M.FTR_IDN
+      , M.ATT_IDN
+      , M.ATT_NAM
+      , M.ATT_DES
+      , M.CRE_YY
+      , M.IMP_CDE
+      , CD2.NM
+      , M.CHK_PRD_CDE
+      , CD.NM
+      , M.CHK_PRD_AMT
+      , A.PRS_NAM
+      , A.HJD_CDE
+      , H.HJD_NAM
+      , B.LMT_YEAR
+      , V.FTR_NAM
+      ) M
+
+
+
+      ) X JOIN C ON 1=1
+      WHERE RN &lt;= ($page$+1) * $rows$
+      AND RN &gt;= ($page$) * $rows$ + 1
+
+    </select>
+
+    <!--시설물노후도상세-->
+    <select id ="SelectOldDtl" parameterClass="Hashtable" resultClass ="Hashtable">
+      <![CDATA[					
+      SELECT M.*
+      , CASE WHEN M.OLD_RATE IS NULL THEN ''
+          WHEN M.OLD_RATE <= 20 THEN 'A'
+          WHEN M.OLD_RATE > 20 OR M.OLD_RATE <= 40 THEN 'B'
+          WHEN M.OLD_RATE > 40 OR M.OLD_RATE <= 60 THEN 'C'
+          WHEN M.OLD_RATE > 60 OR M.OLD_RATE <= 80 THEN 'D'
+          WHEN M.OLD_RATE > 80 THEN 'E'
+          ELSE '' END AS OLD_LVL
+      FROM (
+      SELECT M.ATTA_SEQ as G2_ID   /*세부시설 일련번호*/
+        , M.FTR_CDE /*지형지물번호*/
+        , M.FTR_IDN /*관리번호*/
+        , M.ATT_IDN /*세부시설번호*/
+        , M.ATT_NAM /*세부시설명*/
+        , M.ATT_DES /*시설개요*/
+        , M.CRE_YY  /*설치연도*/
+        , M.IMP_CDE /*주요도*/
+        , M.CHK_PRD_CDE    /*점검주기구분*/
+        , CD.NM AS CHK_PRD_NAM
+        , M.CHK_PRD_AMT    /*점검주기*/
+        , CASE WHEN CHK_PRD_CDE IS NULL AND M.CHK_PRD_AMT IS NULL THEN ''
+            WHEN CHK_PRD_CDE IS NOT NULL AND M.CHK_PRD_AMT IS NULL THEN CD.NM
+            WHEN CHK_PRD_CDE IS NOT NULL AND M.CHK_PRD_AMT IS NOT NULL THEN M.CHK_PRD_AMT || ' ' || CD.NM
+            ELSE '' END AS CHK_PRD
+        , A.PRS_NAM        /*가압장명*/
+        , A.HJD_CDE
+        , H.HJD_NAM
+        , B.LMT_YEAR       /*내구연한*/
+        , V.FTR_NAM        /*지형지물명*/
+        , CASE WHEN NVL(M.CRE_YY,0) = 0 OR NVL(B.LMT_YEAR,0) = 0 THEN null
+          ELSE ROUND(NVL(((TO_CHAR(SYSDATE,'YYYY') - NVL(M.CRE_YY,0))/NULLIF(NVL(B.LMT_YEAR,0),0)) * 100,0))
+          END AS OLD_RATE
+      FROM WTT_ATTA_DT M /*부속시설 세부사항*/
+          INNER JOIN WTL_PRES_PS A /*가압장*/
+          ON (M.FTR_CDE = A.FTR_CDE AND M.FTR_IDN = A.FTR_IDN)
+          INNER JOIN FMS_FTR_LMT B /*노후도관리*/
+          ON (M.FTR_CDE = B.FTR_CDE)
+          LEFT JOIN V_FTR_CDE V ON (M.FTR_CDE = V.FTR_CDE)
+          LEFT JOIN CMT_ADAR_MA H ON H.HJD_CDE = A.HJD_CDE
+          LEFT JOIN INFOUSER.CD_DTL_INFO CD ON (CD.MST_CD = '250108' AND CD.DTL_CD = M.CHK_PRD_CDE)
+      WHERE 1=1
+      ]]>
+      AND M.ATTA_SEQ = #G2_ID#
+      ) M
+    </select>
+
+
+    <update id="UpdateOldMng" parameterClass="Hashtable">
+      UPDATE WTT_ATTA_DT /*세부시설*/
+      SET IMP_CDE = #IMP_CDE#
+      WHERE 1=1
+      AND ATTA_SEQ = #G2_ID#
+    </update>
+
   </statements>
   
 </sqlMap>
