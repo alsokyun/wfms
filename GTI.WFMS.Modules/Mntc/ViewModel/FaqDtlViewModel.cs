@@ -9,6 +9,7 @@ using GTI.WFMS.Modules.Mntc.Model;
 using GTI.WFMS.Modules.Mntc.View;
 using GTIFramework.Common.Log;
 using GTIFramework.Common.MessageBox;
+using GTIFramework.Core;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -142,7 +143,7 @@ namespace GTI.WFMS.Modules.Mntc.ViewModel
                         prop.SetValue(this, Convert.ChangeType(colValue, prop.PropertyType));
                     }
                 }
-                Console.WriteLine(propName + " - " + prop.GetValue(this,null));
+                //Console.WriteLine(propName + " - " + prop.GetValue(this,null));
             }
         }
 
@@ -165,7 +166,16 @@ namespace GTI.WFMS.Modules.Mntc.ViewModel
             try
             {
                 //this.QUESTION = richQUESTION.RtfText;
-                BizUtil.Update2(this, "SaveFaqDtl");
+                //BizUtil.Update2(this, "SaveFaqDtl");
+
+                Hashtable param = new Hashtable();
+                param.Add("SEQ", this.SEQ);
+                param.Add("QUESTION", this.QUESTION);
+                param.Add("REPL", this.REPL);
+                param.Add("TTL", this.TTL);
+                DBUtil.Update(param);
+
+
             }
             catch (Exception ex)
             {

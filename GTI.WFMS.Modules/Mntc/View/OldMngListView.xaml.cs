@@ -9,11 +9,11 @@ using System.Windows.Input;
 namespace GTI.WFMS.Modules.Mntc.View
 {
     /// <summary>
-    /// OptMtListView.xaml에 대한 상호 작용 논리
+    /// OldMngListView.xaml에 대한 상호 작용 논리
     /// </summary>
-    public partial class OptMtListView : UserControl
+    public partial class OldMngListView : UserControl
     {
-        public OptMtListView()
+        public OldMngListView()
         {
             InitializeComponent();
 
@@ -34,7 +34,7 @@ namespace GTI.WFMS.Modules.Mntc.View
             {
                 G2_ID = ((DataRowView)gc.CurrentItem).Row["G2_ID"].ToString();
 
-                Window pop = new OptMtDtlView(G2_ID);
+                Window pop = new OldDtlView(G2_ID);
                 if ( pop.ShowDialog() is bool)
                 {
                     //재조회
