@@ -155,36 +155,39 @@
     <select id="SelectHydtMetrDtl"  parameterClass="Hashtable" resultClass ="GTI.WFMS.Models.Acmf.Model.HydtMetrDtl">
       /* HydtMetrMap.SelectHydtMetrDtl 급수전계량기 상세정보*/
       <![CDATA[
-		 	 SELECT A.FTR_CDE
-            , (SELECT FTR_NAM FROM INFOFMS.V_FTR_CDE WHERE FTR_CDE = A.FTR_CDE) AS FTR_NAM
-            , A.FTR_IDN
-            , A.HJD_CDE
-            , (SELECT HJD_NAM FROM INFOFMS.CMT_ADAR_MA WHERE HJD_CDE = A.HJD_CDE) AS HJD_NAM
-            , A.SHT_NUM            
-            , decode(length(A.IST_YMD), 8, to_char(to_date(A.IST_YMD, 'yyyyMMdd'), 'yyyy-MM-dd'), '') AS IST_YMD
-            , A.HOM_NUM
-            , A.HOM_NAM
-            , A.HOM_CDE
-            , (SELECT HJD_NAM FROM INFOFMS.CMT_ADAR_MA WHERE HJD_CDE = A.HOM_CDE) AS HOM_CDE_NAM
-            , A.HOM_ADR
-            , A.HOM_CNT
-            , A.SBI_CDE
-            , (SELECT NM FROM INFOUSER.CD_DTL_INFO WHERE MST_CD = '250020' AND DTL_CD = A.SBI_CDE ) AS SBI_NAM
-            , A.MET_DIP
-            , A.MOF_CDE
-            , A.PRD_NUM
-            , A.PIP_CDE
-            , A.PIP_IDN
-            , A.CNT_NUM
-            , A.SYS_CHK
-            , A.MET_NUM
-            , A.MET_MOF
-            , A.HOM_HJD
-            , decode(A.SYS_CHK,'1','유','무') as SYS_CHK_NAM
-         FROM INFOFMS.WTL_META_PS A 
-			  WHERE 1=1
-          AND FTR_CDE = #FTR_CDE# 
-				  AND FTR_IDN = #FTR_IDN#
+        SELECT ROWNUM AS RNO, M.*
+          FROM (
+		 	           SELECT A.FTR_CDE
+                      , (SELECT FTR_NAM FROM INFOFMS.V_FTR_CDE WHERE FTR_CDE = A.FTR_CDE) AS FTR_NAM
+                      , A.FTR_IDN
+                      , A.HJD_CDE
+                      , (SELECT HJD_NAM FROM INFOFMS.CMT_ADAR_MA WHERE HJD_CDE = A.HJD_CDE) AS HJD_NAM
+                      , A.SHT_NUM            
+                      , decode(length(A.IST_YMD), 8, to_char(to_date(A.IST_YMD, 'yyyyMMdd'), 'yyyy-MM-dd'), '') AS IST_YMD
+                      , A.HOM_NUM
+                      , A.HOM_NAM
+                      , A.HOM_CDE
+                      , (SELECT HJD_NAM FROM INFOFMS.CMT_ADAR_MA WHERE HJD_CDE = A.HOM_CDE) AS HOM_CDE_NAM
+                      , A.HOM_ADR
+                      , A.HOM_CNT
+                      , A.SBI_CDE
+                      , (SELECT NM FROM INFOUSER.CD_DTL_INFO WHERE MST_CD = '250020' AND DTL_CD = A.SBI_CDE ) AS SBI_NAM
+                      , A.MET_DIP
+                      , A.MOF_CDE
+                      , A.PRD_NUM
+                      , A.PIP_CDE
+                      , A.PIP_IDN
+                      , A.CNT_NUM
+                      , A.SYS_CHK
+                      , A.MET_NUM
+                      , A.MET_MOF
+                      , A.HOM_HJD
+                      , decode(A.SYS_CHK,'1','유','무') as SYS_CHK_NAM
+                   FROM INFOFMS.WTL_META_PS A 
+			            WHERE 1=1
+                    AND FTR_CDE = #FTR_CDE# 
+				            AND FTR_IDN = #FTR_IDN# 
+                    ) M
 			]]>
     </select>
 
