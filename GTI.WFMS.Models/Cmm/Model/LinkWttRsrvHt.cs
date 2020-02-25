@@ -29,6 +29,16 @@ namespace GTI.WFMS.Models.Cmm.Model
                 OnPropertyChanged("RNO");
             }
         }
+        private decimal __SEQ;
+        public decimal SEQ
+        {
+            get { return __SEQ; }
+            set
+            {
+                this.__SEQ = value;
+                OnPropertyChanged("SEQ");
+            }
+        }
         private string __FTR_CDE;
         public string FTR_CDE
         {

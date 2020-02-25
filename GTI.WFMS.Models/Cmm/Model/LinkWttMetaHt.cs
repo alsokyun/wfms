@@ -220,20 +220,20 @@ namespace GTI.WFMS.Models.Cmm.Model
                 OnPropertyChanged("OME_DIP");
             }
         }
-        private string OME_MOF;
-        public string __OME_MOF
+        private string __OME_MOF;
+        public string OME_MOF
         {
-            get { return OME_MOF; }
+            get { return __OME_MOF; }
             set
             {
                 this.__OME_MOF = value;
-                OnPropertyChanged("OME_NAM");
+                OnPropertyChanged("OME_MOF");
             }
         }
         private string __OME_MOF_NAM;
         public string OME_MOF_NAM
         {
-            get { return OME_MOF_NAM; }
+            get { return __OME_MOF_NAM; }
             set
             {
                 this.__OME_MOF_NAM = value;
@@ -243,7 +243,7 @@ namespace GTI.WFMS.Models.Cmm.Model
         private string __OME_TYP;
         public string OME_TYP
         {
-            get { return OME_TYP; }
+            get { return __OME_TYP; }
             set
             {
                 this.__OME_TYP = value;
@@ -253,7 +253,7 @@ namespace GTI.WFMS.Models.Cmm.Model
         private string __OME_COL;
         public string OME_COL
         {
-            get { return OME_COL; }
+            get { return __OME_COL; }
             set
             {
                 this.__OME_COL = value;
@@ -263,7 +263,7 @@ namespace GTI.WFMS.Models.Cmm.Model
         private string __OME_SEL;
         public string OME_SEL
         {
-            get { return OME_SEL; }
+            get { return __OME_SEL; }
             set
             {
                 this.__OME_SEL = value;
@@ -273,7 +273,7 @@ namespace GTI.WFMS.Models.Cmm.Model
         private string __OME_VAL;
         public string OME_VAL
         {
-            get { return OME_VAL; }
+            get { return __OME_VAL; }
             set
             {
                 this.__OME_VAL = value;
@@ -293,7 +293,7 @@ namespace GTI.WFMS.Models.Cmm.Model
         private string __IME_NAM;
         public string IME_NAM
         {
-            get { return IME_NAM; }
+            get { return __IME_NAM; }
             set
             {
                 this.__IME_NAM = value;
@@ -313,7 +313,7 @@ namespace GTI.WFMS.Models.Cmm.Model
         private string __IME_MOF;
         public string IME_MOF
         {
-            get { return IME_MOF; }
+            get { return __IME_MOF; }
             set
             {
                 this.__IME_MOF = value;
@@ -343,7 +343,7 @@ namespace GTI.WFMS.Models.Cmm.Model
         private string __IME_SEL;
         public string IME_SEL
         {
-            get { return IME_SEL; }
+            get { return __IME_SEL; }
             set
             {
                 this.__IME_SEL = value;
@@ -353,7 +353,7 @@ namespace GTI.WFMS.Models.Cmm.Model
         private string __IME_VAL;
         public string IME_VAL
         {
-            get { return IME_VAL; }
+            get { return __IME_VAL; }
             set
             {
                 this.__IME_VAL = value;
@@ -363,7 +363,7 @@ namespace GTI.WFMS.Models.Cmm.Model
         private string __IME_COL;
         public string IME_COL
         {
-            get { return IME_COL; }
+            get { return __IME_COL; }
             set
             {
                 this.__IME_COL = value;
@@ -383,7 +383,7 @@ namespace GTI.WFMS.Models.Cmm.Model
         private string __IME_NUM;
         public string IME_NUM
         {
-            get { return IME_NUM; }
+            get { return __IME_NUM; }
             set
             {
                 this.__IME_NUM = value;
@@ -413,7 +413,7 @@ namespace GTI.WFMS.Models.Cmm.Model
         private string __ATT_USR;
         public string ATT_USR
         {
-            get { return ATT_USR; }
+            get { return __ATT_USR; }
             set
             {
                 this.__ATT_USR = value;
@@ -423,7 +423,7 @@ namespace GTI.WFMS.Models.Cmm.Model
         private string __ATT_TIM;
         public string ATT_TIM
         {
-            get { return ATT_TIM; }
+            get { return __ATT_TIM; }
             set
             {
                 this.__ATT_TIM = value;
