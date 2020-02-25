@@ -17,5 +17,10 @@ namespace GTI.WFMS.Modules.Pipe.Report
         {
 
         }
+
+        private void xrTable1_BeforePrint(object sender, System.Drawing.Printing.PrintEventArgs e)
+        {
+
+        }
     }
 }

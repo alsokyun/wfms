@@ -176,6 +176,8 @@
     <Compile Include="Cmm\Model\FctDtl.cs" />
     <Compile Include="Cmm\Model\FileDtl.cs" />
     <Compile Include="Cmm\Model\FileMapDtl.cs" />
+    <Compile Include="Cmm\Model\LinkWttRsrvHt.cs" />
+    <Compile Include="Cmm\Model\LinkWttMetaHt.cs" />
     <Compile Include="Cmm\Model\LinkWtlLeakPs.cs" />
     <Compile Include="Cmm\Work\CmmWork.cs" />
     <Compile Include="Cnst\Model\CnstDtl.cs" />

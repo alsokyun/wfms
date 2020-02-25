@@ -26,7 +26,17 @@ namespace GTI.WFMS.Models.Acmf.Model
 
         /// <summary>                                                                 
         /// 프로퍼티 부분                                                             
-        /// </summary>                                                                
+        /// </summary>    
+        private int __RNO;
+        public int RNO
+        {
+            get { return __RNO; }
+            set
+            {
+                this.__RNO = value;
+                OnPropertyChanged("RNO");
+            }
+        }
         private string __FTR_CDE;
         public string FTR_CDE
         {

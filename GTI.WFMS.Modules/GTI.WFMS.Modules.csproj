@@ -464,6 +464,27 @@
     </Page>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Acmf\Report\HydtMetrReport.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Acmf\Report\HydtMetrReport.Designer.cs">
+      <DependentUpon>HydtMetrReport.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Acmf\Report\SupDutReport.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Acmf\Report\SupDutReport.Designer.cs">
+      <DependentUpon>SupDutReport.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Acmf\Report\WtrTrkReport.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Acmf\Report\WtrTrkReport.Designer.cs">
+      <DependentUpon>WtrTrkReport.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Acmf\viewModel\WtrTrkDtlViewMdl.cs" />
+    <Compile Include="Acmf\viewModel\SupDutDtlViewMdl.cs" />
+    <Compile Include="Acmf\viewModel\HydtMetrDtlViewMdl.cs" />
     <Compile Include="Acmf\viewModel\WtrTrkAddViewModel.cs" />
     <Compile Include="Acmf\viewModel\SupDutAddViewModel.cs" />
     <Compile Include="Acmf\viewModel\WtrTrkDtlViewModel.cs" />
@@ -907,6 +928,15 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <EmbeddedResource Include="Acmf\Report\HydtMetrReport.resx">
+      <DependentUpon>HydtMetrReport.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Acmf\Report\SupDutReport.resx">
+      <DependentUpon>SupDutReport.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Acmf\Report\WtrTrkReport.resx">
+      <DependentUpon>WtrTrkReport.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Cnst\Report\CnstMngReport.resx">
       <DependentUpon>CnstMngReport.cs</DependentUpon>
     </EmbeddedResource>
@@ -949,7 +979,6 @@
     <EmbeddedResource Include="Properties\Licenses.licx" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Acmf\Report\" />
     <Folder Include="Link\ViewModel\" />
   </ItemGroup>
   <ItemGroup>
