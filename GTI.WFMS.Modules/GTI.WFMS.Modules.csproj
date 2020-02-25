@@ -294,6 +294,10 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
+    <Page Include="Mntc\View\ChkSchAddView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
     <Page Include="Mntc\View\OldMngListView.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -307,6 +311,10 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Include="Mntc\View\OptMtDtlView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Mntc\View\ChkPlanListView.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
@@ -667,6 +675,7 @@
     <Compile Include="Main\View\PopWinView.xaml.cs">
       <DependentUpon>PopWinView.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Mntc\ViewModel\ChkSchAddViewModel.cs" />
     <Compile Include="Mntc\ViewModel\ChkSchDtlViewModel.cs" />
     <Compile Include="Mntc\ViewModel\ChkSchListViewModel.cs" />
     <Compile Include="Mntc\ViewModel\FaqDtlViewModel.cs" />
@@ -676,6 +685,9 @@
     <Compile Include="Mntc\ViewModel\FaqListViewModel.cs" />
     <Compile Include="Mntc\View\ChkSchDtlView.xaml.cs">
       <DependentUpon>ChkSchDtlView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Mntc\View\ChkSchAddView.xaml.cs">
+      <DependentUpon>ChkSchAddView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Mntc\View\OldMngListView.xaml.cs">
       <DependentUpon>OldMngListView.xaml</DependentUpon>
@@ -688,6 +700,9 @@
     </Compile>
     <Compile Include="Mntc\View\OptMtDtlView.xaml.cs">
       <DependentUpon>OptMtDtlView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Mntc\View\ChkPlanListView.xaml.cs">
+      <DependentUpon>ChkPlanListView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Mntc\View\PdjtStockView.xaml.cs">
       <DependentUpon>PdjtStockView.xaml</DependentUpon>

@@ -13,6 +13,7 @@ namespace GTI.WFMS.Models.Cmm.Model
     {
         private string __ID;
         private string __DUP; //중복체크상태
+        private string __CHK; //중복체크상태
 
         public string ID
         {
@@ -28,6 +29,14 @@ namespace GTI.WFMS.Models.Cmm.Model
             set
             {
                 this.__DUP = value;
+            }
+        }
+        public string CHK
+        {
+            get { return __CHK; }
+            set
+            {
+                this.__CHK = value;
             }
         }
 

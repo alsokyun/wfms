@@ -2,6 +2,7 @@
 using DevExpress.Xpf.Editors;
 using DevExpress.Xpf.Scheduling;
 using GTI.WFMS.Models.Common;
+using GTI.WFMS.Modules.Link.View;
 using GTI.WFMS.Modules.Pop.View;
 using GTIFramework.Common.MessageBox;
 using GTIFramework.Common.Utils.ViewEffect;
@@ -35,7 +36,7 @@ namespace GTI.WFMS.Modules.Mntc.View
             txtSCL_NUM.EditValue = _SCL_NUM; //뷰의 바인딩을 통해 뷰모델값 변경동기화
 
             //초기조회
-            InitMOdel();
+            InitModel();
 
         }
 
@@ -280,7 +281,7 @@ namespace GTI.WFMS.Modules.Mntc.View
         #region ========= 메소드 ===========
 
         //초기조회
-        private void InitMOdel()
+        private void InitModel()
         {
 
             // 1.점검결과
@@ -306,7 +307,7 @@ namespace GTI.WFMS.Modules.Mntc.View
             /* 
              * 2.탭항목 동적추가
              */
-            InitTab();
+            //InitTab(); - 그리드 선택이벤트에서
         }
 
 
@@ -317,7 +318,7 @@ namespace GTI.WFMS.Modules.Mntc.View
 
             DXTabItem tab01 = new DXTabItem();
             tab01.Header = "점검사진";
-            //tab01.Content = new WttCostDtView(SCL_NUM);
+            tab01.Content = new ImgFileMngView(SCL_NUM.ToString() +  SEL_FTR_CDE + SEL_FTR_IDN);
             tabSubMenu.Items.Add(tab01);
 
             DXTabItem tab02 = new DXTabItem();
@@ -382,6 +383,15 @@ namespace GTI.WFMS.Modules.Mntc.View
         {
             this.Close();
         }
+        //Esc
+        private void ChkSchDtlView_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.Key == Key.Escape)
+            {
+                this.Close();
+            }
+        }
+
 
         /// <summary>
         /// 마우스 드래그

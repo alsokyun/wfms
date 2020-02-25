@@ -15,7 +15,8 @@
       when A.SCL_STAT_CDE = 'SCL_STAT_CDE03' then 'fd7e02'
       else '35495f' end AS COLOR
 
-      , A.MNG_CDE, A.TIT_NAM
+      , A.MNG_CDE,  C3.NM AS MNG_NAM
+      , A.TIT_NAM
       , A.STA_YMD
       , A.END_YMD
       , A.CKM_GRP_NM, A.CKM_PEO, A.CHK_CTNT
@@ -33,6 +34,7 @@
       LEFT JOIN INFOUSER.CD_DTL_INFO C ON A.SCL_STAT_CDE = C.DTL_CD AND C.MST_CD = (SELECT MST_CD FROM INFOUSER.CD_MST_INFO WHERE ETC = 'SCL_STAT_CDE')
       LEFT JOIN INFOUSER.CD_DTL_INFO C2 ON A.SCL_CDE = C2.DTL_CD AND C2.MST_CD = (SELECT MST_CD FROM INFOUSER.CD_MST_INFO WHERE ETC = 'SCL_CDE')
       LEFT JOIN INFOUSER.SYS_USER_INFO U ON A.CRE_USR = U.USER_ID
+      LEFT JOIN INFOUSER.CD_DTL_INFO C3 ON A.MNG_CDE = C3.DTL_CD AND C3.MST_CD = '250101'
       WHERE 1=1
       <isNotEmpty prepend="AND" property="SCL_NUM">
         A.SCL_NUM = #SCL_NUM#
@@ -60,8 +62,14 @@
       <isNotEmpty prepend="AND" property="END_YMD">
         A.END_YMD <![CDATA[<=]]> TO_CHAR(TO_DATE(#END_YMD#, 'yyyy-MM-dd'), 'yyyyMMdd')
       </isNotEmpty>
+      <isNotEmpty prepend="AND" property="CHK_YM">
+        (
+          (A.STA_YMD <![CDATA[>=]]> #CHK_YM# || '01' AND A.STA_YMD <![CDATA[<=]]> #CHK_YM# || '31')
+        OR (A.END_YMD <![CDATA[>=]]> #CHK_YM# || '01' AND A.END_YMD  <![CDATA[<=]]> #CHK_YM# || '31')
+        )
+      </isNotEmpty>
 
-
+      
     </select>
 
     <!--점검일정 저장-->
@@ -213,6 +221,7 @@
       , H.PDH_CNT, H.PDH_AMT
       , P.PDT_NAM
       , P.PDT_MDL_STD
+      , NULL AS CHK
       
       FROM FMS_PDJT_HT H
       INNER JOIN FMS_PDJT_MA P ON P.PDH_NUM = H.PDH_NUM

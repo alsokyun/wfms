@@ -1,0 +1,167 @@
+﻿using DevExpress.Mvvm;
+using DevExpress.Xpf.Editors;
+using GTI.WFMS.Models.Common;
+using GTI.WFMS.Models.Mntc.Model;
+using GTI.WFMS.Modules.Mntc.View;
+using GTIFramework.Common.Log;
+using GTIFramework.Common.MessageBox;
+using System;
+using System.Collections;
+using System.Collections.Generic;
+using System.Data;
+using System.Linq;
+using System.Reflection;
+using System.Text;
+using System.Threading.Tasks;
+using System.Windows;
+using System.Windows.Controls;
+
+namespace GTI.WFMS.Modules.Mntc.ViewModel
+{
+
+
+    public class ChkSchAddViewModel : ChscMaDtl
+    {
+
+
+        #region ==========  Properties 정의 ==========
+        /// <summary>
+        /// Loaded Event
+        /// </summary>
+        public DelegateCommand<object> LoadedCommand { get; set; }
+        public DelegateCommand<object> SaveCommand { get; set; }
+        
+
+        #endregion
+
+
+        #region ==========  Member 정의 ==========
+        ChkSchAddView chkSchAddView;
+        ComboBoxEdit cbMNG_CDE; DataTable dtMNG_CDE = new DataTable();
+        ComboBoxEdit cbSCL_CDE; DataTable dtSCL_CDE = new DataTable();
+        
+        Button btnSave;
+        Button btnClose;
+        
+
+        #endregion
+
+
+
+        /// <summary>
+        /// 생성자
+        /// </summary>
+        public ChkSchAddViewModel()
+        {
+            this.LoadedCommand = new DelegateCommand<object>(delegate (object obj) {
+                // 0.화면객체인스턴스화
+                if (obj == null) return;
+
+                chkSchAddView = obj as ChkSchAddView;
+
+                cbMNG_CDE = chkSchAddView.cbMNG_CDE;
+                cbSCL_CDE = chkSchAddView.cbSCL_CDE;
+                
+                btnSave = chkSchAddView.btnSave;
+                btnClose = chkSchAddView.btnClose;
+                
+
+
+                //2.화면데이터객체 초기화
+                InitDataBinding();
+
+
+                //3.권한처리
+                permissionApply();
+
+
+            });
+
+            //신규저장
+            this.SaveCommand = new DelegateCommand<object>(delegate (object obj) {
+
+                // 필수체크 (Tag에 필수체크 표시한 EditBox, ComboBox 대상으로 수행)
+                if (!BizUtil.ValidReq(chkSchAddView)) return;
+
+
+                if (Messages.ShowYesNoMsgBox("저장하시겠습니까?") != MessageBoxResult.Yes) return;
+
+                try
+                {
+                    BizUtil.Update2(this, "SaveChscMaDtl");
+                }
+                catch (Exception )
+                {
+                    Messages.ShowErrMsgBox("저장 처리중 오류가 발생하였습니다.");
+                    return;
+                }
+
+                Messages.ShowOkMsgBox();
+                //화면닫기
+                btnClose.RaiseEvent(new RoutedEventArgs(Button.ClickEvent));
+
+            });
+            
+
+        }
+
+
+
+
+
+        #region ============= 메소드정의 ================
+
+
+        /// <summary>
+        /// 초기조회 및 바인딩
+        /// </summary>
+        private void InitDataBinding()
+        {
+            try
+            {
+                //관리기관
+                BizUtil.SetCmbCode(cbMNG_CDE, "MNG_CDE", true);
+                //점검구분
+                BizUtil.SetCmbCode(cbSCL_CDE, "SCL_CDE", true);
+                
+
+            }
+            catch (Exception ex)
+            {
+                Messages.ShowErrMsgBoxLog(ex);
+            }
+        }
+
+
+        /// <summary>
+        /// 화면 권한처리
+        /// </summary>
+        private void permissionApply()
+        {
+            try
+            {
+                string strPermission = Logs.htPermission[Logs.strFocusMNU_CD].ToString();
+                switch (strPermission)
+                {
+                    case "W":
+                        break;
+                    case "R":
+                        btnSave.Visibility = Visibility.Collapsed;
+                        break;
+                    case "N":
+                        break;
+                }
+
+            }
+            catch (Exception ex)
+            {
+                Messages.ShowErrMsgBoxLog(ex);
+            }
+
+        }
+
+        #endregion
+
+
+    }
+}

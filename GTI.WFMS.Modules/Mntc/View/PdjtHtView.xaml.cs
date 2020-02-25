@@ -44,9 +44,23 @@ namespace GTI.WFMS.Modules.Mntc.View
             this.FTR_CDE = _FTR_CDE;
             this.FTR_IDN = _FTR_IDN;
             this.SEQ = _SEQ;
-            
-            
+
+
             //초기조회
+            InitModel();
+        }
+
+
+        #endregion
+
+
+
+
+        #region =========== 이벤트핸들러 ============
+
+        //초기조회
+        private void InitModel()
+        {
             DataTable dt = new DataTable();
 
             Hashtable param = new Hashtable();
@@ -56,20 +70,13 @@ namespace GTI.WFMS.Modules.Mntc.View
             param.Add("FTR_CDE", FTR_CDE);
             param.Add("FTR_IDN", FTR_IDN);
             param.Add("SEQ", SEQ);
-            param.Add("PDT_CAT_CDE", "PDT01"); //소모품
-            
+            param.Add("PDT_CAT_CDE", "PDT001"); //소모품
+
 
             dt = BizUtil.SelectList(param);
             grid.ItemsSource = dt;
-
         }
 
-        #endregion
-
-
-
-
-        #region =========== 이벤트핸들러 ============
 
         //그리드행추가시 이벤트처리
         private void AddingNewRow(object sender, System.ComponentModel.AddingNewEventArgs e)
@@ -86,7 +93,7 @@ namespace GTI.WFMS.Modules.Mntc.View
             param["sqlId"] = "SelectPdhList";
             param["ValueMember"] = "PDH_NUM";
             param["DisplayMember"] = "PDT_NAM";
-            param["PDT_CAT_CDE"] = "PDT01"; //소모품
+            param["PDT_CAT_CDE"] = "PDT001"; //소모품
             obj.ItemsSource = BizUtil.GetCombo(param);
 
             obj.SelectedIndexChanged += OnSelectedIndexChanged;
@@ -98,16 +105,16 @@ namespace GTI.WFMS.Modules.Mntc.View
             ComboBoxEdit obj = sender as ComboBoxEdit;
             DataTable dt = (DataTable)obj.ItemsSource;
 
-            DataRowView rv = obj.SelectedItem as DataRowView;
-            DataRow[] dr = dt.Select("PDH_NUM='" + rv.Row["PDH_NUM"].ToString() + "\'");
-            string PDT_MDL_STD = "";
             try
             {
+                DataRowView rv = obj.SelectedItem as DataRowView;
+                DataRow[] dr = dt.Select("PDH_NUM='" + rv.Row["PDH_NUM"].ToString() + "\'");
+                string PDT_MDL_STD = "";
                 PDT_MDL_STD = dr[0]["PDT_MDL_STD"].ToString();
+                grid.SetCellValue(gv.FocusedRowHandle, "PDT_MDL_STD", PDT_MDL_STD);
             }
             catch (Exception){}
 
-            grid.SetCellValue(gv.FocusedRowHandle, "PDT_MDL_STD", PDT_MDL_STD);
         }
 
 
@@ -189,10 +196,12 @@ namespace GTI.WFMS.Modules.Mntc.View
                         }
                         catch (Exception )
                         {
+                            InitModel();
                         }
                     }
 
                     Messages.ShowOkMsgBox();
+                    InitModel();
                 }
             }
             catch (Exception ex)
@@ -270,7 +279,7 @@ namespace GTI.WFMS.Modules.Mntc.View
             }
             //저장처리 성공
             Messages.ShowOkMsgBox();
-
+            InitModel();
         }
 
 
