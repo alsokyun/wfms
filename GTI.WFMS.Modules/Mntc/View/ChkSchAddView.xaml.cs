@@ -10,6 +10,7 @@ using System.ComponentModel;
 using System.Data;
 using System.Windows;
 using System.Windows.Controls.Primitives;
+using System.Windows.Data;
 using System.Windows.Input;
 
 namespace GTI.WFMS.Modules.Mntc.View
@@ -19,7 +20,6 @@ namespace GTI.WFMS.Modules.Mntc.View
     /// </summary>
     public partial class ChkSchAddView : Window
     {
-        private string SCL_NUM;
 
         /// <summary>
         /// 생성자
@@ -31,6 +31,13 @@ namespace GTI.WFMS.Modules.Mntc.View
             // 테마일괄적용...
             ThemeApply.Themeapply(this);
 
+
+            /* RichTextBox를 바인딩하기위한 부분 : 사용안함
+            Binding b = new Binding("Doc");
+            b.Source = richBox;
+            b.Mode = BindingMode.TwoWay;
+            BindingOperations.SetBinding(DataContext as ChkSchAddViewModel, ChkSchAddViewModel.DocProperty, b);
+            */
         }
 
 
