@@ -6,21 +6,16 @@ using GTI.WFMS.Modules.Mntc.View;
 using GTIFramework.Common.Log;
 using GTIFramework.Common.MessageBox;
 using System;
-using System.Collections;
-using System.Collections.Generic;
 using System.Data;
-using System.Linq;
-using System.Reflection;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Documents;
 
 namespace GTI.WFMS.Modules.Mntc.ViewModel
 {
 
 
-    public class ChkSchAddViewModel : ChscMaDtl
+    public class ChkSchAddViewModel : DependencyObject
     {
 
 
@@ -30,7 +25,26 @@ namespace GTI.WFMS.Modules.Mntc.ViewModel
         /// </summary>
         public DelegateCommand<object> LoadedCommand { get; set; }
         public DelegateCommand<object> SaveCommand { get; set; }
-        
+        public ChscMaDtl Dtl
+        {
+            get {return dtl; }
+            set {dtl = value; }
+        }
+
+        /* RichTextBox를 바인딩하기위한 부분 : 사용안함
+        public FlowDocument Doc
+        {
+            get {return (FlowDocument)GetValue(DocProperty); }
+            set {SetValue(DocProperty, value); }
+        }
+        public static readonly DependencyProperty DocProperty 
+            = DependencyProperty.Register("Doc", typeof(FlowDocument), typeof(ChkSchAddViewModel), new PropertyMetadata(OnDocumentChanged));
+        public static void OnDocumentChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        {
+            //throw new NotImplementedException();
+        }
+         */
+
 
         #endregion
 
@@ -42,8 +56,8 @@ namespace GTI.WFMS.Modules.Mntc.ViewModel
         
         Button btnSave;
         Button btnClose;
-        
 
+        private ChscMaDtl dtl;
         #endregion
 
 
@@ -53,6 +67,19 @@ namespace GTI.WFMS.Modules.Mntc.ViewModel
         /// </summary>
         public ChkSchAddViewModel()
         {
+            /* RichTextBox를 바인딩하기위한 부분 : 사용안함
+            FlowDocument d = new FlowDocument();
+            Paragraph paragraph = new Paragraph();
+            Run a = new Run();
+            a.Text = "ASDFASDFASDFASDFASDF";
+            paragraph.Inlines.Add(a);
+            d.Blocks.Add(paragraph);
+
+            Doc = d;
+            */
+
+            dtl = new ChscMaDtl();
+
             this.LoadedCommand = new DelegateCommand<object>(delegate (object obj) {
                 // 0.화면객체인스턴스화
                 if (obj == null) return;
@@ -88,11 +115,12 @@ namespace GTI.WFMS.Modules.Mntc.ViewModel
 
                 try
                 {
-                    BizUtil.Update2(this, "SaveChscMaDtl");
+                    this.Dtl.CHK_CTNT = new TextRange(chkSchAddView.richBox.Document.ContentStart, chkSchAddView.richBox.Document.ContentEnd).Text;
+                    BizUtil.Update2(this.Dtl, "SaveChscMaDtl");
                 }
-                catch (Exception )
+                catch (Exception ex)
                 {
-                    Messages.ShowErrMsgBox("저장 처리중 오류가 발생하였습니다.");
+                    Messages.ShowErrMsgBox("저장 처리중 오류가 발생하였습니다." + ex.Message);
                     return;
                 }
 
@@ -110,6 +138,13 @@ namespace GTI.WFMS.Modules.Mntc.ViewModel
 
 
         #region ============= 메소드정의 ================
+
+        public string GetContent(RichTextBox box)
+        {
+            TextRange range = new TextRange(box.Document.ContentStart, box.Document.ContentEnd);
+            return range.Text;
+        }
+
 
 
         /// <summary>
@@ -161,7 +196,8 @@ namespace GTI.WFMS.Modules.Mntc.ViewModel
         }
 
         #endregion
-
-
     }
+
+
+   
 }
