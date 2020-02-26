@@ -559,6 +559,8 @@
     <Resource Include="Resources\Navy\Images\Image\btn_s_reg.png" />
     <Resource Include="Resources\Navy\Images\Image\btn_s_reg_on.png" />
     <Resource Include="InfoFMS.ico" />
+    <Content Include="DLL\DevExpress.Xpf.Themes.GTIBlueTheme.v19.1.dll" />
+    <Content Include="DLL\DevExpress.Xpf.Themes.GTINavyTheme.v19.1.dll" />
     <Content Include="Styles\Fonts\malgun.ttf">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
