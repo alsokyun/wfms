@@ -119,6 +119,7 @@
     </Content>
     <Content Include="Mntc\Dao\Maps\MntcMap.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <SubType>Designer</SubType>
     </Content>
     <Content Include="Pipe\Dao\Maps\FireFacMap.xml">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
