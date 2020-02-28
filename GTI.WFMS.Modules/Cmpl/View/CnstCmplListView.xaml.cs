@@ -25,17 +25,20 @@ namespace GTI.WFMS.Modules.Cmpl.View
         //선택된 항목으로 페이지이동
         private void Grid_MouseDoubleClick(object sender, MouseButtonEventArgs e)
         {
-            string SEQ = "";
+            string WSER_SEQ = "";
 
             GridControl gc = sender as GridControl;
 
             try
             {
-                SEQ = ((DataRowView)gc.CurrentItem).Row["SEQ"].ToString();
+                WSER_SEQ = ((DataRowView)gc.CurrentItem).Row["WSER_SEQ"].ToString();
 
-                ///페이지이동 - 뷰생성자로 파라미터키 전달 
-                ///=> 뷰모델과바인딩된 객체값을 변경해서 뷰모델로 최종적으로 파라미터 전달
-                //NavigationService.Navigate(new FaqDtlView(SEQ));
+                CnstCmplDtlView view = new CnstCmplDtlView(WSER_SEQ);
+                if (view.ShowDialog() is bool)
+                {
+                    //재조회
+                    btnSearch.RaiseEvent(new RoutedEventArgs(Button.ClickEvent));
+                }
             }
             catch (Exception ex)
             {
@@ -48,7 +51,12 @@ namespace GTI.WFMS.Modules.Cmpl.View
         // 등록 팝업
         private void BtnAdd_Click(object sender, RoutedEventArgs e)
         {
-            //NavigationService.Navigate(new WtlPipeAddView());
+            CnstCmplAddView view = new CnstCmplAddView();
+            if (view.ShowDialog() is bool)
+            {
+                //재조회
+                btnSearch.RaiseEvent(new RoutedEventArgs(Button.ClickEvent));
+            }
         }
     }
 }

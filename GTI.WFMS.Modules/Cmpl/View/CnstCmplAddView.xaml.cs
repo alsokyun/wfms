@@ -5,30 +5,21 @@ using System.Windows.Input;
 namespace GTI.WFMS.Modules.Cmpl.View
 {
     /// <summary>
-    /// CnstCmplDtlView.xaml에 대한 상호 작용 논리
+    /// CnstCmplAddView.xaml에 대한 상호 작용 논리
     /// </summary>
-    public partial class CnstCmplDtlView : Window
+    public partial class CnstCmplAddView : Window
     {
-        private string _WSER_SEQ;
-
 
         /// <summary>
         /// 생성자
         /// </summary>
-        public CnstCmplDtlView(string WSER_SEQ)
+        public CnstCmplAddView()
         {
             InitializeComponent();
 
             // 테마일괄적용...
             ThemeApply.Themeapply(this);
 
-
-            //뷰모델로 키전달하기기위 뷰에서 UpdateTrigger 발생시킴
-            if (WSER_SEQ != null)
-            {
-                _WSER_SEQ = WSER_SEQ;
-                this.txtWSER_SEQ.Text = WSER_SEQ;
-            }
         }
 
 
@@ -43,7 +34,7 @@ namespace GTI.WFMS.Modules.Cmpl.View
         }
 
        
-        private void CnstCmplDtlView_KeyDown(object sender, KeyEventArgs e)
+        private void CnstCmplAddView_KeyDown(object sender, KeyEventArgs e)
         {
             if (e.Key == Key.Escape)
             {

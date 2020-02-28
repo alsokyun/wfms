@@ -185,6 +185,7 @@
     <Compile Include="Cmm\Model\LinkWttMetaHt.cs" />
     <Compile Include="Cmm\Model\LinkWtlLeakPs.cs" />
     <Compile Include="Cmm\Work\CmmWork.cs" />
+    <Compile Include="Cmpl\Model\WserDtl.cs" />
     <Compile Include="Cmpl\Model\LeakDtl.cs" />
     <Compile Include="Cnst\Model\CnstDtl.cs" />
     <Compile Include="Cnst\Model\WttChngDt.cs" />

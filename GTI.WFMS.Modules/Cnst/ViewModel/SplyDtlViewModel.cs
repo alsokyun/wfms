@@ -130,8 +130,6 @@ namespace GTI.WFMS.Modules.Cnst.ViewModel
             SplyDtl result = new SplyDtl();
             result = BizUtil.SelectObject(param) as SplyDtl;
 
-
-
             //결과를 뷰모델멤버로 매칭
             Type dbmodel = result.GetType();
             Type model = this.GetType();

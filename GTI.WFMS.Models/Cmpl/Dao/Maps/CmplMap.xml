@@ -10,10 +10,10 @@
 
       FROM WTT_WSER_MA A
       LEFT JOIN INFOUSER.CD_DTL_INFO C ON C.DTL_CD = A.APL_CDE AND C.MST_CD = '250056'
-      LEFT JOIN INFOUSER.CD_DTL_INFO C2 ON C2.DTL_CD = A.PRO_CDE AND C.MST_CD = '250050'
+      LEFT JOIN INFOUSER.CD_DTL_INFO C2 ON C2.DTL_CD = A.PRO_CDE AND C2.MST_CD = '250050'
       LEFT JOIN CMT_ADAR_MA H ON A.APL_HJD = H.HJD_CDE
-      , WTT_CONS_MA M
-      WHERE M.CNT_NUM = A.CNT_NUM
+      LEFT JOIN WTT_CONS_MA M ON M.CNT_NUM = A.CNT_NUM
+      WHERE 1=1
 
       <isNotEmpty prepend="AND" property="RCV_NUM">
         RCV_NUM = #RCV_NUM#
@@ -65,10 +65,10 @@
       , A.CNT_NUM
       FROM WTT_WSER_MA A
       LEFT JOIN INFOUSER.CD_DTL_INFO C ON C.DTL_CD = A.APL_CDE AND C.MST_CD = '250056'
-      LEFT JOIN INFOUSER.CD_DTL_INFO C2 ON C2.DTL_CD = A.PRO_CDE AND C.MST_CD = '250050'
+      LEFT JOIN INFOUSER.CD_DTL_INFO C2 ON C2.DTL_CD = A.PRO_CDE AND C2.MST_CD = '250050'
       LEFT JOIN CMT_ADAR_MA H ON A.APL_HJD = H.HJD_CDE
-      , WTT_CONS_MA M
-      WHERE M.CNT_NUM = A.CNT_NUM
+      LEFT JOIN WTT_CONS_MA M ON M.CNT_NUM = A.CNT_NUM
+      WHERE 1=1
 
       <isNotEmpty prepend="AND" property="RCV_NUM">
         RCV_NUM = #RCV_NUM#
@@ -103,7 +103,7 @@
     </select>
 
     <!--상수공사민원 상세-->
-    <select id="SelectWttWserMa" resultClass="Hashtable">
+    <select id="SelectWttWserMa" resultClass="GTI.WFMS.Models.Cmpl.Model.WserDtl">
       SELECT
       RCV_NUM
       , WSER_SEQ
@@ -159,6 +159,88 @@
       ORDER BY  A.FTR_CDE DESC , A.FTR_IDN DESC
     </select>
 
+
+
+    <!--상수공사 민원번호 중복체크-->
+    <select id ="SelectWserDup" parameterClass="Hashtable" resultClass ="Hashtable">
+      SELECT
+      A.RCV_NUM
+      FROM
+      WTT_WSER_MA A
+      WHERE 1 = 1
+      AND A.RCV_NUM = #RCV_NUM#
+    </select>
+
+    <!--상수공사 민원 수정-->
+    <update id="SaveCmplWserMa" >
+      MERGE INTO WTT_WSER_MA
+      USING DUAL ON (WSER_SEQ=#WSER_SEQ#)
+
+      WHEN MATCHED THEN
+      UPDATE
+      SET RCV_NUM=#RCV_NUM#
+      , RCV_YMD=#RCV_YMD#
+      , RCV_NAM=#RCV_NAM#
+      , APL_HJD=#APL_HJD#
+      , APL_ADR=#APL_ADR#
+      , APL_EXP=#APL_EXP#
+      , APL_CDE=#APL_CDE#
+      , APM_NAM=#APM_NAM#
+      , APM_ADR=#APM_ADR#
+      , APM_TEL=#APM_TEL#
+      , DUR_YMD=#DUR_YMD#
+      , PRO_CDE=#PRO_CDE#
+      , PRO_EXP=#PRO_EXP#
+      , PRO_YMD=#PRO_YMD#
+      , PRO_NAM=#PRO_NAM#
+      , CNT_NUM=#CNT_NUM#
+
+      WHEN NOT MATCHED THEN
+      INSERT
+      ( RCV_NUM
+      , WSER_SEQ
+      , RCV_YMD
+      , RCV_NAM
+      , APL_HJD
+      , APL_ADR
+      , APL_EXP
+      , APL_CDE
+      , APM_NAM
+      , APM_ADR
+      , APM_TEL
+      , DUR_YMD
+      , PRO_CDE
+      , PRO_EXP
+      , PRO_YMD
+      , PRO_NAM
+      , CNT_NUM)
+      VALUES ( #RCV_NUM#
+      , (SELECT NVL(MAX(WSER_SEQ+1),1) AS WSER_SEQ FROM WTT_WSER_MA)
+      , #RCV_YMD#
+      , #RCV_NAM#
+      , #APL_HJD#
+      , #APL_ADR#
+      , #APL_EXP#
+      , #APL_CDE#
+      , #APM_NAM#
+      , #APM_ADR#
+      , #APM_TEL#
+      , #DUR_YMD#
+      , #PRO_CDE#
+      , #PRO_EXP#
+      , #PRO_YMD#
+      , #PRO_NAM#
+      , #CNT_NUM# )
+
+
+    </update>
+
+    <!--상수공사 민원 삭제-->
+    <update id="DeleteWserMa" >
+      DELETE FROM WTT_WSER_MA
+      WHERE 1=1
+      AND WSER_SEQ=#WSER_SEQ#
+    </update>
 
   </statements>
   

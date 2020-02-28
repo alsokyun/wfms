@@ -122,7 +122,7 @@
         </Grid>
 
         <!--하단버튼-->
-        <StackPanel Grid.Row="2" Grid.Column="0" Orientation="Horizontal" VerticalAlignment="Bottom" HorizontalAlignment="Center" Margin="5 0 10 10">
+        <StackPanel Grid.Row="2" Grid.Column="0" Orientation="Horizontal" VerticalAlignment="Center" HorizontalAlignment="Center" >
             <Button x:Name="btnReset" Style="{DynamicResource ResourceKey=InitButton}">
                 <i:Interaction.Triggers>
                     <i:EventTrigger EventName="Click">
@@ -187,7 +187,7 @@
                     <dxe:TextEditSettings HorizontalContentAlignment="Center"/>
                 </dxg:GridColumn.EditSettings>
             </dxg:GridColumn>
-            <dxg:GridColumn Header="민원지행정동" Width="130" FieldName="APL_HJD_NAM" HorizontalHeaderContentAlignment="Center">
+            <dxg:GridColumn Header="민원지행정동" Width="100" FieldName="APL_HJD_NAM" HorizontalHeaderContentAlignment="Center">
                 <dxg:GridColumn.EditSettings>
                     <dxe:TextEditSettings HorizontalContentAlignment="Center"/>
                 </dxg:GridColumn.EditSettings>
@@ -202,7 +202,7 @@
                     <dxe:TextEditSettings HorizontalContentAlignment="Center" DisplayTextConverter="{StaticResource date3StrConverter}"/>
                 </dxg:GridColumn.EditSettings>
             </dxg:GridColumn>
-            <dxg:GridColumn Header="처리일자" Width="100" FieldName="PRD_YMD" HorizontalHeaderContentAlignment="Center">
+            <dxg:GridColumn Header="처리일자" Width="100" FieldName="PRO_YMD" HorizontalHeaderContentAlignment="Center">
                 <dxg:GridColumn.EditSettings>
                     <dxe:TextEditSettings HorizontalContentAlignment="Center" DisplayTextConverter="{StaticResource date3StrConverter}"/>
                 </dxg:GridColumn.EditSettings>
@@ -212,12 +212,17 @@
                     <dxe:TextEditSettings HorizontalContentAlignment="Center"/>
                 </dxg:GridColumn.EditSettings>
             </dxg:GridColumn>
-            <dxg:GridColumn Header="민원인연락처" Width="200*" FieldName="APM_TEL" HorizontalHeaderContentAlignment="Center">
+            <dxg:GridColumn Header="민원인연락처" Width="200" FieldName="APM_TEL" HorizontalHeaderContentAlignment="Center">
                 <dxg:GridColumn.EditSettings>
                     <dxe:TextEditSettings HorizontalContentAlignment="Center"/>
                 </dxg:GridColumn.EditSettings>
             </dxg:GridColumn>
-
+            <!--히든키-->
+            <dxg:GridColumn Header="일련번호" FieldName="WSER_SEQ" Visible="False" Tag="PrintN">
+                <dxg:GridColumn.EditSettings>
+                    <dxe:TextEditSettings />
+                </dxg:GridColumn.EditSettings>
+            </dxg:GridColumn>
         </dxg:GridControl>
 
 

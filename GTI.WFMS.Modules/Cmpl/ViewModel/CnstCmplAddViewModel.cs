@@ -19,7 +19,7 @@ namespace GTI.WFMS.Modules.Cmpl.ViewModel
 {
 
 
-    public class CnstCmplDtlViewModel : INotifyPropertyChanged 
+    public class CnstCmplAddViewModel : INotifyPropertyChanged
     {
 
         /// <summary>
@@ -43,12 +43,11 @@ namespace GTI.WFMS.Modules.Cmpl.ViewModel
         /// </summary>
         public DelegateCommand<object> LoadedCommand { get; set; }
         public DelegateCommand<object> SaveCommand { get; set; }
-        public DelegateCommand<object> DelCommand { get; set; }
-        
+        public DelegateCommand<object> DupCommand { get; set; }
 
         public WserDtl Dtl
         {
-            get {return dtl; }
+            get { return dtl; }
             set
             {
                 dtl = value;
@@ -62,15 +61,13 @@ namespace GTI.WFMS.Modules.Cmpl.ViewModel
 
 
         #region ==========  Member 정의 ==========
-        CnstCmplDtlView cnstCmplDtlView;
-        
+        CnstCmplAddView cnstCmplAddView;
+
         Button btnSave;
         Button btnClose;
+        Button btnDup;
 
-        private WserDtl dtl = new WserDtl(); //민원마스터
-        private DataTable dt = new DataTable(); //민원누수지점내역
-
-        string _WSER_SEQ;
+        private WserDtl dtl;
 
         #endregion
 
@@ -79,19 +76,21 @@ namespace GTI.WFMS.Modules.Cmpl.ViewModel
         /// <summary>
         /// 생성자
         /// </summary>
-        public CnstCmplDtlViewModel()
+        public CnstCmplAddViewModel()
         {
+
+            dtl = new WserDtl();
 
             this.LoadedCommand = new DelegateCommand<object>(delegate (object obj) {
                 // 0.화면객체인스턴스화
                 if (obj == null) return;
 
-                cnstCmplDtlView = obj as CnstCmplDtlView;
+                cnstCmplAddView = obj as CnstCmplAddView;
 
-                btnSave = cnstCmplDtlView.btnSave;
-                btnClose = cnstCmplDtlView.btnClose;
+                btnSave = cnstCmplAddView.btnSave;
+                btnClose = cnstCmplAddView.btnClose;
+                btnDup = cnstCmplAddView.btnDup;
 
-                _WSER_SEQ = cnstCmplDtlView.txtWSER_SEQ.Text;
 
                 //2.화면데이터객체 초기화
                 InitDataBinding();
@@ -100,8 +99,6 @@ namespace GTI.WFMS.Modules.Cmpl.ViewModel
                 //3.권한처리
                 permissionApply();
 
-                //4.초기조회
-                InitModel();
 
             });
 
@@ -109,47 +106,23 @@ namespace GTI.WFMS.Modules.Cmpl.ViewModel
             this.SaveCommand = new DelegateCommand<object>(delegate (object obj) {
 
                 // 필수체크 (Tag에 필수체크 표시한 EditBox, ComboBox 대상으로 수행)
-                if (!BizUtil.ValidReq(cnstCmplDtlView)) return;
+                if (!BizUtil.ValidReq(cnstCmplAddView)) return;
 
+                // 민원번호중복체크
+                if (btnDup.Content.Equals("체크"))
+                {
+                    Messages.ShowInfoMsgBox("민원번호 (중복)체크를 하세요.");
+                    return;
+                }
 
                 if (Messages.ShowYesNoMsgBox("저장하시겠습니까?") != MessageBoxResult.Yes) return;
 
                 try
                 {
                     //다큐먼트는 따로 처리
-                    this.Dtl.APL_EXP = new TextRange(cnstCmplDtlView.richAPL_EXP.Document.ContentStart, cnstCmplDtlView.richAPL_EXP.Document.ContentEnd).Text;
-                    this.Dtl.PRO_EXP = new TextRange(cnstCmplDtlView.richPRO_EXP.Document.ContentStart, cnstCmplDtlView.richPRO_EXP.Document.ContentEnd).Text;
+                    this.Dtl.APL_EXP = new TextRange(cnstCmplAddView.richAPL_EXP.Document.ContentStart, cnstCmplAddView.richAPL_EXP.Document.ContentEnd).Text;
+                    this.Dtl.PRO_EXP = new TextRange(cnstCmplAddView.richPRO_EXP.Document.ContentStart, cnstCmplAddView.richPRO_EXP.Document.ContentEnd).Text;
                     BizUtil.Update2(this.Dtl, "SaveCmplWserMa");
-                }
-                catch (Exception ex)
-                {
-                    Messages.ShowErrMsgBox("저장 처리중 오류가 발생하였습니다." + ex.Message);
-                    return;
-                }
-
-                Messages.ShowOkMsgBox();
-                InitModel();
-                //화면닫기
-                //btnClose.RaiseEvent(new RoutedEventArgs(Button.ClickEvent));
-
-            });
-
-
-            
-            //삭제
-            this.DelCommand = new DelegateCommand<object>(delegate (object obj) {
-
-                if (dt.Rows.Count > 0)
-                {
-                    Messages.ShowErrMsgBox("해당민원 누수지점 내역이 존재합니다.");
-                    return;
-                }
-
-                if (Messages.ShowYesNoMsgBox("민원을 삭제하시겠습니까?") != MessageBoxResult.Yes) return;
-
-                try
-                {
-                    BizUtil.Update2(this.Dtl, "DeleteWserMa");
                 }
                 catch (Exception ex)
                 {
@@ -163,6 +136,37 @@ namespace GTI.WFMS.Modules.Cmpl.ViewModel
 
             });
 
+
+            //입력항목 변경되면 중복버튼 복원
+            this.Dtl.DUP = "체크";
+            PropertyChanged += delegate (object sender, PropertyChangedEventArgs args) {
+                try
+                {
+                    btnDup.Content = "체크";
+                }
+                catch (Exception) { }
+            };
+
+            this.DupCommand = new DelegateCommand<object>(delegate (object obj) {
+                if (btnDup.Content.Equals("OK")) return;
+
+
+                Hashtable param = new Hashtable();
+                param.Add("sqlId", "SelectWserDup");
+                param.Add("RCV_NUM", this.Dtl.RCV_NUM);
+                DataTable dt = BizUtil.SelectList(param);
+                if (dt.Rows.Count > 1)
+                {
+                    Messages.ShowInfoMsgBox("민원번호가 중복되었습니다.");
+                }
+                else
+                {
+                    btnDup.Content = "OK";
+                }
+            });
+
+
+
         }
 
 
@@ -173,47 +177,6 @@ namespace GTI.WFMS.Modules.Cmpl.ViewModel
 
         #region ============= 메소드정의 ================
 
-        //초기모델조회
-        private void InitModel()
-        {
-            //1.상세마스터
-            Hashtable param = new Hashtable();
-            param.Add("sqlId", "SelectWttWserMa");
-            param.Add("WSER_SEQ", _WSER_SEQ);
-
-            WserDtl result = new WserDtl();
-            result = BizUtil.SelectObject(param) as WserDtl;
-            this.Dtl = result;
-
-            //다큐먼트는 따로 처리
-            Paragraph p = new Paragraph();
-            try
-            {
-                p.Inlines.Add(this.Dtl.APL_EXP.Trim());
-                cnstCmplDtlView.richAPL_EXP.Document.Blocks.Clear();
-                cnstCmplDtlView.richAPL_EXP.Document.Blocks.Add(p);
-            }
-            catch (Exception){}
-
-            p = new Paragraph();
-            try
-            {
-                p.Inlines.Add(this.Dtl.PRO_EXP.Trim());
-                cnstCmplDtlView.richPRO_EXP.Document.Blocks.Clear();
-                cnstCmplDtlView.richPRO_EXP.Document.Blocks.Add(p);
-            }
-            catch (Exception){}
-
-
-            //2.누수지점
-            param = new Hashtable();
-            param.Add("sqlId", "SelectCmplLeakList");
-            param.Add("RCV_NUM", this.Dtl.RCV_NUM);
-
-            dt = BizUtil.SelectList(param);
-
-            cnstCmplDtlView.grid.ItemsSource = dt;
-        }
 
 
 
@@ -225,12 +188,12 @@ namespace GTI.WFMS.Modules.Cmpl.ViewModel
             try
             {
                 //행정구역
-                BizUtil.SetCombo(cnstCmplDtlView.cbAPL_HJD, "Select_ADAR_LIST", "HJD_CDE", "HJD_NAM", true);
+                BizUtil.SetCombo(cnstCmplAddView.cbAPL_HJD, "Select_ADAR_LIST", "HJD_CDE", "HJD_NAM", true);
                 //민원구분
-                BizUtil.SetCmbCode(cnstCmplDtlView.cbAPL_CDE, "APL_CDE", true, "250056");
+                BizUtil.SetCmbCode(cnstCmplAddView.cbAPL_CDE, "APL_CDE", true, "250056");
                 //민원처리상태
-                BizUtil.SetCmbCode(cnstCmplDtlView.cbPRO_CDE, "PRO_CDE", true, "250050");
-                
+                BizUtil.SetCmbCode(cnstCmplAddView.cbPRO_CDE, "PRO_CDE", true, "250050");
+
             }
             catch (Exception ex)
             {
@@ -270,5 +233,5 @@ namespace GTI.WFMS.Modules.Cmpl.ViewModel
     }
 
 
-   
+
 }
