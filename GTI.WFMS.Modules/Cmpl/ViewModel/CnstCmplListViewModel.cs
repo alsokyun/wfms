@@ -11,16 +11,16 @@ using System.Data;
 using System.Windows;
 using System.ComponentModel;
 using System.Collections.ObjectModel;
-using GTI.WFMS.Modules.Cnst.View;
+using GTI.WFMS.Modules.Cmpl.View;
 using System.Windows.Threading;
 using DevExpress.Xpf.Core;
 using GTIFramework.Common.Utils.Converters;
 using System.Threading;
 using System.Collections.Generic;
 
-namespace GTI.WFMS.Modules.Cnst.ViewModel
+namespace GTI.WFMS.Modules.Cmpl.ViewModel
 {
-    public class SplyMngListViewModel : INotifyPropertyChanged
+    public class CnstCmplListViewModel : INotifyPropertyChanged
     {
 
         #region ==========  페이징관련 INotifyPropertyChanged  ==========
@@ -95,7 +95,6 @@ namespace GTI.WFMS.Modules.Cnst.ViewModel
         public DelegateCommand<object> ResetCommand { get; set; }
         public DelegateCommand<object> ExcelCmd { get; set; }
         
-        public DelegateCommand<object> btnCmd { get; set; }
         #endregion
 
 
@@ -106,14 +105,16 @@ namespace GTI.WFMS.Modules.Cnst.ViewModel
         DataTable dtresult = new DataTable(); //조회결과 데이터
 
 
-        SplyMngListView splyMngListView;
+        CnstCmplListView cnstCmplListView;
 
-        TextEdit txtCNT_NUM;
-        ComboBoxEdit cbHJD_CDE; 
-        DateEdit dtBEG_YMD_FROM;
-        DateEdit dtBEG_YMD_TO;
-        DateEdit dtFNS_YMD_FROM;
-        DateEdit dtFNS_YMD_TO;
+        ComboBoxEdit cbHJD_CDE;
+        ComboBoxEdit cbAPL_CDE; 
+        ComboBoxEdit cbPRO_CDE;
+        //TextEdit txtRCV_NUM;
+        //DateEdit dtRCV_YMD_FROM;
+        //DateEdit dtRCV_YMD_TO;
+        //DateEdit dtPRO_YMD_FROM;
+        //DateEdit dtPRO_YMD_TO;
 
         GridControl grid;
 
@@ -132,14 +133,12 @@ namespace GTI.WFMS.Modules.Cnst.ViewModel
         /// <summary>
         /// 생성자
         /// </summary>
-        public SplyMngListViewModel()
+        public CnstCmplListViewModel()
         {
 
             LoadedCommand = new DelegateCommand<object>(OnLoaded);
             SearchCommand = new DelegateCommand<object>(SearchAction);
             ResetCommand = new DelegateCommand<object>(ResetAction);
-            
-            btnCmd = new DelegateCommand<object>(btnMethod);
             ExcelCmd = new DelegateCommand<object>(ExcelDownAction);
 
 
@@ -182,26 +181,15 @@ namespace GTI.WFMS.Modules.Cnst.ViewModel
         private void OnLoaded(object obj)
         {
             if (obj == null) return;
-            var values = (object[])obj;
 
             //1. 화면객체 인스턴스
-            splyMngListView = values[0] as SplyMngListView;
+            cnstCmplListView = obj as CnstCmplListView;
 
-            txtCNT_NUM = splyMngListView.txtCNT_NUM;
-            cbHJD_CDE = splyMngListView.cbHJD_CDE;
-            txtCNT_NUM = splyMngListView.txtCNT_NUM;
-            dtBEG_YMD_FROM = splyMngListView.dtBEG_YMD_FROM;
-            dtBEG_YMD_TO = splyMngListView.dtBEG_YMD_TO;
-            dtBEG_YMD_FROM.DisplayFormatString = "yyyy-MM-dd";
-            dtBEG_YMD_TO.DisplayFormatString = "yyyy-MM-dd";
-            //dtBEG_YMD_FROM.EditValue = DateTime.Today.AddYears(-10);
-            //dtBEG_YMD_TO.EditValue = DateTime.Today;
-            dtFNS_YMD_FROM = splyMngListView.dtFNS_YMD_FROM;
-            dtFNS_YMD_TO = splyMngListView.dtFNS_YMD_TO;
-            dtFNS_YMD_FROM.DisplayFormatString = "yyyy-MM-dd";
-            dtFNS_YMD_TO.DisplayFormatString = "yyyy-MM-dd";
+            cbAPL_CDE = cnstCmplListView.cbAPL_CDE;
+            cbPRO_CDE = cnstCmplListView.cbPRO_CDE;
+            cbHJD_CDE = cnstCmplListView.cbHJD_CDE;
 
-            grid = splyMngListView.grid;
+            grid = cnstCmplListView.grid;
 
 
             //2.화면데이터객체 초기화
@@ -228,25 +216,20 @@ namespace GTI.WFMS.Modules.Cnst.ViewModel
                 //if (treeList.FocusedNode == null) return;
 
                 Hashtable conditions = new Hashtable();
-                conditions.Add("CNT_NUM", txtCNT_NUM.Text.Trim());
-                conditions.Add("HJD_CDE", cbHJD_CDE.EditValue.ToString().Trim());
-                try
-                {
-                    conditions.Add("BEG_YMD_FROM", dtBEG_YMD_FROM.EditValue == null ? null : Convert.ToDateTime(dtBEG_YMD_FROM.EditValue).ToString("yyyy-MM-dd"));
-                    conditions.Add("BEG_YMD_TO", dtBEG_YMD_TO.EditValue == null ? null : Convert.ToDateTime(dtBEG_YMD_TO.EditValue).ToString("yyyy-MM-dd"));
-                }
-                catch (Exception ) { }
-                try
-                {
-                    conditions.Add("FNS_YMD_FROM", dtFNS_YMD_FROM.EditValue == null ? null : Convert.ToDateTime(dtFNS_YMD_FROM.EditValue).ToString("yyyy-MM-dd"));
-                    conditions.Add("FNS_YMD_TO", dtFNS_YMD_TO.EditValue == null ? null : Convert.ToDateTime(dtFNS_YMD_TO.EditValue).ToString("yyyy-MM-dd"));
-                }
-                catch (Exception ) { }
+                conditions.Add("RCV_NUM", cnstCmplListView.txtRCV_NUM.Text.Trim());
+                conditions.Add("APL_HJD", cbHJD_CDE.EditValue.ToString().Trim());
+                conditions.Add("APL_CDE", cbAPL_CDE.EditValue.ToString().Trim());
+                conditions.Add("PRO_CDE", cbPRO_CDE.EditValue.ToString().Trim());
+                conditions.Add("RCV_YMD_FROM", cnstCmplListView.dtRCV_YMD_FROM.EditValue == null ? "" : Convert.ToDateTime(cnstCmplListView.dtRCV_YMD_FROM.EditValue).ToString("yyyyMMdd"));
+                conditions.Add("RCV_YMD_TO", cnstCmplListView.dtRCV_YMD_TO.EditValue == null ? "" : Convert.ToDateTime(cnstCmplListView.dtRCV_YMD_TO.EditValue).ToString("yyyyMMdd"));
+                conditions.Add("PRO_YMD_FROM", cnstCmplListView.dtPRO_YMD_FROM.EditValue == null ? "" : Convert.ToDateTime(cnstCmplListView.dtPRO_YMD_FROM.EditValue).ToString("yyyyMMdd"));
+                conditions.Add("PRO_YMD_TO", cnstCmplListView.dtPRO_YMD_TO.EditValue == null ? "" : Convert.ToDateTime(cnstCmplListView.dtPRO_YMD_TO.EditValue).ToString("yyyyMMdd"));
+
 
                 conditions.Add("firstIndex", 0);
                 conditions.Add("lastIndex", 1000);
 
-                conditions.Add("sqlId", "SelectWttSplyMaList");
+                conditions.Add("sqlId", "SelectCnstCmplList");
 
                 /*
                     조회후 페이징소스 업데이트
@@ -297,13 +280,14 @@ namespace GTI.WFMS.Modules.Cnst.ViewModel
         /// <param name="obj"></param>
         private void ResetAction(object obj)
         {
-            txtCNT_NUM.Text = "";
+            cbAPL_CDE.SelectedIndex = 0;
+            cbPRO_CDE.SelectedIndex = 0;
             cbHJD_CDE.SelectedIndex = 0;
-            dtBEG_YMD_FROM.EditValue = null;
-            dtBEG_YMD_TO.EditValue = null;
-            dtFNS_YMD_FROM.EditValue = null;
-            dtFNS_YMD_TO.EditValue = null;
-
+            cnstCmplListView.txtRCV_NUM.Text = "";
+            cnstCmplListView.dtRCV_YMD_FROM.EditValue = null;
+            cnstCmplListView.dtRCV_YMD_TO.EditValue = null;
+            cnstCmplListView.dtPRO_YMD_FROM.EditValue = null;
+            cnstCmplListView.dtPRO_YMD_TO.EditValue = null;
         }
 
         /// <summary>
@@ -317,25 +301,20 @@ namespace GTI.WFMS.Modules.Cnst.ViewModel
             {
                 /// 데이터조회
                 Hashtable conditions = new Hashtable();
-                conditions.Add("CNT_NUM", txtCNT_NUM.Text.Trim());
-                conditions.Add("HJD_CDE", cbHJD_CDE.EditValue.ToString().Trim());
-                try
-                {
-                    conditions.Add("BEG_YMD_FROM", dtBEG_YMD_FROM.EditValue == null ? null : Convert.ToDateTime(dtBEG_YMD_FROM.EditValue).ToString("yyyy-MM-dd"));
-                    conditions.Add("BEG_YMD_TO", dtBEG_YMD_TO.EditValue == null ? null : Convert.ToDateTime(dtBEG_YMD_TO.EditValue).ToString("yyyy-MM-dd"));
-                }
-                catch (Exception ) { }
-                try
-                {
-                    conditions.Add("FNS_YMD_FROM", dtFNS_YMD_FROM.EditValue == null ? null : Convert.ToDateTime(dtFNS_YMD_FROM.EditValue).ToString("yyyy-MM-dd"));
-                    conditions.Add("FNS_YMD_TO", dtFNS_YMD_TO.EditValue == null ? null : Convert.ToDateTime(dtFNS_YMD_TO.EditValue).ToString("yyyy-MM-dd"));
-                }
-                catch (Exception ) { }
+                conditions.Add("RCV_NUM", cnstCmplListView.txtRCV_NUM.Text.Trim());
+                conditions.Add("APL_HJD", cbHJD_CDE.EditValue.ToString().Trim());
+                conditions.Add("APL_CDE", cbAPL_CDE.EditValue.ToString().Trim());
+                conditions.Add("PRO_CDE", cbPRO_CDE.EditValue.ToString().Trim());
+                conditions.Add("RCV_YMD_FROM", cnstCmplListView.dtRCV_YMD_FROM.EditValue == null ? "" : Convert.ToDateTime(cnstCmplListView.dtRCV_YMD_FROM.EditValue).ToString("yyyyMMdd"));
+                conditions.Add("RCV_YMD_TO", cnstCmplListView.dtRCV_YMD_TO.EditValue == null ? "" : Convert.ToDateTime(cnstCmplListView.dtRCV_YMD_TO.EditValue).ToString("yyyyMMdd"));
+                conditions.Add("PRO_YMD_FROM", cnstCmplListView.dtPRO_YMD_FROM.EditValue == null ? "" : Convert.ToDateTime(cnstCmplListView.dtPRO_YMD_FROM.EditValue).ToString("yyyyMMdd"));
+                conditions.Add("PRO_YMD_TO", cnstCmplListView.dtPRO_YMD_TO.EditValue == null ? "" : Convert.ToDateTime(cnstCmplListView.dtPRO_YMD_TO.EditValue).ToString("yyyyMMdd"));
+
 
                 conditions.Add("page", 0);
                 conditions.Add("rows", 1000000);
 
-                conditions.Add("sqlId", "SelectWttSplyMaList");
+                conditions.Add("sqlId", "SelectCnstCmplList");
 
 
                 exceldt = BizUtil.SelectList(conditions);
@@ -362,7 +341,7 @@ namespace GTI.WFMS.Modules.Cnst.ViewModel
                 saveFileDialog.Title = "저장경로를 지정하세요.";
 
                 //초기 파일명 지정
-                saveFileDialog.FileName = DateTime.Now.ToString("yyyyMMdd") + "_" + "급수전대장.xlsx";
+                saveFileDialog.FileName = DateTime.Now.ToString("yyyyMMdd") + "_" + "FAQ목록.xlsx";
 
                 saveFileDialog.OverwritePrompt = true;
                 saveFileDialog.Filter = "Excel|*.xlsx";
@@ -387,10 +366,10 @@ namespace GTI.WFMS.Modules.Cnst.ViewModel
         {
             try
             {
-                splyMngListView.Dispatcher.Invoke(DispatcherPriority.ApplicationIdle,
+                cnstCmplListView.Dispatcher.Invoke(DispatcherPriority.ApplicationIdle,
                     new Action((delegate ()
                     {
-                        (splyMngListView.FindName("waitindicator") as WaitIndicator).DeferedVisibility = true;
+                        (cnstCmplListView.FindName("waitindicator") as WaitIndicator).DeferedVisibility = true;
                     })));
 
 
@@ -402,21 +381,21 @@ namespace GTI.WFMS.Modules.Cnst.ViewModel
 
                 //엑셀 유틸 호출
                 //ExcelUtil.ExcelTabulation(strFileName, strExcelFormPath, startPointXY, strSearchCondition, dtExceltTableData);
-                ExcelUtil.ExcelGrid(strExcelFormPath, strFileName, "급수전대장 목록", dtExceltTableData, tablePointXY, grid, true);
+                ExcelUtil.ExcelGrid(strExcelFormPath, strFileName, "FAQ목록", dtExceltTableData, tablePointXY, grid, true);
 
-                splyMngListView.Dispatcher.Invoke(DispatcherPriority.ApplicationIdle,
+                cnstCmplListView.Dispatcher.Invoke(DispatcherPriority.ApplicationIdle,
                    new Action((delegate ()
                    {
-                       (splyMngListView.FindName("waitindicator") as WaitIndicator).DeferedVisibility = false;
+                       (cnstCmplListView.FindName("waitindicator") as WaitIndicator).DeferedVisibility = false;
                        Messages.ShowInfoMsgBox("엑셀 다운로드가 완료되었습니다.");
                    })));
             }
             catch (Exception ex)
             {
-                splyMngListView.Dispatcher.Invoke(DispatcherPriority.ApplicationIdle,
+                cnstCmplListView.Dispatcher.Invoke(DispatcherPriority.ApplicationIdle,
                     new Action((delegate ()
                     {
-                        (splyMngListView.FindName("waitindicator") as WaitIndicator).DeferedVisibility = false;
+                        (cnstCmplListView.FindName("waitindicator") as WaitIndicator).DeferedVisibility = false;
                         Messages.ShowErrMsgBoxLog(ex);
                     })));
             }
@@ -436,6 +415,10 @@ namespace GTI.WFMS.Modules.Cnst.ViewModel
             try {
                 // cbHJD_CDE 행정동
                 BizUtil.SetCombo(cbHJD_CDE, "Select_ADAR_LIST", "HJD_CDE", "HJD_NAM", true);
+                // 민원구분
+                BizUtil.SetCmbCode(cbAPL_CDE, "APL_CDE", true, "250056");
+                // 처리상태
+                BizUtil.SetCmbCode(cbPRO_CDE, "PRO_CDE", true, "250050");
             }
             catch (Exception ex)
             {
@@ -476,105 +459,6 @@ namespace GTI.WFMS.Modules.Cnst.ViewModel
 
 
 
-
-        /// <summary>
-        /// SQL DataRow -> 모델클래스 생성기
-        /// </summary>
-        /// <param name="obj"></param>
-        private void btnMethod(object obj)
-        {
-
-
-            string name_space = "GTI.WFMS.Models.Cmpl.Model";
-            string class_name = "WserDtl";
-            
-            Hashtable param = new Hashtable();
-            param.Add("sqlId", "SelectWttWserMa");
-            param.Add("WSER_SEQ", 13);
-            
-            DataTable dt = BizUtil.SelectList(param);
-            DataRow dr = dt.Rows[0];
-
-            String sb = "";
-            sb += "namespace " + name_space + "\r\n";
-            sb += "{ " + "\r\n";
-            sb += " public class " + class_name + ": CmmDtl, INotifyPropertyChanged" + "\r\n";
-            sb += " { " + "\r\n";
-            sb += "     /// <summary>" + "\r\n";
-            sb += "     /// 인터페이스 구현부분" + "\r\n";
-            sb += "     /// </summary>" + "\r\n";
-            sb += "     public event PropertyChangedEventHandler PropertyChanged;" + "\r\n";
-            sb += "     protected void OnPropertyChanged(string propertyName)" + "\r\n";
-            sb += "         { " + "\r\n";
-            sb += "             if (PropertyChanged != null)" + "\r\n";
-            sb += "             { " + "\r\n";
-            sb += "                 PropertyChanged(this, new PropertyChangedEventArgs(propertyName));" + "\r\n";           
-            sb += "             } " + "\r\n";
-            sb += "         } " + "\r\n";
-
-            sb += "\r\n";
-            sb += "\r\n";
-            sb += "\r\n";
-
-            sb += "     /// <summary>" + "\r\n";
-            sb += "     /// 프로퍼티 부분" + "\r\n";
-            sb += "     /// </summary>" + "\r\n";
-            foreach (DataColumn col in dt.Columns)
-            {
-                string value = dr[col].ToString();
-
-                //type 결정
-                string type_name = "string";
-                if (col.ColumnName.Contains("_AMT") || col.ColumnName.Contains("_DIP") || col.ColumnName.Contains("_DIR"))
-                {
-                    type_name = "decimal";
-                }
-                else
-                {
-                    switch (dr[col].GetType().Name.ToLower())
-                    {
-                        case "string":
-                            type_name = "string";
-                            break;
-                        case "int":
-                            type_name = "int";
-                            break;
-                        case "decimal":
-                            type_name = "decimal";
-                            break;
-                        case "double":
-                            type_name = "double";
-                            break;
-                        default:
-                            break;
-                    }
-                }
-
-
-                sb += "     private " + type_name + " __" + col + ";" + "\r\n";
-                sb += "     public " + type_name + " " + col + "\r\n";
-                sb += "     { " + "\r\n";
-                sb += "         get { return __" + col + "; }" + "\r\n";
-                sb += "         set " + "\r\n";
-                sb += "         { " + "\r\n";
-                sb += "         this.__" + col + " = value;" + "\r\n";
-                sb += "         OnPropertyChanged(\"" + col + "\"); " + "\r\n";
-                sb += "         } " + "\r\n";
-                sb += "     } " + "\r\n";
-            }
-
-            sb += " } " + "\r\n";
-            sb += "} " + "\r\n";
-
-
-            Console.WriteLine("=========class string===========");
-            Console.Write(sb);
-            Console.WriteLine("=========class string===========");
-
-
-            MessageBox.Show("모델생성 -> Console 확인");
-
-        }
         #endregion
 
     }

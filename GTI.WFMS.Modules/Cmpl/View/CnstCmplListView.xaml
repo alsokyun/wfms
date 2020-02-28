@@ -1,4 +1,4 @@
-﻿<Page x:Class="GTI.WFMS.Modules.Cnst.View.SplyMngListView"
+﻿<Page x:Class="GTI.WFMS.Modules.Cmpl.View.CnstCmplListView"
         xmlns:dxe="http://schemas.devexpress.com/winfx/2008/xaml/editors"  
         xmlns:dxg="http://schemas.devexpress.com/winfx/2008/xaml/grid"  
         xmlns:dx="http://schemas.devexpress.com/winfx/2008/xaml/core"
@@ -11,24 +11,22 @@
         d:DesignHeight="585" d:DesignWidth="1100"
       
         xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
-        xmlns:ei="http://schemas.microsoft.com/expression/2010/interactions"
-        xmlns:vm="clr-namespace:GTI.WFMS.Modules.Cnst.ViewModel"
-        xmlns:cm="clr-namespace:GTIFramework.Common.Utils.Converters;assembly=GTIFramework"
+        xmlns:vm="clr-namespace:GTI.WFMS.Modules.Cmpl.ViewModel"
         xmlns:common="clr-namespace:GTI.WFMS.Models.Common;assembly=GTI.WFMS.Models"
-        x:Name="splyMngListView"
+        x:Name="cnstCmplListView"
 
       >
 
     <!--뷰모델연결처리
     -->
     <Page.DataContext>
-        <vm:SplyMngListViewModel></vm:SplyMngListViewModel>
+        <vm:CnstCmplListViewModel/>
     </Page.DataContext>
 
 
     <Page.Resources>
         <ResourceDictionary>
-            <cm:MultiValueConverter x:Key="multiValueConverter"/>
+            <common:Date3StrConverter x:Key="date3StrConverter"/>
         </ResourceDictionary>
     </Page.Resources>
 
@@ -55,12 +53,14 @@
 
         <Border Grid.Row="0" Grid.RowSpan="3" Grid.Column="1" Background="{DynamicResource TileCOLOR2Brush}" />
 
-        <Grid Grid.Row="1" Background="{DynamicResource PopupCOLOR3Brush}" Height="245" VerticalAlignment="Top" >
+        <Grid Grid.Row="1" Background="{DynamicResource PopupCOLOR3Brush}" Height="325" VerticalAlignment="Top" >
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="120"/>
                 <ColumnDefinition Width="*"/>
             </Grid.ColumnDefinitions>
             <Grid.RowDefinitions>
+                <RowDefinition Height="40" />
+                <RowDefinition Height="40" />
                 <RowDefinition Height="40" />
                 <RowDefinition Height="40" />
                 <RowDefinition Height="40" />
@@ -79,37 +79,45 @@
             <Border Grid.Row="2" Grid.Column="2" BorderThickness="0,0,0,1" BorderBrush="{DynamicResource PopCOLOR3Brush}" Margin="0,0,0,0"/>
             <Border Grid.Row="3" Grid.Column="0" BorderThickness="0,0,1,1" BorderBrush="{DynamicResource PopCOLOR3Brush}" Margin="0,0,0,0"/>
             <Border Grid.Row="3" Grid.Column="2" BorderThickness="0,0,0,1" BorderBrush="{DynamicResource PopCOLOR3Brush}" Margin="0,0,0,0"/>
-            <Border Grid.Row="4" Grid.Column="0" BorderThickness="0,0,1,1" BorderBrush="{DynamicResource PopCOLOR3Brush}" Margin="0,0,0,0"/>
-            <Border Grid.Row="4" Grid.Column="2" BorderThickness="0,0,0,1" BorderBrush="{DynamicResource PopCOLOR3Brush}" Margin="0,0,0,0"/>
-            <Border Grid.Row="5" Grid.Column="0" BorderThickness="0,0,1,1" BorderBrush="{DynamicResource PopCOLOR3Brush}" Margin="0,0,0,0"/>
-            <Border Grid.Row="5" Grid.Column="2" BorderThickness="0,0,0,1" BorderBrush="{DynamicResource PopCOLOR3Brush}" Margin="0,0,0,0"/>
 
             <!--라벨&입력창-->
 
-            <Label Grid.Row="0" Grid.Column="0" Content="공사번호" Style="{DynamicResource ResourceKey=HeadLabel}"/>
-            <dxe:TextEdit Grid.Row="0" Grid.Column="2" x:Name="txtCNT_NUM" Style="{DynamicResource ResourceKey=SrchTextEdit}"  HorizontalAlignment="Center" >
+            <Label Grid.Row="0" Grid.Column="0" Content="민원번호" Style="{DynamicResource ResourceKey=HeadLabel}"/>
+            <dxe:TextEdit Grid.Row="0" Grid.Column="1" x:Name="txtRCV_NUM" Style="{DynamicResource ResourceKey=SrchTextEdit}"  HorizontalAlignment="Center" >
                 <dxe:TextEdit.InputBindings>
-                    <KeyBinding Key="Enter" Command="{Binding SearchCommand}">
-                    </KeyBinding>
+                    <KeyBinding Key="Enter" Command="{Binding SearchCommand}"/>
                 </dxe:TextEdit.InputBindings>
             </dxe:TextEdit>
+
             <Label Grid.Row="1" Grid.Column="0" Content="행정동" Style="{DynamicResource ResourceKey=HeadLabel}"/>
-            <dxe:ComboBoxEdit Grid.Row="1" Grid.Column="2" x:Name="cbHJD_CDE" Style="{DynamicResource ResourceKey=SrchComboBox}" 
+            <dxe:ComboBoxEdit Grid.Row="1" Grid.Column="1" x:Name="cbHJD_CDE" Style="{DynamicResource ResourceKey=SrchComboBox}" 
                                 HorizontalAlignment="Center" />
 
-            <Label Grid.Row="2" Grid.Column="0" Content="착공일자[이상]" Style="{DynamicResource ResourceKey=HeadLabel}"/>
-            <dxe:DateEdit  Grid.Row="2" Grid.Column="2" Style="{DynamicResource ResourceKey=HeadDateEdit}" x:Name="dtBEG_YMD_FROM" >
-            </dxe:DateEdit>
+            <Label Grid.Row="2" Grid.Column="0" Content="민원구분" Style="{DynamicResource ResourceKey=HeadLabel}"/>
+            <dxe:ComboBoxEdit Grid.Row="2" Grid.Column="1" x:Name="cbAPL_CDE" Style="{DynamicResource ResourceKey=SrchComboBox}" 
+                                HorizontalAlignment="Center" />
 
-            <Label Grid.Row="3" Grid.Column="0" Content="착공일자[이하]" Style="{DynamicResource ResourceKey=HeadLabel}"/>
-            <dxe:DateEdit  Grid.Row="3" Grid.Column="2" Style="{DynamicResource ResourceKey=HeadDateEdit}" x:Name="dtBEG_YMD_TO" />
+            <Label Grid.Row="3" Grid.Column="0" Content="접수일자[이상]" Style="{DynamicResource ResourceKey=HeadLabel}"/>
+            <dxe:DateEdit  Grid.Row="3" Grid.Column="1" Style="{DynamicResource ResourceKey=HeadDateEdit}" 
+                           x:Name="dtRCV_YMD_FROM" />
 
-            <Label Grid.Row="4" Grid.Column="0" Content="준공일자[이상]" Style="{DynamicResource ResourceKey=HeadLabel}"/>
-            <dxe:DateEdit  Grid.Row="4" Grid.Column="2" Style="{DynamicResource ResourceKey=HeadDateEdit}" x:Name="dtFNS_YMD_FROM" >
-            </dxe:DateEdit>
+            <Label Grid.Row="4" Grid.Column="0" Content="접수일자[이하]" Style="{DynamicResource ResourceKey=HeadLabel}"/>
+            <dxe:DateEdit  Grid.Row="4" Grid.Column="1" Style="{DynamicResource ResourceKey=HeadDateEdit}" 
+                           x:Name="dtRCV_YMD_TO" />
 
-            <Label Grid.Row="5" Grid.Column="0" Content="준공일자[이하]" Style="{DynamicResource ResourceKey=HeadLabel}"/>
-            <dxe:DateEdit  Grid.Row="5" Grid.Column="2" Style="{DynamicResource ResourceKey=HeadDateEdit}" x:Name="dtFNS_YMD_TO" />
+            <Label Grid.Row="5" Grid.Column="0" Content="처리일자[이상]" Style="{DynamicResource ResourceKey=HeadLabel}"/>
+            <dxe:DateEdit  Grid.Row="5" Grid.Column="1" Style="{DynamicResource ResourceKey=HeadDateEdit}" 
+                           x:Name="dtPRO_YMD_FROM" NullValue=""/>
+
+            <Label Grid.Row="6" Grid.Column="0" Content="처리일자[이하]" Style="{DynamicResource ResourceKey=HeadLabel}"/>
+            <dxe:DateEdit  Grid.Row="6" Grid.Column="1" Style="{DynamicResource ResourceKey=HeadDateEdit}" 
+                           x:Name="dtPRO_YMD_TO" />
+
+            <Label Grid.Row="7" Grid.Column="0" Content="처리상태" Style="{DynamicResource ResourceKey=HeadLabel}"/>
+            <dxe:ComboBoxEdit Grid.Row="7" Grid.Column="1" x:Name="cbPRO_CDE" Style="{DynamicResource ResourceKey=SrchComboBox}" 
+                                HorizontalAlignment="Center" />
+
+
 
         </Grid>
 
@@ -118,16 +126,14 @@
             <Button x:Name="btnReset" Style="{DynamicResource ResourceKey=InitButton}">
                 <i:Interaction.Triggers>
                     <i:EventTrigger EventName="Click">
-                        <i:InvokeCommandAction Command="{Binding ResetCommand}">
-                        </i:InvokeCommandAction>
+                        <i:InvokeCommandAction Command="{Binding ResetCommand}"/>
                     </i:EventTrigger>
                 </i:Interaction.Triggers>
             </Button>
             <Button x:Name="btnSearch" Style="{DynamicResource ResourceKey=SearchButton}">
                 <i:Interaction.Triggers>
                     <i:EventTrigger EventName="Click">
-                        <i:InvokeCommandAction Command="{Binding SearchCommand}">
-                        </i:InvokeCommandAction>
+                        <i:InvokeCommandAction Command="{Binding SearchCommand}"/>
                     </i:EventTrigger>
                 </i:Interaction.Triggers>
             </Button>
@@ -176,37 +182,41 @@
             </dxg:GridControl.View>
 
 
-            <dxg:GridColumn Header="공사번호" Width="100" FieldName="CNT_NUM" HorizontalHeaderContentAlignment="Center">
+            <dxg:GridColumn Header="민원번호" Width="80" FieldName="RCV_NUM" HorizontalHeaderContentAlignment="Center">
                 <dxg:GridColumn.EditSettings>
                     <dxe:TextEditSettings HorizontalContentAlignment="Center"/>
                 </dxg:GridColumn.EditSettings>
             </dxg:GridColumn>
-            <dxg:GridColumn Header="행정동" Width="100" FieldName="HJD_NAM" HorizontalHeaderContentAlignment="Center">
-                <dxg:GridColumn.EditSettings>
-                    <dxe:TextEditSettings HorizontalContentAlignment="Left"/>
-                </dxg:GridColumn.EditSettings>
-            </dxg:GridColumn>
-            <dxg:GridColumn Header="시공자명" Width="100" FieldName="OPR_NAM" HorizontalHeaderContentAlignment="Center">
+            <dxg:GridColumn Header="민원지행정동" Width="130" FieldName="APL_HJD_NAM" HorizontalHeaderContentAlignment="Center">
                 <dxg:GridColumn.EditSettings>
                     <dxe:TextEditSettings HorizontalContentAlignment="Center"/>
                 </dxg:GridColumn.EditSettings>
             </dxg:GridColumn>
-            <dxg:GridColumn Header="설계총액" Width="100" FieldName="TOT_AMT" HorizontalHeaderContentAlignment="Center">
-                <dxg:GridColumn.EditSettings>
-                    <dxe:TextEditSettings HorizontalContentAlignment="Right"/>
-                </dxg:GridColumn.EditSettings>
-            </dxg:GridColumn>
-            <dxg:GridColumn Header="착수일자" Width="100" FieldName="BEG_YMD" HorizontalHeaderContentAlignment="Center">
+            <dxg:GridColumn Header="민원구분" Width="100" FieldName="APL_NAM" HorizontalHeaderContentAlignment="Center">
                 <dxg:GridColumn.EditSettings>
                     <dxe:TextEditSettings HorizontalContentAlignment="Center"/>
                 </dxg:GridColumn.EditSettings>
             </dxg:GridColumn>
-            <dxg:GridColumn Header="준공일자" Width="100" FieldName="FNS_YMD" HorizontalHeaderContentAlignment="Center">
+            <dxg:GridColumn Header="접수일자" Width="100" FieldName="RCV_YMD" HorizontalHeaderContentAlignment="Center">
+                <dxg:GridColumn.EditSettings>
+                    <dxe:TextEditSettings HorizontalContentAlignment="Center" DisplayTextConverter="{StaticResource date3StrConverter}"/>
+                </dxg:GridColumn.EditSettings>
+            </dxg:GridColumn>
+            <dxg:GridColumn Header="처리일자" Width="100" FieldName="PRD_YMD" HorizontalHeaderContentAlignment="Center">
+                <dxg:GridColumn.EditSettings>
+                    <dxe:TextEditSettings HorizontalContentAlignment="Center" DisplayTextConverter="{StaticResource date3StrConverter}"/>
+                </dxg:GridColumn.EditSettings>
+            </dxg:GridColumn>
+            <dxg:GridColumn Header="처리상태" Width="130" FieldName="PRO_NAM" HorizontalHeaderContentAlignment="Center">
                 <dxg:GridColumn.EditSettings>
                     <dxe:TextEditSettings HorizontalContentAlignment="Center"/>
                 </dxg:GridColumn.EditSettings>
             </dxg:GridColumn>
-
+            <dxg:GridColumn Header="민원인연락처" Width="200*" FieldName="APM_TEL" HorizontalHeaderContentAlignment="Center">
+                <dxg:GridColumn.EditSettings>
+                    <dxe:TextEditSettings HorizontalContentAlignment="Center"/>
+                </dxg:GridColumn.EditSettings>
+            </dxg:GridColumn>
 
         </dxg:GridControl>
 
@@ -221,11 +231,6 @@
             </i:Interaction.Behaviors>
         </dxe:DataPager>
 
-
-        <Button Grid.Row="2" Grid.Column="2" Content="VM생성" Command="{Binding btnCmd}" Visibility="Visible" 
-                Width="50" Height="30" HorizontalAlignment="Left">
-        </Button>
-
     </Grid>
     
 
@@ -234,13 +239,7 @@
     <!--뷰와 연결된 뷰모델로 Loaded 이벤트전파-->
     <i:Interaction.Triggers>
         <i:EventTrigger EventName="Loaded">
-            <i:InvokeCommandAction Command="{Binding LoadedCommand}">
-                <i:InvokeCommandAction.CommandParameter>
-                    <MultiBinding Converter="{StaticResource multiValueConverter}">
-                        <Binding ElementName="splyMngListView"/>
-                    </MultiBinding>
-                </i:InvokeCommandAction.CommandParameter>
-            </i:InvokeCommandAction>
+            <i:InvokeCommandAction Command="{Binding LoadedCommand}" CommandParameter="{Binding ElementName=cnstCmplListView}" />
         </i:EventTrigger>
     </i:Interaction.Triggers>
 

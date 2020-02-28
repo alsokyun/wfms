@@ -166,6 +166,14 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
+    <Page Include="Cmpl\View\CnstCmplDtlView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Cmpl\View\CnstCmplListView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
     <Page Include="Cnst\View\SplyMngListView.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -540,6 +548,14 @@
       <DependentUpon>UcUserMngView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Adm\ViewModel\UcUserMngViewModel.cs" />
+    <Compile Include="Cmpl\ViewModel\CnstCmplDtlViewModel.cs" />
+    <Compile Include="Cmpl\ViewModel\CnstCmplListViewModel.cs" />
+    <Compile Include="Cmpl\View\CnstCmplDtlView.xaml.cs">
+      <DependentUpon>CnstCmplDtlView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Cmpl\View\CnstCmplListView.xaml.cs">
+      <DependentUpon>CnstCmplListView.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Cnst\Report\CnstMngReport.cs">
       <SubType>Component</SubType>
     </Compile>
