@@ -35,7 +35,7 @@ namespace GTI.WFMS.Modules.Cnst.ViewModel
 
         #region ==========  Member 정의 ==========
         SplyDtlView splyDtlView;
-        ComboBoxEdit cbHJD_CDE; DataTable dtHJD_CDE = new DataTable();
+        ComboBoxEdit cbHJD_CDE; 
         Button btnBack;
         Button btnDelete;
         Button btnSave;
@@ -129,8 +129,6 @@ namespace GTI.WFMS.Modules.Cnst.ViewModel
 
             SplyDtl result = new SplyDtl();
             result = BizUtil.SelectObject(param) as SplyDtl;
-
-
 
             //결과를 뷰모델멤버로 매칭
             Type dbmodel = result.GetType();

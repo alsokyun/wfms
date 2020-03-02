@@ -109,7 +109,7 @@ namespace GTI.WFMS.Modules.Cnst.ViewModel
         SplyMngListView splyMngListView;
 
         TextEdit txtCNT_NUM;
-        ComboBoxEdit cbHJD_CDE; DataTable dtHJD_CDE = new DataTable();
+        ComboBoxEdit cbHJD_CDE; 
         DateEdit dtBEG_YMD_FROM;
         DateEdit dtBEG_YMD_TO;
         DateEdit dtFNS_YMD_FROM;
@@ -485,13 +485,12 @@ namespace GTI.WFMS.Modules.Cnst.ViewModel
         {
 
 
-            string name_space = "GTI.WFMS.Models.Cmm.Model";
-            string class_name = "FileMapDtl";
+            string name_space = "GTI.WFMS.Models.Cmpl.Model";
+            string class_name = "WserDtl";
             
             Hashtable param = new Hashtable();
-            param.Add("sqlId", "SelectFileMap");
-            param.Add("BIZ_ID", "SB20130009");
-            param.Add("FIL_SEQ", 114);
+            param.Add("sqlId", "SelectWttWserMa");
+            param.Add("WSER_SEQ", 13);
             
             DataTable dt = BizUtil.SelectList(param);
             DataRow dr = dt.Rows[0];

@@ -51,8 +51,8 @@ namespace GTI.WFMS.Modules.Mntc.ViewModel
 
         #region ==========  Member 정의 ==========
         ChkSchAddView chkSchAddView;
-        ComboBoxEdit cbMNG_CDE; DataTable dtMNG_CDE = new DataTable();
-        ComboBoxEdit cbSCL_CDE; DataTable dtSCL_CDE = new DataTable();
+        ComboBoxEdit cbMNG_CDE; 
+        ComboBoxEdit cbSCL_CDE; 
         
         Button btnSave;
         Button btnClose;
@@ -115,6 +115,7 @@ namespace GTI.WFMS.Modules.Mntc.ViewModel
 
                 try
                 {
+                    //다큐먼트는 따로 처리
                     this.Dtl.CHK_CTNT = new TextRange(chkSchAddView.richBox.Document.ContentStart, chkSchAddView.richBox.Document.ContentEnd).Text;
                     BizUtil.Update2(this.Dtl, "SaveChscMaDtl");
                 }

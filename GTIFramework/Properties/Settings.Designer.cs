@@ -25,7 +25,7 @@ namespace GTIFramework.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("172.16.0.4")]
+        [global::System.Configuration.DefaultSettingValueAttribute("211.105.28.40")]
         public string strIP {
             get {
                 return ((string)(this["strIP"]));
@@ -49,7 +49,7 @@ namespace GTIFramework.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("infouser")]
+        [global::System.Configuration.DefaultSettingValueAttribute("infofms")]
         public string strID {
             get {
                 return ((string)(this["strID"]));
@@ -61,7 +61,7 @@ namespace GTIFramework.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("infouser")]
+        [global::System.Configuration.DefaultSettingValueAttribute("infofms")]
         public string strPWD {
             get {
                 return ((string)(this["strPWD"]));

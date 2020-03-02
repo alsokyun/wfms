@@ -15,6 +15,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Documents;
 
 namespace GTI.WFMS.Modules.Mntc.ViewModel
 {
@@ -90,7 +91,11 @@ namespace GTI.WFMS.Modules.Mntc.ViewModel
                 ChscMaDtl result = new ChscMaDtl();
                 result = BizUtil.SelectObject(param) as ChscMaDtl;
 
-
+                //점검결과 다큐먼트 수동세팅
+                chkSchDtlView.richBox.Document.Blocks.Clear();
+                Paragraph paragraph = new Paragraph();
+                paragraph.Inlines.Add(result.CHK_CTNT.Trim());
+                chkSchDtlView.richBox.Document.Blocks.Add(paragraph);
 
                 //결과를 뷰모델멤버로 매칭
                 Type dbmodel = result.GetType();
@@ -132,6 +137,8 @@ namespace GTI.WFMS.Modules.Mntc.ViewModel
 
                 try
                 {
+                    //다큐먼트 별로로 세팅
+                    this.CHK_CTNT = new TextRange(chkSchDtlView.richBox.Document.ContentStart, chkSchDtlView.richBox.Document.ContentEnd).Text;
                     BizUtil.Update2(this, "SaveChscMaDtl");
                 }
                 catch (Exception )

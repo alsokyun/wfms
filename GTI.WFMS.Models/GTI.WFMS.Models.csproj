@@ -105,6 +105,10 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
       <SubType>Designer</SubType>
     </Content>
+    <Content Include="Cmpl\Dao\Maps\CmplMap.xml">
+      <SubType>Designer</SubType>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <Content Include="Cnst\Dao\Maps\CnstMap.xml">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
       <SubType>Designer</SubType>
@@ -181,6 +185,8 @@
     <Compile Include="Cmm\Model\LinkWttMetaHt.cs" />
     <Compile Include="Cmm\Model\LinkWtlLeakPs.cs" />
     <Compile Include="Cmm\Work\CmmWork.cs" />
+    <Compile Include="Cmpl\Model\WserDtl.cs" />
+    <Compile Include="Cmpl\Model\LeakDtl.cs" />
     <Compile Include="Cnst\Model\CnstDtl.cs" />
     <Compile Include="Cnst\Model\WttChngDt.cs" />
     <Compile Include="Cnst\Model\WttFlawDt.cs" />
@@ -227,17 +233,18 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <None Include="..\GTI.WFMS.Main\bin\Debug\DBConfig\ORACLEConfig.config">
-      <Link>DBConfig\ORACLEConfig.config</Link>
-    </None>
     <None Include="app.config" />
+    <None Include="DBConfig\ORACLEConfig.config">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
     <None Include="DBConfig\TIBEROConfig.config">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
     <WCFMetadata Include="Connected Services\" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

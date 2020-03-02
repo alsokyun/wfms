@@ -222,7 +222,7 @@
         </dxe:DataPager>
 
 
-        <Button Grid.Row="2" Grid.Column="2" Content="VM생성" Command="{Binding btnCmd}" Visibility="Collapsed" 
+        <Button Grid.Row="2" Grid.Column="2" Content="VM생성" Command="{Binding btnCmd}" Visibility="Visible" 
                 Width="50" Height="30" HorizontalAlignment="Left">
         </Button>
 

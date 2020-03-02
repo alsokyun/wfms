@@ -230,12 +230,8 @@ namespace GTI.WFMS.Modules.Cnst.ViewModel
                 conditions.Add("CNT_NUM", txtCNT_NUM.Text.Trim());
                 conditions.Add("CNT_NAM", txtCNT_NAM.Text.Trim());
                 //conditions.Add("FTR_IDN", FmsUtil.Trim(txtFTR_IDN.EditValue));
-                try
-                {
-                    conditions.Add("TCT_AMT_FROM", txtTCT_AMT_FROM.EditValue == null ? 0 : txtTCT_AMT_FROM.EditValue);
-                    conditions.Add("TCT_AMT_TO", txtTCT_AMT_TO.EditValue == null ? 0 : txtTCT_AMT_TO.EditValue);
-                }
-                catch (Exception ) { }
+                conditions.Add("TCT_AMT_FROM", txtTCT_AMT_FROM.EditValue);
+                conditions.Add("TCT_AMT_TO", txtTCT_AMT_TO.EditValue);
 
                 try
                 {
