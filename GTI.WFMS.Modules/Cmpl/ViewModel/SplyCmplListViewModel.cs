@@ -20,7 +20,7 @@ using System.Collections.Generic;
 
 namespace GTI.WFMS.Modules.Cmpl.ViewModel
 {
-    public class CnstCmplListViewModel : INotifyPropertyChanged
+    public class SplyCmplListViewModel : INotifyPropertyChanged
     {
 
         #region ==========  페이징관련 INotifyPropertyChanged  ==========
@@ -105,16 +105,11 @@ namespace GTI.WFMS.Modules.Cmpl.ViewModel
         DataTable dtresult = new DataTable(); //조회결과 데이터
 
 
-        CnstCmplListView cnstCmplListView;
+        SplyCmplListView splyCmplListView;
 
         ComboBoxEdit cbHJD_CDE;
         ComboBoxEdit cbAPL_CDE; 
         ComboBoxEdit cbPRO_CDE;
-        //TextEdit txtRCV_NUM;
-        //DateEdit dtRCV_YMD_FROM;
-        //DateEdit dtRCV_YMD_TO;
-        //DateEdit dtPRO_YMD_FROM;
-        //DateEdit dtPRO_YMD_TO;
 
         GridControl grid;
 
@@ -133,7 +128,7 @@ namespace GTI.WFMS.Modules.Cmpl.ViewModel
         /// <summary>
         /// 생성자
         /// </summary>
-        public CnstCmplListViewModel()
+        public SplyCmplListViewModel()
         {
 
             LoadedCommand = new DelegateCommand<object>(OnLoaded);
@@ -183,13 +178,13 @@ namespace GTI.WFMS.Modules.Cmpl.ViewModel
             if (obj == null) return;
 
             //1. 화면객체 인스턴스
-            cnstCmplListView = obj as CnstCmplListView;
+            splyCmplListView = obj as SplyCmplListView;
 
-            cbAPL_CDE = cnstCmplListView.cbAPL_CDE;
-            cbPRO_CDE = cnstCmplListView.cbPRO_CDE;
-            cbHJD_CDE = cnstCmplListView.cbHJD_CDE;
+            cbAPL_CDE = splyCmplListView.cbAPL_CDE;
+            cbPRO_CDE = splyCmplListView.cbPRO_CDE;
+            cbHJD_CDE = splyCmplListView.cbHJD_CDE;
 
-            grid = cnstCmplListView.grid;
+            grid = splyCmplListView.grid;
 
 
             //2.화면데이터객체 초기화
@@ -216,20 +211,20 @@ namespace GTI.WFMS.Modules.Cmpl.ViewModel
                 //if (treeList.FocusedNode == null) return;
 
                 Hashtable conditions = new Hashtable();
-                conditions.Add("RCV_NUM", cnstCmplListView.txtRCV_NUM.Text.Trim());
+                conditions.Add("RCV_NUM", splyCmplListView.txtRCV_NUM.Text.Trim());
                 conditions.Add("APL_HJD", cbHJD_CDE.EditValue.ToString().Trim());
                 conditions.Add("APL_CDE", cbAPL_CDE.EditValue.ToString().Trim());
                 conditions.Add("PRO_CDE", cbPRO_CDE.EditValue.ToString().Trim());
-                conditions.Add("RCV_YMD_FROM", cnstCmplListView.dtRCV_YMD_FROM.EditValue == null ? "" : Convert.ToDateTime(cnstCmplListView.dtRCV_YMD_FROM.EditValue).ToString("yyyyMMdd"));
-                conditions.Add("RCV_YMD_TO", cnstCmplListView.dtRCV_YMD_TO.EditValue == null ? "" : Convert.ToDateTime(cnstCmplListView.dtRCV_YMD_TO.EditValue).ToString("yyyyMMdd"));
-                conditions.Add("PRO_YMD_FROM", cnstCmplListView.dtPRO_YMD_FROM.EditValue == null ? "" : Convert.ToDateTime(cnstCmplListView.dtPRO_YMD_FROM.EditValue).ToString("yyyyMMdd"));
-                conditions.Add("PRO_YMD_TO", cnstCmplListView.dtPRO_YMD_TO.EditValue == null ? "" : Convert.ToDateTime(cnstCmplListView.dtPRO_YMD_TO.EditValue).ToString("yyyyMMdd"));
+                conditions.Add("RCV_YMD_FROM", splyCmplListView.dtRCV_YMD_FROM.EditValue == null ? "" : Convert.ToDateTime(splyCmplListView.dtRCV_YMD_FROM.EditValue).ToString("yyyyMMdd"));
+                conditions.Add("RCV_YMD_TO", splyCmplListView.dtRCV_YMD_TO.EditValue == null ? "" : Convert.ToDateTime(splyCmplListView.dtRCV_YMD_TO.EditValue).ToString("yyyyMMdd"));
+                conditions.Add("PRO_YMD_FROM", splyCmplListView.dtPRO_YMD_FROM.EditValue == null ? "" : Convert.ToDateTime(splyCmplListView.dtPRO_YMD_FROM.EditValue).ToString("yyyyMMdd"));
+                conditions.Add("PRO_YMD_TO", splyCmplListView.dtPRO_YMD_TO.EditValue == null ? "" : Convert.ToDateTime(splyCmplListView.dtPRO_YMD_TO.EditValue).ToString("yyyyMMdd"));
 
 
                 conditions.Add("firstIndex", 0);
                 conditions.Add("lastIndex", 1000);
 
-                conditions.Add("sqlId", "SelectCnstCmplList");
+                conditions.Add("sqlId", "SelectSplyCmplList");
 
                 /*
                     조회후 페이징소스 업데이트
@@ -283,11 +278,11 @@ namespace GTI.WFMS.Modules.Cmpl.ViewModel
             cbAPL_CDE.SelectedIndex = 0;
             cbPRO_CDE.SelectedIndex = 0;
             cbHJD_CDE.SelectedIndex = 0;
-            cnstCmplListView.txtRCV_NUM.Text = "";
-            cnstCmplListView.dtRCV_YMD_FROM.EditValue = null;
-            cnstCmplListView.dtRCV_YMD_TO.EditValue = null;
-            cnstCmplListView.dtPRO_YMD_FROM.EditValue = null;
-            cnstCmplListView.dtPRO_YMD_TO.EditValue = null;
+            splyCmplListView.txtRCV_NUM.Text = "";
+            splyCmplListView.dtRCV_YMD_FROM.EditValue = null;
+            splyCmplListView.dtRCV_YMD_TO.EditValue = null;
+            splyCmplListView.dtPRO_YMD_FROM.EditValue = null;
+            splyCmplListView.dtPRO_YMD_TO.EditValue = null;
         }
 
         /// <summary>
@@ -301,20 +296,20 @@ namespace GTI.WFMS.Modules.Cmpl.ViewModel
             {
                 /// 데이터조회
                 Hashtable conditions = new Hashtable();
-                conditions.Add("RCV_NUM", cnstCmplListView.txtRCV_NUM.Text.Trim());
+                conditions.Add("RCV_NUM", splyCmplListView.txtRCV_NUM.Text.Trim());
                 conditions.Add("APL_HJD", cbHJD_CDE.EditValue.ToString().Trim());
                 conditions.Add("APL_CDE", cbAPL_CDE.EditValue.ToString().Trim());
                 conditions.Add("PRO_CDE", cbPRO_CDE.EditValue.ToString().Trim());
-                conditions.Add("RCV_YMD_FROM", cnstCmplListView.dtRCV_YMD_FROM.EditValue == null ? "" : Convert.ToDateTime(cnstCmplListView.dtRCV_YMD_FROM.EditValue).ToString("yyyyMMdd"));
-                conditions.Add("RCV_YMD_TO", cnstCmplListView.dtRCV_YMD_TO.EditValue == null ? "" : Convert.ToDateTime(cnstCmplListView.dtRCV_YMD_TO.EditValue).ToString("yyyyMMdd"));
-                conditions.Add("PRO_YMD_FROM", cnstCmplListView.dtPRO_YMD_FROM.EditValue == null ? "" : Convert.ToDateTime(cnstCmplListView.dtPRO_YMD_FROM.EditValue).ToString("yyyyMMdd"));
-                conditions.Add("PRO_YMD_TO", cnstCmplListView.dtPRO_YMD_TO.EditValue == null ? "" : Convert.ToDateTime(cnstCmplListView.dtPRO_YMD_TO.EditValue).ToString("yyyyMMdd"));
+                conditions.Add("RCV_YMD_FROM", splyCmplListView.dtRCV_YMD_FROM.EditValue == null ? "" : Convert.ToDateTime(splyCmplListView.dtRCV_YMD_FROM.EditValue).ToString("yyyyMMdd"));
+                conditions.Add("RCV_YMD_TO", splyCmplListView.dtRCV_YMD_TO.EditValue == null ? "" : Convert.ToDateTime(splyCmplListView.dtRCV_YMD_TO.EditValue).ToString("yyyyMMdd"));
+                conditions.Add("PRO_YMD_FROM", splyCmplListView.dtPRO_YMD_FROM.EditValue == null ? "" : Convert.ToDateTime(splyCmplListView.dtPRO_YMD_FROM.EditValue).ToString("yyyyMMdd"));
+                conditions.Add("PRO_YMD_TO", splyCmplListView.dtPRO_YMD_TO.EditValue == null ? "" : Convert.ToDateTime(splyCmplListView.dtPRO_YMD_TO.EditValue).ToString("yyyyMMdd"));
 
 
                 conditions.Add("page", 0);
                 conditions.Add("rows", 1000000);
 
-                conditions.Add("sqlId", "SelectCnstCmplList");
+                conditions.Add("sqlId", "SelectSplyCmplList");
 
 
                 exceldt = BizUtil.SelectList(conditions);
@@ -341,7 +336,7 @@ namespace GTI.WFMS.Modules.Cmpl.ViewModel
                 saveFileDialog.Title = "저장경로를 지정하세요.";
 
                 //초기 파일명 지정
-                saveFileDialog.FileName = DateTime.Now.ToString("yyyyMMdd") + "_" + "상수공사 민원목록.xlsx";
+                saveFileDialog.FileName = DateTime.Now.ToString("yyyyMMdd") + "_" + "급수공사 민원목록.xlsx";
 
                 saveFileDialog.OverwritePrompt = true;
                 saveFileDialog.Filter = "Excel|*.xlsx";
@@ -366,10 +361,10 @@ namespace GTI.WFMS.Modules.Cmpl.ViewModel
         {
             try
             {
-                cnstCmplListView.Dispatcher.Invoke(DispatcherPriority.ApplicationIdle,
+                splyCmplListView.Dispatcher.Invoke(DispatcherPriority.ApplicationIdle,
                     new Action((delegate ()
                     {
-                        (cnstCmplListView.FindName("waitindicator") as WaitIndicator).DeferedVisibility = true;
+                        (splyCmplListView.FindName("waitindicator") as WaitIndicator).DeferedVisibility = true;
                     })));
 
 
@@ -381,21 +376,21 @@ namespace GTI.WFMS.Modules.Cmpl.ViewModel
 
                 //엑셀 유틸 호출
                 //ExcelUtil.ExcelTabulation(strFileName, strExcelFormPath, startPointXY, strSearchCondition, dtExceltTableData);
-                ExcelUtil.ExcelGrid(strExcelFormPath, strFileName, "상수공사 민원목록", dtExceltTableData, tablePointXY, grid, true);
+                ExcelUtil.ExcelGrid(strExcelFormPath, strFileName, "급수공사 민원목록", dtExceltTableData, tablePointXY, grid, true);
 
-                cnstCmplListView.Dispatcher.Invoke(DispatcherPriority.ApplicationIdle,
+                splyCmplListView.Dispatcher.Invoke(DispatcherPriority.ApplicationIdle,
                    new Action((delegate ()
                    {
-                       (cnstCmplListView.FindName("waitindicator") as WaitIndicator).DeferedVisibility = false;
+                       (splyCmplListView.FindName("waitindicator") as WaitIndicator).DeferedVisibility = false;
                        Messages.ShowInfoMsgBox("엑셀 다운로드가 완료되었습니다.");
                    })));
             }
             catch (Exception ex)
             {
-                cnstCmplListView.Dispatcher.Invoke(DispatcherPriority.ApplicationIdle,
+                splyCmplListView.Dispatcher.Invoke(DispatcherPriority.ApplicationIdle,
                     new Action((delegate ()
                     {
-                        (cnstCmplListView.FindName("waitindicator") as WaitIndicator).DeferedVisibility = false;
+                        (splyCmplListView.FindName("waitindicator") as WaitIndicator).DeferedVisibility = false;
                         Messages.ShowErrMsgBoxLog(ex);
                     })));
             }

@@ -12,7 +12,7 @@
       LEFT JOIN INFOUSER.CD_DTL_INFO C ON C.DTL_CD = A.APL_CDE AND C.MST_CD = '250056'
       LEFT JOIN INFOUSER.CD_DTL_INFO C2 ON C2.DTL_CD = A.PRO_CDE AND C2.MST_CD = '250050'
       LEFT JOIN CMT_ADAR_MA H ON A.APL_HJD = H.HJD_CDE
-      LEFT JOIN WTT_CONS_MA M ON M.CNT_NUM = A.CNT_NUM
+      INNER JOIN WTT_CONS_MA M ON M.CNT_NUM = A.CNT_NUM
       WHERE 1=1
 
       <isNotEmpty prepend="AND" property="RCV_NUM">
@@ -67,7 +67,7 @@
       LEFT JOIN INFOUSER.CD_DTL_INFO C ON C.DTL_CD = A.APL_CDE AND C.MST_CD = '250056'
       LEFT JOIN INFOUSER.CD_DTL_INFO C2 ON C2.DTL_CD = A.PRO_CDE AND C2.MST_CD = '250050'
       LEFT JOIN CMT_ADAR_MA H ON A.APL_HJD = H.HJD_CDE
-      LEFT JOIN WTT_CONS_MA M ON M.CNT_NUM = A.CNT_NUM
+      INNER JOIN WTT_CONS_MA M ON M.CNT_NUM = A.CNT_NUM
       WHERE 1=1
 
       <isNotEmpty prepend="AND" property="RCV_NUM">
@@ -171,7 +171,14 @@
       AND A.RCV_NUM = #RCV_NUM#
     </select>
 
-    <!--상수공사 민원 수정-->
+    <!--상수공사 민원번호 채번-->
+    <select id ="SelectRevNum" parameterClass="Hashtable" resultClass ="Hashtable">
+      SELECT TO_CHAR(SYSDATE,'YYYY') || NVL(MAX(WSER_SEQ),0) + 1 AS RCV_NUM
+      FROM WTT_WSER_MA
+    </select>
+
+
+      <!--상수공사 민원 수정-->
     <update id="SaveCmplWserMa" >
       MERGE INTO WTT_WSER_MA
       USING DUAL ON (WSER_SEQ=#WSER_SEQ#)
@@ -241,6 +248,110 @@
       WHERE 1=1
       AND WSER_SEQ=#WSER_SEQ#
     </update>
+
+
+
+
+    <!--상수공사민원목록-->
+    <select id ="SelectSplyCmplList" parameterClass="Hashtable" resultClass ="Hashtable">
+
+      WITH C AS (
+      SELECT COUNT(1) AS ROWCNT
+
+      FROM WTT_WSER_MA A
+      LEFT JOIN INFOUSER.CD_DTL_INFO C ON C.DTL_CD = A.APL_CDE AND C.MST_CD = '250056'
+      LEFT JOIN INFOUSER.CD_DTL_INFO C2 ON C2.DTL_CD = A.PRO_CDE AND C2.MST_CD = '250050'
+      LEFT JOIN CMT_ADAR_MA H ON A.APL_HJD = H.HJD_CDE
+      INNER JOIN WTT_SPLY_MA M ON M.CNT_NUM = A.CNT_NUM
+      WHERE 1=1
+
+      <isNotEmpty prepend="AND" property="RCV_NUM">
+        RCV_NUM = #RCV_NUM#
+      </isNotEmpty>
+      <isNotEmpty prepend="AND" property="APL_HJD">
+        APL_HJD = #APL_HJD#
+      </isNotEmpty>
+      <isNotEmpty prepend="AND" property="APL_CDE">
+        APL_CDE = #APL_CDE#
+      </isNotEmpty>
+      <isNotEmpty prepend="AND" property="RCV_YMD_FROM">
+        RCV_YMD <![CDATA[>=]]> #RCV_YMD_FROM#
+      </isNotEmpty>
+      <isNotEmpty prepend="AND" property="RCV_YMD_TO">
+        RCV_YMD <![CDATA[<=]]> #RCV_YMD_TO#
+      </isNotEmpty>
+      <isNotEmpty prepend="AND" property="PRO_YMD_FROM">
+        PRO_YMD <![CDATA[>=]]> #PRO_YMD_FROM#
+      </isNotEmpty>
+      <isNotEmpty prepend="AND" property="PRO_YMD_TO">
+        PRO_YMD <![CDATA[<=]]> #PRO_YMD_TO#
+      </isNotEmpty>
+      <isNotEmpty prepend="AND" property="PRO_CDE">
+        PRO_CDE = #PRO_CDE#
+      </isNotEmpty>
+
+      )
+
+
+      SELECT C.ROWCNT, X.*  FROM (
+
+      SELECT ROW_NUMBER() OVER( ORDER BY A.RCV_NUM DESC ) AS RN
+      , A.RCV_NUM
+      , A.WSER_SEQ
+      , A.RCV_YMD
+      , A.RCV_NAM
+      , A.APL_HJD, H.HJD_NAM AS APL_HJD_NAM
+      , A.APL_ADR
+      , A.APL_EXP
+      , A.APL_CDE, C.NM AS APL_NAM
+      , A.APM_NAM
+      , A.APM_ADR
+      , A.APM_TEL
+      , A.DUR_YMD
+      , A.PRO_CDE, C2.NM AS PRO_NAM
+      , A.PRO_EXP
+      , A.PRO_YMD
+      , A.PRO_NAM
+      , A.CNT_NUM
+      FROM WTT_WSER_MA A
+      LEFT JOIN INFOUSER.CD_DTL_INFO C ON C.DTL_CD = A.APL_CDE AND C.MST_CD = '250056'
+      LEFT JOIN INFOUSER.CD_DTL_INFO C2 ON C2.DTL_CD = A.PRO_CDE AND C2.MST_CD = '250050'
+      LEFT JOIN CMT_ADAR_MA H ON A.APL_HJD = H.HJD_CDE
+      INNER JOIN WTT_SPLY_MA M ON M.CNT_NUM = A.CNT_NUM
+      WHERE 1=1
+
+      <isNotEmpty prepend="AND" property="RCV_NUM">
+        RCV_NUM = #RCV_NUM#
+      </isNotEmpty>
+      <isNotEmpty prepend="AND" property="APL_HJD">
+        APL_HJD = #APL_HJD#
+      </isNotEmpty>
+      <isNotEmpty prepend="AND" property="APL_CDE">
+        APL_CDE = #APL_CDE#
+      </isNotEmpty>
+      <isNotEmpty prepend="AND" property="RCV_YMD_FROM">
+        RCV_YMD <![CDATA[>=]]> #RCV_YMD_FROM#
+      </isNotEmpty>
+      <isNotEmpty prepend="AND" property="RCV_YMD_TO">
+        RCV_YMD <![CDATA[<=]]> #RCV_YMD_TO#
+      </isNotEmpty>
+      <isNotEmpty prepend="AND" property="PRO_YMD_FROM">
+        PRO_YMD <![CDATA[>=]]> #PRO_YMD_FROM#
+      </isNotEmpty>
+      <isNotEmpty prepend="AND" property="PRO_YMD_TO">
+        PRO_YMD <![CDATA[<=]]> #PRO_YMD_TO#
+      </isNotEmpty>
+      <isNotEmpty prepend="AND" property="PRO_CDE">
+        PRO_CDE = #PRO_CDE#
+      </isNotEmpty>
+
+
+      ) X JOIN C ON 1=1
+      WHERE RN &lt;= ($page$+1) * $rows$
+      AND RN &gt;= ($page$) * $rows$ + 1
+
+    </select>
+
 
   </statements>
   

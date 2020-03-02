@@ -19,7 +19,7 @@ namespace GTI.WFMS.Modules.Cmpl.ViewModel
 {
 
 
-    public class CnstCmplAddViewModel : INotifyPropertyChanged
+    public class SplyCmplDtlViewModel : INotifyPropertyChanged 
     {
 
         /// <summary>
@@ -43,11 +43,12 @@ namespace GTI.WFMS.Modules.Cmpl.ViewModel
         /// </summary>
         public DelegateCommand<object> LoadedCommand { get; set; }
         public DelegateCommand<object> SaveCommand { get; set; }
-        public DelegateCommand<object> DupCommand { get; set; }
+        public DelegateCommand<object> DelCommand { get; set; }
+        
 
         public WserDtl Dtl
         {
-            get { return dtl; }
+            get {return dtl; }
             set
             {
                 dtl = value;
@@ -61,13 +62,14 @@ namespace GTI.WFMS.Modules.Cmpl.ViewModel
 
 
         #region ==========  Member 정의 ==========
-        CnstCmplAddView cnstCmplAddView;
-
+        SplyCmplDtlView splyCmplDtlView;
+        
         Button btnSave;
         Button btnClose;
-        Button btnDup;
 
-        private WserDtl dtl;
+        private WserDtl dtl = new WserDtl(); //민원마스터
+
+        string _WSER_SEQ;
 
         #endregion
 
@@ -76,21 +78,19 @@ namespace GTI.WFMS.Modules.Cmpl.ViewModel
         /// <summary>
         /// 생성자
         /// </summary>
-        public CnstCmplAddViewModel()
+        public SplyCmplDtlViewModel()
         {
-
-            dtl = new WserDtl();
 
             this.LoadedCommand = new DelegateCommand<object>(delegate (object obj) {
                 // 0.화면객체인스턴스화
                 if (obj == null) return;
 
-                cnstCmplAddView = obj as CnstCmplAddView;
+                splyCmplDtlView = obj as SplyCmplDtlView;
 
-                btnSave = cnstCmplAddView.btnSave;
-                btnClose = cnstCmplAddView.btnClose;
-                btnDup = cnstCmplAddView.btnDup;
+                btnSave = splyCmplDtlView.btnSave;
+                btnClose = splyCmplDtlView.btnClose;
 
+                _WSER_SEQ = splyCmplDtlView.txtWSER_SEQ.Text;
 
                 //2.화면데이터객체 초기화
                 InitDataBinding();
@@ -99,19 +99,8 @@ namespace GTI.WFMS.Modules.Cmpl.ViewModel
                 //3.권한처리
                 permissionApply();
 
-
-                //4.민원번호 채번
-                Hashtable param = new Hashtable();
-                param.Add("sqlId", "SelectRevNum");
-                DataTable  dt = BizUtil.SelectList(param);
-                string rcvNum = "";
-                try
-                {
-                    rcvNum = dt.Rows[0]["RCV_NUM"].ToString();
-                }
-                catch (Exception){}
-                this.Dtl.RCV_NUM = rcvNum;
-
+                //4.초기조회
+                InitModel();
 
             });
 
@@ -119,23 +108,41 @@ namespace GTI.WFMS.Modules.Cmpl.ViewModel
             this.SaveCommand = new DelegateCommand<object>(delegate (object obj) {
 
                 // 필수체크 (Tag에 필수체크 표시한 EditBox, ComboBox 대상으로 수행)
-                if (!BizUtil.ValidReq(cnstCmplAddView)) return;
+                if (!BizUtil.ValidReq(splyCmplDtlView)) return;
 
-                // 민원번호중복체크
-                if (btnDup.Content.Equals("체크"))
-                {
-                    Messages.ShowInfoMsgBox("민원번호 (중복)체크를 하세요.");
-                    return;
-                }
 
                 if (Messages.ShowYesNoMsgBox("저장하시겠습니까?") != MessageBoxResult.Yes) return;
 
                 try
                 {
                     //다큐먼트는 따로 처리
-                    this.Dtl.APL_EXP = new TextRange(cnstCmplAddView.richAPL_EXP.Document.ContentStart, cnstCmplAddView.richAPL_EXP.Document.ContentEnd).Text;
-                    this.Dtl.PRO_EXP = new TextRange(cnstCmplAddView.richPRO_EXP.Document.ContentStart, cnstCmplAddView.richPRO_EXP.Document.ContentEnd).Text;
+                    this.Dtl.APL_EXP = new TextRange(splyCmplDtlView.richAPL_EXP.Document.ContentStart, splyCmplDtlView.richAPL_EXP.Document.ContentEnd).Text;
+                    this.Dtl.PRO_EXP = new TextRange(splyCmplDtlView.richPRO_EXP.Document.ContentStart, splyCmplDtlView.richPRO_EXP.Document.ContentEnd).Text;
                     BizUtil.Update2(this.Dtl, "SaveCmplWserMa");
+                }
+                catch (Exception ex)
+                {
+                    Messages.ShowErrMsgBox("저장 처리중 오류가 발생하였습니다." + ex.Message);
+                    return;
+                }
+
+                Messages.ShowOkMsgBox();
+                InitModel();
+                //화면닫기
+                //btnClose.RaiseEvent(new RoutedEventArgs(Button.ClickEvent));
+
+            });
+
+
+            
+            //삭제
+            this.DelCommand = new DelegateCommand<object>(delegate (object obj) {
+
+                if (Messages.ShowYesNoMsgBox("민원을 삭제하시겠습니까?") != MessageBoxResult.Yes) return;
+
+                try
+                {
+                    BizUtil.Update2(this.Dtl, "DeleteWserMa");
                 }
                 catch (Exception ex)
                 {
@@ -149,37 +156,6 @@ namespace GTI.WFMS.Modules.Cmpl.ViewModel
 
             });
 
-
-            //입력항목 변경되면 중복버튼 복원
-            this.Dtl.DUP = "체크";
-            PropertyChanged += delegate (object sender, PropertyChangedEventArgs args) {
-                try
-                {
-                    btnDup.Content = "체크";
-                }
-                catch (Exception) { }
-            };
-
-            this.DupCommand = new DelegateCommand<object>(delegate (object obj) {
-                if (btnDup.Content.Equals("OK")) return;
-
-
-                Hashtable param = new Hashtable();
-                param.Add("sqlId", "SelectWserDup");
-                param.Add("RCV_NUM", this.Dtl.RCV_NUM);
-                DataTable dt = BizUtil.SelectList(param);
-                if (dt.Rows.Count > 1)
-                {
-                    Messages.ShowInfoMsgBox("민원번호가 중복되었습니다.");
-                }
-                else
-                {
-                    btnDup.Content = "OK";
-                }
-            });
-
-
-
         }
 
 
@@ -190,6 +166,39 @@ namespace GTI.WFMS.Modules.Cmpl.ViewModel
 
         #region ============= 메소드정의 ================
 
+        //초기모델조회
+        private void InitModel()
+        {
+            //1.상세마스터
+            Hashtable param = new Hashtable();
+            param.Add("sqlId", "SelectWttWserMa");
+            param.Add("WSER_SEQ", _WSER_SEQ);
+
+            WserDtl result = new WserDtl();
+            result = BizUtil.SelectObject(param) as WserDtl;
+            this.Dtl = result;
+
+            //다큐먼트는 따로 처리
+            Paragraph p = new Paragraph();
+            try
+            {
+                p.Inlines.Add(this.Dtl.APL_EXP.Trim());
+                splyCmplDtlView.richAPL_EXP.Document.Blocks.Clear();
+                splyCmplDtlView.richAPL_EXP.Document.Blocks.Add(p);
+            }
+            catch (Exception){}
+
+            p = new Paragraph();
+            try
+            {
+                p.Inlines.Add(this.Dtl.PRO_EXP.Trim());
+                splyCmplDtlView.richPRO_EXP.Document.Blocks.Clear();
+                splyCmplDtlView.richPRO_EXP.Document.Blocks.Add(p);
+            }
+            catch (Exception){}
+
+
+        }
 
 
 
@@ -201,12 +210,12 @@ namespace GTI.WFMS.Modules.Cmpl.ViewModel
             try
             {
                 //행정구역
-                BizUtil.SetCombo(cnstCmplAddView.cbAPL_HJD, "Select_ADAR_LIST", "HJD_CDE", "HJD_NAM", true);
+                BizUtil.SetCombo(splyCmplDtlView.cbAPL_HJD, "Select_ADAR_LIST", "HJD_CDE", "HJD_NAM", true);
                 //민원구분
-                BizUtil.SetCmbCode(cnstCmplAddView.cbAPL_CDE, "APL_CDE", true, "250056");
+                BizUtil.SetCmbCode(splyCmplDtlView.cbAPL_CDE, "APL_CDE", true, "250056");
                 //민원처리상태
-                BizUtil.SetCmbCode(cnstCmplAddView.cbPRO_CDE, "PRO_CDE", true, "250050");
-
+                BizUtil.SetCmbCode(splyCmplDtlView.cbPRO_CDE, "PRO_CDE", true, "250050");
+                
             }
             catch (Exception ex)
             {
@@ -246,5 +255,5 @@ namespace GTI.WFMS.Modules.Cmpl.ViewModel
     }
 
 
-
+   
 }

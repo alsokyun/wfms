@@ -1,4 +1,4 @@
-﻿<Page x:Class="GTI.WFMS.Modules.Cmpl.View.CnstCmplListView"
+﻿<Page x:Class="GTI.WFMS.Modules.Cmpl.View.SplyCmplListView"
         xmlns:dxe="http://schemas.devexpress.com/winfx/2008/xaml/editors"  
         xmlns:dxg="http://schemas.devexpress.com/winfx/2008/xaml/grid"  
         xmlns:dx="http://schemas.devexpress.com/winfx/2008/xaml/core"
@@ -13,14 +13,14 @@
         xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
         xmlns:vm="clr-namespace:GTI.WFMS.Modules.Cmpl.ViewModel"
         xmlns:common="clr-namespace:GTI.WFMS.Models.Common;assembly=GTI.WFMS.Models"
-        x:Name="cnstCmplListView"
+        x:Name="splyCmplListView"
 
       >
 
     <!--뷰모델연결처리
     -->
     <Page.DataContext>
-        <vm:CnstCmplListViewModel/>
+        <vm:SplyCmplListViewModel/>
     </Page.DataContext>
 
 
@@ -249,7 +249,7 @@
     <!--뷰와 연결된 뷰모델로 Loaded 이벤트전파-->
     <i:Interaction.Triggers>
         <i:EventTrigger EventName="Loaded">
-            <i:InvokeCommandAction Command="{Binding LoadedCommand}" CommandParameter="{Binding ElementName=cnstCmplListView}" />
+            <i:InvokeCommandAction Command="{Binding LoadedCommand}" CommandParameter="{Binding ElementName=splyCmplListView}" />
         </i:EventTrigger>
     </i:Interaction.Triggers>
 

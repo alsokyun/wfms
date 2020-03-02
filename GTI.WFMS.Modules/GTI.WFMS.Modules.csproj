@@ -166,11 +166,23 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
+    <Page Include="Cmpl\View\SplyCmplAddView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
     <Page Include="Cmpl\View\CnstCmplAddView.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
+    <Page Include="Cmpl\View\SplyCmplDtlView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
     <Page Include="Cmpl\View\CnstCmplDtlView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Cmpl\View\SplyCmplListView.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
@@ -552,14 +564,26 @@
       <DependentUpon>UcUserMngView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Adm\ViewModel\UcUserMngViewModel.cs" />
+    <Compile Include="Cmpl\ViewModel\SplyCmplAddViewModel.cs" />
     <Compile Include="Cmpl\ViewModel\CnstCmplAddViewModel.cs" />
+    <Compile Include="Cmpl\ViewModel\SplyCmplDtlViewModel.cs" />
     <Compile Include="Cmpl\ViewModel\CnstCmplDtlViewModel.cs" />
+    <Compile Include="Cmpl\ViewModel\SplyCmplListViewModel.cs" />
     <Compile Include="Cmpl\ViewModel\CnstCmplListViewModel.cs" />
+    <Compile Include="Cmpl\View\SplyCmplAddView.xaml.cs">
+      <DependentUpon>SplyCmplAddView.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Cmpl\View\CnstCmplAddView.xaml.cs">
       <DependentUpon>CnstCmplAddView.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Cmpl\View\SplyCmplDtlView.xaml.cs">
+      <DependentUpon>SplyCmplDtlView.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Cmpl\View\CnstCmplDtlView.xaml.cs">
       <DependentUpon>CnstCmplDtlView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Cmpl\View\SplyCmplListView.xaml.cs">
+      <DependentUpon>SplyCmplListView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Cmpl\View\CnstCmplListView.xaml.cs">
       <DependentUpon>CnstCmplListView.xaml</DependentUpon>

@@ -19,7 +19,7 @@ namespace GTI.WFMS.Modules.Cmpl.ViewModel
 {
 
 
-    public class CnstCmplAddViewModel : INotifyPropertyChanged
+    public class SplyCmplAddViewModel : INotifyPropertyChanged
     {
 
         /// <summary>
@@ -61,7 +61,7 @@ namespace GTI.WFMS.Modules.Cmpl.ViewModel
 
 
         #region ==========  Member 정의 ==========
-        CnstCmplAddView cnstCmplAddView;
+        SplyCmplAddView splyCmplAddView;
 
         Button btnSave;
         Button btnClose;
@@ -76,7 +76,7 @@ namespace GTI.WFMS.Modules.Cmpl.ViewModel
         /// <summary>
         /// 생성자
         /// </summary>
-        public CnstCmplAddViewModel()
+        public SplyCmplAddViewModel()
         {
 
             dtl = new WserDtl();
@@ -85,11 +85,11 @@ namespace GTI.WFMS.Modules.Cmpl.ViewModel
                 // 0.화면객체인스턴스화
                 if (obj == null) return;
 
-                cnstCmplAddView = obj as CnstCmplAddView;
+                splyCmplAddView = obj as SplyCmplAddView;
 
-                btnSave = cnstCmplAddView.btnSave;
-                btnClose = cnstCmplAddView.btnClose;
-                btnDup = cnstCmplAddView.btnDup;
+                btnSave = splyCmplAddView.btnSave;
+                btnClose = splyCmplAddView.btnClose;
+                btnDup = splyCmplAddView.btnDup;
 
 
                 //2.화면데이터객체 초기화
@@ -119,7 +119,7 @@ namespace GTI.WFMS.Modules.Cmpl.ViewModel
             this.SaveCommand = new DelegateCommand<object>(delegate (object obj) {
 
                 // 필수체크 (Tag에 필수체크 표시한 EditBox, ComboBox 대상으로 수행)
-                if (!BizUtil.ValidReq(cnstCmplAddView)) return;
+                if (!BizUtil.ValidReq(splyCmplAddView)) return;
 
                 // 민원번호중복체크
                 if (btnDup.Content.Equals("체크"))
@@ -133,8 +133,8 @@ namespace GTI.WFMS.Modules.Cmpl.ViewModel
                 try
                 {
                     //다큐먼트는 따로 처리
-                    this.Dtl.APL_EXP = new TextRange(cnstCmplAddView.richAPL_EXP.Document.ContentStart, cnstCmplAddView.richAPL_EXP.Document.ContentEnd).Text;
-                    this.Dtl.PRO_EXP = new TextRange(cnstCmplAddView.richPRO_EXP.Document.ContentStart, cnstCmplAddView.richPRO_EXP.Document.ContentEnd).Text;
+                    this.Dtl.APL_EXP = new TextRange(splyCmplAddView.richAPL_EXP.Document.ContentStart, splyCmplAddView.richAPL_EXP.Document.ContentEnd).Text;
+                    this.Dtl.PRO_EXP = new TextRange(splyCmplAddView.richPRO_EXP.Document.ContentStart, splyCmplAddView.richPRO_EXP.Document.ContentEnd).Text;
                     BizUtil.Update2(this.Dtl, "SaveCmplWserMa");
                 }
                 catch (Exception ex)
@@ -201,11 +201,11 @@ namespace GTI.WFMS.Modules.Cmpl.ViewModel
             try
             {
                 //행정구역
-                BizUtil.SetCombo(cnstCmplAddView.cbAPL_HJD, "Select_ADAR_LIST", "HJD_CDE", "HJD_NAM", true);
+                BizUtil.SetCombo(splyCmplAddView.cbAPL_HJD, "Select_ADAR_LIST", "HJD_CDE", "HJD_NAM", true);
                 //민원구분
-                BizUtil.SetCmbCode(cnstCmplAddView.cbAPL_CDE, "APL_CDE", true, "250056");
+                BizUtil.SetCmbCode(splyCmplAddView.cbAPL_CDE, "APL_CDE", true, "250056");
                 //민원처리상태
-                BizUtil.SetCmbCode(cnstCmplAddView.cbPRO_CDE, "PRO_CDE", true, "250050");
+                BizUtil.SetCmbCode(splyCmplAddView.cbPRO_CDE, "PRO_CDE", true, "250050");
 
             }
             catch (Exception ex)

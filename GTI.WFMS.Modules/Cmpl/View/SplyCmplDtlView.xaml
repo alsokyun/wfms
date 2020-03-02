@@ -1,5 +1,5 @@
 ﻿<Window xmlns:dxre="http://schemas.devexpress.com/winfx/2008/xaml/richedit"  
-        x:Class="GTI.WFMS.Modules.Cmpl.View.CnstCmplAddView"
+        x:Class="GTI.WFMS.Modules.Cmpl.View.SplyCmplDtlView"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
@@ -14,12 +14,12 @@
             xmlns:dxg="http://schemas.devexpress.com/winfx/2008/xaml/grid"
             xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
                
-            x:Name="cnstCmplAddView"
-            KeyDown="CnstCmplAddView_KeyDown"
+            x:Name="splyCmplDtlView"
+            KeyDown="SplyCmplDtlView_KeyDown"
         
            Style="{DynamicResource PopupWindow}" 
            WindowStyle="None"  
-           Width="1000" Height="380"
+           Width="1000" Height="385"
        >
 
     <Window.Resources>
@@ -29,7 +29,7 @@
     </Window.Resources>
 
     <Window.DataContext>
-        <vm:CnstCmplAddViewModel/>
+        <vm:SplyCmplDtlViewModel/>
     </Window.DataContext>
 
     <Grid >
@@ -37,13 +37,13 @@
             <RowDefinition Height="40"/>
 
             <RowDefinition Height="40"/>
-            <RowDefinition Height="290"/>
+            <RowDefinition Height="*"/>
 
 
         </Grid.RowDefinitions>
 
         <Grid Grid.Row="0" Background="{DynamicResource PopCOLOR2Brush}" PreviewMouseLeftButtonDown="Grid_PreviewMouseLeftButtonDown" >
-            <Label Content="상수공사 민원관리 등록" FontSize="17" FontWeight="Bold" Foreground="White" 
+            <Label Content="급수공사 민원관리" FontSize="17" FontWeight="Bold" Foreground="White" 
                    HorizontalAlignment="Left" VerticalAlignment="Center" Padding="10 0 0 0" />
         </Grid>
 
@@ -61,6 +61,7 @@
         </StackPanel>
 
         <StackPanel Grid.Row="1" Orientation="Horizontal" HorizontalAlignment="Right" Margin="0 0 10 0">
+            <Button x:Name="btnDel" Style="{DynamicResource ResourceKey=GrdDelButton}" Command="{Binding DelCommand}" />
             <Button x:Name="btnSave" Style="{DynamicResource ResourceKey=GrdRegButton}" Command="{Binding SaveCommand}" />
         </StackPanel>
 
@@ -138,11 +139,11 @@
 
 
             <Label Grid.Row="0" Grid.Column="0" Content="민원접수번호" Style="{DynamicResource ResourceKey=GridLabelReq}" />
-            <dxe:TextEdit Grid.Row="0" Grid.Column="1" Style="{DynamicResource ResourceKey=GrdTextEdit}" Tag="민원접수번호" Width="80" HorizontalAlignment="Left"
+            <dxe:TextEdit Grid.Row="0" Grid.Column="1" Style="{DynamicResource ResourceKey=GrdTextEdit}" Tag="민원접수번호" IsEnabled="False"
                           EditValue="{Binding Dtl.RCV_NUM, UpdateSourceTrigger=PropertyChanged}" 
                           x:Name="txtRCV_NUM" />
-            <Button Grid.Row="0" Grid.Column="1" HorizontalAlignment="Right" Width="Auto" Height="22" Padding="1" Margin="0 0 10 0"
-                    x:Name="btnDup" Command="{Binding DupCommand}" Content="체크" Style="{DynamicResource TxtButton}" FontWeight="Normal" />
+            <!--히든 키-->
+            <TextBlock x:Name="txtWSER_SEQ" Text="{Binding WSER_SEQ, UpdateSourceTrigger=PropertyChanged}" Visibility="Collapsed"/> 
             <Label Grid.Row="0" Grid.Column="2" Content="민원인성명" Style="{DynamicResource ResourceKey=GridLabelReq}" />
             <dxe:TextEdit Grid.Row="0" Grid.Column="3" Style="{DynamicResource ResourceKey=GrdTextEdit}" Tag="민원인성명" 
                           EditValue="{Binding Dtl.APM_NAM}" />
@@ -185,7 +186,7 @@
                           EditValue="{Binding Dtl.PRO_YMD, Converter={StaticResource date3StrConverter}}" />
             <Label Grid.Row="4" Grid.Column="4" Content="처리자명" Style="{DynamicResource ResourceKey=GridLabel}"  />
             <dxe:TextEdit Grid.Row="4" Grid.Column="5" Style="{DynamicResource ResourceKey=GrdTextEdit}" 
-                          EditValue="{Binding Dtl.PRO_NAM}" />
+                          EditValue="{Binding Dtl.RCV_NAM}" />
 
 
             <Label Grid.Row="5" Grid.Column="0" Content="민원내용" Style="{DynamicResource ResourceKey=GridLabel}" />
@@ -198,13 +199,14 @@
 
 
 
+
     </Grid>
 
 
     <!--뷰와 연결된 뷰모델로 Loaded 이벤트전파-->
     <i:Interaction.Triggers>
         <i:EventTrigger EventName="Loaded">
-            <i:InvokeCommandAction Command="{Binding LoadedCommand}" CommandParameter="{Binding ElementName=cnstCmplAddView}"/>
+            <i:InvokeCommandAction Command="{Binding LoadedCommand}" CommandParameter="{Binding ElementName=splyCmplDtlView}"/>
         </i:EventTrigger>
     </i:Interaction.Triggers>
 
