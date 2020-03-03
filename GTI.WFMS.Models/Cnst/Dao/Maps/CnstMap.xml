@@ -531,7 +531,8 @@
     <!-- 공사하도급 목록	 -->
     <select id ="SelectWttSubcDtList2" parameterClass="Hashtable" resultClass ="GTI.WFMS.Modules.Cnst.Model.WttSubcDt">
      SELECT ROWNUM AS RNO, M.*
-       FROM (  SELECT CNT_NUM
+       FROM (  SELECT NULL AS CHK
+                    , CNT_NUM
                     , SUBC_SEQ
                     , SUB_NUM
                     , SUB_NAM

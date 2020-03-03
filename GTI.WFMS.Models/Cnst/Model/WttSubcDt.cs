@@ -1,4 +1,5 @@
 ﻿using GTI.WFMS.Models.Cmm.Model;
+using System.Collections.ObjectModel;
 using System.ComponentModel;
 
 namespace GTI.WFMS.Modules.Cnst.Model
@@ -16,9 +17,7 @@ namespace GTI.WFMS.Modules.Cnst.Model
                 PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
             }
         }
-
-
-
+                
         /// <summary>
         /// 프로퍼티 부분
         /// </summary>

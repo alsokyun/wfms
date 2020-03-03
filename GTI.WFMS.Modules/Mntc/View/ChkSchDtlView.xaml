@@ -400,8 +400,8 @@
     </Grid>
 
 
-    
-    
+
+
 
     <!--뷰와 연결된 뷰모델로 Loaded 이벤트전파-->
     <i:Interaction.Triggers>
