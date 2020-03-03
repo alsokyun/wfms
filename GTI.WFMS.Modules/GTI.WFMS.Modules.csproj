@@ -166,6 +166,10 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
+    <Page Include="Cmpl\View\LekSiteAddView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
     <Page Include="Cmpl\View\LekSiteDtlView.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -295,6 +299,10 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Include="Link\View\AttFacListView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Pop\View\CnstCmplSelView.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
@@ -576,6 +584,7 @@
       <DependentUpon>UcUserMngView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Adm\ViewModel\UcUserMngViewModel.cs" />
+    <Compile Include="Cmpl\ViewModel\LekSiteAddViewModel.cs" />
     <Compile Include="Cmpl\ViewModel\LekSiteDtlViewModel.cs" />
     <Compile Include="Cmpl\ViewModel\LekSiteListViewModel.cs" />
     <Compile Include="Cmpl\ViewModel\SplyCmplAddViewModel.cs" />
@@ -584,6 +593,9 @@
     <Compile Include="Cmpl\ViewModel\CnstCmplDtlViewModel.cs" />
     <Compile Include="Cmpl\ViewModel\SplyCmplListViewModel.cs" />
     <Compile Include="Cmpl\ViewModel\CnstCmplListViewModel.cs" />
+    <Compile Include="Cmpl\View\LekSiteAddView.xaml.cs">
+      <DependentUpon>LekSiteAddView.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Cmpl\View\LekSiteDtlView.xaml.cs">
       <DependentUpon>LekSiteDtlView.xaml</DependentUpon>
     </Compile>
@@ -744,6 +756,10 @@
     </Compile>
     <Compile Include="Link\View\AttFacListView.xaml.cs">
       <DependentUpon>AttFacListView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Pop\ViewModel\CnstCmplSelViewModel.cs" />
+    <Compile Include="Pop\View\CnstCmplSelView.xaml.cs">
+      <DependentUpon>CnstCmplSelView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Pop\View\CnstMngPopView.xaml.cs">
       <DependentUpon>CnstMngPopView.xaml</DependentUpon>
