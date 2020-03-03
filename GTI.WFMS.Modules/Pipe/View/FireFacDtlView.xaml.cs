@@ -1,7 +1,11 @@
 ﻿using DevExpress.Xpf.Core;
+using DevExpress.Xpf.Grid;
 using GTI.WFMS.Modules.Link.View;
+using GTI.WFMS.Modules.Pop.View;
+using GTIFramework.Common.MessageBox;
 using GTIFramework.Common.Utils.ViewEffect;
 using System;
+using System.Data;
 using System.Threading;
 using System.Windows;
 using System.Windows.Controls;
@@ -40,11 +44,11 @@ namespace GTI.WFMS.Modules.Pipe.View
             //탭항목 동적추가
             waitindicator.DeferedVisibility = true;
             thread = new Thread(new ThreadStart(LoadFx));
-            thread.Start();           
+            thread.Start();
         }
 
         private void MakeChild(string FTR_CDE, int FTR_IDN)
-        {            
+        {
             //탭항목 동적추가
             tabSubMenu.Items.Clear();
 
@@ -64,7 +68,7 @@ namespace GTI.WFMS.Modules.Pipe.View
             tabSubMenu.Items.Add(tab03);
 
         }
-        
+
         /// <summary>
         /// 엑셀다운로드 쓰레드 Function
         /// </summary>
@@ -96,6 +100,38 @@ namespace GTI.WFMS.Modules.Pipe.View
         {
             NavigationService.Navigate(new FireFacListView());
         }
+        
+        private void BtnSel_Click(object sender, RoutedEventArgs e)
+        {
+            String inCNT_NUM = "";
+            String outCNT_NUM = "";
 
+            if (Messages.ShowYesNoMsgBox("공사번호를 변경하시겠습니까?") != MessageBoxResult.Yes) return;
+
+            try
+            {
+                inCNT_NUM = this.txtCNT_NUM.Text;
+
+                // 부속세부시설윈도우
+                CnstMngPopView cnstMngPopView = new CnstMngPopView(inCNT_NUM);
+                cnstMngPopView.Owner = Window.GetWindow(this);
+
+
+                //공사번호 리턴
+                if (cnstMngPopView.ShowDialog() is bool)
+                {
+                    outCNT_NUM = cnstMngPopView.txtRET_CNT_NAM.Text;
+                    if (outCNT_NUM != null && outCNT_NUM != "" && inCNT_NUM != outCNT_NUM)
+                    {
+                        this.txtCNT_NUM.Text = outCNT_NUM;
+                    }
+
+                }
+            }
+            catch (Exception ex)
+            {
+                Messages.ShowErrMsgBox(ex.ToString());
+            }
+        }
     }
 }

@@ -1726,6 +1726,34 @@
             </Trigger>
         </Style.Triggers>
     </Style>
+    <!--그리드추가 버튼 (이미지)-->
+    <Style TargetType="Button" x:Key="GrdAdd2Button">
+        <Setter Property="Width" Value="20"/>
+        <Setter Property="Height" Value="20"/>
+        <Setter Property="Margin" Value="5,0,0,0"/>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate>
+                    <Grid>
+                        <Image Source="/Resources/Navy/Images/Image/btn_xs_add.png"/>
+                    </Grid>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+        <Style.Triggers>
+            <Trigger Property="IsMouseOver" Value="True">
+                <Setter Property="Template">
+                    <Setter.Value>
+                        <ControlTemplate>
+                            <Grid>
+                                <Image Source="/Resources/Navy/Images/Image/btn_xs_add_on.png"/>
+                            </Grid>
+                        </ControlTemplate>
+                    </Setter.Value>
+                </Setter>
+            </Trigger>
+        </Style.Triggers>
+    </Style>
     <!--그리드삭제 버튼 (이미지)-->
     <Style TargetType="Button" x:Key="GrdDelButton">
         <Setter Property="Width" Value="52"/>

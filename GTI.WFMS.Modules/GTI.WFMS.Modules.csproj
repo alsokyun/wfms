@@ -290,6 +290,10 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
+    <Page Include="Pop\View\CnstMngPopView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
     <Page Include="Link\View\ImgFileMngView.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -725,6 +729,9 @@
     <Compile Include="Link\View\AttFacListView.xaml.cs">
       <DependentUpon>AttFacListView.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Pop\View\CnstMngPopView.xaml.cs">
+      <DependentUpon>CnstMngPopView.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Link\View\ImgFileMngView.xaml.cs">
       <DependentUpon>ImgFileMngView.xaml</DependentUpon>
     </Compile>
@@ -936,6 +943,7 @@
     <Compile Include="Pipe\View\WtsMnhoListView.xaml.cs">
       <DependentUpon>WtsMnhoListView.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Pop\ViewModel\CnstMngPopViewModel.cs" />
     <Compile Include="Pop\ViewModel\FilePhotoViewModel.cs" />
     <Compile Include="Pop\ViewModel\FilePopViewModel.cs" />
     <Compile Include="Pop\ViewModel\FileMngViewModel.cs" />
