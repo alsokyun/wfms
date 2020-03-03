@@ -1,13 +1,8 @@
-﻿using DevExpress.Xpf.Core;
-using DevExpress.Xpf.Grid;
-using GTI.WFMS.Modules.Main;
-using GTI.WFMS.Modules.Pop.ViewModel;
+﻿using DevExpress.Xpf.Grid;
 using GTIFramework.Common.Utils.ViewEffect;
 using System;
-using System.ComponentModel;
 using System.Data;
 using System.Windows;
-using System.Windows.Controls.Primitives;
 using System.Windows.Input;
 
 namespace GTI.WFMS.Modules.Pop.View

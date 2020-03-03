@@ -1,23 +1,28 @@
-﻿using DevExpress.Mvvm;
-using DevExpress.Xpf.Editors;
+﻿using DevExpress.Xpf.Editors;
 using DevExpress.Xpf.Grid;
 using GTI.WFMS.Models.Cmm.Work;
 using GTI.WFMS.Models.Common;
-using GTI.WFMS.Modules.Pop.View;
 using GTIFramework.Common.Log;
 using GTIFramework.Common.MessageBox;
+using Prism.Commands;
 using System;
 using System.Collections;
-using System.Collections.ObjectModel;
-using System.ComponentModel;
 using System.Data;
 using System.Windows;
+using System.ComponentModel;
+using System.Collections.ObjectModel;
+using GTI.WFMS.Modules.Pop.View;
+using System.Windows.Threading;
+using DevExpress.Xpf.Core;
+using GTIFramework.Common.Utils.Converters;
+using System.Threading;
+using System.Collections.Generic;
 using System.Windows.Controls;
 using System.Windows.Input;
 
 namespace GTI.WFMS.Modules.Pop.ViewModel
 {
-    public class FtrSelViewModel : INotifyPropertyChanged
+    public class CnstCmplSelViewModel : INotifyPropertyChanged
     {
 
         #region ==========  페이징관련 INotifyPropertyChanged  ==========
@@ -37,7 +42,7 @@ namespace GTI.WFMS.Modules.Pop.ViewModel
             {
                 if (value == pageIndex) return;
                 pageIndex = value;
-                RaisePropertyChanged("PageIndex");
+                OnPropertyChanged("PageIndex");
             }
         }
 
@@ -50,7 +55,7 @@ namespace GTI.WFMS.Modules.Pop.ViewModel
             {
                 if (value == itemCnt) return;
                 itemCnt = value;
-                RaisePropertyChanged("ItemCnt");
+                OnPropertyChanged("ItemCnt");
             }
         }
 
@@ -63,13 +68,13 @@ namespace GTI.WFMS.Modules.Pop.ViewModel
             {
                 if (value == totalCnt) return;
                 totalCnt = value;
-                RaisePropertyChanged("TotalCnt");
+                OnPropertyChanged("TotalCnt");
             }
         }
 
 
         // pageIndex가 변경될때 이벤트연동
-        protected void RaisePropertyChanged(string propertyName)
+        protected void OnPropertyChanged(string propertyName)
         {
             PropertyChangedEventHandler handler = PropertyChanged;
             if (handler != null)
@@ -87,12 +92,11 @@ namespace GTI.WFMS.Modules.Pop.ViewModel
         /// Loaded Event
         /// </summary>
         public DelegateCommand<object> LoadedCommand { get; set; }
+
         public DelegateCommand<object> SearchCommand { get; set; }
         public DelegateCommand<object> ResetCommand { get; set; }
         public DelegateCommand<object> SelCmd { get; set; }
         public DelegateCommand<object> WindowMoveCommand { get; set; }
-
-
 
         #endregion
 
@@ -104,22 +108,22 @@ namespace GTI.WFMS.Modules.Pop.ViewModel
         DataTable dtresult = new DataTable(); //조회결과 데이터
 
 
-        FtrSelView ftrSelView;
-        ComboBoxEdit cbHJD_CDE; 
-        ComboBoxEdit cbFTR_CDE; 
-        
-        TextEdit txtFTR_IDN;
-        TextEdit txtCNT_NUM;
-        TextEdit txtFTR_NAM;
-        TextEdit txtCNT_NAM;
+        CnstCmplSelView cnstCmplSelView;
 
-        TextBlock txtFTR_CDE;
-        TextBlock txtHJD_NAM;
-        
+        ComboBoxEdit cbHJD_CDE;
+        ComboBoxEdit cbAPL_CDE; 
+        ComboBoxEdit cbPRO_CDE;
+
         GridControl grid;
 
-        Button btnClose;
-
+        //엑셀다운로드 관련
+        System.Windows.Forms.SaveFileDialog saveFileDialog;
+        Thread thread;
+        string strFileName;
+        string strExcelFormPath = AppDomain.CurrentDomain.BaseDirectory + "/Resources/Excel/FmsBaseExcel.xlsx";
+        DataTable exceldt;
+        GridColumn[] columnList;
+        List<string> listCols;
         #endregion
 
 
@@ -127,14 +131,13 @@ namespace GTI.WFMS.Modules.Pop.ViewModel
         /// <summary>
         /// 생성자
         /// </summary>
-        public FtrSelViewModel()
+        public CnstCmplSelViewModel()
         {
 
             LoadedCommand = new DelegateCommand<object>(OnLoaded);
             SearchCommand = new DelegateCommand<object>(SearchAction);
             ResetCommand = new DelegateCommand<object>(ResetAction);
             SelCmd = new DelegateCommand<object>(SelAciton);
-
 
             // 윈도우 마우스드래그
             WindowMoveCommand = new DelegateCommand<object>(delegate (object objt)
@@ -143,14 +146,14 @@ namespace GTI.WFMS.Modules.Pop.ViewModel
                 {
                     if (Mouse.LeftButton == MouseButtonState.Pressed)
                     {
-                        if (ftrSelView.WindowState == WindowState.Maximized)
+                        if (cnstCmplSelView.WindowState == WindowState.Maximized)
                         {
-                            ftrSelView.Top = Mouse.GetPosition(ftrSelView).Y - System.Windows.Forms.Cursor.Position.Y - 6;
-                            ftrSelView.Left = System.Windows.Forms.Cursor.Position.X - Mouse.GetPosition(ftrSelView).X + 20;
+                            cnstCmplSelView.Top = Mouse.GetPosition(cnstCmplSelView).Y - System.Windows.Forms.Cursor.Position.Y - 6;
+                            cnstCmplSelView.Left = System.Windows.Forms.Cursor.Position.X - Mouse.GetPosition(cnstCmplSelView).X + 20;
 
-                            ftrSelView.WindowState = WindowState.Normal;
+                            cnstCmplSelView.WindowState = WindowState.Normal;
                         }
-                        ftrSelView.DragMove();
+                        cnstCmplSelView.DragMove();
                     }
                 }
                 catch (Exception ex)
@@ -162,6 +165,7 @@ namespace GTI.WFMS.Modules.Pop.ViewModel
 
             // 조회데이터 초기화
             this.PagedCollection = new ObservableCollection<DataTable>();
+
             // 프로퍼티변경이벤트 처리핸들러 등록
             PropertyChanged += delegate (object sender, PropertyChangedEventArgs e)
             {
@@ -198,24 +202,15 @@ namespace GTI.WFMS.Modules.Pop.ViewModel
         private void OnLoaded(object obj)
         {
             if (obj == null) return;
-            var values = (object[])obj;
 
             //1. 화면객체 인스턴스
-            ftrSelView = values[0] as FtrSelView;
+            cnstCmplSelView = obj as CnstCmplSelView;
 
-            cbHJD_CDE = ftrSelView.cbHJD_CDE;
-            cbFTR_CDE = ftrSelView.cbFTR_CDE;        
-            txtFTR_IDN = ftrSelView.txtFTR_IDN;
-            txtFTR_NAM = ftrSelView.txtFTR_NAM;
-            txtFTR_CDE = ftrSelView.txtFTR_CDE;
-            txtHJD_NAM = ftrSelView.txtHJD_NAM;
-            txtCNT_NAM = ftrSelView.txtCNT_NAM;
-            txtCNT_NUM = ftrSelView.txtCNT_NUM;
-            
+            cbAPL_CDE = cnstCmplSelView.cbAPL_CDE;
+            cbPRO_CDE = cnstCmplSelView.cbPRO_CDE;
+            cbHJD_CDE = cnstCmplSelView.cbHJD_CDE;
 
-            btnClose = ftrSelView.btnClose;
-            
-            grid = ftrSelView.grid;
+            grid = cnstCmplSelView.grid;
 
 
             //2.화면데이터객체 초기화
@@ -242,20 +237,26 @@ namespace GTI.WFMS.Modules.Pop.ViewModel
                 //if (treeList.FocusedNode == null) return;
 
                 Hashtable conditions = new Hashtable();
-                conditions.Add("HJD_CDE", cbHJD_CDE.EditValue.ToString().Trim());
-                conditions.Add("FTR_CDE", cbFTR_CDE.EditValue.ToString().Trim());                
-                conditions.Add("FTR_IDN", FmsUtil.Trim(txtFTR_IDN.EditValue));
-                conditions.Add("FTR_NAM", FmsUtil.Trim(txtFTR_NAM.EditValue));                
-                conditions.Add("CNT_NUM", txtCNT_NUM.Text.Trim());
-                conditions.Add("CNT_NAM", txtCNT_NAM.Text.Trim());
-                
-                conditions.Add("sqlId", "SelectFtrAllList");
+                conditions.Add("RCV_NUM", cnstCmplSelView.txtRCV_NUM.Text.Trim());
+                conditions.Add("APL_HJD", cbHJD_CDE.EditValue.ToString().Trim());
+                conditions.Add("APL_CDE", cbAPL_CDE.EditValue.ToString().Trim());
+                conditions.Add("PRO_CDE", cbPRO_CDE.EditValue.ToString().Trim());
+                conditions.Add("RCV_YMD_FROM", cnstCmplSelView.dtRCV_YMD_FROM.EditValue == null ? "" : Convert.ToDateTime(cnstCmplSelView.dtRCV_YMD_FROM.EditValue).ToString("yyyyMMdd"));
+                conditions.Add("RCV_YMD_TO", cnstCmplSelView.dtRCV_YMD_TO.EditValue == null ? "" : Convert.ToDateTime(cnstCmplSelView.dtRCV_YMD_TO.EditValue).ToString("yyyyMMdd"));
+                conditions.Add("PRO_YMD_FROM", cnstCmplSelView.dtPRO_YMD_FROM.EditValue == null ? "" : Convert.ToDateTime(cnstCmplSelView.dtPRO_YMD_FROM.EditValue).ToString("yyyyMMdd"));
+                conditions.Add("PRO_YMD_TO", cnstCmplSelView.dtPRO_YMD_TO.EditValue == null ? "" : Convert.ToDateTime(cnstCmplSelView.dtPRO_YMD_TO.EditValue).ToString("yyyyMMdd"));
+
+
+                conditions.Add("firstIndex", 0);
+                conditions.Add("lastIndex", 1000);
+
+                conditions.Add("sqlId", "SelectCnstCmplList");
 
                 /*
                     조회후 페이징소스 업데이트
                  */
                 int page_idx = 0;
-                //페이지버튼으로 조회
+                //페이징 버튼으로 조회
                 if (obj is int)
                 {
                     page_idx = (int)obj;
@@ -263,8 +264,9 @@ namespace GTI.WFMS.Modules.Pop.ViewModel
                 //조회버튼으로 조회는 버튼위치(PageIndex) 초기화
                 else
                 {
-                    PageIndex = -1;
+                    PageIndex = -1; 
                 }
+
                 BizUtil.SelectListPage(conditions, page_idx, delegate (DataTable dt) {
                     // TotalCnt 설정
                     try
@@ -278,8 +280,9 @@ namespace GTI.WFMS.Modules.Pop.ViewModel
                         this.ItemCnt = 0;
                     }
 
+                    //조회결과 매핑
                     this.PagedCollection.Clear();
-                    this.PagedCollection.Add(dt);
+                    this.PagedCollection.Add(dt); 
                 });
 
 
@@ -291,23 +294,24 @@ namespace GTI.WFMS.Modules.Pop.ViewModel
             }
         }
 
-
+        
         /// <summary>
         /// 초기화
         /// </summary>
         /// <param name="obj"></param>
         private void ResetAction(object obj)
         {
+            cbAPL_CDE.SelectedIndex = 0;
+            cbPRO_CDE.SelectedIndex = 0;
             cbHJD_CDE.SelectedIndex = 0;
-            cbFTR_CDE.SelectedIndex = 0;            
-            txtFTR_IDN.Text = "";
-            txtFTR_NAM.Text = "";
-            txtFTR_CDE.Text = "";
-            txtHJD_NAM.Text = "";
-            txtCNT_NUM.Text = "";
-            txtCNT_NAM.Text = "";
-            
+            cnstCmplSelView.txtRCV_NUM.Text = "";
+            cnstCmplSelView.dtRCV_YMD_FROM.EditValue = null;
+            cnstCmplSelView.dtRCV_YMD_TO.EditValue = null;
+            cnstCmplSelView.dtPRO_YMD_FROM.EditValue = null;
+            cnstCmplSelView.dtPRO_YMD_TO.EditValue = null;
         }
+
+
 
         /// <summary>
         /// 시설물선택 
@@ -323,19 +327,19 @@ namespace GTI.WFMS.Modules.Pop.ViewModel
                     cnt++;
                 }
             }
-            if (cnt<1)
+            if (cnt < 1)
             {
                 Messages.ShowInfoMsgBox("선택된 항목이 없습니다.");
                 return;
             }
             else if (cnt > 1)
             {
-                Messages.ShowInfoMsgBox("시설물을 하나만 선택하세요.");
+                Messages.ShowInfoMsgBox("민원항목을 하나만 선택하세요.");
                 return;
             }
 
 
-            for (int i=0; i< ((DataTable)grid.ItemsSource).Rows.Count; i++)
+            for (int i = 0; i < ((DataTable)grid.ItemsSource).Rows.Count; i++)
             {
                 Hashtable conditions = new Hashtable();
                 try
@@ -343,10 +347,7 @@ namespace GTI.WFMS.Modules.Pop.ViewModel
                     if ("Y".Equals(((DataTable)grid.ItemsSource).Rows[i]["CHK"]))
                     {
                         //선태한 시설물을 화면에 저장
-                        txtFTR_CDE.Text = ((DataTable)grid.ItemsSource).Rows[i]["FTR_CDE"].ToString();
-                        txtFTR_IDN.Text = ((DataTable)grid.ItemsSource).Rows[i]["FTR_IDN"].ToString();
-                        txtFTR_NAM.Text = ((DataTable)grid.ItemsSource).Rows[i]["FTR_NAM"].ToString();
-                        txtHJD_NAM.Text = ((DataTable)grid.ItemsSource).Rows[i]["HJD_NAM"].ToString();
+                        cnstCmplSelView.txbRCV_NUM.Text = ((DataTable)grid.ItemsSource).Rows[i]["RCV_NUM"].ToString();
                         break;
                     }
                 }
@@ -357,10 +358,8 @@ namespace GTI.WFMS.Modules.Pop.ViewModel
             }
 
             //화면닫기
-            btnClose.RaiseEvent(new RoutedEventArgs(Button.ClickEvent));
+            cnstCmplSelView.btnClose.RaiseEvent(new RoutedEventArgs(Button.ClickEvent));
         }
-
-
 
         #endregion
 
@@ -373,13 +372,13 @@ namespace GTI.WFMS.Modules.Pop.ViewModel
         /// </summary>
         private void InitDataBinding()
         {
-            try
-            {
+            try {
                 // cbHJD_CDE 행정동
                 BizUtil.SetCombo(cbHJD_CDE, "Select_ADAR_LIST", "HJD_CDE", "HJD_NAM", true);
-                // cbFTR_CDE 시설물구분
-                BizUtil.SetCombo(cbFTR_CDE, "Select_FTR_LIST", "FTR_CDE", "FTR_NAM", true);
-                
+                // 민원구분
+                BizUtil.SetCmbCode(cbAPL_CDE, "APL_CDE", true, "250056");
+                // 처리상태
+                BizUtil.SetCmbCode(cbPRO_CDE, "PRO_CDE", true, "250050");
             }
             catch (Exception ex)
             {
@@ -417,20 +416,10 @@ namespace GTI.WFMS.Modules.Pop.ViewModel
 
 
 
-        // 시설물 지도상 위치찾아가기
-        private void cellPosMethod(object obj)
-        {
-            string FTR_IDN = obj as string;
-            MessageBox.Show("지도상 위치찾아가기..FTR_IDN - " + FTR_IDN);
-        }
-
-
-
-
-
 
 
         #endregion
 
     }
+
 }

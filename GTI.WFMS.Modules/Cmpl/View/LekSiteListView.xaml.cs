@@ -54,7 +54,7 @@ namespace GTI.WFMS.Modules.Cmpl.View
         // 등록 팝업
         private void BtnAdd_Click(object sender, RoutedEventArgs e)
         {
-            CnstCmplAddView view = new CnstCmplAddView();
+            LekSiteAddView view = new LekSiteAddView();
             if (view.ShowDialog() is bool)
             {
                 //재조회

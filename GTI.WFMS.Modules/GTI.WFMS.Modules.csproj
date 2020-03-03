@@ -166,6 +166,10 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
+    <Page Include="Cmpl\View\LekSiteAddView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
     <Page Include="Cmpl\View\LekSiteDtlView.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -478,6 +482,10 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
+    <Page Include="Pop\View\CnstCmplSelView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
     <Page Include="Pop\View\FilePhotoView.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -572,6 +580,7 @@
       <DependentUpon>UcUserMngView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Adm\ViewModel\UcUserMngViewModel.cs" />
+    <Compile Include="Cmpl\ViewModel\LekSiteAddViewModel.cs" />
     <Compile Include="Cmpl\ViewModel\LekSiteDtlViewModel.cs" />
     <Compile Include="Cmpl\ViewModel\LekSiteListViewModel.cs" />
     <Compile Include="Cmpl\ViewModel\SplyCmplAddViewModel.cs" />
@@ -580,6 +589,9 @@
     <Compile Include="Cmpl\ViewModel\CnstCmplDtlViewModel.cs" />
     <Compile Include="Cmpl\ViewModel\SplyCmplListViewModel.cs" />
     <Compile Include="Cmpl\ViewModel\CnstCmplListViewModel.cs" />
+    <Compile Include="Cmpl\View\LekSiteAddView.xaml.cs">
+      <DependentUpon>LekSiteAddView.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Cmpl\View\LekSiteDtlView.xaml.cs">
       <DependentUpon>LekSiteDtlView.xaml</DependentUpon>
     </Compile>
@@ -952,6 +964,7 @@
     <Compile Include="Pipe\View\WtsMnhoListView.xaml.cs">
       <DependentUpon>WtsMnhoListView.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Pop\ViewModel\CnstCmplSelViewModel.cs" />
     <Compile Include="Pop\ViewModel\FilePhotoViewModel.cs" />
     <Compile Include="Pop\ViewModel\FilePopViewModel.cs" />
     <Compile Include="Pop\ViewModel\FileMngViewModel.cs" />
@@ -959,6 +972,9 @@
     <Compile Include="Pop\ViewModel\FtrSelViewModel.cs" />
     <Compile Include="Pop\View\AttFacDtlView.xaml.cs">
       <DependentUpon>AttFacDtlView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Pop\View\CnstCmplSelView.xaml.cs">
+      <DependentUpon>CnstCmplSelView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Pop\View\FilePhotoView.xaml.cs">
       <DependentUpon>FilePhotoView.xaml</DependentUpon>
