@@ -122,6 +122,17 @@ namespace GTI.WFMS.Models.Cmpl.Model
                 OnPropertyChanged("PIP_CDE");
             }
         }
+        private string __PIP_NAM;
+        public string PIP_NAM
+        {
+            get { return __PIP_NAM; }
+            set
+            {
+                this.__PIP_NAM = value;
+                OnPropertyChanged("PIP_NAM");
+            }
+        }
+
         private decimal __PIP_IDN;
         public decimal PIP_IDN
         {
