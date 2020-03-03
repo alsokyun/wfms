@@ -233,7 +233,7 @@
 
     
 
-    <!-- BizId 첨부파일 목록	 -->
+    <!-- BizId 첨부파일 목록 (사진 111, 파일 112) -->
     <select id="SelectBizIdFileDtl"  resultClass="Hashtable">
       SELECT B.SEQ
       , A.FIL_SEQ

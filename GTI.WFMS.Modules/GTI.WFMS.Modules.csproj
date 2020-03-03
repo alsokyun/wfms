@@ -166,6 +166,14 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
+    <Page Include="Cmpl\View\LekSiteDtlView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Cmpl\View\LekSiteListView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
     <Page Include="Cmpl\View\SplyCmplAddView.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -564,12 +572,20 @@
       <DependentUpon>UcUserMngView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Adm\ViewModel\UcUserMngViewModel.cs" />
+    <Compile Include="Cmpl\ViewModel\LekSiteDtlViewModel.cs" />
+    <Compile Include="Cmpl\ViewModel\LekSiteListViewModel.cs" />
     <Compile Include="Cmpl\ViewModel\SplyCmplAddViewModel.cs" />
     <Compile Include="Cmpl\ViewModel\CnstCmplAddViewModel.cs" />
     <Compile Include="Cmpl\ViewModel\SplyCmplDtlViewModel.cs" />
     <Compile Include="Cmpl\ViewModel\CnstCmplDtlViewModel.cs" />
     <Compile Include="Cmpl\ViewModel\SplyCmplListViewModel.cs" />
     <Compile Include="Cmpl\ViewModel\CnstCmplListViewModel.cs" />
+    <Compile Include="Cmpl\View\LekSiteDtlView.xaml.cs">
+      <DependentUpon>LekSiteDtlView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Cmpl\View\LekSiteListView.xaml.cs">
+      <DependentUpon>LekSiteListView.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Cmpl\View\SplyCmplAddView.xaml.cs">
       <DependentUpon>SplyCmplAddView.xaml</DependentUpon>
     </Compile>
