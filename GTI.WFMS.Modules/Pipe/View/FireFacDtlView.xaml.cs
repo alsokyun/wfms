@@ -103,17 +103,19 @@ namespace GTI.WFMS.Modules.Pipe.View
         
         private void BtnSel_Click(object sender, RoutedEventArgs e)
         {
-            String inCNT_NUM = "";
+            String inCNT_NUM = this.txtCNT_NUM.Text;
             String outCNT_NUM = "";
-
-            if (Messages.ShowYesNoMsgBox("공사번호를 변경하시겠습니까?") != MessageBoxResult.Yes) return;
+                        
+            if (inCNT_NUM != null && inCNT_NUM != "")
+            {
+                if (Messages.ShowYesNoMsgBox("공사번호를 변경하시겠습니까?") != MessageBoxResult.Yes) return;
+            }            
 
             try
-            {
-                inCNT_NUM = this.txtCNT_NUM.Text;
+            {                
 
-                // 부속세부시설윈도우
-                CnstMngPopView cnstMngPopView = new CnstMngPopView(inCNT_NUM);
+                // 상수공사대장 윈도우
+                CnstMngPopView cnstMngPopView = new CnstMngPopView("");
                 cnstMngPopView.Owner = Window.GetWindow(this);
 
 
@@ -126,6 +128,8 @@ namespace GTI.WFMS.Modules.Pipe.View
                         this.txtCNT_NUM.Text = outCNT_NUM;
                     }
 
+                    this.txtCNT_NUM.SelectAll();
+                    this.txtCNT_NUM.Focus();
                 }
             }
             catch (Exception ex)

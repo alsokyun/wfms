@@ -169,7 +169,8 @@
 
             <Label Grid.Row="0" Grid.Column="4" Content="공사번호" Style="{DynamicResource ResourceKey=GridLabel}" Margin="10,9,0,9" />
             <dxe:TextEdit Grid.Row="0" Grid.Column="5" Style="{DynamicResource ResourceKey=GrdTextEdit}" 
-                          x:Name="txtCNT_NUM" EditValue="{Binding CNT_NUM}" Height="28" Margin="10,6"/>
+                          x:Name="txtCNT_NUM" EditValue="{Binding CNT_NUM}" Height="28" Margin="10,6,34,6"/>
+            <Button Grid.Row="0" Grid.Column="5"  x:Name="btnSel" Style="{DynamicResource ResourceKey=GdAddButton}" HorizontalAlignment="Right" Margin="0 0 10 0" Click="BtnSel_Click"/>
 
             <Label Grid.Row="0" Grid.Column="6" Content="관리기관" Style="{DynamicResource ResourceKey=GridLabel}" Margin="10,9,0,9"/>
             <dxe:ComboBoxEdit Grid.Row="0" Grid.Column="7" Style="{DynamicResource ResourceKey=GrdComboBox}"  
@@ -296,18 +297,10 @@
                 <DataTemplate>
                     <dxci:TabBorder BorderThickness="1 2 1 1" BorderBrush="{DynamicResource BorderGridCOLOR2Brush}" BorderBackground="Transparent" ViewInfo="{Binding}"/>
                 </DataTemplate>
-            </dx:DXTabControl.BackgroundTemplate>
-
-            <!--
-            <dx:DXTabItem Header="사진첨부">
-            </dx:DXTabItem>
-            <dx:DXTabItem Header="참조자료">
-            </dx:DXTabItem>
-            <dx:DXTabItem Header="누수지점 및 복구내역">
-            </dx:DXTabItem>
-            -->
-
+            </dx:DXTabControl.BackgroundTemplate>          
         </dx:DXTabControl>
+
+        <dx:WaitIndicator x:Name="waitindicator" Grid.Row="4" DeferedVisibility="False" Content="Loading..."/>
     </Grid>
 
 

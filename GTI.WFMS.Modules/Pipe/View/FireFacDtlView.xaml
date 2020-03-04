@@ -6,7 +6,7 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:GTI.WFMS.Modules.Pipe.View"
              mc:Ignorable="d" 
-             d:DesignHeight="550" d:DesignWidth="1100"
+             d:DesignHeight="550" d:DesignWidth="950"
       
             xmlns:dxci="http://schemas.devexpress.com/winfx/2008/xaml/core/internal"
             xmlns:uccontent="clr-namespace:GTI.WFMS.Modules.Link.View"
@@ -181,13 +181,11 @@
             <Label Grid.Row="1" Grid.Column="0" Content="도엽번호" Style="{DynamicResource ResourceKey=GridLabel}" Margin="10,9,0,9"/>
             <dxe:TextEdit Grid.Row="1" Grid.Column="1" Style="{DynamicResource ResourceKey=GrdTextEdit}"  
                           x:Name="txtSHT_NUM" EditValue="{Binding SHT_NUM}" Height="28" Margin="10,6"/>
-
-
+            
             <Label Grid.Row="1" Grid.Column="2" Content="공사번호" Style="{DynamicResource ResourceKey=GridLabel}" Margin="10,9,0,9" />
             <dxe:TextEdit Grid.Row="1" Grid.Column="3" Style="{DynamicResource ResourceKey=GrdTextEdit}" 
-                          x:Name="txtCNT_NUM" EditValue="{Binding CNT_NUM}" Height="28" Margin="10,6,30,6" Width="115" HorizontalAlignment="Left"/>
-            <Button Grid.Row="1" Grid.Column="3"  x:Name="btnSel" Style="{DynamicResource ResourceKey=GdAddButton}" HorizontalAlignment="Right" Margin="0 0 10 0" Click="BtnSel_Click">
-            </Button>
+                          x:Name="txtCNT_NUM" EditValue="{Binding CNT_NUM}" Height="28" Margin="10,6,34,6"/>
+            <Button Grid.Row="1" Grid.Column="3"  x:Name="btnSel" Style="{DynamicResource ResourceKey=GdAddButton}" HorizontalAlignment="Right" Margin="0 0 10 0" Click="BtnSel_Click"/>
 
             <Label Grid.Row="1" Grid.Column="4" Content="설치일자" Style="{DynamicResource ResourceKey=GridLabel}" Margin="10,9,0,9"/>
             <dxe:DateEdit Grid.Row="1" Grid.Column="5" Style="{DynamicResource ResourceKey=GrdDateEdit}" HorizontalContentAlignment="Center" 

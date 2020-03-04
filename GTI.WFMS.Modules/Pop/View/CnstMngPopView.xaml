@@ -7,7 +7,7 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
         xmlns:local="clr-namespace:GTI.WFMS.Modules.Pop.View"
         mc:Ignorable="d" 
-        d:DesignHeight="585" d:DesignWidth="1100"
+        d:DesignHeight="585" d:DesignWidth="950"
       
         xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
         xmlns:ei="http://schemas.microsoft.com/expression/2010/interactions"

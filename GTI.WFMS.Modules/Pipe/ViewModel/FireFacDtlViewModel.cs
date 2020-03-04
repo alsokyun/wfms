@@ -140,11 +140,11 @@ namespace GTI.WFMS.Modules.Pipe.ViewModel
         /// <param name="obj"></param>
         private void OnSave(object obj)
         {
+            fireFacDtlView.btnSave.Focus();
 
             // 필수체크 (Tag에 필수체크 표시한 EditBox, ComboBox 대상으로 수행)
             if (!BizUtil.ValidReq(fireFacDtlView)) return;
-
-
+            
             if (Messages.ShowYesNoMsgBox("저장하시겠습니까?") != MessageBoxResult.Yes) return;
 
             try
@@ -198,6 +198,8 @@ namespace GTI.WFMS.Modules.Pipe.ViewModel
         /// <param name="obj"></param>
         private void OnDelete(object obj)
         {
+            fireFacDtlView.btnDelete.Focus();
+
             //0.삭제전 체크
             Hashtable param = new Hashtable();
             param.Add("sqlId" , "selectChscResSubList");
@@ -235,7 +237,7 @@ namespace GTI.WFMS.Modules.Pipe.ViewModel
 
 
             // 1.삭제처리
-            if (Messages.ShowYesNoMsgBox("변로를 삭제하시겠습니까?") != MessageBoxResult.Yes) return;
+            if (Messages.ShowYesNoMsgBox("소방시설를 삭제하시겠습니까?") != MessageBoxResult.Yes) return;
             try
             {
                 BizUtil.Update2(this, "deleteFireFacDtl");

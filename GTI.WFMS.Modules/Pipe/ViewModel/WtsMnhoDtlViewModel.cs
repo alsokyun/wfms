@@ -208,16 +208,14 @@ namespace GTI.WFMS.Modules.Pipe.ViewModel
             Hashtable param = new Hashtable();
             param.Add("sqlId" , "selectChscResSubList");
             param.Add("sqlId2", "selectFileMapList");
-            param.Add("sqlId3", "selectWtlLeakSubList");
 
             param.Add("FTR_CDE", this.FTR_CDE);
             param.Add("FTR_IDN", this.FTR_IDN);
-            param.Add("BIZ_ID", string.Concat(this.FTR_CDE , this.FTR_IDN) );
+            param.Add("BIZ_ID" , string.Concat(this.FTR_CDE , this.FTR_IDN) );
 
             Hashtable result = BizUtil.SelectLists(param);
             DataTable dt  = new DataTable();
             DataTable dt2 = new DataTable();
-            DataTable dt3 = new DataTable();
 
             try
             {
@@ -239,21 +237,9 @@ namespace GTI.WFMS.Modules.Pipe.ViewModel
                 }
             }
             catch (Exception) { }
-            try
-            {
-                dt3 = result["dt3"] as DataTable;
-                if (dt3.Rows.Count > 0)
-                {
-                    Messages.ShowErrMsgBox("누수지점내역이 존재합니다.");
-                    return;
-                }
-            }
-            catch (Exception) { }
-
-
-
+         
             // 1.삭제처리
-            if (Messages.ShowYesNoMsgBox("변로를 삭제하시겠습니까?") != MessageBoxResult.Yes) return;
+            if (Messages.ShowYesNoMsgBox("상수맨홀를 삭제하시겠습니까?") != MessageBoxResult.Yes) return;
             try
             {
                 BizUtil.Update2(this, "deleteWtsMnhoDtl");
