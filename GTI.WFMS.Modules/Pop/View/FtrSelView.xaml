@@ -6,9 +6,9 @@
              
             xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
             xmlns:cv="clr-namespace:GTI.WFMS.Models.Common;assembly=GTI.WFMS.Models"
+
             xmlns:cm="clr-namespace:GTIFramework.Common.Utils.Converters;assembly=GTIFramework"
             xmlns:vd="clr-namespace:GTI.WFMS.Modules.Pop.ViewModel"
-            xmlns:common="clr-namespace:GTI.WFMS.Models.Common;assembly=GTI.WFMS.Models"
 
             mc:Ignorable="d" 
             d:DesignHeight="200" d:DesignWidth="450"
@@ -43,7 +43,6 @@
         <Grid.RowDefinitions>
             <RowDefinition Height="40"/>
             <RowDefinition Height="*"/>
-            <RowDefinition Height="40"/>
         </Grid.RowDefinitions>
 
         <Grid Grid.Row="0" Background="{DynamicResource PopCOLOR2Brush}" >
@@ -288,7 +287,7 @@
             <dxe:DataPager x:Name="DataPager" Grid.Row="2" Grid.Column="2"  HorizontalAlignment="Center" NumericButtonCount="10"
                            PageIndex="{Binding PageIndex, Mode=TwoWay}" Margin="0 0 0 0"  >
                 <i:Interaction.Behaviors>
-                    <common:SourcesBehavior x:Name="DataPagerSource" Sources="{Binding PagedCollection}" ItemCnt="{Binding ItemCnt}"/>
+                    <cv:SourcesBehavior x:Name="DataPagerSource" Sources="{Binding PagedCollection}" ItemCnt="{Binding ItemCnt}"/>
                 </i:Interaction.Behaviors>
             </dxe:DataPager>
 

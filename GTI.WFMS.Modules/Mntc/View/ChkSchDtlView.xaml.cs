@@ -107,10 +107,6 @@ namespace GTI.WFMS.Modules.Mntc.View
                     string FTR_NAM = ftrSelView.txtFTR_NAM.Text;
                     string HJD_NAM = ftrSelView.txtHJD_NAM.Text;
 
-                    //string FTR_IDN = "117";
-                    //string FTR_CDE = "SA117";
-                    //string FTR_NAM = "유량계";
-                    //string HJD_NAM = "북정동";
 
                     //저장버튼으로 닫힘
                     if (!FmsUtil.IsNull(FTR_IDN))

@@ -397,7 +397,7 @@ namespace GTI.WFMS.Models.Common
         /// <summary>
         /// Gets the data folder where locally provisioned data is stored.
         /// </summary>
-        internal static string GetDataFolder()
+        public static string GetDataFolder()
         {
             string appDataFolder = Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData);
             string sampleDataFolder = Path.Combine(appDataFolder, "WFMSData");

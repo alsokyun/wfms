@@ -283,8 +283,6 @@ namespace GTI.WFMS.Modules.Pop.ViewModel
                             ItemsSelect.Add(dtl);
                         }
                         catch (Exception){}
-
-
                     }
                 }
             });

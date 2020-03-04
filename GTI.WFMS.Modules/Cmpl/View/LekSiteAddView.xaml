@@ -1,5 +1,5 @@
 ﻿<Window xmlns:dxre="http://schemas.devexpress.com/winfx/2008/xaml/richedit"  
-        x:Class="GTI.WFMS.Modules.Cmpl.View.LekSiteDtlView"
+        x:Class="GTI.WFMS.Modules.Cmpl.View.LekSiteAddView"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
@@ -14,12 +14,12 @@
             xmlns:dxg="http://schemas.devexpress.com/winfx/2008/xaml/grid"
             xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
                
-            x:Name="lekSiteDtlView"
-            KeyDown="LekSiteDtlView_KeyDown"
+            x:Name="lekSiteAddView"
+            KeyDown="LekSiteAddView_KeyDown"
         
            Style="{DynamicResource PopupWindow}" 
            WindowStyle="None"  
-           Width="1000" Height="600"
+           Width="1000" Height="380"
        >
 
     <Window.Resources>
@@ -30,7 +30,7 @@
     </Window.Resources>
 
     <Window.DataContext>
-        <vm:LekSiteDtlViewModel/>
+        <vm:LekSiteAddViewModel/>
     </Window.DataContext>
 
     <Grid >
@@ -40,12 +40,10 @@
             <RowDefinition Height="40"/>
             <RowDefinition Height="290"/>
 
-            <RowDefinition Height="*"/>
-
         </Grid.RowDefinitions>
 
         <Grid Grid.Row="0" Background="{DynamicResource PopCOLOR2Brush}" PreviewMouseLeftButtonDown="Grid_PreviewMouseLeftButtonDown" >
-            <Label Content="누수지점 상세정보" FontSize="17" FontWeight="Bold" Foreground="White" 
+            <Label Content="누수지점 등록" FontSize="17" FontWeight="Bold" Foreground="White" 
                    HorizontalAlignment="Left" VerticalAlignment="Center" Padding="10 0 0 0" />
         </Grid>
 
@@ -63,7 +61,6 @@
         </StackPanel>
 
         <StackPanel Grid.Row="1" Orientation="Horizontal" HorizontalAlignment="Right" Margin="0 0 10 0">
-            <Button x:Name="btnDel" Style="{DynamicResource ResourceKey=GrdDelButton}" Command="{Binding DelCommand}" />
             <Button x:Name="btnSave" Style="{DynamicResource ResourceKey=GrdRegButton}" Command="{Binding SaveCommand}" />
         </StackPanel>
 
@@ -147,10 +144,10 @@
             <!--히든 키-->
             <TextBlock x:Name="txtFTR_CDE" Text="{Binding Dtl.FTR_CDE}" Visibility="Collapsed"/> 
             <Label Grid.Row="0" Grid.Column="2" Content="지형지물" Style="{DynamicResource ResourceKey=GridLabelReq}" />
-            <dxe:TextEdit Grid.Row="0" Grid.Column="3" Style="{DynamicResource ResourceKey=GrdTextEdit}" Tag="지형지물"  IsEnabled="False"
-                          EditValue="{Binding Dtl.FTR_NAM}" />
+            <dxe:ComboBoxEdit Grid.Row="0" Grid.Column="3" Style="{DynamicResource ResourceKey=GrdComboBox}" Tag="지형지물"
+                              x:Name="cbFTR_CDE" EditValue="{Binding Dtl.FTR_CDE, UpdateSourceTrigger=PropertyChanged}"  />
             <Label Grid.Row="0" Grid.Column="4" Content="행정동" Style="{DynamicResource ResourceKey=GridLabelReq}"  />
-            <dxe:ComboBoxEdit Grid.Row="0" Grid.Column="5" Style="{DynamicResource ResourceKey=GrdComboBox}" 
+            <dxe:ComboBoxEdit Grid.Row="0" Grid.Column="5" Style="{DynamicResource ResourceKey=GrdComboBox}" Tag="행정동"
                               x:Name="cbHJD_CDE" EditValue="{Binding Dtl.HJD_CDE}"  />
             <Label Grid.Row="0" Grid.Column="6" Content="민원접수번호" Style="{DynamicResource ResourceKey=GridLabelReq}"  />
             <dxe:TextEdit Grid.Row="0" Grid.Column="7" Style="{DynamicResource ResourceKey=GrdTextEdit}" Tag="민원접수번호" Width="100" HorizontalAlignment="Left"
@@ -158,17 +155,16 @@
             <Button Grid.Row="0" Grid.Column="7" 
                     x:Name="btnSel" Style="{DynamicResource ResourceKey=GdAddButton}" HorizontalAlignment="Right" Margin="0 0 5 0" Click="BtnSel_Click"/>
 
-            <Label Grid.Row="1" Grid.Column="0" Content="관로관리번호" Style="{DynamicResource ResourceKey=GridLabelReq}"  />
+            <Label Grid.Row="1" Grid.Column="0" Content="관로관리번호" Style="{DynamicResource ResourceKey=GridLabelReq}" />
             <dxe:TextEdit Grid.Row="1" Grid.Column="1" Style="{DynamicResource ResourceKey=GrdTextEdit}" Tag="관리번호" Width="100" HorizontalAlignment="Left"
                           EditValue="{Binding Dtl.PIP_IDN, UpdateSourceTrigger=PropertyChanged}" IsEnabled="False"
                           x:Name="txtPIP_IDN" />
-            <TextBlock x:Name="txtPIP_CDE" Text="{Binding Dtl.PIP_CDE, UpdateSourceTrigger=PropertyChanged}" Visibility="Collapsed" />
-            <!--관로시설물코드-->
+            <TextBlock x:Name="txtPIP_CDE" Text="{Binding Dtl.PIP_CDE, UpdateSourceTrigger=PropertyChanged}" Visibility="Collapsed" /> <!--관로시설물코드-->
             <Button Grid.Row="1" Grid.Column="1" 
                     x:Name="btnFtrSel" Style="{DynamicResource ResourceKey=GdAddButton}" HorizontalAlignment="Right" Margin="0 0 5 0" Click="BtnFtrSel_Click"/>
             <Label Grid.Row="1" Grid.Column="2" Content="관로지형지물" Style="{DynamicResource ResourceKey=GridLabel}"  />
             <dxe:TextEdit Grid.Row="1" Grid.Column="3" Style="{DynamicResource ResourceKey=GrdTextEdit}" IsEnabled="False"
-                          EditValue="{Binding Dtl.PIP_NAM}" x:Name="txtPIP_NAM" />
+                          x:Name="txtPIP_NAM"  EditValue="{Binding Dtl.PIP_NAM}" />
             <Label Grid.Row="1" Grid.Column="4" Content="도엽번호" Style="{DynamicResource ResourceKey=GridLabel}"  />
             <dxe:TextEdit Grid.Row="1" Grid.Column="5" Style="{DynamicResource ResourceKey=GrdTextEdit}" 
                           EditValue="{Binding Dtl.SHT_NUM}" />
@@ -217,24 +213,13 @@
 
 
 
-        <Grid Grid.Row="3" Margin="10 0 10 10" >
-
-            <StackPanel Orientation="Horizontal" HorizontalAlignment="Left" VerticalAlignment="Top"  Margin="10 0 0 0">
-                <Image Style="{DynamicResource TitleCircle}"/>
-                <Label Content="누수점검사진" Style="{DynamicResource ResourceKey=CircleTitleLabel}"/>
-            </StackPanel>
-
-            <ContentControl x:Name="cctrlPhoto" Width="Auto"/>
-
-        </Grid>
-
     </Grid>
 
 
     <!--뷰와 연결된 뷰모델로 Loaded 이벤트전파-->
     <i:Interaction.Triggers>
         <i:EventTrigger EventName="Loaded">
-            <i:InvokeCommandAction Command="{Binding LoadedCommand}" CommandParameter="{Binding ElementName=lekSiteDtlView}"/>
+            <i:InvokeCommandAction Command="{Binding LoadedCommand}" CommandParameter="{Binding ElementName=lekSiteAddView}"/>
         </i:EventTrigger>
     </i:Interaction.Triggers>
 
