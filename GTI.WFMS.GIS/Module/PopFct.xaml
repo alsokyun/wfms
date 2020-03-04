@@ -5,7 +5,7 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:GTI.WFMS.GIS.Module"
              mc:Ignorable="d" 
-             d:DesignHeight="100" d:DesignWidth="250"
+             d:DesignHeight="250" d:DesignWidth="280"
         
              xmlns:vm="clr-namespace:GTI.WFMS.GIS"
        Width="250" Height="Auto"

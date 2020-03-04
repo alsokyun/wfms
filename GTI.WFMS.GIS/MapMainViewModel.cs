@@ -20,6 +20,7 @@ using Esri.ArcGISRuntime.Symbology;
 using System.Threading.Tasks;
 using System.Collections;
 using Prism.Regions;
+using Microsoft.Win32;
 
 namespace GTI.WFMS.GIS
 {
@@ -56,7 +57,6 @@ namespace GTI.WFMS.GIS
         private double _ulsanScale = 500000;
 
         //private FctDtl fctDtl = new FctDtl(); //시설물기본정보
-        private CmmDtl fctDtl = new CmmDtl(); //시설물기본정보
         private Popup divLayer = new Popup(); //시설물레이어DIV
         //private PopFct popFct = new PopFct(); //시설물정보DIV
         private Popup popFct = new Popup(); //시설물정보DIV
@@ -107,21 +107,34 @@ namespace GTI.WFMS.GIS
         public RelayCommand<object> findCmd { get; set; }
 
         public RelayCommand<object> CallPageCmd { get; set; }//시설물팝업에서 시설물메뉴화면 호출작업
+        public RelayCommand<object> ChgImgCmd { get; set; }//시설물팝업에서 아이콘파일변경작업
 
 
+        //시설물기본정보
+        private CmmDtl fctDtl = new CmmDtl(); 
         public CmmDtl FctDtl
         {
             get { return this.fctDtl; }
             set { this.fctDtl = value; }
         }
-
+        //시설물미리보기 소스경로
+        private string iconPath;
+        public string IconPath
+        {
+            get {return iconPath; }
+            set
+            {
+                this.iconPath = value;
+                OnPropertyChanged(IconPath);
+            }
+        }
 
         #endregion
 
 
 
 
-               
+
         #region ========== 생성자 ==========
 
         public MapMainViewModel()
@@ -262,7 +275,48 @@ namespace GTI.WFMS.GIS
                 }
 
             });
-            
+
+            //파일찾기버튼 이벤트
+            ChgImgCmd = new RelayCommand<object>(delegate (object obj)
+            {
+                // 전달된 파라미터 
+                if (obj == null)
+                {
+                    Messages.ShowErrMsgBox("시설물코드가 존재하지 않습니다.");
+                    return;
+                }
+                string _FTR_CDE = obj as string;
+
+
+                // 파일탐색기 열기
+                OpenFileDialog openFileDialog = new OpenFileDialog();
+                openFileDialog.Multiselect = false;
+                openFileDialog.Filter = "All files (*.*)|*.*";
+                openFileDialog.InitialDirectory = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
+                if (openFileDialog.ShowDialog() == true)
+                {
+                    //아이콘 파일경로
+                    string icon_foler = Path.Combine(BizUtil.GetDataFolder(), "style_img");
+
+
+                    FileInfo[] files = openFileDialog.FileNames.Select(f => new FileInfo(f)).ToArray();  //파일인포
+                    foreach (FileInfo fi in files)
+                    {
+                        try
+                        {
+                            //해당이미지파일을 FTR_CDE ex)SA117 이름의파일로 복사
+                            fi.CopyTo( Path.Combine(icon_foler, _FTR_CDE), true );
+                        }
+                        catch (Exception) { }
+                        finally
+                        {
+                            //아이콘 재적용
+                            InitUniqueValueRenderer();
+                        }
+                    }
+                }
+            });
+
 
 
             btnCmd = new RelayCommand<object>(async delegate (object obj)
