@@ -368,6 +368,9 @@
       LEFT JOIN INFOUSER.CD_DTL_INFO C2 ON C2.MST_CD = '250043' AND C2.DTL_CD = A.LEP_CDE
       WHERE 1=1
 
+      <isNotEmpty prepend="AND" property="FTR_CDE">
+        A.FTR_CDE like '%' || #FTR_CDE# || '%'
+      </isNotEmpty>
       <isNotEmpty prepend="AND" property="FTR_IDN">
         A.FTR_IDN like '%' || #FTR_IDN# || '%'
       </isNotEmpty>
@@ -434,6 +437,9 @@
       LEFT JOIN INFOUSER.CD_DTL_INFO C2 ON C2.MST_CD = '250043' AND C2.DTL_CD = A.LEP_CDE
       WHERE 1=1
 
+      <isNotEmpty prepend="AND" property="FTR_CDE">
+        A.FTR_CDE like '%' || #FTR_CDE# || '%'
+      </isNotEmpty>
       <isNotEmpty prepend="AND" property="FTR_IDN">
         A.FTR_IDN like '%' || #FTR_IDN# || '%'
       </isNotEmpty>

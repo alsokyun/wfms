@@ -1,4 +1,7 @@
-﻿using GTIFramework.Common.Utils.ViewEffect;
+﻿using GTI.WFMS.Modules.Pop.View;
+using GTIFramework.Common.MessageBox;
+using GTIFramework.Common.Utils.ViewEffect;
+using System;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Navigation;
@@ -28,6 +31,41 @@ namespace GTI.WFMS.Modules.Pipe.View
         private void _backCmd(object sender, RoutedEventArgs e)
         {
             NavigationService.Navigate(new WtlPipeListView());
+        }
+
+        private void BtnSel_Click(object sender, RoutedEventArgs e)
+        {
+            String inCNT_NUM = this.txtCNT_NUM.Text; ;
+            string outCNT_NUM = "";
+
+            if (inCNT_NUM != null && inCNT_NUM != "")
+            {
+                if (Messages.ShowYesNoMsgBox("공사번호를 변경하시겠습니까?") != MessageBoxResult.Yes) return;
+            }
+
+            try
+            {
+                // 상수공사대장 윈도우
+                CnstMngPopView cnstMngPopView = new CnstMngPopView("");
+                cnstMngPopView.Owner = Window.GetWindow(this);
+
+                //공사번호 리턴
+                if (cnstMngPopView.ShowDialog() is bool)
+                {
+                    outCNT_NUM = cnstMngPopView.txtRET_CNT_NAM.Text;
+                    if (outCNT_NUM != null && outCNT_NUM != "" && inCNT_NUM != outCNT_NUM)
+                    {
+                        this.txtCNT_NUM.Text = outCNT_NUM;
+                    }
+
+                    this.txtCNT_NUM.SelectAll();
+                    this.txtCNT_NUM.Focus();
+                }
+            }
+            catch (Exception ex)
+            {
+                Messages.ShowErrMsgBox(ex.ToString());
+            }
         }
     }
 }
