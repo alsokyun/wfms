@@ -7,7 +7,7 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
         xmlns:local="clr-namespace:GTI.WFMS.Modules.Pop.View"
         mc:Ignorable="d" 
-        d:DesignHeight="585" d:DesignWidth="950"
+        d:DesignHeight="585" d:DesignWidth="1100"
       
         xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
         xmlns:ei="http://schemas.microsoft.com/expression/2010/interactions"
@@ -15,6 +15,10 @@
         xmlns:cm="clr-namespace:GTIFramework.Common.Utils.Converters;assembly=GTIFramework"
         xmlns:common="clr-namespace:GTI.WFMS.Models.Common;assembly=GTI.WFMS.Models"
         x:Name="cnstMngPopView"
+        
+        Style="{DynamicResource PopupWindow}" 
+       WindowStyle="None"  
+       Width="1000" Height="600"
       >
 
     <!--뷰모델연결처리
@@ -30,8 +34,25 @@
         </ResourceDictionary>
     </Window.Resources>
 
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="40"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
 
-    <Grid Background="{DynamicResource PopCOLOR1Brush}">
+        <Grid Grid.Row="0" Background="{DynamicResource PopCOLOR2Brush}" >
+            <Grid.InputBindings>
+                <MouseBinding MouseAction="LeftClick" Command="{Binding WindowMoveCommand}" 
+                              CommandParameter="{Binding RelativeSource={RelativeSource AncestorType={x:Type Window}, Mode=FindAncestor}}"/>
+            </Grid.InputBindings>
+            <Label Content="시설물 선택" FontSize="17" FontWeight="Bold" Foreground="White" 
+                   HorizontalAlignment="Left" VerticalAlignment="Center" Padding="10 0 0 0" />
+        </Grid>
+
+        <Button Grid.Row="0" Style="{DynamicResource XSignCloseButton}" Margin="0,10,10,0" 
+                x:Name="btnClose" Click="BtnClose_Click" />
+
+        <Grid Grid.Row="1" Background="{DynamicResource PopCOLOR1Brush}">
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="278"/>
             <ColumnDefinition Width="1"/>
@@ -272,7 +293,7 @@
       
         
     </Grid>
-
+    </Grid>
 
     <!--뷰와 연결된 뷰모델로 Loaded 이벤트전파-->
     <i:Interaction.Triggers>

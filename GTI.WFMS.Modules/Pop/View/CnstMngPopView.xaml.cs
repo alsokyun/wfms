@@ -41,5 +41,12 @@ namespace GTI.WFMS.Modules.Pop.View
                 Messages.ShowErrMsgBox(ex.ToString());
             }
         }
+
+        private void BtnClose_Click(object sender, RoutedEventArgs e)
+        {
+            //팝업호출지점으로 리턴
+            DialogResult = true;
+            Close();
+        }
     }
 }
