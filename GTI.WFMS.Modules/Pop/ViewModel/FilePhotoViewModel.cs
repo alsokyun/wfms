@@ -247,6 +247,7 @@ namespace GTI.WFMS.Modules.Pop.ViewModel
                     bi.BeginInit();
                     bi.UriSource = new Uri(file_path);
                     bi.EndInit();
+                    
 
                     imgView.Source = bi;
                     grdImg.Visibility = Visibility.Visible;
@@ -283,8 +284,6 @@ namespace GTI.WFMS.Modules.Pop.ViewModel
                             ItemsSelect.Add(dtl);
                         }
                         catch (Exception){}
-
-
                     }
                 }
             });

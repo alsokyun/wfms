@@ -20,6 +20,8 @@ using Esri.ArcGISRuntime.Symbology;
 using System.Threading.Tasks;
 using System.Collections;
 using Prism.Regions;
+using Microsoft.Win32;
+using System.Windows.Media.Imaging;
 
 namespace GTI.WFMS.GIS
 {
@@ -56,7 +58,6 @@ namespace GTI.WFMS.GIS
         private double _ulsanScale = 500000;
 
         //private FctDtl fctDtl = new FctDtl(); //시설물기본정보
-        private CmmDtl fctDtl = new CmmDtl(); //시설물기본정보
         private Popup divLayer = new Popup(); //시설물레이어DIV
         //private PopFct popFct = new PopFct(); //시설물정보DIV
         private Popup popFct = new Popup(); //시설물정보DIV
@@ -107,30 +108,42 @@ namespace GTI.WFMS.GIS
         public RelayCommand<object> findCmd { get; set; }
 
         public RelayCommand<object> CallPageCmd { get; set; }//시설물팝업에서 시설물메뉴화면 호출작업
+        public RelayCommand<object> ChgImgCmd { get; set; }//시설물팝업에서 아이콘파일변경작업
 
 
+        //시설물기본정보
+        private CmmDtl fctDtl = new CmmDtl(); 
         public CmmDtl FctDtl
         {
             get { return this.fctDtl; }
-            set { this.fctDtl = value; }
+            set
+            {
+                this.fctDtl = value;
+                OnPropertyChanged("FctDtl");
+            }
         }
-
+        //시설물미리보기 소스이미지
+        private BitmapImage bitImg;
+        public BitmapImage BitImg
+        {
+            get { return bitImg; }
+            set
+            {
+                this.bitImg = value;
+                OnPropertyChanged("BitImg");
+            }
+        }
 
         #endregion
 
 
 
 
-               
+
         #region ========== 생성자 ==========
 
         public MapMainViewModel()
         {
-
-            //뷰객체를 파라미터로 전달받기
-            //loadedCmd = new RelayCommand<object>(loadedMethod);
-            /*
-             */
             loadedCmd = new RelayCommand<object>(delegate (object obj)
             {
 
@@ -153,6 +166,9 @@ namespace GTI.WFMS.GIS
 
                 InitUniqueValueRenderer();//렌더러초기생성작업
 
+
+                //비트맵초기화(시설물상세DIV 아이콘)
+                BitImg = new BitmapImage();
             });
 
 
@@ -262,7 +278,66 @@ namespace GTI.WFMS.GIS
                 }
 
             });
-            
+
+            //파일찾기버튼 이벤트
+            ChgImgCmd = new RelayCommand<object>(delegate (object obj)
+            {
+                // 전달된 파라미터 
+                if (obj == null)
+                {
+                    Messages.ShowErrMsgBox("시설물코드가 존재하지 않습니다.");
+                    return;
+                }
+                string _FTR_CDE = obj as string;
+
+                // UniqueValueRenderer 자원해제
+                //uniqueValueRenderer = new UniqueValueRenderer();
+                //layers[_selectedLayerNm].ResetRenderer();
+
+                // 파일탐색기 열기
+                OpenFileDialog openFileDialog = new OpenFileDialog();
+                openFileDialog.Multiselect = false;
+                openFileDialog.Filter = "All files (*.*)|*.*";
+                openFileDialog.InitialDirectory = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
+                if (openFileDialog.ShowDialog() == true)
+                {
+                    //아이콘 파일경로
+                    string icon_foler = Path.Combine(BizUtil.GetDataFolder(), "style_img");
+
+
+                    FileInfo[] files = openFileDialog.FileNames.Select(f => new FileInfo(f)).ToArray();  //파일인포
+                    foreach (FileInfo fi in files)
+                    {
+                        try
+                        {
+
+                            //해당이미지파일을 FTR_CDE ex)SA117 이름의파일로 복사
+                            fi.CopyTo( Path.Combine(icon_foler, _FTR_CDE), true );
+                        }
+                        catch (Exception ex)
+                        {
+                            Messages.ShowErrMsgBox(ex.Message);
+                        }
+                        finally
+                        {
+                            //1.렌더러 재구성
+                            InitUniqueValueRenderer();
+
+                            //2.레이어의 렌더러 재세팅
+                            foreach (string sel in _selectedLayerNms)
+                            {
+                                layers[sel].Renderer = uniqueValueRenderer.Clone();
+                                layers[sel].RetryLoadAsync();
+                            }
+
+                            //3.팝업이미지소스 업데이트
+                            BitImg = new BitmapImage(new Uri(Path.Combine(Path.Combine(BizUtil.GetDataFolder(), "style_img"), _FTR_CDE))).Clone();
+
+                        }
+                    }
+                }
+            });
+
 
 
             btnCmd = new RelayCommand<object>(async delegate (object obj)
@@ -1074,6 +1149,7 @@ namespace GTI.WFMS.GIS
                     param.Add("sqlId", "SelectFlowMtDtl");
 
                     this.FctDtl = BizUtil.SelectObject(param) as CmmDtl;
+
                     break;
 
                 case "SA118": case "SA119": //소화전,급수탑
@@ -1091,6 +1167,7 @@ namespace GTI.WFMS.GIS
                     param.Add("sqlId", "SelectFireFacDtl");
 
                     this.FctDtl = BizUtil.SelectObject(param) as CmmDtl;
+
                     break;
 
 
@@ -1169,6 +1246,16 @@ namespace GTI.WFMS.GIS
                     break;
 
             }
+
+
+            //아이콘이미지 설정
+            //BitmapImage bi = new BitmapImage();
+            //bi.BeginInit();
+            //bi.UriSource = new Uri(Path.Combine(Path.Combine(BizUtil.GetDataFolder(), "style_img"), fTR_CDE), UriKind.Relative);
+            //bi.EndInit();
+            //BitImg = bi;
+            BitImg = new BitmapImage(new Uri(Path.Combine(Path.Combine(BizUtil.GetDataFolder(), "style_img"), fTR_CDE))).Clone();
+
         }
 
 
