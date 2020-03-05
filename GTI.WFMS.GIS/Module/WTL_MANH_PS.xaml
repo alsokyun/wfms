@@ -66,10 +66,15 @@
 
             </Grid>
 
-            <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Margin="10">
-                <Button>시설물대장</Button>
-
-            </StackPanel>
+            <Grid Margin="10">
+                <StackPanel Orientation="Horizontal" HorizontalAlignment="Left" >
+                    <Border BorderThickness="1" BorderBrush="Pink"  HorizontalAlignment="Center" VerticalAlignment="Center" Margin="5 0 5 0" Padding="2">
+                        <Image x:Name="imgSA117" Source="{Binding BitImg}" />
+                    </Border>
+                    <Button Content="변경" Command="{Binding ChgImgCmd}" CommandParameter="{Binding FctDtl.FTR_CDE}"/>
+                </StackPanel>
+                <Button Content="시설물대장" Command="{Binding CallPageCmd}" CommandParameter="{Binding FctDtl}" HorizontalAlignment="Right"/>
+            </Grid>
 
         </StackPanel>
     </Grid>

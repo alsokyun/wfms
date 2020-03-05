@@ -9,6 +9,7 @@
         
              xmlns:vm="clr-namespace:GTI.WFMS.GIS"
        Width="250" Height="Auto"
+       KeyDown="Popup_KeyDown"
        >
 
     <Popup.Resources>

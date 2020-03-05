@@ -4,16 +4,18 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:GTI.WFMS.GIS.Module"
+             xmlns:vm="clr-namespace:GTI.WFMS.GIS"
              mc:Ignorable="d" 
              d:DesignHeight="300" d:DesignWidth="250"
         
-             
+             KeyDown="Popup_KeyDown"
        Width="250" Height="Auto"
        >
 
     <Popup.Resources>
         <ResourceDictionary Source="../Styles/Navy/GisStyles.xaml" />
     </Popup.Resources>
+
 
     <Grid x:Name="gridContent" >
         <StackPanel Background="White">
@@ -70,18 +72,13 @@
             </Grid>
 
             <Grid Margin="10">
-                <!--<Button Content="시설물대장" 
-                        Command="{Binding Path=DataContext.CallPageCmd, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type Window}}}" 
-                        CommandParameter="{Binding FctDtl}"
-                        />-->
                 <StackPanel Orientation="Horizontal" HorizontalAlignment="Left" >
-                    <Border BorderThickness="1" BorderBrush="DodgerBlue"  HorizontalAlignment="Center" VerticalAlignment="Center" Margin="5 0 5 0" Padding="2">
-                        <Image x:Name="imgSA117" Source="{Binding IconPath}" />
+                    <Border BorderThickness="1" BorderBrush="Pink"  HorizontalAlignment="Center" VerticalAlignment="Center" Margin="5 0 5 0" Padding="2">
+                        <Image x:Name="imgSA117" Source="{Binding BitImg}" />
                     </Border>
                     <Button Content="변경" Command="{Binding ChgImgCmd}" CommandParameter="{Binding FctDtl.FTR_CDE}"/>
                 </StackPanel>
                 <Button Content="시설물대장" Command="{Binding CallPageCmd}" CommandParameter="{Binding FctDtl}" HorizontalAlignment="Right"/>
-                
             </Grid>
 
         </StackPanel>

@@ -3,12 +3,14 @@ using Esri.ArcGISRuntime.Data;
 using Esri.ArcGISRuntime.Geometry;
 using Esri.ArcGISRuntime.Mapping;
 using Esri.ArcGISRuntime.Symbology;
+using Esri.ArcGISRuntime.UI;
 using Esri.ArcGISRuntime.UI.Controls;
 using GTI.WFMS.Models.Common;
 using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Windows;
+using System.Windows.Media.Imaging;
 
 namespace GTI.WFMS.GIS
 {
@@ -136,8 +138,8 @@ namespace GTI.WFMS.GIS
                                 layer = new FeatureLayer(layerTable); /////// 신규레이어 생성 /////// 
                                 layers[_layerNm] = layer; /////// 딕셔너리에 자동으로 저장되지는 않을것임 /////// 
 
-                                _mapView.Map.OperationalLayers.Add(layer);
                                 layer.Renderer = uniqueValueRenderer.Clone(); //렌더러는 레이어 각각 할당해야하므로 렌더러복사하여 할당
+                                _mapView.Map.OperationalLayers.Add(layer);
 
 
                             }
@@ -214,10 +216,38 @@ namespace GTI.WFMS.GIS
             var SA110Uri = new Uri(BizUtil.GetDataFolder("style_img", "SA110"), UriKind.Relative);
             PictureMarkerSymbol SA110Symbol = new PictureMarkerSymbol(SA110Uri);
             UniqueValue SA110Value = new UniqueValue("SA110", "SA110", SA110Symbol, "SA110"); //string description, string label, Symbol symbol, object value
+
             //유량계
+            //BitmapImage bi = new BitmapImage();
+            //bi.BeginInit();
+            //bi.UriSource = new Uri(BizUtil.GetDataFolder("style_img", "SA117"), UriKind.Relative);
+            //bi.EndInit();
+            //byte[] data;
+            //JpegBitmapEncoder encoder = new JpegBitmapEncoder();
+            //encoder.Frames.Add(BitmapFrame.Create(bi));
+            //using (MemoryStream ms = new MemoryStream())
+            //{
+            //    encoder.Save(ms);
+            //    data = ms.ToArray();
+            //}
+            //FileStream fs = new FileStream(BizUtil.GetDataFolder("style_img", "SA117"), FileMode.Open);
+            //var SA117Uri = await RuntimeImage.FromStreamAsync(fs);
+
+
+            //RuntimeImage SA117Uri;
+            //using (FileStream fs = new FileStream(BizUtil.GetDataFolder("style_img", "SA117"), FileMode.Open, FileAccess.Read))
+            //{
+            //    SA117Uri = await RuntimeImage.FromStreamAsync(fs);
+            //    //fs.Flush();
+            //    //fs.Dispose();
+            //    //fs.Close();
+            //}
             var SA117Uri = new Uri(BizUtil.GetDataFolder("style_img", "SA117"), UriKind.Relative);
-            PictureMarkerSymbol SA117Symbol = new PictureMarkerSymbol(SA117Uri);
+            PictureMarkerSymbol SA117Symbol = new PictureMarkerSymbol(SA117Uri); ;
             UniqueValue SA117Value = new UniqueValue("SA117", "SA117", SA117Symbol, "SA117"); //string description, string label, Symbol symbol, object value
+
+
+
             //급수탑
             var SA118Uri = new Uri(BizUtil.GetDataFolder("style_img", "SA118"), UriKind.Relative);
             PictureMarkerSymbol SA118Symbol = new PictureMarkerSymbol(SA118Uri);

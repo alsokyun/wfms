@@ -62,10 +62,23 @@ namespace GTI.WFMS.GIS.Module
             }
             ((MapMainViewModel)this.DataContext)._selectedFeature = null;
 
-
-
-
             this.IsOpen = false;
         }
+
+        //Esc키 팝업닫기
+        private void Popup_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.Key == Key.Escape)
+            {
+                foreach (var v in ((MapMainViewModel)this.DataContext).layers)
+                {
+                    v.Value.ClearSelection();
+                }
+                ((MapMainViewModel)this.DataContext)._selectedFeature = null;
+
+                this.IsOpen = false;
+            }
+        }
+
     }
 }

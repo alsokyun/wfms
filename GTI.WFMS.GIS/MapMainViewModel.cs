@@ -21,6 +21,7 @@ using System.Threading.Tasks;
 using System.Collections;
 using Prism.Regions;
 using Microsoft.Win32;
+using System.Windows.Media.Imaging;
 
 namespace GTI.WFMS.GIS
 {
@@ -115,17 +116,21 @@ namespace GTI.WFMS.GIS
         public CmmDtl FctDtl
         {
             get { return this.fctDtl; }
-            set { this.fctDtl = value; }
-        }
-        //시설물미리보기 소스경로
-        private string iconPath;
-        public string IconPath
-        {
-            get {return iconPath; }
             set
             {
-                this.iconPath = value;
-                OnPropertyChanged(IconPath);
+                this.fctDtl = value;
+                OnPropertyChanged("FctDtl");
+            }
+        }
+        //시설물미리보기 소스이미지
+        private BitmapImage bitImg;
+        public BitmapImage BitImg
+        {
+            get { return bitImg; }
+            set
+            {
+                this.bitImg = value;
+                OnPropertyChanged("BitImg");
             }
         }
 
@@ -139,11 +144,6 @@ namespace GTI.WFMS.GIS
 
         public MapMainViewModel()
         {
-
-            //뷰객체를 파라미터로 전달받기
-            //loadedCmd = new RelayCommand<object>(loadedMethod);
-            /*
-             */
             loadedCmd = new RelayCommand<object>(delegate (object obj)
             {
 
@@ -166,6 +166,9 @@ namespace GTI.WFMS.GIS
 
                 InitUniqueValueRenderer();//렌더러초기생성작업
 
+
+                //비트맵초기화(시설물상세DIV 아이콘)
+                BitImg = new BitmapImage();
             });
 
 
@@ -287,6 +290,9 @@ namespace GTI.WFMS.GIS
                 }
                 string _FTR_CDE = obj as string;
 
+                // UniqueValueRenderer 자원해제
+                //uniqueValueRenderer = new UniqueValueRenderer();
+                //layers[_selectedLayerNm].ResetRenderer();
 
                 // 파일탐색기 열기
                 OpenFileDialog openFileDialog = new OpenFileDialog();
@@ -304,14 +310,29 @@ namespace GTI.WFMS.GIS
                     {
                         try
                         {
+
                             //해당이미지파일을 FTR_CDE ex)SA117 이름의파일로 복사
                             fi.CopyTo( Path.Combine(icon_foler, _FTR_CDE), true );
                         }
-                        catch (Exception) { }
+                        catch (Exception ex)
+                        {
+                            Messages.ShowErrMsgBox(ex.Message);
+                        }
                         finally
                         {
-                            //아이콘 재적용
+                            //1.렌더러 재구성
                             InitUniqueValueRenderer();
+
+                            //2.레이어의 렌더러 재세팅
+                            foreach (string sel in _selectedLayerNms)
+                            {
+                                layers[sel].Renderer = uniqueValueRenderer.Clone();
+                                layers[sel].RetryLoadAsync();
+                            }
+
+                            //3.팝업이미지소스 업데이트
+                            BitImg = new BitmapImage(new Uri(Path.Combine(Path.Combine(BizUtil.GetDataFolder(), "style_img"), _FTR_CDE))).Clone();
+
                         }
                     }
                 }
@@ -1128,6 +1149,7 @@ namespace GTI.WFMS.GIS
                     param.Add("sqlId", "SelectFlowMtDtl");
 
                     this.FctDtl = BizUtil.SelectObject(param) as CmmDtl;
+
                     break;
 
                 case "SA118": case "SA119": //소화전,급수탑
@@ -1145,6 +1167,7 @@ namespace GTI.WFMS.GIS
                     param.Add("sqlId", "SelectFireFacDtl");
 
                     this.FctDtl = BizUtil.SelectObject(param) as CmmDtl;
+
                     break;
 
 
@@ -1223,6 +1246,16 @@ namespace GTI.WFMS.GIS
                     break;
 
             }
+
+
+            //아이콘이미지 설정
+            //BitmapImage bi = new BitmapImage();
+            //bi.BeginInit();
+            //bi.UriSource = new Uri(Path.Combine(Path.Combine(BizUtil.GetDataFolder(), "style_img"), fTR_CDE), UriKind.Relative);
+            //bi.EndInit();
+            //BitImg = bi;
+            BitImg = new BitmapImage(new Uri(Path.Combine(Path.Combine(BizUtil.GetDataFolder(), "style_img"), fTR_CDE))).Clone();
+
         }
 
 
