@@ -22,18 +22,23 @@ using System.Collections;
 using Prism.Regions;
 using Microsoft.Win32;
 using System.Windows.Media.Imaging;
-using GTI.WFMS.GIS.Pop.View;
 
 namespace GTI.WFMS.GIS
 {
     /// <summary>
     /// Provides map data to an application
     /// </summary>
-    public class MapMainViewModel : LayerModel, INotifyPropertyChanged
+    public class MapLayerViewModel : LyrModel, INotifyPropertyChanged
     {
 
 
         #region ========== Members 정의 ==========
+
+        /// <summary>
+        /// Gets or sets the map
+        /// </summary>
+        public MapView mapView; //뷰의 MapView
+
 
         // 선택한 피처 - 서버연계된Feature  
         //public ArcGISFeature _selectedFeature;
@@ -49,12 +54,22 @@ namespace GTI.WFMS.GIS
 
 
 
+        // Coordinates for Ulsan
+        private MapPoint _ulsanCoords = new MapPoint(14389882.070911, 4239809.084922, SpatialReferences.WebMercator); //3857
+        //private MapPoint _londonCoords = new MapPoint(-13881.7678417696, 6710726.57374296, SpatialReferences.WebMercator);
+        //private MapPoint _ulsanCoords = new MapPoint(394216.933974, 223474.303376, SpatialReferences.WebMercator); //5181
+
+        //private double _ulsanScale = 8762.7156655228955;
+        //private double _ulsanScale = 150000;
+        private double _ulsanScale = 500000;
 
         //private FctDtl fctDtl = new FctDtl(); //시설물기본정보
         private Popup divLayer = new Popup(); //시설물레이어DIV
         //private PopFct popFct = new PopFct(); //시설물정보DIV
         private Popup popFct = new Popup(); //시설물정보DIV
         private Button ClearButton = new Button();
+        private TextBox txtFTR_CDE = new TextBox();
+        private TextBox txtFTR_IDN = new TextBox();
         #endregion
 
 
@@ -77,9 +92,12 @@ namespace GTI.WFMS.GIS
 
         #region ==========  Properties 정의 ==========
 
-        /// <summary>
-        /// Gets or sets the map
-        /// </summary>
+        public Map _map = new Map(SpatialReference.Create(3857));
+        //private Map _map = new Map(Basemap.CreateStreets());
+        //private Map _map = new Map(Basemap.CreateNationalGeographic());
+        //private Map _map = new Map(Basemap.CreateImageryWithLabels());
+        //private Map _map = new Map(SpatialReference.Create(5181));
+        //private Map _map = new Map(SpatialReference.Create(3857)) { MinScale = 7000000.0 };
         public Map Map
         {
             get { return _map; }
@@ -100,10 +118,6 @@ namespace GTI.WFMS.GIS
 
         public RelayCommand<object> CallPageCmd { get; set; }//시설물팝업에서 시설물메뉴화면 호출작업
         public RelayCommand<object> ChgImgCmd { get; set; }//시설물팝업에서 아이콘파일변경작업
-
-        public RelayCommand<object> EditCmd { get; set; }
-
-        
 
 
         //시설물기본정보
@@ -137,7 +151,7 @@ namespace GTI.WFMS.GIS
 
         #region ========== 생성자 ==========
 
-        public MapMainViewModel()
+        public MapLayerViewModel()
         {
             loadedCmd = new RelayCommand<object>(delegate (object obj)
             {
@@ -149,6 +163,8 @@ namespace GTI.WFMS.GIS
                 this.divLayer = divGrid.FindName("divLayer") as Popup;
                 this.ClearButton = divGrid.FindName("ClearButton") as Button;
 
+                txtFTR_CDE = divGrid.FindName("txtFTR_CDE") as TextBox;
+                txtFTR_IDN = divGrid.FindName("txtFTR_IDN") as TextBox;
 
                 //지도초기화
                 InitMap();
@@ -157,7 +173,7 @@ namespace GTI.WFMS.GIS
                 //시설물레이어DIV 초기화작업
                 InitDivLayer();
 
-                GisCmm.InitUniqueValueRenderer();//렌더러초기생성작업
+                InitUniqueValueRenderer();//렌더러초기생성작업
 
 
                 //비트맵초기화(시설물상세DIV 아이콘)
@@ -250,14 +266,7 @@ namespace GTI.WFMS.GIS
                 {
                     cb.IsChecked = false;
                 }
-
                 //선택된레이어 해제
-                _selectedFeature = null;
-                try
-                {
-                    layers[_selectedLayerNm].ClearSelection();
-                }
-                catch (Exception) { }
                 _selectedLayerNms.Clear();
                 _selectedLayerNm = "";
             });
@@ -272,21 +281,11 @@ namespace GTI.WFMS.GIS
 
                 foreach (var v in views)
                 {
-                    MapMainView mapMainView = v as MapMainView;
+                    MapLayerView mapMainView = v as MapLayerView;
                     //MainWinViewModel vm = ((System.Windows.Controls.Grid)((ContentControl)mapMainView.Parent).Parent).DataContext as MainWinViewModel;
                     break;
                 }
 
-            });
-
-            //시설물편집창
-            EditCmd = new RelayCommand<object>(delegate (object obj)
-            {
-                EditWinView view = new EditWinView();
-                if (view.ShowDialog() is bool)
-                {
-                    //재조회
-                }
             });
 
             //파일찾기버튼 이벤트
@@ -331,12 +330,12 @@ namespace GTI.WFMS.GIS
                         finally
                         {
                             //1.렌더러 재구성
-                            GisCmm.InitUniqueValueRenderer();
+                            InitUniqueValueRenderer();
 
                             //2.레이어의 렌더러 재세팅
                             foreach (string sel in _selectedLayerNms)
                             {
-                                layers[sel].Renderer = GisCmm.uniqueValueRenderer.Clone();
+                                layers[sel].Renderer = uniqueValueRenderer.Clone();
                                 layers[sel].RetryLoadAsync();
                             }
 
@@ -355,115 +354,14 @@ namespace GTI.WFMS.GIS
                 Button btn = obj as Button;
                 switch (btn.Content.ToString())
                 {
-                    case "추가":
-                        if (_selectedLayerNms.Count < 1)
-                        {
-                            MessageBox.Show("시설물을 선택하세요.");
-                            return;
-                        }
-                        else if (_selectedLayerNms.Count > 1)
-                        {
-                            MessageBox.Show("시설물을 하나만 선택하세요.");
-                            return;
-                        }
+                    case "시설물편집":
+                        //시설물편집팝업호출
 
 
-                        //라인피처인 경우 - SketchEditor 를 GraphicOverlay에 생성한다
-                        if (_selectedLayerNm.Equals("WTL_PIPE_LM") || _selectedLayerNm.Equals("WTL_SPLY_LS"))
-                        {
-                            try
-                            {
-                                // Let the user draw on the map view using the chosen sketch mode
-                                Esri.ArcGISRuntime.Geometry.Geometry geometry = await mapView.SketchEditor.StartAsync(SketchCreationMode.Polyline, true); //맵에 신규geometry 얻어오기
-
-                                // Create and add a graphic from the geometry the user drew
-                                SimpleLineSymbol symbol;
-                                if (_selectedLayerNm.Equals("WTL_PIPE_LM"))
-                                {
-                                    symbol = new SimpleLineSymbol(SimpleLineSymbolStyle.Solid, System.Drawing.Color.SkyBlue, 2);
-                                }
-                                else
-                                {
-                                    symbol = new SimpleLineSymbol(SimpleLineSymbolStyle.Solid, System.Drawing.Color.SkyBlue, 2);
-                                }
-
-                                Graphic graphic = new Graphic(geometry, symbol);
-                                _sketchOverlay.Graphics.Add(graphic);
-
-                                // Enable/disable the clear and edit buttons according to whether or not graphics exist in the overlay
-                                ClearButton.IsEnabled = _sketchOverlay.Graphics.Count > 0;
-                            }
-                            catch (TaskCanceledException)
-                            {
-                                // Ignore ... let the user cancel drawing
-                            }
-                            catch (Exception ex)
-                            {
-                                // Report exceptions
-                                MessageBox.Show("Error drawing graphic shape: " + ex.Message);
-                            }
-                        }
-                        //포인트피처의 경우는 클릭핸들러만 추가함
-                        else
-                        {
-                            //추가처리 탭핸들러 추가
-                            mapView.GeoViewTapped -= handlerGeoViewTappedMoveFeature;
-                            mapView.GeoViewTapped -= handlerGeoViewTapped;
-                            mapView.GeoViewTapped += handlerGeoViewTappedAddFeature;
-                            MessageBox.Show("시설물을 추가할 지점을 마우스로 클릭하세요.");
-                        }
 
                         break;
 
-                    case "이동":
-                        if (_selectedFeature == null)
-                        {
-                            MessageBox.Show("시설물을 선택하세요.");
-                            return;
-                        }
 
-
-                        MessageBox.Show("이동할 지점을 마우스로 클릭하세요.");
-                        //이동처리 탭핸들러 추가
-                        mapView.GeoViewTapped -= handlerGeoViewTappedAddFeature;
-                        mapView.GeoViewTapped -= handlerGeoViewTapped;
-                        mapView.GeoViewTapped += handlerGeoViewTappedMoveFeature;
-                        break;
-
-                    case "삭제":
-                        if (_selectedFeature == null)
-                        {
-                            MessageBox.Show("시설물을 선택하세요.");
-                            return;
-                        }
-
-                        //삭제처리
-                        //열여있는 시설물정보창 닫기
-                        popFct.IsOpen = false;
-
-                        // Load the feature.
-                        //await _selectedFeature.LoadAsync();
-
-                        Feature back_selectedFeature = _selectedFeature;
-                        if (Messages.ShowYesNoMsgBox("시설물 위치정보를 삭제하시겠습니까?") == MessageBoxResult.Yes)
-                        {
-                            // Apply the edit to the feature table.
-                            await _selectedFeature.FeatureTable.DeleteFeatureAsync(_selectedFeature);
-                            _selectedFeature.Refresh();
-                        }
-                        else
-                        {
-                            await _selectedFeature.FeatureTable.AddFeatureAsync(back_selectedFeature);
-                            _selectedFeature.Refresh();
-                        }
-
-                        break;
-
-                    case "취소":
-                        // Push the update to the service.
-                        //ServiceFeatureTable serviceTableCancel = (ServiceFeatureTable)_selectedFeature.FeatureTable;
-                        //serviceTableCancel.CancelLoad();
-                        break;
                     default:
                         break;
                 }
@@ -509,7 +407,7 @@ namespace GTI.WFMS.GIS
             string layerNm = "";
             try
             {
-                layerNm = GisCmm.GetLayerNm(FTR_CDE);
+                layerNm = GetLayerNm(FTR_CDE);
                 if ("".Equals(layerNm))
                 {
                     MessageBox.Show("잘못된 레이어입니다.");
@@ -524,10 +422,10 @@ namespace GTI.WFMS.GIS
 
 
             //0.해당레이어표시 - 내부에서자동으로 로딩여부 체크함
-            ShowShapeLayer(mapView, GisCmm.GetLayerNm(FTR_CDE), true);
+            ShowShapeLayer(mapView, GetLayerNm(FTR_CDE), true);
 
             //1.해당레이어 가져오기
-            FeatureLayer layer = layers[GisCmm.GetLayerNm(FTR_CDE)];
+            FeatureLayer layer = layers[GetLayerNm(FTR_CDE)];
 
 
 
@@ -661,7 +559,7 @@ namespace GTI.WFMS.GIS
         private async void InitMap()
         {
             //지도위치 및 스케일 초기화
-            await mapView.SetViewpointCenterAsync(GisCmm._ulsanCoords, GisCmm._ulsanScale);
+            await mapView.SetViewpointCenterAsync(_ulsanCoords, _ulsanScale);
 
             //Base맵 초기화
             Console.WriteLine("this._map.SpatialReference - " + this._map.SpatialReference);

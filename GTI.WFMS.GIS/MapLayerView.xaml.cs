@@ -10,13 +10,25 @@ namespace GTI.WFMS.GIS
     /// <summary>
     /// MapView.xaml에 대한 상호 작용 논리
     /// </summary>
-    public partial class MapMainView : UserControl
+    public partial class MapLayerView : UserControl
     {
-        public MapMainView()
+        public MapLayerView()
         {
             InitializeComponent();
 
 
+            //스타일로딩
+            this.Resources.MergedDictionaries.Clear();
+            if (ThemeApply.strThemeName.Equals("GTIBlueTheme"))
+            {
+                this.Resources.MergedDictionaries.Add(new ResourceDictionary() { Source = new Uri("pack://application:,,,/GTI.WFMS.GIS;component/Styles/Blue/GisStyles.xaml", UriKind.Absolute) });
+                //this.Resources = Application.LoadComponent(new Uri("pack://application:,,,/GTI.WFMS.GIS;component/Styles/Blue/GisStyles.xaml", UriKind.Absolute)) as ResourceDictionary;
+            }
+            else
+            {
+                this.Resources.MergedDictionaries.Add(new ResourceDictionary() { Source = new Uri("pack://application:,,,/GTI.WFMS.GIS;component/Styles/Navy/GisStyles.xaml", UriKind.Absolute) });
+                //this.Resources = Application.LoadComponent(new Uri("pack://application:,,,/GTI.WFMS.GIS;component/Styles/Navy/GisStyles.xaml", UriKind.Absolute)) as ResourceDictionary;
+            }
 
             //StartLocalMapService();
         }
