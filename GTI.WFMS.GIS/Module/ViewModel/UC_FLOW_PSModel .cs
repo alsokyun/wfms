@@ -144,7 +144,7 @@ namespace GTI.WFMS.GIS.Module.ViewModel
             {
                 FctDtl.FTR_CDE = this.FTR_CDE;
                 FctDtl.FTR_IDN = Convert.ToInt32(this.FTR_IDN); //신규위치 및 기존위치 정보만 있을수 있으므로 shape의 관리번호를 기준으로한다.
-                BizUtil.Update2(FctDtl, "updateFlowMtDtl");
+                BizUtil.Update2(FctDtl, "saveFlowMtDtl");
             }
             catch (Exception e)
             {

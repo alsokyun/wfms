@@ -163,7 +163,16 @@ namespace GTI.WFMS.GIS.Pop.ViewModel
 
 
             //시설물조회 후 해당레이어 표시
-            SearchCommand = new RelayCommand<object>(SearchAction);
+            SearchCommand = new RelayCommand<object>(delegate(object obj) {
+
+                //기존항목 초기화
+                InitModel();
+
+                //기존페이지 초기화
+                InitPage(cbFTR_CDE.EditValue.ToString(), null, null);
+
+                SearchAction(obj);
+            });
 
 
 
@@ -282,11 +291,20 @@ namespace GTI.WFMS.GIS.Pop.ViewModel
                 else
                 {
                     ////화면초기화
-                    InitModel();
+                    editWinView.txtFTR_IDN.EditValue = ""; //FTR_IDN = ""
+                    NEW_FTR_IDN = "";
+
+                    //선택된레이어 해제
+                    _selectedFeature = null;
+                    try
+                    {
+                        layers[_selectedLayerNm].ClearSelection();
+                    }
+                    catch (Exception) { }
 
                     ////신규시설물 페이지전환
-                    editWinView.cctl.Content = new UC_FLOW_PS(FTR_CDE);
-                    NEW_FTR_IDN = ((UC_FLOW_PS)editWinView.cctl.Content).txtFTR_IDN.EditValue.ToString();
+                    InitPage(cbFTR_CDE.EditValue.ToString(), FTR_CDE, null);
+                    
 
                     //추가처리 탭핸들러 추가
                     mapView.GeoViewTapped -= handlerGeoViewTappedMoveFeature;
@@ -335,6 +353,11 @@ namespace GTI.WFMS.GIS.Pop.ViewModel
                     // Apply the edit to the feature table.
                     await _selectedFeature.FeatureTable.DeleteFeatureAsync(_selectedFeature);
                     _selectedFeature.Refresh();
+
+                    MessageBox.Show("삭제되었습니다.");
+                    // 페이지초기화
+                    InitPage(cbFTR_CDE.EditValue.ToString(), null, null);
+
                 }
                 else
                 {
@@ -391,6 +414,8 @@ namespace GTI.WFMS.GIS.Pop.ViewModel
         {
             // 0.편집화면초기화
             InitModel();
+            editWinView.txtFTR_IDN.EditValue = ""; 
+
             //시설물레이어 초기화
             _selectedLayerNm = "";
             _selectedLayerNms.Clear();
@@ -407,15 +432,7 @@ namespace GTI.WFMS.GIS.Pop.ViewModel
             }
 
             // 2.선택된 레이어의 시설물 페이지로  초기화
-            switch (ftr_cde)
-            {
-                case "SA117":
-                    editWinView.cctl.Content = new UC_FLOW_PS();
-                    break;
-                default:
-                    editWinView.cctl.Content = null;
-                    break;
-            }
+            InitPage(ftr_cde, null, null);
 
             // 시설물검색
             SearchAction(null);
@@ -428,7 +445,6 @@ namespace GTI.WFMS.GIS.Pop.ViewModel
         {
             // 화면초기화
             BitImg = new BitmapImage();
-            editWinView.txtFTR_IDN.EditValue = ""; //FTR_IDN = ""
             NEW_FTR_IDN = "";
 
 
@@ -445,7 +461,42 @@ namespace GTI.WFMS.GIS.Pop.ViewModel
                 layers[_selectedLayerNm].ClearSelection();
             }
             catch (Exception) { }
+
         }
+
+
+        /// <summary>
+        /// UserControl 시설물페이지 재로딩
+        /// </summary>
+        /// <param name="CBO_FTR_CDE"></param>
+        /// <param name="_FTR_CDE"></param>
+        /// <param name="_FTR_IDN"></param>
+        private void InitPage(string CBO_FTR_CDE, string _FTR_CDE, string _FTR_IDN)
+        {
+            switch (CBO_FTR_CDE)
+            {
+                case "SA117":
+                    if (FmsUtil.IsNull(_FTR_CDE) && FmsUtil.IsNull(_FTR_IDN))
+                    {
+                        editWinView.cctl.Content = new UC_FLOW_PS();//널페이지
+                    }
+                    else if (FmsUtil.IsNull(_FTR_IDN))
+                    {
+                        editWinView.cctl.Content = new UC_FLOW_PS(_FTR_CDE);//신규페이지
+                        NEW_FTR_IDN = ((UC_FLOW_PS)editWinView.cctl.Content).txtFTR_IDN.EditValue.ToString();
+                    }
+                    else
+                    {
+                        editWinView.cctl.Content = new UC_FLOW_PS(_FTR_CDE, _FTR_IDN);//상세페이지
+                    }
+                    break;
+
+                default:
+                    editWinView.cctl.Content = new UC_FLOW_PS(_FTR_CDE, _FTR_IDN);
+                    break;
+            }
+        }
+
 
 
         //시설물 shape 검색
@@ -457,14 +508,13 @@ namespace GTI.WFMS.GIS.Pop.ViewModel
                 return;
             }
 
-            //기존항목 삭제
-            editWinView.cctl.Content = null;
-
             string ftr_idn = editWinView.txtFTR_IDN.Text;
 
             //레이어표시 - FTR_IDN 조건 필터링
             ShowShapeLayerFilter(mapView, GisCmm.GetLayerNm(FTR_CDE), true, ftr_idn);
         }
+
+
 
         #endregion
 
@@ -734,15 +784,7 @@ namespace GTI.WFMS.GIS.Pop.ViewModel
 
 
                 // UserControl 시설물정보 재로딩
-                switch (cbFTR_CDE.EditValue)
-                {
-                    case "SA117":
-                        editWinView.cctl.Content = new UC_FLOW_PS(this.FTR_CDE, this.FTR_IDN);
-                        break;
-                    default:
-                        editWinView.cctl.Content = new UC_FLOW_PS(this.FTR_CDE, this.FTR_IDN);
-                        break;
-                }
+                InitPage(cbFTR_CDE.EditValue.ToString(), this.FTR_CDE, this.FTR_IDN);
 
 
                 // 아이콘 이미지소스 업데이트

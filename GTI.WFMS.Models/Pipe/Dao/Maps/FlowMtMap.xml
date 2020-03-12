@@ -249,7 +249,70 @@
         AND	FTR_IDN = #FTR_IDN#
     </update>
 
-    <!--유량계 상세삭제-->
+    <!--유량계 상세저장-->
+    <update id="saveFlowMtDtl" parameterClass="GTI.WFMS.Models.Pipe.Model.FlowMtDtl">
+      MERGE INTO INFOFMS.WTL_FLOW_PS
+      USING DUAL ON (FTR_CDE = #FTR_CDE# AND	FTR_IDN = #FTR_IDN#)
+
+      WHEN MATCHED THEN
+      UPDATE
+      SET HJD_CDE = #HJD_CDE#
+      , SHT_NUM = #SHT_NUM#
+      , MNG_CDE = #MNG_CDE#
+      , IST_YMD = decode(length(#IST_YMD#), 10, to_char(to_date(#IST_YMD#, 'yyyy-MM-dd'), 'yyyyMMdd'), '')
+      , GAG_CDE = #GAG_CDE#
+      , MOF_CDE = #MOF_CDE#
+      , FLO_DIP = #FLO_DIP#
+      , PRD_NAM = #PRD_NAM#
+      , PIP_CDE = #PIP_CDE#
+      , CNT_NUM = #CNT_NUM#
+      , SYS_CHK = #SYS_CHK#
+      , ANG_DIR = #ANG_DIR#
+      , PIP_IDN = #PIP_IDN#
+      , SHT_CDE = #SHT_CDE#
+
+      WHEN NOT MATCHED THEN
+        INSERT 
+        ( FTR_CDE
+        , FTR_IDN
+        , HJD_CDE
+        , SHT_NUM
+        , MNG_CDE
+        , IST_YMD
+        , GAG_CDE
+        , MOF_CDE
+        , FLO_DIP
+        , PRD_NAM
+        , PIP_CDE
+        , CNT_NUM
+        , SYS_CHK
+        , ANG_DIR
+        , PIP_IDN
+        , SHT_CDE
+        )
+        VALUES
+        ( #FTR_CDE#
+        , #FTR_IDN#
+        , #HJD_CDE#
+        , #SHT_NUM#
+        , #MNG_CDE#
+        , decode(length(#IST_YMD#), 10, to_char(to_date(#IST_YMD#, 'yyyy-MM-dd'), 'yyyyMMdd'), '')
+        , #GAG_CDE#
+        , #MOF_CDE#
+        , #FLO_DIP#
+        , #PRD_NAM#
+        , #PIP_CDE#
+        , #CNT_NUM#
+        , #SYS_CHK#
+        , #ANG_DIR#
+        , #PIP_IDN#
+        , #SHT_CDE#
+        )
+    </update>
+    
+    
+    
+      <!--유량계 상세삭제-->
     <update id="deleteFlowMtDtl" parameterClass="GTI.WFMS.Models.Pipe.Model.FlowMtDtl">
       /* 유량계 상세 삭제 */
       DELETE INFOFMS.WTL_FLOW_PS

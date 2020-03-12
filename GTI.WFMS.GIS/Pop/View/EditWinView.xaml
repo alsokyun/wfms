@@ -90,7 +90,7 @@
                     <Label Content="시설물속성정보" Style="{DynamicResource ResourceKey=CircleTitleLabel}"/>
                 </StackPanel>
                 <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Margin="0 0 10 0">
-                    <Border BorderThickness="1" BorderBrush="Pink"  HorizontalAlignment="Center" VerticalAlignment="Center" Margin="5 0 5 0" Padding="2" Width="20" Height="20">
+                    <Border BorderThickness="1" BorderBrush="Pink"  HorizontalAlignment="Center" VerticalAlignment="Center" Margin="5 0 5 0" Padding="2" Width="22" Height="22">
                         <Image x:Name="imgSA117" Source="{Binding BitImg}" />
                     </Border>
                     <Button Content="심볼변경" Command="{Binding ChgImgCmd}" CommandParameter="{Binding FTR_CDE}" Height="25" Style="{DynamicResource TxtButton}" />
