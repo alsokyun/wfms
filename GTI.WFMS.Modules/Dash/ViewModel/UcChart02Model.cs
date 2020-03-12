@@ -60,13 +60,11 @@ namespace GTI.WFMS.Modules.Dash.ViewModel
 
                 // Create an empty chart. 
                 ChartControl chart1 = ucChart02.ctDash;
-                ChartControl chart = new ChartControl();
-                
+                                
                 // Bind a chart to a data source. 
                 chart1.DataSource = dt;
-                
+                                
                 ucChart02.srXSER1.Points.Clear();
-
                 foreach (DataRow row in dt.Rows)
                 {                                      
                     SeriesPoint point = new SeriesPoint(row["NAM"].ToString(), Convert.ToDouble(row["DATA_VAL"]));
@@ -74,7 +72,7 @@ namespace GTI.WFMS.Modules.Dash.ViewModel
                     ucChart02.srXSER1.Points.Add(point);
                 }
 
-              
+
             }
             catch (Exception e)
             {

@@ -57,8 +57,31 @@
 
             <Border Grid.Row="1" Grid.Column="0" Style="{DynamicResource MenuContentoutBorder}">
                 <dxc:ChartControl Name="ctDash">
+                    <dxc:ChartControl.Palette>
+                        <dxc:CustomPalette>
+                            <dxc:CustomPalette.Colors>
+                                <Color>#FF0F00</Color>
+                                <Color>#FF6600</Color>
+                                <Color>#FF9E01</Color>
+                                <Color>#FCD202</Color>
+                                <Color>#F8FF01</Color>
+                                <Color>#B0DE09</Color>
+                                <Color>#04D215</Color>
+                                <Color>#0D8ECF</Color>
+                                <Color>#0D52D1</Color>
+                                <Color>#2A0CD0</Color>
+                                <Color>#8A0CCF</Color>
+                                <Color>#CD0D74</Color>
+                                <Color>#754DEB</Color>
+                                <Color>#DDDDDD</Color>
+                                <Color>#333333</Color>
+                            </dxc:CustomPalette.Colors>
+                        </dxc:CustomPalette>
+                    </dxc:ChartControl.Palette>
+                    
                     
                     <dxc:ChartControl.Diagram>
+                        
                         <!--
                             EnableAxisXNavigation="True" ==> X 스크롤 출력여부
                             -->
