@@ -561,6 +561,16 @@
     <Resource Include="InfoFMS.ico" />
     <Content Include="DLL\DevExpress.Xpf.Themes.GTIBlueTheme.v19.1.dll" />
     <Content Include="DLL\DevExpress.Xpf.Themes.GTINavyTheme.v19.1.dll" />
+    <Resource Include="Resources\Navy\Images\Image\btn_layer_add.png" />
+    <Resource Include="Resources\Navy\Images\Image\btn_layer_add_on.png" />
+    <Resource Include="Resources\Navy\Images\Image\btn_layer_del.png" />
+    <Resource Include="Resources\Navy\Images\Image\btn_layer_del_on.png" />
+    <Resource Include="Resources\Navy\Images\Image\btn_layer_move.png" />
+    <Resource Include="Resources\Navy\Images\Image\btn_layer_move_on.png" />
+    <Resource Include="Resources\Navy\Images\Image\icon_layer_close.png" />
+    <Resource Include="Resources\Navy\Images\Image\icon_layer_map_folder.png" />
+    <Resource Include="Resources\Navy\Images\Image\btn_modi.png" />
+    <Resource Include="Resources\Navy\Images\Image\btn_modi_on.png" />
     <Content Include="Styles\Fonts\malgun.ttf">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>

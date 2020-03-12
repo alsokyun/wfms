@@ -248,7 +248,7 @@
             <Label Grid.Row="0" Grid.Column="6" Content="제작회사명" Style="{DynamicResource ResourceKey=GridLabel}"/>
             <dxe:TextEdit Grid.Row="0" Grid.Column="7" Style="{DynamicResource ResourceKey=GrdTextEdit}"   
                           x:Name="txtPRD_NAM" EditValue="{Binding PRD_NAM}"/>
-            <Label Grid.Row="1" Grid.Column="0" Content="지형지물부호" Style="{DynamicResource ResourceKey=GridLabel}"/>
+            <Label Grid.Row="1" Grid.Column="0" Content="관로지형지물부호" Style="{DynamicResource ResourceKey=GridLabel}"/>
             <dxe:TextEdit Grid.Row="1" Grid.Column="1" Style="{DynamicResource ResourceKey=GrdTextEdit}"   
                           x:Name="txtPIP_CDE" EditValue="{Binding PIP_CDE}"/>
             <Label Grid.Row="1" Grid.Column="2" Content="관로관리번호" Style="{DynamicResource ResourceKey=GridLabel}"/>

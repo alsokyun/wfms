@@ -168,8 +168,8 @@
             <Label Grid.Row="0" Grid.Column="0" Content="공사번호" Style="{DynamicResource ResourceKey=GridLabelReq}"/>
             <dxe:TextEdit Grid.Row="0" Grid.Column="1" Style="{DynamicResource ResourceKey=GrdTextEdit}" Tag="공사번호" Width="80" HorizontalAlignment="Left"
                           x:Name="txtCNT_NUM" EditValue="{Binding CNT_NUM, UpdateSourceTrigger=PropertyChanged}"/>
-            <Button Grid.Row="0" Grid.Column="1" HorizontalAlignment="Right" Width="Auto" Height="22" Padding="1" Margin="0 0 10 0"
-                    x:Name="btnDup" Command="{Binding DupCommand}" Content="체크" Style="{DynamicResource TxtButton}" FontWeight="Normal" />
+            <Button Grid.Row="0" Grid.Column="1" HorizontalAlignment="Right" Width="Auto" Height="22" Margin="0 0 10 0"
+                    x:Name="btnDup" Command="{Binding DupCommand}" Content="체크" Style="{DynamicResource TxtButton}" />
 
             <Label Grid.Row="0" Grid.Column="2" Content="시공자명" Style="{DynamicResource ResourceKey=GridLabel}"/>
             <dxe:TextEdit Grid.Row="0" Grid.Column="3" Style="{DynamicResource ResourceKey=GrdTextEdit}"  

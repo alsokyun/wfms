@@ -17,7 +17,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace GTI.WFMS.GIS
+namespace GTI.WFMS.GIS.sample
 {
     /// <summary>
     /// 피처 추가기능

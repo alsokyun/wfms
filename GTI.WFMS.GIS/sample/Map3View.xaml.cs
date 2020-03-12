@@ -17,7 +17,7 @@ using System.Windows;
 using System.Windows.Controls;
 using SelectionMode = Esri.ArcGISRuntime.Mapping.SelectionMode;
 
-namespace GTI.WFMS.GIS
+namespace GTI.WFMS.GIS.sample
 {
     /// <summary>
     /// FeatureService로부터 로컬에 Geodatabase를 생성하고, 피처를  수정한후  Geodatabased와 FeatureService에 동기화처리
