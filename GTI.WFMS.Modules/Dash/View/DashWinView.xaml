@@ -7,10 +7,8 @@
             mc:Ignorable="d" 
             d:DesignHeight="500" d:DesignWidth="1000"
         
-            xmlns:esri="http://schemas.esri.com/arcgis/runtime/2013"
             xmlns:cv="clr-namespace:GTI.WFMS.Models.Common;assembly=GTI.WFMS.Models"
-            xmlns:vm="clr-namespace:GTI.WFMS.GIS.Module.View"
-            xmlns:local="clr-namespace:GTI.WFMS.Modules.Dash.ViewModel"
+            xmlns:vm="clr-namespace:GTI.WFMS.Modules.Dash.ViewModel"
             xmlns:dxe="http://schemas.devexpress.com/winfx/2008/xaml/editors"
             xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
                
@@ -24,24 +22,24 @@
 
     <Window.Resources>
         <ResourceDictionary>
-            <cv:Date3StrConverter x:Key="date3StrConverter" />
             <cv:Toggle2Converter x:Key="toggleConverter" />
         </ResourceDictionary>
     </Window.Resources>
 
-
+    <Window.DataContext>
+        <vm:DashWinViewModel />
+    </Window.DataContext>
     
     <Grid >
         <Grid.RowDefinitions>
             <RowDefinition Height="40"/>
 
-            <RowDefinition Height="42"/>
             <RowDefinition Height="*"/>
 
         </Grid.RowDefinitions>
 
         <Grid Grid.Row="0" Background="{DynamicResource TileCOLOR2Brush }" PreviewMouseLeftButtonDown="Grid_PreviewMouseLeftButtonDown" >
-            <Label Content="시설물 편집" FontSize="17" FontWeight="Bold" Foreground="White" 
+            <Label Content="상황판" FontSize="17" FontWeight="Bold" Foreground="White" 
                    HorizontalAlignment="Left" VerticalAlignment="Center" Padding="10 0 0 0" />
         </Grid>
 
@@ -49,20 +47,23 @@
                 x:Name="btnClose" Click="BtnClose_Click" />
 
 
-        <Grid>
+        <Grid Grid.Row="1">
             <Grid.RowDefinitions>
                 <RowDefinition Height="300*"/>
                 <RowDefinition Height="300*"/>
             </Grid.RowDefinitions>
             <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="300*"/>
-                <ColumnDefinition Width="300*"/>
+                <ColumnDefinition Width="300"/>
+                <ColumnDefinition Width="400*"/>
+                <ColumnDefinition Width="400*"/>
             </Grid.ColumnDefinitions>
+            
+            
 
-            <ContentControl Grid.Row="0" Grid.Column="0" x:Name="ctl1"/>
-            <ContentControl Grid.Row="0" Grid.Column="1" x:Name="ctl2"/>
-            <ContentControl Grid.Row="1" Grid.Column="0" x:Name="ctl3"/>
-            <ContentControl Grid.Row="1" Grid.Column="1" x:Name="ctl4"/>
+            <ContentControl Grid.Row="0" Grid.Column="1" x:Name="ctl1"/>
+            <ContentControl Grid.Row="0" Grid.Column="2" x:Name="ctl2"/>
+            <ContentControl Grid.Row="1" Grid.Column="1" x:Name="ctl3"/>
+            <ContentControl Grid.Row="1" Grid.Column="2" x:Name="ctl4"/>
 
         </Grid>
 

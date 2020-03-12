@@ -4,6 +4,7 @@ using GTI.WFMS.GIS;
 using GTI.WFMS.Models.Cmm.Model;
 using GTI.WFMS.Models.Common;
 using GTI.WFMS.Models.Main.Work;
+using GTI.WFMS.Modules.Dash.View;
 using GTI.WFMS.Modules.Main;
 using GTI.WFMS.Modules.Main.View;
 using GTI.WNMS.Main.View.Pop;
@@ -96,7 +97,8 @@ namespace GTI.WFMS.Main
 
         public RelayCommand<object> CallPageCmd { get; set; }
 
-        
+        public RelayCommand<object> UserInfoMngCommand { get; set; }
+
         #endregion
 
 
@@ -120,6 +122,17 @@ namespace GTI.WFMS.Main
             MenuShowHidenCommand = new DelegateCommand<object>(MenuShowHidenAction);
             QuickShowHidenCommand = new DelegateCommand<object>(QuickShowHidenAction);
             QuickMngCommand = new DelegateCommand<object>(QuickMngAction);
+
+
+
+            UserInfoMngCommand = new RelayCommand<object>(delegate (object obj) {
+
+                DashWinView dashWinView = new DashWinView();
+                if (dashWinView.ShowDialog() is bool)
+                {
+                    //재조회
+                }
+            });
 
             //시설물팝업에서 시설물메뉴화면 호출작업
             CallPageCmd = new RelayCommand<object>(delegate (object obj) {

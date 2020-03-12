@@ -229,11 +229,6 @@ namespace GTI.WFMS.GIS
             //InitUniqueValueRenderer();
 
 
-            ChartCmd = new RelayCommand<object>(delegate (object obj) { 
-
-
-            });
-
 
             //GIS√ ±‚»≠
             resetCmd = new RelayCommand<object>(delegate (object obj)
