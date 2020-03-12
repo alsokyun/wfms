@@ -1,0 +1,243 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<sqlMap namespace="Dash" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://ibatis.apache.org/mapping">
+  <statements>
+
+    <select id="SelectDashMenuList" resultClass="Hashtable" >
+      <![CDATA[
+		/* Dash_SQL.selectDashMenuList - 대시보드 메뉴관리 */		
+		SELECT M.MNU_CD
+		     , M.MNU_NM
+		     , M.ETC
+		     , M.MNU_FLE_NM
+		     , M.ORD
+		     , M.USE_YN
+		     , CASE WHEN U.USER_ID IS NOT NULL THEN 'Y' ELSE 'N' END AS MNU_USE_YN
+		  FROM DASH_MNU_INFO M
+		       LEFT JOIN USER_DASH_MNU U
+		         ON ( M.MNU_CD = U.MNU_CD AND U.USER_ID = #id# )
+		 WHERE 1=1    
+		   AND M.USE_YN = 'Y'
+		 ORDER BY M.ORD 
+	]]>
+    </select>
+
+    <!-- 사용자별 대시보드 대상 삭제 -->
+    <update id="deleteUserDashMnu" parameterClass="hashmap">
+      <![CDATA[
+			/* Dash_SQL.deleteUserDashMnu - 사용자별 대시보드 대상 삭제*/	
+			DELETE USER_DASH_MNU
+			WHERE USER_ID =  #id#    
+		]]>
+    </update>
+
+    <!-- 사용자별 대시보드 대상 저장 -->
+    <update id="insertUserDashMnu" parameterClass="hashmap">
+      <![CDATA[
+			/* Dash_SQL.insertUserDashMnu - 사용자별 대시보드 대상 저장*/	
+			INSERT INTO USER_DASH_MNU( USER_ID, MNU_CD )
+			VALUES ( #id#, #mnuCd# )    
+		]]>
+    </update>
+
+    <select id="SelectDashChart1List" resultClass="Hashtable" >
+      <![CDATA[
+		/* Dash_SQL.selectDashChart1List - 1.민원현황(상수,급수공사에 대한 민원구분별) */		
+		SELECT APL_CDE
+		     , APL_CDE_NAM
+		     , APL_CDE_NAM AS NAM
+		     , NVL(SUM(CNT),0) AS DATA_VAL
+		     , NVL(SUM(CNT2),0) AS DATA_VAL2
+		  FROM (
+		        SELECT m.APL_CDE 
+		              ,m.APL_CDE_NAM
+		              ,d.GRP_NM
+		              ,d.CNT
+		              ,d.CNT2
+		          FROM (SELECT DTL_CD AS APL_CDE
+		                     , CD_NM AS APL_CDE_NAM
+		                  FROM CD_DTL_INFO
+		                 WHERE 1=1
+		                     AND MST_CD = 'APL_CDE' /*민원구분*/
+		                     AND DEL_YN = 'N'		                  
+		                UNION ALL
+		                SELECT ' ' AS APL_CDE
+		                     , '선택안함' AS APL_CDE_NAM
+		                  FROM DUAL
+		                 WHERE 1=1 
+		                 ORDER BY 1) M
+		             , (
+		                SELECT '상수공사' as GRP_NM
+		                     , NVL(A.APL_CDE,' ') AS APL_CDE
+		                     , A.CNT_NUM
+		                     , 1 as CNT
+		                     , 0 as CNT2
+		                  FROM WTT_WSER_MA A
+		                     , WTT_CONS_MA M
+		                 WHERE M.CNT_NUM = A.CNT_NUM
+  						   AND A.RCV_YMD LIKE NVL(#pYm#, TO_CHAR(SYSDATE,'YYYYMM')) || '%'
+		                UNION ALL
+		                SELECT '급수공사' as GRP_NM
+		                     , NVL(A.APL_CDE,' ') AS APL_CDE
+		                     , A.CNT_NUM
+		                     , 0 as CNT
+		                     , 1 as CNT2
+		                  FROM WTT_WSER_MA A
+		                     , WTT_SPLY_MA M
+		                 WHERE M.CNT_NUM = A.CNT_NUM  
+		                   AND A.RCV_YMD LIKE NVL(#pYm#, TO_CHAR(SYSDATE,'YYYYMM')) || '%'       
+		               ) D
+		         WHERE 1=1
+		           AND M.APL_CDE = D.APL_CDE(+) )
+		 GROUP BY APL_CDE, APL_CDE_NAM         
+		 ORDER BY DECODE(APL_CDE,' ','APL99999',APL_CDE)
+	]]>
+    </select>
+
+    <select id="SelectDashChart2List" resultClass="Hashtable" >
+      <![CDATA[
+		/* Dash_SQL.selectDashChart2List - 2.소모품별 재고현황(금일기준) */		
+		SELECT M.PDH_NUM
+		     , M.MNG_CDE_NAM
+		     , M.PDT_NAM
+		     , M.IN_AMT         /*입고수량*/
+		     , M.TOT_USE_AMT    /*사용량*/
+		     , M.IN_AMT - TOT_USE_AMT AS CUR_STCK_CNT /*현재고*/
+         , M.PDT_NAM AS NAM
+         , M.IN_AMT - TOT_USE_AMT AS DATA_VAL
+		  FROM (SELECT M.PDH_NUM
+		             , M.PDT_CAT_CDE
+		             , NVL(FN_GET_CD_DTL_INFO_NAME('PDT_CAT_CDE',M.PDT_CAT_CDE),M.PDT_CAT_CDE) AS MNG_CDE_NAM
+		             , M.PDT_NAM
+		             , NVL(SUM(A.IN_AMT),0) AS IN_AMT
+		             , NVL(SUM(CASE WHEN M.PDT_CAT_CDE = 'PDT_CAT_CDE001' THEN B.PDH_CNT /*소모품구분(소모품)*/
+		                            WHEN M.PDT_CAT_CDE = 'PDT_CAT_CDE002' THEN B.PDH_AMT /*소모품구분(오일)*/
+		                       ELSE 0 END),0) AS TOT_USE_AMT /*총사용량*/
+		          FROM FMS_PDJT_MA M
+		               LEFT JOIN FMS_PDJT_IN_HT A ON ( M.PDH_NUM = A.PDH_NUM ) /*소모품 입고*/
+		               LEFT JOIN FMS_PDJT_HT B ON ( M.PDH_NUM = B.PDH_NUM ) /*소모품 사용*/
+		         WHERE 1=1
+		           AND M.USE_YN = 'Y'
+		         GROUP BY M.PDH_NUM, M.PDT_CAT_CDE, M.PDT_NAM
+		         ORDER BY 1 ) M
+	]]>
+    </select>
+
+    <select id="SelectDashChart3List" resultClass="Hashtable" >
+      <![CDATA[	
+		/* Dash_SQL.selectDashChart3List - 3.점검현황(금일기준) */		
+		SELECT M.DTL_CD AS SCL_STAT_CDE /*점검상태*/
+		     , M.CD_NM AS SCL_STAT_CDE_NAM
+         , M.CD_NM AS NAM         
+		     , SUM(CASE WHEN A.SCL_NUM IS NOT NULL THEN 1 ELSE 0 END) DATA_VAL         
+		  FROM CD_DTL_INFO M 
+               LEFT JOIN FMS_CHSC_MA A
+                 ON (M.DTL_CD = A.SCL_STAT_CDE
+                     AND A.STA_YMD >= NVL(#pYm#, TO_CHAR(SYSDATE,'YYYYMM')) || '01'
+                     AND A.END_YMD <= TO_CHAR(LAST_DAY(NVL(#pYm#, TO_CHAR(SYSDATE,'YYYYMM')) || '01' ),'YYYYMMDD') )
+		 WHERE 1=1
+           AND M.MST_CD = 'SCL_STAT_CDE'
+		 GROUP BY M.DTL_CD, M.CD_NM
+		 ORDER BY M.DTL_CD, M.CD_NM
+	]]>
+    </select>
+
+    <select id="SelectDashChart4List" resultClass="Hashtable" >
+      <![CDATA[	
+		/* Dash_SQL.selectDashChart4List - 4.시설물 현황(금일기준) */		
+		SELECT M.TAB, M.TAB_NM, M.ORD
+         , M.TAB_NM AS NAM
+         , SUM(CASE WHEN FTR_CDE IS NOT NULL THEN 1 ELSE 0 END) AS DATA_VAL
+		  FROM (SELECT 'WTL_PIPE_LS' AS TAB, '상수관로'     AS TAB_NM, 1  AS ORD FROM DUAL UNION ALL /*상수관로*/  IST_YMD
+				SELECT 'WTL_VALV_PS' AS TAB, '변류시설'     AS TAB_NM, 2  AS ORD FROM DUAL UNION ALL /*변류시설*/  IST_YMD
+				SELECT 'WTL_FIRE_PS' AS TAB, '소방시설'     AS TAB_NM, 3  AS ORD FROM DUAL UNION ALL /*소방시설*/  IST_YMD
+				SELECT 'WTL_MANH_PS' AS TAB, '상수맨홀'     AS TAB_NM, 4  AS ORD FROM DUAL UNION ALL /*상수맨홀*/  IST_YMD
+				SELECT 'WTL_FLOW_PS' AS TAB, '유량계'       AS TAB_NM, 5  AS ORD FROM DUAL UNION ALL /*유량계*/   IST_YMD
+				SELECT 'WTL_STPI_PS' AS TAB, '스탠드파이프' AS TAB_NM, 6  AS ORD FROM DUAL UNION ALL /*스탠드파이프*/    IST_YMD
+				SELECT 'WTL_PRGA_PS' AS TAB, '수압계'       AS TAB_NM, 7  AS ORD FROM DUAL UNION ALL /*수압계*/   IST_YMD
+				SELECT 'WTL_HEAD_PS' AS TAB, '수원지'       AS TAB_NM, 8  AS ORD FROM DUAL UNION ALL /*수원지*/   FNS_YMD
+				SELECT 'WTL_GAIN_PS' AS TAB, '취수장'       AS TAB_NM, 9  AS ORD FROM DUAL UNION ALL /*취수장*/   FNS_YMD
+				SELECT 'WTL_SERV_PS' AS TAB, '배수지'       AS TAB_NM, 10 AS ORD FROM DUAL UNION ALL /*배수지*/   FNS_YMD
+				SELECT 'WTL_PURI_AS' AS TAB, '정수장'       AS TAB_NM, 11 AS ORD FROM DUAL UNION ALL /*정수장*/   FNS_YMD
+				SELECT 'WTL_PRES_PS' AS TAB, '가압펌프장'   AS TAB_NM, 12 AS ORD FROM DUAL UNION ALL /*가압펌프장*/ FNS_YMD
+				SELECT 'WTL_SPLY_LS' AS TAB, '급수관로'     AS TAB_NM, 13 AS ORD FROM DUAL UNION ALL /*급수관로*/  IST_YMD
+				SELECT 'WTL_META_PS' AS TAB, '급수전계량기' AS TAB_NM, 14 AS ORD FROM DUAL UNION ALL /*급수전계량기*/    IST_YMD
+				SELECT 'WTL_RSRV_PS' AS TAB, '저수조'       AS TAB_NM, 15 AS ORD FROM DUAL /*저수조*/ FNS_YMD
+				) M 
+				  LEFT JOIN V_FTR A ON (M.TAB = A.TAB )
+		 WHERE 1=1   
+		 GROUP BY M.TAB, M.TAB_NM, M.ORD
+		 ORDER BY M.ORD
+
+	]]>
+    </select>
+
+    <select id="SelectDashChart5List" resultClass="Hashtable" >
+      <![CDATA[	
+		/* Dash_SQL.selectDashChart5List - 5.보수사유 현황(금일기준) */		
+		SELECT M.DTL_CD AS RPR_CAT_CDE /* 보수구분 */
+		     , M.CD_NM AS RPR_CAT_CDE_NAM		     
+         , M.CD_NM AS NAM 
+		     , SUM(CASE WHEN A.SCL_NUM IS NOT NULL THEN 1 ELSE 0 END) DATA_VAL
+		  FROM CD_DTL_INFO M 
+               LEFT JOIN FMS_CHSC_FTR_RES A
+                 ON (M.DTL_CD = A.RPR_CAT_CDE
+                     AND A.RPR_YMD LIKE NVL(#pYm#, TO_CHAR(SYSDATE,'YYYYMM')) || '%' )
+		 WHERE 1=1
+           AND M.MST_CD = 'RPR_CAT_CDE'
+		 GROUP BY M.DTL_CD, M.CD_NM
+		 ORDER BY M.DTL_CD, M.CD_NM
+	]]>
+    </select>
+
+    <select id="SelectDashChart6List" resultClass="Hashtable" >
+      <![CDATA[	
+		/* Dash_SQL.selectDashChart6List - 6.공사 현황(금일기준) */		
+		SELECT '상수공사' AS GBNAM
+         , '상수공사' AS NAM
+		     , COUNT(*) AS DATA_VAL
+		  FROM WTT_CONS_MA /*상수공사대장*/
+		 WHERE 1=1
+		   AND BEG_YMD LIKE NVL(#pYm#, TO_CHAR(SYSDATE,'YYYYMM')) || '%' /*착수일자*/
+		UNION ALL
+		SELECT '급수공사' AS GBNAM    
+         , '급수공사' AS NAM
+		     , COUNT(*) AS DATA_VAL
+		  FROM WTT_SPLY_MA /*급수공사대장*/
+		 WHERE 1=1
+		   AND BEG_YMD LIKE NVL(#pYm#, TO_CHAR(SYSDATE,'YYYYMM')) || '%' /*착수일자*/
+	]]>
+    </select>
+
+    <select id="SelectDashChart7List" resultClass="Hashtable" >
+      <![CDATA[
+		/* Dash_SQL.selectDashChart7List - 7.소모품별 사용현황(금일기준) */		
+		SELECT M.PDH_NUM
+		     , M.MNG_CDE_NAM
+		     , M.PDT_NAM
+		     , M.IN_AMT         /*입고수량*/
+		     , M.TOT_USE_AMT    /*사용량*/
+		     , M.IN_AMT - TOT_USE_AMT AS CUR_STCK_CNT /*현재고*/
+         , M.PDT_NAM AS NAM
+         , M.TOT_USE_AMT AS DATA_VAL
+		  FROM (SELECT M.PDH_NUM
+		             , M.PDT_CAT_CDE
+		             , NVL(FN_GET_CD_DTL_INFO_NAME('PDT_CAT_CDE',M.PDT_CAT_CDE),M.PDT_CAT_CDE) AS MNG_CDE_NAM
+		             , M.PDT_NAM
+		             , NVL(SUM(A.IN_AMT),0) AS IN_AMT
+		             , NVL(SUM(CASE WHEN M.PDT_CAT_CDE = 'PDT_CAT_CDE001' THEN B.PDH_CNT /*소모품구분(소모품)*/
+		                            WHEN M.PDT_CAT_CDE = 'PDT_CAT_CDE002' THEN B.PDH_AMT /*소모품구분(오일)*/
+		                       ELSE 0 END),0) AS TOT_USE_AMT /*총사용량*/
+		          FROM FMS_PDJT_MA M
+		               LEFT JOIN FMS_PDJT_IN_HT A ON ( M.PDH_NUM = A.PDH_NUM ) /*소모품 입고*/
+		               LEFT JOIN FMS_PDJT_HT B ON ( M.PDH_NUM = B.PDH_NUM  
+		                     AND TO_CHAR(B.CRE_YMD,'YYYYMM') = NVL(#pYm#, TO_CHAR(SYSDATE,'YYYYMM')) ) /*소모품 사용*/
+		         WHERE 1=1
+		           AND M.USE_YN = 'Y'
+		         GROUP BY M.PDH_NUM, M.PDT_CAT_CDE, M.PDT_NAM
+		         ORDER BY 1 ) M
+	]]>
+    </select>
+
+
+  </statements>
+</sqlMap>

@@ -62,6 +62,13 @@
                         </i:EventTrigger>
                     </i:Interaction.Triggers>
                 </Button>
+                <Button Content="Chart">
+                    <i:Interaction.Triggers>
+                        <i:EventTrigger EventName="Click">
+                            <i:InvokeCommandAction Command="{Binding ChartCmd}" />
+                        </i:EventTrigger>
+                    </i:Interaction.Triggers>
+                </Button>
                 <!--기타버튼:사용안함
                 <Button x:Name="ClearButton" 
                         Content="Clear" IsEnabled="False"

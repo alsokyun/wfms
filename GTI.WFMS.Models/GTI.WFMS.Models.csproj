@@ -113,6 +113,10 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
       <SubType>Designer</SubType>
     </Content>
+    <Content Include="Dash\Dao\Maps\DashMap.xml">
+      <SubType>Designer</SubType>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Content Include="Lib\Interop.SHDocVw.dll" />
     <Content Include="Main\Dao\Maps\MainMap.xml">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
@@ -174,7 +178,6 @@
     <Compile Include="Acmf\Model\SupDutDtl.cs" />
     <Compile Include="Acmf\Model\HydtMetrDtl.cs" />
     <Compile Include="Adm\Dao\AdmDao.cs" />
-    <Compile Include="Adm\Work\AdmWork.cs" />
     <Compile Include="Cmm\Dao\CommonDao.cs" />
     <Compile Include="Cmm\Dao\CmmDao.cs" />
     <Compile Include="Cmm\Model\CmmDtl.cs" />
@@ -199,6 +202,8 @@
     <Compile Include="Common\Integer.cs" />
     <Compile Include="Common\RelayCommand.cs" />
     <Compile Include="Common\SourcesBehavior.cs" />
+    <Compile Include="Adm\Work\AdmWork.cs" />
+    <Compile Include="Dash\Model\DashDtl.cs" />
     <Compile Include="Fclt\Model\WttAttaDt.cs" />
     <Compile Include="FileUtils\CompleteRecordDragDropEventArgsConverter.cs" />
     <Compile Include="FileUtils\DragRecordOverEventArgsConverter.cs" />

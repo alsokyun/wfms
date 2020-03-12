@@ -235,6 +235,10 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
+    <Page Include="Dash\View\DashWinView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
     <Page Include="Fclt\view\PrsPmpAddView.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -300,6 +304,10 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Include="Link\View\AttFacListView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Dash\View\DashView.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
@@ -657,6 +665,10 @@
     <Compile Include="Cnst\View\CnstMngDtlView.xaml.cs">
       <DependentUpon>CnstMngDtlView.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Dash\ViewModel\DashViewModel.cs" />
+    <Compile Include="Dash\View\DashWinView.xaml.cs">
+      <DependentUpon>DashWinView.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Fclt\Report\FiltPltReport.cs">
       <SubType>Component</SubType>
     </Compile>
@@ -757,6 +769,9 @@
     </Compile>
     <Compile Include="Link\View\AttFacListView.xaml.cs">
       <DependentUpon>AttFacListView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Dash\View\DashView.xaml.cs">
+      <DependentUpon>DashView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Pop\ViewModel\CnstCmplSelViewModel.cs" />
     <Compile Include="Pop\View\CnstCmplSelView.xaml.cs">
