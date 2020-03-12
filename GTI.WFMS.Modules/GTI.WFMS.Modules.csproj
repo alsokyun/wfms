@@ -235,6 +235,30 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
+    <Page Include="Dash\View\UcChart07.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Dash\View\UcChart06.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Dash\View\UcChart05.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Dash\View\UcChart04.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Dash\View\UcChart03.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Dash\View\UcChart02.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
     <Page Include="Dash\View\UcChart01.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -669,9 +693,33 @@
     <Compile Include="Cnst\View\CnstMngDtlView.xaml.cs">
       <DependentUpon>CnstMngDtlView.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Dash\ViewModel\UcChart07Model.cs" />
+    <Compile Include="Dash\ViewModel\UcChart06Model.cs" />
+    <Compile Include="Dash\ViewModel\UcChart05Model.cs" />
+    <Compile Include="Dash\ViewModel\UcChart04Model.cs" />
+    <Compile Include="Dash\ViewModel\UcChart03Model.cs" />
+    <Compile Include="Dash\ViewModel\UcChart02Model.cs" />
     <Compile Include="Dash\ViewModel\UcChart01Model.cs" />
     <Compile Include="Dash\ViewModel\DashViewModel.cs" />
     <Compile Include="Dash\ViewModel\DashWinViewModel.cs" />
+    <Compile Include="Dash\View\UcChart07.xaml.cs">
+      <DependentUpon>UcChart07.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Dash\View\UcChart06.xaml.cs">
+      <DependentUpon>UcChart06.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Dash\View\UcChart05.xaml.cs">
+      <DependentUpon>UcChart05.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Dash\View\UcChart04.xaml.cs">
+      <DependentUpon>UcChart04.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Dash\View\UcChart03.xaml.cs">
+      <DependentUpon>UcChart03.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Dash\View\UcChart02.xaml.cs">
+      <DependentUpon>UcChart02.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Dash\View\UcChart01.xaml.cs">
       <DependentUpon>UcChart01.xaml</DependentUpon>
     </Compile>

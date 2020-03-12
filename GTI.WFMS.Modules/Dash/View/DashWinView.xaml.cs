@@ -29,11 +29,6 @@ namespace GTI.WFMS.Modules.Dash.View
 
         }
 
-
-
-
-
-
         //엔터키조회
         private void TxtFTR_IDN_KeyDown(object sender, KeyEventArgs e)
         {
@@ -41,12 +36,6 @@ namespace GTI.WFMS.Modules.Dash.View
             {
             }
         }
-
-
-
-
-
-
 
         //Esc 
         private void DashWinView_KeyDown(object sender, KeyEventArgs e)

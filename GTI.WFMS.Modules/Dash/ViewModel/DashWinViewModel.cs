@@ -34,14 +34,16 @@ namespace GTI.WFMS.Modules.Dash.ViewModel
         {
 
             LoadedCommand = new RelayCommand<object>(delegate (object obj){
+
+                if (obj == null) return;
+
                 // 0.뷰객체를 파라미터로 전달받기
                 dashWinView = obj as DashWinView;
-
-
+                
                 dashWinView.ctl1.Content = new UcChart01();
-                dashWinView.ctl2.Content = new UcChart01();
-                dashWinView.ctl3.Content = new UcChart01();
-                dashWinView.ctl4.Content = new UcChart01();
+                dashWinView.ctl2.Content = new UcChart02();
+                dashWinView.ctl3.Content = new UcChart03();
+                dashWinView.ctl4.Content = new UcChart04();
 
 
             });
