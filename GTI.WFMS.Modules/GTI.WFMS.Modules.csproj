@@ -235,6 +235,10 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
+    <Page Include="Dash\View\DashWinView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
     <Page Include="Fclt\view\PrsPmpAddView.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -662,6 +666,9 @@
       <DependentUpon>CnstMngDtlView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Dash\ViewModel\DashViewModel.cs" />
+    <Compile Include="Dash\View\DashWinView.xaml.cs">
+      <DependentUpon>DashWinView.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Fclt\Report\FiltPltReport.cs">
       <SubType>Component</SubType>
     </Compile>

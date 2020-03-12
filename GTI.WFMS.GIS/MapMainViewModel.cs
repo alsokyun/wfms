@@ -91,6 +91,7 @@ namespace GTI.WFMS.GIS
         public RelayCommand<object> toggleCmd { get; set; }
         public RelayCommand<object> closeCmd { get; set; }
         public RelayCommand<object> resetCmd { get; set; }
+        public RelayCommand<object> ChartCmd { get; set; }
 
         public RelayCommand<object> btnCmd { get; set; }
         
@@ -226,6 +227,13 @@ namespace GTI.WFMS.GIS
 
             // 레이어스타일 Renderer 초기화 - shape방식에서만 사용함
             //InitUniqueValueRenderer();
+
+
+            ChartCmd = new RelayCommand<object>(delegate (object obj) { 
+
+
+            });
+
 
             //GIS초기화
             resetCmd = new RelayCommand<object>(delegate (object obj)
