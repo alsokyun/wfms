@@ -10,7 +10,7 @@ using System.Data;
 
 namespace GTI.WFMS.Modules.Dash.ViewModel
 {
-    public class UcChart01Model : DashDtl
+    public class UcChart06Model : DashDtl
     {
 
         #region ==========  Properties 정의 ==========
@@ -19,11 +19,11 @@ namespace GTI.WFMS.Modules.Dash.ViewModel
         #endregion
 
         #region ==========  Member 정의 ==========
-        UcChart01 ucChart01;
+        UcChart06 ucChart06;
         #endregion
                
         /// 생성자
-        public UcChart01Model()
+        public UcChart06Model()
         {
             // 초기이벤트
             this.LoadedCommand = new DelegateCommand<object>(OnLoaded);           
@@ -44,14 +44,14 @@ namespace GTI.WFMS.Modules.Dash.ViewModel
                 var values = (object[])obj;
 
                 //1. 화면객체 인스턴스
-                ucChart01 = values[0] as UcChart01;
+                ucChart06 = values[0] as UcChart06;
 
                 // 4.초기조회
                 Hashtable param = new Hashtable();
 
                 var sYm = Convert.ToDateTime(DateTime.Today).ToString("yyyyMM");
 
-                param.Add("sqlId", "SelectDashChart1List");
+                param.Add("sqlId", "SelectDashChart6List");
                 param.Add("pYm", sYm);
                 param.Add("id" , Logs.strLogin_ID);
 
@@ -59,20 +59,17 @@ namespace GTI.WFMS.Modules.Dash.ViewModel
                 DataTable dt = BizUtil.SelectList(param);
 
                 // Create an empty chart. 
-                ChartControl chart1 = ucChart01.ctDash;
+                ChartControl chart1 = ucChart06.ctDash;
 
                 // Bind a chart to a data source. 
                 chart1.DataSource = dt;
-
-                ucChart01.srXSER1.Points.Clear();
-                ucChart01.srXSER2.Points.Clear();
+                
+                ucChart06.srXSER1.Points.Clear();
 
                 foreach (DataRow row in dt.Rows)
                 {
                     SeriesPoint point = new SeriesPoint(row["NAM"].ToString(), Convert.ToDouble(row["DATA_VAL"]));
-                    SeriesPoint point2 = new SeriesPoint(row["NAM"].ToString(), Convert.ToDouble(row["DATA_VAL2"]));
-                    ucChart01.srXSER1.Points.Add(point);
-                    ucChart01.srXSER2.Points.Add(point2);
+                    ucChart06.srXSER1.Points.Add(point);
                 }
 
               

@@ -9,9 +9,9 @@
     xmlns:cv="clr-namespace:GTI.WFMS.Models.Common;assembly=GTI.WFMS.Models"
     xmlns:vm="clr-namespace:GTI.WFMS.Modules.Dash.ViewModel"
     xmlns:cm="clr-namespace:GTIFramework.Common.Utils.Converters;assembly=GTIFramework"
-    x:Class="GTI.WFMS.Modules.Dash.View.UcChart01"
+    x:Class="GTI.WFMS.Modules.Dash.View.UcChart02"
     mc:Ignorable="d" d:DesignHeight="800" d:DesignWidth="1100"
-    x:Name="ucChart01">
+    x:Name="ucChart02">
 
     <!--페이지내 리소스정의-->
     <UserControl.Resources>
@@ -21,10 +21,10 @@
             <cv:Date2StrConverter x:Key="date2StrConverter" />
         </ResourceDictionary>
     </UserControl.Resources>
-
+    
     <!--뷰와 뷰모델 바인딩-->
     <UserControl.DataContext>
-        <vm:UcChart01Model/>
+        <vm:UcChart02Model/>
     </UserControl.DataContext>
 
     <!--뷰와 연결된 뷰모델로 Loaded 이벤트전파-->
@@ -33,7 +33,7 @@
             <i:InvokeCommandAction Command="{Binding LoadedCommand}">
                 <i:InvokeCommandAction.CommandParameter>
                     <MultiBinding Converter="{StaticResource multiValueConverter}">
-                        <Binding ElementName="ucChart01"/>
+                        <Binding ElementName="ucChart02"/>
                     </MultiBinding>
                 </i:InvokeCommandAction.CommandParameter>
             </i:InvokeCommandAction>
@@ -50,7 +50,7 @@
 
             <Border Grid.Row="0" Style="{DynamicResource ControlContentBorder}">
                 <StackPanel Orientation="Horizontal">
-                    <Label x:Name="ctTitle1" Content="민원 현황" HorizontalAlignment="Center" VerticalContentAlignment="Center" Style="{DynamicResource SelectLabel}" Margin="10,0,10,0"/>
+                    <Label x:Name="ctTitle1" Content="소모픔 재고현황" HorizontalAlignment="Center" VerticalContentAlignment="Center" Style="{DynamicResource SelectLabel}" Margin="10,0,10,0"/>
                 </StackPanel>
             </Border>
 
@@ -60,9 +60,9 @@
                     <dxc:ChartControl.Palette>
                         <dxc:CustomPalette>
                             <dxc:CustomPalette.Colors>
-                                <!--<Color>#FF0F00</Color>-->
+                                <Color>#FF0F00</Color>
                                 <Color>#FF6600</Color>
-                                <!--<Color>#FF9E01</Color>-->
+                                <Color>#FF9E01</Color>
                                 <Color>#FCD202</Color>
                                 <Color>#F8FF01</Color>
                                 <Color>#B0DE09</Color>
@@ -79,12 +79,6 @@
                         </dxc:CustomPalette>
                     </dxc:ChartControl.Palette>
 
-                    <dxc:ChartControl.Legends>
-                        <!-- 범례 설정 - 체크Box로 표현   
-                            <dxc:Legend HorizontalPosition="Center" VerticalPosition="BottomOutside" MarkerMode="CheckBox" Orientation="Horizontal" Visibility="Visible" ItemVisibilityMode="Default" />
-                            -->
-                        <dxc:Legend HorizontalPosition="Center" VerticalPosition="BottomOutside" MarkerMode="CheckBox" Orientation="Horizontal" Visibility="Visible" ItemVisibilityMode="Default" Margin="0,0,0,15"/>
-                    </dxc:ChartControl.Legends>
                     <dxc:ChartControl.Diagram>
                         <!--
                             EnableAxisXNavigation="True" ==> X 스크롤 출력여부
@@ -117,7 +111,7 @@
                             </dxc:XYDiagram2D.AxisX>
                             <dxc:XYDiagram2D.Series>
                                 <!-- Margin="2,0,-2,0" BarWidth="0.3"-->
-                                <dxc:BarSideBySideSeries2D x:Name="srXSER1" BarWidth="0.3" Margin="0,0,0,0" DisplayName="상수공사">
+                                <dxc:BarSideBySideSeries2D x:Name="srXSER1" ColorEach="True" BarWidth="0.3" Margin="0,0,0,0" DisplayName="소모품">
                                     <!--region #Model-->
                                     <dxc:BarSideBySideSeries2D.Model>
                                         <!-- 3D 막대사용시 <dxc:Quasi3DBar2DModel /> -->
@@ -125,25 +119,14 @@
                                     </dxc:BarSideBySideSeries2D.Model>
                                     <!--endregion #Model-->
                                     <dxc:BarSideBySideSeries2D.Points>
-                                        <dxc:SeriesPoint Argument="A" Value="10" />
-                                        <dxc:SeriesPoint Argument="B" Value="20" />
-                                        <dxc:SeriesPoint Argument="C" Value="30" />
-                                        <dxc:SeriesPoint Argument="D" Value="40" />                                        
-                                    </dxc:BarSideBySideSeries2D.Points>
-                                </dxc:BarSideBySideSeries2D>
-                                <!-- Margin="2,0,-2,0" BarWidth="0.3"  -->
-                                <dxc:BarSideBySideSeries2D x:Name="srXSER2" BarWidth="0.3" Margin="0,0,0,0" DisplayName="급수공사">
-                                    <!--region #Model2-->
-                                    <dxc:BarSideBySideSeries2D.Model>
-                                        <!-- 3D 막대사용시 <dxc:Quasi3DBar2DModel /> -->
-                                        <dxc:BorderlessSimpleBar2DModel/>
-                                    </dxc:BarSideBySideSeries2D.Model>
-                                    <!--endregion #Model2-->
-                                    <dxc:BarSideBySideSeries2D.Points>
-                                        <dxc:SeriesPoint Argument="A" Value="4" />
-                                        <dxc:SeriesPoint Argument="B" Value="3" />
-                                        <dxc:SeriesPoint Argument="C" Value="2" />
-                                        <dxc:SeriesPoint Argument="D" Value="1" />
+                                        <dxc:SeriesPoint Argument="A" Value="10"/>
+                                        <dxc:SeriesPoint Argument="B" Value="20"/>
+                                        <dxc:SeriesPoint Argument="C" Value="30"/>
+                                        <dxc:SeriesPoint Argument="D" Value="40"/>
+                                        <dxc:SeriesPoint Argument="A2" Value="-10"/>
+                                        <dxc:SeriesPoint Argument="B2" Value="-20"/>
+                                        <dxc:SeriesPoint Argument="C2" Value="-30"/>
+                                        <dxc:SeriesPoint Argument="D2" Value="-40"/>
                                     </dxc:BarSideBySideSeries2D.Points>
                                 </dxc:BarSideBySideSeries2D>
                             </dxc:XYDiagram2D.Series>
