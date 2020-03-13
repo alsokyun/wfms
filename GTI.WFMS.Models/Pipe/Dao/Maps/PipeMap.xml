@@ -203,7 +203,12 @@
     <!--상수관로 상세저장-->
     <update id="saveWtlPipeDtl" parameterClass="GTI.WFMS.Models.Pipe.Model.PipeDtl">
       /* 상수관로 상세저장 */
-      UPDATE WTL_PIPE_LM
+      MERGE INTO INFOFMS.WTL_PIPE_LM
+      USING DUAL ON (FTR_CDE = #FTR_CDE# AND FTR_IDN = #FTR_IDN#)
+
+      WHEN MATCHED THEN
+
+      UPDATE
       SET HJD_CDE=#HJD_CDE#
       , SHT_NUM=#SHT_NUM#
       , MNG_CDE=#MNG_CDE#
@@ -218,8 +223,43 @@
       , PIP_LBL=#PIP_LBL#
       , PIP_DIP=#PIP_DIP#
       , PIP_LEN=#PIP_LEN#
-      WHERE 	FTR_CDE = #FTR_CDE#
-      AND		FTR_IDN = #FTR_IDN#
+
+      WHEN NOT MATCHED THEN
+      INSERT
+      ( FTR_CDE
+      , FTR_IDN
+      , HJD_CDE
+      , SHT_NUM
+      , MNG_CDE
+      , IST_YMD
+      , SAA_CDE
+      , MOP_CDE
+      , JHT_CDE
+      , LOW_DEP
+      , HGH_DEP
+      , CNT_NUM
+      , SYS_CHK
+      , PIP_LBL
+      , PIP_DIP
+      , PIP_LEN )
+
+      VALUES (#FTR_CDE#
+      , #FTR_IDN#
+      , #HJD_CDE#
+      , #SHT_NUM#
+      , #MNG_CDE#
+      , decode(length(#IST_YMD#), 10, to_char(to_date(#IST_YMD#, 'yyyy-MM-dd'), 'yyyyMMdd'), '')
+      , #SAA_CDE#
+      , #MOP_CDE#
+      , #JHT_CDE#
+      , #LOW_DEP#
+      , #HGH_DEP#
+      , #CNT_NUM#
+      , #SYS_CHK#
+      , #PIP_LBL#
+      , #PIP_DIP#
+      , #PIP_LEN# )
+
     </update>
 
     

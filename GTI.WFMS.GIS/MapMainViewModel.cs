@@ -563,7 +563,11 @@ namespace GTI.WFMS.GIS
 
 
                 // Construct and assign the where clause that will be used to query the feature table.
-                queryParams.WhereClause = "upper(FTR_CDE) = '" + _FTR_CDE + "' AND FTR_IDN = " + _FTR_IDN ;
+                queryParams.WhereClause = " FTR_CDE = '" + _FTR_CDE + "' ";
+                if (!FmsUtil.IsNull(_FTR_IDN))
+                {
+                    queryParams.WhereClause += " AND FTR_IDN = " + _FTR_IDN;
+                }
 
 
                 List<Feature> features;

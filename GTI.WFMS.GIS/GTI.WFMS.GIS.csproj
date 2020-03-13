@@ -83,6 +83,30 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="GisCmm.cs" />
+    <Compile Include="Module\ViewModel\UC_FIRE_PSModel.cs" />
+    <Compile Include="Module\ViewModel\UC_PRGA_PSModel.cs" />
+    <Compile Include="Module\ViewModel\UC_STPI_PSModel.cs" />
+    <Compile Include="Module\ViewModel\UC_MANH_PSModel.cs" />
+    <Compile Include="Module\ViewModel\UC_PURI_ASModel.cs" />
+    <Compile Include="Module\ViewModel\UC_PIPE_LMModel.cs" />
+    <Compile Include="Module\View\UC_FIRE_PS.xaml.cs">
+      <DependentUpon>UC_FIRE_PS.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Module\View\UC_PRGA_PS.xaml.cs">
+      <DependentUpon>UC_PRGA_PS.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Module\View\UC_STPI_PS.xaml.cs">
+      <DependentUpon>UC_STPI_PS.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Module\View\UC_MANH_PS.xaml.cs">
+      <DependentUpon>UC_MANH_PS.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Module\View\UC_PURI_AS.xaml.cs">
+      <DependentUpon>UC_PURI_AS.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Module\View\UC_PIPE_LM.xaml.cs">
+      <DependentUpon>UC_PIPE_LM.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Pop\ViewModel\EditWinViewModel.cs" />
     <Compile Include="Pop\ViewModel\LyrModel.cs" />
     <Compile Include="Pop\View\CnstMngPopView.xaml.cs">
@@ -166,6 +190,30 @@
       <DependentUpon>MapMainView.xaml</DependentUpon>
     </Compile>
     <Compile Include="MapMainViewModel.cs" />
+    <Page Include="Module\View\UC_FIRE_PS.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Module\View\UC_PRGA_PS.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Module\View\UC_STPI_PS.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Module\View\UC_MANH_PS.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Module\View\UC_PURI_AS.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Module\View\UC_PIPE_LM.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
     <Page Include="sample\Map4View.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>

@@ -41,7 +41,8 @@ namespace GTI.WFMS.GIS
 
             // 1.Point 마커 스타일링 - 속성값에따른 이미지 선별매핑
             //스탠드파이프
-            SimpleLineSymbol SA003Symbol = new SimpleLineSymbol(SimpleLineSymbolStyle.Solid, System.Drawing.Color.SkyBlue, 1);
+            var SA003Uri = new Uri(BizUtil.GetDataFolder("style_img", "SA003"), UriKind.Relative);
+            PictureMarkerSymbol SA003Symbol = new PictureMarkerSymbol(SA003Uri);
             UniqueValue SA003Value = new UniqueValue("SA003", "SA003", SA003Symbol, "SA003");
             //상수맨홀
             var SA100Uri = new Uri(BizUtil.GetDataFolder("style_img", "SA100"), UriKind.Relative);

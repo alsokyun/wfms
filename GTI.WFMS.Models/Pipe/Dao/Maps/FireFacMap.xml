@@ -242,6 +242,63 @@
       AND	FTR_IDN = #FTR_IDN#
     </update>
 
+    <update id="SaveFireFacDtl" parameterClass="GTI.WFMS.Models.Pipe.Model.FireFacDtl">
+      MERGE INTO INFOFMS.WTL_FIRE_PS
+      USING DUAL ON (FTR_CDE = #FTR_CDE# AND	FTR_IDN = #FTR_IDN#)
+
+      WHEN MATCHED THEN
+        UPDATE
+        SET HJD_CDE = #HJD_CDE#
+        , SHT_NUM = #SHT_NUM#
+        , MNG_CDE = #MNG_CDE#
+        , IST_YMD = decode(length(#IST_YMD#), 10, to_char(to_date(#IST_YMD#, 'yyyy-MM-dd'), 'yyyyMMdd'), '')
+        , HOM_NUM = #HOM_NUM#
+        , MOF_CDE = #MOF_CDE#
+        , FIR_DIP = #FIR_DIP#
+        , PIP_DIP = #PIP_DIP#
+        , SUP_HIT = #SUP_HIT#
+        , CNT_NUM = #CNT_NUM#
+        , SYS_CHK = #SYS_CHK#
+        , ANG_DIR = #ANG_DIR#
+
+      WHEN NOT MATCHED THEN
+        INSERT  
+        (
+        FTR_CDE
+        , FTR_IDN
+        , HJD_CDE
+        , SHT_NUM
+        , MNG_CDE
+        , IST_YMD
+        , HOM_NUM
+        , MOF_CDE
+        , FIR_DIP
+        , PIP_DIP
+        , SUP_HIT
+        , CNT_NUM
+        , SYS_CHK
+        , ANG_DIR
+        )
+        VALUES
+        (
+        #FTR_CDE#
+        , #FTR_IDN#
+        , #HJD_CDE#
+        , #SHT_NUM#
+        , #MNG_CDE#
+        , decode(length(#IST_YMD#), 10, to_char(to_date(#IST_YMD#, 'yyyy-MM-dd'), 'yyyyMMdd'), '')
+        , #HOM_NUM#
+        , #MOF_CDE#
+        , #FIR_DIP#
+        , #PIP_DIP#
+        , #SUP_HIT#
+        , #CNT_NUM#
+        , #SYS_CHK#
+        , #ANG_DIR#
+        )
+
+    </update>
+
     <!--소방시설 상세삭제-->
     <update id="deleteFireFacDtl" parameterClass="GTI.WFMS.Models.Pipe.Model.FireFacDtl">
       /* 소방시설 상세 삭제 */

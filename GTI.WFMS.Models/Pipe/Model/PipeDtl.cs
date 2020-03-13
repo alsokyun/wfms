@@ -112,7 +112,7 @@ namespace GTI.WFMS.Models.Pipe.Model
         {
             get 
             {
-                return Convert.ToDateTime(__IST_YMD).ToString("yyyy-MM-dd");
+                return __IST_YMD;
             }
             set
             {

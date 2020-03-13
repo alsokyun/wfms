@@ -130,12 +130,30 @@ namespace GTI.WFMS.GIS.Pop.ViewModel
 
 
 
+        private void OnGeometryChanged(object sender, GeometryChangedEventArgs e)
+        {
+            if (e.NewGeometry.Dimension == GeometryDimension.Area)
+            {
+                //mapView.SketchEditor.CompleteCommand.Execute(null);
+            }
+        }
+
+        private void OnSelectedVertexChanged(object sender, VertexChangedEventArgs e)
+        {
+            if (e.NewVertex.PointIndex == 5)
+            {
+
+            }
+        }
 
 
         #region ========== 생성자 ==========
 
         public EditWinViewModel()
         {
+
+
+
             LoadedCommand = new RelayCommand<object>(delegate (object obj)
             {
 
@@ -157,6 +175,8 @@ namespace GTI.WFMS.GIS.Pop.ViewModel
                 BitImg = new BitmapImage();
 
 
+                mapView.SketchEditor.GeometryChanged += OnGeometryChanged;
+                mapView.SketchEditor.SelectedVertexChanged += OnSelectedVertexChanged;
 
             });
 
@@ -177,7 +197,7 @@ namespace GTI.WFMS.GIS.Pop.ViewModel
 
 
 
-            //파일찾기버튼 이벤트
+            //아이콘변경 (파일찾기)
             ChgImgCmd = new RelayCommand<object>(delegate (object obj)
             {
                 // 전달된 파라미터 
@@ -254,27 +274,65 @@ namespace GTI.WFMS.GIS.Pop.ViewModel
                 }
 
 
+
+                //Polygon 피처인 경우 - SketchEditor 를 GraphicOverlay에 생성한다
                 //라인피처인 경우 - SketchEditor 를 GraphicOverlay에 생성한다
-                if (_selectedLayerNm.Equals("WTL_PIPE_LM") || _selectedLayerNm.Equals("WTL_SPLY_LS"))
+                if (_selectedLayerNm.Equals("WTL_PIPE_LM") || _selectedLayerNm.Equals("WTL_SPLY_LS") || _selectedLayerNm.Equals("WTL_PURI_AS"))
                 {
                     try
                     {
-                        // Let the user draw on the map view using the chosen sketch mode
-                        Esri.ArcGISRuntime.Geometry.Geometry geometry = await mapView.SketchEditor.StartAsync(SketchCreationMode.Polyline, true); //맵에 신규geometry 얻어오기
-
-                        // Create and add a graphic from the geometry the user drew
-                        SimpleLineSymbol symbol;
-                        if (_selectedLayerNm.Equals("WTL_PIPE_LM"))
+                        SketchCreationMode creationMode = SketchCreationMode.Polyline;
+                        Symbol symbol;
+                        if (_selectedLayerNm.Equals("WTL_PURI_AS"))
                         {
+                            creationMode = SketchCreationMode.Polygon;
+                            symbol = new SimpleFillSymbol() { Color = System.Drawing.Color.SkyBlue, Style = SimpleFillSymbolStyle.Solid };
+                        }
+                        else if (_selectedLayerNm.Equals("WTL_PIPE_LM"))
+                        {
+                            creationMode = SketchCreationMode.Polyline;
                             symbol = new SimpleLineSymbol(SimpleLineSymbolStyle.Solid, System.Drawing.Color.SkyBlue, 2);
                         }
                         else
                         {
+                            creationMode = SketchCreationMode.Polyline;
                             symbol = new SimpleLineSymbol(SimpleLineSymbolStyle.Solid, System.Drawing.Color.SkyBlue, 2);
                         }
 
+                        MessageBox.Show("시설물을 추가할 지점을 마우스로 클릭하세요.(편집완료는 더블클릭)");
+
+                        // Let the user draw on the map view using the chosen sketch mode
+                        Esri.ArcGISRuntime.Geometry.Geometry geometry = await mapView.SketchEditor.StartAsync(creationMode, false); //맵에 신규geometry 얻어오기
+
+
+                        //화면에 그래픽표시(참고용)
                         Graphic graphic = new Graphic(geometry, symbol);
                         _sketchOverlay.Graphics.Add(graphic);
+
+
+
+                        // 0.화면초기화
+                        editWinView.txtFTR_IDN.EditValue = ""; //FTR_IDN = ""
+                        NEW_FTR_IDN = "";
+
+                        //선택된레이어 해제
+                        _selectedFeature = null;
+                        try
+                        {
+                            layers[_selectedLayerNm].ClearSelection();
+                        }
+                        catch (Exception) { }
+
+                        //신규시설물 페이지전환
+                        InitPage(cbFTR_CDE.EditValue.ToString(), FTR_CDE, null);
+
+
+                        // 1.레이어에 위치추가
+                        AddFeatureToLayer(geometry);
+
+
+                        // 2.시설물DB 저장
+                        Messages.ShowInfoMsgBox("위치정보가 추가되었습니다. 해당시설물의 상세정보를 저장하세요");
 
                     }
                     catch (TaskCanceledException)
@@ -368,6 +426,8 @@ namespace GTI.WFMS.GIS.Pop.ViewModel
 
         }
 
+
+
         #endregion
 
 
@@ -434,8 +494,15 @@ namespace GTI.WFMS.GIS.Pop.ViewModel
             // 2.선택된 레이어의 시설물 페이지로  초기화
             InitPage(ftr_cde, null, null);
 
-            // 시설물검색
-            SearchAction(null);
+            // 시설물검색 
+            if (_selectedLayerNm.Equals("WTL_PIPE_LM") || _selectedLayerNm.Equals("WTL_SPLY_LS"))
+            {
+                //대용량데이터는 자동검색 제외
+            }
+            else
+            {
+                SearchAction(null);
+            }
 
         }
 
@@ -462,6 +529,10 @@ namespace GTI.WFMS.GIS.Pop.ViewModel
             }
             catch (Exception) { }
 
+            //그래픽스 클리어
+            //_sketchOverlay.ClearSelection();
+            _sketchOverlay.Graphics.Clear();
+
         }
 
 
@@ -475,10 +546,74 @@ namespace GTI.WFMS.GIS.Pop.ViewModel
         {
             switch (CBO_FTR_CDE)
             {
-                case "SA117":
+                case "SA001": //상수관로
                     if (FmsUtil.IsNull(_FTR_CDE) && FmsUtil.IsNull(_FTR_IDN))
                     {
-                        editWinView.cctl.Content = new UC_FLOW_PS();//널페이지
+                        editWinView.cctl.Content = null;
+                    }
+                    else if (FmsUtil.IsNull(_FTR_IDN))
+                    {
+                        editWinView.cctl.Content = new UC_PIPE_LM(_FTR_CDE);//신규페이지
+                        NEW_FTR_IDN = ((UC_PIPE_LM)editWinView.cctl.Content).txtFTR_IDN.EditValue.ToString();
+                    }
+                    else
+                    {
+                        editWinView.cctl.Content = new UC_PIPE_LM(_FTR_CDE, _FTR_IDN);//상세페이지
+                    }
+                    break;
+
+                case "SA003": //스탠파이프
+                    if (FmsUtil.IsNull(_FTR_CDE) && FmsUtil.IsNull(_FTR_IDN))
+                    {
+                        editWinView.cctl.Content = null;
+                    }
+                    else if (FmsUtil.IsNull(_FTR_IDN))
+                    {
+                        editWinView.cctl.Content = new UC_STPI_PS(_FTR_CDE);//신규페이지
+                        NEW_FTR_IDN = ((UC_STPI_PS)editWinView.cctl.Content).txtFTR_IDN.EditValue.ToString();
+                    }
+                    else
+                    {
+                        editWinView.cctl.Content = new UC_STPI_PS(_FTR_CDE, _FTR_IDN);//상세페이지
+                    }
+                    break;
+
+                case "SA100": //상수맨홀
+                    if (FmsUtil.IsNull(_FTR_CDE) && FmsUtil.IsNull(_FTR_IDN))
+                    {
+                        editWinView.cctl.Content = null;
+                    }
+                    else if (FmsUtil.IsNull(_FTR_IDN))
+                    {
+                        editWinView.cctl.Content = new UC_MANH_PS(_FTR_CDE);//신규페이지
+                        NEW_FTR_IDN = ((UC_MANH_PS)editWinView.cctl.Content).txtFTR_IDN.EditValue.ToString();
+                    }
+                    else
+                    {
+                        editWinView.cctl.Content = new UC_MANH_PS(_FTR_CDE, _FTR_IDN);//상세페이지
+                    }
+                    break;
+
+                case "SA113": //정수장
+                    if (FmsUtil.IsNull(_FTR_CDE) && FmsUtil.IsNull(_FTR_IDN))
+                    {
+                        editWinView.cctl.Content = null;
+                    }
+                    else if (FmsUtil.IsNull(_FTR_IDN))
+                    {
+                        editWinView.cctl.Content = new UC_PURI_AS(_FTR_CDE);//신규페이지
+                        NEW_FTR_IDN = ((UC_PURI_AS)editWinView.cctl.Content).txtFTR_IDN.EditValue.ToString();
+                    }
+                    else
+                    {
+                        editWinView.cctl.Content = new UC_PURI_AS(_FTR_CDE, _FTR_IDN);//상세페이지
+                    }
+                    break;
+
+                case "SA117": //유량계
+                    if (FmsUtil.IsNull(_FTR_CDE) && FmsUtil.IsNull(_FTR_IDN))
+                    {
+                        editWinView.cctl.Content = null;
                     }
                     else if (FmsUtil.IsNull(_FTR_IDN))
                     {
@@ -488,6 +623,38 @@ namespace GTI.WFMS.GIS.Pop.ViewModel
                     else
                     {
                         editWinView.cctl.Content = new UC_FLOW_PS(_FTR_CDE, _FTR_IDN);//상세페이지
+                    }
+                    break;
+
+                case "SA118": case "SA119": //급수탑,소화전
+                    if (FmsUtil.IsNull(_FTR_CDE) && FmsUtil.IsNull(_FTR_IDN))
+                    {
+                        editWinView.cctl.Content = null;
+                    }
+                    else if (FmsUtil.IsNull(_FTR_IDN))
+                    {
+                        editWinView.cctl.Content = new UC_FIRE_PS(_FTR_CDE);//신규페이지
+                        NEW_FTR_IDN = ((UC_FIRE_PS)editWinView.cctl.Content).txtFTR_IDN.EditValue.ToString();
+                    }
+                    else
+                    {
+                        editWinView.cctl.Content = new UC_FIRE_PS(_FTR_CDE, _FTR_IDN);//상세페이지
+                    }
+                    break;
+
+                case "SA121": //수압계
+                    if (FmsUtil.IsNull(_FTR_CDE) && FmsUtil.IsNull(_FTR_IDN))
+                    {
+                        editWinView.cctl.Content = null;
+                    }
+                    else if (FmsUtil.IsNull(_FTR_IDN))
+                    {
+                        editWinView.cctl.Content = new UC_PRGA_PS(_FTR_CDE);//신규페이지
+                        NEW_FTR_IDN = ((UC_PRGA_PS)editWinView.cctl.Content).txtFTR_IDN.EditValue.ToString();
+                    }
+                    else
+                    {
+                        editWinView.cctl.Content = new UC_PRGA_PS(_FTR_CDE, _FTR_IDN);//상세페이지
                     }
                     break;
 
@@ -512,11 +679,155 @@ namespace GTI.WFMS.GIS.Pop.ViewModel
 
             //레이어표시 - FTR_IDN 조건 필터링
             ShowShapeLayerFilter(mapView, GisCmm.GetLayerNm(FTR_CDE), true, ftr_idn);
+
+            //조회된 피처 자동선택
+            SelectFct(FTR_CDE,  ftr_idn, layers[_selectedLayerNm]);
+
         }
 
 
 
+
         #endregion
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        // 관리번호로 해당Feature 객체찾기
+        public async void SelectFct(string _FTR_CDE, string _FTR_IDN, FeatureLayer _featureLayer)
+        {
+            // 0.Feature 테이블 가져오기
+            //FeatureLayer __featureLayer = _featureLayer.Clone() as FeatureLayer;
+            FeatureTable _featureTable = _featureLayer.FeatureTable;
+
+
+
+            // Create a query parameters that will be used to Query the feature table.
+            QueryParameters queryParams = new QueryParameters();
+
+
+            // Construct and assign the where clause that will be used to query the feature table.
+            queryParams.WhereClause = " FTR_CDE = '" + _FTR_CDE + "' ";
+            if (!FmsUtil.IsNull(_FTR_IDN))
+            {
+                queryParams.WhereClause += " AND FTR_IDN = " + _FTR_IDN;
+            }
+
+
+            List<Feature> features;
+            try
+            {
+                // Query the feature table.
+                FeatureQueryResult queryResult = await _featureTable.QueryFeaturesAsync(queryParams);
+
+                // Cast the QueryResult to a List so the results can be interrogated.
+                features = queryResult.ToList();
+            }
+            catch (Exception e)
+            {
+                Messages.ShowErrMsgBox(e.Message);
+                return;
+            }
+
+            if (features.Any())
+            {
+                // Create an envelope.
+                EnvelopeBuilder envBuilder = new EnvelopeBuilder(SpatialReferences.WebMercator);
+
+
+
+                // Loop over each feature from the query result.
+                foreach (Feature feature in features)
+                {
+                    //첫번째피쳐 선택처리
+                    ShowFctPage(feature);
+                    break;
+                }
+            }
+        }
+
+
+
+        //맵뷰 Feature선택 처리 - 상세정보팝업 
+        public async void ShowFctPage(Feature identifiedFeature)
+        {
+            try
+            {
+                // 0.기존선택해제
+                if (_selectedFeature != null)
+                {
+                    try
+                    {
+                        // Reset the selection.
+                        layers[_selectedLayerNm].ClearSelection();
+                        _selectedFeature = null;
+                    }
+                    catch (Exception) { }
+
+                }
+
+
+                // 1.선택처리
+                _selectedFeature = (Feature)identifiedFeature; //선택피처 ArcGISFeature 변환저장
+                //_selectedFeature = (ArcGISFeature)identifiedFeature; //선택피처 ArcGISFeature 변환저장
+
+                // 선택된 레이어에서 속성정보 가져오기
+                string _FTR_CDE = identifiedFeature.GetAttributeValue("FTR_CDE").ToString();
+                string _FTR_IDN = identifiedFeature.GetAttributeValue("FTR_IDN").ToString();
+
+                // DB시설물조회 후 해당시설물정보 UserControl로 전환
+                if (FmsUtil.IsNull(_FTR_CDE) || FmsUtil.IsNull(_FTR_IDN))
+                {
+                    Messages.ShowErrMsgBox("시설물 DB정보가 없습니다.");
+                    return ;
+                }
+                //else if (_FTR_IDN == this.FTR_IDN)
+                //{
+                //    //기존시설물이면 토글처리（선택처리하지 않음）
+                //    //this.FTR_CDE= "";
+                //    this.FTR_IDN = null;
+                //}
+                else
+                {
+                    //시설물선택활성화 처리
+                    layers[_selectedLayerNm].SelectFeature(identifiedFeature);
+                    //해당피처로 이동
+                    await mapView.SetViewpointCenterAsync(identifiedFeature.Geometry.Extent.GetCenter(), 40000);
+
+                    //this.FTR_CDE = _FTR_CDE;
+                    this.FTR_IDN = _FTR_IDN;
+                }
+
+
+
+                // UserControl 시설물정보 재로딩
+                InitPage(cbFTR_CDE.EditValue.ToString(), this.FTR_CDE, this.FTR_IDN);
+
+
+                // 아이콘 이미지소스 업데이트
+                try
+                {
+                    BitImg = new BitmapImage(new Uri(Path.Combine(Path.Combine(BizUtil.GetDataFolder(), "style_img"), _FTR_CDE))).Clone();
+                }
+                catch (Exception){}
+
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine("레이어 featrue click error..." + e.Message);
+            }
+
+        }
 
 
 
@@ -543,7 +854,7 @@ namespace GTI.WFMS.GIS.Pop.ViewModel
 
 
         // 피처추가
-        public async void handlerGeoViewTappedAddFeature(object sender, GeoViewInputEventArgs e)
+        public void handlerGeoViewTappedAddFeature(object sender, GeoViewInputEventArgs e)
         {
             try
             {
@@ -553,39 +864,9 @@ namespace GTI.WFMS.GIS.Pop.ViewModel
                 destinationPoint = (MapPoint)GeometryEngine.NormalizeCentralMeridian(destinationPoint);
 
 
+                // 1.레이어에 위치추가
+                AddFeatureToLayer(destinationPoint);
 
-                // Get the path to the first layer - the local feature service url + layer ID
-                //string layerUrl = _localFeatureService.Url + "/" + GetLayerId(_selectedLayer);
-
-                // Create the ServiceFeatureTable
-                //ServiceFeatureTable serviceFeatureTable = new ServiceFeatureTable(new Uri(layerUrl));
-                //FeatureLayer featureLayer = new FeatureLayer(serviceFeatureTable);
-
-                // Wait for the layer to load
-                //await featureLayer.LoadAsync();
-
-
-                FeatureTable layerTable = layers[_selectedLayerNm].FeatureTable;
-
-
-                //피처추가
-                Feature _addedFeature = layerTable.CreateFeature();
-                _addedFeature.Geometry = destinationPoint;
-
-                //속성추가
-                //Field Field_FTR_CDE = new Field(FieldType.Text, "FTR_CDE", "시설물코드", 50);
-                //Field Field_FTR_IDN = new Field(FieldType.Int32, "FTR_IDN", "관리번호", 10);
-                //Field Field_SHT_NUM = new Field(FieldType.Text, "SHT_NUM", "도엽번호", 50);
-
-                _addedFeature.SetAttributeValue("FTR_CDE", this.FTR_CDE);
-                _addedFeature.SetAttributeValue("FTR_IDN", Convert.ToDouble(NEW_FTR_IDN));
-
-
-
-
-                await layerTable.AddFeatureAsync(_addedFeature);
-                //추가내용 새로고침
-                _addedFeature.Refresh();
 
                 MessageBox.Show("Added feature ", "Success!");
 
@@ -605,6 +886,39 @@ namespace GTI.WFMS.GIS.Pop.ViewModel
                 Messages.ShowErrMsgBox(ex.ToString());
             }
 
+        }
+
+        /// <summary>
+        /// 레이어에 Feature(MapPoint, PolyLine, Polygon)를 추가
+        /// </summary>
+        /// <param name="geometry"></param>
+        private async void AddFeatureToLayer(Geometry geometry)
+        {
+            FeatureTable layerTable = layers[_selectedLayerNm].FeatureTable;
+
+
+            //피처추가
+            Feature _addedFeature = layerTable.CreateFeature();
+            _addedFeature.Geometry = geometry;
+
+            //속성추가
+            _addedFeature.SetAttributeValue("FTR_CDE", this.FTR_CDE);
+            _addedFeature.SetAttributeValue("FTR_IDN", Convert.ToDouble(NEW_FTR_IDN));
+
+            try
+            {
+                await layerTable.AddFeatureAsync(_addedFeature);
+            }
+            catch (Exception)
+            {
+                //관리번호 타입이 정수이여서 에러나면 다시 시도
+                _addedFeature.SetAttributeValue("FTR_IDN", Convert.ToInt32(NEW_FTR_IDN));
+                await layerTable.AddFeatureAsync(_addedFeature);
+            }
+            
+            
+            //추가내용 새로고침
+            _addedFeature.Refresh();
         }
 
 
@@ -767,12 +1081,12 @@ namespace GTI.WFMS.GIS.Pop.ViewModel
                     Messages.ShowErrMsgBox("시설물 DB정보가 없습니다.");
                     return;
                 }
-                else if (_FTR_IDN == this.FTR_IDN)
-                {
-                    //기존시설물이면 토글처리（선택처리하지 않음）
-                    //this.FTR_CDE= "";
-                    this.FTR_IDN = null;
-                }
+                //else if (_FTR_IDN == this.FTR_IDN)
+                //{
+                //    //기존시설물이면 토글처리（선택처리하지 않음）
+                //    //this.FTR_CDE= "";
+                //    this.FTR_IDN = null;
+                //}
                 else
                 {
                     //시설물선택활성화 처리
@@ -805,118 +1119,6 @@ namespace GTI.WFMS.GIS.Pop.ViewModel
 
 
 
-        /// <summary>
-        /// 해당시설물의 지도상위치 찾아가기
-        /// </summary>
-        /// <param name="FTR_CDE"></param>
-        /// <param name="FTR_IDN"></param>
-        /// <returns></returns>
-        public async Task findFtrAsync(string FTR_CDE, string FTR_IDN)
-        {
-
-            string layerNm = "";
-            try
-            {
-                layerNm = GisCmm.GetLayerNm(FTR_CDE);
-                if ("".Equals(layerNm))
-                {
-                    MessageBox.Show("잘못된 레이어입니다.");
-                    return;
-                }
-            }
-            catch (Exception)
-            {
-                MessageBox.Show("잘못된 레이어입니다.");
-                return;
-            }
-
-
-            //0.해당레이어표시 - 내부에서자동으로 로딩여부 체크함
-            //레이어표시 - FTR_IDN 조건 필터링
-            ShowShapeLayerFilter(mapView, GisCmm.GetLayerNm(FTR_CDE), true, null);
-
-            //1.해당레이어 가져오기
-            FeatureLayer layer = layers[GisCmm.GetLayerNm(FTR_CDE)];
-
-
-
-            // Remove any previous feature selections that may have been made.
-            layer.ClearSelection();
-
-            // Begin query process.
-            await QueryStateFeature(FTR_CDE, FTR_IDN, layer);
-
-        }
-
-
-
-        // 레이에서 해당 Feature 찾기
-        private async Task QueryStateFeature(string _FTR_CDE, string _FTR_IDN, FeatureLayer _featureLayer)
-        {
-            try
-            {
-                // 0.Feature 테이블 가져오기
-                //FeatureLayer __featureLayer = _featureLayer.Clone() as FeatureLayer;
-                FeatureTable _featureTable = _featureLayer.FeatureTable;
-
-
-
-                // Create a query parameters that will be used to Query the feature table.
-                QueryParameters queryParams = new QueryParameters();
-
-
-                // Construct and assign the where clause that will be used to query the feature table.
-                queryParams.WhereClause = "upper(FTR_CDE) = '" + _FTR_CDE + "' AND FTR_IDN = " + _FTR_IDN;
-
-
-                List<Feature> features;
-                try
-                {
-                    // Query the feature table.
-                    FeatureQueryResult queryResult = await _featureTable.QueryFeaturesAsync(queryParams);
-
-                    // Cast the QueryResult to a List so the results can be interrogated.
-                    features = queryResult.ToList();
-                }
-                catch (Exception)
-                {
-                    Messages.ShowErrMsgBox("보호된 메모리 접근 에러..");
-                    return;
-                }
-
-                if (features.Any())
-                {
-                    // Create an envelope.
-                    EnvelopeBuilder envBuilder = new EnvelopeBuilder(SpatialReferences.WebMercator);
-
-
-
-                    // Loop over each feature from the query result.
-                    foreach (Feature feature in features)
-                    {
-                        // Add the extent of each matching feature to the envelope.
-                        //envBuilder.UnionOf(feature.Geometry.Extent); //복수의 피처영역 합치기
-
-                        // Select each feature.
-                        _featureLayer.SelectFeature(feature);
-                        //해당피처로 이동
-                        await mapView.SetViewpointCenterAsync(feature.Geometry.Extent.GetCenter(), 40000);
-                    }
-
-                    // Zoom to the extent of the selected feature(s).
-                    //await mapView.SetViewpointGeometryAsync(envBuilder.ToGeometry(), 50);
-
-                }
-                else
-                {
-                    MessageBox.Show("해당 시설물 위치를 찾을 수 없습니다.");
-                }
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show("An error occurred.\n" + ex, "Sample error");
-            }
-        }
 
 
         #endregion
