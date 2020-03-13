@@ -543,6 +543,14 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
+    <Page Include="Stat\View\FcltStatListView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Stat\View\StatCmplListView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Acmf\Report\HydtMetrReport.cs">
@@ -1068,6 +1076,14 @@
     </Compile>
     <Compile Include="Pop\View\FtrSelView.xaml.cs">
       <DependentUpon>FtrSelView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Stat\ViewModel\FcltStatListViewModel.cs" />
+    <Compile Include="Stat\ViewModel\StatCmplListViewModel.cs" />
+    <Compile Include="Stat\View\FcltStatListView.xaml.cs">
+      <DependentUpon>FcltStatListView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Stat\View\StatCmplListView.xaml.cs">
+      <DependentUpon>StatCmplListView.xaml</DependentUpon>
     </Compile>
   </ItemGroup>
   <ItemGroup>
