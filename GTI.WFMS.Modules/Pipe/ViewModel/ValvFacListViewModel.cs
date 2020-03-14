@@ -271,6 +271,7 @@ namespace GTI.WFMS.Modules.Pipe.ViewModel
                 conditions.Add("HJD_CDE", cbHJD_CDE.EditValue.ToString().Trim());
                 conditions.Add("VAL_MOF", cbVAL_MOF.EditValue.ToString().Trim());
                 conditions.Add("VAL_MOP", cbVAL_MOP.EditValue.ToString().Trim());
+                conditions.Add("FTR_CDE", valvFacListView.cbFTR_CDE.EditValue.ToString().Trim());
 
                 conditions.Add("FTR_IDN", FmsUtil.Trim(txtFTR_IDN.EditValue));
                 conditions.Add("CNT_NUM", txtCNT_NUM.Text.Trim());
@@ -371,6 +372,7 @@ namespace GTI.WFMS.Modules.Pipe.ViewModel
                 conditions.Add("HJD_CDE", cbHJD_CDE.EditValue.ToString().Trim());
                 conditions.Add("VAL_MOF", cbVAL_MOF.EditValue.ToString().Trim());
                 conditions.Add("VAL_MOP", cbVAL_MOP.EditValue.ToString().Trim());
+                conditions.Add("FTR_CDE", valvFacListView.cbFTR_CDE.EditValue.ToString().Trim());
 
                 conditions.Add("FTR_IDN", FmsUtil.Trim(txtFTR_IDN.EditValue));
                 conditions.Add("CNT_NUM", txtCNT_NUM.Text.Trim());
@@ -513,6 +515,10 @@ namespace GTI.WFMS.Modules.Pipe.ViewModel
 
                 // cbVAL_FOR    10.시설물형태
                 BizUtil.SetCmbCode(cbVAL_FOR, "FOR_CDE", true);
+
+                // cbFTR_CDE 지형지물
+                BizUtil.SetCombo(valvFacListView.cbFTR_CDE, "Select_FTR_LIST", "FTR_CDE", "FTR_NAM", true);
+
             }
             catch (Exception ex)
             {

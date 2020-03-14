@@ -562,6 +562,22 @@ namespace GTI.WFMS.GIS.Pop.ViewModel
                     }
                     break;
 
+                case "SA002": //급수관로
+                    if (FmsUtil.IsNull(_FTR_CDE) && FmsUtil.IsNull(_FTR_IDN))
+                    {
+                        editWinView.cctl.Content = null;
+                    }
+                    else if (FmsUtil.IsNull(_FTR_IDN))
+                    {
+                        editWinView.cctl.Content = new UC_SPLY_LS(_FTR_CDE);//신규페이지
+                        NEW_FTR_IDN = ((UC_SPLY_LS)editWinView.cctl.Content).txtFTR_IDN.EditValue.ToString();
+                    }
+                    else
+                    {
+                        editWinView.cctl.Content = new UC_SPLY_LS(_FTR_CDE, _FTR_IDN);//상세페이지
+                    }
+                    break;
+
                 case "SA003": //스탠파이프
                     if (FmsUtil.IsNull(_FTR_CDE) && FmsUtil.IsNull(_FTR_IDN))
                     {
@@ -594,6 +610,39 @@ namespace GTI.WFMS.GIS.Pop.ViewModel
                     }
                     break;
 
+                case "SA110": //수원지
+                    if (FmsUtil.IsNull(_FTR_CDE) && FmsUtil.IsNull(_FTR_IDN))
+                    {
+                        editWinView.cctl.Content = null;
+                    }
+                    else if (FmsUtil.IsNull(_FTR_IDN))
+                    {
+                        editWinView.cctl.Content = new UC_HEAD_PS(_FTR_CDE);//신규페이지
+                        NEW_FTR_IDN = ((UC_HEAD_PS)editWinView.cctl.Content).txtFTR_IDN.EditValue.ToString();
+                    }
+                    else
+                    {
+                        editWinView.cctl.Content = new UC_HEAD_PS(_FTR_CDE, _FTR_IDN);//상세페이지
+                    }
+                    break;
+
+                case "SA112": //취수장
+                    if (FmsUtil.IsNull(_FTR_CDE) && FmsUtil.IsNull(_FTR_IDN))
+                    {
+                        editWinView.cctl.Content = null;
+                    }
+                    else if (FmsUtil.IsNull(_FTR_IDN))
+                    {
+                        editWinView.cctl.Content = new UC_GAIN_PS(_FTR_CDE);//신규페이지
+                        NEW_FTR_IDN = ((UC_GAIN_PS)editWinView.cctl.Content).txtFTR_IDN.EditValue.ToString();
+                    }
+                    else
+                    {
+                        editWinView.cctl.Content = new UC_GAIN_PS(_FTR_CDE, _FTR_IDN);//상세페이지
+                    }
+                    break;
+
+
                 case "SA113": //정수장
                     if (FmsUtil.IsNull(_FTR_CDE) && FmsUtil.IsNull(_FTR_IDN))
                     {
@@ -609,6 +658,24 @@ namespace GTI.WFMS.GIS.Pop.ViewModel
                         editWinView.cctl.Content = new UC_PURI_AS(_FTR_CDE, _FTR_IDN);//상세페이지
                     }
                     break;
+
+                case "SA114": //배수지
+                    if (FmsUtil.IsNull(_FTR_CDE) && FmsUtil.IsNull(_FTR_IDN))
+                    {
+                        editWinView.cctl.Content = null;
+                    }
+                    else if (FmsUtil.IsNull(_FTR_IDN))
+                    {
+                        editWinView.cctl.Content = new UC_SERV_PS(_FTR_CDE);//신규페이지
+                        NEW_FTR_IDN = ((UC_SERV_PS)editWinView.cctl.Content).txtFTR_IDN.EditValue.ToString();
+                    }
+                    else
+                    {
+                        editWinView.cctl.Content = new UC_SERV_PS(_FTR_CDE, _FTR_IDN);//상세페이지
+                    }
+                    break;
+
+
 
                 case "SA117": //유량계
                     if (FmsUtil.IsNull(_FTR_CDE) && FmsUtil.IsNull(_FTR_IDN))
@@ -642,6 +709,22 @@ namespace GTI.WFMS.GIS.Pop.ViewModel
                     }
                     break;
 
+                case "SA120": //저수조
+                    if (FmsUtil.IsNull(_FTR_CDE) && FmsUtil.IsNull(_FTR_IDN))
+                    {
+                        editWinView.cctl.Content = null;
+                    }
+                    else if (FmsUtil.IsNull(_FTR_IDN))
+                    {
+                        editWinView.cctl.Content = new UC_RSRV_PS(_FTR_CDE);//신규페이지
+                        NEW_FTR_IDN = ((UC_RSRV_PS)editWinView.cctl.Content).txtFTR_IDN.EditValue.ToString();
+                    }
+                    else
+                    {
+                        editWinView.cctl.Content = new UC_RSRV_PS(_FTR_CDE, _FTR_IDN);//상세페이지
+                    }
+                    break;
+
                 case "SA121": //수압계
                     if (FmsUtil.IsNull(_FTR_CDE) && FmsUtil.IsNull(_FTR_IDN))
                     {
@@ -657,6 +740,45 @@ namespace GTI.WFMS.GIS.Pop.ViewModel
                         editWinView.cctl.Content = new UC_PRGA_PS(_FTR_CDE, _FTR_IDN);//상세페이지
                     }
                     break;
+
+                case "SA122": //급수전계량기
+                    if (FmsUtil.IsNull(_FTR_CDE) && FmsUtil.IsNull(_FTR_IDN))
+                    {
+                        editWinView.cctl.Content = null;
+                    }
+                    else if (FmsUtil.IsNull(_FTR_IDN))
+                    {
+                        editWinView.cctl.Content = new UC_META_PS(_FTR_CDE);//신규페이지
+                        NEW_FTR_IDN = ((UC_META_PS)editWinView.cctl.Content).txtFTR_IDN.EditValue.ToString();
+                    }
+                    else
+                    {
+                        editWinView.cctl.Content = new UC_META_PS(_FTR_CDE, _FTR_IDN);//상세페이지
+                    }
+                    break;
+
+                case "SA206": //가압펌프장
+                    if (FmsUtil.IsNull(_FTR_CDE) && FmsUtil.IsNull(_FTR_IDN))
+                    {
+                        editWinView.cctl.Content = null;
+                    }
+                    else if (FmsUtil.IsNull(_FTR_IDN))
+                    {
+                        editWinView.cctl.Content = new UC_PRES_PS(_FTR_CDE);//신규페이지
+                        NEW_FTR_IDN = ((UC_PRES_PS)editWinView.cctl.Content).txtFTR_IDN.EditValue.ToString();
+                    }
+                    else
+                    {
+                        editWinView.cctl.Content = new UC_PRES_PS(_FTR_CDE, _FTR_IDN);//상세페이지
+                    }
+                    break;
+
+
+
+
+
+
+
 
                 default:
                     editWinView.cctl.Content = new UC_FLOW_PS(_FTR_CDE, _FTR_IDN);
@@ -717,10 +839,10 @@ namespace GTI.WFMS.GIS.Pop.ViewModel
 
 
             // Construct and assign the where clause that will be used to query the feature table.
-            queryParams.WhereClause = " FTR_CDE = '" + _FTR_CDE + "' ";
+            queryParams.WhereClause = " FTR_CDE = '" + _FTR_CDE + "' ORDER BY FTR_IDN DESC";
             if (!FmsUtil.IsNull(_FTR_IDN))
             {
-                queryParams.WhereClause += " AND FTR_IDN = " + _FTR_IDN;
+                queryParams.WhereClause = " FTR_CDE = '" + _FTR_CDE + "' AND FTR_IDN = " + _FTR_IDN;
             }
 
 

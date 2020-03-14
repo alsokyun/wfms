@@ -278,14 +278,6 @@
                                         </i:EventTrigger>
                                     </i:Interaction.Triggers>
                                 </Button>
-                                <Button  Tag="WTL_VALV_PS^SA206" Content="소화전" ToolTip="SA206.png" Template="{StaticResource ResourceKey=dockTemplate}">
-                                    <i:Interaction.Triggers>
-                                        <i:EventTrigger EventName="Click">
-                                            <i:InvokeCommandAction Command="{Binding chkCmd}"  CommandParameter="{Binding RelativeSource={RelativeSource AncestorType={x:Type Button}}}" >
-                                            </i:InvokeCommandAction>
-                                        </i:EventTrigger>
-                                    </i:Interaction.Triggers>
-                                </Button>
                             </TreeViewItem.Items>
                         </TreeViewItem>
 
@@ -306,6 +298,14 @@
                             </i:Interaction.Triggers>
                         </Button>
                         <Button  Tag="WTL_META_PS" Content="계량기" ToolTip="SA122.png" Template="{StaticResource ResourceKey=dockTemplate}">
+                            <i:Interaction.Triggers>
+                                <i:EventTrigger EventName="Click">
+                                    <i:InvokeCommandAction Command="{Binding chkCmd}"  CommandParameter="{Binding RelativeSource={RelativeSource AncestorType={x:Type Button}}}" >
+                                    </i:InvokeCommandAction>
+                                </i:EventTrigger>
+                            </i:Interaction.Triggers>
+                        </Button>
+                        <Button  Tag="WTL_PRES_PS" Content="가압펌프장" ToolTip="SA206.png" Template="{StaticResource ResourceKey=dockTemplate}">
                             <i:Interaction.Triggers>
                                 <i:EventTrigger EventName="Click">
                                     <i:InvokeCommandAction Command="{Binding chkCmd}"  CommandParameter="{Binding RelativeSource={RelativeSource AncestorType={x:Type Button}}}" >

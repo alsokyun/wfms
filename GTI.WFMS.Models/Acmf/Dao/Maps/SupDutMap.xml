@@ -251,6 +251,67 @@
       AND	FTR_IDN = #FTR_IDN#
     </update>
 
+    <update id="SaveSupDutDtl" parameterClass="GTI.WFMS.Models.Acmf.Model.SupDutDtl">
+      MERGE INTO INFOFMS.WTL_SPLY_LS
+      USING DUAL ON (FTR_CDE = #FTR_CDE# AND	FTR_IDN = #FTR_IDN#)
+
+      WHEN MATCHED THEN
+      UPDATE
+      SET HJD_CDE = #HJD_CDE#
+      , SHT_NUM = #SHT_NUM#
+      , MNG_CDE = #MNG_CDE#
+      , IST_YMD = decode(length(#IST_YMD#), 10, to_char(to_date(#IST_YMD#, 'yyyy-MM-dd'), 'yyyyMMdd'), '')
+      , SAA_CDE = #SAA_CDE#
+      , JHT_CDE = #JHT_CDE#
+      , CNT_NUM = #CNT_NUM#
+      , SYS_CHK = #SYS_CHK#
+      , PIP_LBL = #PIP_LBL#
+      , PIP_DIP = #PIP_DIP#
+      , MOP_CDE = #MOP_CDE#
+      , PIP_LEN = #PIP_LEN#
+      , LOW_DEP = #LOW_DEP#
+      , HGH_DEP = #HGH_DEP#
+
+
+      WHEN NOT MATCHED THEN
+      INSERT 
+      (   FTR_CDE
+      , FTR_IDN
+      , HJD_CDE
+      , SHT_NUM
+      , MNG_CDE
+      , IST_YMD
+      , SAA_CDE
+      , JHT_CDE
+      , CNT_NUM
+      , SYS_CHK
+      , PIP_LBL
+      , PIP_DIP
+      , MOP_CDE
+      , PIP_LEN
+      , LOW_DEP
+      , HGH_DEP
+      )
+      VALUES
+      (   #FTR_CDE#
+      , #FTR_IDN#
+      , #HJD_CDE#
+      , #SHT_NUM#
+      , #MNG_CDE#
+      , decode(length(#IST_YMD#), 10, to_char(to_date(#IST_YMD#, 'yyyy-MM-dd'), 'yyyyMMdd'), '')
+      , #SAA_CDE#
+      , #JHT_CDE#
+      , #CNT_NUM#
+      , #SYS_CHK#
+      , #PIP_LBL#
+      , #PIP_DIP#
+      , #MOP_CDE#
+      , #PIP_LEN#
+      , #LOW_DEP#
+      , #HGH_DEP#
+      )
+    </update>
+
     <!--급수관로 상세삭제-->
     <update id="deleteSupDutDtl" parameterClass="GTI.WFMS.Models.Acmf.Model.SupDutDtl">
       /* 급수관로 상세 삭제 */

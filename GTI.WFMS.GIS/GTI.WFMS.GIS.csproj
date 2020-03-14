@@ -84,6 +84,13 @@
   <ItemGroup>
     <Compile Include="GisCmm.cs" />
     <Compile Include="Module\ViewModel\UC_FIRE_PSModel.cs" />
+    <Compile Include="Module\ViewModel\UC_RSRV_PSModel.cs" />
+    <Compile Include="Module\ViewModel\UC_META_PSModel.cs" />
+    <Compile Include="Module\ViewModel\UC_SPLY_LSModel.cs" />
+    <Compile Include="Module\ViewModel\UC_PRES_PSModel.cs" />
+    <Compile Include="Module\ViewModel\UC_SERV_PSModel.cs" />
+    <Compile Include="Module\ViewModel\UC_GAIN_PSModel.cs" />
+    <Compile Include="Module\ViewModel\UC_HEAD_PSModel.cs" />
     <Compile Include="Module\ViewModel\UC_PRGA_PSModel.cs" />
     <Compile Include="Module\ViewModel\UC_STPI_PSModel.cs" />
     <Compile Include="Module\ViewModel\UC_MANH_PSModel.cs" />
@@ -91,6 +98,27 @@
     <Compile Include="Module\ViewModel\UC_PIPE_LMModel.cs" />
     <Compile Include="Module\View\UC_FIRE_PS.xaml.cs">
       <DependentUpon>UC_FIRE_PS.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Module\View\UC_RSRV_PS.xaml.cs">
+      <DependentUpon>UC_RSRV_PS.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Module\View\UC_META_PS.xaml.cs">
+      <DependentUpon>UC_META_PS.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Module\View\UC_SPLY_LS.xaml.cs">
+      <DependentUpon>UC_SPLY_LS.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Module\View\UC_PRES_PS.xaml.cs">
+      <DependentUpon>UC_PRES_PS.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Module\View\UC_SERV_PS.xaml.cs">
+      <DependentUpon>UC_SERV_PS.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Module\View\UC_GAIN_PS.xaml.cs">
+      <DependentUpon>UC_GAIN_PS.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Module\View\UC_HEAD_PS.xaml.cs">
+      <DependentUpon>UC_HEAD_PS.xaml</DependentUpon>
     </Compile>
     <Compile Include="Module\View\UC_PRGA_PS.xaml.cs">
       <DependentUpon>UC_PRGA_PS.xaml</DependentUpon>
@@ -191,6 +219,34 @@
     </Compile>
     <Compile Include="MapMainViewModel.cs" />
     <Page Include="Module\View\UC_FIRE_PS.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Module\View\UC_RSRV_PS.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Module\View\UC_META_PS.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Module\View\UC_SPLY_LS.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Module\View\UC_PRES_PS.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Module\View\UC_SERV_PS.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Module\View\UC_GAIN_PS.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Module\View\UC_HEAD_PS.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>

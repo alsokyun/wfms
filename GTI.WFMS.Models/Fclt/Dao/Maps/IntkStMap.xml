@@ -238,24 +238,87 @@
     <!--취수장 상세저장-->
     <update id="updateIntkStDtl" parameterClass="GTI.WFMS.Models.Fclt.Model.IntkStDtl">
       /* 취수장 상세 수정 */
-     UPDATE INFOFMS.WTL_GAIN_PS
-        SET HJD_CDE = #HJD_CDE#
-          , SHT_NUM = #SHT_NUM#
-          , MNG_CDE = #MNG_CDE#
-          , FNS_YMD = decode(length(#FNS_YMD#), 10, to_char(to_date(#FNS_YMD#, 'yyyy-MM-dd'), 'yyyyMMdd'), '')
-          , GAI_NAM = #GAI_NAM#
-          , WSR_CDE = #WSR_CDE#
-          , WSS_NAM = #WSS_NAM#
-          , AGA_VOL = #AGA_VOL#
-          , HGA_VOL = #HGA_VOL#
-          , PMP_CNT = #PMP_CNT#
-          , GAI_ARA = #GAI_ARA#
-          , WRW_CDE = #WRW_CDE#
-          , WGW_CDE = #WGW_CDE#
-          , CNT_NUM = #CNT_NUM#
-          , SYS_CHK = #SYS_CHK#
+      UPDATE INFOFMS.WTL_GAIN_PS
+      SET HJD_CDE = #HJD_CDE#
+      , SHT_NUM = #SHT_NUM#
+      , MNG_CDE = #MNG_CDE#
+      , FNS_YMD = decode(length(#FNS_YMD#), 10, to_char(to_date(#FNS_YMD#, 'yyyy-MM-dd'), 'yyyyMMdd'), '')
+      , GAI_NAM = #GAI_NAM#
+      , WSR_CDE = #WSR_CDE#
+      , WSS_NAM = #WSS_NAM#
+      , AGA_VOL = #AGA_VOL#
+      , HGA_VOL = #HGA_VOL#
+      , PMP_CNT = #PMP_CNT#
+      , GAI_ARA = #GAI_ARA#
+      , WRW_CDE = #WRW_CDE#
+      , WGW_CDE = #WGW_CDE#
+      , CNT_NUM = #CNT_NUM#
+      , SYS_CHK = #SYS_CHK#
       WHERE FTR_CDE = #FTR_CDE#
-        AND	FTR_IDN = #FTR_IDN#
+      AND	FTR_IDN = #FTR_IDN#
+    </update>
+
+    <update id="SaveIntkStDtl" parameterClass="GTI.WFMS.Models.Fclt.Model.IntkStDtl">
+      MERGE INTO INFOFMS.WTL_GAIN_PS
+      USING DUAL ON (FTR_CDE = #FTR_CDE# AND	FTR_IDN = #FTR_IDN#)
+
+      WHEN MATCHED THEN
+      UPDATE
+      SET HJD_CDE = #HJD_CDE#
+      , SHT_NUM = #SHT_NUM#
+      , MNG_CDE = #MNG_CDE#
+      , FNS_YMD = decode(length(#FNS_YMD#), 10, to_char(to_date(#FNS_YMD#, 'yyyy-MM-dd'), 'yyyyMMdd'), '')
+      , GAI_NAM = #GAI_NAM#
+      , WSR_CDE = #WSR_CDE#
+      , WSS_NAM = #WSS_NAM#
+      , AGA_VOL = #AGA_VOL#
+      , HGA_VOL = #HGA_VOL#
+      , PMP_CNT = #PMP_CNT#
+      , GAI_ARA = #GAI_ARA#
+      , WRW_CDE = #WRW_CDE#
+      , WGW_CDE = #WGW_CDE#
+      , CNT_NUM = #CNT_NUM#
+      , SYS_CHK = #SYS_CHK#
+
+      WHEN NOT MATCHED THEN
+      INSERT 
+      ( FTR_CDE
+      , FTR_IDN
+      , HJD_CDE
+      , SHT_NUM
+      , MNG_CDE
+      , FNS_YMD
+      , GAI_NAM
+      , WSR_CDE
+      , WSS_NAM
+      , AGA_VOL
+      , HGA_VOL
+      , PMP_CNT
+      , GAI_ARA
+      , WRW_CDE
+      , WGW_CDE
+      , CNT_NUM
+      , SYS_CHK
+      )
+      VALUES
+      ( #FTR_CDE#
+      , #FTR_IDN#
+      , #HJD_CDE#
+      , #SHT_NUM#
+      , #MNG_CDE#
+      , decode(length(#FNS_YMD#), 10, to_char(to_date(#FNS_YMD#, 'yyyy-MM-dd'), 'yyyyMMdd'), '')
+      , #GAI_NAM#
+      , #WSR_CDE#
+      , #WSS_NAM#
+      , #AGA_VOL#
+      , #HGA_VOL#
+      , #PMP_CNT#
+      , #GAI_ARA#
+      , #WRW_CDE#
+      , #WGW_CDE#
+      , #CNT_NUM#
+      , #SYS_CHK#
+      )
     </update>
 
     <!--취수장 상세삭제-->

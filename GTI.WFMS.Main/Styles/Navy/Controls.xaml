@@ -1873,5 +1873,45 @@
         <Setter Property="Margin" Value="10,0,10,0"/>
     </Style>
 
+    
+    <!--스크롤뷰어-->
+    <Style x:Key="RightScrollViewer"
+       TargetType="{x:Type ScrollViewer}">
+        <Setter Property="OverridesDefaultStyle" Value="True" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type ScrollViewer}">
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto" />
+                            <ColumnDefinition />
+                        </Grid.ColumnDefinitions>
+                        <Grid.RowDefinitions>
+                            <RowDefinition />
+                            <RowDefinition Height="Auto" />
+                        </Grid.RowDefinitions>
+                        
+                        <Border Grid.Column="0" BorderThickness="1,1,0,1">
+                            <Border.BorderBrush>
+                                <SolidColorBrush Color="{DynamicResource PopCOLOR2}" />
+                            </Border.BorderBrush>
+                            <ScrollContentPresenter />
+                        </Border>
+                        
+                        <ScrollBar Grid.Column="1" x:Name="PART_VerticalScrollBar"
+                             Value="{TemplateBinding VerticalOffset}"
+                             Maximum="{TemplateBinding ScrollableHeight}"
+                             ViewportSize="{TemplateBinding ViewportHeight}"
+                             Visibility="{TemplateBinding ComputedVerticalScrollBarVisibility}"
+                             Background="{DynamicResource PopCOLOR2Brush}"
+                                   />
+                    </Grid>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+ 
+
 
 </ResourceDictionary>

@@ -239,7 +239,7 @@ namespace GTI.WFMS.GIS
                 case "SA203": layerNm = "WTL_VALV_PS^SA203"; break;
                 case "SA204": layerNm = "WTL_VALV_PS^SA204"; break;
                 case "SA205": layerNm = "WTL_VALV_PS^SA205"; break;
-                case "SA206": layerNm = "WTL_VALV_PS^SA206"; break;
+                case "SA206": layerNm = "WTL_PRES_PS"; break;
                 case "SA300": layerNm = "WTL_LEAK_PS"; break;
 
                 default:

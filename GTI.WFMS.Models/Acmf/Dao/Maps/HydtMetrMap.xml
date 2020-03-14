@@ -245,27 +245,103 @@
     <update id="updateHydtMetrDtl" parameterClass="GTI.WFMS.Models.Acmf.Model.HydtMetrDtl">
       /* 급수전계량기 상세 수정 */
       UPDATE INFOFMS.WTL_META_PS
-        SET HJD_CDE = #HJD_CDE#
-          , SHT_NUM = #SHT_NUM#
-          , IST_YMD = decode(length(#IST_YMD#), 10, to_char(to_date(#IST_YMD#, 'yyyy-MM-dd'), 'yyyyMMdd'), '')
-          , HOM_NUM = #HOM_NUM#
-          , HOM_NAM = #HOM_NAM#
-          , HOM_CDE = #HOM_CDE#
-          , HOM_ADR = #HOM_ADR#
-          , HOM_CNT = #HOM_CNT#
-          , SBI_CDE = #SBI_CDE#
-          , MET_DIP = #MET_DIP#
-          , MOF_CDE = #MOF_CDE#
-          , PRD_NUM = #PRD_NUM#
-          , PIP_CDE = #PIP_CDE#
-          , PIP_IDN = #PIP_IDN#
-          , CNT_NUM = #CNT_NUM#
-          , SYS_CHK = #SYS_CHK#
-          , MET_NUM = #MET_NUM#
-          , MET_MOF = #MET_MOF#
-          , HOM_HJD = #HOM_HJD#
+      SET HJD_CDE = #HJD_CDE#
+      , SHT_NUM = #SHT_NUM#
+      , IST_YMD = decode(length(#IST_YMD#), 10, to_char(to_date(#IST_YMD#, 'yyyy-MM-dd'), 'yyyyMMdd'), '')
+      , HOM_NUM = #HOM_NUM#
+      , HOM_NAM = #HOM_NAM#
+      , HOM_CDE = #HOM_CDE#
+      , HOM_ADR = #HOM_ADR#
+      , HOM_CNT = #HOM_CNT#
+      , SBI_CDE = #SBI_CDE#
+      , MET_DIP = #MET_DIP#
+      , MOF_CDE = #MOF_CDE#
+      , PRD_NUM = #PRD_NUM#
+      , PIP_CDE = #PIP_CDE#
+      , PIP_IDN = #PIP_IDN#
+      , CNT_NUM = #CNT_NUM#
+      , SYS_CHK = #SYS_CHK#
+      , MET_NUM = #MET_NUM#
+      , MET_MOF = #MET_MOF#
+      , HOM_HJD = #HOM_HJD#
       WHERE FTR_CDE = #FTR_CDE#
-        AND	FTR_IDN = #FTR_IDN#
+      AND	FTR_IDN = #FTR_IDN#
+    </update>
+
+    <update id="SaveHydtMetrDtl" parameterClass="GTI.WFMS.Models.Acmf.Model.HydtMetrDtl">
+      MERGE INTO INFOFMS.WTL_META_PS
+      USING DUAL ON (FTR_CDE = #FTR_CDE# AND	FTR_IDN = #FTR_IDN#)
+
+      WHEN MATCHED THEN
+      UPDATE
+      SET HJD_CDE = #HJD_CDE#
+      , SHT_NUM = #SHT_NUM#
+      , IST_YMD = decode(length(#IST_YMD#), 10, to_char(to_date(#IST_YMD#, 'yyyy-MM-dd'), 'yyyyMMdd'), '')
+      , HOM_NUM = #HOM_NUM#
+      , HOM_NAM = #HOM_NAM#
+      , HOM_CDE = #HOM_CDE#
+      , HOM_ADR = #HOM_ADR#
+      , HOM_CNT = #HOM_CNT#
+      , SBI_CDE = #SBI_CDE#
+      , MET_DIP = #MET_DIP#
+      , MOF_CDE = #MOF_CDE#
+      , PRD_NUM = #PRD_NUM#
+      , PIP_CDE = #PIP_CDE#
+      , PIP_IDN = #PIP_IDN#
+      , CNT_NUM = #CNT_NUM#
+      , SYS_CHK = #SYS_CHK#
+      , MET_NUM = #MET_NUM#
+      , MET_MOF = #MET_MOF#
+      , HOM_HJD = #HOM_HJD#
+
+
+      WHEN NOT MATCHED THEN
+      INSERT 
+      (   FTR_CDE
+      , FTR_IDN
+      , HJD_CDE
+      , SHT_NUM
+      , IST_YMD
+      , HOM_NUM
+      , HOM_NAM
+      , HOM_CDE
+      , HOM_ADR
+      , HOM_CNT
+      , SBI_CDE
+      , MET_DIP
+      , MOF_CDE
+      , PRD_NUM
+      , PIP_CDE
+      , PIP_IDN
+      , CNT_NUM
+      , SYS_CHK
+      , MET_NUM
+      , MET_MOF
+      , HOM_HJD
+      )
+      VALUES
+      (   #FTR_CDE#
+      , #FTR_IDN#
+      , #HJD_CDE#
+      , #SHT_NUM#
+      , decode(length(#IST_YMD#), 10, to_char(to_date(#IST_YMD#, 'yyyy-MM-dd'), 'yyyyMMdd'), '')
+      , #HOM_NUM#
+      , #HOM_NAM#
+      , #HOM_CDE#
+      , #HOM_ADR#
+      , #HOM_CNT#
+      , #SBI_CDE#
+      , #MET_DIP#
+      , #MOF_CDE#
+      , #PRD_NUM#
+      , #PIP_CDE#
+      , #PIP_IDN#
+      , #CNT_NUM#
+      , #SYS_CHK#
+      , #MET_NUM#
+      , #MET_MOF#
+      , #HOM_HJD#
+      )
     </update>
 
     <!--급수전계량기 상세삭제-->

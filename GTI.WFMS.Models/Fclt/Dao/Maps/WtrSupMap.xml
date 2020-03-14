@@ -266,6 +266,75 @@
       AND	FTR_IDN = #FTR_IDN#
     </update>
 
+    <update id="SaveWtrSupDtl" parameterClass="GTI.WFMS.Models.Fclt.Model.WtrSupDtl">
+      MERGE INTO INFOFMS.WTL_SERV_PS
+      USING DUAL ON (FTR_CDE = #FTR_CDE# AND	FTR_IDN = #FTR_IDN#)
+
+      WHEN MATCHED THEN 
+      UPDATE 
+      SET HJD_CDE = #HJD_CDE#
+        , SHT_NUM = #SHT_NUM#
+        , MNG_CDE = #MNG_CDE#
+        , FNS_YMD = decode(length(#FNS_YMD#), 10, to_char(to_date(#FNS_YMD#, 'yyyy-MM-dd'), 'yyyyMMdd'), '')
+        , SRV_NAM = #SRV_NAM#
+        , PUR_NAM = #PUR_NAM#
+        , SAG_CDE = #SAG_CDE#
+        , SRV_VOL = #SRV_VOL#
+        , HGH_WAL = #HGH_WAL#
+        , LOW_WAL = #LOW_WAL#
+        , ISR_VOL = #ISR_VOL#
+        , SUP_ARE = #SUP_ARE#
+        , SUP_POP = #SUP_POP#
+        , SCW_CDE = #SCW_CDE#
+        , CNT_NUM = #CNT_NUM#     
+        , SYS_CHK = #SYS_CHK#
+        , SRV_ARA = #SRV_ARA#
+
+      WHEN NOT MATCHED THEN 
+        INSERT 
+              (   FTR_CDE
+                , FTR_IDN
+                , HJD_CDE
+                , SHT_NUM
+                , MNG_CDE
+                , FNS_YMD
+                , SRV_NAM
+                , PUR_NAM
+                , SAG_CDE
+                , SRV_VOL
+                , HGH_WAL
+                , LOW_WAL
+                , ISR_VOL
+                , SUP_ARE
+                , SUP_POP
+                , SCW_CDE
+                , CNT_NUM
+                , SYS_CHK
+                , SRV_ARA
+              )
+              VALUES
+              (   #FTR_CDE#
+                , #FTR_IDN#
+                , #HJD_CDE#
+                , #SHT_NUM#
+                , #MNG_CDE#
+                , decode(length(#FNS_YMD#), 10, to_char(to_date(#FNS_YMD#, 'yyyy-MM-dd'), 'yyyyMMdd'), '')
+                , #SRV_NAM#
+                , #PUR_NAM#
+                , #SAG_CDE#
+                , #SRV_VOL#
+                , #HGH_WAL#
+                , #LOW_WAL#
+                , #ISR_VOL#
+                , #SUP_ARE#
+                , #SUP_POP#
+                , #SCW_CDE#
+                , #CNT_NUM#
+                , #SYS_CHK#
+                , #SRV_ARA#
+              )
+    </update>
+
     <!--배수지 상세삭제-->
     <update id="deleteWtrSupDtl" parameterClass="GTI.WFMS.Models.Fclt.Model.WtrSupDtl">
       /* 배수지 상세 삭제 */

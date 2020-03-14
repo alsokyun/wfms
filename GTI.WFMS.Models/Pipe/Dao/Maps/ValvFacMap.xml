@@ -20,6 +20,11 @@
         A.FTR_IDN = #FTR_IDN#
       </isNotEmpty>
 
+      <!-- 조건2. 관리번호 -->
+      <isNotEmpty prepend="AND" property="FTR_CDE">
+        A.FTR_CDE= #FTR_CDE#
+      </isNotEmpty>
+
       <!-- 조건3. 행정읍면동 -->
       <isNotEmpty prepend="AND" property="HJD_CDE">
         A.HJD_CDE = #HJD_CDE#
@@ -110,6 +115,11 @@
       <!-- 조건2. 관리번호 -->
       <isNotEmpty prepend="AND" property="FTR_IDN">
         A.FTR_IDN = #FTR_IDN#
+      </isNotEmpty>
+
+      <!-- 조건2. 관리번호 -->
+      <isNotEmpty prepend="AND" property="FTR_CDE">
+        A.FTR_CDE= #FTR_CDE#
       </isNotEmpty>
 
       <!-- 조건3. 행정읍면동 -->
