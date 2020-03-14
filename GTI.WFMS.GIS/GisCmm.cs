@@ -23,6 +23,7 @@ namespace GTI.WFMS.GIS
         //private double _ulsanScale = 8762.7156655228955;
         //private double _ulsanScale = 150000;
         public static double _ulsanScale = 500000;
+        public static double _ulsanScale2 = 150000;
 
 
 

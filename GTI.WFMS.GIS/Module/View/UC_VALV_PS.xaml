@@ -1,0 +1,226 @@
+﻿<UserControl x:Class="GTI.WFMS.GIS.Module.View.UC_VALV_PS"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             
+             xmlns:vm="clr-namespace:GTI.WFMS.GIS.Module.ViewModel"
+             xmlns:cv="clr-namespace:GTI.WFMS.Models.Common;assembly=GTI.WFMS.Models"     
+             xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
+
+             xmlns:dxe="http://schemas.devexpress.com/winfx/2008/xaml/editors"
+             mc:Ignorable="d" 
+             d:DesignHeight="300" d:DesignWidth="250"
+        
+             Width="280" Height="660"
+             x:Name="uC_VALV_PS"
+       >
+
+    <UserControl.DataContext>
+        <vm:UC_VALV_PSModel/>
+    </UserControl.DataContext>
+
+    <UserControl.Resources>
+        <cv:Date2StrConverter x:Key="date2StrConverter" />
+        <cv:Toggle2Converter x:Key="toggleConverter" />
+    </UserControl.Resources>
+
+
+
+    <Grid  Background="{DynamicResource PopCOLOR2Brush}" >
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*" />
+            <RowDefinition Height="40" />
+        </Grid.RowDefinitions>
+
+        <ScrollViewer Grid.Row="0" Height="620" VerticalScrollBarVisibility="Hidden">
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="120"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="40" />
+                    <RowDefinition Height="40" />
+                    <RowDefinition Height="40" />
+                    <RowDefinition Height="40" />
+                    <RowDefinition Height="40" />
+                    <RowDefinition Height="40" />
+                    <RowDefinition Height="40" />
+                    <RowDefinition Height="40" />
+                    <RowDefinition Height="40" />
+                    <RowDefinition Height="40" />
+                    <RowDefinition Height="40" />
+                    <RowDefinition Height="40" />
+                    <RowDefinition Height="40" />
+                    <RowDefinition Height="40" />
+                    <RowDefinition Height="40" />
+                    <RowDefinition Height="40" />
+                    <RowDefinition Height="40" />
+                    <RowDefinition Height="40" />
+                    <RowDefinition Height="40" />
+                    <RowDefinition Height="40" />
+                    <RowDefinition Height="40" />
+                    <RowDefinition Height="40" />
+                </Grid.RowDefinitions>
+
+                <!--테이블구분선-->
+                <Border Grid.Row="0" Grid.Column="0" BorderThickness="1 1 1 1" BorderBrush="{DynamicResource MainBack1Brush1}" Background="{DynamicResource PopupCOLOR3Brush}"/>
+                <Border Grid.Row="0" Grid.Column="1" BorderThickness="0 1 1 1" BorderBrush="{DynamicResource MainBack1Brush1}"/>
+                <Border Grid.Row="1" Grid.Column="0" BorderThickness="1 0 1 1" BorderBrush="{DynamicResource MainBack1Brush1}" Background="{DynamicResource PopupCOLOR3Brush}"/>
+                <Border Grid.Row="1" Grid.Column="1" BorderThickness="0 0 1 1" BorderBrush="{DynamicResource MainBack1Brush1}"/>
+                <Border Grid.Row="2" Grid.Column="0" BorderThickness="1 0 1 1" BorderBrush="{DynamicResource MainBack1Brush1}" Background="{DynamicResource PopupCOLOR3Brush}"/>
+                <Border Grid.Row="2" Grid.Column="1" BorderThickness="0 0 1 1" BorderBrush="{DynamicResource MainBack1Brush1}"/>
+                <Border Grid.Row="3" Grid.Column="0" BorderThickness="1 0 1 1" BorderBrush="{DynamicResource MainBack1Brush1}" Background="{DynamicResource PopupCOLOR3Brush}"/>
+                <Border Grid.Row="3" Grid.Column="1" BorderThickness="0 0 1 1" BorderBrush="{DynamicResource MainBack1Brush1}"/>
+                <Border Grid.Row="4" Grid.Column="0" BorderThickness="1 0 1 1" BorderBrush="{DynamicResource MainBack1Brush1}" Background="{DynamicResource PopupCOLOR3Brush}"/>
+                <Border Grid.Row="4" Grid.Column="1" BorderThickness="0 0 1 1" BorderBrush="{DynamicResource MainBack1Brush1}"/>
+                <Border Grid.Row="5" Grid.Column="0" BorderThickness="1 0 1 1" BorderBrush="{DynamicResource MainBack1Brush1}" Background="{DynamicResource PopupCOLOR3Brush}"/>
+                <Border Grid.Row="5" Grid.Column="1" BorderThickness="0 0 1 1" BorderBrush="{DynamicResource MainBack1Brush1}"/>
+                <Border Grid.Row="6" Grid.Column="0" BorderThickness="1 0 1 1" BorderBrush="{DynamicResource MainBack1Brush1}" Background="{DynamicResource PopupCOLOR3Brush}"/>
+                <Border Grid.Row="6" Grid.Column="1" BorderThickness="0 0 1 1" BorderBrush="{DynamicResource MainBack1Brush1}"/>
+                <Border Grid.Row="7" Grid.Column="0" BorderThickness="1 0 1 1" BorderBrush="{DynamicResource MainBack1Brush1}" Background="{DynamicResource PopupCOLOR3Brush}"/>
+                <Border Grid.Row="7" Grid.Column="1" BorderThickness="0 0 1 1" BorderBrush="{DynamicResource MainBack1Brush1}"/>
+                <Border Grid.Row="8" Grid.Column="0" BorderThickness="1 0 1 1" BorderBrush="{DynamicResource MainBack1Brush1}" Background="{DynamicResource PopupCOLOR3Brush}"/>
+                <Border Grid.Row="8" Grid.Column="1" BorderThickness="0 0 1 1" BorderBrush="{DynamicResource MainBack1Brush1}"/>
+                <Border Grid.Row="9" Grid.Column="0" BorderThickness="1 0 1 1" BorderBrush="{DynamicResource MainBack1Brush1}" Background="{DynamicResource PopupCOLOR3Brush}"/>
+                <Border Grid.Row="9" Grid.Column="1" BorderThickness="0 0 1 1" BorderBrush="{DynamicResource MainBack1Brush1}"/>
+                <Border Grid.Row="10" Grid.Column="0" BorderThickness="1 0 1 1" BorderBrush="{DynamicResource MainBack1Brush1}" Background="{DynamicResource PopupCOLOR3Brush}"/>
+                <Border Grid.Row="10" Grid.Column="1" BorderThickness="0 0 1 1" BorderBrush="{DynamicResource MainBack1Brush1}"/>
+                <Border Grid.Row="11" Grid.Column="0" BorderThickness="1 0 1 1" BorderBrush="{DynamicResource MainBack1Brush1}" Background="{DynamicResource PopupCOLOR3Brush}"/>
+                <Border Grid.Row="11" Grid.Column="1" BorderThickness="0 0 1 1" BorderBrush="{DynamicResource MainBack1Brush1}"/>
+                <Border Grid.Row="12" Grid.Column="0" BorderThickness="1 0 1 1" BorderBrush="{DynamicResource MainBack1Brush1}" Background="{DynamicResource PopupCOLOR3Brush}"/>
+                <Border Grid.Row="12" Grid.Column="1" BorderThickness="0 0 1 1" BorderBrush="{DynamicResource MainBack1Brush1}"/>
+                <Border Grid.Row="13" Grid.Column="0" BorderThickness="1 0 1 1" BorderBrush="{DynamicResource MainBack1Brush1}" Background="{DynamicResource PopupCOLOR3Brush}"/>
+                <Border Grid.Row="13" Grid.Column="1" BorderThickness="0 0 1 1" BorderBrush="{DynamicResource MainBack1Brush1}"/>
+                <Border Grid.Row="14" Grid.Column="0" BorderThickness="1 0 1 1" BorderBrush="{DynamicResource MainBack1Brush1}" Background="{DynamicResource PopupCOLOR3Brush}"/>
+                <Border Grid.Row="14" Grid.Column="1" BorderThickness="0 0 1 1" BorderBrush="{DynamicResource MainBack1Brush1}"/>
+                <Border Grid.Row="15" Grid.Column="0" BorderThickness="1 0 1 1" BorderBrush="{DynamicResource MainBack1Brush1}" Background="{DynamicResource PopupCOLOR3Brush}"/>
+                <Border Grid.Row="15" Grid.Column="1" BorderThickness="0 0 1 1" BorderBrush="{DynamicResource MainBack1Brush1}"/>
+                <Border Grid.Row="16" Grid.Column="0" BorderThickness="1 0 1 1" BorderBrush="{DynamicResource MainBack1Brush1}" Background="{DynamicResource PopupCOLOR3Brush}"/>
+                <Border Grid.Row="16" Grid.Column="1" BorderThickness="0 0 1 1" BorderBrush="{DynamicResource MainBack1Brush1}"/>
+                <Border Grid.Row="17" Grid.Column="0" BorderThickness="1 0 1 1" BorderBrush="{DynamicResource MainBack1Brush1}" Background="{DynamicResource PopupCOLOR3Brush}"/>
+                <Border Grid.Row="17" Grid.Column="1" BorderThickness="0 0 1 1" BorderBrush="{DynamicResource MainBack1Brush1}"/>
+                <Border Grid.Row="18" Grid.Column="0" BorderThickness="1 0 1 1" BorderBrush="{DynamicResource MainBack1Brush1}" Background="{DynamicResource PopupCOLOR3Brush}"/>
+                <Border Grid.Row="18" Grid.Column="1" BorderThickness="0 0 1 1" BorderBrush="{DynamicResource MainBack1Brush1}"/>
+                <Border Grid.Row="19" Grid.Column="0" BorderThickness="1 0 1 1" BorderBrush="{DynamicResource MainBack1Brush1}" Background="{DynamicResource PopupCOLOR3Brush}"/>
+                <Border Grid.Row="19" Grid.Column="1" BorderThickness="0 0 1 1" BorderBrush="{DynamicResource MainBack1Brush1}"/>
+                <Border Grid.Row="20" Grid.Column="0" BorderThickness="1 0 1 1" BorderBrush="{DynamicResource MainBack1Brush1}" Background="{DynamicResource PopupCOLOR3Brush}"/>
+                <Border Grid.Row="20" Grid.Column="1" BorderThickness="0 0 1 1" BorderBrush="{DynamicResource MainBack1Brush1}"/>
+                <Border Grid.Row="21" Grid.Column="0" BorderThickness="1 0 1 1" BorderBrush="{DynamicResource MainBack1Brush1}" Background="{DynamicResource PopupCOLOR3Brush}"/>
+                <Border Grid.Row="21" Grid.Column="1" BorderThickness="0 0 1 1" BorderBrush="{DynamicResource MainBack1Brush1}"/>
+
+
+                <Label Grid.Row="0" Grid.Column="0" Content="관리번호" Style="{DynamicResource ResourceKey=GridLabelReq}"/>
+                <dxe:TextEdit Grid.Row="0" Grid.Column="1" Text="{Binding FTR_IDN, UpdateSourceTrigger=PropertyChanged}" Style="{DynamicResource ResourceKey=GrdTextEdit}" 
+                          x:Name="txtFTR_IDN" Tag="관리번호" IsEnabled="False"/>
+                <TextBox x:Name="txtFTR_CDE" Visibility="Collapsed" Text="{Binding FTR_CDE, UpdateSourceTrigger=PropertyChanged}"/>
+
+                <Label Grid.Row="1" Grid.Column="0" Content="행정동" Style="{DynamicResource ResourceKey=GridLabelReq}"/>
+                <dxe:ComboBoxEdit Grid.Row="1" Grid.Column="1" Style="{DynamicResource ResourceKey=GrdComboBox}" Tag="행정동"
+                              x:Name="cbHJD_CDE" EditValue="{Binding FctDtl.HJD_CDE}" />
+
+
+                <Label Grid.Row="2" Grid.Column="0" Content="공사번호" Style="{DynamicResource ResourceKey=GridLabel}"/>
+                <dxe:TextEdit Grid.Row="2" Grid.Column="1" Style="{DynamicResource ResourceKey=GrdTextEdit}" 
+                          x:Name="txtCNT_NUM" EditValue="{Binding FctDtl.CNT_NUM}" Width="110" HorizontalAlignment="Left"/>
+                <Button Grid.Row="2" Grid.Column="1"  x:Name="btnSel" Style="{DynamicResource ResourceKey=GdAddButton}" HorizontalAlignment="Right" Margin="0 0 10 0" Click="BtnSel_Click"/>
+
+                <Label Grid.Row="3" Grid.Column="0" Content="관리기관" Style="{DynamicResource ResourceKey=GridLabel}"/>
+                <dxe:ComboBoxEdit Grid.Row="3" Grid.Column="1" Style="{DynamicResource ResourceKey=GrdComboBox}"  
+                              x:Name="cbMNG_CDE" EditValue="{Binding FctDtl.MNG_CDE}" />
+
+                <Label Grid.Row="4" Grid.Column="0" Content="도엽번호" Style="{DynamicResource ResourceKey=GridLabel}"/>
+                <dxe:TextEdit Grid.Row="4" Grid.Column="1" Style="{DynamicResource ResourceKey=GrdTextEdit}" 
+                          EditValue="{Binding FctDtl.SHT_NUM}" />
+
+                <Label Grid.Row="5" Grid.Column="0" Content="설치일자" Style="{DynamicResource ResourceKey=GridLabel}"/>
+                <dxe:DateEdit Grid.Row="5" Grid.Column="1" Style="{DynamicResource ResourceKey=GrdDateEdit}" HorizontalContentAlignment="Center" 
+                          EditValue="{Binding FctDtl.IST_YMD, Converter={StaticResource date2StrConverter}}"  />
+
+                <Label Grid.Row="6" Grid.Column="0" Content="형식" Style="{DynamicResource ResourceKey=GridLabel}"/>
+                <dxe:ComboBoxEdit Grid.Row="6" Grid.Column="1" Style="{DynamicResource ResourceKey=GrdComboBox}" 
+                              x:Name="cbVAL_MOF" EditValue="{Binding FctDtl.VAL_MOF}" />
+
+                <Label Grid.Row="7" Grid.Column="0" Content="관재질" Style="{DynamicResource ResourceKey=GridLabel}"/>
+                <dxe:ComboBoxEdit Grid.Row="7" Grid.Column="1" Style="{DynamicResource ResourceKey=GrdComboBox}" 
+                              x:Name="cbVAL_MOP" EditValue="{Binding FctDtl.VAL_MOP}" />
+
+                <Label Grid.Row="8" Grid.Column="0" Content="구경" Style="{DynamicResource ResourceKey=GridLabel}"/>
+                <dxe:TextEdit Grid.Row="8" Grid.Column="1" Style="{DynamicResource ResourceKey=GrdNumberEdit}"   
+                          EditValue="{Binding FctDtl.VAL_DIP}"/>
+
+                <Label Grid.Row="9" Grid.Column="0" Content="제수변회전방향" Style="{DynamicResource ResourceKey=GridLabel}"/>
+                <dxe:ComboBoxEdit Grid.Row="9" Grid.Column="1" Style="{DynamicResource ResourceKey=GrdComboBox}" 
+                              x:Name="cbSAE_CDE" EditValue="{Binding SAE_CDE}" />
+
+                <Label Grid.Row="10" Grid.Column="0" Content="제수변총회전수" Style="{DynamicResource ResourceKey=GridLabel}"/>
+                <dxe:TextEdit Grid.Row="10" Grid.Column="1" Style="{DynamicResource ResourceKey=GrdNumberEdit}"   
+                          EditValue="{Binding FctDtl.TRO_CNT}"/>
+
+                <Label Grid.Row="11" Grid.Column="0" Content="제수변회전수" Style="{DynamicResource ResourceKey=GridLabel}"/>
+                <dxe:TextEdit Grid.Row="11" Grid.Column="1" Style="{DynamicResource ResourceKey=GrdNumberEdit}"   
+                          EditValue="{Binding FctDtl.CRO_CNT}"/>
+
+                <Label Grid.Row="12" Grid.Column="0" Content="제수변구동방법" Style="{DynamicResource ResourceKey=GridLabel}"/>
+                <dxe:ComboBoxEdit Grid.Row="12" Grid.Column="1" Style="{DynamicResource ResourceKey=GrdComboBox}" 
+                              x:Name="cbMTH_CDE" EditValue="{Binding FctDtl.MTH_CDE}" />
+
+                <Label Grid.Row="13" Grid.Column="0" Content="시설물형태" Style="{DynamicResource ResourceKey=GridLabel}"/>
+                <dxe:ComboBoxEdit Grid.Row="13" Grid.Column="1" Style="{DynamicResource ResourceKey=GrdComboBox}" 
+                              x:Name="cbVAL_FOR" EditValue="{Binding FctDtl.VAL_FOR}" />
+
+                <Label Grid.Row="14" Grid.Column="0" Content="변실규격" Style="{DynamicResource ResourceKey=GridLabel}"/>
+                <dxe:TextEdit Grid.Row="14" Grid.Column="1" Style="{DynamicResource ResourceKey=GrdTextEdit}"   
+                          EditValue="{Binding FctDtl.VAL_STD}"/>
+
+                <Label Grid.Row="15" Grid.Column="0" Content="설정압력" Style="{DynamicResource ResourceKey=GridLabel}"/>
+                <dxe:TextEdit Grid.Row="15" Grid.Column="1" Style="{DynamicResource ResourceKey=GrdNumberEdit}"   
+                          EditValue="{Binding FctDtl.VAL_SAF}"/>
+
+                <Label Grid.Row="16" Grid.Column="0" Content="제작회사명" Style="{DynamicResource ResourceKey=GridLabel}"/>
+                <dxe:TextEdit Grid.Row="16" Grid.Column="1" Style="{DynamicResource ResourceKey=GrdTextEdit}"   
+                          EditValue="{Binding FctDtl.PRD_NAM}"/>
+
+                <Label Grid.Row="17" Grid.Column="0" Content="관로지형지물부호" Style="{DynamicResource ResourceKey=GridLabel}"/>
+                <dxe:TextEdit Grid.Row="17" Grid.Column="1" Style="{DynamicResource ResourceKey=GrdTextEdit}"   
+                          EditValue="{Binding FctDtl.PIP_CDE}"/>
+
+                <Label Grid.Row="18" Grid.Column="0" Content="관로관리번호" Style="{DynamicResource ResourceKey=GridLabel}"/>
+                <dxe:TextEdit Grid.Row="18" Grid.Column="1" Style="{DynamicResource ResourceKey=GrdTextEdit}"   
+                          EditValue="{Binding FctDtl.PIP_IDN}"/>
+
+                <Label Grid.Row="19" Grid.Column="0" Content="이상상태" Style="{DynamicResource ResourceKey=GridLabel}"/>
+                <dxe:ComboBoxEdit Grid.Row="19" Grid.Column="1" Style="{DynamicResource ResourceKey=GrdComboBox}" 
+                              x:Name="cbCST_CDE" EditValue="{Binding FctDtl.CST_CDE}" />
+
+                <Label Grid.Row="20" Grid.Column="0" Content="개폐여부" Style="{DynamicResource ResourceKey=GridLabel}"/>
+                <dxe:ComboBoxEdit Grid.Row="20" Grid.Column="1" Style="{DynamicResource ResourceKey=GrdComboBox}" 
+                              x:Name="cbOFF_CDE" EditValue="{Binding FctDtl.OFF_CDE}" />
+
+                <Label Grid.Row="21" Grid.Column="0" Content="대장초기화여부" Style="{DynamicResource ResourceKey=GridLabel}"/>
+                <dxe:ToggleSwitch Grid.Row="21" Grid.Column="5" HorizontalAlignment="Center"  VerticalAlignment="Center" Foreground="White"
+                                  CheckedStateContent="유" UncheckedStateContent="무" ContentPlacement="Inside" 
+                                  IsChecked="{Binding FctDtl.SYS_CHK, Converter={StaticResource toggleConverter}}" />
+
+            </Grid>
+        </ScrollViewer>
+
+        <Grid Grid.Row="1">
+            <Button x:Name="btnSave" Style="{DynamicResource ResourceKey=SaveButton}" Command="{Binding SaveCommand}" HorizontalAlignment="Right" Margin="0 0 10 0"/>
+        </Grid>
+    </Grid>
+
+
+
+
+    <!--뷰와 연결된 뷰모델로 Loaded 이벤트전파-->
+    <i:Interaction.Triggers>
+        <i:EventTrigger EventName="Loaded">
+            <i:InvokeCommandAction Command="{Binding LoadedCommand}" CommandParameter="{Binding ElementName=uC_VALV_PS}"/>
+
+        </i:EventTrigger>
+    </i:Interaction.Triggers>
+
+
+</UserControl>

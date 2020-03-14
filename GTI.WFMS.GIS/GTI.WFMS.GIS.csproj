@@ -84,6 +84,7 @@
   <ItemGroup>
     <Compile Include="GisCmm.cs" />
     <Compile Include="Module\ViewModel\UC_FIRE_PSModel.cs" />
+    <Compile Include="Module\ViewModel\UC_VALV_PSModel.cs" />
     <Compile Include="Module\ViewModel\UC_RSRV_PSModel.cs" />
     <Compile Include="Module\ViewModel\UC_META_PSModel.cs" />
     <Compile Include="Module\ViewModel\UC_SPLY_LSModel.cs" />
@@ -98,6 +99,9 @@
     <Compile Include="Module\ViewModel\UC_PIPE_LMModel.cs" />
     <Compile Include="Module\View\UC_FIRE_PS.xaml.cs">
       <DependentUpon>UC_FIRE_PS.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Module\View\UC_VALV_PS.xaml.cs">
+      <DependentUpon>UC_VALV_PS.xaml</DependentUpon>
     </Compile>
     <Compile Include="Module\View\UC_RSRV_PS.xaml.cs">
       <DependentUpon>UC_RSRV_PS.xaml</DependentUpon>
@@ -219,6 +223,10 @@
     </Compile>
     <Compile Include="MapMainViewModel.cs" />
     <Page Include="Module\View\UC_FIRE_PS.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Module\View\UC_VALV_PS.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>

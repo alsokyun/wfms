@@ -440,7 +440,7 @@ namespace GTI.WFMS.GIS.Pop.ViewModel
         private async void InitMap()
         {
             //지도위치 및 스케일 초기화
-            await mapView.SetViewpointCenterAsync(GisCmm._ulsanCoords, GisCmm._ulsanScale);
+            await mapView.SetViewpointCenterAsync(GisCmm._ulsanCoords, GisCmm._ulsanScale2);
 
             //Base맵 초기화
             Console.WriteLine("this._map.SpatialReference - " + this._map.SpatialReference);
@@ -754,6 +754,22 @@ namespace GTI.WFMS.GIS.Pop.ViewModel
                     else
                     {
                         editWinView.cctl.Content = new UC_META_PS(_FTR_CDE, _FTR_IDN);//상세페이지
+                    }
+                    break;
+
+                case "SA200": case "SA201": case "SA202": case "SA203": case "SA204": case "SA205":
+                    if (FmsUtil.IsNull(_FTR_CDE) && FmsUtil.IsNull(_FTR_IDN))
+                    {
+                        editWinView.cctl.Content = null;
+                    }
+                    else if (FmsUtil.IsNull(_FTR_IDN))
+                    {
+                        editWinView.cctl.Content = new UC_VALV_PS(_FTR_CDE);//신규페이지
+                        NEW_FTR_IDN = ((UC_VALV_PS)editWinView.cctl.Content).txtFTR_IDN.EditValue.ToString();
+                    }
+                    else
+                    {
+                        editWinView.cctl.Content = new UC_VALV_PS(_FTR_CDE, _FTR_IDN);//상세페이지
                     }
                     break;
 
