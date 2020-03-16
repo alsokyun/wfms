@@ -543,7 +543,7 @@ namespace GTI.WFMS.GIS.Pop.ViewModel
 
 
         /// <summary>
-        /// UserControl 시설물페이지 재로딩
+        /// UserControl 시설물페이지 로딩
         /// </summary>
         /// <param name="CBO_FTR_CDE"></param>
         /// <param name="_FTR_CDE"></param>

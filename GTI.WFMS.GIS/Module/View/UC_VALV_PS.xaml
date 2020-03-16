@@ -33,7 +33,7 @@
             <RowDefinition Height="50" />
         </Grid.RowDefinitions>
 
-        <ScrollViewer Grid.Row="0" Height="610" VerticalScrollBarVisibility="Hidden">
+        <ScrollViewer Grid.Row="0" Height="600" VerticalScrollBarVisibility="Hidden">
             <Grid>
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="120"/>
