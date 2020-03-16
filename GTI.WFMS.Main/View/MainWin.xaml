@@ -92,11 +92,12 @@
                 <Border Width="1" Background="{DynamicResource MainHeadGBNBrush1}"/>
                 <Button Style="{DynamicResource PowerButton}" Command="{Binding CloseCommand}"/>
             </StackPanel>
+            
         </Grid>
 
         <!--탑메뉴버튼 영역-->
         <Border Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="3" x:Name="borderTop"
-                Background="{DynamicResource MainLMENUBrush1}"  BorderThickness="0,0,0,3" BorderBrush="{DynamicResource MainLMENUUnderBrush1}">
+                Background="{DynamicResource MainLMENUBrush1}"  BorderThickness="0,1,0,3" BorderBrush="{DynamicResource MainLMENUUnderBrush1}">
             <Border.Effect>
                 <DropShadowEffect Direction="-90" ShadowDepth="3" Opacity="0.3"/>
             </Border.Effect>

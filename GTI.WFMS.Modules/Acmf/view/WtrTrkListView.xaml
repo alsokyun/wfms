@@ -68,7 +68,6 @@
                 <RowDefinition Height="40" />
                 <RowDefinition Height="40" />
                 <RowDefinition Height="40" />
-                <RowDefinition Height="40" />
             </Grid.RowDefinitions>
 
             <!--테이블구분선-->
@@ -92,8 +91,6 @@
             <Border Grid.Row="8" Grid.Column="2" BorderThickness="0,0,0,1" BorderBrush="{DynamicResource PopCOLOR3Brush}" Margin="0,0,0,0"/>
             <Border Grid.Row="9" Grid.Column="0" BorderThickness="0,0,1,1" BorderBrush="{DynamicResource PopCOLOR3Brush}" Margin="0,0,0,0"/>
             <Border Grid.Row="9" Grid.Column="2" BorderThickness="0,0,0,1" BorderBrush="{DynamicResource PopCOLOR3Brush}" Margin="0,0,0,0"/>
-            <Border Grid.Row="10" Grid.Column="0" BorderThickness="0,0,1,1" BorderBrush="{DynamicResource PopCOLOR3Brush}" Margin="0,0,0,0"/>
-            <Border Grid.Row="10" Grid.Column="2" BorderThickness="0,0,0,1" BorderBrush="{DynamicResource PopCOLOR3Brush}" Margin="0,0,0,0"/>
 
             <!--라벨&입력창-->
             <Label Grid.Row="0" Grid.Column="0" Content="관리기관" Style="{DynamicResource ResourceKey=HeadLabel}"/>
@@ -158,31 +155,26 @@
                 </dxe:TextEdit.InputBindings>
             </dxe:TextEdit>
 
-            <Label Grid.Row="10" Grid.Column="0" Content="" Style="{DynamicResource ResourceKey=HeadLabel}"/>
-
         </Grid>
 
 
         <!--하단버튼-->
-        <StackPanel Grid.Row="2" Grid.Column="0" Orientation="Horizontal" VerticalAlignment="Bottom" HorizontalAlignment="Center" Margin="5 0 10 10">
-            <Button x:Name="btnReset" Style="{DynamicResource ResourceKey=InitButton}">
+        <StackPanel Grid.Row="2" Grid.Column="0" Orientation="Horizontal" VerticalAlignment="Top" HorizontalAlignment="Center" >
+            <Button x:Name="btnReset" Style="{DynamicResource ResourceKey=InitButton}" Margin="10 0 0 0">
                 <i:Interaction.Triggers>
                     <i:EventTrigger EventName="Click">
-                        <i:InvokeCommandAction Command="{Binding ResetCommand}">
-                        </i:InvokeCommandAction>
+                        <i:InvokeCommandAction Command="{Binding ResetCommand}"/>
                     </i:EventTrigger>
                 </i:Interaction.Triggers>
             </Button>
-            <Button x:Name="btnSearch" Style="{DynamicResource ResourceKey=SearchButton}">
+            <Button x:Name="btnSearch" Style="{DynamicResource ResourceKey=SearchButton}" Margin="5 0 10 0">
                 <i:Interaction.Triggers>
                     <i:EventTrigger EventName="Click">
-                        <i:InvokeCommandAction Command="{Binding SearchCommand}">
-                        </i:InvokeCommandAction>
+                        <i:InvokeCommandAction Command="{Binding SearchCommand}"/>
                     </i:EventTrigger>
                 </i:Interaction.Triggers>
             </Button>
         </StackPanel>
-
 
 
         <!--그리드영역-->
@@ -199,7 +191,7 @@
 
         <Border  Grid.Row="1" Grid.Column="2"  BorderBrush="{DynamicResource PopCOLOR2Brush}" BorderThickness="1"/>
 
-        <dxg:GridControl Grid.Row="1" Grid.Column="2" x:Name="grid" VerticalAlignment="Stretch" HorizontalAlignment="Stretch"
+        <dxg:GridControl Grid.Row="1" Grid.Column="2" x:Name="grid" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" ShowBorder="True" Margin="5 0 5 0"
                             MouseDoubleClick="Grid_MouseDoubleClick"
                             ItemsSource="{Binding ElementName=DataPagerSource, Path=ActualSource}" >
 

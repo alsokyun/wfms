@@ -223,4 +223,7 @@
     <SolidColorBrush x:Key="PopCOLOR4Brush" Color="{DynamicResource PopCOLOR4}" Opacity="0.5"/>
     <Color x:Key="DivBack1">#45688a</Color>
     <SolidColorBrush x:Key="DivBack1Brush1" Color="{DynamicResource DivBack1}"/>
+    <Color x:Key="MainLMENU2">#08614f</Color>
+    <SolidColorBrush x:Key="MainLMENUBrush2" Color="{DynamicResource MainLMENU2}"/>
+
 </ResourceDictionary>
