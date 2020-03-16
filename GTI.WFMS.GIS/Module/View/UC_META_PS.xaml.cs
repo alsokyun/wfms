@@ -41,6 +41,7 @@ namespace GTI.WFMS.GIS.Module.View
             
             //채번결과 매칭
             txtFTR_IDN.Text = result.FTR_IDN.ToString();
+            btnDel.Tag = "Y";//신규채번 플래그
         }
 
 

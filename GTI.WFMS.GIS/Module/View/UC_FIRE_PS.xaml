@@ -25,10 +25,10 @@
         <cv:Toggle2Converter x:Key="toggleConverter" />
     </UserControl.Resources>
 
-    <Grid  Background="{DynamicResource PopCOLOR2Brush}">
+    <Grid x:Name="grid" Background="{DynamicResource PopCOLOR2Brush}" >
         <Grid.RowDefinitions>
             <RowDefinition Height="*" />
-            <RowDefinition Height="40" />
+            <RowDefinition Height="50" />
         </Grid.RowDefinitions>
 
         <Grid >
@@ -134,19 +134,24 @@
             <dxe:TextEdit Grid.Row="11" Grid.Column="1" Style="{DynamicResource ResourceKey=GrdTextEdit}"   
                           x:Name="txtPIP_CDE" EditValue="{Binding FctDtl.PIP_CDE}"/>
 
-            <Label Grid.Row="11" Grid.Column="0" Content="방향각" Style="{DynamicResource ResourceKey=GridLabel}"/>
-            <dxe:TextEdit Grid.Row="11" Grid.Column="1" Style="{DynamicResource ResourceKey=GrdNumberEdit}"   
+            <Label Grid.Row="12" Grid.Column="0" Content="방향각" Style="{DynamicResource ResourceKey=GridLabel}"/>
+            <dxe:TextEdit Grid.Row="12" Grid.Column="1" Style="{DynamicResource ResourceKey=GrdNumberEdit}"   
                           EditValue="{Binding FctDtl.ANG_DIR}"/>
 
-            <Label Grid.Row="12" Grid.Column="0" Content="대장초기화여부" Style="{DynamicResource ResourceKey=GridLabel}"/>
-            <dxe:ToggleSwitch Grid.Row="12" Grid.Column="5" HorizontalAlignment="Center"  VerticalAlignment="Center" Foreground="White"
+            <Label Grid.Row="13" Grid.Column="0" Content="대장초기화여부" Style="{DynamicResource ResourceKey=GridLabel}"/>
+            <dxe:ToggleSwitch Grid.Row="13" Grid.Column="5" HorizontalAlignment="Center"  VerticalAlignment="Center" Foreground="White"
                                   CheckedStateContent="유" UncheckedStateContent="무" ContentPlacement="Inside" 
                                   IsChecked="{Binding FctDtl.SYS_CHK, Converter={StaticResource toggleConverter}}" />
 
         </Grid>
 
         <Grid Grid.Row="1">
-            <Button x:Name="btnSave" Style="{DynamicResource ResourceKey=SaveButton}" Command="{Binding SaveCommand}" HorizontalAlignment="Right" Margin="0 0 10 0"/>
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+                <Button x:Name="btnDel" Style="{DynamicResource ResourceKey=DelButton}" Margin="0 0 10 0" Tag="N"
+                        Command="{Binding DelCommand}" />
+                <Button x:Name="btnSave" Style="{DynamicResource ResourceKey=SaveButton}" Margin="0 0 10 0"
+                        Command="{Binding SaveCommand}" />
+            </StackPanel>
         </Grid>
     </Grid>
 

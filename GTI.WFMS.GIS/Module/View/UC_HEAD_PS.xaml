@@ -25,10 +25,10 @@
         <cv:Toggle2Converter x:Key="toggleConverter" />
     </UserControl.Resources>
 
-    <Grid  Background="{DynamicResource PopCOLOR2Brush}">
+    <Grid  Background="{DynamicResource PopCOLOR2Brush}" x:Name="grid" >
         <Grid.RowDefinitions>
             <RowDefinition Height="*" />
-            <RowDefinition Height="40" />
+            <RowDefinition Height="50" />
         </Grid.RowDefinitions>
 
         <Grid >
@@ -154,7 +154,12 @@
         </Grid>
 
         <Grid Grid.Row="1">
-            <Button x:Name="btnSave" Style="{DynamicResource ResourceKey=SaveButton}" Command="{Binding SaveCommand}" HorizontalAlignment="Right" Margin="0 0 10 0"/>
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+                <Button x:Name="btnDel" Style="{DynamicResource ResourceKey=DelButton}" Margin="0 0 10 0" Tag="N"
+                        Command="{Binding DelCommand}" />
+                <Button x:Name="btnSave" Style="{DynamicResource ResourceKey=SaveButton}" Margin="0 0 10 0"
+                        Command="{Binding SaveCommand}" />
+            </StackPanel>
         </Grid>
     </Grid>
 

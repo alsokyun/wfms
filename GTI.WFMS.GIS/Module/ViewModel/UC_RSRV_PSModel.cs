@@ -9,6 +9,7 @@ using GTIFramework.Common.MessageBox;
 using System;
 using System.Collections;
 using System.ComponentModel;
+using System.Data;
 using System.Windows;
 using System.Windows.Controls;
 
@@ -34,6 +35,7 @@ namespace GTI.WFMS.GIS.Module.ViewModel
         /// </summary>
         public RelayCommand<object> LoadedCommand { get; set; }
         public RelayCommand<object> SaveCommand { get; set; }
+        public RelayCommand<object> DelCommand { get; set; }
 
         /// <summary>
         /// 시설물 키 : FctDtl과 별도로 관리됨
@@ -89,8 +91,9 @@ namespace GTI.WFMS.GIS.Module.ViewModel
         {
             this.LoadedCommand = new RelayCommand<object>(OnLoaded);
             this.SaveCommand = new RelayCommand<object>(OnSave);          
+            this.DelCommand = new RelayCommand<object>(OnDelete);
         }
-        
+
         #region ==========  이벤트 핸들러 ==========
 
         /// <summary>
@@ -159,7 +162,78 @@ namespace GTI.WFMS.GIS.Module.ViewModel
         }
 
 
+        /// <summary>
+        /// 삭제처리
+        /// </summary>
+        /// <param name="obj"></param>
+        private void OnDelete(object obj)
+        {
+            //0.삭제전 체크
+            Hashtable param = new Hashtable();
+            param.Add("sqlId", "selectChscResSubList");
+            param.Add("sqlId2", "SelectFileMapList");
+            param.Add("sqlId3", "selectWtlLeakSubList");
 
+            param.Add("FTR_CDE", this.FTR_CDE);
+            param.Add("FTR_IDN", this.FTR_IDN);
+            param.Add("BIZ_ID", string.Concat(this.FTR_CDE, this.FTR_IDN));
+
+            Hashtable result = BizUtil.SelectLists(param);
+            DataTable dt = new DataTable();
+            DataTable dt2 = new DataTable();
+            DataTable dt3 = new DataTable();
+
+            try
+            {
+                dt = result["dt"] as DataTable;
+                if (dt.Rows.Count > 0)
+                {
+                    Messages.ShowErrMsgBox("유지보수내역이 존재합니다.");
+                    return;
+                }
+            }
+            catch (Exception) { }
+            try
+            {
+                dt2 = result["dt2"] as DataTable;
+                if (dt2.Rows.Count > 0)
+                {
+                    Messages.ShowErrMsgBox("파일첨부내역이 존재합니다.");
+                    return;
+                }
+            }
+            catch (Exception) { }
+            try
+            {
+                dt3 = result["dt3"] as DataTable;
+                if (dt3.Rows.Count > 0)
+                {
+                    Messages.ShowErrMsgBox("누수지점내역이 존재합니다.");
+                    return;
+                }
+            }
+            catch (Exception) { }
+
+
+
+            // 1.삭제처리
+            if (Messages.ShowYesNoMsgBox("변로를 삭제하시겠습니까?") != MessageBoxResult.Yes) return;
+            try
+            {
+                BizUtil.Update2(this.FctDtl, "deleteWtrTrkDtl");
+            }
+            catch (Exception e)
+            {
+                Messages.ShowErrMsgBox("삭제 처리중 오류가 발생하였습니다." + e.Message);
+                return;
+            }
+            Messages.ShowOkMsgBox();
+
+
+
+            InitModel();
+
+        }
         #endregion
 
         #region ============= 메소드정의 ================
@@ -176,6 +250,14 @@ namespace GTI.WFMS.GIS.Module.ViewModel
             if (result != null)
             {
                 this.FctDtl = result;
+            }
+            else
+            {
+                //신규등록이면 상세화면표시
+                if (!"Y".Equals(uC_RSRV_PS.btnDel.Tag))
+                {
+                    uC_RSRV_PS.grid.Visibility = Visibility.Hidden; //DB데이터가 없으면 빈페이지표시
+                }
             }
         }
 

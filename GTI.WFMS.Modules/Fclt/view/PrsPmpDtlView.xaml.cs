@@ -89,7 +89,7 @@ namespace GTI.WFMS.Modules.Fclt.View
                        waitindicator.DeferedVisibility = false;
                    })));
             }
-            catch (Exception ex)
+            catch (Exception )
             {
                 this.Dispatcher.Invoke(DispatcherPriority.ApplicationIdle,
                     new Action((delegate ()

@@ -198,8 +198,8 @@ namespace GTI.WFMS.Modules.Cnst.ViewModel
         {
             //0.삭제전 체크
             Hashtable param = new Hashtable();
-            param.Add("sqlId", "selectFileMapList");
-            param.Add("sqlId2", "selectFileMapList");
+            param.Add("sqlId", "SelectFileMapList");
+            param.Add("sqlId2", "SelectFileMapList");
             param.Add("CNT_NUM", this.CNT_NUM);
 
             Hashtable result = BizUtil.SelectLists(param);

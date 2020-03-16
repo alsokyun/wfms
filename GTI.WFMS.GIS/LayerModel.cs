@@ -37,12 +37,6 @@ namespace GTI.WFMS.GIS
         public MapView mapView; //뷰의 MapView
 
 
-        /* 
-         * 레이어객체리스트
-        public FeatureLayer BML_GADM_AS = new FeatureLayer();//울산광역행정구역
-        public FeatureLayer WTL_FLOW_PS = new FeatureLayer();
-        public FeatureLayer WTL_FIRE_PS = new FeatureLayer();
-         */
 
         public Dictionary<string, FeatureLayer> layers = new Dictionary<string, FeatureLayer>()
         {

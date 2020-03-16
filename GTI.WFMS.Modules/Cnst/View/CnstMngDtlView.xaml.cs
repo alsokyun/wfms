@@ -26,7 +26,7 @@ namespace GTI.WFMS.Modules.Cnst.View
     public partial class CnstMngDtlView : Page
     {
         public delegate void BackCmd(object sender, RoutedEventArgs e);
-        public event BackCmd backEvent;
+        //public event BackCmd backEvent;
 
         Thread thread;
         private string _CNT_NUM;
@@ -43,7 +43,7 @@ namespace GTI.WFMS.Modules.Cnst.View
 
             //강제이벤트 발생
             //BackCmd backCmd = new BackCmd(_backCmd);
-            backEvent += new BackCmd(_backCmd);
+            //backEvent += new BackCmd(_backCmd);
             //backEvent(null, null);
 
 
@@ -75,7 +75,7 @@ namespace GTI.WFMS.Modules.Cnst.View
 
 
             }
-            catch (Exception ex)
+            catch (Exception )
             {
                 this.Dispatcher.Invoke(DispatcherPriority.ApplicationIdle,
                     new Action((delegate ()

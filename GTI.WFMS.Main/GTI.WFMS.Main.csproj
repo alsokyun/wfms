@@ -571,6 +571,15 @@
     <Resource Include="Resources\Navy\Images\Image\icon_layer_map_folder.png" />
     <Resource Include="Resources\Navy\Images\Image\btn_modi.png" />
     <Resource Include="Resources\Navy\Images\Image\btn_modi_on.png" />
+    <Resource Include="Resources\Navy\Images\Image\btn_pos_add.png" />
+    <Resource Include="Resources\Navy\Images\Image\btn_pos_add_on.png" />
+    <Resource Include="Resources\Navy\Images\Image\btn_pos_add_over.png" />
+    <Resource Include="Resources\Navy\Images\Image\btn_pos_del.png" />
+    <Resource Include="Resources\Navy\Images\Image\btn_pos_del_on.png" />
+    <Resource Include="Resources\Navy\Images\Image\btn_pos_del_over.png" />
+    <Resource Include="Resources\Navy\Images\Image\btn_pos_edit.png" />
+    <Resource Include="Resources\Navy\Images\Image\btn_pos_edit_on.png" />
+    <Resource Include="Resources\Navy\Images\Image\btn_pos_edit_over.png" />
     <Content Include="Styles\Fonts\malgun.ttf">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>

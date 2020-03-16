@@ -35,11 +35,12 @@ namespace GTI.WFMS.GIS.Module.View
             
             //신규관리번호채번
             Hashtable param = new Hashtable();
-            param.Add("sqlId", "SelectPrsPmpFTR_IDN");
-            PrsPmpDtl result = BizUtil.SelectObject(param) as PrsPmpDtl;
+            param.Add("sqlId", "SelectWtprMtFTR_IDN");
+            WtprMtDtl result = BizUtil.SelectObject(param) as WtprMtDtl;
             
             //채번결과 매칭
             txtFTR_IDN.Text = result.FTR_IDN.ToString();
+            btnDel.Tag = "Y";//신규채번 플래그
         }
 
 

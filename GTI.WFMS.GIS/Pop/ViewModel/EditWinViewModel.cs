@@ -185,6 +185,12 @@ namespace GTI.WFMS.GIS.Pop.ViewModel
             //시설물조회 후 해당레이어 표시
             SearchCommand = new RelayCommand<object>(delegate(object obj) {
 
+                if (FmsUtil.IsNull(FTR_CDE))
+                {
+                    Messages.ShowInfoMsgBox("시설물을 선택하세요.");
+                    return;
+                }
+
                 //기존항목 초기화
                 InitModel();
 
@@ -732,12 +738,12 @@ namespace GTI.WFMS.GIS.Pop.ViewModel
                     }
                     else if (FmsUtil.IsNull(_FTR_IDN))
                     {
-                        editWinView.cctl.Content = new UC_PRGA_PS(_FTR_CDE);//신규페이지
-                        NEW_FTR_IDN = ((UC_PRGA_PS)editWinView.cctl.Content).txtFTR_IDN.EditValue.ToString();
+                        editWinView.cctl.Content = new UC_PRES_PS(_FTR_CDE);//신규페이지
+                        NEW_FTR_IDN = ((UC_PRES_PS)editWinView.cctl.Content).txtFTR_IDN.EditValue.ToString();
                     }
                     else
                     {
-                        editWinView.cctl.Content = new UC_PRGA_PS(_FTR_CDE, _FTR_IDN);//상세페이지
+                        editWinView.cctl.Content = new UC_PRES_PS(_FTR_CDE, _FTR_IDN);//상세페이지
                     }
                     break;
 
@@ -780,12 +786,12 @@ namespace GTI.WFMS.GIS.Pop.ViewModel
                     }
                     else if (FmsUtil.IsNull(_FTR_IDN))
                     {
-                        editWinView.cctl.Content = new UC_PRES_PS(_FTR_CDE);//신규페이지
-                        NEW_FTR_IDN = ((UC_PRES_PS)editWinView.cctl.Content).txtFTR_IDN.EditValue.ToString();
+                        editWinView.cctl.Content = new UC_PRGA_PS(_FTR_CDE);//신규페이지
+                        NEW_FTR_IDN = ((UC_PRGA_PS)editWinView.cctl.Content).txtFTR_IDN.EditValue.ToString();
                     }
                     else
                     {
-                        editWinView.cctl.Content = new UC_PRES_PS(_FTR_CDE, _FTR_IDN);//상세페이지
+                        editWinView.cctl.Content = new UC_PRGA_PS(_FTR_CDE, _FTR_IDN);//상세페이지
                     }
                     break;
 
@@ -807,12 +813,6 @@ namespace GTI.WFMS.GIS.Pop.ViewModel
         //시설물 shape 검색
         private void SearchAction(object obj)
         {
-            if (FmsUtil.IsNull(FTR_CDE))
-            {
-                Messages.ShowInfoMsgBox("시설물을 선택하세요.");
-                return;
-            }
-
             string ftr_idn = editWinView.txtFTR_IDN.Text;
 
             //레이어표시 - FTR_IDN 조건 필터링
@@ -1006,7 +1006,7 @@ namespace GTI.WFMS.GIS.Pop.ViewModel
                 AddFeatureToLayer(destinationPoint);
 
 
-                MessageBox.Show("Added feature ", "Success!");
+                //MessageBox.Show("Added feature ", "Success!");
 
                 //이벤트핸들러원복
                 mapView.GeoViewTapped -= handlerGeoViewTappedMoveFeature;
