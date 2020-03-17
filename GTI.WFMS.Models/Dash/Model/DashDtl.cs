@@ -51,6 +51,39 @@ namespace GTI.WFMS.Models.Dash.Model
                 OnPropertyChanged("DATA_VAL2");
             }
         }
-        
+
+        private string __USER_ID;
+        public string USER_ID
+        {
+            get { return __USER_ID; }
+            set
+            {
+                this.__USER_ID = value;
+                OnPropertyChanged("USER_ID");
+            }
+        }
+
+        private string __MNU_CD;
+        public string MNU_CD
+        {
+            get { return __MNU_CD; }
+            set
+            {
+                this.__MNU_CD = value;
+                OnPropertyChanged("MNU_CD");
+            }
+        }
+
+        private string __MNU_NM;
+        public string MNU_NM
+        {
+            get { return __MNU_NM; }
+            set
+            {
+                this.__MNU_NM = value;
+                OnPropertyChanged("MNU_NM");
+            }
+        }
+
     }
 }

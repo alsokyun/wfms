@@ -1,13 +1,11 @@
 ﻿using DevExpress.Mvvm;
 using DevExpress.Xpf.Charts;
-using DevExpress.Xpf.Scheduling;
 using GTI.WFMS.Models.Common;
 using GTI.WFMS.Models.Dash.Model;
 using GTI.WFMS.Modules.Dash.View;
 using GTIFramework.Common.Log;
 using System;
 using System.Collections;
-using System.ComponentModel;
 using System.Data;
 using System.Windows;
 

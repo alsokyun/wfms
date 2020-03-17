@@ -2,7 +2,7 @@
 <sqlMap namespace="Dash" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://ibatis.apache.org/mapping">
   <statements>
 
-    <select id="SelectDashMenuList" resultClass="Hashtable" >
+    <select id="SelectDashMenuList" parameterClass="Hashtable" resultClass ="Hashtable" >
       <![CDATA[
 		/* Dash_SQL.selectDashMenuList - 대시보드 메뉴관리 */		
 		SELECT M.MNU_CD
@@ -12,6 +12,7 @@
 		     , M.ORD
 		     , M.USE_YN
 		     , CASE WHEN U.USER_ID IS NOT NULL THEN 'Y' ELSE 'N' END AS MNU_USE_YN
+         , CASE WHEN U.USER_ID IS NOT NULL THEN 'Y' ELSE 'N' END AS CHK
 		  FROM DASH_MNU_INFO M
 		       LEFT JOIN USER_DASH_MNU U
 		         ON ( M.MNU_CD = U.MNU_CD AND U.USER_ID = #id# )
@@ -22,16 +23,16 @@
     </select>
 
     <!-- 사용자별 대시보드 대상 삭제 -->
-    <update id="deleteUserDashMnu" parameterClass="hashmap">
+    <update id="DeleteUserDashMnu" parameterClass="hashmap">
       <![CDATA[
 			/* Dash_SQL.deleteUserDashMnu - 사용자별 대시보드 대상 삭제*/	
 			DELETE USER_DASH_MNU
-			WHERE USER_ID =  #id#    
+			WHERE USER_ID =  #id#
 		]]>
     </update>
 
     <!-- 사용자별 대시보드 대상 저장 -->
-    <update id="insertUserDashMnu" parameterClass="hashmap">
+    <update id="InsertUserDashMnu" parameterClass="hashmap">
       <![CDATA[
 			/* Dash_SQL.insertUserDashMnu - 사용자별 대시보드 대상 저장*/	
 			INSERT INTO USER_DASH_MNU( USER_ID, MNU_CD )
@@ -39,7 +40,7 @@
 		]]>
     </update>
 
-    <select id="SelectDashChart1List" resultClass="Hashtable" >
+    <select id="SelectDashChart1List" parameterClass="Hashtable" resultClass ="Hashtable" >
       <![CDATA[
 		/* Dash_SQL.selectDashChart1List - 1.민원현황(상수,급수공사에 대한 민원구분별) */		
 		SELECT APL_CDE
@@ -93,7 +94,7 @@
 	]]>
     </select>
 
-    <select id="SelectDashChart2List" resultClass="Hashtable" >
+    <select id="SelectDashChart2List" parameterClass="Hashtable" resultClass ="Hashtable" >
       <![CDATA[
 		/* Dash_SQL.selectDashChart2List - 2.소모품별 재고현황(금일기준) */		
 		SELECT M.PDH_NUM
@@ -109,8 +110,8 @@
 		             , NVL(FN_GET_CD_DTL_INFO_NAME('PDT_CAT_CDE',M.PDT_CAT_CDE),M.PDT_CAT_CDE) AS MNG_CDE_NAM
 		             , M.PDT_NAM
 		             , NVL(SUM(A.IN_AMT),0) AS IN_AMT
-		             , NVL(SUM(CASE WHEN M.PDT_CAT_CDE = 'PDT_CAT_CDE001' THEN B.PDH_CNT /*소모품구분(소모품)*/
-		                            WHEN M.PDT_CAT_CDE = 'PDT_CAT_CDE002' THEN B.PDH_AMT /*소모품구분(오일)*/
+		             , NVL(SUM(CASE WHEN M.PDT_CAT_CDE = 'PDT001' THEN B.PDH_CNT /*소모품구분(소모품)*/
+		                            WHEN M.PDT_CAT_CDE = 'PDT002' THEN B.PDH_AMT /*소모품구분(오일)*/
 		                       ELSE 0 END),0) AS TOT_USE_AMT /*총사용량*/
 		          FROM FMS_PDJT_MA M
 		               LEFT JOIN FMS_PDJT_IN_HT A ON ( M.PDH_NUM = A.PDH_NUM ) /*소모품 입고*/
@@ -122,7 +123,7 @@
 	]]>
     </select>
 
-    <select id="SelectDashChart3List" resultClass="Hashtable" >
+    <select id="SelectDashChart3List" parameterClass="Hashtable" resultClass ="Hashtable" >
       <![CDATA[	
 		/* Dash_SQL.selectDashChart3List - 3.점검현황(금일기준) */		
 		SELECT M.DTL_CD AS SCL_STAT_CDE /*점검상태*/
@@ -141,7 +142,7 @@
 	]]>
     </select>
 
-    <select id="SelectDashChart4List" resultClass="Hashtable" >
+    <select id="SelectDashChart4List" parameterClass="Hashtable" resultClass ="Hashtable" >
       <![CDATA[	
 		/* Dash_SQL.selectDashChart4List - 4.시설물 현황(금일기준) */		
 		SELECT M.TAB, M.TAB_NM, M.ORD
@@ -171,7 +172,7 @@
 	]]>
     </select>
 
-    <select id="SelectDashChart5List" resultClass="Hashtable" >
+    <select id="SelectDashChart5List" parameterClass="Hashtable" resultClass ="Hashtable" >
       <![CDATA[	
 		/* Dash_SQL.selectDashChart5List - 5.보수사유 현황(금일기준) */		
 		SELECT M.DTL_CD AS RPR_CAT_CDE /* 보수구분 */
@@ -189,7 +190,7 @@
 	]]>
     </select>
 
-    <select id="SelectDashChart6List" resultClass="Hashtable" >
+    <select id="SelectDashChart6List" parameterClass="Hashtable" resultClass ="Hashtable" >
       <![CDATA[	
 		/* Dash_SQL.selectDashChart6List - 6.공사 현황(금일기준) */		
 		SELECT '상수공사' AS GBNAM
@@ -208,7 +209,7 @@
 	]]>
     </select>
 
-    <select id="SelectDashChart7List" resultClass="Hashtable" >
+    <select id="SelectDashChart7List" parameterClass="Hashtable" resultClass ="Hashtable" >
       <![CDATA[
 		/* Dash_SQL.selectDashChart7List - 7.소모품별 사용현황(금일기준) */		
 		SELECT M.PDH_NUM
@@ -224,8 +225,8 @@
 		             , NVL(FN_GET_CD_DTL_INFO_NAME('PDT_CAT_CDE',M.PDT_CAT_CDE),M.PDT_CAT_CDE) AS MNG_CDE_NAM
 		             , M.PDT_NAM
 		             , NVL(SUM(A.IN_AMT),0) AS IN_AMT
-		             , NVL(SUM(CASE WHEN M.PDT_CAT_CDE = 'PDT_CAT_CDE001' THEN B.PDH_CNT /*소모품구분(소모품)*/
-		                            WHEN M.PDT_CAT_CDE = 'PDT_CAT_CDE002' THEN B.PDH_AMT /*소모품구분(오일)*/
+		             , NVL(SUM(CASE WHEN M.PDT_CAT_CDE = 'PDT001' THEN B.PDH_CNT /*소모품구분(소모품)*/
+		                            WHEN M.PDT_CAT_CDE = 'PDT002' THEN B.PDH_AMT /*소모품구분(오일)*/
 		                       ELSE 0 END),0) AS TOT_USE_AMT /*총사용량*/
 		          FROM FMS_PDJT_MA M
 		               LEFT JOIN FMS_PDJT_IN_HT A ON ( M.PDH_NUM = A.PDH_NUM ) /*소모품 입고*/
