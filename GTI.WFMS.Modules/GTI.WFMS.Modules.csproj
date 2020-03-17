@@ -235,6 +235,10 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
+    <Page Include="Dash\View\UcChartMnu.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
     <Page Include="Dash\View\UcChart07.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -701,6 +705,7 @@
     <Compile Include="Cnst\View\CnstMngDtlView.xaml.cs">
       <DependentUpon>CnstMngDtlView.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Dash\ViewModel\UcChartMnuModel.cs" />
     <Compile Include="Dash\ViewModel\UcChart07Model.cs" />
     <Compile Include="Dash\ViewModel\UcChart06Model.cs" />
     <Compile Include="Dash\ViewModel\UcChart05Model.cs" />
@@ -710,6 +715,9 @@
     <Compile Include="Dash\ViewModel\UcChart01Model.cs" />
     <Compile Include="Dash\ViewModel\DashViewModel.cs" />
     <Compile Include="Dash\ViewModel\DashWinViewModel.cs" />
+    <Compile Include="Dash\View\UcChartMnu.xaml.cs">
+      <DependentUpon>UcChartMnu.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Dash\View\UcChart07.xaml.cs">
       <DependentUpon>UcChart07.xaml</DependentUpon>
     </Compile>

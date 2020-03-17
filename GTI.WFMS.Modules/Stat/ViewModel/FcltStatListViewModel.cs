@@ -1,4 +1,5 @@
-﻿using DevExpress.Xpf.Grid;
+﻿using DevExpress.Xpf.Editors;
+using DevExpress.Xpf.Grid;
 using GTI.WFMS.Models.Common;
 using GTI.WFMS.Modules.Stat.View;
 using GTIFramework.Common.Log;
@@ -27,9 +28,7 @@ namespace GTI.WFMS.Modules.Stat.ViewModel
                 handler(this, new PropertyChangedEventArgs(propertyName));
             }
         }
-
-        FcltStatListView fcltStatListView;
-        GridControl grid;
+             
 
         #endregion
 
@@ -42,8 +41,12 @@ namespace GTI.WFMS.Modules.Stat.ViewModel
         public DelegateCommand<object> LoadedCommand { get; set; }
 
         #endregion
-                
-        #region ========== Members 정의 ==========
+
+        #region ========== Members 정의 ==========        
+        FcltStatListView fcltStatListView;
+        GridControl grid;
+
+        DateEdit dtSEARCH;
         #endregion
 
         /// <summary>
@@ -65,6 +68,8 @@ namespace GTI.WFMS.Modules.Stat.ViewModel
         {
             if (obj == null) return;
             var values = (object[])obj;
+                       
+            dtSEARCH.EditValue = DateTime.Today;
 
             //1. 화면객체 인스턴스
             fcltStatListView = values[0] as FcltStatListView;

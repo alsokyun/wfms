@@ -39,16 +39,16 @@
 
         <StackPanel Grid.Row="0" Grid.Column="1" Orientation="Horizontal">
             <Image Style="{DynamicResource TitleCircle}" Margin="10 0 0 0"/>
-            <Label Content="시설물 통계" Style="{DynamicResource CircleTitleLabel}"/>
+            <Label Content="시설물 통계" Style="{DynamicResource CircleTitleLabel}"/>            
         </StackPanel>
         
         <!--화면 종료
         <Button Grid.Row="0" Grid.Column="1" Style="{DynamicResource XSignCloseButton}" Margin="0,15,10,0" x:Name="btnClose" Click="BtnClose_Click" />
 -->
         <!--그리드영역-->
-        <StackPanel Grid.Row="0" Grid.Column="1" Orientation="Horizontal">
-            <Image Style="{DynamicResource TitleCircle}" Margin="10 0 0 0"/>
-            <Label Content="{Binding TotalCnt, Mode=OneWay}" ContentStringFormat="목록 ({0:N0}건)" Style="{DynamicResource ResourceKey=CircleTitleLabel}" />
+        <StackPanel Grid.Row="0" Grid.Column="1" Orientation="Horizontal" HorizontalAlignment="Right" Margin="0 0 0 0">
+            <Label Content="검색일자 : " Style="{DynamicResource CircleTitleLabel}"/>
+            <dxe:DateEdit Style="{DynamicResource ResourceKey=HeadDateEdit}" x:Name="dtSEARCH" Height="30" EditValueChanged="DtSEARCH_EditValueChanged" />
         </StackPanel>        
         
         <Border  Grid.Row="1" Grid.Column="1"  BorderBrush="{DynamicResource PopCOLOR2Brush}" BorderThickness="1"/>

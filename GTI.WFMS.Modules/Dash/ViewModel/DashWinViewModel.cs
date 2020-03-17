@@ -1,34 +1,36 @@
-﻿using GTI.WFMS.Models.Common;
+﻿using DevExpress.Mvvm;
+using GTI.WFMS.Models.Common;
 using GTI.WFMS.Modules.Dash.View;
 using GTIFramework.Common.Log;
 using System;
 using System.Collections;
-using System.Collections.Generic;
 using System.Data;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace GTI.WFMS.Modules.Dash.ViewModel
 {
-    public class DashWinViewModel
+    public class DashWinViewModel : BindableBase
     {
-
         #region ==========  Properties 정의 ==========
+        
+        public DelegateCommand<object> MenuShowHidenCommand { get; set; }
         public RelayCommand<object> LoadedCommand { get; set; } //Loaded이벤트에서 ICommand 사용하여 뷰객체 전달받음
         public RelayCommand<object> SearchCommand { get; set; }
+
+        private const int V = 300;
+
         #endregion
-                
+
         #region ==========  Member 정의 ==========
         DashWinView dashWinView;
+        private bool bMenuShowHiden = true; //아코디언메뉴 visible 
+
         #endregion
-
-
-
 
         ///생성자
         public DashWinViewModel()
         {
+            MenuShowHidenCommand = new DelegateCommand<object>(OnMenuShowHiden);
+
             // 4.초기조회
             Hashtable param = new Hashtable();
             DataTable dt = new DataTable();
@@ -52,9 +54,12 @@ namespace GTI.WFMS.Modules.Dash.ViewModel
             LoadedCommand = new RelayCommand<object>(delegate (object obj){
 
                 if (obj == null) return;
-
+                                
                 // 0.뷰객체를 파라미터로 전달받기
                 dashWinView = obj as DashWinView;
+
+                dashWinView.Menu.Content = new UcChartMnu();
+
                 foreach (DataRow row in dt.Rows)
                 {                    
                     if ("Y".Equals(row["MNU_USE_YN"].ToString()))
@@ -117,6 +122,43 @@ namespace GTI.WFMS.Modules.Dash.ViewModel
 
         }
 
+        /// <summary>
+        /// 메뉴 Show/Hide
+        /// </summary>
+        /// <param name="obj"></param>
+        private void OnMenuShowHiden(object obj)
+        {
+            dashWinView = obj as DashWinView;
+
+            /*
+            Storyboard sb;
+
+            ContentControl accr = (ContentControl)dashWinView.FindName("Menu");
+            Button btn = (Button)dashWinView.FindName("btnMenuSlide");
+
+            if (bMenuShowHiden)
+            {
+                sb = dashWinView.FindResource("Menuin") as Storyboard;
+
+                btn.Margin = new Thickness(0, 0, 18, 0);
+                accr.CollapseAll();
+                accr.RootItemExpandButtonPosition = ExpandButtonPosition.None;
+                accr.ExpandItemOnHeaderClick = false;
+            }
+            else
+            {
+                sb = mainwin.FindResource("Menuout") as Storyboard;
+
+                btn.Margin = new Thickness(0, 0, 6, 0);
+                accr.ExpandAll();
+                accr.RootItemExpandButtonPosition = ExpandButtonPosition.Right;
+                accr.ExpandItemOnHeaderClick = true;
+            }
+
+            sb.Begin(mainwin);
+            bMenuShowHiden = !bMenuShowHiden;
+            */
+        }
 
 
 
@@ -127,5 +169,5 @@ namespace GTI.WFMS.Modules.Dash.ViewModel
 
 
 
-}
+    }
 }

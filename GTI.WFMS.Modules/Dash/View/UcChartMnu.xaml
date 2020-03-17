@@ -1,0 +1,76 @@
+﻿<UserControl x:Class="GTI.WFMS.Modules.Dash.View.UcChartMnu"
+        xmlns:dxe="http://schemas.devexpress.com/winfx/2008/xaml/editors"  
+        xmlns:dxg="http://schemas.devexpress.com/winfx/2008/xaml/grid"  
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+        mc:Ignorable="d" 
+        d:DesignHeight="300" d:DesignWidth="300"        
+        xmlns:vm="clr-namespace:GTI.WFMS.Modules.Dash.ViewModel"
+        xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
+        xmlns:cm="clr-namespace:GTIFramework.Common.Utils.Converters;assembly=GTIFramework"        
+        xmlns:cv="clr-namespace:GTI.WFMS.Models.Common;assembly=GTI.WFMS.Models"     
+        x:Name="ucChartMnu"
+             >
+
+    <UserControl.Resources>
+        <cm:MultiValueConverter x:Key="multiValueConverter"/>
+        <cv:RownumConverter x:Key="rownumConverter" />
+        <cv:ToggleConverter x:Key="toggleConverter" />
+        <cv:Date3StrConverter x:Key="date3StrConverter" />        
+    </UserControl.Resources>
+
+    <UserControl.DataContext>
+        <vm:UcChartMnuModel/>
+    </UserControl.DataContext>
+    
+    
+    <!--뷰와 연결된 뷰모델로 Loaded 이벤트전파-->
+    <i:Interaction.Triggers>
+        <i:EventTrigger EventName="Loaded">
+            <i:InvokeCommandAction Command="{Binding LoadedCommand}" CommandParameter="{Binding ElementName=ucChartMnu}"/>
+        </i:EventTrigger>
+    </i:Interaction.Triggers>
+
+    <Grid>
+
+        <Grid.RowDefinitions>
+            <RowDefinition Height="30" />
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+
+
+        <StackPanel Grid.Row="0" Orientation="Horizontal" HorizontalAlignment="Right" Margin="0 0 5 0">
+            <Button x:Name="btnReg" Content="저장" Style="{DynamicResource ResourceKey=GrdRegButton}" Command="{Binding SaveCommand}"/>
+        </StackPanel>
+
+
+        <dxg:GridControl Grid.Row="1" x:Name="grid" VerticalAlignment="Stretch" HorizontalAlignment="Stretch">
+            <dxg:GridControl.View>
+                <dxg:TableView x:Name="gv"
+                                NavigationStyle="Row" 
+                                AllowPerPixelScrolling="True"  
+                                ShowHorizontalLines="True"                               
+                                ShowIndicator="False" 
+                                ShowGroupPanel="False" 
+                                AllowBandMultiRow="False"
+                    />
+            </dxg:GridControl.View>
+            <dxg:GridColumn Header="선택" Width="35" FixedWidth="True" HorizontalHeaderContentAlignment="Center">
+                <dxg:GridColumn.CellTemplate>
+                    <DataTemplate>
+                        <dxe:CheckEdit  EditValue="{Binding RowData.Row.CHK, Mode=TwoWay, Converter={StaticResource toggleConverter}}" HorizontalAlignment="Center" />
+                    </DataTemplate>
+                </dxg:GridColumn.CellTemplate>
+            </dxg:GridColumn>
+            <dxg:GridColumn Header="항목" Width="6*" FieldName="MNU_NM" HorizontalHeaderContentAlignment="Center">
+                <dxg:GridColumn.EditSettings>
+                    <dxe:TextEditSettings HorizontalContentAlignment="Left"/>
+                </dxg:GridColumn.EditSettings>
+            </dxg:GridColumn>
+        </dxg:GridControl>
+    </Grid>
+</UserControl>
+
+    
