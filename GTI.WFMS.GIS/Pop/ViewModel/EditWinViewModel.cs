@@ -738,12 +738,12 @@ namespace GTI.WFMS.GIS.Pop.ViewModel
                     }
                     else if (FmsUtil.IsNull(_FTR_IDN))
                     {
-                        editWinView.cctl.Content = new UC_PRES_PS(_FTR_CDE);//신규페이지
-                        NEW_FTR_IDN = ((UC_PRES_PS)editWinView.cctl.Content).txtFTR_IDN.EditValue.ToString();
+                        editWinView.cctl.Content = new UC_PRGA_PS(_FTR_CDE);//신규페이지
+                        NEW_FTR_IDN = ((UC_PRGA_PS)editWinView.cctl.Content).txtFTR_IDN.EditValue.ToString();
                     }
                     else
                     {
-                        editWinView.cctl.Content = new UC_PRES_PS(_FTR_CDE, _FTR_IDN);//상세페이지
+                        editWinView.cctl.Content = new UC_PRGA_PS(_FTR_CDE, _FTR_IDN);//상세페이지
                     }
                     break;
 
@@ -786,12 +786,12 @@ namespace GTI.WFMS.GIS.Pop.ViewModel
                     }
                     else if (FmsUtil.IsNull(_FTR_IDN))
                     {
-                        editWinView.cctl.Content = new UC_PRGA_PS(_FTR_CDE);//신규페이지
-                        NEW_FTR_IDN = ((UC_PRGA_PS)editWinView.cctl.Content).txtFTR_IDN.EditValue.ToString();
+                        editWinView.cctl.Content = new UC_PRES_PS(_FTR_CDE);//신규페이지
+                        NEW_FTR_IDN = ((UC_PRES_PS)editWinView.cctl.Content).txtFTR_IDN.EditValue.ToString();
                     }
                     else
                     {
-                        editWinView.cctl.Content = new UC_PRGA_PS(_FTR_CDE, _FTR_IDN);//상세페이지
+                        editWinView.cctl.Content = new UC_PRES_PS(_FTR_CDE, _FTR_IDN);//상세페이지
                     }
                     break;
 

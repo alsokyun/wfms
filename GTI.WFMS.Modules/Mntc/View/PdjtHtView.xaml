@@ -36,7 +36,7 @@
         </StackPanel>
 
 
-        <dxg:GridControl Grid.Row="1" x:Name="grid" VerticalAlignment="Stretch" HorizontalAlignment="Stretch"  >
+        <dxg:GridControl Grid.Row="1" x:Name="grid" VerticalAlignment="Stretch" HorizontalAlignment="Stretch"  ShowBorder="True" >
 
             <dxg:GridControl.View>
                 <dxg:TableView x:Name="gv"

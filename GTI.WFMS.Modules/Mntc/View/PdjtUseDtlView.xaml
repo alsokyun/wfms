@@ -32,10 +32,10 @@
             <RowDefinition Height="40"/>
 
             <RowDefinition Height="40"/>
-            <RowDefinition Height="140"/>
+            <RowDefinition Height="130"/>
 
             <RowDefinition Height="40"/>
-            <RowDefinition Height="200"/>
+            <RowDefinition Height="210"/>
 
         </Grid.RowDefinitions>
 
@@ -121,7 +121,7 @@
         <Grid Grid.Row="4" x:Name="gridContent" Margin="10 0 10 0"   >
 
             <dxg:GridControl  x:Name="grid"
-                        EnableSmartColumnsGeneration="False"
+                        EnableSmartColumnsGeneration="False" ShowBorder="True"
                         SelectionMode="Cell">
 
                 <dxg:GridControl.View >
@@ -139,7 +139,7 @@
 
                 <dxg:GridColumn Header="지형지물명" Width="130*"  FieldName="FTR_NAM" HorizontalHeaderContentAlignment="Center">
                     <dxg:GridColumn.EditSettings>
-                        <dxe:TextEditSettings HorizontalContentAlignment="Left"/>
+                        <dxe:TextEditSettings HorizontalContentAlignment="Center"/>
                     </dxg:GridColumn.EditSettings>
                 </dxg:GridColumn>
                 <dxg:GridColumn Header="관리번호" Width="70" FieldName="FTR_IDN" HorizontalHeaderContentAlignment="Center">

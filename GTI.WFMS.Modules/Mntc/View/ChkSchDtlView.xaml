@@ -95,7 +95,7 @@
                 </StackPanel>
             </StackPanel>
             <StackPanel Grid.Row="0" Orientation="Horizontal" HorizontalAlignment="Right" Margin="10 0 10 0">
-                <Button x:Name="btnAppr"  Command="{Binding ApprCmd}" Content="점검승인" />
+                <Button x:Name="btnAppr"  Style="{DynamicResource ResourceKey=ApprButton}" Command="{Binding ApprCmd}" />
                 <Button x:Name="btnDelete" Style="{DynamicResource ResourceKey=DelButton}" Command="{Binding DeleteCommand}" />
                 <Button x:Name="btnSave" Style="{DynamicResource ResourceKey=SaveButton}" Command="{Binding SaveCommand}" />
             </StackPanel>

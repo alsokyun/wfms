@@ -1764,7 +1764,7 @@
             <Setter.Value>
                 <ControlTemplate>
                     <Grid>
-                        <Image Source="/Resources/Navy/Images/Image/btn_s_reg.png"/>
+                        <Image Source="/Resources/Navy/Images/Image/btn_s_save.png"/>
                     </Grid>
                 </ControlTemplate>
             </Setter.Value>
@@ -1775,7 +1775,7 @@
                     <Setter.Value>
                         <ControlTemplate>
                             <Grid>
-                                <Image Source="/Resources/Navy/Images/Image/btn_s_reg_on.png"/>
+                                <Image Source="/Resources/Navy/Images/Image/btn_s_save_on.png"/>
                             </Grid>
                         </ControlTemplate>
                     </Setter.Value>
@@ -2238,6 +2238,90 @@
                         <ControlTemplate>
                             <Grid>
                                 <Image Source="/Resources/Navy/Images/Image/btn_pos_del_over.png"/>
+                            </Grid>
+                        </ControlTemplate>
+                    </Setter.Value>
+                </Setter>
+            </Trigger>
+        </Style.Triggers>
+    </Style>
+    <!--점검승인 버튼 (이미지)-->
+    <Style TargetType="Button" x:Key="ApprButton">
+        <Setter Property="Width" Value="120"/>
+        <Setter Property="Height" Value="34"/>
+        <Setter Property="Margin" Value="5,0,0,0"/>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate>
+                    <Grid>
+                        <Image Source="/Resources/Navy/Images/Image/btn_appr.png"/>
+                    </Grid>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+        <Style.Triggers>
+            <Trigger Property="IsMouseOver" Value="True">
+                <Setter Property="Template">
+                    <Setter.Value>
+                        <ControlTemplate>
+                            <Grid>
+                                <Image Source="/Resources/Navy/Images/Image/btn_appr_on.png"/>
+                            </Grid>
+                        </ControlTemplate>
+                    </Setter.Value>
+                </Setter>
+            </Trigger>
+        </Style.Triggers>
+    </Style>
+    <!--선택 버튼 (이미지)-->
+    <Style TargetType="Button" x:Key="SelButton">
+        <Setter Property="Width" Value="92"/>
+        <Setter Property="Height" Value="34"/>
+        <Setter Property="Margin" Value="5,0,0,0"/>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate>
+                    <Grid>
+                        <Image Source="/Resources/Navy/Images/Image/btn_sel.png"/>
+                    </Grid>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+        <Style.Triggers>
+            <Trigger Property="IsMouseOver" Value="True">
+                <Setter Property="Template">
+                    <Setter.Value>
+                        <ControlTemplate>
+                            <Grid>
+                                <Image Source="/Resources/Navy/Images/Image/btn_sel_on.png"/>
+                            </Grid>
+                        </ControlTemplate>
+                    </Setter.Value>
+                </Setter>
+            </Trigger>
+        </Style.Triggers>
+    </Style>
+    <!--입고등록 (이미지)-->
+    <Style TargetType="Button" x:Key="InStrButton">
+        <Setter Property="Width" Value="120"/>
+        <Setter Property="Height" Value="34"/>
+        <Setter Property="Margin" Value="5,0,0,0"/>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate>
+                    <Grid>
+                        <Image Source="/Resources/Navy/Images/Image/btn_instr.png"/>
+                    </Grid>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+        <Style.Triggers>
+            <Trigger Property="IsMouseOver" Value="True">
+                <Setter Property="Template">
+                    <Setter.Value>
+                        <ControlTemplate>
+                            <Grid>
+                                <Image Source="/Resources/Navy/Images/Image/btn_instr_on.png"/>
                             </Grid>
                         </ControlTemplate>
                     </Setter.Value>

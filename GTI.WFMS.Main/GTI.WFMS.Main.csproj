@@ -580,6 +580,14 @@
     <Resource Include="Resources\Navy\Images\Image\btn_pos_edit.png" />
     <Resource Include="Resources\Navy\Images\Image\btn_pos_edit_on.png" />
     <Resource Include="Resources\Navy\Images\Image\btn_pos_edit_over.png" />
+    <Resource Include="Resources\Navy\Images\Image\btn_appr.png" />
+    <Resource Include="Resources\Navy\Images\Image\btn_appr_on.png" />
+    <Resource Include="Resources\Navy\Images\Image\btn_sel.png" />
+    <Resource Include="Resources\Navy\Images\Image\btn_sel_on.png" />
+    <Resource Include="Resources\Navy\Images\Image\btn_instr.png" />
+    <Resource Include="Resources\Navy\Images\Image\btn_instr_on.png" />
+    <Resource Include="Resources\Navy\Images\Image\btn_s_save.png" />
+    <Resource Include="Resources\Navy\Images\Image\btn_s_save_on.png" />
     <Content Include="Styles\Fonts\malgun.ttf">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
