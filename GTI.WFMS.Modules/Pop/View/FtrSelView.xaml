@@ -177,7 +177,7 @@
             </StackPanel>
 
             <StackPanel Grid.Row="0" Grid.Column="2" Orientation="Horizontal" HorizontalAlignment="Right" Margin="0 0 10 0">
-                <Button x:Name="btnAdd" Content="선택" Command="{Binding SelCmd}"/>
+                <Button x:Name="btnAdd" Content="선택" Command="{Binding SelCmd}" Style="{DynamicResource SelButton}"/>
             </StackPanel>
 
 
