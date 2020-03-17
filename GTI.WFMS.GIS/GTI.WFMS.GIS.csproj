@@ -83,6 +83,65 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="GisCmm.cs" />
+    <Compile Include="Module\ViewModel\UC_FIRE_PSModel.cs" />
+    <Compile Include="Module\ViewModel\UC_VALV_PSModel.cs" />
+    <Compile Include="Module\ViewModel\UC_RSRV_PSModel.cs" />
+    <Compile Include="Module\ViewModel\UC_META_PSModel.cs" />
+    <Compile Include="Module\ViewModel\UC_SPLY_LSModel.cs" />
+    <Compile Include="Module\ViewModel\UC_PRES_PSModel.cs" />
+    <Compile Include="Module\ViewModel\UC_SERV_PSModel.cs" />
+    <Compile Include="Module\ViewModel\UC_GAIN_PSModel.cs" />
+    <Compile Include="Module\ViewModel\UC_HEAD_PSModel.cs" />
+    <Compile Include="Module\ViewModel\UC_PRGA_PSModel.cs" />
+    <Compile Include="Module\ViewModel\UC_STPI_PSModel.cs" />
+    <Compile Include="Module\ViewModel\UC_MANH_PSModel.cs" />
+    <Compile Include="Module\ViewModel\UC_PURI_ASModel.cs" />
+    <Compile Include="Module\ViewModel\UC_PIPE_LMModel.cs" />
+    <Compile Include="Module\View\UC_FIRE_PS.xaml.cs">
+      <DependentUpon>UC_FIRE_PS.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Module\View\UC_VALV_PS.xaml.cs">
+      <DependentUpon>UC_VALV_PS.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Module\View\UC_RSRV_PS.xaml.cs">
+      <DependentUpon>UC_RSRV_PS.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Module\View\UC_META_PS.xaml.cs">
+      <DependentUpon>UC_META_PS.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Module\View\UC_SPLY_LS.xaml.cs">
+      <DependentUpon>UC_SPLY_LS.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Module\View\UC_PRES_PS.xaml.cs">
+      <DependentUpon>UC_PRES_PS.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Module\View\UC_SERV_PS.xaml.cs">
+      <DependentUpon>UC_SERV_PS.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Module\View\UC_GAIN_PS.xaml.cs">
+      <DependentUpon>UC_GAIN_PS.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Module\View\UC_HEAD_PS.xaml.cs">
+      <DependentUpon>UC_HEAD_PS.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Module\View\UC_PRGA_PS.xaml.cs">
+      <DependentUpon>UC_PRGA_PS.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Module\View\UC_STPI_PS.xaml.cs">
+      <DependentUpon>UC_STPI_PS.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Module\View\UC_MANH_PS.xaml.cs">
+      <DependentUpon>UC_MANH_PS.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Module\View\UC_PURI_AS.xaml.cs">
+      <DependentUpon>UC_PURI_AS.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Module\View\UC_PIPE_LM.xaml.cs">
+      <DependentUpon>UC_PIPE_LM.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Module\FTR_POP.xaml.cs">
+      <DependentUpon>FTR_POP.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Pop\ViewModel\EditWinViewModel.cs" />
     <Compile Include="Pop\ViewModel\LyrModel.cs" />
     <Compile Include="Pop\View\CnstMngPopView.xaml.cs">
@@ -92,47 +151,8 @@
       <DependentUpon>EditWinView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Module\ViewModel\UC_FLOW_PSModel .cs" />
-    <Compile Include="Module\WTL_FIRE_PS.xaml.cs">
-      <DependentUpon>WTL_FIRE_PS.xaml</DependentUpon>
-    </Compile>
     <Compile Include="Module\View\UC_FLOW_PS.xaml.cs">
       <DependentUpon>UC_FLOW_PS.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Module\WTL_MANH_PS.xaml.cs">
-      <DependentUpon>WTL_MANH_PS.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Module\WTL_FLOW_PS.xaml.cs">
-      <DependentUpon>WTL_FLOW_PS.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Module\WTL_HEAD_PS.xaml.cs">
-      <DependentUpon>WTL_HEAD_PS.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Module\WTL_GAIN_PS.xaml.cs">
-      <DependentUpon>WTL_GAIN_PS.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Module\WTL_STPI_PS.xaml.cs">
-      <DependentUpon>WTL_STPI_PS.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Module\WTL_META_PS.xaml.cs">
-      <DependentUpon>WTL_META_PS.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Module\WTL_RSRV_PS.xaml.cs">
-      <DependentUpon>WTL_RSRV_PS.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Module\WTL_SPLY_LS.xaml.cs">
-      <DependentUpon>WTL_SPLY_LS.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Module\WTL_PRES_PS.xaml.cs">
-      <DependentUpon>WTL_PRES_PS.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Module\WTL_PURI_AS.xaml.cs">
-      <DependentUpon>WTL_PURI_AS.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Module\WTL_PRGA_PS.xaml.cs">
-      <DependentUpon>WTL_PRGA_PS.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Module\WTL_VALV_PS.xaml.cs">
-      <DependentUpon>WTL_VALV_PS.xaml</DependentUpon>
     </Compile>
     <Compile Include="Module\WTL_PIPE_LM.xaml.cs">
       <DependentUpon>WTL_PIPE_LM.xaml</DependentUpon>
@@ -166,6 +186,66 @@
       <DependentUpon>MapMainView.xaml</DependentUpon>
     </Compile>
     <Compile Include="MapMainViewModel.cs" />
+    <Page Include="Module\View\UC_FIRE_PS.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Module\View\UC_VALV_PS.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Module\View\UC_RSRV_PS.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Module\View\UC_META_PS.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Module\View\UC_SPLY_LS.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Module\View\UC_PRES_PS.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Module\View\UC_SERV_PS.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Module\View\UC_GAIN_PS.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Module\View\UC_HEAD_PS.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Module\View\UC_PRGA_PS.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Module\View\UC_STPI_PS.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Module\View\UC_MANH_PS.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Module\View\UC_PURI_AS.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Module\View\UC_PIPE_LM.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Module\FTR_POP.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
     <Page Include="sample\Map4View.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -190,69 +270,13 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="Module\WTL_FIRE_PS.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
     <Page Include="Module\View\UC_FLOW_PS.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="Module\WTL_MANH_PS.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="Module\WTL_FLOW_PS.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="Module\WTL_HEAD_PS.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="Module\WTL_GAIN_PS.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="Module\WTL_STPI_PS.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="Module\WTL_META_PS.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="Module\WTL_RSRV_PS.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="Module\WTL_SPLY_LS.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="Module\WTL_PRES_PS.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="Module\WTL_PURI_AS.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="Module\WTL_PRGA_PS.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="Module\WTL_VALV_PS.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
     <Page Include="Module\WTL_PIPE_LM.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
-    </Page>
-    <Page Include="Module\PopFct.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="sample\SketchOnMap.xaml">
       <Generator>MSBuild:Compile</Generator>
@@ -264,9 +288,6 @@
     </Page>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Module\PopFct.xaml.cs">
-      <DependentUpon>PopFct.xaml</DependentUpon>
-    </Compile>
     <Compile Include="Properties\AssemblyInfo.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -314,7 +335,9 @@
       <Version>100.6.0</Version>
     </PackageReference>
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Resource Include="Pop\View\fms_search_line.png" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

@@ -234,21 +234,84 @@
       /* 정수장 상세 수정 */
       UPDATE INFOFMS.WTL_PURI_AS
       SET HJD_CDE = #HJD_CDE#
-        , SHT_NUM = #SHT_NUM#
-        , MNG_CDE = #MNG_CDE#
-        , FNS_YMD = decode(length(#FNS_YMD#), 10, to_char(to_date(#FNS_YMD#, 'yyyy-MM-dd'), 'yyyyMMdd'), '')
-        , PUR_NAM = #PUR_NAM#
-        , WSR_CDE = #WSR_CDE#
-        , GAI_NAM = #GAI_NAM#
-        , SRV_NAM = #SRV_NAM#
-        , PUR_VOL = #PUR_VOL#
-        , PWR_VOL = #PWR_VOL#
-        , PUR_ARA = #PUR_ARA#
-        , SAM_CDE = #SAM_CDE#
-        , CNT_NUM = #CNT_NUM#
-        , SYS_CHK = #SYS_CHK#
+      , SHT_NUM = #SHT_NUM#
+      , MNG_CDE = #MNG_CDE#
+      , FNS_YMD = decode(length(#FNS_YMD#), 10, to_char(to_date(#FNS_YMD#, 'yyyy-MM-dd'), 'yyyyMMdd'), '')
+      , PUR_NAM = #PUR_NAM#
+      , WSR_CDE = #WSR_CDE#
+      , GAI_NAM = #GAI_NAM#
+      , SRV_NAM = #SRV_NAM#
+      , PUR_VOL = #PUR_VOL#
+      , PWR_VOL = #PWR_VOL#
+      , PUR_ARA = #PUR_ARA#
+      , SAM_CDE = #SAM_CDE#
+      , CNT_NUM = #CNT_NUM#
+      , SYS_CHK = #SYS_CHK#
       WHERE FTR_CDE = #FTR_CDE#
       AND	FTR_IDN = #FTR_IDN#
+    </update>
+
+    <!--정수장 상세저장-->
+    <update id="SaveFiltPltDtl" parameterClass="GTI.WFMS.Models.Fclt.Model.FiltPltDtl">
+      /* 정수장 상세 수정 */
+      MERGE INTO INFOFMS.WTL_PURI_AS
+      USING DUAL ON (FTR_CDE = #FTR_CDE# AND	FTR_IDN = #FTR_IDN#)
+
+      WHEN MATCHED THEN
+      UPDATE
+      SET HJD_CDE = #HJD_CDE#
+      , SHT_NUM = #SHT_NUM#
+      , MNG_CDE = #MNG_CDE#
+      , FNS_YMD = decode(length(#FNS_YMD#), 10, to_char(to_date(#FNS_YMD#, 'yyyy-MM-dd'), 'yyyyMMdd'), '')
+      , PUR_NAM = #PUR_NAM#
+      , WSR_CDE = #WSR_CDE#
+      , GAI_NAM = #GAI_NAM#
+      , SRV_NAM = #SRV_NAM#
+      , PUR_VOL = #PUR_VOL#
+      , PWR_VOL = #PWR_VOL#
+      , PUR_ARA = #PUR_ARA#
+      , SAM_CDE = #SAM_CDE#
+      , CNT_NUM = #CNT_NUM#
+      , SYS_CHK = #SYS_CHK#
+
+      WHEN NOT MATCHED THEN
+      INSERT 
+      ( FTR_CDE
+      , FTR_IDN
+      , HJD_CDE
+      , SHT_NUM
+      , MNG_CDE
+      , FNS_YMD
+      , PUR_NAM
+      , WSR_CDE
+      , GAI_NAM
+      , SRV_NAM
+      , PUR_VOL
+      , PWR_VOL
+      , PUR_ARA
+      , SAM_CDE
+      , CNT_NUM
+      , SYS_CHK
+      )
+      VALUES
+      ( #FTR_CDE#
+      , #FTR_IDN#
+      , #HJD_CDE#
+      , #SHT_NUM#
+      , #MNG_CDE#
+      , decode(length(#FNS_YMD#), 10, to_char(to_date(#FNS_YMD#, 'yyyy-MM-dd'), 'yyyyMMdd'), '')
+      , #PUR_NAM#
+      , #WSR_CDE#
+      , #GAI_NAM#
+      , #SRV_NAM#
+      , #PUR_VOL#
+      , #PWR_VOL#
+      , #PUR_ARA#
+      , #SAM_CDE#
+      , #CNT_NUM#
+      , #SYS_CHK#
+      )
+
     </update>
 
     <!--정수장 상세삭제-->

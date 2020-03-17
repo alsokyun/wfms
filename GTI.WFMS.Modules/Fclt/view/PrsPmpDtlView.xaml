@@ -238,7 +238,7 @@
             <Label Grid.Row="0" Grid.Column="0" Content="가압장명" Style="{DynamicResource ResourceKey=GridLabel}"/>
             <dxe:TextEdit Grid.Row="0" Grid.Column="1" Style="{DynamicResource ResourceKey=GrdTextEdit}"   
                           x:Name="txtPRS_NAM" EditValue="{Binding PRS_NAM}"/>
-            <Label Grid.Row="0" Grid.Column="2" Content="부지면적" Style="{DynamicResource ResourceKey=GridLabel}"/>
+            <Label Grid.Row="0" Grid.Column="2" Content="부지면적(㎡)" Style="{DynamicResource ResourceKey=GridLabel}"/>
             <dxe:TextEdit Grid.Row="0" Grid.Column="3" Style="{DynamicResource ResourceKey=GrdNumberEdit}"   
                           x:Name="txtPRS_ARA" EditValue="{Binding PRS_ARA}"/>
             <Label Grid.Row="0" Grid.Column="4" Content="관리방법" Style="{DynamicResource ResourceKey=GridLabel}"/>

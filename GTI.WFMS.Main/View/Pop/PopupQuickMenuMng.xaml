@@ -14,7 +14,7 @@
             <RowDefinition Height="2"/>
             <RowDefinition Height="45"/>
             <RowDefinition Height="10"/>
-            <RowDefinition Height="40"/>
+            <RowDefinition Height="30"/>
             <RowDefinition Height="*"/>
             <RowDefinition Height="10"/>
             <RowDefinition Height="34"/>
@@ -43,9 +43,9 @@
         <Label Grid.Row="1" Grid.Column="2" Grid.ColumnSpan="2" Content="즐겨찾기 관리" FontSize="18" FontWeight="Bold" Foreground="White" HorizontalAlignment="Left" VerticalAlignment="Center"/>
 
         <Button x:Name="btnXSignClose" Grid.Row="1" Grid.Column="2" Grid.ColumnSpan="3" Style="{DynamicResource XSignCloseButton}" Width="15" Height="15" Margin="0,10,10,0"/>
-        <StackPanel Grid.Row="3" Grid.Column="2" Orientation="Horizontal">
+        <StackPanel Grid.Row="3" Grid.Column="2" Orientation="Horizontal" >
             <Image Style="{DynamicResource TitleCircle}"/>
-            <Label Content="메뉴" Style="{DynamicResource ResourceKey=CircleTitleLabel}"/>
+            <Label Content="메뉴" Style="{DynamicResource ResourceKey=CircleTitleLabel}" />
         </StackPanel>
 
         <Border Grid.Row="4" Grid.Column="2" Margin="0,0,0,0" Style="{DynamicResource MenuContentoutBorder}">

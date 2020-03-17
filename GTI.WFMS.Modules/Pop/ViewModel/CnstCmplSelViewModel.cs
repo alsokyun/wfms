@@ -116,14 +116,7 @@ namespace GTI.WFMS.Modules.Pop.ViewModel
 
         GridControl grid;
 
-        //엑셀다운로드 관련
-        System.Windows.Forms.SaveFileDialog saveFileDialog;
-        Thread thread;
-        string strFileName;
-        string strExcelFormPath = AppDomain.CurrentDomain.BaseDirectory + "/Resources/Excel/FmsBaseExcel.xlsx";
-        DataTable exceldt;
-        GridColumn[] columnList;
-        List<string> listCols;
+
         #endregion
 
 

@@ -199,7 +199,7 @@ namespace GTI.WFMS.Modules.Fclt.ViewModel
             //0.삭제전 체크
             Hashtable param = new Hashtable();
             param.Add("sqlId" , "selectChscResSubList");
-            param.Add("sqlId2", "selectFileMapList");
+            param.Add("sqlId2", "SelectFileMapList");
             param.Add("sqlId3", "selectWtlLeakSubList");
 
             param.Add("FTR_CDE", this.FTR_CDE);

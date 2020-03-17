@@ -202,7 +202,7 @@ namespace GTI.WFMS.Modules.Pipe.ViewModel
             //0.삭제전 체크
             Hashtable param = new Hashtable();
             param.Add("sqlId" , "selectChscResSubList");
-            param.Add("sqlId2", "selectFileMapList");
+            param.Add("sqlId2", "SelectFileMapList");
 
             param.Add("FTR_CDE", this.FTR_CDE);
             param.Add("FTR_IDN", this.FTR_IDN);

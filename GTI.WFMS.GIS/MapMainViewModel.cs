@@ -52,7 +52,6 @@ namespace GTI.WFMS.GIS
 
         //private FctDtl fctDtl = new FctDtl(); //시설물기본정보
         private Popup divLayer = new Popup(); //시설물레이어DIV
-        //private PopFct popFct = new PopFct(); //시설물정보DIV
         private Popup popFct = new Popup(); //시설물정보DIV
         private Button ClearButton = new Button();
         #endregion
@@ -563,7 +562,11 @@ namespace GTI.WFMS.GIS
 
 
                 // Construct and assign the where clause that will be used to query the feature table.
-                queryParams.WhereClause = "upper(FTR_CDE) = '" + _FTR_CDE + "' AND FTR_IDN = " + _FTR_IDN ;
+                queryParams.WhereClause = " FTR_CDE = '" + _FTR_CDE + "' ";
+                if (!FmsUtil.IsNull(_FTR_IDN))
+                {
+                    queryParams.WhereClause += " AND FTR_IDN = " + _FTR_IDN;
+                }
 
 
                 List<Feature> features;
@@ -917,27 +920,6 @@ namespace GTI.WFMS.GIS
         {
             try
             {
-                // PopFct 객체 생성여부 체크관련 - 검증안됨
-                /*
-                if (App.Current.Windows.Count > 1)
-                {
-                    // do your code here, when you have more than one window open state this code will execute
-                }
-
-                if (FmsUtil.IsWindowOpen<Popup>())
-                {
-                    PopFct pop = new PopFct();
-                    (Activator.GetObject((new PopFct()).GetType(), null) as PopFct).IsOpen = false;
-                }
-                 */
-
-                /*
-                divLayerInfo.PlacementRectangle = new Rect(e.Position.X, e.Position.Y, 250, 300);
-                divLayerInfo.IsOpen = true;
-                 */
-
-
-
 
                 // 위치에해당하는 피처찾은 결과
                 // Perform the identify operation.
@@ -1007,270 +989,16 @@ namespace GTI.WFMS.GIS
         // 시설물정보팝업 보이기
         private void ShowFtrPop(string fTR_CDE, string fTR_IDN, GeoViewInputEventArgs e)
         {
-            Hashtable param = new Hashtable();
-            switch (fTR_CDE)
-            {
-                case "SA001": //상수관로
-                    //팝업열기 & 위치
-                    popFct.IsOpen = false;
-
-                    popFct = new WTL_PIPE_LM();
-                    popFct.PlacementRectangle = new Rect(e.Position.X + 300, e.Position.Y - 200, 250, 300);
-                    popFct.IsOpen = true;
-                    popFct.DataContext = this;
-
-                    param = new Hashtable();
-                    param.Add("FTR_CDE", fTR_CDE);
-                    param.Add("FTR_IDN", fTR_IDN);
-                    param.Add("sqlId", "SelectWtlPipeDtl2");
-
-                    this.FctDtl = BizUtil.SelectObject(param) as CmmDtl;
-                    break;
-
-                case "SA002": //급수관로
-                    //팝업열기 & 위치
-                    popFct.IsOpen = false;
-
-                    popFct = new WTL_SPLY_LS();
-                    popFct.PlacementRectangle = new Rect(e.Position.X + 300, e.Position.Y - 200, 250, 300);
-                    popFct.IsOpen = true;
-                    popFct.DataContext = this;
-
-                    param = new Hashtable();
-                    param.Add("FTR_CDE", fTR_CDE);
-                    param.Add("FTR_IDN", fTR_IDN);
-                    param.Add("sqlId", "SelectSupDutDtl");
-
-                    this.FctDtl = BizUtil.SelectObject(param) as CmmDtl;
-                    break;
-
-                case "SA003": //스탠파이프
-                    //팝업열기 & 위치
-                    popFct.IsOpen = false;
-
-                    popFct = new WTL_STPI_PS();
-                    popFct.PlacementRectangle = new Rect(e.Position.X + 300, e.Position.Y - 200, 250, 300);
-                    popFct.IsOpen = true;
-                    popFct.DataContext = this;
-
-                    param = new Hashtable();
-                    param.Add("FTR_CDE", fTR_CDE);
-                    param.Add("FTR_IDN", fTR_IDN);
-                    param.Add("sqlId", "SelectStndPiDtl");
-
-                    this.FctDtl = BizUtil.SelectObject(param) as CmmDtl;
-                    break;
-
-                case "SA100": //상수맨홀
-                    //팝업열기 & 위치
-                    popFct.IsOpen = false;
-
-                    popFct = new WTL_MANH_PS();
-                    popFct.PlacementRectangle = new Rect(e.Position.X + 300, e.Position.Y - 200, 250, 300);
-                    popFct.IsOpen = true;
-                    popFct.DataContext = this;
-
-                    param = new Hashtable();
-                    param.Add("FTR_CDE", fTR_CDE);
-                    param.Add("FTR_IDN", fTR_IDN);
-                    param.Add("sqlId", "SelectWtsMnhoDtl");
-
-                    this.FctDtl = BizUtil.SelectObject(param) as CmmDtl;
-                    break;
-
-                case "SA110": //수원지
-                    //팝업열기 & 위치
-                    popFct.IsOpen = false;
-
-                    popFct = new WTL_HEAD_PS();
-                    popFct.PlacementRectangle = new Rect(e.Position.X + 300, e.Position.Y - 200, 250, 300);
-                    popFct.IsOpen = true;
-                    popFct.DataContext = this;
-
-                    param = new Hashtable();
-                    param.Add("FTR_CDE", fTR_CDE);
-                    param.Add("FTR_IDN", fTR_IDN);
-                    param.Add("sqlId", "SelectWtrSourDtl");
-
-                    this.FctDtl = BizUtil.SelectObject(param) as CmmDtl;
-                    break;
-
-                case "SA112": //취수장
-                    //팝업열기 & 위치
-                    popFct.IsOpen = false;
-
-                    popFct = new WTL_GAIN_PS();
-                    popFct.PlacementRectangle = new Rect(e.Position.X + 300, e.Position.Y - 200, 250, 300);
-                    popFct.IsOpen = true;
-                    popFct.DataContext = this;
-
-                    param = new Hashtable();
-                    param.Add("FTR_CDE", fTR_CDE);
-                    param.Add("FTR_IDN", fTR_IDN);
-                    param.Add("sqlId", "SelectIntkStDtl");
-
-                    this.FctDtl = BizUtil.SelectObject(param) as CmmDtl;
-                    break;
-
-                case "SA113": //정수장
-                    //팝업열기 & 위치
-                    popFct.IsOpen = false;
-
-                    popFct = new WTL_PURI_AS();
-                    popFct.PlacementRectangle = new Rect(e.Position.X + 300, e.Position.Y - 200, 250, 300);
-                    popFct.IsOpen = true;
-                    popFct.DataContext = this;
-
-                    param = new Hashtable();
-                    param.Add("FTR_CDE", fTR_CDE);
-                    param.Add("FTR_IDN", fTR_IDN);
-                    param.Add("sqlId", "SelectFiltPltDtl");
-
-                    this.FctDtl = BizUtil.SelectObject(param) as CmmDtl;
-                    break;
-
-                case "SA114": //배수지
-                    //팝업열기 & 위치
-                    popFct.IsOpen = false;
-
-                    popFct = new WTL_PIPE_LM();
-                    popFct.PlacementRectangle = new Rect(e.Position.X + 300, e.Position.Y - 200, 250, 300);
-                    popFct.IsOpen = true;
-                    popFct.DataContext = this;
-
-                    param = new Hashtable();
-                    param.Add("FTR_CDE", fTR_CDE);
-                    param.Add("FTR_IDN", fTR_IDN);
-                    param.Add("sqlId", "SelectWtrSupDtl");
-
-                    this.FctDtl = BizUtil.SelectObject(param) as CmmDtl;
-                    break;
-
-
-                case "SA117": //유량계
-                    //팝업열기 & 위치
-                    popFct.IsOpen = false;
-
-                    popFct = new WTL_FLOW_PS();
-                    popFct.PlacementRectangle = new Rect(e.Position.X + 300, e.Position.Y - 200, 250, 300);
-                    popFct.IsOpen = true;
-                    popFct.DataContext = this;
-
-                    param = new Hashtable();
-                    param.Add("FTR_CDE", fTR_CDE);
-                    param.Add("FTR_IDN", fTR_IDN);
-                    param.Add("sqlId", "SelectFlowMtDtl");
-
-                    this.FctDtl = BizUtil.SelectObject(param) as CmmDtl;
-
-                    break;
-
-                case "SA118": case "SA119": //소화전,급수탑
-                    //팝업열기 & 위치
-                    popFct.IsOpen = false;
-
-                    popFct = new WTL_FIRE_PS();
-                    popFct.PlacementRectangle = new Rect(e.Position.X + 300, e.Position.Y - 200, 250, 300);
-                    popFct.IsOpen = true;
-                    popFct.DataContext = this;
-
-                    param = new Hashtable();
-                    param.Add("FTR_CDE", fTR_CDE);
-                    param.Add("FTR_IDN", fTR_IDN);
-                    param.Add("sqlId", "SelectFireFacDtl");
-
-                    this.FctDtl = BizUtil.SelectObject(param) as CmmDtl;
-
-                    break;
-
-
-                case "SA120": //저수조
-                    //팝업열기 & 위치
-                    popFct.IsOpen = false;
-
-                    popFct = new WTL_RSRV_PS();
-                    popFct.PlacementRectangle = new Rect(e.Position.X + 300, e.Position.Y - 200, 250, 300);
-                    popFct.IsOpen = true;
-                    popFct.DataContext = this;
-
-                    param = new Hashtable();
-                    param.Add("FTR_CDE", fTR_CDE);
-                    param.Add("FTR_IDN", fTR_IDN);
-                    param.Add("sqlId", "SelectWtrTrkDtl");
-
-                    this.FctDtl = BizUtil.SelectObject(param) as CmmDtl;
-                    break;
-
-
-                case "SA121": //수압계
-                    //팝업열기 & 위치
-                    popFct.IsOpen = false;
-
-                    popFct = new WTL_PRGA_PS();
-                    popFct.PlacementRectangle = new Rect(e.Position.X + 300, e.Position.Y - 200, 250, 300);
-                    popFct.IsOpen = true;
-                    popFct.DataContext = this;
-
-                    param = new Hashtable();
-                    param.Add("FTR_CDE", fTR_CDE);
-                    param.Add("FTR_IDN", fTR_IDN);
-                    param.Add("sqlId", "SelectWtprMtDtl");
-
-                    this.FctDtl = BizUtil.SelectObject(param) as CmmDtl;
-                    break;
-
-
-                case "SA122": //급수전계량기
-                    //팝업열기 & 위치
-                    popFct.IsOpen = false;
-
-                    popFct = new WTL_META_PS();
-                    popFct.PlacementRectangle = new Rect(e.Position.X + 300, e.Position.Y - 200, 250, 300);
-                    popFct.IsOpen = true;
-                    popFct.DataContext = this;
-
-                    param = new Hashtable();
-                    param.Add("FTR_CDE", fTR_CDE);
-                    param.Add("FTR_IDN", fTR_IDN);
-                    param.Add("sqlId", "SelectHydtMetrDtl");
-
-                    this.FctDtl = BizUtil.SelectObject(param) as CmmDtl;
-                    break;
-
-
-                case "SA200": case "SA201": case "SA202": case "SA203": case "SA204": case "SA205": case "SA206": //변류시설
-                    //팝업열기 & 위치
-                    popFct.IsOpen = false;
-
-                    popFct = new WTL_VALV_PS();
-                    popFct.PlacementRectangle = new Rect(e.Position.X + 300, e.Position.Y - 200, 250, 300);
-                    popFct.IsOpen = true;
-                    popFct.DataContext = this;
-
-                    param = new Hashtable();
-                    param.Add("FTR_CDE", fTR_CDE);
-                    param.Add("FTR_IDN", fTR_IDN);
-                    param.Add("sqlId", "SelectValvFacDtl");
-
-                    this.FctDtl = BizUtil.SelectObject(param) as CmmDtl;
-                    break;
-
-                default:
-                    break;
-
-            }
-
-
-            //아이콘이미지 설정
-            //BitmapImage bi = new BitmapImage();
-            //bi.BeginInit();
-            //bi.UriSource = new Uri(Path.Combine(Path.Combine(BizUtil.GetDataFolder(), "style_img"), fTR_CDE), UriKind.Relative);
-            //bi.EndInit();
-            //BitImg = bi;
-            BitImg = new BitmapImage(new Uri(Path.Combine(Path.Combine(BizUtil.GetDataFolder(), "style_img"), fTR_CDE))).Clone();
-
+            //팝업열기 & 위치
+            popFct.IsOpen = false;
+
+            popFct = new FTR_POP(fTR_CDE, fTR_IDN);
+
+            //double y0 = e.Position.Y - 700; //위쪽으로 표시함
+            //if (y0 < 100) y0 = 100;
+            popFct.PlacementRectangle = new Rect(e.Position.X + 550, e.Position.Y - 300, 10, 10);
+            popFct.IsOpen = true;
         }
-
 
         #endregion
 

@@ -269,7 +269,79 @@
       AND	FTR_IDN = #FTR_IDN#
     </update>
 
-    <!--저수조 상세삭제-->
+    <update id="SaveWtrTrkDtl" parameterClass="GTI.WFMS.Models.Acmf.Model.WtrTrkDtl">
+      MERGE INTO INFOFMS.WTL_RSRV_PS
+      USING DUAL ON (FTR_CDE = #FTR_CDE# AND	FTR_IDN = #FTR_IDN#)
+
+      WHEN MATCHED THEN 
+      UPDATE 
+      SET HJD_CDE = #HJD_CDE#
+        , SHT_NUM = #SHT_NUM#
+        , MNG_CDE = #MNG_CDE#
+        , PMS_YMD = decode(length(#PMS_YMD#), 10, to_char(to_date(#PMS_YMD#, 'yyyy-MM-dd'), 'yyyyMMdd'), '')
+        , FNS_YMD = decode(length(#FNS_YMD#), 10, to_char(to_date(#FNS_YMD#, 'yyyy-MM-dd'), 'yyyyMMdd'), '')
+        , BLS_CDE = #BLS_CDE#
+        , RSR_NAM = #RSR_NAM#
+        , OWN_NAM = #OWN_NAM#
+        , OWN_ADR = #OWN_ADR#
+        , OWN_TEL = #OWN_TEL#
+        , MNG_NAM = #MNG_NAM#
+        , MNG_ADR = #MNG_ADR#
+        , MNG_TEL = #MNG_TEL#
+        , BLD_ARA = #BLD_ARA#
+        , TBL_ARA = #TBL_ARA#
+        , FAM_CNT = #FAM_CNT#
+        , BLD_ADR = #BLD_ADR#
+        , SYS_CHK = #SYS_CHK#
+
+      WHEN NOT MATCHED THEN 
+      INSERT 
+      (   FTR_CDE
+      , FTR_IDN
+      , HJD_CDE
+      , SHT_NUM
+      , MNG_CDE
+      , PMS_YMD
+      , FNS_YMD
+      , BLS_CDE
+      , RSR_NAM
+      , OWN_NAM
+      , OWN_ADR
+      , OWN_TEL
+      , MNG_NAM
+      , MNG_ADR
+      , MNG_TEL
+      , BLD_ARA
+      , TBL_ARA
+      , FAM_CNT
+      , BLD_ADR
+      , SYS_CHK
+      )
+      VALUES
+      (   #FTR_CDE#
+        , #FTR_IDN#
+        , #HJD_CDE#
+        , #SHT_NUM#
+        , #MNG_CDE#
+        , decode(length(#PMS_YMD#), 10, to_char(to_date(#PMS_YMD#, 'yyyy-MM-dd'), 'yyyyMMdd'), '')
+        , decode(length(#FNS_YMD#), 10, to_char(to_date(#FNS_YMD#, 'yyyy-MM-dd'), 'yyyyMMdd'), '')
+        , #BLS_CDE#
+        , #RSR_NAM#
+        , #OWN_NAM#
+        , #OWN_ADR#
+        , #OWN_TEL#
+        , #MNG_NAM#
+        , #MNG_ADR#
+        , #MNG_TEL#
+        , #BLD_ARA#
+        , #TBL_ARA#
+        , #FAM_CNT#
+        , #BLD_ADR#
+        , #SYS_CHK#
+      )
+</update>
+
+ <!--저수조 상세삭제-->
     <update id="deleteWtrTrkDtl" parameterClass="GTI.WFMS.Models.Acmf.Model.WtrTrkDtl">
       /* 저수조 상세 삭제 */
       DELETE INFOFMS.WTL_RSRV_PS

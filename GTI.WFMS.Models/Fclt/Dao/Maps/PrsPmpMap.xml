@@ -228,20 +228,78 @@
       /* 가압펌프장 상세 수정 */
       UPDATE INFOFMS.WTL_PRES_PS
       SET HJD_CDE = #HJD_CDE#
-        , SHT_NUM = #SHT_NUM#
-        , MNG_CDE = #MNG_CDE#
-        , FNS_YMD = decode(length(#FNS_YMD#), 10, to_char(to_date(#FNS_YMD#, 'yyyy-MM-dd'), 'yyyyMMdd'), '')
-        , PRS_NAM = #PRS_NAM#
-        , PRS_ARA = #PRS_ARA#
-        , SAG_CDE = #SAG_CDE#
-        , PRS_ALT = #PRS_ALT#
-        , PRS_VOL = #PRS_VOL#
-        , PRS_ARE = #PRS_ARE#
-        , PRS_SAH = #PRS_SAH#
-        , CNT_NUM = #CNT_NUM#
-        , SYS_CHK = #SYS_CHK#
+      , SHT_NUM = #SHT_NUM#
+      , MNG_CDE = #MNG_CDE#
+      , FNS_YMD = decode(length(#FNS_YMD#), 10, to_char(to_date(#FNS_YMD#, 'yyyy-MM-dd'), 'yyyyMMdd'), '')
+      , PRS_NAM = #PRS_NAM#
+      , PRS_ARA = #PRS_ARA#
+      , SAG_CDE = #SAG_CDE#
+      , PRS_ALT = #PRS_ALT#
+      , PRS_VOL = #PRS_VOL#
+      , PRS_ARE = #PRS_ARE#
+      , PRS_SAH = #PRS_SAH#
+      , CNT_NUM = #CNT_NUM#
+      , SYS_CHK = #SYS_CHK#
       WHERE FTR_CDE = #FTR_CDE#
       AND	FTR_IDN = #FTR_IDN#
+    </update>
+
+    <update id="SavePrsPmpDtl" parameterClass="GTI.WFMS.Models.Fclt.Model.PrsPmpDtl">
+      MERGE INTO INFOFMS.WTL_PRES_PS
+      USING DUAL ON (FTR_CDE = #FTR_CDE# AND	FTR_IDN = #FTR_IDN#)
+
+      WHEN MATCHED THEN
+      UPDATE
+      SET HJD_CDE = #HJD_CDE#
+      , SHT_NUM = #SHT_NUM#
+      , MNG_CDE = #MNG_CDE#
+      , FNS_YMD = decode(length(#FNS_YMD#), 10, to_char(to_date(#FNS_YMD#, 'yyyy-MM-dd'), 'yyyyMMdd'), '')
+      , PRS_NAM = #PRS_NAM#
+      , PRS_ARA = #PRS_ARA#
+      , SAG_CDE = #SAG_CDE#
+      , PRS_ALT = #PRS_ALT#
+      , PRS_VOL = #PRS_VOL#
+      , PRS_ARE = #PRS_ARE#
+      , PRS_SAH = #PRS_SAH#
+      , CNT_NUM = #CNT_NUM#
+      , SYS_CHK = #SYS_CHK#
+
+
+      WHEN NOT MATCHED THEN
+      INSERT 
+      ( FTR_CDE
+      , FTR_IDN
+      , HJD_CDE
+      , SHT_NUM
+      , MNG_CDE
+      , FNS_YMD
+      , PRS_NAM
+      , PRS_ARA
+      , SAG_CDE
+      , PRS_ALT
+      , PRS_VOL
+      , PRS_ARE
+      , PRS_SAH
+      , CNT_NUM
+      , SYS_CHK
+      )
+      VALUES
+      ( #FTR_CDE#
+      , #FTR_IDN#
+      , #HJD_CDE#
+      , #SHT_NUM#
+      , #MNG_CDE#
+      , decode(length(#FNS_YMD#), 10, to_char(to_date(#FNS_YMD#, 'yyyy-MM-dd'), 'yyyyMMdd'), '')
+      , #PRS_NAM#
+      , #PRS_ARA#
+      , #SAG_CDE#
+      , #PRS_ALT#
+      , #PRS_VOL#
+      , #PRS_ARE#
+      , #PRS_SAH#
+      , #CNT_NUM#
+      , #SYS_CHK#
+      )
     </update>
 
     <!--가압펌프장 상세삭제-->

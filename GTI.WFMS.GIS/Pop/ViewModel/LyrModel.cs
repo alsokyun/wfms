@@ -128,6 +128,10 @@ namespace GTI.WFMS.GIS.Pop.ViewModel
                 // 1.레이어 ON
                 if (chk)
                 {
+                    // 필터링 인수있으면 하위시설물(관리번호, 전체)으로 필터
+                    layer.DefinitionExpression = filterExp;
+
+
                     if (_mapView.Map.OperationalLayers.Contains(layer))
                     {
                         //on상태 아무것도 안함
@@ -145,27 +149,15 @@ namespace GTI.WFMS.GIS.Pop.ViewModel
                             {
                                 ShapefileFeatureTable layerTable = await ShapefileFeatureTable.OpenAsync(shapefilePath);
 
-                                /*
-                                    시설물필터링 쿼리
-                                 */
-                                string condition = "";
-                                if (!FmsUtil.IsNull(_FTR_IDN))
-                                {
-                                    condition += " FTR_IDN = " + _FTR_IDN ;
-                                }
-                                QueryParameters queryParams = new QueryParameters();
-                                queryParams.WhereClause = condition;
-                                FeatureQueryResult queryResult = await layerTable.QueryFeaturesAsync(queryParams);
-
-                                FeatureCollectionTable collectTable = new FeatureCollectionTable(queryResult);
 
                                 layer = new FeatureLayer(layerTable); /////// 신규레이어 생성 /////// 
+                                layer.DefinitionExpression = filterExp;// 필터링 인수있으면 하위시설물(관리번호, 전체)으로 필터
+
                                 layers[_layerNm] = layer; /////// 딕셔너리에 자동으로 저장되지는 않을것임 /////// 
 
 
                                 layer.Renderer = GisCmm.uniqueValueRenderer.Clone(); //렌더러는 레이어 각각 할당해야하므로 렌더러복사하여 할당
                                 _mapView.Map.OperationalLayers.Add(layer);
-
 
                             }
                             catch (Exception e)
@@ -175,9 +167,8 @@ namespace GTI.WFMS.GIS.Pop.ViewModel
                         }
                     }
 
-
-                    // 필터링 인수있으면 하위시설물(관리번호, 전체)으로 필터
-                    layer.DefinitionExpression = filterExp;
+                    // Zoom the map to the extent of the shapefile.
+                    //await _mapView.SetViewpointGeometryAsync(layer.FullExtent, 50);
 
                 }
                 // 2.레이어 OFF
@@ -206,8 +197,6 @@ namespace GTI.WFMS.GIS.Pop.ViewModel
                 MessageBox.Show("레이어가 존재하지 않습니다.");
             }
         }
-
-
 
 
 

@@ -97,7 +97,7 @@
       SELECT FTR_CDE, FTR_NAM 
       FROM V_FTR_CDE
       WHERE 1=1
-      ORDER BY FTR_NAM
+      ORDER BY FTR_CDE
     </select>
 
   </statements>
