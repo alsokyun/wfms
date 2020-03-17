@@ -8,7 +8,6 @@ using System;
 using System.Collections;
 using System.Data;
 using System.Windows;
-using System.Windows.Controls;
 
 namespace GTI.WFMS.Modules.Dash.ViewModel
 {
@@ -23,8 +22,7 @@ namespace GTI.WFMS.Modules.Dash.ViewModel
         #endregion
 
         #region ==========  Member 정의 ==========
-        UcChartMnu ucChartMnu;
-        
+        UcChartMnu ucChartMnu;        
         #endregion
 
         /// 생성자
@@ -178,7 +176,7 @@ namespace GTI.WFMS.Modules.Dash.ViewModel
             Messages.ShowOkMsgBox();
 
             //재조회
-            InitModel(obj);            
+            InitModel(obj);                        
 
         }
         #endregion

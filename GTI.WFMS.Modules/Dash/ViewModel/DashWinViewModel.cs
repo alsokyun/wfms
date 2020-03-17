@@ -2,9 +2,13 @@
 using GTI.WFMS.Models.Common;
 using GTI.WFMS.Modules.Dash.View;
 using GTIFramework.Common.Log;
+using GTIFramework.Common.MessageBox;
 using System;
 using System.Collections;
 using System.Data;
+using System.Windows;
+using System.Windows.Controls;
+using System.Windows.Media.Animation;
 
 namespace GTI.WFMS.Modules.Dash.ViewModel
 {
@@ -12,16 +16,16 @@ namespace GTI.WFMS.Modules.Dash.ViewModel
     {
         #region ==========  Properties 정의 ==========
         
+        public DelegateCommand<object> LoadedCommand { get; set; } //Loaded이벤트에서 ICommand 사용하여 뷰객체 전달받음
+        public DelegateCommand<object> SaveCommand { get; set; }
         public DelegateCommand<object> MenuShowHidenCommand { get; set; }
-        public RelayCommand<object> LoadedCommand { get; set; } //Loaded이벤트에서 ICommand 사용하여 뷰객체 전달받음
-        public RelayCommand<object> SearchCommand { get; set; }
 
-        private const int V = 300;
 
         #endregion
 
         #region ==========  Member 정의 ==========
         DashWinView dashWinView;
+
         private bool bMenuShowHiden = true; //아코디언메뉴 visible 
 
         #endregion
@@ -29,44 +33,72 @@ namespace GTI.WFMS.Modules.Dash.ViewModel
         ///생성자
         public DashWinViewModel()
         {
-            MenuShowHidenCommand = new DelegateCommand<object>(OnMenuShowHiden);
+            // 초기이벤트
+            this.LoadedCommand = new DelegateCommand<object>(OnLoaded);
+            this.SaveCommand = new DelegateCommand<object>(OnSave);
+            this.MenuShowHidenCommand = new DelegateCommand<object>(OnMenuShowHiden);
+        }
 
-            // 4.초기조회
-            Hashtable param = new Hashtable();
-            DataTable dt = new DataTable();
+        #region ==========  이벤트 핸들러 ==========
 
-            String sYm = Convert.ToDateTime(DateTime.Today).ToString("yyyyMM");
-            String sMenuFleNm = "";
-            int nCt = 0;
-
+        /// <summary>
+        /// 로딩작업
+        /// </summary>
+        /// <param name="obj"></param>
+        private void OnLoaded(object obj)
+        {
             try
             {
-                param.Add("sqlId", "SelectDashMenuList");
-                param.Add("pYm", sYm);
-                param.Add("id", Logs.strLogin_ID);
-                dt = BizUtil.SelectList(param);
+                // 0.화면객체인스턴스화
+                if (obj == null) return;
+
+                InitModel(obj);
+
             }
             catch (Exception e)
             {
                 Console.WriteLine(e);
             }
 
-            LoadedCommand = new RelayCommand<object>(delegate (object obj){
+        }
 
-                if (obj == null) return;
-                                
-                // 0.뷰객체를 파라미터로 전달받기
-                dashWinView = obj as DashWinView;
+        /// <summary>
+        /// 조회작업
+        /// </summary>
+        /// <param name="obj"></param>
+        private void InitModel(object obj)
+        {
+            try
+            {
+                // 4.초기조회
+                Hashtable param = new Hashtable();
+                DataTable dt = new DataTable();
 
-                dashWinView.Menu.Content = new UcChartMnu();
+                String sYm = Convert.ToDateTime(DateTime.Today).ToString("yyyyMM");
+                String sMenuFleNm = "";
+                int nCt = 0;
+
+                dashWinView = obj as DashWinView;                                                
+                
+                param.Add("sqlId", "SelectDashMenuList");
+                param.Add("pYm", sYm);
+                param.Add("id", Logs.strLogin_ID);
+
+                dt = BizUtil.SelectList(param);
+                dashWinView.grid.ItemsSource = dt;
+                
+                dashWinView.ctl1.Content = null;
+                dashWinView.ctl2.Content = null;
+                dashWinView.ctl3.Content = null;
+                dashWinView.ctl4.Content = null;
 
                 foreach (DataRow row in dt.Rows)
-                {                    
+                {
                     if ("Y".Equals(row["MNU_USE_YN"].ToString()))
                     {
                         nCt++;
                         sMenuFleNm = row["MNU_FLE_NM"].ToString();
-                                       
+
                         if (nCt == 1)
                         {
                             if (sMenuFleNm == "dashChart1") dashWinView.ctl1.Content = new UcChart01();
@@ -76,18 +108,18 @@ namespace GTI.WFMS.Modules.Dash.ViewModel
                             else if (sMenuFleNm == "dashChart5") dashWinView.ctl1.Content = new UcChart05();
                             else if (sMenuFleNm == "dashChart6") dashWinView.ctl1.Content = new UcChart06();
                             else if (sMenuFleNm == "dashChart7") dashWinView.ctl1.Content = new UcChart07();
-                            else dashWinView.ctl1.Content = "";
+                            else dashWinView.ctl1.Content = null;
                         }
                         else if (nCt == 2)
                         {
                             if (sMenuFleNm == "dashChart1") dashWinView.ctl2.Content = new UcChart01();
-                            else if(sMenuFleNm == "dashChart2") dashWinView.ctl2.Content = new UcChart02();
+                            else if (sMenuFleNm == "dashChart2") dashWinView.ctl2.Content = new UcChart02();
                             else if (sMenuFleNm == "dashChart3") dashWinView.ctl2.Content = new UcChart03();
                             else if (sMenuFleNm == "dashChart4") dashWinView.ctl2.Content = new UcChart04();
                             else if (sMenuFleNm == "dashChart5") dashWinView.ctl2.Content = new UcChart05();
                             else if (sMenuFleNm == "dashChart6") dashWinView.ctl2.Content = new UcChart06();
                             else if (sMenuFleNm == "dashChart7") dashWinView.ctl2.Content = new UcChart07();
-                            else dashWinView.ctl2.Content = "";
+                            else dashWinView.ctl2.Content = null;
                         }
                         else if (nCt == 3)
                         {
@@ -98,7 +130,7 @@ namespace GTI.WFMS.Modules.Dash.ViewModel
                             else if (sMenuFleNm == "dashChart5") dashWinView.ctl3.Content = new UcChart05();
                             else if (sMenuFleNm == "dashChart6") dashWinView.ctl3.Content = new UcChart06();
                             else if (sMenuFleNm == "dashChart7") dashWinView.ctl3.Content = new UcChart07();
-                            else dashWinView.ctl3.Content = "";
+                            else dashWinView.ctl3.Content = null;
                         }
                         else if (nCt == 4)
                         {
@@ -109,18 +141,17 @@ namespace GTI.WFMS.Modules.Dash.ViewModel
                             else if (sMenuFleNm == "dashChart5") dashWinView.ctl4.Content = new UcChart05();
                             else if (sMenuFleNm == "dashChart6") dashWinView.ctl4.Content = new UcChart06();
                             else if (sMenuFleNm == "dashChart7") dashWinView.ctl4.Content = new UcChart07();
-                            else dashWinView.ctl4.Content = "";
+                            else dashWinView.ctl4.Content = null;
                         }
-                    }                    
+                    }
                 }
-
-            });
-
-
-            SearchCommand = new RelayCommand<object>(delegate (object obj){ 
-            });
-
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+            }
         }
+                
 
         /// <summary>
         /// 메뉴 Show/Hide
@@ -128,44 +159,115 @@ namespace GTI.WFMS.Modules.Dash.ViewModel
         /// <param name="obj"></param>
         private void OnMenuShowHiden(object obj)
         {
-            dashWinView = obj as DashWinView;
-
-            /*
-            Storyboard sb;
-
-            ContentControl accr = (ContentControl)dashWinView.FindName("Menu");
-            Button btn = (Button)dashWinView.FindName("btnMenuSlide");
-
-            if (bMenuShowHiden)
+            try
             {
-                sb = dashWinView.FindResource("Menuin") as Storyboard;
+                Storyboard sb;
 
-                btn.Margin = new Thickness(0, 0, 18, 0);
-                accr.CollapseAll();
-                accr.RootItemExpandButtonPosition = ExpandButtonPosition.None;
-                accr.ExpandItemOnHeaderClick = false;
+                Button btnCtMenu = (Button)dashWinView.FindName("btnCtMenu");
+
+                if (bMenuShowHiden)
+                {
+                    sb = dashWinView.FindResource("CtMenuShow") as Storyboard;
+                    btnCtMenu.Style = Application.Current.Resources["btn_Quick_Slide_CLOSE"] as Style;
+                }
+                else
+                {
+                    sb = dashWinView.FindResource("CtMenuHiden") as Storyboard;
+                    btnCtMenu.Style = Application.Current.Resources["btn_Quick_Slide_OPEN"] as Style;
+                }
+
+                sb.Begin(dashWinView);
+                bMenuShowHiden = !bMenuShowHiden;
+
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+            }
+        }
+
+        /// <summary>
+        /// 로딩작업
+        /// </summary>
+        /// <param name="obj"></param>
+        private void OnSave(object obj)
+        {
+
+            Hashtable param = new Hashtable();
+            int nUpdCnt = 0;
+
+            //그리드 저장
+            DataTable dt = dashWinView.grid.ItemsSource as DataTable;
+
+            foreach (DataRow rowChk in dt.Rows)
+            {
+                if ("Y".Equals(rowChk["CHK"].ToString()))
+                {
+                    nUpdCnt++;
+                }
+            }
+
+            if (nUpdCnt > 0 && nUpdCnt <= 4)
+            {
+                param.Add("id", Logs.strLogin_ID);
+                param.Add("sqlId", "DeleteUserDashMnu");
             }
             else
             {
-                sb = mainwin.FindResource("Menuout") as Storyboard;
+                if (nUpdCnt > 4)
+                {
+                    Messages.ShowErrMsgBox("선택은 4개를 초과하실 수 없습니다.");
+                }
+                else
+                {
+                    Messages.ShowErrMsgBox("선택하신 내용이 없습니다.(1~4개 선택가능)");
+                }
 
-                btn.Margin = new Thickness(0, 0, 6, 0);
-                accr.ExpandAll();
-                accr.RootItemExpandButtonPosition = ExpandButtonPosition.Right;
-                accr.ExpandItemOnHeaderClick = true;
+                return;
             }
 
-            sb.Begin(mainwin);
-            bMenuShowHiden = !bMenuShowHiden;
-            */
+            if (Messages.ShowYesNoMsgBox("저장하시겠습니까?") != MessageBoxResult.Yes) return;
+
+            //저장처리
+            try
+            {
+                //사용자별 기존내용 삭제
+                BizUtil.Update(param);
+
+                foreach (DataRow row in dt.Rows)
+                {
+                    param = new Hashtable();
+
+                    if ("Y".Equals(row["CHK"].ToString()))
+                    {
+                        param.Add("mnuCd", row["MNU_CD"].ToString());
+                        param.Add("id", Logs.strLogin_ID);
+
+                        param.Add("sqlId", "InsertUserDashMnu");
+                        BizUtil.Update(param);
+                    }
+
+                }
+
+            }
+            catch (Exception ex)
+            {
+                Messages.ShowErrMsgBox("저장 처리중 오류가 발생하였습니다." + ex.ToString());
+                return;
+            }
+
+
+            //저장처리 성공
+            Messages.ShowOkMsgBox();
+
+            //재조회
+            InitModel(obj);
+
         }
 
 
 
-
-
-
-
+        #endregion
 
 
 
