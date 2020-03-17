@@ -1,7 +1,6 @@
 ﻿using DevExpress.Xpf.Editors;
 using GTI.WFMS.GIS.Module.View;
 using GTI.WFMS.Models.Common;
-using GTI.WFMS.Models.Fclt.Model;
 using GTI.WFMS.Models.Pipe.Model;
 using GTIFramework.Common.Log;
 using GTIFramework.Common.MessageBox;
@@ -36,7 +35,6 @@ namespace GTI.WFMS.GIS.Module.ViewModel
         public RelayCommand<object> SaveCommand { get; set; }
         public RelayCommand<object> DelCommand { get; set; }
 
-
         /// <summary>
         /// 시설물 키 : FctDtl과 별도로 관리됨
         /// </summary>
@@ -62,8 +60,8 @@ namespace GTI.WFMS.GIS.Module.ViewModel
         }
 
 
-        private PrsPmpDtl fctDtl = new PrsPmpDtl();
-        public PrsPmpDtl FctDtl
+        private WtprMtDtl fctDtl = new WtprMtDtl();
+        public WtprMtDtl FctDtl
         {
             get { return fctDtl; }
             set
@@ -77,7 +75,7 @@ namespace GTI.WFMS.GIS.Module.ViewModel
 
 
         #region ==========  Member 정의 ==========
-        UC_PRGA_PS uC_PRGA_PS;
+        UC_PRGA_PS uC_PRES_PS;
         Button btnSave;
 
 
@@ -107,9 +105,9 @@ namespace GTI.WFMS.GIS.Module.ViewModel
                 // 0.화면객체인스턴스화
                 if (obj == null) return;
 
-                uC_PRGA_PS = obj as UC_PRGA_PS;
+                uC_PRES_PS = obj as UC_PRGA_PS;
 
-                btnSave = uC_PRGA_PS.btnSave;
+                btnSave = uC_PRES_PS.btnSave;
 
                 //2.화면데이터객체 초기화
                 InitDataBinding();
@@ -140,7 +138,7 @@ namespace GTI.WFMS.GIS.Module.ViewModel
         {
 
             // 필수체크 (Tag에 필수체크 표시한 EditBox, ComboBox 대상으로 수행)
-            if (!BizUtil.ValidReq(uC_PRGA_PS)) return;
+            if (!BizUtil.ValidReq(uC_PRES_PS)) return;
 
 
             if (Messages.ShowYesNoMsgBox("저장하시겠습니까?") != MessageBoxResult.Yes) return;
@@ -149,7 +147,7 @@ namespace GTI.WFMS.GIS.Module.ViewModel
             {
                 FctDtl.FTR_CDE = this.FTR_CDE;
                 FctDtl.FTR_IDN = Convert.ToInt32(this.FTR_IDN); //신규위치 및 기존위치 정보만 있을수 있으므로 shape의 관리번호를 기준으로한다.
-                BizUtil.Update2(FctDtl, "SavePrsPmpDtl");
+                BizUtil.Update2(FctDtl, "SaveWtprMtDtl");
             }
             catch (Exception e)
             {
@@ -171,7 +169,6 @@ namespace GTI.WFMS.GIS.Module.ViewModel
             Hashtable param = new Hashtable();
             param.Add("sqlId", "selectChscResSubList");
             param.Add("sqlId2", "SelectFileMapList");
-            param.Add("sqlId3", "selectWtlLeakSubList");
 
             param.Add("FTR_CDE", this.FTR_CDE);
             param.Add("FTR_IDN", this.FTR_IDN);
@@ -180,7 +177,6 @@ namespace GTI.WFMS.GIS.Module.ViewModel
             Hashtable result = BizUtil.SelectLists(param);
             DataTable dt = new DataTable();
             DataTable dt2 = new DataTable();
-            DataTable dt3 = new DataTable();
 
             try
             {
@@ -202,24 +198,14 @@ namespace GTI.WFMS.GIS.Module.ViewModel
                 }
             }
             catch (Exception) { }
-            try
-            {
-                dt3 = result["dt3"] as DataTable;
-                if (dt3.Rows.Count > 0)
-                {
-                    Messages.ShowErrMsgBox("누수지점내역이 존재합니다.");
-                    return;
-                }
-            }
-            catch (Exception) { }
 
 
 
             // 1.삭제처리
-            if (Messages.ShowYesNoMsgBox("변로를 삭제하시겠습니까?") != MessageBoxResult.Yes) return;
+            if (Messages.ShowYesNoMsgBox("수압계시설를 삭제하시겠습니까?") != MessageBoxResult.Yes) return;
             try
             {
-                BizUtil.Update2(this.fctDtl, "deletePrsPmpDtl");
+                BizUtil.Update2(this.FctDtl, "deleteWtprMtDtl");
             }
             catch (Exception)
             {
@@ -231,6 +217,8 @@ namespace GTI.WFMS.GIS.Module.ViewModel
             InitModel();
 
         }
+
+
         #endregion
 
         #region ============= 메소드정의 ================
@@ -239,11 +227,11 @@ namespace GTI.WFMS.GIS.Module.ViewModel
         private void InitModel()
         {
             Hashtable param = new Hashtable();
-            param.Add("sqlId", "SelectPrsPmpDtl");
+            param.Add("sqlId", "SelectWtprMtDtl");
             param.Add("FTR_CDE", this.FTR_CDE);
             param.Add("FTR_IDN", this.FTR_IDN);
 
-            PrsPmpDtl result = BizUtil.SelectObject(param) as PrsPmpDtl;
+            WtprMtDtl result = BizUtil.SelectObject(param) as WtprMtDtl;
             if (result != null)
             {
                 this.FctDtl = result;
@@ -251,9 +239,9 @@ namespace GTI.WFMS.GIS.Module.ViewModel
             else
             {
                 //신규등록이면 상세화면표시
-                if (!"Y".Equals(uC_PRGA_PS.btnDel.Tag))
+                if (!"Y".Equals(uC_PRES_PS.btnDel.Tag))
                 {
-                    uC_PRGA_PS.grid.Visibility = Visibility.Hidden; //DB데이터가 없으면 빈페이지표시
+                    uC_PRES_PS.grid.Visibility = Visibility.Hidden; //DB데이터가 없으면 빈페이지표시
                 }
             }
         }
@@ -267,13 +255,17 @@ namespace GTI.WFMS.GIS.Module.ViewModel
             try
             {
                 // cbHJD_CDE 행정동
-                BizUtil.SetCombo(uC_PRGA_PS.cbHJD_CDE, "Select_ADAR_LIST", "HJD_CDE", "HJD_NAM", true);
+                BizUtil.SetCombo(uC_PRES_PS.cbHJD_CDE, "Select_ADAR_LIST", "HJD_CDE", "HJD_NAM", true);
 
                 // cbMNG_CDE 관리기관
-                BizUtil.SetCmbCode(uC_PRGA_PS.cbMNG_CDE, "MNG_CDE", true);
+                BizUtil.SetCmbCode(uC_PRES_PS.cbMNG_CDE, "MNG_CDE", true);
 
-                // cbSAG_CDE 관리방법
-                BizUtil.SetCmbCode(uC_PRGA_PS.cbSAG_CDE, "SAG_CDE", true);
+                // cbPGA_CDE 수압계종류
+                BizUtil.SetCmbCode(uC_PRES_PS.cbPGA_CDE, "PGA_CDE", true);
+
+                // cbMOF_CDE 형식
+                BizUtil.SetCmbCode(uC_PRES_PS.cbMOF_CDE, "MOF_CDE", true, "250035");
+
             }
             catch (Exception ex)
             {
@@ -314,5 +306,3 @@ namespace GTI.WFMS.GIS.Module.ViewModel
 
     }
 }
-
-

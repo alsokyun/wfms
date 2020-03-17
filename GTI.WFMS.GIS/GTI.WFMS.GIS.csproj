@@ -88,11 +88,11 @@
     <Compile Include="Module\ViewModel\UC_RSRV_PSModel.cs" />
     <Compile Include="Module\ViewModel\UC_META_PSModel.cs" />
     <Compile Include="Module\ViewModel\UC_SPLY_LSModel.cs" />
-    <Compile Include="Module\ViewModel\UC_PRES_PSModel.cs" />
+    <Compile Include="Module\ViewModel\UC_PRGA_PSModel.cs" />
     <Compile Include="Module\ViewModel\UC_SERV_PSModel.cs" />
     <Compile Include="Module\ViewModel\UC_GAIN_PSModel.cs" />
     <Compile Include="Module\ViewModel\UC_HEAD_PSModel.cs" />
-    <Compile Include="Module\ViewModel\UC_PRGA_PSModel.cs" />
+    <Compile Include="Module\ViewModel\UC_PRES_PSModel.cs" />
     <Compile Include="Module\ViewModel\UC_STPI_PSModel.cs" />
     <Compile Include="Module\ViewModel\UC_MANH_PSModel.cs" />
     <Compile Include="Module\ViewModel\UC_PURI_ASModel.cs" />
@@ -112,8 +112,8 @@
     <Compile Include="Module\View\UC_SPLY_LS.xaml.cs">
       <DependentUpon>UC_SPLY_LS.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Module\View\UC_PRES_PS.xaml.cs">
-      <DependentUpon>UC_PRES_PS.xaml</DependentUpon>
+    <Compile Include="Module\View\UC_PRGA_PS.xaml.cs">
+      <DependentUpon>UC_PRGA_PS.xaml</DependentUpon>
     </Compile>
     <Compile Include="Module\View\UC_SERV_PS.xaml.cs">
       <DependentUpon>UC_SERV_PS.xaml</DependentUpon>
@@ -124,8 +124,8 @@
     <Compile Include="Module\View\UC_HEAD_PS.xaml.cs">
       <DependentUpon>UC_HEAD_PS.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Module\View\UC_PRGA_PS.xaml.cs">
-      <DependentUpon>UC_PRGA_PS.xaml</DependentUpon>
+    <Compile Include="Module\View\UC_PRES_PS.xaml.cs">
+      <DependentUpon>UC_PRES_PS.xaml</DependentUpon>
     </Compile>
     <Compile Include="Module\View\UC_STPI_PS.xaml.cs">
       <DependentUpon>UC_STPI_PS.xaml</DependentUpon>
@@ -206,7 +206,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="Module\View\UC_PRES_PS.xaml">
+    <Page Include="Module\View\UC_PRGA_PS.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
@@ -222,7 +222,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="Module\View\UC_PRGA_PS.xaml">
+    <Page Include="Module\View\UC_PRES_PS.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>

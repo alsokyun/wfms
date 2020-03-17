@@ -283,8 +283,8 @@
 		     , AR.RPR_CAT_CDE   /*보수구분*/
 		     , B.NM AS RPR_CAT_CDE_NM
 		     , TO_CHAR(A.CRE_YMD,'YYYY-MM-DD HH24:MI:DD') AS USE_YMD /*사용일자*/
-		     , CASE WHEN M.PDT_CAT_CDE = 'PDT_CAT_CDE001' THEN A.PDH_CNT 
-		            WHEN M.PDT_CAT_CDE = 'PDT_CAT_CDE002' THEN A.PDH_AMT 
+		     , CASE WHEN M.PDT_CAT_CDE = 'PDT001' THEN A.PDH_CNT 
+		            WHEN M.PDT_CAT_CDE = 'PDT002' THEN A.PDH_AMT 
 		            ELSE 0 END AS USE_CNT
 		     , A.PDH_CNT
 		     , A.PDH_AMT 

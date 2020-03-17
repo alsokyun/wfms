@@ -11,7 +11,7 @@ using System.Windows.Controls;
 namespace GTI.WFMS.GIS.Module.View
 {
     /// <summary>
-    /// WTL_PIPE_LM.xaml에 대한 상호 작용 논리
+    /// UC_PRGA_PS.xaml에 대한 상호 작용 논리
     /// </summary>
     public partial class UC_PRGA_PS : UserControl
     {
@@ -35,8 +35,8 @@ namespace GTI.WFMS.GIS.Module.View
             
             //신규관리번호채번
             Hashtable param = new Hashtable();
-            param.Add("sqlId", "SelectPrsPmpFTR_IDN");
-            PrsPmpDtl result = BizUtil.SelectObject(param) as PrsPmpDtl;
+            param.Add("sqlId", "SelectWtprMtFTR_IDN");
+            WtprMtDtl result = BizUtil.SelectObject(param) as WtprMtDtl;
             
             //채번결과 매칭
             txtFTR_IDN.Text = result.FTR_IDN.ToString();
