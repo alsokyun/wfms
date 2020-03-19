@@ -17,7 +17,6 @@ namespace GTI.WFMS.GIS
             InitializeComponent();
 
 
-
             //StartLocalMapService();
         }
 

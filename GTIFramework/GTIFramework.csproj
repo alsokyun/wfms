@@ -202,9 +202,24 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="DLL\EntLibContrib.Data.Tibero.dll" />
-    <Content Include="DLL\Oracle.DataAccess.dll" />
-    <Content Include="DLL\Tibero.DbAccess.dll" />
+    <Content Include="DLL\EntLibContrib.Data.Tibero.dll">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="DLL\oci.dll">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="DLL\ociw32.dll">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="DLL\Oracle.DataAccess.dll">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="DLL\OraOps11w.dll">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="DLL\Tibero.DbAccess.dll">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <None Include="app.config">
       <SubType>Designer</SubType>
     </None>

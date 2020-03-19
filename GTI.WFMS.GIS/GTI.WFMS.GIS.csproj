@@ -154,9 +154,6 @@
     <Compile Include="Module\View\UC_FLOW_PS.xaml.cs">
       <DependentUpon>UC_FLOW_PS.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Module\WTL_PIPE_LM.xaml.cs">
-      <DependentUpon>WTL_PIPE_LM.xaml</DependentUpon>
-    </Compile>
     <Compile Include="Pop\ViewModel\CnstMngPopViewModel.cs" />
     <Compile Include="sample\SketchOnMap.xaml.cs">
       <DependentUpon>SketchOnMap.xaml</DependentUpon>
@@ -271,10 +268,6 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Include="Module\View\UC_FLOW_PS.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="Module\WTL_PIPE_LM.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>

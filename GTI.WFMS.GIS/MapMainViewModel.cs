@@ -23,6 +23,7 @@ using Prism.Regions;
 using Microsoft.Win32;
 using System.Windows.Media.Imaging;
 using GTI.WFMS.GIS.Pop.View;
+using Esri.ArcGISRuntime;
 
 namespace GTI.WFMS.GIS
 {
@@ -40,6 +41,8 @@ namespace GTI.WFMS.GIS
         public Feature _selectedFeature;
         public string _selectedLayerNm = "";
         public List<string> _selectedLayerNms = new List<string>();
+        
+        
         // Graphics overlay to host sketch graphics
         private GraphicsOverlay _sketchOverlay;
         private Esri.ArcGISRuntime.Geometry.Geometry _geometry;
@@ -88,18 +91,14 @@ namespace GTI.WFMS.GIS
         public RelayCommand<object> loadedCmd { get; set; } //Loaded이벤트에서 ICommand 사용하여 뷰객체 전달받음
         public RelayCommand<object> chkCmd { get; set; }
         public RelayCommand<object> toggleCmd { get; set; }
-        public RelayCommand<object> closeCmd { get; set; }
         public RelayCommand<object> resetCmd { get; set; }
         public RelayCommand<object> ChartCmd { get; set; }
 
-        public RelayCommand<object> btnCmd { get; set; }
         
         public RelayCommand<object> completeCmd { get; set; }
         public RelayCommand<object> clearCmd { get; set; }
-        public RelayCommand<object> findCmd { get; set; }
 
         public RelayCommand<object> CallPageCmd { get; set; }//시설물팝업에서 시설물메뉴화면 호출작업
-        public RelayCommand<object> ChgImgCmd { get; set; }//시설물팝업에서 아이콘파일변경작업
 
         public RelayCommand<object> EditCmd { get; set; }
 
@@ -139,6 +138,12 @@ namespace GTI.WFMS.GIS
 
         public MapMainViewModel()
         {
+            //string licenseKey = "runtimelite,1000,rud1244207246,none,9TJC7XLS1MJPF5KHT033"; //그린텍
+            //string licenseKey = "runtimelite,1000,rud9177830334,none,A3E60RFLTFM5NERL1040"; //kyun0828 free 
+            
+            //ArcGISRuntimeEnvironment.SetLicense(licenseKey);
+
+
             loadedCmd = new RelayCommand<object>(delegate (object obj)
             {
 
@@ -215,13 +220,6 @@ namespace GTI.WFMS.GIS
                 }
             });
 
-            //팝업레이어 토글처리
-            closeCmd = new RelayCommand<object>(delegate (object obj)
-            {
-                Popup divLayerInfo = obj as Popup;
-
-                divLayerInfo.IsOpen = false;
-            });
 
 
             // 레이어스타일 Renderer 초기화 - shape방식에서만 사용함
@@ -291,186 +289,7 @@ namespace GTI.WFMS.GIS
                 }
             });
 
-            //파일찾기버튼 이벤트
-            ChgImgCmd = new RelayCommand<object>(delegate (object obj)
-            {
-                // 전달된 파라미터 
-                if (obj == null)
-                {
-                    Messages.ShowErrMsgBox("시설물코드가 존재하지 않습니다.");
-                    return;
-                }
-                string _FTR_CDE = obj as string;
-
-                // UniqueValueRenderer 자원해제
-                //uniqueValueRenderer = new UniqueValueRenderer();
-                //layers[_selectedLayerNm].ResetRenderer();
-
-                // 파일탐색기 열기
-                OpenFileDialog openFileDialog = new OpenFileDialog();
-                openFileDialog.Multiselect = false;
-                openFileDialog.Filter = "All files (*.*)|*.*";
-                openFileDialog.InitialDirectory = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
-                if (openFileDialog.ShowDialog() == true)
-                {
-                    //아이콘 파일경로
-                    string icon_foler = Path.Combine(BizUtil.GetDataFolder(), "style_img");
-
-
-                    FileInfo[] files = openFileDialog.FileNames.Select(f => new FileInfo(f)).ToArray();  //파일인포
-                    foreach (FileInfo fi in files)
-                    {
-                        try
-                        {
-
-                            //해당이미지파일을 FTR_CDE ex)SA117 이름의파일로 복사
-                            fi.CopyTo( Path.Combine(icon_foler, _FTR_CDE), true );
-                        }
-                        catch (Exception ex)
-                        {
-                            Messages.ShowErrMsgBox(ex.Message);
-                        }
-                        finally
-                        {
-                            //1.렌더러 재구성
-                            GisCmm.InitUniqueValueRenderer();
-
-                            //2.레이어의 렌더러 재세팅
-                            foreach (string sel in _selectedLayerNms)
-                            {
-                                layers[sel].Renderer = GisCmm.uniqueValueRenderer.Clone();
-                                layers[sel].RetryLoadAsync();
-                            }
-
-                            //3.팝업이미지소스 업데이트
-                            BitImg = new BitmapImage(new Uri(Path.Combine(Path.Combine(BizUtil.GetDataFolder(), "style_img"), _FTR_CDE))).Clone();
-
-                        }
-                    }
-                }
-            });
-
-
-
-            btnCmd = new RelayCommand<object>(async delegate (object obj)
-            {
-                Button btn = obj as Button;
-                switch (btn.Content.ToString())
-                {
-                    case "추가":
-                        if (_selectedLayerNms.Count < 1)
-                        {
-                            MessageBox.Show("시설물을 선택하세요.");
-                            return;
-                        }
-                        else if (_selectedLayerNms.Count > 1)
-                        {
-                            MessageBox.Show("시설물을 하나만 선택하세요.");
-                            return;
-                        }
-
-
-                        //라인피처인 경우 - SketchEditor 를 GraphicOverlay에 생성한다
-                        if (_selectedLayerNm.Equals("WTL_PIPE_LM") || _selectedLayerNm.Equals("WTL_SPLY_LS"))
-                        {
-                            try
-                            {
-                                // Let the user draw on the map view using the chosen sketch mode
-                                Esri.ArcGISRuntime.Geometry.Geometry geometry = await mapView.SketchEditor.StartAsync(SketchCreationMode.Polyline, true); //맵에 신규geometry 얻어오기
-
-                                // Create and add a graphic from the geometry the user drew
-                                SimpleLineSymbol symbol;
-                                if (_selectedLayerNm.Equals("WTL_PIPE_LM"))
-                                {
-                                    symbol = new SimpleLineSymbol(SimpleLineSymbolStyle.Solid, System.Drawing.Color.SkyBlue, 2);
-                                }
-                                else
-                                {
-                                    symbol = new SimpleLineSymbol(SimpleLineSymbolStyle.Solid, System.Drawing.Color.SkyBlue, 2);
-                                }
-
-                                Graphic graphic = new Graphic(geometry, symbol);
-                                _sketchOverlay.Graphics.Add(graphic);
-
-                                // Enable/disable the clear and edit buttons according to whether or not graphics exist in the overlay
-                                ClearButton.IsEnabled = _sketchOverlay.Graphics.Count > 0;
-                            }
-                            catch (TaskCanceledException)
-                            {
-                                // Ignore ... let the user cancel drawing
-                            }
-                            catch (Exception ex)
-                            {
-                                // Report exceptions
-                                MessageBox.Show("Error drawing graphic shape: " + ex.Message);
-                            }
-                        }
-                        //포인트피처의 경우는 클릭핸들러만 추가함
-                        else
-                        {
-                            //추가처리 탭핸들러 추가
-                            mapView.GeoViewTapped -= handlerGeoViewTappedMoveFeature;
-                            mapView.GeoViewTapped -= handlerGeoViewTapped;
-                            mapView.GeoViewTapped += handlerGeoViewTappedAddFeature;
-                            MessageBox.Show("시설물을 추가할 지점을 마우스로 클릭하세요.");
-                        }
-
-                        break;
-
-                    case "이동":
-                        if (_selectedFeature == null)
-                        {
-                            MessageBox.Show("시설물을 선택하세요.");
-                            return;
-                        }
-
-
-                        MessageBox.Show("이동할 지점을 마우스로 클릭하세요.");
-                        //이동처리 탭핸들러 추가
-                        mapView.GeoViewTapped -= handlerGeoViewTappedAddFeature;
-                        mapView.GeoViewTapped -= handlerGeoViewTapped;
-                        mapView.GeoViewTapped += handlerGeoViewTappedMoveFeature;
-                        break;
-
-                    case "삭제":
-                        if (_selectedFeature == null)
-                        {
-                            MessageBox.Show("시설물을 선택하세요.");
-                            return;
-                        }
-
-                        //삭제처리
-                        //열여있는 시설물정보창 닫기
-                        popFct.IsOpen = false;
-
-                        // Load the feature.
-                        //await _selectedFeature.LoadAsync();
-
-                        Feature back_selectedFeature = _selectedFeature;
-                        if (Messages.ShowYesNoMsgBox("시설물 위치정보를 삭제하시겠습니까?") == MessageBoxResult.Yes)
-                        {
-                            // Apply the edit to the feature table.
-                            await _selectedFeature.FeatureTable.DeleteFeatureAsync(_selectedFeature);
-                            _selectedFeature.Refresh();
-                        }
-                        else
-                        {
-                            await _selectedFeature.FeatureTable.AddFeatureAsync(back_selectedFeature);
-                            _selectedFeature.Refresh();
-                        }
-
-                        break;
-
-                    case "취소":
-                        // Push the update to the service.
-                        //ServiceFeatureTable serviceTableCancel = (ServiceFeatureTable)_selectedFeature.FeatureTable;
-                        //serviceTableCancel.CancelLoad();
-                        break;
-                    default:
-                        break;
-                }
-            });
-
+          
 
             //도형클리어처리
             clearCmd = new RelayCommand<object>(delegate (object obj)
@@ -494,13 +313,11 @@ namespace GTI.WFMS.GIS
 
             });
 
-            //시설물찾기
-            //findCmd = new RelayCommand<object>(FindAction);
 
         }
 
         /// <summary>
-        /// 해당시설물의 지도상위치 찾아가기
+        /// 해당시설물의 지도상위치 찾아가기(업무화면에서 호출됨) 
         /// </summary>
         /// <param name="FTR_CDE"></param>
         /// <param name="FTR_IDN"></param>
@@ -619,33 +436,7 @@ namespace GTI.WFMS.GIS
         }
 
 
-        //시설물레이어DIV 초기화작업
-        private void InitDivLayer()
-        {
-            var thumb = new Thumb
-            {
-                Width = 0,
-                Height = 0,
-            };
-
-            StackPanel stContent = this.divLayer.FindName("stContent") as StackPanel;
-            stContent.Children.Add(thumb);
-
-            this.divLayer.MouseDown += (sender, e) =>
-            {
-                thumb.RaiseEvent(e);
-            };
-
-            thumb.DragDelta += (sender, e) =>
-            {
-                this.divLayer.HorizontalOffset += e.HorizontalChange;
-                this.divLayer.VerticalOffset += e.VerticalChange;
-            };
-
-        }
-
-
-
+        
 
 
 
@@ -684,9 +475,7 @@ namespace GTI.WFMS.GIS
 
 
             //맵뷰 클릭이벤트 설정
-            mapView.GeoViewTapped -= handlerGeoViewTappedMoveFeature;
-            mapView.GeoViewTapped -= handlerGeoViewTappedAddFeature;
-            mapView.GeoViewTapped -= handlerGeoViewTapped;
+            //mapView.GeoViewTapped -= handlerGeoViewTapped;
             mapView.GeoViewTapped += handlerGeoViewTapped;
 
 
@@ -697,215 +486,29 @@ namespace GTI.WFMS.GIS
 
 
 
-        // 피처추가
-        public async void handlerGeoViewTappedAddFeature(object sender, GeoViewInputEventArgs e)
+
+        //시설물레이어DIV 초기화작업
+        private void InitDivLayer()
         {
-            try
+            var thumb = new Thumb
             {
-                // Get the MapPoint from the EventArgs for the tap.
-                MapPoint destinationPoint = e.Location;
-                // Normalize the point - needed when the tapped location is over the international date line.
-                destinationPoint = (MapPoint)GeometryEngine.NormalizeCentralMeridian(destinationPoint);
+                Width = 0,
+                Height = 0,
+            };
 
+            StackPanel stContent = this.divLayer.FindName("stContent") as StackPanel;
+            stContent.Children.Add(thumb);
 
-
-                // Get the path to the first layer - the local feature service url + layer ID
-                //string layerUrl = _localFeatureService.Url + "/" + GetLayerId(_selectedLayer);
-
-                // Create the ServiceFeatureTable
-                //ServiceFeatureTable serviceFeatureTable = new ServiceFeatureTable(new Uri(layerUrl));
-                //FeatureLayer featureLayer = new FeatureLayer(serviceFeatureTable);
-
-                // Wait for the layer to load
-                //await featureLayer.LoadAsync();
-
-
-                FeatureTable layerTable = layers[_selectedLayerNm].FeatureTable;
-
-
-                //피처추가
-                Feature _addedFeature = layerTable.CreateFeature();
-                _addedFeature.Geometry = destinationPoint;
-
-                //속성추가
-                //Field Field_FTR_CDE = new Field(FieldType.Text, "FTR_CDE", "시설물코드", 50);
-                //Field Field_FTR_IDN = new Field(FieldType.Int32, "FTR_IDN", "관리번호", 10);
-                //Field Field_SHT_NUM = new Field(FieldType.Text, "SHT_NUM", "도엽번호", 50);
-
-                string ftr_cde = "SA118";
-                try
-                {
-                    //ftr_cde = _selectedLayer.Split(',')[0];
-                }
-                catch (Exception){}
-                
-                _addedFeature.SetAttributeValue("FTR_CDE", ftr_cde);
-                _addedFeature.SetAttributeValue("FTR_IDN", 999f);
-                _addedFeature.SetAttributeValue("SHT_NUM", "99999");
-                _addedFeature.SetAttributeValue("SHT_NUM", "99999");
-                _addedFeature.SetAttributeValue("HJD_CDE", "3171033000");
-                _addedFeature.SetAttributeValue("MNG_CDE", "MNG401");
-
-
-
-
-                await layerTable.AddFeatureAsync(_addedFeature);
-                //추가내용 새로고침
-                _addedFeature.Refresh();
-
-                MessageBox.Show("Added feature ", "Success!");
-
-                //이벤트핸들러원복
-                mapView.GeoViewTapped -= handlerGeoViewTappedMoveFeature;
-                mapView.GeoViewTapped -= handlerGeoViewTappedAddFeature;
-                mapView.GeoViewTapped -= handlerGeoViewTapped;
-                mapView.GeoViewTapped += handlerGeoViewTapped;
-            }
-            catch (Exception ex)
+            this.divLayer.MouseDown += (sender, e) =>
             {
-                Messages.ShowErrMsgBox(ex.ToString());
-            }
+                thumb.RaiseEvent(e);
+            };
 
-        }
-
-
-        //맵뷰 클릭이벤트 핸들러 -  이동처리(ServiceFeature)
-        public async void handlerGeoViewTappedMoveFeature_org(object sender, GeoViewInputEventArgs e)
-        {
-
-            //이동처리
-            if (_selectedFeature != null)
+            thumb.DragDelta += (sender, e) =>
             {
-                try
-                {
-                    // Get the MapPoint from the EventArgs for the tap.
-                    MapPoint destinationPoint = e.Location;
-
-                    // Normalize the point - needed when the tapped location is over the international date line.
-                    destinationPoint = (MapPoint)GeometryEngine.NormalizeCentralMeridian(destinationPoint);
-
-                    // Load the feature.
-                    //await _selectedFeature.LoadAsync();
-
-                    // Update the geometry of the selected feature.
-                    _selectedFeature.Geometry = destinationPoint;
-
-                    // Apply the edit to the feature table.
-                    await _selectedFeature.FeatureTable.UpdateFeatureAsync(_selectedFeature);
-                    _selectedFeature.Refresh();
-
-                    // Push the update to the service. - Save버튼에서 최종저장
-                    //ServiceFeatureTable serviceTable = (ServiceFeatureTable)_selectedFeature.FeatureTable;
-                    //await serviceTable.ApplyEditsAsync();
-                    //MessageBox.Show("Moved feature " + _selectedFeature.Attributes["objectid"], "Success!");
-
-
-                }
-                catch (Exception ex)
-                {
-                    MessageBox.Show(ex.ToString(), "Error when moving feature.");
-                }
-
-            }
-        }
-
-        //맵뷰 클릭이벤트 핸들러 -  이동처리(shape파일)
-        public async void handlerGeoViewTappedMoveFeature(object sender, GeoViewInputEventArgs e)
-        {
-
-            //이동처리
-            if (_selectedFeature != null)
-            {
-                try
-                {
-                    // Get the MapPoint from the EventArgs for the tap.
-                    MapPoint mapPoint = e.Location;
-                    // Normalize the point - needed when the tapped location is over the international date line.
-                    mapPoint = (MapPoint)GeometryEngine.NormalizeCentralMeridian(mapPoint);
-                    Polyline polyline;
-                    Polygon polygon;
-
-
-                    // Update the geometry of the selected feature.
-                    Feature back_selectedFeature = _selectedFeature;
-
-
-                    //라인피처인 경우 - 평행이동 라인을 만든다
-                    if (_selectedFeature.Geometry is Polyline)
-                    {
-                        polyline = (Polyline)_selectedFeature.Geometry;
-
-                        List<MapPoint> points = new List<MapPoint>();
-                        foreach (var part in polyline.Parts)
-                        {
-                            //라인의 첫번째점을 기준으로 이동
-                            double dx = mapPoint.X - part.Points[0].X;
-                            double dy = mapPoint.Y - part.Points[0].Y;
-
-                            foreach (var pt in part.Points)
-                            {
-                                MapPoint mpt = new MapPoint(pt.X + dx, pt.Y + dy, SpatialReferences.WebMercator);
-                                points.Add(mpt);
-                            }
-                        }
-
-                        _selectedFeature.Geometry = new Polyline(points);
-                    }
-                    //폴리곤 피처인경우 - 평행이동 폴리곤을 만든다
-                    else if (_selectedFeature.Geometry is Polygon)
-                    {
-                        polygon = (Polygon)_selectedFeature.Geometry;
-
-                        List<MapPoint> points = new List<MapPoint>();
-                        foreach (var part in polygon.Parts)
-                        {
-                            //라인의 첫번째점을 기준으로 이동
-                            double dx = mapPoint.X - part.Points[0].X;
-                            double dy = mapPoint.Y - part.Points[0].Y;
-
-                            foreach (var pt in part.Points)
-                            {
-                                MapPoint mpt = new MapPoint(pt.X + dx, pt.Y + dy, SpatialReferences.WebMercator);
-                                points.Add(mpt);
-                            }
-                        }
-
-                        _selectedFeature.Geometry = new Polygon(points);
-                    }
-                    //포인트 피처인 경우는 위치만 변경하면됨
-                    else
-                    {
-                        _selectedFeature.Geometry = mapPoint;
-                    }
-
-
-                    if (Messages.ShowYesNoMsgBox("시설물 위치이동을 저장하시겠습니까?") == MessageBoxResult.Yes)
-                    {
-                        // Apply the edit to the feature table.
-                        await _selectedFeature.FeatureTable.UpdateFeatureAsync(_selectedFeature);
-                        _selectedFeature.Refresh();
-                        MessageBox.Show("Moved feature ", "Success!");
-                    }
-                    else
-                    {
-                        await _selectedFeature.FeatureTable.UpdateFeatureAsync(back_selectedFeature);
-                        _selectedFeature.Refresh();
-                    }
-
-                }
-                catch (Exception ex)
-                {
-                    MessageBox.Show(ex.ToString(), "Error when moving feature.");
-                }
-
-            }
-
-            //이벤트핸들러원복
-            mapView.GeoViewTapped -= handlerGeoViewTappedMoveFeature;
-            mapView.GeoViewTapped -= handlerGeoViewTappedAddFeature;
-            mapView.GeoViewTapped -= handlerGeoViewTapped;
-            mapView.GeoViewTapped += handlerGeoViewTapped;
-
+                this.divLayer.HorizontalOffset += e.HorizontalChange;
+                this.divLayer.VerticalOffset += e.VerticalChange;
+            };
 
         }
 

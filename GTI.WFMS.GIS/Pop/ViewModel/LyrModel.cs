@@ -5,6 +5,7 @@ using Esri.ArcGISRuntime.Mapping;
 using Esri.ArcGISRuntime.Symbology;
 using Esri.ArcGISRuntime.UI.Controls;
 using GTI.WFMS.Models.Common;
+using GTIFramework.Common.MessageBox;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -162,7 +163,7 @@ namespace GTI.WFMS.GIS.Pop.ViewModel
                             }
                             catch (Exception e)
                             {
-                                Console.WriteLine(e.Message);
+                                Messages.ShowErrMsgBox(e.Message);
                             }
                         }
                     }
