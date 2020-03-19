@@ -39,7 +39,7 @@
 
         </Grid.RowDefinitions>
 
-        <Grid Grid.Row="0" Background="{DynamicResource PopCOLOR2Brush}" PreviewMouseLeftButtonDown="Grid_PreviewMouseLeftButtonDown" >
+        <Grid Grid.Row="0" Background="{DynamicResource TileCOLOR4Brush}" PreviewMouseLeftButtonDown="Grid_PreviewMouseLeftButtonDown" >
             <Label Content="소모품 상세내역" FontSize="17" FontWeight="Bold" Foreground="White" 
                    HorizontalAlignment="Left" VerticalAlignment="Center" Padding="10 0 0 0" />
         </Grid>
@@ -88,22 +88,22 @@
 
 
             <Label Grid.Row="0" Grid.Column="0" Content="관리번호" Style="{DynamicResource ResourceKey=GridLabel}" />
-            <dxe:TextEdit Grid.Row="0" Grid.Column="1" Style="{DynamicResource ResourceKey=GrdTextEdit}" IsEnabled="False" 
+            <dxe:TextEdit Grid.Row="0" Grid.Column="1" Style="{DynamicResource ResourceKey=GridTextEdit}" IsEnabled="False" 
                           x:Name="txtPDH_NUM"  />
             <Label Grid.Row="0" Grid.Column="2" Content="구분" Style="{DynamicResource ResourceKey=GridLabel}" />
-            <dxe:TextEdit Grid.Row="0" Grid.Column="3" Style="{DynamicResource ResourceKey=GrdTextEdit}" IsEnabled="False" 
+            <dxe:TextEdit Grid.Row="0" Grid.Column="3" Style="{DynamicResource ResourceKey=GridTextEdit}" IsEnabled="False" 
                           x:Name="txtPDT_CAT_CDE_NM" />
             <Label Grid.Row="1" Grid.Column="0" Content="품명" Style="{DynamicResource ResourceKey=GridLabel}" />
-            <dxe:TextEdit Grid.Row="1" Grid.Column="1" Style="{DynamicResource ResourceKey=GrdTextEdit}" HorizontalContentAlignment="Center" 
+            <dxe:TextEdit Grid.Row="1" Grid.Column="1" Style="{DynamicResource ResourceKey=GridTextEdit}" HorizontalContentAlignment="Center" 
                           x:Name="txtPDT_NAM"    IsEnabled="False" />
             <Label Grid.Row="1" Grid.Column="2" Content="모델 및 규격" Style="{DynamicResource ResourceKey=GridLabel}" />
-            <dxe:TextEdit Grid.Row="1" Grid.Column="3" Style="{DynamicResource ResourceKey=GrdTextEdit}"  IsEnabled="False"  
+            <dxe:TextEdit Grid.Row="1" Grid.Column="3" Style="{DynamicResource ResourceKey=GridTextEdit}"  IsEnabled="False"  
                           x:Name="txtPDT_MDL_STD" />
             <Label Grid.Row="2" Grid.Column="0" Content="단위" Style="{DynamicResource ResourceKey=GridLabel}" />
-            <dxe:TextEdit Grid.Row="2" Grid.Column="1" Style="{DynamicResource ResourceKey=GrdTextEdit}"   IsEnabled="False"
+            <dxe:TextEdit Grid.Row="2" Grid.Column="1" Style="{DynamicResource ResourceKey=GridTextEdit}"   IsEnabled="False"
                           x:Name="txtPDT_UNT" />
             <Label Grid.Row="2" Grid.Column="2" Content="제조사" Style="{DynamicResource ResourceKey=GridLabel}" />
-            <dxe:TextEdit Grid.Row="2" Grid.Column="3" Style="{DynamicResource ResourceKey=GrdTextEdit}"   IsEnabled="False"
+            <dxe:TextEdit Grid.Row="2" Grid.Column="3" Style="{DynamicResource ResourceKey=GridTextEdit}"   IsEnabled="False"
                           x:Name="txtPDT_MNF" />
 
         </Grid>

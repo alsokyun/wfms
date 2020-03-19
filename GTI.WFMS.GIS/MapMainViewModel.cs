@@ -45,7 +45,7 @@ namespace GTI.WFMS.GIS
         
         // Graphics overlay to host sketch graphics
         private GraphicsOverlay _sketchOverlay;
-        private Esri.ArcGISRuntime.Geometry.Geometry _geometry;
+        //private Esri.ArcGISRuntime.Geometry.Geometry _geometry;
 
 
         public event PropertyChangedEventHandler PropertyChanged;
@@ -305,7 +305,7 @@ namespace GTI.WFMS.GIS
                 mapView.SketchEditor.Stop();
                 //추가된 도형 저장처리
 
-                _selectedFeature.Geometry = _geometry;
+                //_selectedFeature.Geometry = _geometry;
                 // Apply the edit to the feature table.
                 await _selectedFeature.FeatureTable.UpdateFeatureAsync(_selectedFeature);
                 _selectedFeature.Refresh();

@@ -25,7 +25,7 @@
         </ResourceDictionary>
     </Page.Resources>
 
-    <Grid Background="{DynamicResource PopCOLOR1Brush}">
+    <Grid Background="{DynamicResource TileCOLOR4Brush}">
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="10"/>
             <ColumnDefinition Width="*"/>
@@ -48,10 +48,10 @@
         <!--그리드영역-->
         <StackPanel Grid.Row="0" Grid.Column="1" Orientation="Horizontal" HorizontalAlignment="Right" Margin="0 0 0 0">
             <Label Content="검색일자 : " Style="{DynamicResource CircleTitleLabel}"/>
-            <dxe:DateEdit Style="{DynamicResource ResourceKey=HeadDateEdit}" x:Name="dtSEARCH" Height="30" EditValueChanged="DtSEARCH_EditValueChanged" />
+            <dxe:DateEdit Style="{DynamicResource ResourceKey=HeaderDateEdit}" x:Name="dtSEARCH" Height="30" EditValueChanged="DtSEARCH_EditValueChanged" />
         </StackPanel>        
         
-        <Border  Grid.Row="1" Grid.Column="1"  BorderBrush="{DynamicResource PopCOLOR2Brush}" BorderThickness="1"/>
+        <Border  Grid.Row="1" Grid.Column="1"  BorderBrush="{DynamicResource TileCOLOR4Brush}" BorderThickness="1"/>
         
         <dxg:GridControl Grid.Row="1" Grid.Column="1" x:Name="grid" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" 
                          ItemsSource="{Binding ElementName=DataPagerSource, Path=ActualSource}" >

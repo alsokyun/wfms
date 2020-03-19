@@ -158,7 +158,7 @@
         <Grid Grid.Row="3" Grid.Column="1" HorizontalAlignment="Right">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="17"/>
-                <ColumnDefinition Width="137" x:Name="colQuick"/>
+                <ColumnDefinition Width="7" x:Name="colQuick"/>
             </Grid.ColumnDefinitions>
 
             <Border Grid.Column="0">

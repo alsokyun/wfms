@@ -4,8 +4,7 @@
                     xmlns:dxg="http://schemas.devexpress.com/winfx/2008/xaml/grid"
                     xmlns:dxc="http://schemas.devexpress.com/winfx/2008/xaml/charts"
                     xmlns:dx="http://schemas.devexpress.com/winfx/2008/xaml/core"
-                    xmlns:dxgt="http://schemas.devexpress.com/winfx/2008/xaml/grid/themekeys"
-                    xmlns:local="clr-namespace:GTI.WFMS.Main.Styles.Navy">
+                    xmlns:dxgt="http://schemas.devexpress.com/winfx/2008/xaml/grid/themekeys">
 
     <!--================= Global Style Navy =================-->
     <!--Button-->
@@ -50,6 +49,8 @@
         <Setter Property="AllowColumnFiltering" Value="False"/>
         <Setter Property="UseEvenRowBackground" Value="False"/>
         <Setter Property="NavigationStyle" Value="Row"/>
+        <Setter Property="AllowColumnMoving" Value="False"/>
+        <Setter Property="AllowBandMoving" Value="False"/>
     </Style>
 
     <!--TableView-->
@@ -71,6 +72,8 @@
         <Setter Property="FontFamily" Value="{DynamicResource malgun}"/>
         <Setter Property="FontSize" Value="13"/>
         <Setter Property="RowMinHeight" Value="40"/>
+        <Setter Property="TextOptions.TextRenderingMode" Value="Auto"/>
+        <Setter Property="TextOptions.TextFormattingMode" Value="Display"/>
         <Setter Property="AllowDragDrop" Value="False"/>
         <Setter Property="BandHeaderTemplate">
             <Setter.Value>
@@ -90,6 +93,8 @@
                 </DataTemplate>
             </Setter.Value>
         </Setter>
+        <Setter Property="AllowColumnMoving" Value="False"/>
+        <Setter Property="AllowBandMoving" Value="False"/>
     </Style>
 
     <!--GridControl Row 기본 스타일(포커스를 잃어도 선택 유지)-->

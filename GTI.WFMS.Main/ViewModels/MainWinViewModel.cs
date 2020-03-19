@@ -348,7 +348,7 @@ namespace GTI.WFMS.Main
                             }
                             else
                             {
-                                btnMenu.Tag = "/Resources/Navy/Images/MNUImage/" + r["MNU_IMG"].ToString();
+                                btnMenu.Tag = "/Resources/Blue/Images/MNUImage/" + r["MNU_IMG"].ToString();
                             }
 
                             btnMenu.Click += btnMenu_Click;

@@ -25,7 +25,7 @@
         </ResourceDictionary>
     </Page.Resources>
 
-    <Grid Background="{DynamicResource PopCOLOR1Brush}">
+    <Grid Background="{DynamicResource TileCOLOR4Brush}">
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="10"/>
             <ColumnDefinition Width="*"/>
@@ -51,7 +51,7 @@
             <Label Content="{Binding TotalCnt, Mode=OneWay}" ContentStringFormat="목록 ({0:N0}건)" Style="{DynamicResource ResourceKey=CircleTitleLabel}" />
         </StackPanel>        
         
-        <Border  Grid.Row="1" Grid.Column="1"  BorderBrush="{DynamicResource PopCOLOR2Brush}" BorderThickness="1"/>
+        <Border  Grid.Row="1" Grid.Column="1"  BorderBrush="{DynamicResource TileCOLOR4Brush}" BorderThickness="1"/>
         
         <dxg:GridControl Grid.Row="1" Grid.Column="1" x:Name="grid" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" 
                          ItemsSource="{Binding ElementName=DataPagerSource, Path=ActualSource}" >

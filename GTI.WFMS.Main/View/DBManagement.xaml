@@ -74,22 +74,22 @@
 
         <!--DB 구분-->
         <Label Grid.Row="4" Grid.Column="3" Content="구분" Style="{DynamicResource PopupLabel}"/>
-        <dxe:ComboBoxEdit x:Name="cbDBCAT" Grid.Row="4" Grid.Column="4" Text="{Binding null}" DisplayMember="NM" ValueMember="DTL_CD"  Style="{DynamicResource GrdComboBox}"/>
+        <dxe:ComboBoxEdit x:Name="cbDBCAT" Grid.Row="4" Grid.Column="4" Text="{Binding null}" DisplayMember="NM" ValueMember="DTL_CD"  Style="{DynamicResource GridTextEdit}"/>
         <!--IP주소-->
         <Label Grid.Row="5" Grid.Column="3" Content="IP주소" Style="{DynamicResource PopupLabel}"/>
-        <dxe:TextEdit x:Name="txtIP" Grid.Row="5" Grid.Column="4" Text="{Binding null}" MaxLength="16" Style="{DynamicResource GrdTextEdit}">
+        <dxe:TextEdit x:Name="txtIP" Grid.Row="5" Grid.Column="4" Text="{Binding null}" MaxLength="16" Style="{DynamicResource GridTextEdit}">
         </dxe:TextEdit>
         <!--PORT 번호-->
         <Label Grid.Row="6" Grid.Column="3" Content="PORT번호" Style="{DynamicResource PopupLabel}"/>
-        <dxe:TextEdit x:Name="txtPort" Grid.Row="6" Grid.Column="4" Text="{Binding null}" Mask="\d{0,16}" MaskType="RegEx" Style="{DynamicResource GrdTextEdit}">
+        <dxe:TextEdit x:Name="txtPort" Grid.Row="6" Grid.Column="4" Text="{Binding null}" Mask="\d{0,16}" MaskType="RegEx" Style="{DynamicResource GridTextEdit}">
         </dxe:TextEdit>
         <!--SID 이름-->
         <Label Grid.Row="7" Grid.Column="3" Content="SID이름" Style="{DynamicResource PopupLabel}"/>
-        <dxe:TextEdit x:Name="txtSID" Grid.Row="7" Grid.Column="4" Text="{Binding null}" MaxLength="10" Style="{DynamicResource GrdTextEdit}">
+        <dxe:TextEdit x:Name="txtSID" Grid.Row="7" Grid.Column="4" Text="{Binding null}" MaxLength="10" Style="{DynamicResource GridTextEdit}">
         </dxe:TextEdit>
         <!--접속아이디-->
         <Label Grid.Row="8" Grid.Column="3" Content="접속 아이디" Style="{DynamicResource PopupLabel}"/>
-        <dxe:TextEdit x:Name="txtConnID" Grid.Row="8" Grid.Column="4" Text="{Binding null}" MaxLength="16" Style="{DynamicResource GrdTextEdit}">
+        <dxe:TextEdit x:Name="txtConnID" Grid.Row="8" Grid.Column="4" Text="{Binding null}" MaxLength="16" Style="{DynamicResource GridTextEdit}">
         </dxe:TextEdit>
         <!--접속 비밀번호-->
         <Label Grid.Row="9" Grid.Column="3" Content="접속 비밀번호" Style="{DynamicResource PopupLabel}"/>

@@ -73,7 +73,7 @@
                     <DataTemplate>
                         <dxe:ComboBoxEdit EditValue="{Binding RowData.Row.PDH_NUM, Mode=TwoWay}" ValueMember="PDH_NUM" DisplayMember="PDT_NAM"
                                             Loaded="PDH_NUM_Loaded"  
-                                    Style="{DynamicResource ResourceKey=GrdComboBox}" >
+                                    Style="{DynamicResource ResourceKey=GridComboBox}" >
                             <dxe:ComboBoxEdit.ItemContainerStyle>
                                 <Style TargetType="{x:Type dxe:ComboBoxEditItem}">
                                     <Setter Property="Foreground" Value="#2279b5"/>
@@ -91,7 +91,7 @@
             <dxg:GridColumn Header="사용량" Width="3*" FieldName="PDH_AMT" HorizontalHeaderContentAlignment="Center"  AllowEditing="True">
                 <dxg:GridColumn.CellTemplate>
                     <DataTemplate>
-                        <dxe:TextEdit  Style="{DynamicResource ResourceKey=GrdNumberEdit}" MaskType="Numeric" MaskUseAsDisplayFormat="True" 
+                        <dxe:TextEdit  Style="{DynamicResource ResourceKey=GridNumberEdit}" MaskType="Numeric" MaskUseAsDisplayFormat="True" 
                             EditValue="{Binding  RowData.Row.PDH_AMT, Mode=TwoWay }" />
                     </DataTemplate>
                 </dxg:GridColumn.CellTemplate>

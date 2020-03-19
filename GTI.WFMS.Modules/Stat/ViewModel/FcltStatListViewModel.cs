@@ -46,7 +46,6 @@ namespace GTI.WFMS.Modules.Stat.ViewModel
         FcltStatListView fcltStatListView;
         GridControl grid;
 
-        DateEdit dtSEARCH;
         #endregion
 
         /// <summary>
@@ -68,13 +67,15 @@ namespace GTI.WFMS.Modules.Stat.ViewModel
         {
             if (obj == null) return;
             var values = (object[])obj;
-                       
-            dtSEARCH.EditValue = DateTime.Today;
+
+            
 
             //1. 화면객체 인스턴스
             fcltStatListView = values[0] as FcltStatListView;
             grid = fcltStatListView.grid;
 
+            fcltStatListView.dtSEARCH.EditValue = DateTime.Today;
+            
             //2.화면데이터객체 초기화
             InitDataBinding();
 

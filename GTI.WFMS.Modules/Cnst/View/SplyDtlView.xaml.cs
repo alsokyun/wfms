@@ -74,7 +74,7 @@ namespace GTI.WFMS.Modules.Cnst.View
 
 
             }
-            catch (Exception ex)
+            catch (Exception )
             {
                 this.Dispatcher.Invoke(DispatcherPriority.ApplicationIdle,
                     new Action((delegate ()

@@ -147,26 +147,6 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="Adm\View\Page1.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Adm\View\Page2.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Adm\View\UcCodeMngView.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Adm\View\UcPageView.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="Adm\View\UcUserMngView.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
     <Page Include="Cmpl\View\LekSiteAddView.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -614,25 +594,6 @@
     <Compile Include="Acmf\view\HydtMetrListView.xaml.cs">
       <DependentUpon>HydtMetrListView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Adm\Model\SelectUser.cs" />
-    <Compile Include="Adm\ViewModel\UcCodeMngViewModel.cs" />
-    <Compile Include="Adm\ViewModel\UcPageViewModel.cs" />
-    <Compile Include="Adm\View\Page1.xaml.cs">
-      <DependentUpon>Page1.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Adm\View\Page2.xaml.cs">
-      <DependentUpon>Page2.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Adm\View\UcCodeMngView.xaml.cs">
-      <DependentUpon>UcCodeMngView.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Adm\View\UcPageView.xaml.cs">
-      <DependentUpon>UcPageView.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Adm\View\UcUserMngView.xaml.cs">
-      <DependentUpon>UcUserMngView.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Adm\ViewModel\UcUserMngViewModel.cs" />
     <Compile Include="Cmpl\ViewModel\LekSiteAddViewModel.cs" />
     <Compile Include="Cmpl\ViewModel\LekSiteDtlViewModel.cs" />
     <Compile Include="Cmpl\ViewModel\LekSiteListViewModel.cs" />

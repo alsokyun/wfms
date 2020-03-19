@@ -1,8 +1,10 @@
 ﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-                    xmlns:local="clr-namespace:GTI.WFMS.Main.Styles.Navy"
                     x:Name="Colors">
 
+    <Color x:Key="Monitor_Chart_Color">#FFFFFFFF</Color>
+    <SolidColorBrush x:Key="Monitor_Chart_ColorBrush1" Color="{DynamicResource Monitor_Chart_Color}"/>
+    
     <Color x:Key="Default_Chart_Color">#FFFFFF</Color>
     <SolidColorBrush x:Key="Default_Chart_ColorBrush1" Color="{DynamicResource Default_Chart_Color}"/>
 
@@ -112,9 +114,12 @@
     <SolidColorBrush x:Key="BorderGridCOLOR5Brush" Color="{DynamicResource BorderGridCOLOR5}"/>
 
     <!--보더그리드표6-->
-    <Color x:Key="BorderGridCOLOR6">#071a34</Color>
+    <Color x:Key="BorderGridCOLOR6">#27405e</Color>
     <SolidColorBrush x:Key="BorderGridCOLOR6Brush" Color="{DynamicResource BorderGridCOLOR6}"/>
 
+    <!--보더그리드표7-->
+    <Color x:Key="BorderGridCOLOR7">#213753</Color>
+    <SolidColorBrush x:Key="BorderGridCOLOR7Brush" Color="{DynamicResource BorderGridCOLOR7}"/>
 
 
 
@@ -130,7 +135,7 @@
     <Color x:Key="PopupCOLOR3">#192942</Color>
     <SolidColorBrush x:Key="PopupCOLOR3Brush" Color="{DynamicResource PopupCOLOR3}"/>
 
-    
+
 
 
 
@@ -203,27 +208,25 @@
 
     <!--그리드 통계 색상1-->
     <Color x:Key="GridControlTotal1">#1C3049</Color>
-    <SolidColorBrush x:Key="GridControlTotal1Brush" Color="{DynamicResource GridControlTotal1}"/>
+    <SolidColorBrush x:Key="GridControlTotal1Brush" Color="{DynamicResource GridControlTotal1}" />
 
 
 
-
-
-
-
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
     <!--================== FMS 추가 ==================-->
     <!--화면 색상표1-->
-    <Color x:Key="PopCOLOR1">#213550</Color>
-    <SolidColorBrush x:Key="PopCOLOR1Brush" Color="{DynamicResource PopCOLOR1}"/>
-    <Color x:Key="PopCOLOR2">#293e5a</Color>
-    <SolidColorBrush x:Key="PopCOLOR2Brush" Color="{DynamicResource PopCOLOR2}"/>
-    <Color x:Key="PopCOLOR3">#20344E</Color>
-    <SolidColorBrush x:Key="PopCOLOR3Brush" Color="{DynamicResource PopCOLOR3}"/>
-    <Color x:Key="PopCOLOR4">#EEEEEE</Color>
-    <SolidColorBrush x:Key="PopCOLOR4Brush" Color="{DynamicResource PopCOLOR4}" Opacity="0.5"/>
     <Color x:Key="DivBack1">#45688a</Color>
     <SolidColorBrush x:Key="DivBack1Brush1" Color="{DynamicResource DivBack1}"/>
-    <Color x:Key="MainLMENU2">#08614f</Color>
-    <SolidColorBrush x:Key="MainLMENUBrush2" Color="{DynamicResource MainLMENU2}"/>
+
+
 
 </ResourceDictionary>

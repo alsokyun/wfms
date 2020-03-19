@@ -170,9 +170,6 @@
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="sample\Map4View.xaml.cs">
-      <DependentUpon>Map4View.xaml</DependentUpon>
-    </Compile>
     <Compile Include="sample\Map3View.xaml.cs">
       <DependentUpon>Map3View.xaml</DependentUpon>
     </Compile>
@@ -240,10 +237,6 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Include="Module\FTR_POP.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="sample\Map4View.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>

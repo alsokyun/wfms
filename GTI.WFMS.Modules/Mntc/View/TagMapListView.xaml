@@ -19,7 +19,7 @@
         <cv:RownumConverter x:Key="rownumConverter" />
     </UserControl.Resources>
 
-    <Grid  Background="{DynamicResource PopCOLOR2Brush}" >
+    <Grid  Background="{DynamicResource TileCOLOR4Brush}" >
         <Grid.ColumnDefinitions >
             <ColumnDefinition Width="280"/>
             <ColumnDefinition Width="1"/>
@@ -52,30 +52,30 @@
                 </Grid.RowDefinitions>
 
                 <!--테이블구분선-->
-                <Border Grid.Row="0" Grid.Column="0" BorderThickness="0,0,1,1" BorderBrush="{DynamicResource PopCOLOR3Brush}" Margin="0,0,0,0"/>
-                <Border Grid.Row="0" Grid.Column="2" BorderThickness="0,0,0,1" BorderBrush="{DynamicResource PopCOLOR3Brush}" Margin="0,0,0,0"/>
-                <Border Grid.Row="1" Grid.Column="0" BorderThickness="0,0,1,1" BorderBrush="{DynamicResource PopCOLOR3Brush}" Margin="0,0,0,0"/>
-                <Border Grid.Row="1" Grid.Column="2" BorderThickness="0,0,0,1" BorderBrush="{DynamicResource PopCOLOR3Brush}" Margin="0,0,0,0"/>
-                <Border Grid.Row="2" Grid.Column="0" BorderThickness="0,0,1,1" BorderBrush="{DynamicResource PopCOLOR3Brush}" Margin="0,0,0,0"/>
-                <Border Grid.Row="2" Grid.Column="2" BorderThickness="0,0,0,1" BorderBrush="{DynamicResource PopCOLOR3Brush}" Margin="0,0,0,0"/>
-                <Border Grid.Row="3" Grid.Column="0" BorderThickness="0,0,1,1" BorderBrush="{DynamicResource PopCOLOR3Brush}" Margin="0,0,0,0"/>
-                <Border Grid.Row="3" Grid.Column="2" BorderThickness="0,0,0,1" BorderBrush="{DynamicResource PopCOLOR3Brush}" Margin="0,0,0,0"/>
+                <Border Grid.Row="0" Grid.Column="0" BorderThickness="0,0,1,1" BorderBrush="{DynamicResource TileCOLOR4Brush}" Margin="0,0,0,0"/>
+                <Border Grid.Row="0" Grid.Column="2" BorderThickness="0,0,0,1" BorderBrush="{DynamicResource TileCOLOR4Brush}" Margin="0,0,0,0"/>
+                <Border Grid.Row="1" Grid.Column="0" BorderThickness="0,0,1,1" BorderBrush="{DynamicResource TileCOLOR4Brush}" Margin="0,0,0,0"/>
+                <Border Grid.Row="1" Grid.Column="2" BorderThickness="0,0,0,1" BorderBrush="{DynamicResource TileCOLOR4Brush}" Margin="0,0,0,0"/>
+                <Border Grid.Row="2" Grid.Column="0" BorderThickness="0,0,1,1" BorderBrush="{DynamicResource TileCOLOR4Brush}" Margin="0,0,0,0"/>
+                <Border Grid.Row="2" Grid.Column="2" BorderThickness="0,0,0,1" BorderBrush="{DynamicResource TileCOLOR4Brush}" Margin="0,0,0,0"/>
+                <Border Grid.Row="3" Grid.Column="0" BorderThickness="0,0,1,1" BorderBrush="{DynamicResource TileCOLOR4Brush}" Margin="0,0,0,0"/>
+                <Border Grid.Row="3" Grid.Column="2" BorderThickness="0,0,0,1" BorderBrush="{DynamicResource TileCOLOR4Brush}" Margin="0,0,0,0"/>
 
                 <!--라벨&입력창-->
-                <Label Grid.Row="0" Grid.Column="0" Content="관리번호" Style="{DynamicResource ResourceKey=HeadLabel}"/>
-                <dxe:TextEdit Grid.Row="0" Grid.Column="1" x:Name="txtFTR_IDN" Style="{DynamicResource ResourceKey=SrchTextEdit}"  HorizontalAlignment="Center" Margin="0"
+                <Label Grid.Row="0" Grid.Column="0" Content="관리번호" Style="{DynamicResource ResourceKey=GridLabel}"/>
+                <dxe:TextEdit Grid.Row="0" Grid.Column="1" x:Name="txtFTR_IDN" Style="{DynamicResource ResourceKey=SearchTextEdit}"  HorizontalAlignment="Center" Margin="0"
                               KeyDown="Txt_KeyDown">
                 </dxe:TextEdit>
-                <Label Grid.Row="1" Grid.Column="0" Content="가압장명" Style="{DynamicResource ResourceKey=HeadLabel}"/>
-                <dxe:TextEdit Grid.Row="1" Grid.Column="1" x:Name="txtPRS_NAM" Style="{DynamicResource ResourceKey=SrchTextEdit}"  HorizontalAlignment="Center" Margin="0"
+                <Label Grid.Row="1" Grid.Column="0" Content="가압장명" Style="{DynamicResource ResourceKey=GridLabel}"/>
+                <dxe:TextEdit Grid.Row="1" Grid.Column="1" x:Name="txtPRS_NAM" Style="{DynamicResource ResourceKey=SearchTextEdit}"  HorizontalAlignment="Center" Margin="0"
                               KeyDown="Txt_KeyDown">
                 </dxe:TextEdit>
-                <Label Grid.Row="2" Grid.Column="0" Content="세부시설명" Style="{DynamicResource ResourceKey=HeadLabel}"/>
-                <dxe:TextEdit Grid.Row="2" Grid.Column="1" x:Name="txtATT_NAM" Style="{DynamicResource ResourceKey=SrchTextEdit}"  HorizontalAlignment="Center" Margin="0"
+                <Label Grid.Row="2" Grid.Column="0" Content="세부시설명" Style="{DynamicResource ResourceKey=GridLabel}"/>
+                <dxe:TextEdit Grid.Row="2" Grid.Column="1" x:Name="txtATT_NAM" Style="{DynamicResource ResourceKey=SearchTextEdit}"  HorizontalAlignment="Center" Margin="0"
                               KeyDown="Txt_KeyDown">
                 </dxe:TextEdit>
-                <Label Grid.Row="3" Grid.Column="0" Content="태그ID" Style="{DynamicResource ResourceKey=HeadLabel}"/>
-                <dxe:TextEdit Grid.Row="3" Grid.Column="1" x:Name="txtTAG_ID" Style="{DynamicResource ResourceKey=SrchTextEdit}"  HorizontalAlignment="Center" Margin="0"
+                <Label Grid.Row="3" Grid.Column="0" Content="태그ID" Style="{DynamicResource ResourceKey=GridLabel}"/>
+                <dxe:TextEdit Grid.Row="3" Grid.Column="1" x:Name="txtTAG_ID" Style="{DynamicResource ResourceKey=SearchTextEdit}"  HorizontalAlignment="Center" Margin="0"
                               KeyDown="Txt_KeyDown">
                 </dxe:TextEdit>
 
@@ -164,7 +164,7 @@
                 <dxg:GridColumn Header="태그ID" Width="8*" FieldName="TAG_ID" HorizontalHeaderContentAlignment="Center" AllowEditing="True">
                     <dxg:GridColumn.CellTemplate>
                         <DataTemplate>
-                            <dxe:TextEdit  Style="{DynamicResource ResourceKey=GrdTextEdit}" 
+                            <dxe:TextEdit  Style="{DynamicResource ResourceKey=GridTextEdit}" 
                                            EditValue="{Binding  RowData.Row.TAG_ID, Mode=TwoWay }" />
                         </DataTemplate>
                     </dxg:GridColumn.CellTemplate>

@@ -69,7 +69,7 @@
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
 
-        <Grid Grid.Row="0" Background="{DynamicResource PopCOLOR2Brush}" PreviewMouseLeftButtonDown="BdTitle_PreviewMouseLeftButtonDown" >
+        <Grid Grid.Row="0" Background="{DynamicResource TileCOLOR4Brush}" PreviewMouseLeftButtonDown="BdTitle_PreviewMouseLeftButtonDown" >
             <Label Content="점검결과내용" FontSize="17" FontWeight="Bold" Foreground="White" 
                    HorizontalAlignment="Left" VerticalAlignment="Center" Padding="10 0 0 0" />
         </Grid>
@@ -78,7 +78,7 @@
                 x:Name="btnClose" Click="BtnClose_Click" />
 
 
-        <Grid Grid.Row="1" Background="{DynamicResource PopCOLOR2Brush}" Margin="10 5 10 10">
+        <Grid Grid.Row="1" Background="{DynamicResource TileCOLOR4Brush}" Margin="10 5 10 10">
             <Grid.RowDefinitions >
                 <RowDefinition Height="40"/>
                 <RowDefinition Height="120"/>
@@ -151,31 +151,31 @@
 
 
                 <Label Grid.Row="0" Grid.Column="0" Content="관리기관" Style="{DynamicResource ResourceKey=GridLabelReq}"/>
-                <dxe:ComboBoxEdit Grid.Row="0" Grid.Column="1" Style="{DynamicResource ResourceKey=GrdComboBox}" Tag="관리기관"  
+                <dxe:ComboBoxEdit Grid.Row="0" Grid.Column="1" Style="{DynamicResource ResourceKey=GridComboBox}" Tag="관리기관"  
                               x:Name="cbMNG_CDE" EditValue="{Binding MNG_CDE, Mode=TwoWay}" />
                 <!--키정보-히든-->
                 <dxe:TextEdit Grid.Row="0" Grid.Column="1" x:Name="txtSCL_NUM" EditValue="{Binding SCL_NUM, UpdateSourceTrigger=PropertyChanged}" Visibility="Collapsed"/>
 
 
                 <Label Grid.Row="0" Grid.Column="2" Content="점검구분" Style="{DynamicResource ResourceKey=GridLabelReq}"/>
-                <dxe:ComboBoxEdit Grid.Row="0" Grid.Column="3" Style="{DynamicResource ResourceKey=GrdComboBox}" Tag="점검구분"  
+                <dxe:ComboBoxEdit Grid.Row="0" Grid.Column="3" Style="{DynamicResource ResourceKey=GridComboBox}" Tag="점검구분"  
                               x:Name="cbSCL_CDE" EditValue="{Binding SCL_CDE, Mode=TwoWay}" />
                 <Label Grid.Row="0" Grid.Column="4" Content="점검그룹" Style="{DynamicResource ResourceKey=GridLabelReq}"/>
-                <dxe:TextEdit Grid.Row="0" Grid.Column="5" Grid.ColumnSpan="3" Style="{DynamicResource ResourceKey=GrdTextEdit}"  Tag="점검그룹"   
+                <dxe:TextEdit Grid.Row="0" Grid.Column="5" Grid.ColumnSpan="3" Style="{DynamicResource ResourceKey=GridTextEdit}"  Tag="점검그룹"   
                           x:Name="txtCKM_GRP_NAM" EditValue="{Binding CKM_GRP_NM, Mode=TwoWay}"/>
 
 
                 <Label Grid.Row="1" Grid.Column="0" Content="점검승인상태" Style="{DynamicResource ResourceKey=GridLabel}" />
-                <dxe:TextEdit Grid.Row="1" Grid.Column="1" Style="{DynamicResource ResourceKey=GrdTextEdit}" IsEnabled="False" 
+                <dxe:TextEdit Grid.Row="1" Grid.Column="1" Style="{DynamicResource ResourceKey=GridTextEdit}" IsEnabled="False" 
                           EditValue="{Binding SCL_STAT_NM, Mode=TwoWay}"/>
                 <Label Grid.Row="1" Grid.Column="2" Content="저검승인일자" Style="{DynamicResource ResourceKey=GridLabel}" />
-                <dxe:TextEdit Grid.Row="1" Grid.Column="3" Style="{DynamicResource ResourceKey=GrdTextEdit}" IsEnabled="False" 
+                <dxe:TextEdit Grid.Row="1" Grid.Column="3" Style="{DynamicResource ResourceKey=GridTextEdit}" IsEnabled="False" 
                           EditValue="{Binding CHK_APR_YMD, Mode=TwoWay}"/>
                 <Label Grid.Row="2" Grid.Column="0" Content="점검승인자" Style="{DynamicResource ResourceKey=GridLabel}" />
-                <dxe:TextEdit Grid.Row="2" Grid.Column="1" Style="{DynamicResource ResourceKey=GrdTextEdit}" IsEnabled="False" 
+                <dxe:TextEdit Grid.Row="2" Grid.Column="1" Style="{DynamicResource ResourceKey=GridTextEdit}" IsEnabled="False" 
                           EditValue="{Binding CHK_APR_USR, Mode=TwoWay}"/>
                 <Label Grid.Row="2" Grid.Column="2" Content="점검완료일" Style="{DynamicResource ResourceKey=GridLabel}"/>
-                <dxe:TextEdit Grid.Row="2" Grid.Column="3" Style="{DynamicResource ResourceKey=GrdTextEdit}" IsEnabled="False" 
+                <dxe:TextEdit Grid.Row="2" Grid.Column="3" Style="{DynamicResource ResourceKey=GridTextEdit}" IsEnabled="False" 
                           EditValue="{Binding CHK_CMP_YMD, Mode=TwoWay}"/>
 
                 <Label Grid.Row="1" Grid.Column="4" Grid.RowSpan="2" Content="점검내용" Style="{DynamicResource ResourceKey=GridLabel}" />
@@ -212,7 +212,9 @@
 
 
 
-                <dxg:GridControl Grid.Row="1" x:Name="grid" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" ShowBorder="True" >
+                <dxg:GridControl Grid.Row="1" x:Name="grid" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" ShowBorder="True" 
+                                 CurrentItemChanged="Grid_CurrentItemChanged"
+                                 >
 
                     <dxg:GridControl.View>
                         <dxg:TableView x:Name="gv"
@@ -228,8 +230,6 @@
                                 VerticalScrollbarVisibility="Disabled"
                                 ScrollViewer.VerticalScrollBarVisibility="Hidden"
                                 AutoWidth="False"
-                                      
-                                FocusedRowChanged="Gv_FocusedRowChanged"
                     />
                     </dxg:GridControl.View>
 
@@ -265,7 +265,7 @@
                     <dxg:GridColumn Header="보수일자" Width="130" FieldName="RPR_YMD" HorizontalHeaderContentAlignment="Center">
                         <dxg:GridColumn.CellTemplate>
                             <DataTemplate>
-                                <dxe:DateEdit Style="{DynamicResource ResourceKey=GrdDateEdit}" 
+                                <dxe:DateEdit Style="{DynamicResource ResourceKey=GridDateEdit}" 
                             EditValue="{Binding RowData.Row.RPR_YMD, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged , Converter={StaticResource date2StrConverter}}"   />
                             </DataTemplate>
                         </dxg:GridColumn.CellTemplate>
@@ -275,7 +275,7 @@
                             <DataTemplate>
                                 <dxe:ComboBoxEdit EditValue="{Binding RowData.Row.RPR_CAT_CDE, Mode=TwoWay}" ValueMember="DTL_CD" DisplayMember="NM"
                                             Loaded="RPR_CAT_CDE_Loaded"  
-                                    Style="{DynamicResource ResourceKey=GrdComboBox}" >
+                                    Style="{DynamicResource ResourceKey=GridComboBox}" >
                                     <dxe:ComboBoxEdit.ItemContainerStyle>
                                         <Style TargetType="{x:Type dxe:ComboBoxEditItem}">
                                             <Setter Property="Foreground" Value="#2279b5"/>
@@ -290,7 +290,7 @@
                             <DataTemplate>
                                 <dxe:ComboBoxEdit EditValue="{Binding RowData.Row.RPR_CUZ_CDE, Mode=TwoWay}" ValueMember="DTL_CD" DisplayMember="NM"
                                             Loaded="RPR_CUZ_CDE_Loaded"  
-                                    Style="{DynamicResource ResourceKey=GrdComboBox}" >
+                                    Style="{DynamicResource ResourceKey=GridComboBox}" >
                                     <dxe:ComboBoxEdit.ItemContainerStyle>
                                         <Style TargetType="{x:Type dxe:ComboBoxEditItem}">
                                             <Setter Property="Foreground" Value="#2279b5"/>
@@ -303,7 +303,7 @@
                     <dxg:GridColumn Header="시공자명" Width="100" FieldName="RPR_USR_NM" HorizontalHeaderContentAlignment="Center">
                         <dxg:GridColumn.CellTemplate>
                             <DataTemplate>
-                                <dxe:TextEdit Style="{DynamicResource ResourceKey=GrdTextEdit}"   
+                                <dxe:TextEdit Style="{DynamicResource ResourceKey=GridTextEdit}"   
                             EditValue="{Binding  RowData.Row.RPR_USR_NM, Mode=TwoWay}"/>
                             </DataTemplate>
                         </dxg:GridColumn.CellTemplate>
@@ -311,7 +311,7 @@
                     <dxg:GridColumn Header="보수내용" Width="500" FieldName="RPR_CTNT" HorizontalHeaderContentAlignment="Center">
                         <dxg:GridColumn.CellTemplate>
                             <DataTemplate>
-                                <dxe:TextEdit Style="{DynamicResource ResourceKey=GrdTextEdit}"   
+                                <dxe:TextEdit Style="{DynamicResource ResourceKey=GridTextEdit}"   
                             EditValue="{Binding  RowData.Row.RPR_CTNT, Mode=TwoWay}"/>
                             </DataTemplate>
                         </dxg:GridColumn.CellTemplate>

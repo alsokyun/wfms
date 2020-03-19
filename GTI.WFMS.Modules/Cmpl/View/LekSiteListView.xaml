@@ -32,7 +32,7 @@
 
 
     
-    <Grid Background="{DynamicResource PopCOLOR1Brush}">
+    <Grid Background="{DynamicResource TileCOLOR4Brush}">
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="278"/>
             <ColumnDefinition Width="1"/>
@@ -74,59 +74,59 @@
             </Grid.RowDefinitions>
 
             <!--테이블구분선-->
-            <Border Grid.Row="0" Grid.Column="0" BorderThickness="0,0,1,1" BorderBrush="{DynamicResource PopCOLOR3Brush}" Margin="0,0,0,0"/>
-            <Border Grid.Row="0" Grid.Column="2" BorderThickness="0,0,0,1" BorderBrush="{DynamicResource PopCOLOR3Brush}" Margin="0,0,0,0"/>
-            <Border Grid.Row="1" Grid.Column="0" BorderThickness="0,0,1,1" BorderBrush="{DynamicResource PopCOLOR3Brush}" Margin="0,0,0,0"/>
-            <Border Grid.Row="1" Grid.Column="2" BorderThickness="0,0,0,1" BorderBrush="{DynamicResource PopCOLOR3Brush}" Margin="0,0,0,0"/>
-            <Border Grid.Row="2" Grid.Column="0" BorderThickness="0,0,1,1" BorderBrush="{DynamicResource PopCOLOR3Brush}" Margin="0,0,0,0"/>
-            <Border Grid.Row="2" Grid.Column="2" BorderThickness="0,0,0,1" BorderBrush="{DynamicResource PopCOLOR3Brush}" Margin="0,0,0,0"/>
-            <Border Grid.Row="3" Grid.Column="0" BorderThickness="0,0,1,1" BorderBrush="{DynamicResource PopCOLOR3Brush}" Margin="0,0,0,0"/>
-            <Border Grid.Row="3" Grid.Column="2" BorderThickness="0,0,0,1" BorderBrush="{DynamicResource PopCOLOR3Brush}" Margin="0,0,0,0"/>
+            <Border Grid.Row="0" Grid.Column="0" BorderThickness="0,0,1,1" BorderBrush="{DynamicResource TileCOLOR4Brush}" Margin="0,0,0,0"/>
+            <Border Grid.Row="0" Grid.Column="2" BorderThickness="0,0,0,1" BorderBrush="{DynamicResource TileCOLOR4Brush}" Margin="0,0,0,0"/>
+            <Border Grid.Row="1" Grid.Column="0" BorderThickness="0,0,1,1" BorderBrush="{DynamicResource TileCOLOR4Brush}" Margin="0,0,0,0"/>
+            <Border Grid.Row="1" Grid.Column="2" BorderThickness="0,0,0,1" BorderBrush="{DynamicResource TileCOLOR4Brush}" Margin="0,0,0,0"/>
+            <Border Grid.Row="2" Grid.Column="0" BorderThickness="0,0,1,1" BorderBrush="{DynamicResource TileCOLOR4Brush}" Margin="0,0,0,0"/>
+            <Border Grid.Row="2" Grid.Column="2" BorderThickness="0,0,0,1" BorderBrush="{DynamicResource TileCOLOR4Brush}" Margin="0,0,0,0"/>
+            <Border Grid.Row="3" Grid.Column="0" BorderThickness="0,0,1,1" BorderBrush="{DynamicResource TileCOLOR4Brush}" Margin="0,0,0,0"/>
+            <Border Grid.Row="3" Grid.Column="2" BorderThickness="0,0,0,1" BorderBrush="{DynamicResource TileCOLOR4Brush}" Margin="0,0,0,0"/>
 
             <!--라벨&입력창-->
 
-            <Label Grid.Row="0" Grid.Column="0" Content="관리번호" Style="{DynamicResource ResourceKey=HeadLabel}"/>
-            <dxe:TextEdit Grid.Row="0" Grid.Column="1" x:Name="txtFTR_IDN" Style="{DynamicResource ResourceKey=SrchTextEdit}"  HorizontalAlignment="Center" >
+            <Label Grid.Row="0" Grid.Column="0" Content="관리번호" Style="{DynamicResource ResourceKey=GridLabel}"/>
+            <dxe:TextEdit Grid.Row="0" Grid.Column="1" x:Name="txtFTR_IDN" Style="{DynamicResource ResourceKey=SearchTextEdit}"  HorizontalAlignment="Center" >
                 <dxe:TextEdit.InputBindings>
                     <KeyBinding Key="Enter" Command="{Binding SearchCommand}"/>
                 </dxe:TextEdit.InputBindings>
             </dxe:TextEdit>
-            <Label Grid.Row="1" Grid.Column="0" Content="도엽번호" Style="{DynamicResource ResourceKey=HeadLabel}"/>
-            <dxe:TextEdit Grid.Row="1" Grid.Column="1" x:Name="txtSHT_NUM" Style="{DynamicResource ResourceKey=SrchTextEdit}"  HorizontalAlignment="Center" >
+            <Label Grid.Row="1" Grid.Column="0" Content="도엽번호" Style="{DynamicResource ResourceKey=GridLabel}"/>
+            <dxe:TextEdit Grid.Row="1" Grid.Column="1" x:Name="txtSHT_NUM" Style="{DynamicResource ResourceKey=SearchTextEdit}"  HorizontalAlignment="Center" >
                 <dxe:TextEdit.InputBindings>
                     <KeyBinding Key="Enter" Command="{Binding SearchCommand}"/>
                 </dxe:TextEdit.InputBindings>
             </dxe:TextEdit>
-            <Label Grid.Row="2" Grid.Column="0" Content="행정동" Style="{DynamicResource ResourceKey=HeadLabel}"/>
-            <dxe:ComboBoxEdit Grid.Row="2" Grid.Column="1" x:Name="cbHJD_CDE" Style="{DynamicResource ResourceKey=SrchComboBox}" 
+            <Label Grid.Row="2" Grid.Column="0" Content="행정동" Style="{DynamicResource ResourceKey=GridLabel}"/>
+            <dxe:ComboBoxEdit Grid.Row="2" Grid.Column="1" x:Name="cbHJD_CDE" Style="{DynamicResource ResourceKey=SearchComboBox}" 
                                 HorizontalAlignment="Center" />
-            <Label Grid.Row="3" Grid.Column="0" Content="관로관리번호" Style="{DynamicResource ResourceKey=HeadLabel}"/>
-            <dxe:TextEdit Grid.Row="3" Grid.Column="1" x:Name="txtPIP_IDN" Style="{DynamicResource ResourceKey=SrchTextEdit}"  HorizontalAlignment="Center" >
+            <Label Grid.Row="3" Grid.Column="0" Content="관로관리번호" Style="{DynamicResource ResourceKey=GridLabel}"/>
+            <dxe:TextEdit Grid.Row="3" Grid.Column="1" x:Name="txtPIP_IDN" Style="{DynamicResource ResourceKey=SearchTextEdit}"  HorizontalAlignment="Center" >
                 <dxe:TextEdit.InputBindings>
                     <KeyBinding Key="Enter" Command="{Binding SearchCommand}"/>
                 </dxe:TextEdit.InputBindings>
             </dxe:TextEdit>
-            <Label Grid.Row="4" Grid.Column="0" Content="누수일자[이상]" Style="{DynamicResource ResourceKey=HeadLabel}"/>
-            <dxe:DateEdit  Grid.Row="4" Grid.Column="1" Style="{DynamicResource ResourceKey=HeadDateEdit}" 
+            <Label Grid.Row="4" Grid.Column="0" Content="누수일자[이상]" Style="{DynamicResource ResourceKey=GridLabel}"/>
+            <dxe:DateEdit  Grid.Row="4" Grid.Column="1" Style="{DynamicResource ResourceKey=HeaderDateEdit}" 
                            x:Name="dtLEK_YMD_FROM" />
-            <Label Grid.Row="5" Grid.Column="0" Content="누수일자[이하]" Style="{DynamicResource ResourceKey=HeadLabel}"/>
-            <dxe:DateEdit  Grid.Row="5" Grid.Column="1" Style="{DynamicResource ResourceKey=HeadDateEdit}" 
+            <Label Grid.Row="5" Grid.Column="0" Content="누수일자[이하]" Style="{DynamicResource ResourceKey=GridLabel}"/>
+            <dxe:DateEdit  Grid.Row="5" Grid.Column="1" Style="{DynamicResource ResourceKey=HeaderDateEdit}" 
                            x:Name="dtLEK_YMD_TO" />
-            <Label Grid.Row="6" Grid.Column="0" Content="복구일자[이상]" Style="{DynamicResource ResourceKey=HeadLabel}"/>
-            <dxe:DateEdit  Grid.Row="6" Grid.Column="1" Style="{DynamicResource ResourceKey=HeadDateEdit}" 
+            <Label Grid.Row="6" Grid.Column="0" Content="복구일자[이상]" Style="{DynamicResource ResourceKey=GridLabel}"/>
+            <dxe:DateEdit  Grid.Row="6" Grid.Column="1" Style="{DynamicResource ResourceKey=HeaderDateEdit}" 
                            x:Name="dtREP_YMD_FROM" NullValue=""/>
 
-            <Label Grid.Row="7" Grid.Column="0" Content="복구일자[이하]" Style="{DynamicResource ResourceKey=HeadLabel}"/>
-            <dxe:DateEdit  Grid.Row="7" Grid.Column="1" Style="{DynamicResource ResourceKey=HeadDateEdit}" 
+            <Label Grid.Row="7" Grid.Column="0" Content="복구일자[이하]" Style="{DynamicResource ResourceKey=GridLabel}"/>
+            <dxe:DateEdit  Grid.Row="7" Grid.Column="1" Style="{DynamicResource ResourceKey=HeaderDateEdit}" 
                            x:Name="dtREP_YMD_TO" />
-            <Label Grid.Row="8" Grid.Column="0" Content="누수부위" Style="{DynamicResource ResourceKey=HeadLabel}"/>
-            <dxe:ComboBoxEdit Grid.Row="8" Grid.Column="1" x:Name="cbLEP_CDE" Style="{DynamicResource ResourceKey=SrchComboBox}" 
+            <Label Grid.Row="8" Grid.Column="0" Content="누수부위" Style="{DynamicResource ResourceKey=GridLabel}"/>
+            <dxe:ComboBoxEdit Grid.Row="8" Grid.Column="1" x:Name="cbLEP_CDE" Style="{DynamicResource ResourceKey=SearchComboBox}" 
                                 HorizontalAlignment="Center" />
-            <Label Grid.Row="9" Grid.Column="0" Content="누수원인" Style="{DynamicResource ResourceKey=HeadLabel}"/>
-            <dxe:ComboBoxEdit Grid.Row="9" Grid.Column="1" x:Name="cbLRS_CDE" Style="{DynamicResource ResourceKey=SrchComboBox}" 
+            <Label Grid.Row="9" Grid.Column="0" Content="누수원인" Style="{DynamicResource ResourceKey=GridLabel}"/>
+            <dxe:ComboBoxEdit Grid.Row="9" Grid.Column="1" x:Name="cbLRS_CDE" Style="{DynamicResource ResourceKey=SearchComboBox}" 
                                 HorizontalAlignment="Center" />
-            <Label Grid.Row="10" Grid.Column="0" Content="민원접수번호" Style="{DynamicResource ResourceKey=HeadLabel}"/>
-            <dxe:TextEdit Grid.Row="10" Grid.Column="1" x:Name="txtRCV_NUM" Style="{DynamicResource ResourceKey=SrchTextEdit}"  HorizontalAlignment="Center" >
+            <Label Grid.Row="10" Grid.Column="0" Content="민원접수번호" Style="{DynamicResource ResourceKey=GridLabel}"/>
+            <dxe:TextEdit Grid.Row="10" Grid.Column="1" x:Name="txtRCV_NUM" Style="{DynamicResource ResourceKey=SearchTextEdit}"  HorizontalAlignment="Center" >
                 <dxe:TextEdit.InputBindings>
                     <KeyBinding Key="Enter" Command="{Binding SearchCommand}"/>
                 </dxe:TextEdit.InputBindings>

@@ -193,8 +193,8 @@
     <Color x:Key="DataMngTab2">#434343</Color>                                                          
     <SolidColorBrush x:Key="DataMngTab2Brush" Color="{DynamicResource DataMngTab2}"/>                   
                                                                                                         
-    <!--데이터관리 탭 관련 색상표3-->                                                                   
-    <Color x:Key="DataMngTab3">#5190BC</Color>                                                          
+    <!--데이터관리 탭 관련 색상표3-->
+    <Color x:Key="DataMngTab3">#91b8d4</Color>                                                          
     <SolidColorBrush x:Key="DataMngTab3Brush" Color="{DynamicResource DataMngTab3}"/>                   
                                                                                                         
     <!--데이터관리 탭 관련 색상표4-->                                                                   
@@ -208,6 +208,15 @@
                                                                                                         
     <!--그리드 통계 색상1-->
     <Color x:Key="GridControlTotal1">#DDDDDD</Color>
-    <SolidColorBrush x:Key="GridControlTotal1Brush" Color="{DynamicResource GridControlTotal1}"/>       
+    <SolidColorBrush x:Key="GridControlTotal1Brush" Color="{DynamicResource GridControlTotal1}"/>
+
+
+
+    <!--================== FMS 추가 ==================-->
+    <!--화면 색상표1-->
+    <Color x:Key="DivBack1">#45688a</Color>
+    <SolidColorBrush x:Key="DivBack1Brush1" Color="{DynamicResource DivBack1}"/>
+
+
 
 </ResourceDictionary>

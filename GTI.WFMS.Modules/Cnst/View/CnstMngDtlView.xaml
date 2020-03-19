@@ -72,7 +72,7 @@
 
 
 
-    <Grid  Background="{DynamicResource PopCOLOR2Brush}" >
+    <Grid  Background="{DynamicResource TileCOLOR4Brush}" >
         <Grid.RowDefinitions>
             <RowDefinition Height="40" />
             <RowDefinition Height="Auto" />
@@ -168,40 +168,40 @@
             <Label Grid.Row="0" Grid.Column="0" Content="공사번호" Style="{DynamicResource ResourceKey=GridLabelReq}" >
             </Label>
             <!--키값으로 사용 : 부모페이지로부터 뷰생성자로 전달되고, 뷰에서 변경되면 뷰모델로 전달된다.-->
-            <dxe:TextEdit Grid.Row="0" Grid.Column="1" Style="{DynamicResource ResourceKey=GrdTextEdit}" Tag="공사번호"    
+            <dxe:TextEdit Grid.Row="0" Grid.Column="1" Style="{DynamicResource ResourceKey=GridTextEdit}" Tag="공사번호"    
                           x:Name="txtCNT_NUM" EditValue="{Binding CNT_NUM, UpdateSourceTrigger=PropertyChanged}" Height="28" Margin="10,8,10,4"/>
 
 
             <Label Grid.Row="0" Grid.Column="2" Content="공사구분" Style="{DynamicResource ResourceKey=GridLabelReq}"/>
-            <dxe:ComboBoxEdit Grid.Row="0" Grid.Column="3" Style="{DynamicResource ResourceKey=GrdComboBox}"  Tag="공사구분"
+            <dxe:ComboBoxEdit Grid.Row="0" Grid.Column="3" Style="{DynamicResource ResourceKey=GridComboBox}"  Tag="공사구분"
                               x:Name="cbCNT_CDE" EditValue="{Binding CNT_CDE}" />
 
             <Label Grid.Row="0" Grid.Column="4" Content="공사명" Style="{DynamicResource ResourceKey=GridLabelReq}"/>
-            <dxe:TextEdit Grid.Row="0" Grid.Column="5" Grid.ColumnSpan="3" Style="{DynamicResource ResourceKey=GrdTextEdit}"  Tag="공사명"
+            <dxe:TextEdit Grid.Row="0" Grid.Column="5" Grid.ColumnSpan="3" Style="{DynamicResource ResourceKey=GridTextEdit}"  Tag="공사명"
                            x:Name="txtCNT_NAM" EditValue="{Binding CNT_NAM}"/>
 
             <Label Grid.Row="1" Grid.Column="0" Content="설계자명" Style="{DynamicResource ResourceKey=GridLabel}"/>
-            <dxe:TextEdit Grid.Row="1" Grid.Column="1" Style="{DynamicResource ResourceKey=GrdTextEdit}"  
+            <dxe:TextEdit Grid.Row="1" Grid.Column="1" Style="{DynamicResource ResourceKey=GridTextEdit}"  
                           x:Name="txtDSN_NAM" EditValue="{Binding DSN_NAM}"/>
 
             <Label Grid.Row="1" Grid.Column="2" Content="공사위치" Style="{DynamicResource ResourceKey=GridLabel}"/>
-            <dxe:TextEdit Grid.Row="1" Grid.Column="3" Grid.ColumnSpan="5" Style="{DynamicResource ResourceKey=GrdTextEdit}"  
+            <dxe:TextEdit Grid.Row="1" Grid.Column="3" Grid.ColumnSpan="5" Style="{DynamicResource ResourceKey=GridTextEdit}"  
                           x:Name="txtCNT_LOC" EditValue="{Binding CNT_LOC, Converter={StaticResource s2StrConverter}}"/>
 
             <Label Grid.Row="2" Grid.Column="0" Content="설계총액" Style="{DynamicResource ResourceKey=GridLabel}"/>
-            <dxe:TextEdit Grid.Row="2" Grid.Column="1" Style="{DynamicResource ResourceKey=GrdNumberEdit}"   
+            <dxe:TextEdit Grid.Row="2" Grid.Column="1" Style="{DynamicResource ResourceKey=GridNumberEdit}"   
                           x:Name="txtDSN_AMT" EditValue="{Binding DSN_AMT}"/>
 
             <Label Grid.Row="2" Grid.Column="2" Content="순공사비" Style="{DynamicResource ResourceKey=GridLabel}"/>
-            <dxe:TextEdit Grid.Row="2" Grid.Column="3" Style="{DynamicResource ResourceKey=GrdNumberEdit}"   
+            <dxe:TextEdit Grid.Row="2" Grid.Column="3" Style="{DynamicResource ResourceKey=GridNumberEdit}"   
                           x:Name="txtDPC_AMT" EditValue="{Binding DPC_AMT}"/>
 
             <Label Grid.Row="2" Grid.Column="4" Content="설계_관급금액" Style="{DynamicResource ResourceKey=GridLabel}"/>
-            <dxe:TextEdit Grid.Row="2" Grid.Column="5" Style="{DynamicResource ResourceKey=GrdNumberEdit}"   
+            <dxe:TextEdit Grid.Row="2" Grid.Column="5" Style="{DynamicResource ResourceKey=GridNumberEdit}"   
                           x:Name="txtDGV_AMT" EditValue="{Binding DGV_AMT}"/>
 
             <Label Grid.Row="2" Grid.Column="6" Content="기타잡비" Style="{DynamicResource ResourceKey=GridLabel}"/>
-            <dxe:TextEdit Grid.Row="2" Grid.Column="7" Style="{DynamicResource ResourceKey=GrdNumberEdit}"   
+            <dxe:TextEdit Grid.Row="2" Grid.Column="7" Style="{DynamicResource ResourceKey=GridNumberEdit}"   
                           x:Name="txtDET_AMT" EditValue="{Binding DET_AMT}"/>
         </Grid>
 
@@ -291,36 +291,36 @@
 
 
                     <Label Grid.Row="0" Grid.Column="0" Content="감독자명" Style="{DynamicResource ResourceKey=GridLabel}"/>
-                    <dxe:TextEdit Grid.Row="0" Grid.Column="1" Style="{DynamicResource ResourceKey=GrdTextEdit}"  
+                    <dxe:TextEdit Grid.Row="0" Grid.Column="1" Style="{DynamicResource ResourceKey=GridTextEdit}"  
                            x:Name="txtSVS_NSM" EditValue="{Binding SVS_NSM}" MaxLength="8"/>
 
                     <Label Grid.Row="0" Grid.Column="2" Content="착공일자" Style="{DynamicResource ResourceKey=GridLabel}" />
-                    <dxe:DateEdit Grid.Row="0" Grid.Column="3" Style="{DynamicResource ResourceKey=GrdDateEdit}" HorizontalContentAlignment="Center" 
+                    <dxe:DateEdit Grid.Row="0" Grid.Column="3" Style="{DynamicResource ResourceKey=GridDateEdit}" HorizontalContentAlignment="Center" 
                           x:Name="dtBEG_YMD" EditValue="{Binding BEG_YMD, Converter={StaticResource date2StrConverter}}"   />
 
 
                     <Label Grid.Row="0" Grid.Column="4" Content="준공검사일자" Style="{DynamicResource ResourceKey=GridLabel}" />
-                    <dxe:DateEdit Grid.Row="0" Grid.Column="5" Style="{DynamicResource ResourceKey=GrdDateEdit}" HorizontalContentAlignment="Center"  
+                    <dxe:DateEdit Grid.Row="0" Grid.Column="5" Style="{DynamicResource ResourceKey=GridDateEdit}" HorizontalContentAlignment="Center"  
                           x:Name="dtFCH_YMD" EditValue="{Binding FCH_YMD, Converter={StaticResource date2StrConverter}}"  />
 
                     <Label Grid.Row="0" Grid.Column="6" Content="준공검사자명" Style="{DynamicResource ResourceKey=GridLabel}"/>
-                    <dxe:TextEdit Grid.Row="0" Grid.Column="7" Style="{DynamicResource ResourceKey=GrdTextEdit}"  
+                    <dxe:TextEdit Grid.Row="0" Grid.Column="7" Style="{DynamicResource ResourceKey=GridTextEdit}"  
                            x:Name="txtFCH_NAM" EditValue="{Binding FCH_NAM}"/>
 
                     <Label Grid.Row="1" Grid.Column="0" Content="준공일자" Style="{DynamicResource ResourceKey=GridLabel}" />
-                    <dxe:DateEdit Grid.Row="1" Grid.Column="1" Style="{DynamicResource ResourceKey=GrdDateEdit}" HorizontalContentAlignment="Center" 
+                    <dxe:DateEdit Grid.Row="1" Grid.Column="1" Style="{DynamicResource ResourceKey=GridDateEdit}" HorizontalContentAlignment="Center" 
                           x:Name="dtFNS_YMD" EditValue="{Binding FNS_YMD, Converter={StaticResource date2StrConverter}}"  />
 
                     <Label Grid.Row="1" Grid.Column="2" Content="실준공일자" Style="{DynamicResource ResourceKey=GridLabel}" />
-                    <dxe:DateEdit Grid.Row="1" Grid.Column="3" Style="{DynamicResource ResourceKey=GrdDateEdit}" HorizontalContentAlignment="Center" 
+                    <dxe:DateEdit Grid.Row="1" Grid.Column="3" Style="{DynamicResource ResourceKey=GridDateEdit}" HorizontalContentAlignment="Center" 
                           x:Name="dtRFN_YMD" EditValue="{Binding RFN_YMD, Converter={StaticResource date2StrConverter}}"  />
 
                     <Label Grid.Row="1" Grid.Column="4" Content="관급물량" Style="{DynamicResource ResourceKey=GridLabel}"/>
-                    <dxe:TextEdit Grid.Row="1" Grid.Column="5" Style="{DynamicResource ResourceKey=GrdTextEdit}"  
+                    <dxe:TextEdit Grid.Row="1" Grid.Column="5" Style="{DynamicResource ResourceKey=GridTextEdit}"  
                            x:Name="txtGVR_DES" EditValue="{Binding GVR_DES}"/>
 
                     <Label Grid.Row="2" Grid.Column="0" Content="공사개요" Style="{DynamicResource ResourceKey=GridLabel}"/>
-                    <dxe:TextEdit Grid.Row="2" Grid.Column="1" Grid.ColumnSpan="7" Style="{DynamicResource ResourceKey=GrdTextEdit}"  
+                    <dxe:TextEdit Grid.Row="2" Grid.Column="1" Grid.ColumnSpan="7" Style="{DynamicResource ResourceKey=GridTextEdit}"  
                            x:Name="txtCNT_DES" EditValue="{Binding CNT_DES}"/>
                 </Grid>
                 
@@ -365,35 +365,35 @@
 
 
                     <Label Grid.Row="0" Grid.Column="0" Content="입찰일자" Style="{DynamicResource ResourceKey=GridLabel}" />
-                    <dxe:DateEdit Grid.Row="0" Grid.Column="1" Style="{DynamicResource ResourceKey=GrdDateEdit}" HorizontalContentAlignment="Center" 
+                    <dxe:DateEdit Grid.Row="0" Grid.Column="1" Style="{DynamicResource ResourceKey=GridDateEdit}" HorizontalContentAlignment="Center" 
                           x:Name="dtBID_YMD" EditValue="{Binding BID_YMD, Converter={StaticResource date2StrConverter}}"  />
 
                     <Label Grid.Row="0" Grid.Column="2" Content="계약일자" Style="{DynamicResource ResourceKey=GridLabel}" />
-                    <dxe:DateEdit Grid.Row="0" Grid.Column="3" Style="{DynamicResource ResourceKey=GrdDateEdit}" HorizontalContentAlignment="Center" 
+                    <dxe:DateEdit Grid.Row="0" Grid.Column="3" Style="{DynamicResource ResourceKey=GridDateEdit}" HorizontalContentAlignment="Center" 
                           x:Name="dtCTT_YMD" EditValue="{Binding CTT_YMD, Converter={StaticResource date2StrConverter}}"  />
 
                     <Label Grid.Row="0" Grid.Column="4" Content="예정금액" Style="{DynamicResource ResourceKey=GridLabel}"/>
-                    <dxe:TextEdit Grid.Row="0" Grid.Column="5" Style="{DynamicResource ResourceKey=GrdNumberEdit}"   
+                    <dxe:TextEdit Grid.Row="0" Grid.Column="5" Style="{DynamicResource ResourceKey=GridNumberEdit}"   
                           x:Name="txtEST_AMT"  EditValue="{Binding EST_AMT}"/>
 
                     <Label Grid.Row="0" Grid.Column="6" Content="계약방법" Style="{DynamicResource ResourceKey=GridLabel}"/>
-                    <dxe:ComboBoxEdit Grid.Row="0" Grid.Column="7" Style="{DynamicResource ResourceKey=GrdComboBox}" 
+                    <dxe:ComboBoxEdit Grid.Row="0" Grid.Column="7" Style="{DynamicResource ResourceKey=GridComboBox}" 
                               x:Name="cbCTT_CDE" EditValue="{Binding CTT_CDE}" />
 
                     <Label Grid.Row="1" Grid.Column="0" Content="계약총액" Style="{DynamicResource ResourceKey=GridLabel}"/>
-                    <dxe:TextEdit Grid.Row="1" Grid.Column="1" Style="{DynamicResource ResourceKey=GrdNumberEdit}"   
+                    <dxe:TextEdit Grid.Row="1" Grid.Column="1" Style="{DynamicResource ResourceKey=GridNumberEdit}"   
                           x:Name="txtTCT_AMT"  EditValue="{Binding TCT_AMT}"/>
 
                     <Label Grid.Row="1" Grid.Column="2" Content="기타잡비" Style="{DynamicResource ResourceKey=GridLabel}"/>
-                    <dxe:TextEdit Grid.Row="1" Grid.Column="3" Style="{DynamicResource ResourceKey=GrdNumberEdit}"   
+                    <dxe:TextEdit Grid.Row="1" Grid.Column="3" Style="{DynamicResource ResourceKey=GridNumberEdit}"   
                           x:Name="txtCET_AMT"  EditValue="{Binding CET_AMT}"/>
 
                     <Label Grid.Row="1" Grid.Column="4" Content="순공사비" Style="{DynamicResource ResourceKey=GridLabel}"/>
-                    <dxe:TextEdit Grid.Row="1" Grid.Column="5" Style="{DynamicResource ResourceKey=GrdNumberEdit}"   
+                    <dxe:TextEdit Grid.Row="1" Grid.Column="5" Style="{DynamicResource ResourceKey=GridNumberEdit}"   
                           x:Name="txtCPC_AMT"  EditValue="{Binding CPC_AMT}"/>
 
                     <Label Grid.Row="1" Grid.Column="6" Content="관급금액" Style="{DynamicResource ResourceKey=GridLabel}"/>
-                    <dxe:TextEdit Grid.Row="1" Grid.Column="7" Style="{DynamicResource ResourceKey=GrdNumberEdit}"   
+                    <dxe:TextEdit Grid.Row="1" Grid.Column="7" Style="{DynamicResource ResourceKey=GridNumberEdit}"   
                           x:Name="txtCGV_AMT"  EditValue="{Binding CGV_AMT}"/>
                 </Grid>
                 
@@ -438,19 +438,19 @@
 
 
                     <Label Grid.Row="0" Grid.Column="0" Content="국비" Style="{DynamicResource ResourceKey=GridLabel}"/>
-                    <dxe:TextEdit Grid.Row="0" Grid.Column="1" Style="{DynamicResource ResourceKey=GrdNumberEdit}"   
+                    <dxe:TextEdit Grid.Row="0" Grid.Column="1" Style="{DynamicResource ResourceKey=GridNumberEdit}"   
                           x:Name="txtNAT_AMT"  EditValue="{Binding NAT_AMT}"/>
                     <Label Grid.Row="0" Grid.Column="2" Content="도비" Style="{DynamicResource ResourceKey=GridLabel}"/>
-                    <dxe:TextEdit Grid.Row="0" Grid.Column="3" Style="{DynamicResource ResourceKey=GrdNumberEdit}"   
+                    <dxe:TextEdit Grid.Row="0" Grid.Column="3" Style="{DynamicResource ResourceKey=GridNumberEdit}"   
                           x:Name="txtCOU_AMT"  EditValue="{Binding COU_AMT}"/>
                     <Label Grid.Row="0" Grid.Column="4" Content="시군비" Style="{DynamicResource ResourceKey=GridLabel}"/>
-                    <dxe:TextEdit Grid.Row="0" Grid.Column="5" Style="{DynamicResource ResourceKey=GrdNumberEdit}"   
+                    <dxe:TextEdit Grid.Row="0" Grid.Column="5" Style="{DynamicResource ResourceKey=GridNumberEdit}"   
                           x:Name="txtCIT_AMT"  EditValue="{Binding CIT_AMT}"/>
                     <Label Grid.Row="0" Grid.Column="6" Content="기채" Style="{DynamicResource ResourceKey=GridLabel}"/>
-                    <dxe:TextEdit Grid.Row="0" Grid.Column="7" Style="{DynamicResource ResourceKey=GrdNumberEdit}"   
+                    <dxe:TextEdit Grid.Row="0" Grid.Column="7" Style="{DynamicResource ResourceKey=GridNumberEdit}"   
                           x:Name="txtBND_AMT"  EditValue="{Binding BND_AMT}"/>
                     <Label Grid.Row="1" Grid.Column="0" Content="잉여금" Style="{DynamicResource ResourceKey=GridLabel}"/>
-                    <dxe:TextEdit Grid.Row="1" Grid.Column="1" Style="{DynamicResource ResourceKey=GrdNumberEdit}"   
+                    <dxe:TextEdit Grid.Row="1" Grid.Column="1" Style="{DynamicResource ResourceKey=GridNumberEdit}"   
                           x:Name="txtCSS_AMT"  EditValue="{Binding CSS_AMT}"/>
 
 
@@ -496,16 +496,16 @@
                     <Border Grid.Row="1" Grid.Column="7" BorderThickness="0 0 1 1" BorderBrush="{DynamicResource MainBack1Brush1}"/>
 
                     <Label Grid.Row="0" Grid.Column="0" Content="도급자명" Style="{DynamicResource ResourceKey=GridLabel}"/>
-                    <dxe:TextEdit Grid.Row="0" Grid.Column="1" Style="{DynamicResource ResourceKey=GrdTextEdit}"  
+                    <dxe:TextEdit Grid.Row="0" Grid.Column="1" Style="{DynamicResource ResourceKey=GridTextEdit}"  
                            x:Name="txtGCN_NAM" EditValue="{Binding GCN_NAM}"/>
                     <Label Grid.Row="0" Grid.Column="2" Content="대표자명" Style="{DynamicResource ResourceKey=GridLabel}"/>
-                    <dxe:TextEdit Grid.Row="0" Grid.Column="3" Style="{DynamicResource ResourceKey=GrdTextEdit}"  
+                    <dxe:TextEdit Grid.Row="0" Grid.Column="3" Style="{DynamicResource ResourceKey=GridTextEdit}"  
                            x:Name="txtPOC_NAM" EditValue="{Binding POC_NAM}"/>
                     <Label Grid.Row="0" Grid.Column="4" Content="전화번호" Style="{DynamicResource ResourceKey=GridLabel}"/>
-                    <dxe:TextEdit Grid.Row="0" Grid.Column="5" Style="{DynamicResource ResourceKey=GrdTextEdit}"  
+                    <dxe:TextEdit Grid.Row="0" Grid.Column="5" Style="{DynamicResource ResourceKey=GridTextEdit}"  
                            x:Name="txtGCN_TEL" EditValue="{Binding GCN_TEL}"/>
                     <Label Grid.Row="1" Grid.Column="0" Content="주소" Style="{DynamicResource ResourceKey=GridLabel}"/>
-                    <dxe:TextEdit Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="7" Style="{DynamicResource ResourceKey=GrdTextEdit}"  
+                    <dxe:TextEdit Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="7" Style="{DynamicResource ResourceKey=GridTextEdit}"  
                            x:Name="txtGCN_ADR" EditValue="{Binding GCN_ADR}"/>
 
 
@@ -543,16 +543,16 @@
                     <Border Grid.Row="0" Grid.Column="7" BorderThickness="0 1 1 1" BorderBrush="{DynamicResource MainBack1Brush1}"/>
 
                     <Label Grid.Row="0" Grid.Column="0" Content="관" Style="{DynamicResource ResourceKey=GridLabel}"/>
-                    <dxe:TextEdit Grid.Row="0" Grid.Column="1" Style="{DynamicResource ResourceKey=GrdTextEdit}"  
+                    <dxe:TextEdit Grid.Row="0" Grid.Column="1" Style="{DynamicResource ResourceKey=GridTextEdit}"  
                            x:Name="txtKWN_EXP" EditValue="{Binding KWN_EXP}"/>
                     <Label Grid.Row="0" Grid.Column="2" Content="항" Style="{DynamicResource ResourceKey=GridLabel}"/>
-                    <dxe:TextEdit Grid.Row="0" Grid.Column="3" Style="{DynamicResource ResourceKey=GrdTextEdit}"  
+                    <dxe:TextEdit Grid.Row="0" Grid.Column="3" Style="{DynamicResource ResourceKey=GridTextEdit}"  
                            x:Name="txtHNG_EXP" EditValue="{Binding HNG_EXP}"/>
                     <Label Grid.Row="0" Grid.Column="4" Content="세항" Style="{DynamicResource ResourceKey=GridLabel}"/>
-                    <dxe:TextEdit Grid.Row="0" Grid.Column="5" Style="{DynamicResource ResourceKey=GrdTextEdit}"  
+                    <dxe:TextEdit Grid.Row="0" Grid.Column="5" Style="{DynamicResource ResourceKey=GridTextEdit}"  
                            x:Name="txtSHN_EXP" EditValue="{Binding SHN_EXP}"/>
                     <Label Grid.Row="0" Grid.Column="6" Content="세목" Style="{DynamicResource ResourceKey=GridLabel}"/>
-                    <dxe:TextEdit Grid.Row="0" Grid.Column="7" Style="{DynamicResource ResourceKey=GrdTextEdit}" x:Name="txtMOK_EXP" EditValue="{Binding MOK_EXP}"/>
+                    <dxe:TextEdit Grid.Row="0" Grid.Column="7" Style="{DynamicResource ResourceKey=GridTextEdit}" x:Name="txtMOK_EXP" EditValue="{Binding MOK_EXP}"/>
 
                 </Grid>
 

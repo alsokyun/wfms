@@ -253,11 +253,11 @@ namespace GTI.WFMS.Modules.Mntc.View
         }
 
         // 그리드 row 선택이벤트 핸들러
-        private void Gv_FocusedRowChanged(object sender, DevExpress.Xpf.Grid.FocusedRowChangedEventArgs e)
+        private void Grid_CurrentItemChanged(object sender, DevExpress.Xpf.Grid.CurrentItemChangedEventArgs e)
         {
-            SEL_FTR_CDE = grid.GetCellValue(gv.FocusedRowHandle, "FTR_CDE").ToString();
-            SEL_FTR_IDN = grid.GetCellValue(gv.FocusedRowHandle, "FTR_IDN").ToString();
-            SEL_SEQ = grid.GetCellValue(gv.FocusedRowHandle, "SEQ").ToString();
+            SEL_FTR_CDE = ((DataRowView)e.NewItem).Row["FTR_CDE"].ToString();
+            SEL_FTR_IDN = ((DataRowView)e.NewItem).Row["FTR_IDN"].ToString();
+            SEL_SEQ = ((DataRowView)e.NewItem).Row["SEQ"].ToString();
 
             // 선택한 시설물로 탭 새로구성
             InitTab();

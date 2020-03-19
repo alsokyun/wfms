@@ -41,7 +41,7 @@
 
         </Grid.RowDefinitions>
 
-        <Grid Grid.Row="0" Background="{DynamicResource PopCOLOR2Brush}" PreviewMouseLeftButtonDown="Grid_PreviewMouseLeftButtonDown" >
+        <Grid Grid.Row="0" Background="{DynamicResource TileCOLOR4Brush}" PreviewMouseLeftButtonDown="Grid_PreviewMouseLeftButtonDown" >
             <Label Content="점검일정 등록" FontSize="17" FontWeight="Bold" Foreground="White" 
                    HorizontalAlignment="Left" VerticalAlignment="Center" Padding="10 0 0 0" />
         </Grid>
@@ -104,25 +104,25 @@
 
 
             <Label Grid.Row="0" Grid.Column="0" Content="점검명" Style="{DynamicResource ResourceKey=GridLabelReq}" />
-            <dxe:TextEdit Grid.Row="0" Grid.Column="1" Grid.ColumnSpan="3" Style="{DynamicResource ResourceKey=GrdTextEdit}" Tag="점검명"
+            <dxe:TextEdit Grid.Row="0" Grid.Column="1" Grid.ColumnSpan="3" Style="{DynamicResource ResourceKey=GridTextEdit}" Tag="점검명"
                           EditValue="{Binding Dtl.TIT_NAM, Mode=TwoWay}" />
 
             <Label Grid.Row="1" Grid.Column="0" Content="관리기관" Style="{DynamicResource ResourceKey=GridLabelReq}" />
-            <dxe:ComboBoxEdit Grid.Row="1" Grid.Column="1" Style="{DynamicResource ResourceKey=GrdComboBox}" Tag="관리기관"  
+            <dxe:ComboBoxEdit Grid.Row="1" Grid.Column="1" Style="{DynamicResource ResourceKey=GridComboBox}" Tag="관리기관"  
                               x:Name="cbMNG_CDE" EditValue="{Binding Dtl.MNG_CDE, Mode=TwoWay}"  />
             <Label Grid.Row="1" Grid.Column="2" Content="점검구분" Style="{DynamicResource ResourceKey=GridLabelReq}"  />
-            <dxe:ComboBoxEdit Grid.Row="1" Grid.Column="3" Style="{DynamicResource ResourceKey=GrdComboBox}" Tag="점검구분"  
+            <dxe:ComboBoxEdit Grid.Row="1" Grid.Column="3" Style="{DynamicResource ResourceKey=GridComboBox}" Tag="점검구분"  
                               x:Name="cbSCL_CDE" EditValue="{Binding Dtl.SCL_CDE, Mode=TwoWay}"   />
 
             <Label Grid.Row="2" Grid.Column="0" Content="점검시작일자" Style="{DynamicResource ResourceKey=GridLabelReq}"  />
-            <dxe:DateEdit Grid.Row="2" Grid.Column="1" Style="{DynamicResource ResourceKey=GrdDateEdit}" Tag="점검시작일자" 
+            <dxe:DateEdit Grid.Row="2" Grid.Column="1" Style="{DynamicResource ResourceKey=GridDateEdit}" Tag="점검시작일자" 
                           EditValue="{Binding Dtl.STA_YMD, Mode=TwoWay, Converter={StaticResource date3StrConverter}}" />
             <Label Grid.Row="2" Grid.Column="2" Content="점검종료일자" Style="{DynamicResource ResourceKey=GridLabelReq}"  />
-            <dxe:DateEdit Grid.Row="2" Grid.Column="3" Style="{DynamicResource ResourceKey=GrdDateEdit}"  Tag="점검종료일자"
+            <dxe:DateEdit Grid.Row="2" Grid.Column="3" Style="{DynamicResource ResourceKey=GridDateEdit}"  Tag="점검종료일자"
                           EditValue="{Binding Dtl.END_YMD, Mode=TwoWay, Converter={StaticResource date3StrConverter}}" />
 
             <Label Grid.Row="3" Grid.Column="0" Content="점검그룹(자)" Style="{DynamicResource ResourceKey=GridLabel}" />
-            <dxe:TextEdit Grid.Row="3" Grid.Column="1" Grid.ColumnSpan="3" Style="{DynamicResource ResourceKey=GrdTextEdit}"  
+            <dxe:TextEdit Grid.Row="3" Grid.Column="1" Grid.ColumnSpan="3" Style="{DynamicResource ResourceKey=GridTextEdit}"  
                           x:Name="txtCKM_GRP_NAM" EditValue="{Binding Dtl.CKM_GRP_NM, Mode=TwoWay}" />
 
             <Label Grid.Row="4" Grid.Column="0" Content="점검내용" Style="{DynamicResource ResourceKey=GridLabel}" />

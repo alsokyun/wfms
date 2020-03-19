@@ -35,7 +35,6 @@ namespace GTI.WFMS.Main.View
         ConnectConfig userConfig = new ConnectConfig();
         string strOldDBConfig = string.Empty; //DB종류
 
-        bool bConnTest = false;
 
 
         /// <summary>
@@ -309,18 +308,15 @@ namespace GTI.WFMS.Main.View
                 DataTable dtSysdate = work.Select_SYSDATE(null);
                 if (dtSysdate.Rows.Count > 0)
                 {
-                    bConnTest = true;
                     Messages.ShowInfoMsgBox("접속 성공!");
                 }
                 else
                 {
-                    bConnTest = false;
                     Messages.ShowInfoMsgBox("접속 실패");
                 }
             }
             catch (Exception ex)
             {
-                bConnTest = false;
                 Messages.ShowInfoMsgBox("접속 실패");
                 Messages.ErrLog(ex);
             }

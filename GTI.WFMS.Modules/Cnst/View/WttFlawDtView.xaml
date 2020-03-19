@@ -71,7 +71,7 @@
             <dxg:GridColumn Header="하자발생일자" Width="3*" FieldName="FLA_YMD" HorizontalHeaderContentAlignment="Center" AllowEditing="True">
                 <dxg:GridColumn.CellTemplate>
                     <DataTemplate>
-                        <dxe:DateEdit Style="{DynamicResource ResourceKey=GrdDateEdit}" 
+                        <dxe:DateEdit Style="{DynamicResource ResourceKey=GridDateEdit}" 
                             EditValue="{Binding RowData.Row.FLA_YMD, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged , Converter={StaticResource date2StrConverter}}"  />
                     </DataTemplate>
                 </dxg:GridColumn.CellTemplate>
@@ -79,7 +79,7 @@
             <dxg:GridColumn Header="하자보수일자" Width="3*" FieldName="RPR_YMD" HorizontalHeaderContentAlignment="Center" AllowEditing="True">
                 <dxg:GridColumn.CellTemplate>
                     <DataTemplate>
-                        <dxe:DateEdit Style="{DynamicResource ResourceKey=GrdDateEdit}" 
+                        <dxe:DateEdit Style="{DynamicResource ResourceKey=GridDateEdit}" 
                             EditValue="{Binding RowData.Row.RPR_YMD, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged , Converter={StaticResource date2StrConverter}}"  />
                     </DataTemplate>
                 </dxg:GridColumn.CellTemplate>
@@ -87,7 +87,7 @@
             <dxg:GridColumn Header="하자보수내용" Width="4*" FieldName="RPR_DES" HorizontalHeaderContentAlignment="Center" AllowEditing="True">
                 <dxg:GridColumn.CellTemplate>
                     <DataTemplate>
-                        <dxe:TextEdit Style="{DynamicResource ResourceKey=GrdTextEdit}"   
+                        <dxe:TextEdit Style="{DynamicResource ResourceKey=GridTextEdit}"   
                             EditValue="{Binding  RowData.Row.RPR_DES, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged }"/>
                     </DataTemplate>
                 </dxg:GridColumn.CellTemplate>

@@ -101,14 +101,14 @@
             <dxg:GridColumn Header="하도급자" Width="4*" FieldName="SUB_NAM" HorizontalHeaderContentAlignment="Center" AllowEditing="True">
                 <dxg:GridColumn.CellTemplate>
                     <DataTemplate>
-                        <dxe:TextEdit Style="{DynamicResource ResourceKey=GrdTextEdit}" EditValue="{Binding RowData.Row.SUB_NAM,  Mode=TwoWay}"/>
+                        <dxe:TextEdit Style="{DynamicResource ResourceKey=GridTextEdit}" EditValue="{Binding RowData.Row.SUB_NAM,  Mode=TwoWay}"/>
                     </DataTemplate>
                 </dxg:GridColumn.CellTemplate>
             </dxg:GridColumn>
             <dxg:GridColumn Header="하도급 대표자" Width="4*" FieldName="PSB_NAM" HorizontalHeaderContentAlignment="Center" AllowEditing="True">
                 <dxg:GridColumn.CellTemplate>
                     <DataTemplate>
-                        <dxe:TextEdit Style="{DynamicResource ResourceKey=GrdTextEdit}"   
+                        <dxe:TextEdit Style="{DynamicResource ResourceKey=GridTextEdit}"   
                             EditValue="{Binding RowData.Row.PSB_NAM,  Mode=TwoWay}"/>
                     </DataTemplate>
                 </dxg:GridColumn.CellTemplate>
@@ -116,7 +116,7 @@
             <dxg:GridColumn Header="하도급 전화번호" Width="4*" FieldName="SUB_TEL" HorizontalHeaderContentAlignment="Center" AllowEditing="True">
                 <dxg:GridColumn.CellTemplate>
                     <DataTemplate>
-                        <dxe:TextEdit Style="{DynamicResource ResourceKey=GrdTextEdit}"   
+                        <dxe:TextEdit Style="{DynamicResource ResourceKey=GridTextEdit}"   
                             EditValue="{Binding RowData.Row.SUB_TEL,  Mode=TwoWay}"/>
                     </DataTemplate>
                 </dxg:GridColumn.CellTemplate>
@@ -124,7 +124,7 @@
             <dxg:GridColumn Header="하도급자 주소" Width="4*" FieldName="SUB_ADR" HorizontalHeaderContentAlignment="Center" AllowEditing="True">
                 <dxg:GridColumn.CellTemplate>
                     <DataTemplate>
-                        <dxe:TextEdit Style="{DynamicResource ResourceKey=GrdTextEdit}"   
+                        <dxe:TextEdit Style="{DynamicResource ResourceKey=GridTextEdit}"   
                             EditValue="{Binding RowData.Row.SUB_ADR, Mode=TwoWay}"/>
                     </DataTemplate>
                 </dxg:GridColumn.CellTemplate>

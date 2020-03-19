@@ -54,17 +54,17 @@
 
 
         <!--일반정보박스영역-->
-        <StackPanel Grid.Row="1" Orientation="Horizontal" HorizontalAlignment="Left" Margin="10 0 0 0" Background="{DynamicResource PopCOLOR1Brush}">
+        <StackPanel Grid.Row="1" Orientation="Horizontal" HorizontalAlignment="Left" Margin="10 0 0 0" Background="{DynamicResource TileCOLOR4Brush}">
             <Button x:Name="btnAdd" Style="{DynamicResource ResourceKey=AddPosButton}" Command="{Binding AddCmd}" />
             <Button x:Name="btnEdit" Style="{DynamicResource ResourceKey=EditPosButton}" Command="{Binding EditCmd}" />
             <Button x:Name="btnDel" Style="{DynamicResource ResourceKey=DelPosButton}" Command="{Binding DelCmd}" />
 
             <Image Source="fms_search_line.png" Margin="15 0 0 0"/>
             <Label Content="시설물선택" Style="{DynamicResource ResourceKey=CircleTitleLabel}"/>
-            <dxe:ComboBoxEdit x:Name="cbFTR_CDE" Style="{DynamicResource ResourceKey=SrchComboBox}" EditValue="{Binding FTR_CDE}" />
+            <dxe:ComboBoxEdit x:Name="cbFTR_CDE" Style="{DynamicResource ResourceKey=SearchComboBox}" EditValue="{Binding FTR_CDE}" />
             <Image Source="fms_search_line.png" Margin="0 0 0 0"/>
             <Label Content="관리번호" Style="{DynamicResource ResourceKey=CircleTitleLabel}"/>
-            <dxe:TextEdit Style="{DynamicResource ResourceKey=SrchTextEdit}" Tag="관리번호" x:Name="txtFTR_IDN" Width="130" KeyDown="TxtFTR_IDN_KeyDown"/>
+            <dxe:TextEdit Style="{DynamicResource ResourceKey=SearchTextEdit}" Tag="관리번호" x:Name="txtFTR_IDN" Width="130" KeyDown="TxtFTR_IDN_KeyDown"/>
 
             <TextBlock x:Name="txbFTR_CDE" Visibility="Collapsed" Text="{Binding FTR_CDE, UpdateSourceTrigger=PropertyChanged}"/>
             <TextBlock x:Name="txbFTR_IDN" Visibility="Collapsed" Text="{Binding FTR_IDN, UpdateSourceTrigger=PropertyChanged}"/>

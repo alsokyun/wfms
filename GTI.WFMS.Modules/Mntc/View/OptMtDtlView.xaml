@@ -42,7 +42,7 @@
 
         </Grid.RowDefinitions>
 
-        <Grid Grid.Row="0" Background="{DynamicResource PopCOLOR2Brush}" PreviewMouseLeftButtonDown="Grid_PreviewMouseLeftButtonDown" >
+        <Grid Grid.Row="0" Background="{DynamicResource TileCOLOR4Brush}" PreviewMouseLeftButtonDown="Grid_PreviewMouseLeftButtonDown" >
             <Label Content="시설물 가동시간 및 점검이력" FontSize="17" FontWeight="Bold" Foreground="White" 
                    HorizontalAlignment="Left" VerticalAlignment="Center" Padding="10 0 0 0" />
         </Grid>
@@ -95,21 +95,21 @@
 
 
             <Label Grid.Row="0" Grid.Column="0" Content="지형지물명" Style="{DynamicResource ResourceKey=GridLabel}" />
-            <dxe:TextEdit Grid.Row="0" Grid.Column="1" Style="{DynamicResource ResourceKey=GrdTextEdit}" IsEnabled="False" 
+            <dxe:TextEdit Grid.Row="0" Grid.Column="1" Style="{DynamicResource ResourceKey=GridTextEdit}" IsEnabled="False" 
                           x:Name="txtFTR_NAM"  />
             <Label Grid.Row="0" Grid.Column="2" Content="관리번호" Style="{DynamicResource ResourceKey=GridLabel}" />
-            <dxe:TextEdit Grid.Row="0" Grid.Column="3" Style="{DynamicResource ResourceKey=GrdTextEdit}" IsEnabled="False" 
+            <dxe:TextEdit Grid.Row="0" Grid.Column="3" Style="{DynamicResource ResourceKey=GridTextEdit}" IsEnabled="False" 
                           x:Name="txtFTR_IDN" />
             <Label Grid.Row="1" Grid.Column="0" Content="가압장명" Style="{DynamicResource ResourceKey=GridLabel}" />
-            <dxe:TextEdit Grid.Row="1" Grid.Column="1" Style="{DynamicResource ResourceKey=GrdTextEdit}" HorizontalContentAlignment="Center" 
+            <dxe:TextEdit Grid.Row="1" Grid.Column="1" Style="{DynamicResource ResourceKey=GridTextEdit}" HorizontalContentAlignment="Center" 
                           x:Name="txtPRS_NAM"    IsEnabled="False" />
             <Label Grid.Row="1" Grid.Column="2" Content="세부시설명" Style="{DynamicResource ResourceKey=GridLabel}" />
-            <dxe:TextEdit Grid.Row="1" Grid.Column="3" Style="{DynamicResource ResourceKey=GrdTextEdit}"  IsEnabled="False"  
+            <dxe:TextEdit Grid.Row="1" Grid.Column="3" Style="{DynamicResource ResourceKey=GridTextEdit}"  IsEnabled="False"  
                           x:Name="txtATT_NAM" />
             <Label Grid.Row="2" Grid.Column="0" Content="점검주기" Style="{DynamicResource ResourceKey=GridLabel}" />
             <StackPanel Grid.Row="2" Grid.Column="1" Grid.ColumnSpan="3" Orientation="Horizontal">
-                <dxe:ComboBoxEdit x:Name="cbCHK_PRD_CDE" Width="90" Style="{DynamicResource ResourceKey=GrdComboBox}" />
-                <dxe:TextEdit x:Name="txtCHK_PRD_AMT" Width="50" Style="{DynamicResource ResourceKey=GrdNumberEdit}"  />
+                <dxe:ComboBoxEdit x:Name="cbCHK_PRD_CDE" Width="90" Style="{DynamicResource ResourceKey=GridComboBox}" />
+                <dxe:TextEdit x:Name="txtCHK_PRD_AMT" Width="50" Style="{DynamicResource ResourceKey=GridNumberEdit}"  />
             </StackPanel>
         </Grid>
 

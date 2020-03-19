@@ -19,10 +19,10 @@
         Style="{DynamicResource PopupWindow}"
         x:Name="popWinView"
         >
-    
 
 
-    <Grid x:Name="gridContent" Background="{DynamicResource PopCOLOR2Brush}">
+
+    <Grid x:Name="gridContent" >
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="2"/>
             <ColumnDefinition Width="*"/>
@@ -36,14 +36,9 @@
         </Grid.RowDefinitions>
 
         <!--헤더 백그라운드 border-->
-        <Border Grid.Row="1" Grid.Column="1" x:Name="bdTitle" Background="{DynamicResource PopCOLOR2Brush}"/>
 
-        <!--폼 아웃라인 border-->
-        <Border Grid.Column="0" Grid.RowSpan="4" Background="{DynamicResource TileCOLOR2Brush}"/>
-        <Border Grid.Column="2" Grid.RowSpan="4" Background="{DynamicResource TileCOLOR2Brush}"/>
-        <Border Grid.Row="3" Grid.ColumnSpan="3" Background="{DynamicResource TileCOLOR2Brush}"/>
 
-        <Grid Grid.Row="1" Grid.Column="1" Background="{DynamicResource TileCOLOR2Brush }" >
+        <Grid Grid.Row="1" Grid.Column="1" Background="{DynamicResource PopupCOLOR1Brush }" >
             <Grid.InputBindings>
                 <MouseBinding MouseAction="LeftClick" Command="{Binding WindowMoveCommand}" 
                               CommandParameter="{Binding RelativeSource={RelativeSource AncestorType={x:Type Window}, Mode=FindAncestor}}"/>

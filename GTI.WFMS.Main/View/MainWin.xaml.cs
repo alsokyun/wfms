@@ -64,16 +64,18 @@ namespace GTI.WFMS.Main
                 Properties.Settings.Default.strThemeName = "GTINavyTheme";
                 Properties.Settings.Default.Save();
 
+
+
                 ThemeApply.strThemeName = "GTINavyTheme";
                 ThemeApply.ThemeChange(this);
-                ThemeApply.Themeapply(this);
-
                 //메뉴 Image 변경
                 foreach (var item in spMenuArea.Children)
                 {
                     if (item is Button)
                         (item as Button).Tag = (item as Button).Tag.ToString().Replace("Blue", "Navy");
                 }
+                ThemeApply.Themeapply(this);
+
 
                 ((sender as MenuItem).Parent as ContextMenu).IsOpen = false;
             }
@@ -89,16 +91,17 @@ namespace GTI.WFMS.Main
                 Properties.Settings.Default.strThemeName = "GTIBlueTheme";
                 Properties.Settings.Default.Save();
 
+
+
                 ThemeApply.strThemeName = "GTIBlueTheme";
                 ThemeApply.ThemeChange(this);
-                ThemeApply.Themeapply(this);
-
                 //메뉴 Image 변경
                 foreach (var item in spMenuArea.Children)
                 {
                     if (item is Button)
                         (item as Button).Tag = (item as Button).Tag.ToString().Replace("Navy", "Blue");
                 }
+                ThemeApply.Themeapply(this);
 
                 ((sender as MenuItem).Parent as ContextMenu).IsOpen = false;
             }

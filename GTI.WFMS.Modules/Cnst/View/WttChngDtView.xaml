@@ -71,7 +71,7 @@
             <dxg:GridColumn Header="변경일자" Width="3*" FieldName="CHG_YMD" HorizontalHeaderContentAlignment="Center" AllowEditing="True">
                 <dxg:GridColumn.CellTemplate>
                     <DataTemplate>
-                        <dxe:DateEdit Style="{DynamicResource ResourceKey=GrdDateEdit}" 
+                        <dxe:DateEdit Style="{DynamicResource ResourceKey=GridDateEdit}" 
                             EditValue="{Binding RowData.Row.CHG_YMD, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, Converter={StaticResource date2StrConverter}}"  />
                     </DataTemplate>
                 </dxg:GridColumn.CellTemplate>
@@ -79,7 +79,7 @@
             <dxg:GridColumn Header="증감금액" Width="4*" FieldName="INC_AMT" HorizontalHeaderContentAlignment="Center" AllowEditing="True">
                 <dxg:GridColumn.CellTemplate>
                     <DataTemplate>
-                        <dxe:TextEdit Style="{DynamicResource ResourceKey=GrdNumberEdit}"   
+                        <dxe:TextEdit Style="{DynamicResource ResourceKey=GridNumberEdit}"   
                             EditValue="{Binding  RowData.Row.INC_AMT, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
                     </DataTemplate>
                 </dxg:GridColumn.CellTemplate>
@@ -87,7 +87,7 @@
             <dxg:GridColumn Header="증감관급금액" Width="4*" FieldName="IGV_AMT" HorizontalHeaderContentAlignment="Center" AllowEditing="True">
                 <dxg:GridColumn.CellTemplate>
                     <DataTemplate>
-                        <dxe:TextEdit Style="{DynamicResource ResourceKey=GrdNumberEdit}"   
+                        <dxe:TextEdit Style="{DynamicResource ResourceKey=GridNumberEdit}"   
                             EditValue="{Binding  RowData.Row.IGV_AMT, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
                     </DataTemplate>
                 </dxg:GridColumn.CellTemplate>
@@ -95,7 +95,7 @@
             <dxg:GridColumn Header="변경공사금액" Width="4*" FieldName="CHG_AMT" HorizontalHeaderContentAlignment="Center" AllowEditing="True">
                 <dxg:GridColumn.CellTemplate>
                     <DataTemplate>
-                        <dxe:TextEdit Style="{DynamicResource ResourceKey=GrdNumberEdit}"   
+                        <dxe:TextEdit Style="{DynamicResource ResourceKey=GridNumberEdit}"   
                             EditValue="{Binding  RowData.Row.CHG_AMT, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
                     </DataTemplate>
                 </dxg:GridColumn.CellTemplate>
@@ -103,7 +103,7 @@
             <dxg:GridColumn Header="최종수정일" Width="3*" FieldName="ATT_TIM" HorizontalHeaderContentAlignment="Center" AllowEditing="True">
                 <dxg:GridColumn.CellTemplate>
                     <DataTemplate>
-                        <dxe:DateEdit Style="{DynamicResource ResourceKey=GrdDateEdit}" 
+                        <dxe:DateEdit Style="{DynamicResource ResourceKey=GridDateEdit}" 
                             EditValue="{Binding RowData.Row.ATT_TIM, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, Converter={StaticResource date2StrConverter}}"  />
                     </DataTemplate>
                 </dxg:GridColumn.CellTemplate>
@@ -111,7 +111,7 @@
             <dxg:GridColumn Header="변경관급량" Width="4*" FieldName="CGV_DES" HorizontalHeaderContentAlignment="Center" AllowEditing="True">
                 <dxg:GridColumn.CellTemplate>
                     <DataTemplate>
-                        <dxe:TextEdit Style="{DynamicResource ResourceKey=GrdTextEdit}"   
+                        <dxe:TextEdit Style="{DynamicResource ResourceKey=GridTextEdit}"   
                             EditValue="{Binding  RowData.Row.CGV_DES, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
                     </DataTemplate>
                 </dxg:GridColumn.CellTemplate>

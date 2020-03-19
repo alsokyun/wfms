@@ -1,6 +1,5 @@
 ﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-                    xmlns:local="clr-namespace:GTI.WFMS.Main.Styles.Navy">
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
 
     <!--사업소 정보 설정 Label-->
     <Style TargetType="{x:Type Label}" x:Key="PopupLabel" BasedOn="{StaticResource BasefontStyle}">
@@ -138,6 +137,16 @@
         <Setter Property="Margin" Value="5,0,10,0"/>
     </Style>
 
+    <!--그리드 값 Label-->
+    <Style TargetType="{x:Type Label}" x:Key="GridValueLabel" BasedOn="{StaticResource BasefontStyle}">
+        <Setter Property="Padding" Value="0"/>
+        <Setter Property="VerticalAlignment" Value="Center"/>
+        <Setter Property="HorizontalAlignment" Value="Center"/>
+        <Setter Property="Foreground" Value="#FFFFFF"/>
+        <Setter Property="FontSize" Value="12"/>
+        <Setter Property="Margin" Value="5,0,10,0"/>
+    </Style>
+
     <!--타일 블록명 Label-->
     <Style TargetType="{x:Type Label}" x:Key="TileBLKNMLabel" BasedOn="{StaticResource BasebdfontStyle}">
         <Setter Property="VerticalAlignment" Value="Center"/>
@@ -234,18 +243,7 @@
 
 
 
-
-
-
     <!--============= FMS 추가 =============-->
-    <!--메뉴 내 헤더 Label-->
-    <Style TargetType="{x:Type Label}" x:Key="HeadLabel" BasedOn="{StaticResource BasebdfontStyle}">
-        <Setter Property="VerticalAlignment" Value="Center"/>
-        <Setter Property="HorizontalAlignment" Value="Left"/>
-        <Setter Property="FontSize" Value="13"/>
-        <Setter Property="Foreground" Value="#77b3d3"/>
-        <Setter Property="Margin" Value="10,0,10,0"/>
-    </Style>
 
 
     <!--그리드 내 Label-->
@@ -267,5 +265,6 @@
         </Setter>
     </Style>
 
-
+    
+    
 </ResourceDictionary>

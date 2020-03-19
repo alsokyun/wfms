@@ -73,7 +73,7 @@
                     <DataTemplate>
                         <dxe:ComboBoxEdit EditValue="{Binding RowData.Row.PTY_CDE, Mode=TwoWay}" ValueMember="DTL_CD" DisplayMember="NM"
                                             Loaded="PTY_CDE_Loaded"  
-                                    Style="{DynamicResource ResourceKey=GrdComboBox}" >
+                                    Style="{DynamicResource ResourceKey=GridComboBox}" >
                             <dxe:ComboBoxEdit.ItemContainerStyle>
                                 <Style TargetType="{x:Type dxe:ComboBoxEditItem}">
                                     <Setter Property="Foreground" Value="#2279b5"/>
@@ -86,7 +86,7 @@
             <dxg:GridColumn Header="지급일자" Width="3*" FieldName="PAY_YMD" HorizontalHeaderContentAlignment="Center" AllowEditing="True">
                 <dxg:GridColumn.CellTemplate>
                     <DataTemplate>
-                        <dxe:DateEdit Style="{DynamicResource ResourceKey=GrdDateEdit}" 
+                        <dxe:DateEdit Style="{DynamicResource ResourceKey=GridDateEdit}" 
                             EditValue="{Binding RowData.Row.PAY_YMD, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged , Converter={StaticResource date3StrConverter}}"   />
                     </DataTemplate>
                 </dxg:GridColumn.CellTemplate>
@@ -94,7 +94,7 @@
             <dxg:GridColumn Header="지급금액" Width="4*" FieldName="PAY_AMT" HorizontalHeaderContentAlignment="Center"  AllowEditing="True">
                 <dxg:GridColumn.CellTemplate>
                     <DataTemplate>
-                        <dxe:TextEdit  Style="{DynamicResource ResourceKey=GrdNumberEdit}" MaskType="Numeric" MaskUseAsDisplayFormat="True" 
+                        <dxe:TextEdit  Style="{DynamicResource ResourceKey=GridNumberEdit}" MaskType="Numeric" MaskUseAsDisplayFormat="True" 
                             EditValue="{Binding  RowData.Row.PAY_AMT, Mode=TwoWay }" />
                     </DataTemplate>
                 </dxg:GridColumn.CellTemplate>

@@ -38,7 +38,7 @@
 
         </Grid.RowDefinitions>
 
-        <Grid Grid.Row="0" Background="{DynamicResource PopCOLOR2Brush}" PreviewMouseLeftButtonDown="Grid_PreviewMouseLeftButtonDown" >
+        <Grid Grid.Row="0" Background="{DynamicResource TileCOLOR4Brush}" PreviewMouseLeftButtonDown="Grid_PreviewMouseLeftButtonDown" >
             <Label Content="예비품/소모품 입고등록" FontSize="17" FontWeight="Bold" Foreground="White" 
                    HorizontalAlignment="Left" VerticalAlignment="Center" Padding="10 0 0 0" />
         </Grid>
@@ -107,7 +107,7 @@
                 <dxg:GridColumn Header="입고일자" Width="120" FieldName="IN_YMD" HorizontalHeaderContentAlignment="Center" AllowEditing="True">
                     <dxg:GridColumn.CellTemplate>
                         <DataTemplate>
-                            <dxe:DateEdit Style="{DynamicResource ResourceKey=GrdDateEdit}" 
+                            <dxe:DateEdit Style="{DynamicResource ResourceKey=GridDateEdit}" 
                             EditValue="{Binding RowData.Row.IN_YMD, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged , Converter={StaticResource date3StrConverter}}"   />
                         </DataTemplate>
                     </dxg:GridColumn.CellTemplate>
@@ -115,7 +115,7 @@
                 <dxg:GridColumn Header="입고수량" Width="100" FieldName="IN_AMT" HorizontalHeaderContentAlignment="Center"  AllowEditing="True">
                     <dxg:GridColumn.CellTemplate>
                         <DataTemplate>
-                            <dxe:TextEdit  Style="{DynamicResource ResourceKey=GrdNumberEdit}" MaskType="Numeric" MaskUseAsDisplayFormat="True" 
+                            <dxe:TextEdit  Style="{DynamicResource ResourceKey=GridNumberEdit}" MaskType="Numeric" MaskUseAsDisplayFormat="True" 
                             EditValue="{Binding  RowData.Row.IN_AMT, Mode=TwoWay }" />
                         </DataTemplate>
                     </dxg:GridColumn.CellTemplate>
@@ -124,7 +124,7 @@
                 <dxg:GridColumn Header="비고" Width="*" FieldName="IN_ETC" HorizontalHeaderContentAlignment="Center" AllowEditing="True">
                     <dxg:GridColumn.CellTemplate>
                         <DataTemplate>
-                            <dxe:TextEdit  Style="{DynamicResource ResourceKey=GrdTextEdit}" 
+                            <dxe:TextEdit  Style="{DynamicResource ResourceKey=GridTextEdit}" 
                             EditValue="{Binding  RowData.Row.IN_ETC, Mode=TwoWay }" />
                         </DataTemplate>
                     </dxg:GridColumn.CellTemplate>

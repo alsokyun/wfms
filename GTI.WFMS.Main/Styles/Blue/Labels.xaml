@@ -241,4 +241,28 @@
         <Setter Property="Padding" Value="0"/>
     </Style>
 
+
+
+    <!--============= FMS 추가 =============-->
+
+
+    <!--그리드 내 Label-->
+    <Style TargetType="{x:Type Label}" x:Key="GridLabelReq" BasedOn="{StaticResource BasefontStyle}">
+        <Setter Property="VerticalAlignment" Value="Center"/>
+        <Setter Property="HorizontalAlignment" Value="Left"/>
+        <Setter Property="Foreground" Value="White"/>
+        <Setter Property="FontSize" Value="13"/>
+        <Setter Property="Margin" Value="10,0,0,0"/>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="Label" >
+                    <StackPanel Orientation="Horizontal">
+                        <TextBlock Text="{TemplateBinding Content}"/>
+                        <TextBlock Foreground="OrangeRed" Padding="4 2 0 0" >*</TextBlock>
+                    </StackPanel>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
 </ResourceDictionary>
