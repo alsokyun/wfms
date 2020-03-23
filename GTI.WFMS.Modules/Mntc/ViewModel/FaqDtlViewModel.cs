@@ -145,6 +145,28 @@ namespace GTI.WFMS.Modules.Mntc.ViewModel
                 }
                 //Console.WriteLine(propName + " - " + prop.GetValue(this,null));
             }
+
+
+            // CLOB 데이터는 OleDbConnection으로 따로 조회
+            try
+            {
+                string sql = "";
+                sql += " SELECT QUESTION, REPL FROM FAQ  WHERE SEQ = :SEQ ;";
+
+                param = new Hashtable();
+                param.Add("sql", sql);
+                param.Add("SEQ", this.SEQ);
+
+                DataTable dt = DBUtil.Select(param);
+
+                this.QUESTION = dt.Rows[0]["QUESTION"].ToString();
+                this.REPL = dt.Rows[0]["REPL"].ToString();
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+            }
+
         }
 
 
@@ -168,11 +190,20 @@ namespace GTI.WFMS.Modules.Mntc.ViewModel
                 //this.QUESTION = richQUESTION.RtfText;
                 //BizUtil.Update2(this, "SaveFaqDtl");
 
+
+                string sql = "";
+                sql += " UPDATE FAQ SET ";
+                sql += " QUESTION = :QUESTION ";
+                sql += " ,REPL = :REPL ";
+                sql += " ,TTL = :TTL ";
+                sql += " WHERE SEQ = :SEQ ;";
+
                 Hashtable param = new Hashtable();
-                param.Add("SEQ", this.SEQ);
+                param.Add("sql", sql);
                 param.Add("QUESTION", this.QUESTION);
                 param.Add("REPL", this.REPL);
                 param.Add("TTL", this.TTL);
+                param.Add("SEQ", this.SEQ);
                 DBUtil.Update(param);
 
 

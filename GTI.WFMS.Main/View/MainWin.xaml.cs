@@ -72,7 +72,10 @@ namespace GTI.WFMS.Main
                 foreach (var item in spMenuArea.Children)
                 {
                     if (item is Button)
+                    {
                         (item as Button).Tag = (item as Button).Tag.ToString().Replace("Blue", "Navy");
+                        (item as Button).Style = Application.Current.Resources["MainMNUButton"] as Style;
+                    }
                 }
                 ThemeApply.Themeapply(this);
 
@@ -99,7 +102,10 @@ namespace GTI.WFMS.Main
                 foreach (var item in spMenuArea.Children)
                 {
                     if (item is Button)
+                    {
                         (item as Button).Tag = (item as Button).Tag.ToString().Replace("Navy", "Blue");
+                        (item as Button).Style = Application.Current.Resources["MainMNUButton"] as Style;
+                    }
                 }
                 ThemeApply.Themeapply(this);
 

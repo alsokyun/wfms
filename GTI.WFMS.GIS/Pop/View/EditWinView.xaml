@@ -42,7 +42,7 @@
 
         </Grid.RowDefinitions>
 
-        <Grid Grid.Row="0" Background="{DynamicResource TileCOLOR2Brush }" PreviewMouseLeftButtonDown="Grid_PreviewMouseLeftButtonDown" >
+        <Grid Grid.Row="0" Background="{DynamicResource PopupCOLOR1Brush }" PreviewMouseLeftButtonDown="Grid_PreviewMouseLeftButtonDown" >
             <Label Content="시설물 편집" FontSize="17" FontWeight="Bold" Foreground="White" 
                    HorizontalAlignment="Left" VerticalAlignment="Center" Padding="10 0 0 0" />
         </Grid>
@@ -62,9 +62,10 @@
             <Image Source="fms_search_line.png" Margin="15 0 0 0"/>
             <Label Content="시설물선택" Style="{DynamicResource ResourceKey=CircleTitleLabel}"/>
             <dxe:ComboBoxEdit x:Name="cbFTR_CDE" Style="{DynamicResource ResourceKey=SearchComboBox}" EditValue="{Binding FTR_CDE}" />
-            <Image Source="fms_search_line.png" Margin="0 0 0 0"/>
+            <Image Source="fms_search_line.png" Margin="10 0 5 0"/>
             <Label Content="관리번호" Style="{DynamicResource ResourceKey=CircleTitleLabel}"/>
             <dxe:TextEdit Style="{DynamicResource ResourceKey=SearchTextEdit}" Tag="관리번호" x:Name="txtFTR_IDN" Width="130" KeyDown="TxtFTR_IDN_KeyDown"/>
+            <Image Source="fms_search_line.png" Margin="10 0 5 0"/>
 
             <TextBlock x:Name="txbFTR_CDE" Visibility="Collapsed" Text="{Binding FTR_CDE, UpdateSourceTrigger=PropertyChanged}"/>
             <TextBlock x:Name="txbFTR_IDN" Visibility="Collapsed" Text="{Binding FTR_IDN, UpdateSourceTrigger=PropertyChanged}"/>
@@ -72,7 +73,13 @@
         <Border Grid.Row="1" BorderThickness="0 0 0 1" BorderBrush="{DynamicResource MainLMENUUnderBrush1}"/>
 
         <StackPanel Grid.Row="1" Orientation="Horizontal" HorizontalAlignment="Right"  >
-            <Button x:Name="btnSearch" Style="{DynamicResource ResourceKey=SearchButton}" Command="{Binding SearchCommand}" Margin="0 0 10 0"/>
+            <Button x:Name="btnSearch" Style="{DynamicResource ResourceKey=SearchButton}"  Margin="0 0 10 0">
+                <i:Interaction.Triggers>
+                    <i:EventTrigger EventName="Click">
+                        <i:InvokeCommandAction Command="{Binding SearchCommand}"/>
+                    </i:EventTrigger>
+                </i:Interaction.Triggers>
+            </Button>
         </StackPanel>
 
         <Grid Grid.Row="2" >

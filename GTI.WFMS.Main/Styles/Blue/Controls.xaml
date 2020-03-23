@@ -17,7 +17,7 @@
         <Setter Property="RenderOptions.BitmapScalingMode" Value="NearestNeighbor"/>
         <Setter Property="RenderOptions.EdgeMode" Value="Unspecified"/>
         <Setter Property="AllowsTransparency" Value="True"/>
-        <Setter Property="Background" Value="#213753"/>
+        <Setter Property="Background" Value="#efefef"/>
         <Setter Property="BorderBrush">
             <Setter.Value>
                 <SolidColorBrush Color="#FFFFFF" Opacity="0.5"/>
