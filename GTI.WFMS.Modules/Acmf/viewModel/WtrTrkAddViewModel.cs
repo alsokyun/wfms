@@ -103,6 +103,9 @@ namespace GTI.WFMS.Modules.Acmf.ViewModel
                 this.FTR_CDE = "SA120";
 
                 this.FNS_YMD = Convert.ToDateTime(DateTime.Today).ToString("yyyy-MM-dd");
+
+                //공통팝업창 사이즈 변경 4
+                FmsUtil.popWinView.Height = 400;
             }
             catch (Exception e)
             {

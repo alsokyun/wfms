@@ -187,7 +187,7 @@
            , A.SHT_NUM
            , A.MNG_CDE
            , (SELECT NM FROM INFOUSER.CD_DTL_INFO WHERE MST_CD = '250101' AND DTL_CD = A.MNG_CDE ) AS MNG_NAM
-           , decode(length(IST_YMD), 8, to_char(to_date(IST_YMD, 'yyyyMMdd'), 'yyyy-MM-dd'), '') AS IST_YMD
+           , A.IST_YMD
            , A.VAL_MOF
            , (SELECT NM FROM INFOUSER.CD_DTL_INFO WHERE MST_CD = '250016' AND DTL_CD = A.VAL_MOF ) AS MOF_NAM
            , A.VAL_MOP
@@ -258,7 +258,7 @@
       , #HJD_CDE#
       , #SHT_NUM#
       , #MNG_CDE#
-      , decode(length(#IST_YMD#), 10, to_char(to_date(#IST_YMD#, 'yyyy-MM-dd'), 'yyyyMMdd'), '')
+      , #IST_YMD#
       , #VAL_MOF#
       , #VAL_MOP#
       , #VAL_DIP#
@@ -287,7 +287,7 @@
       SET HJD_CDE = #HJD_CDE#
       , SHT_NUM = #SHT_NUM#
       , MNG_CDE = #MNG_CDE#
-      , IST_YMD = decode(length(#IST_YMD#), 10, to_char(to_date(#IST_YMD#, 'yyyy-MM-dd'), 'yyyyMMdd'), '')
+      , IST_YMD = #IST_YMD#
       , VAL_MOF = #VAL_MOF#
       , VAL_MOP = #VAL_MOP#
       , VAL_DIP = #VAL_DIP#
@@ -314,13 +314,13 @@
       MERGE INTO INFOFMS.WTL_VALV_PS
       USING DUAL ON (FTR_CDE = #FTR_CDE# AND	FTR_IDN = #FTR_IDN#)
 
-      WHEN MATCHED THEN 
+      WHEN MATCHED THEN
 
-      UPDATE 
+      UPDATE
       SET HJD_CDE = #HJD_CDE#
       , SHT_NUM = #SHT_NUM#
       , MNG_CDE = #MNG_CDE#
-      , IST_YMD = decode(length(#IST_YMD#), 10, to_char(to_date(#IST_YMD#, 'yyyy-MM-dd'), 'yyyyMMdd'), '')
+      , IST_YMD = #IST_YMD#
       , VAL_MOF = #VAL_MOF#
       , VAL_MOP = #VAL_MOP#
       , VAL_DIP = #VAL_DIP#
@@ -341,8 +341,8 @@
       , ANG_DIR = #ANG_DIR#
 
 
-      WHEN NOT MATCHED THEN 
-      INSERT 
+      WHEN NOT MATCHED THEN
+      INSERT
       (
       FTR_CDE
       , FTR_IDN
@@ -376,7 +376,7 @@
       , #HJD_CDE#
       , #SHT_NUM#
       , #MNG_CDE#
-      , decode(length(#IST_YMD#), 10, to_char(to_date(#IST_YMD#, 'yyyy-MM-dd'), 'yyyyMMdd'), '')
+      , #IST_YMD#
       , #VAL_MOF#
       , #VAL_MOP#
       , #VAL_DIP#

@@ -101,6 +101,11 @@ namespace GTI.WFMS.Modules.Pipe.ViewModel
                 this.FTR_IDN = result.FTR_IDN;
                 this.FTR_CDE = "SA001";
                 this.IST_YMD = Convert.ToDateTime(DateTime.Today).ToString("yyyy-MM-dd");
+
+
+                //공통팝업창 사이즈 
+                FmsUtil.popWinView.Height = 360;
+
             }
             catch (Exception e)
             {

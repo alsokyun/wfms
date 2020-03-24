@@ -168,7 +168,7 @@
             , A.SHT_NUM
             , A.MNG_CDE
             , (SELECT NM FROM INFOUSER.CD_DTL_INFO WHERE MST_CD = '250101' AND DTL_CD = A.MNG_CDE ) AS MNG_NAM
-            , decode(length(A.IST_YMD), 8, to_char(to_date(A.IST_YMD, 'yyyyMMdd'), 'yyyy-MM-dd'), '') AS IST_YMD
+            , a.IST_YMD
             , A.SAA_CDE
             , (SELECT NM FROM INFOUSER.CD_DTL_INFO WHERE MST_CD = '250018' AND DTL_CD = A.SAA_CDE ) AS SAA_NAM
             , A.JHT_CDE
@@ -215,7 +215,7 @@
         , #HJD_CDE#
         , #SHT_NUM#
         , #MNG_CDE#
-        , decode(length(#IST_YMD#), 10, to_char(to_date(#IST_YMD#, 'yyyy-MM-dd'), 'yyyyMMdd'), '')
+        , #IST_YMD#
         , #SAA_CDE#
         , #JHT_CDE#
         , #CNT_NUM#
@@ -236,7 +236,7 @@
       SET HJD_CDE = #HJD_CDE#
       , SHT_NUM = #SHT_NUM#
       , MNG_CDE = #MNG_CDE#
-      , IST_YMD = decode(length(#IST_YMD#), 10, to_char(to_date(#IST_YMD#, 'yyyy-MM-dd'), 'yyyyMMdd'), '')
+      , IST_YMD = #IST_YMD#
       , SAA_CDE = #SAA_CDE#
       , JHT_CDE = #JHT_CDE#
       , CNT_NUM = #CNT_NUM#
@@ -260,7 +260,7 @@
       SET HJD_CDE = #HJD_CDE#
       , SHT_NUM = #SHT_NUM#
       , MNG_CDE = #MNG_CDE#
-      , IST_YMD = decode(length(#IST_YMD#), 10, to_char(to_date(#IST_YMD#, 'yyyy-MM-dd'), 'yyyyMMdd'), '')
+      , IST_YMD = #IST_YMD#
       , SAA_CDE = #SAA_CDE#
       , JHT_CDE = #JHT_CDE#
       , CNT_NUM = #CNT_NUM#
@@ -274,7 +274,7 @@
 
 
       WHEN NOT MATCHED THEN
-      INSERT 
+      INSERT
       (   FTR_CDE
       , FTR_IDN
       , HJD_CDE
@@ -298,7 +298,7 @@
       , #HJD_CDE#
       , #SHT_NUM#
       , #MNG_CDE#
-      , decode(length(#IST_YMD#), 10, to_char(to_date(#IST_YMD#, 'yyyy-MM-dd'), 'yyyyMMdd'), '')
+      , #IST_YMD#
       , #SAA_CDE#
       , #JHT_CDE#
       , #CNT_NUM#

@@ -173,7 +173,7 @@
             , A.SHT_NUM
             , A.MNG_CDE
             , (SELECT NM FROM INFOUSER.CD_DTL_INFO WHERE MST_CD = '250101' AND DTL_CD = A.MNG_CDE ) AS MNG_NAM
-            , decode(length(A.FNS_YMD), 8, to_char(to_date(A.FNS_YMD, 'yyyyMMdd'), 'yyyy-MM-dd'), '') AS FNS_YMD
+            , a.FNS_YMD
             , A.HEA_NAM
             , A.WSR_CDE
             , (SELECT NM FROM INFOUSER.CD_DTL_INFO WHERE MST_CD = '250058' AND DTL_CD = A.WSR_CDE ) AS WSR_NAM
@@ -203,51 +203,51 @@
     <update id="insertWtrSourDtl" parameterClass="GTI.WFMS.Models.Fclt.Model.WtrSourDtl">
       INSERT INTO INFOFMS.WTL_HEAD_PS
       (   FTR_CDE
-        , FTR_IDN
-        , HJD_CDE
-        , SHT_NUM
-        , MNG_CDE
-        , FNS_YMD
-        , HEA_NAM
-        , WSR_CDE
-        , IRV_NAM
-        , RSV_VOL
-        , RSV_ARA
-        , FUL_ARA
-        , THR_WAL
-        , HTH_WAL
-        , AVG_WAL
-        , DRA_WAL
-        , HDR_WAL
-        , KEE_WAL
-        , GUA_ARA
-        , GUA_POP
-        , CNT_NUM
-        , SYS_CHK
+      , FTR_IDN
+      , HJD_CDE
+      , SHT_NUM
+      , MNG_CDE
+      , FNS_YMD
+      , HEA_NAM
+      , WSR_CDE
+      , IRV_NAM
+      , RSV_VOL
+      , RSV_ARA
+      , FUL_ARA
+      , THR_WAL
+      , HTH_WAL
+      , AVG_WAL
+      , DRA_WAL
+      , HDR_WAL
+      , KEE_WAL
+      , GUA_ARA
+      , GUA_POP
+      , CNT_NUM
+      , SYS_CHK
       )
       VALUES
       (   #FTR_CDE#
-        , #FTR_IDN#
-        , #HJD_CDE#
-        , #SHT_NUM#
-        , #MNG_CDE#
-        , decode(length(#FNS_YMD#), 10, to_char(to_date(#FNS_YMD#, 'yyyy-MM-dd'), 'yyyyMMdd'), '')
-        , #HEA_NAM#
-        , #WSR_CDE#
-        , #IRV_NAM#
-        , #RSV_VOL#
-        , #RSV_ARA#
-        , #FUL_ARA#
-        , #THR_WAL#
-        , #HTH_WAL#
-        , #AVG_WAL#
-        , #DRA_WAL#
-        , #HDR_WAL#
-        , #KEE_WAL#
-        , #GUA_ARA#
-        , #GUA_POP#
-        , #CNT_NUM#
-        , #SYS_CHK#
+      , #FTR_IDN#
+      , #HJD_CDE#
+      , #SHT_NUM#
+      , #MNG_CDE#
+      , #FNS_YMD#
+      , #HEA_NAM#
+      , #WSR_CDE#
+      , #IRV_NAM#
+      , #RSV_VOL#
+      , #RSV_ARA#
+      , #FUL_ARA#
+      , #THR_WAL#
+      , #HTH_WAL#
+      , #AVG_WAL#
+      , #DRA_WAL#
+      , #HDR_WAL#
+      , #KEE_WAL#
+      , #GUA_ARA#
+      , #GUA_POP#
+      , #CNT_NUM#
+      , #SYS_CHK#
       )
     </update>
 
@@ -258,7 +258,7 @@
       SET HJD_CDE = #HJD_CDE#
       , SHT_NUM = #SHT_NUM#
       , MNG_CDE = #MNG_CDE#
-      , FNS_YMD = decode(length(#FNS_YMD#), 10, to_char(to_date(#FNS_YMD#, 'yyyy-MM-dd'), 'yyyyMMdd'), '')
+      , FNS_YMD = #FNS_YMD#
       , HEA_NAM = #HEA_NAM#
       , WSR_CDE = #WSR_CDE#
       , IRV_NAM = #IRV_NAM#
@@ -288,7 +288,7 @@
       SET HJD_CDE = #HJD_CDE#
       , SHT_NUM = #SHT_NUM#
       , MNG_CDE = #MNG_CDE#
-      , FNS_YMD = decode(length(#FNS_YMD#), 10, to_char(to_date(#FNS_YMD#, 'yyyy-MM-dd'), 'yyyyMMdd'), '')
+      , FNS_YMD = #FNS_YMD#
       , HEA_NAM = #HEA_NAM#
       , WSR_CDE = #WSR_CDE#
       , IRV_NAM = #IRV_NAM#
@@ -307,7 +307,7 @@
       , SYS_CHK = #SYS_CHK#
 
       WHEN NOT MATCHED THEN
-      INSERT 
+      INSERT
       (   FTR_CDE
       , FTR_IDN
       , HJD_CDE
@@ -337,7 +337,7 @@
       , #HJD_CDE#
       , #SHT_NUM#
       , #MNG_CDE#
-      , decode(length(#FNS_YMD#), 10, to_char(to_date(#FNS_YMD#, 'yyyy-MM-dd'), 'yyyyMMdd'), '')
+      , #FNS_YMD#
       , #HEA_NAM#
       , #WSR_CDE#
       , #IRV_NAM#

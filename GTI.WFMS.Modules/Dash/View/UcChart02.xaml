@@ -18,7 +18,6 @@
         <ResourceDictionary>
             <cm:MultiValueConverter x:Key="multiValueConverter"/>
             <cv:Toggle2Converter x:Key="toggleConverter" />
-            <cv:Date2StrConverter x:Key="date2StrConverter" />
         </ResourceDictionary>
     </UserControl.Resources>
     

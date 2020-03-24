@@ -142,7 +142,7 @@
       , A.HJD_CDE,	H.HJD_NAM
       , A.SHT_NUM
       , A.MNG_CDE	,C.NM AS MNG_NAM
-      , decode(length(nvl(IST_YMD, '')), 8, to_char(to_date(IST_YMD, 'yyyyMMdd'), 'yyyy-MM-dd'), '') AS IST_YMD
+      , A.IST_YMD
       , A.SAA_CDE	,C2.NM AS SAA_NAM
       , A.MOP_CDE	,C3.NM AS MOP_NAM
       , A.JHT_CDE	,C4.NM AS JHT_NAM
@@ -175,7 +175,7 @@
       , A.HJD_CDE,	H.HJD_NAM
       , A.SHT_NUM
       , A.MNG_CDE	,C.NM AS MNG_NAM
-      , decode(length(nvl(IST_YMD, '')), 8, to_char(to_date(IST_YMD, 'yyyyMMdd'), 'yyyy-MM-dd'), '') AS IST_YMD
+      , A.IST_YMD
       , A.SAA_CDE	,C2.NM AS SAA_NAM
       , A.MOP_CDE	,C3.NM AS MOP_NAM
       , A.JHT_CDE	,C4.NM AS JHT_NAM
@@ -212,7 +212,7 @@
       SET HJD_CDE=#HJD_CDE#
       , SHT_NUM=#SHT_NUM#
       , MNG_CDE=#MNG_CDE#
-      , IST_YMD=decode(length(#IST_YMD#), 10, to_char(to_date(#IST_YMD#, 'yyyy-MM-dd'), 'yyyyMMdd'), '')
+      , IST_YMD=#IST_YMD#
       , SAA_CDE=#SAA_CDE#
       , JHT_CDE=#JHT_CDE#
       , MOP_CDE=#MOP_CDE#
@@ -248,7 +248,7 @@
       , #HJD_CDE#
       , #SHT_NUM#
       , #MNG_CDE#
-      , decode(length(#IST_YMD#), 10, to_char(to_date(#IST_YMD#, 'yyyy-MM-dd'), 'yyyyMMdd'), '')
+      , #IST_YMD#
       , #SAA_CDE#
       , #MOP_CDE#
       , #JHT_CDE#
@@ -298,13 +298,13 @@
       , PIP_LBL
       , PIP_DIP
       , PIP_LEN )
-      
+
       VALUES (#FTR_CDE#
       , #FTR_IDN#
       , #HJD_CDE#
       , #SHT_NUM#
       , #MNG_CDE#
-      , decode(length(#IST_YMD#), 10, to_char(to_date(#IST_YMD#, 'yyyy-MM-dd'), 'yyyyMMdd'), '')
+      , #IST_YMD#
       , #SAA_CDE#
       , #MOP_CDE#
       , #JHT_CDE#

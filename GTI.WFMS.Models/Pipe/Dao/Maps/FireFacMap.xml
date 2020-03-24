@@ -166,7 +166,7 @@
           , A.SHT_NUM
           , A.MNG_CDE
           , (SELECT NM FROM INFOUSER.CD_DTL_INFO WHERE MST_CD = '250101' AND DTL_CD = A.MNG_CDE ) AS MNG_NAM
-          , decode(length(A.IST_YMD), 8, to_char(to_date(A.IST_YMD, 'yyyyMMdd'), 'yyyy-MM-dd'), '') AS IST_YMD
+          , A.IST_YMD
           , A.HOM_NUM
           , A.MOF_CDE
           , (SELECT NM FROM INFOUSER.CD_DTL_INFO WHERE MST_CD = '250019' AND DTL_CD = A.MOF_CDE ) AS MOF_NAM
@@ -188,7 +188,7 @@
     <update id="insertFireFacDtl" parameterClass="GTI.WFMS.Models.Pipe.Model.FireFacDtl">
       INSERT INTO INFOFMS.WTL_FIRE_PS
       (
-        FTR_CDE
+      FTR_CDE
       , FTR_IDN
       , HJD_CDE
       , SHT_NUM
@@ -205,12 +205,12 @@
       )
       VALUES
       (
-        #FTR_CDE#
+      #FTR_CDE#
       , #FTR_IDN#
       , #HJD_CDE#
       , #SHT_NUM#
       , #MNG_CDE#
-      , decode(length(#IST_YMD#), 10, to_char(to_date(#IST_YMD#, 'yyyy-MM-dd'), 'yyyyMMdd'), '')
+      , #IST_YMD#
       , #HOM_NUM#
       , #MOF_CDE#
       , #FIR_DIP#
@@ -229,7 +229,7 @@
       SET HJD_CDE = #HJD_CDE#
       , SHT_NUM = #SHT_NUM#
       , MNG_CDE = #MNG_CDE#
-      , IST_YMD = decode(length(#IST_YMD#), 10, to_char(to_date(#IST_YMD#, 'yyyy-MM-dd'), 'yyyyMMdd'), '')
+      , IST_YMD = #IST_YMD#
       , HOM_NUM = #HOM_NUM#
       , MOF_CDE = #MOF_CDE#
       , FIR_DIP = #FIR_DIP#

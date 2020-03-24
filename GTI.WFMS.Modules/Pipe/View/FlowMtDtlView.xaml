@@ -28,7 +28,7 @@
 
             <cm:MultiValueConverter x:Key="multiValueConverter"/>
             <cv:Toggle2Converter x:Key="toggleConverter" />
-            <cv:Date2StrConverter x:Key="date2StrConverter" />
+            <cv:Date3StrConverter x:Key="date2StrConverter" />
 
 
             <dx:BoolToObjectConverter x:Key="foregroundConverter">

@@ -21,7 +21,7 @@
     </UserControl.DataContext>
 
     <UserControl.Resources>
-        <cv:Date2StrConverter x:Key="date2StrConverter" />
+        <cv:Date3StrConverter x:Key="date2StrConverter" />
         <cv:Toggle2Converter x:Key="toggleConverter" />
     </UserControl.Resources>
 

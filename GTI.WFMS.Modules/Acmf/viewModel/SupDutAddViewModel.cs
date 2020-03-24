@@ -104,6 +104,9 @@ namespace GTI.WFMS.Modules.Acmf.ViewModel
                 this.FTR_CDE = "SA002";
 
                 this.IST_YMD = Convert.ToDateTime(DateTime.Today).ToString("yyyy-MM-dd");
+
+                //공통팝업창 사이즈 변경 1
+                FmsUtil.popWinView.Height = 280;
             }
             catch (Exception e)
             {

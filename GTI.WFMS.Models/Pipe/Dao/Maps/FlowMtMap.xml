@@ -167,7 +167,7 @@
           , A.SHT_NUM
           , A.MNG_CDE
           , (SELECT NM FROM INFOUSER.CD_DTL_INFO WHERE MST_CD = '250101' AND DTL_CD = A.MNG_CDE ) AS MNG_NAM
-          , decode(length(A.IST_YMD), 8, to_char(to_date(A.IST_YMD, 'yyyyMMdd'), 'yyyy-MM-dd'), '') AS IST_YMD
+          , a.IST_YMD
           , A.GAG_CDE
           , (SELECT NM FROM INFOUSER.CD_DTL_INFO WHERE MST_CD = '250061' AND DTL_CD = A.GAG_CDE ) AS GAG_NAM
           , A.MOF_CDE
@@ -213,7 +213,7 @@
       , #HJD_CDE#
       , #SHT_NUM#
       , #MNG_CDE#
-      , decode(length(#IST_YMD#), 10, to_char(to_date(#IST_YMD#, 'yyyy-MM-dd'), 'yyyyMMdd'), '')
+      , #IST_YMD#
       , #GAG_CDE#
       , #MOF_CDE#
       , #FLO_DIP#
@@ -231,22 +231,22 @@
     <update id="updateFlowMtDtl" parameterClass="GTI.WFMS.Models.Pipe.Model.FlowMtDtl">
       /* 유량계 상세 수정 */
       UPDATE INFOFMS.WTL_FLOW_PS
-        SET HJD_CDE = #HJD_CDE#
-          , SHT_NUM = #SHT_NUM#
-          , MNG_CDE = #MNG_CDE#
-          , IST_YMD = decode(length(#IST_YMD#), 10, to_char(to_date(#IST_YMD#, 'yyyy-MM-dd'), 'yyyyMMdd'), '')
-          , GAG_CDE = #GAG_CDE#
-          , MOF_CDE = #MOF_CDE#
-          , FLO_DIP = #FLO_DIP#
-          , PRD_NAM = #PRD_NAM#
-          , PIP_CDE = #PIP_CDE#
-          , CNT_NUM = #CNT_NUM#
-          , SYS_CHK = #SYS_CHK#
-          , ANG_DIR = #ANG_DIR#
-          , PIP_IDN = #PIP_IDN#
-          , SHT_CDE = #SHT_CDE#
+      SET HJD_CDE = #HJD_CDE#
+      , SHT_NUM = #SHT_NUM#
+      , MNG_CDE = #MNG_CDE#
+      , IST_YMD = #IST_YMD#
+      , GAG_CDE = #GAG_CDE#
+      , MOF_CDE = #MOF_CDE#
+      , FLO_DIP = #FLO_DIP#
+      , PRD_NAM = #PRD_NAM#
+      , PIP_CDE = #PIP_CDE#
+      , CNT_NUM = #CNT_NUM#
+      , SYS_CHK = #SYS_CHK#
+      , ANG_DIR = #ANG_DIR#
+      , PIP_IDN = #PIP_IDN#
+      , SHT_CDE = #SHT_CDE#
       WHERE FTR_CDE = #FTR_CDE#
-        AND	FTR_IDN = #FTR_IDN#
+      AND	FTR_IDN = #FTR_IDN#
     </update>
 
     <!--유량계 상세저장-->
@@ -259,7 +259,7 @@
       SET HJD_CDE = #HJD_CDE#
       , SHT_NUM = #SHT_NUM#
       , MNG_CDE = #MNG_CDE#
-      , IST_YMD = decode(length(#IST_YMD#), 10, to_char(to_date(#IST_YMD#, 'yyyy-MM-dd'), 'yyyyMMdd'), '')
+      , IST_YMD = #IST_YMD#
       , GAG_CDE = #GAG_CDE#
       , MOF_CDE = #MOF_CDE#
       , FLO_DIP = #FLO_DIP#
@@ -272,42 +272,42 @@
       , SHT_CDE = #SHT_CDE#
 
       WHEN NOT MATCHED THEN
-        INSERT 
-        ( FTR_CDE
-        , FTR_IDN
-        , HJD_CDE
-        , SHT_NUM
-        , MNG_CDE
-        , IST_YMD
-        , GAG_CDE
-        , MOF_CDE
-        , FLO_DIP
-        , PRD_NAM
-        , PIP_CDE
-        , CNT_NUM
-        , SYS_CHK
-        , ANG_DIR
-        , PIP_IDN
-        , SHT_CDE
-        )
-        VALUES
-        ( #FTR_CDE#
-        , #FTR_IDN#
-        , #HJD_CDE#
-        , #SHT_NUM#
-        , #MNG_CDE#
-        , decode(length(#IST_YMD#), 10, to_char(to_date(#IST_YMD#, 'yyyy-MM-dd'), 'yyyyMMdd'), '')
-        , #GAG_CDE#
-        , #MOF_CDE#
-        , #FLO_DIP#
-        , #PRD_NAM#
-        , #PIP_CDE#
-        , #CNT_NUM#
-        , #SYS_CHK#
-        , #ANG_DIR#
-        , #PIP_IDN#
-        , #SHT_CDE#
-        )
+      INSERT
+      ( FTR_CDE
+      , FTR_IDN
+      , HJD_CDE
+      , SHT_NUM
+      , MNG_CDE
+      , IST_YMD
+      , GAG_CDE
+      , MOF_CDE
+      , FLO_DIP
+      , PRD_NAM
+      , PIP_CDE
+      , CNT_NUM
+      , SYS_CHK
+      , ANG_DIR
+      , PIP_IDN
+      , SHT_CDE
+      )
+      VALUES
+      ( #FTR_CDE#
+      , #FTR_IDN#
+      , #HJD_CDE#
+      , #SHT_NUM#
+      , #MNG_CDE#
+      , #IST_YMD#
+      , #GAG_CDE#
+      , #MOF_CDE#
+      , #FLO_DIP#
+      , #PRD_NAM#
+      , #PIP_CDE#
+      , #CNT_NUM#
+      , #SYS_CHK#
+      , #ANG_DIR#
+      , #PIP_IDN#
+      , #SHT_CDE#
+      )
     </update>
     
     

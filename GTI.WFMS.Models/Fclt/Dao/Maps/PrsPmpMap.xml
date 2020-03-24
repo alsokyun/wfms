@@ -166,7 +166,7 @@
             , A.SHT_NUM
             , A.MNG_CDE
             , (SELECT NM FROM INFOUSER.CD_DTL_INFO WHERE MST_CD = '250101' AND DTL_CD = A.MNG_CDE ) AS MNG_NAM
-            , decode(length(A.FNS_YMD), 8, to_char(to_date(A.FNS_YMD, 'yyyyMMdd'), 'yyyy-MM-dd'), '') AS FNS_YMD
+            , A.FNS_YMD
             , A.PRS_NAM
             , A.PRS_ARA
             , A.SAG_CDE
@@ -210,7 +210,7 @@
       , #HJD_CDE#
       , #SHT_NUM#
       , #MNG_CDE#
-      , decode(length(#FNS_YMD#), 10, to_char(to_date(#FNS_YMD#, 'yyyy-MM-dd'), 'yyyyMMdd'), '')
+      , #FNS_YMD#
       , #PRS_NAM#
       , #PRS_ARA#
       , #SAG_CDE#
@@ -230,7 +230,7 @@
       SET HJD_CDE = #HJD_CDE#
       , SHT_NUM = #SHT_NUM#
       , MNG_CDE = #MNG_CDE#
-      , FNS_YMD = decode(length(#FNS_YMD#), 10, to_char(to_date(#FNS_YMD#, 'yyyy-MM-dd'), 'yyyyMMdd'), '')
+      , FNS_YMD = #FNS_YMD#
       , PRS_NAM = #PRS_NAM#
       , PRS_ARA = #PRS_ARA#
       , SAG_CDE = #SAG_CDE#
@@ -253,7 +253,7 @@
       SET HJD_CDE = #HJD_CDE#
       , SHT_NUM = #SHT_NUM#
       , MNG_CDE = #MNG_CDE#
-      , FNS_YMD = decode(length(#FNS_YMD#), 10, to_char(to_date(#FNS_YMD#, 'yyyy-MM-dd'), 'yyyyMMdd'), '')
+      , FNS_YMD = #FNS_YMD#
       , PRS_NAM = #PRS_NAM#
       , PRS_ARA = #PRS_ARA#
       , SAG_CDE = #SAG_CDE#
@@ -266,7 +266,7 @@
 
 
       WHEN NOT MATCHED THEN
-      INSERT 
+      INSERT
       ( FTR_CDE
       , FTR_IDN
       , HJD_CDE
@@ -289,7 +289,7 @@
       , #HJD_CDE#
       , #SHT_NUM#
       , #MNG_CDE#
-      , decode(length(#FNS_YMD#), 10, to_char(to_date(#FNS_YMD#, 'yyyy-MM-dd'), 'yyyyMMdd'), '')
+      , #FNS_YMD#
       , #PRS_NAM#
       , #PRS_ARA#
       , #SAG_CDE#

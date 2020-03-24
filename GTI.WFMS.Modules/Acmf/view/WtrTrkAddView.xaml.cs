@@ -1,4 +1,5 @@
 ﻿using DevExpress.Xpf.Core;
+using GTI.WFMS.Models.Common;
 using GTI.WFMS.Modules.Link.View;
 using GTIFramework.Common.Utils.ViewEffect;
 using System;
@@ -40,6 +41,8 @@ namespace GTI.WFMS.Modules.Acmf.View
         // 목록으로 뒤로가기
         private void _backCmd(object sender, RoutedEventArgs e)
         {
+            //공통팝업창 사이즈 원복
+            FmsUtil.popWinView.Height = 631;
             NavigationService.Navigate(new WtrTrkListView());
         }
 

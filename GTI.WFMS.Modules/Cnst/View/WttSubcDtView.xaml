@@ -26,7 +26,7 @@
         <ResourceDictionary>
             <cm:MultiValueConverter x:Key="multiValueConverter"/>
             <cv:ToggleConverter x:Key="toggleConverter" />
-            <cv:Date2StrConverter x:Key="date2StrConverter" />
+            <cv:Date3StrConverter x:Key="date2StrConverter" />
         </ResourceDictionary>
     </UserControl.Resources>
 

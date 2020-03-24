@@ -32,10 +32,10 @@ namespace GTI.WFMS.Modules.Pipe.ViewModel
         #region ==========  Member 정의 ==========
         WtsMnhoAddView wtsMnhoAddView;
         //ComboBoxEdit cbFTR_CDE; DataTable dtFTR_CDE = new DataTable();		//지형지물
-        ComboBoxEdit cbHJD_CDE; DataTable dtHJD_CDE = new DataTable();		//행정동
-        ComboBoxEdit cbMNG_CDE; DataTable dtMNG_CDE = new DataTable();      //관리기관
-        ComboBoxEdit cbSOM_CDE; DataTable dtSOM_CDE = new DataTable();      //맨홀종류
-        ComboBoxEdit cbMHS_CDE; DataTable dtMHS_CDE = new DataTable();      //맨홀종류
+        ComboBoxEdit cbHJD_CDE; //행정동
+        ComboBoxEdit cbMNG_CDE; //관리기관
+        ComboBoxEdit cbSOM_CDE; //맨홀종류
+        ComboBoxEdit cbMHS_CDE; //맨홀종류
 
         Button btnBack;
         Button btnSave;
@@ -102,6 +102,11 @@ namespace GTI.WFMS.Modules.Pipe.ViewModel
                 this.FTR_CDE = "SA100";
 
                 this.IST_YMD = Convert.ToDateTime(DateTime.Today).ToString("yyyy-MM-dd");
+
+
+                //공통팝업창 사이즈 
+                FmsUtil.popWinView.Height = 320;
+
             }
             catch (Exception e)
             {

@@ -166,7 +166,7 @@
             , A.SHT_NUM
             , A.MNG_CDE
             , (SELECT NM FROM INFOUSER.CD_DTL_INFO WHERE MST_CD = '250101' AND DTL_CD = A.MNG_CDE ) AS MNG_NAM
-            , decode(length(A.IST_YMD), 8, to_char(to_date(A.IST_YMD, 'yyyyMMdd'), 'yyyy-MM-dd'), '') AS IST_YMD
+            , A.IST_YMD
             , A.VAL_MOF
             , (SELECT NM FROM INFOUSER.CD_DTL_INFO WHERE MST_CD = '250035' AND DTL_CD = A.VAL_MOF ) AS MOF_NAM
             , A.STP_MOP
@@ -210,7 +210,7 @@
       , #HJD_CDE#
       , #SHT_NUM#
       , #MNG_CDE#
-      , decode(length(#IST_YMD#), 10, to_char(to_date(#IST_YMD#, 'yyyy-MM-dd'), 'yyyyMMdd'), '')
+      , #IST_YMD#
       , #VAL_MOF#
       , #STP_MOP#
       , #STD_DIP#
@@ -229,7 +229,7 @@
       SET HJD_CDE = #HJD_CDE#
       , SHT_NUM = #SHT_NUM#
       , MNG_CDE = #MNG_CDE#
-      , IST_YMD = decode(length(#IST_YMD#), 10, to_char(to_date(#IST_YMD#, 'yyyy-MM-dd'), 'yyyyMMdd'), '')
+      , IST_YMD = #IST_YMD#
       , VAL_MOF = #VAL_MOF#
       , STP_MOP = #STP_MOP#
       , STD_DIP = #STD_DIP#
@@ -248,11 +248,11 @@
 
       WHEN MATCHED THEN
       UPDATE
-      SET 
+      SET
       HJD_CDE = #HJD_CDE#
       , SHT_NUM = #SHT_NUM#
       , MNG_CDE = #MNG_CDE#
-      , IST_YMD = decode(length(#IST_YMD#), 10, to_char(to_date(#IST_YMD#, 'yyyy-MM-dd'), 'yyyyMMdd'), '')
+      , IST_YMD = #IST_YMD#
       , VAL_MOF = #VAL_MOF#
       , STP_MOP = #STP_MOP#
       , STD_DIP = #STD_DIP#
@@ -263,7 +263,7 @@
       , ANG_DIR = #ANG_DIR#
 
       WHEN NOT MATCHED THEN
-      INSERT 
+      INSERT
       ( FTR_CDE
       , FTR_IDN
       , HJD_CDE
@@ -286,7 +286,7 @@
       , #HJD_CDE#
       , #SHT_NUM#
       , #MNG_CDE#
-      , decode(length(#IST_YMD#), 10, to_char(to_date(#IST_YMD#, 'yyyy-MM-dd'), 'yyyyMMdd'), '')
+      , #IST_YMD#
       , #VAL_MOF#
       , #STP_MOP#
       , #STD_DIP#

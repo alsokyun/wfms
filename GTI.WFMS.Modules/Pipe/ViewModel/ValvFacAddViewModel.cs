@@ -31,16 +31,16 @@ namespace GTI.WFMS.Modules.Pipe.ViewModel
 
         #region ==========  Member 정의 ==========
         ValvFacAddView valvFacAddView;
-        ComboBoxEdit cbFTR_CDE; DataTable dtFTR_CDE = new DataTable();		//지형지물
-        ComboBoxEdit cbHJD_CDE; DataTable dtHJD_CDE = new DataTable();		//행정동
-        ComboBoxEdit cbMNG_CDE; DataTable dtMNG_CDE = new DataTable();		//관리기관
-        ComboBoxEdit cbVAL_MOF; DataTable dtVAL_MOF = new DataTable();		//형식
-        ComboBoxEdit cbVAL_MOP; DataTable dtVAL_MOP = new DataTable();		//관재질
-        ComboBoxEdit cbSAE_CDE; DataTable dtSAE_CDE = new DataTable();		//제수변회전방향
-        ComboBoxEdit cbMTH_CDE; DataTable dtMTH_CDE = new DataTable();		//제수변구동방법
-        ComboBoxEdit cbVAL_FOR; DataTable dtVAL_FOR = new DataTable();		//시설물형태
-        ComboBoxEdit cbCST_CDE; DataTable dtCST_CDE = new DataTable();		//이상상태
-        ComboBoxEdit cbOFF_CDE; DataTable dtOFF_CDE = new DataTable();		//개폐여부
+        ComboBoxEdit cbFTR_CDE; //지형지물
+        ComboBoxEdit cbHJD_CDE; //행정동
+        ComboBoxEdit cbMNG_CDE; //관리기관
+        ComboBoxEdit cbVAL_MOF; //형식
+        ComboBoxEdit cbVAL_MOP; //관재질
+        ComboBoxEdit cbSAE_CDE; //제수변회전방향
+        ComboBoxEdit cbMTH_CDE; //제수변구동방법
+        ComboBoxEdit cbVAL_FOR; //시설물형태
+        ComboBoxEdit cbCST_CDE; //이상상태
+        ComboBoxEdit cbOFF_CDE; //개폐여부
 
         Button btnBack;
         Button btnSave;
@@ -112,6 +112,10 @@ namespace GTI.WFMS.Modules.Pipe.ViewModel
                 this.FTR_CDE = "SA200";
 
                 this.IST_YMD = Convert.ToDateTime(DateTime.Today).ToString("yyyy-MM-dd");
+
+                //공통팝업창 사이즈 원복
+                FmsUtil.popWinView.Height = 440;
+
             }
             catch (Exception e)
             {

@@ -165,7 +165,7 @@
           , A.SHT_NUM
           , A.MNG_CDE
           , (SELECT NM FROM INFOUSER.CD_DTL_INFO WHERE MST_CD = '250101' AND DTL_CD = A.MNG_CDE ) AS MNG_NAM
-          , decode(length(A.IST_YMD), 8, to_char(to_date(A.IST_YMD, 'yyyyMMdd'), 'yyyy-MM-dd'), '') AS IST_YMD
+          , a.IST_YMD
           , A.MAN_STD	/*규격*/
           , A.SOM_CDE	/*맨홀종류*/
           , (SELECT NM FROM INFOUSER.CD_DTL_INFO WHERE MST_CD = '250012' AND DTL_CD = A.SOM_CDE ) AS SOM_NAM
@@ -201,12 +201,12 @@
       )
       VALUES
       (
-        #FTR_CDE#
+      #FTR_CDE#
       , #FTR_IDN#
       , #HJD_CDE#
       , #SHT_NUM#
       , #MNG_CDE#
-      , decode(length(#IST_YMD#), 10, to_char(to_date(#IST_YMD#, 'yyyy-MM-dd'), 'yyyyMMdd'), '')
+      , #IST_YMD#
       , #MAN_STD#
       , #SOM_CDE#
       , #MHS_CDE#
@@ -223,7 +223,7 @@
       SET HJD_CDE = #HJD_CDE#
       , SHT_NUM = #SHT_NUM#
       , MNG_CDE = #MNG_CDE#
-      , IST_YMD = decode(length(#IST_YMD#), 10, to_char(to_date(#IST_YMD#, 'yyyy-MM-dd'), 'yyyyMMdd'), '')
+      , IST_YMD = #IST_YMD#
       , MAN_STD = #MAN_STD#
       , SOM_CDE = #SOM_CDE#
       , MHS_CDE = #MHS_CDE#
@@ -244,7 +244,7 @@
       SET HJD_CDE = #HJD_CDE#
       , SHT_NUM = #SHT_NUM#
       , MNG_CDE = #MNG_CDE#
-      , IST_YMD = decode(length(#IST_YMD#), 10, to_char(to_date(#IST_YMD#, 'yyyy-MM-dd'), 'yyyyMMdd'), '')
+      , IST_YMD = #IST_YMD#
       , MAN_STD = #MAN_STD#
       , SOM_CDE = #SOM_CDE#
       , MHS_CDE = #MHS_CDE#
@@ -253,7 +253,7 @@
       , ANG_DIR = #ANG_DIR#
 
       WHEN NOT MATCHED THEN
-      INSERT 
+      INSERT
       (
       FTR_CDE
       , FTR_IDN
@@ -275,7 +275,7 @@
       , #HJD_CDE#
       , #SHT_NUM#
       , #MNG_CDE#
-      , decode(length(#IST_YMD#), 10, to_char(to_date(#IST_YMD#, 'yyyy-MM-dd'), 'yyyyMMdd'), '')
+      , #IST_YMD#
       , #MAN_STD#
       , #SOM_CDE#
       , #MHS_CDE#

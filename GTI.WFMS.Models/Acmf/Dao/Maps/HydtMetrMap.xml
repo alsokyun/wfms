@@ -163,7 +163,7 @@
                       , A.HJD_CDE
                       , (SELECT HJD_NAM FROM INFOFMS.CMT_ADAR_MA WHERE HJD_CDE = A.HJD_CDE) AS HJD_NAM
                       , A.SHT_NUM            
-                      , decode(length(A.IST_YMD), 8, to_char(to_date(A.IST_YMD, 'yyyyMMdd'), 'yyyy-MM-dd'), '') AS IST_YMD
+                      , a.IST_YMD
                       , A.HOM_NUM
                       , A.HOM_NAM
                       , A.HOM_CDE
@@ -195,49 +195,49 @@
     <update id="insertHydtMetrDtl" parameterClass="GTI.WFMS.Models.Acmf.Model.HydtMetrDtl">
       INSERT INTO INFOFMS.WTL_META_PS
       (   FTR_CDE
-        , FTR_IDN
-        , HJD_CDE
-        , SHT_NUM
-        , IST_YMD
-        , HOM_NUM
-        , HOM_NAM
-        , HOM_CDE
-        , HOM_ADR
-        , HOM_CNT
-        , SBI_CDE
-        , MET_DIP
-        , MOF_CDE
-        , PRD_NUM
-        , PIP_CDE
-        , PIP_IDN
-        , CNT_NUM
-        , SYS_CHK
-        , MET_NUM
-        , MET_MOF
-        , HOM_HJD
+      , FTR_IDN
+      , HJD_CDE
+      , SHT_NUM
+      , IST_YMD
+      , HOM_NUM
+      , HOM_NAM
+      , HOM_CDE
+      , HOM_ADR
+      , HOM_CNT
+      , SBI_CDE
+      , MET_DIP
+      , MOF_CDE
+      , PRD_NUM
+      , PIP_CDE
+      , PIP_IDN
+      , CNT_NUM
+      , SYS_CHK
+      , MET_NUM
+      , MET_MOF
+      , HOM_HJD
       )
       VALUES
       (   #FTR_CDE#
-        , #FTR_IDN#
-        , #HJD_CDE#
-        , #SHT_NUM#
-        , decode(length(#IST_YMD#), 10, to_char(to_date(#IST_YMD#, 'yyyy-MM-dd'), 'yyyyMMdd'), '')
-        , #HOM_NUM#
-        , #HOM_NAM#
-        , #HOM_CDE#
-        , #HOM_ADR#
-        , #HOM_CNT#
-        , #SBI_CDE#
-        , #MET_DIP#
-        , #MOF_CDE#
-        , #PRD_NUM#
-        , #PIP_CDE#
-        , #PIP_IDN#
-        , #CNT_NUM#
-        , #SYS_CHK#
-        , #MET_NUM#
-        , #MET_MOF#
-        , #HOM_HJD#
+      , #FTR_IDN#
+      , #HJD_CDE#
+      , #SHT_NUM#
+      , #IST_YMD#
+      , #HOM_NUM#
+      , #HOM_NAM#
+      , #HOM_CDE#
+      , #HOM_ADR#
+      , #HOM_CNT#
+      , #SBI_CDE#
+      , #MET_DIP#
+      , #MOF_CDE#
+      , #PRD_NUM#
+      , #PIP_CDE#
+      , #PIP_IDN#
+      , #CNT_NUM#
+      , #SYS_CHK#
+      , #MET_NUM#
+      , #MET_MOF#
+      , #HOM_HJD#
       )
     </update>
 
@@ -247,7 +247,7 @@
       UPDATE INFOFMS.WTL_META_PS
       SET HJD_CDE = #HJD_CDE#
       , SHT_NUM = #SHT_NUM#
-      , IST_YMD = decode(length(#IST_YMD#), 10, to_char(to_date(#IST_YMD#, 'yyyy-MM-dd'), 'yyyyMMdd'), '')
+      , IST_YMD = #IST_YMD#
       , HOM_NUM = #HOM_NUM#
       , HOM_NAM = #HOM_NAM#
       , HOM_CDE = #HOM_CDE#
@@ -276,7 +276,7 @@
       UPDATE
       SET HJD_CDE = #HJD_CDE#
       , SHT_NUM = #SHT_NUM#
-      , IST_YMD = decode(length(#IST_YMD#), 10, to_char(to_date(#IST_YMD#, 'yyyy-MM-dd'), 'yyyyMMdd'), '')
+      , IST_YMD = #IST_YMD#
       , HOM_NUM = #HOM_NUM#
       , HOM_NAM = #HOM_NAM#
       , HOM_CDE = #HOM_CDE#
@@ -296,7 +296,7 @@
 
 
       WHEN NOT MATCHED THEN
-      INSERT 
+      INSERT
       (   FTR_CDE
       , FTR_IDN
       , HJD_CDE
@@ -324,7 +324,7 @@
       , #FTR_IDN#
       , #HJD_CDE#
       , #SHT_NUM#
-      , decode(length(#IST_YMD#), 10, to_char(to_date(#IST_YMD#, 'yyyy-MM-dd'), 'yyyyMMdd'), '')
+      , #IST_YMD#
       , #HOM_NUM#
       , #HOM_NAM#
       , #HOM_CDE#

@@ -27,7 +27,7 @@
     <!--페이지내 리소스정의-->
     <Page.Resources>
         <ResourceDictionary>
-            <cv:Date2StrConverter x:Key="date2StrConverter" />
+            <cv:Date3StrConverter x:Key="date2StrConverter" />
             <dxre:ContentToRtfConverter x:Key="contentToRtfConverter" />
             <dxre:RtfToContentConverter x:Key="rtfToContentConverter" />
 
