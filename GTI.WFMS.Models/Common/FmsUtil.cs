@@ -23,9 +23,9 @@ namespace GTI.WFMS.Models.Common
         public static int PageSize = 10; //페이지의 row 수
 
         public static IRegionManager __regionManager;
-        public static Popup __popMain;
+        public static Popup __popMain;//열린팝업을 전역변수로 저장해놓음,사용안함
+        public static Window popWinView;//팝업업무기본창 전역변수로 저장해놓음 - 사이즈변경위해
 
-        
 
         /// <summary>
         /// IsNull 오브젝트형

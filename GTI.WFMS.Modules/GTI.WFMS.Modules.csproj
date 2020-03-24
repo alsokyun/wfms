@@ -183,6 +183,14 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
+    <Page Include="Cnst\View\CnstMngAddView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Cnst\View\SplyAddView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
     <Page Include="Cnst\View\SplyMngListView.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -320,6 +328,14 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Include="Dash\View\DashView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Mntc\View\FaqDocView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Mntc\View\FaqAddView.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
@@ -636,12 +652,20 @@
     <Compile Include="Cnst\Report\CnstMngReport.Designer.cs">
       <DependentUpon>CnstMngReport.cs</DependentUpon>
     </Compile>
+    <Compile Include="Cnst\ViewModel\CnstMngAddViewModel.cs" />
+    <Compile Include="Cnst\ViewModel\SplyAddViewModel.cs" />
     <Compile Include="Cnst\ViewModel\SplyMngListViewModel.cs" />
     <Compile Include="Cnst\ViewModel\CnstMngListViewModel.cs" />
     <Compile Include="Cnst\ViewModel\CnstMngDtlViewModel.cs" />
     <Compile Include="Cnst\ViewModel\SplyDtlViewModel.cs" />
     <Compile Include="Cnst\ViewModel\WttSubcDtViewModel.cs" />
     <Compile Include="Cnst\ViewModel\CnstMngDtlViewMdl.cs" />
+    <Compile Include="Cnst\View\CnstMngAddView.xaml.cs">
+      <DependentUpon>CnstMngAddView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Cnst\View\SplyAddView.xaml.cs">
+      <DependentUpon>SplyAddView.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Cnst\View\SplyMngListView.xaml.cs">
       <DependentUpon>SplyMngListView.xaml</DependentUpon>
     </Compile>
@@ -806,6 +830,14 @@
     </Compile>
     <Compile Include="Dash\View\DashView.xaml.cs">
       <DependentUpon>DashView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Mntc\ViewModel\FaqDocViewModel.cs" />
+    <Compile Include="Mntc\ViewModel\FaqAddViewModel.cs" />
+    <Compile Include="Mntc\View\FaqDocView.xaml.cs">
+      <DependentUpon>FaqDocView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Mntc\View\FaqAddView.xaml.cs">
+      <DependentUpon>FaqAddView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Pop\ViewModel\CnstCmplSelViewModel.cs" />
     <Compile Include="Pop\View\CnstCmplSelView.xaml.cs">

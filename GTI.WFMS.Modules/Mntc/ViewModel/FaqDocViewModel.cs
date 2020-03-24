@@ -24,7 +24,7 @@ using System.Windows.Controls;
 
 namespace GTI.WFMS.Modules.Mntc.ViewModel
 {
-    public class FaqDtlViewModel : FaqDtl
+    public class FaqDocViewModel : FaqDtl
     {
 
 
@@ -34,8 +34,6 @@ namespace GTI.WFMS.Modules.Mntc.ViewModel
         /// Loaded Event
         /// </summary>
         public DelegateCommand<object> LoadedCommand { get; set; }
-        public DelegateCommand<object> SaveCommand { get; set; }
-        public DelegateCommand<object> DeleteCommand { get; set; }
         public DelegateCommand<object> BackCommand { get; set; }
 
 
@@ -43,15 +41,12 @@ namespace GTI.WFMS.Modules.Mntc.ViewModel
 
 
         #region ==========  Member 정의 ==========
-        FaqDtlView faqDtlView;
+        FaqDocView faqDocView;
         ComboBoxEdit cbFTR_CDE;
         ComboBoxEdit cbFAQ_CAT_CDE; 
         ComboBoxEdit cbFAQ_CUZ_CDE; 
         
         Button btnBack;
-        Button btnDelete;
-        Button btnSave;
-        RichEditControl richQUESTION;
 
         #endregion
 
@@ -59,11 +54,9 @@ namespace GTI.WFMS.Modules.Mntc.ViewModel
 
 
         /// 생성자
-        public FaqDtlViewModel()
+        public FaqDocViewModel()
         {
             this.LoadedCommand = new DelegateCommand<object>(OnLoaded);
-            this.SaveCommand = new DelegateCommand<object>(OnSave);
-            this.DeleteCommand = new DelegateCommand<object>(OnDelete);
             this.BackCommand = new DelegateCommand<object>(OnBack);
         }
 
@@ -82,14 +75,11 @@ namespace GTI.WFMS.Modules.Mntc.ViewModel
             // 0.화면객체인스턴스화
             if (obj == null) return;
 
-            faqDtlView = obj as FaqDtlView;
-            cbFTR_CDE = faqDtlView.cbFTR_CDE;
-            cbFAQ_CAT_CDE = faqDtlView.cbFAQ_CAT_CDE;
-            cbFAQ_CUZ_CDE= faqDtlView.cbFAQ_CUZ_CDE;
-            btnBack = faqDtlView.btnBack;
-            btnDelete = faqDtlView.btnDelete;
-            btnSave = faqDtlView.btnSave;
-            richQUESTION = faqDtlView.richQUESTION;
+            faqDocView = obj as FaqDocView;
+            cbFTR_CDE = faqDocView.cbFTR_CDE;
+            cbFAQ_CAT_CDE = faqDocView.cbFAQ_CAT_CDE;
+            cbFAQ_CUZ_CDE= faqDocView.cbFAQ_CUZ_CDE;
+            btnBack = faqDocView.btnBack;
 
             //2.화면데이터객체 초기화
             InitDataBinding();
@@ -171,86 +161,6 @@ namespace GTI.WFMS.Modules.Mntc.ViewModel
 
 
 
-        /// <summary>
-        /// 저장작업
-        /// </summary>
-        /// <param name="obj"></param>
-        private void OnSave(object obj)
-        {
-
-            // 필수체크 (Tag에 필수체크 표시한 EditBox, ComboBox 대상으로 수행)
-            if (!BizUtil.ValidReq(faqDtlView)) return;
-
-            
-
-            if (Messages.ShowYesNoMsgBox("저장하시겠습니까?") != MessageBoxResult.Yes) return;
-
-            try
-            {
-                //this.QUESTION = richQUESTION.RtfText;
-                //BizUtil.Update2(this, "SaveFaqDtl");
-
-
-                string sql = "";
-                sql += " UPDATE FAQ SET ";
-                sql += " QUESTION = :QUESTION ";
-                sql += " ,REPL = :REPL ";
-                sql += " ,TTL = :TTL ";
-                sql += " ,FAQ_CAT_CDE= :FAQ_CAT_CDE";
-                sql += " ,EDT_ID = :EDT_ID";
-                sql += " ,FTR_CDE = :FTR_CDE";
-                sql += " ,FAQ_CUZ_CDE= :FAQ_CUZ_CDE";
-                sql += " WHERE SEQ = :SEQ ;";
-
-                Hashtable param = new Hashtable();
-                param.Add("sql", sql);
-                param.Add("QUESTION", this.QUESTION);
-                param.Add("REPL", this.REPL);
-                param.Add("TTL", this.TTL);
-                param.Add("FAQ_CAT_CDE", cbFAQ_CAT_CDE.EditValue);
-                param.Add("EDT_ID", Logs.strLogin_ID);
-                param.Add("FTR_CDE", cbFTR_CDE.EditValue);
-                param.Add("FAQ_CUZ_CDE", cbFAQ_CUZ_CDE.EditValue);
-                DBUtil.Update(param);
-
-
-            }
-            catch (Exception ex)
-            {
-                Messages.ShowErrMsgBox("저장 처리중 오류가 발생하였습니다." + ex.Message);
-                InitModel();
-                return;
-            }
-
-            Messages.ShowOkMsgBox();
-            InitModel();
-        }
-
-        /// <summary>
-        /// 삭제처리
-        /// </summary>
-        /// <param name="obj"></param>
-        private void OnDelete(object obj)
-        {
-
-            // 1.삭제처리
-            if (Messages.ShowYesNoMsgBox("FAQ 항목을 삭제하시겠습니까?") != MessageBoxResult.Yes) return;
-            try
-            {
-                BizUtil.Update2(this, "DeleteFaqDtl");
-            }
-            catch (Exception)
-            {
-                Messages.ShowErrMsgBox("삭제 처리중 오류가 발생하였습니다.");
-                return;
-            }
-            Messages.ShowOkMsgBox();
-
-
-
-            BackCommand.Execute(null);
-
-        }
 
         /// <summary>
         /// 뒤로가기처리
@@ -305,8 +215,6 @@ namespace GTI.WFMS.Modules.Mntc.ViewModel
                     case "W":
                         break;
                     case "R":
-                        btnDelete.Visibility = Visibility.Collapsed;
-                        btnSave.Visibility = Visibility.Collapsed;
                         break;
                     case "N":
                         break;

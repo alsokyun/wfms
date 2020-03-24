@@ -131,7 +131,7 @@ namespace GTI.WFMS.Models.Common
 
 
     /// <summary>
-    /// Date2StrConverter 컨버터 - alsokyun
+    /// DateStrConverter 컨버터 - alsokyun
     /// </summary>
     public class Date2StrConverter : IValueConverter
     {

@@ -151,13 +151,13 @@ namespace GTI.WFMS.Models.Common
         public static bool ValidReq(DependencyObject obj)
         {
             //필수값체크
-            foreach (TextEdit cb in FmsUtil.FindVisualChildren<TextEdit>(obj))
+            foreach (TextEdit te in FmsUtil.FindVisualChildren<TextEdit>(obj))
             {
-                if (!FmsUtil.IsNull(cb.Tag))
+                if (!FmsUtil.IsNull(te.Tag))
                 {
-                    if (FmsUtil.IsNull(cb.Text))
+                    if (FmsUtil.IsNull(te.Text))
                     {
-                        Messages.ShowInfoMsgBox(string.Format("{0}은 필수입력 항목입니다.", cb.Tag.ToString()));
+                        Messages.ShowInfoMsgBox(string.Format("{0}은 필수입력 항목입니다.", te.Tag.ToString()));
                         return false;
                     }
                 }

@@ -1,4 +1,5 @@
 ﻿using DevExpress.Xpf.Core;
+using GTI.WFMS.Models.Common;
 using GTI.WFMS.Modules.Link.View;
 using GTIFramework.Common.Utils.ViewEffect;
 using System;
@@ -25,6 +26,7 @@ namespace GTI.WFMS.Modules.Cnst.View
 
             _SEQ = SEQ;
             this.txtCNT_NUM.EditValue = SEQ;
+
 
             // 테마일괄적용...
             ThemeApply.Themeapply(this);
@@ -111,6 +113,11 @@ namespace GTI.WFMS.Modules.Cnst.View
         private void _backCmd(object sender, RoutedEventArgs e)
         {
             NavigationService.Navigate(new SplyMngListView());
+        }
+
+        private void BtnSel_Click(object sender, RoutedEventArgs e)
+        {
+
         }
     }
 }

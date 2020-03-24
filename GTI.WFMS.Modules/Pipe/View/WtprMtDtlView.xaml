@@ -43,25 +43,25 @@
             <DataTemplate x:Key="TabItemNormalBackground">
                 <Border BorderBrush="{DynamicResource DataMngTab5Brush}" CornerRadius="1,1,0,0" BorderThickness="1" Margin="0 0 1 0">
                     <dxci:TabBorder ViewInfo="{Binding}" BorderBackground="{DynamicResource DataMngTab3Brush}" BorderBrush="{DynamicResource DataMngTab1Brush}" BorderCornerRadius="1,1,0,0"
-                            BackgroundMode="BorderBackground" BorderMode="BorderBrush" BorderThickness="0,0,0,5" BorderMargin="0,0,1,0" HoldBorderThickness="2" HoldBorderMargin="5,0,0,0"/>
+                            BackgroundMode="BorderBackground" BorderMode="BorderBrush" BorderThickness="0,0,0,2" BorderMargin="0,0,1,0" HoldBorderThickness="2" HoldBorderMargin="5,0,0,0"/>
                 </Border>
             </DataTemplate>
             <DataTemplate x:Key="TabItemSelectedBackground">
                 <Border BorderBrush="{DynamicResource DataMngTab5Brush}" CornerRadius="1,1,0,0" BorderThickness="1" Margin="0 0 1 0">
                     <dxci:TabBorder ViewInfo="{Binding}" BorderBackground="{DynamicResource DataMngTab4Brush}" BorderBrush="{DynamicResource DataMngTab2Brush}" BorderCornerRadius="1,1,0,0"
-                            BackgroundMode="BorderBackground" BorderMode="BorderBrush" BorderThickness="0,0,0,5" BorderMargin="0,0,1,0" HoldBorderThickness="2" HoldBorderMargin="5,0,0,0"/>
+                            BackgroundMode="BorderBackground" BorderMode="BorderBrush" BorderThickness="0,0,0,2" BorderMargin="0,0,1,0" HoldBorderThickness="2" HoldBorderMargin="5,0,0,0"/>
                 </Border>
             </DataTemplate>
             <DataTemplate x:Key="TabItemFocusedBackground" >
                 <Border BorderBrush="{DynamicResource DataMngTab5Brush}" CornerRadius="1,1,0,0" BorderThickness="1" Margin="0 0 1 0">
                     <dxci:TabBorder ViewInfo="{Binding}"  BorderBackground="{DynamicResource DataMngTab4Brush}" BorderBrush="{DynamicResource DataMngTab2Brush}" BorderCornerRadius="1,1,0,0"
-                            BackgroundMode="BorderBackground" BorderMode="BorderBrush" BorderThickness="0,0,0,5" BorderMargin="0,0,1,0" HoldBorderThickness="2" HoldBorderMargin="5,0,0,0" />
+                            BackgroundMode="BorderBackground" BorderMode="BorderBrush" BorderThickness="0,0,0,2" BorderMargin="0,0,1,0" HoldBorderThickness="2" HoldBorderMargin="5,0,0,0" />
                 </Border>
             </DataTemplate>
             <DataTemplate x:Key="TabItemHoverBackground">
                 <Border BorderBrush="{DynamicResource DataMngTab5Brush}" CornerRadius="1,1,0,0" BorderThickness="1" Margin="0 0 1 0">
                     <dxci:TabBorder ViewInfo="{Binding}" BorderBackground="{DynamicResource DataMngTab4Brush}" BorderBrush="{DynamicResource DataMngTab2Brush}" BorderCornerRadius="1,1,0,0"
-                            BackgroundMode="BorderBackground" BorderMode="BorderBrush" BorderThickness="0,0,0,5" BorderMargin="0,0,1,0" HoldBorderThickness="2" HoldBorderMargin="0,0,2,2"/>
+                            BackgroundMode="BorderBackground" BorderMode="BorderBrush" BorderThickness="0,0,0,2" BorderMargin="0,0,1,0" HoldBorderThickness="2" HoldBorderMargin="0,0,2,2"/>
                 </Border>
             </DataTemplate>
 

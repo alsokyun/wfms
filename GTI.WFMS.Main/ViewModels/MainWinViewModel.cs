@@ -36,7 +36,7 @@ namespace GTI.WFMS.Main
         MainWin mainwin;
         PopMain pmain = new PopMain();
         Border borderTop = new Border();
-        Window popWinView;
+        //public static Window popWinView;
         //Assembly assembly = Assembly.GetExecutingAssembly();
         Assembly ModulesAssembly = Assembly.Load("GTI.WFMS.Modules");
 
@@ -440,7 +440,7 @@ namespace GTI.WFMS.Main
                                  */
                                 try
                                 {
-                                    popWinView.Close();
+                                    FmsUtil.popWinView.Close();
                                 }
                                 catch (Exception) { }
 
@@ -468,11 +468,13 @@ namespace GTI.WFMS.Main
 
                                     //Type t = ModulesAssembly.GetType("GTI.WFMS.Modules.Mntc.View.ChkSchListView");
                                     Type t = ModulesAssembly.GetType(className);
-                                    popWinView = Activator.CreateInstance(t) as Window;
+                                    FmsUtil.popWinView = Activator.CreateInstance(t) as Window;
                                     //popWinView = new ChkSchListView();
-                                    
+
+                                    //공통팝업창 사이즈 초기화
+                                    FmsUtil.popWinView.Height = 631;
                                     //팝업결과리턴
-                                    if (popWinView.ShowDialog() is bool)
+                                    if (FmsUtil.popWinView.ShowDialog() is bool)
                                     {
                                         //재조회
                                     }
@@ -482,12 +484,12 @@ namespace GTI.WFMS.Main
                                 {
                                     /* Window 공통화면 형태
                                      */
-                                    popWinView = new PopWinView(dr[0]["MNU_PATH"].ToString());
-                                    Label lbTitle = popWinView.FindName("lbTitle") as Label;//화면타이틀
+                                    FmsUtil.popWinView = new PopWinView(dr[0]["MNU_PATH"].ToString());
+                                    Label lbTitle = FmsUtil.popWinView.FindName("lbTitle") as Label;//화면타이틀
                                     lbTitle.Content = dr[0]["MNU_NM"].ToString();
 
                                     //팝업결과리턴
-                                    if (popWinView.ShowDialog() is bool)
+                                    if (FmsUtil.popWinView.ShowDialog() is bool)
                                     {
                                         //재조회
                                     }

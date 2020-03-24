@@ -237,6 +237,19 @@ namespace GTI.WFMS.Modules.Cnst.Model
                 OnPropertyChanged("FCH_NAM");
             }
         }
+
+        private string __SUR_NAM;
+        public string SUR_NAM
+        {
+            get { return __SUR_NAM; }
+            set
+            {
+                this.__SUR_NAM = value;
+                OnPropertyChanged("SUR_NAM");
+            }
+        }
+
+
     }
 
 }

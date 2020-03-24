@@ -611,6 +611,8 @@
     <Resource Include="Resources\Blue\Images\Image\btn_init_on.png" />
     <Resource Include="Resources\Blue\Images\MNUImage\MNU_L_06.png" />
     <Resource Include="Resources\Blue\Images\MNUImage\MNU_L_07.png" />
+    <Resource Include="Resources\Blue\Images\Image\btn_modi.png" />
+    <Resource Include="Resources\Blue\Images\Image\btn_modi_on.png" />
     <Content Include="Styles\Fonts\malgun.ttf">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>

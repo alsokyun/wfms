@@ -159,6 +159,83 @@ namespace GTIFramework.Core
 
 
         /// <summary>
+        /// OleDB 업데이트 
+        /// - param에 등록된 변수가 SQL 에 등록된 변수와 순서가 맞아야하는 이슈가 있어서, 현재는 하드코딩으로 변수매핑했음... 차후에 자동 매핑으로 변경해야함..
+        /// </summary>
+        /// <param name="param"></param>
+        public static void Insert(Hashtable param)
+        {
+            string cmdtxt = "";
+            try
+            {
+                cmdtxt = param["sql"].ToString();
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+
+
+            //커넥션새성 및 오픈
+            string strIP = GTIFramework.Properties.Settings.Default.strIP;
+            string strPort = GTIFramework.Properties.Settings.Default.strPort;
+            string strSID = GTIFramework.Properties.Settings.Default.strSID;
+            string strID = GTIFramework.Properties.Settings.Default.strID;
+            string strPWD = GTIFramework.Properties.Settings.Default.strPWD;
+
+            OleDbConnection conn
+                = new OleDbConnection("Provider=tbprov.Tbprov.6;" +
+                "Data Source =" + strIP + "," + strPort + "," + strSID + ";user id =" + strID + ";password =" + strPWD + ";" +
+                "Connection Pooling = 1;Cache Authentication = False; ");
+            conn.Open();
+
+
+
+            //어댑터생성
+            OleDbDataAdapter oda = new OleDbDataAdapter();
+
+            //커맨드생성
+
+            oda.UpdateCommand = conn.CreateCommand();
+            oda.UpdateCommand.CommandTimeout = 10000;
+
+            //트랜잭션 시작
+            OleDbTransaction trans = conn.BeginTransaction();
+
+            try
+            {
+                oda.UpdateCommand.Transaction = trans;
+                oda.UpdateCommand.CommandText = cmdtxt;
+
+   
+                oda.UpdateCommand.Parameters.Add(new OleDbParameter("FAQ_CAT_CDE", OleDbType.VarChar)).Value = param["FAQ_CAT_CDE"];
+                oda.UpdateCommand.Parameters.Add(new OleDbParameter("TTL", OleDbType.VarChar)).Value = param["TTL"];
+                oda.UpdateCommand.Parameters.Add(new OleDbParameter("REG_ID", OleDbType.VarChar)).Value = param["REG_ID"];
+                oda.UpdateCommand.Parameters.Add(new OleDbParameter("EDT_ID", OleDbType.VarChar)).Value = param["EDT_ID"];
+                oda.UpdateCommand.Parameters.Add(new OleDbParameter("FTR_CDE", OleDbType.VarChar)).Value = param["FTR_CDE"];
+                oda.UpdateCommand.Parameters.Add(new OleDbParameter("FAQ_CUZ_CDE", OleDbType.VarChar)).Value = param["FAQ_CUZ_CDE"];
+                oda.UpdateCommand.Parameters.Add(new OleDbParameter("QUESTION", OleDbType.LongVarChar)).Value = param["QUESTION"];
+                oda.UpdateCommand.Parameters.Add(new OleDbParameter("REPL", OleDbType.LongVarChar)).Value = param["REPL"];
+
+
+                oda.UpdateCommand.ExecuteNonQuery();
+
+                trans.Commit();
+            }
+            catch (Exception ex)
+            {
+                trans.Rollback();
+                Console.WriteLine(ex.Message);
+            }
+            finally
+            {
+                conn.Close();
+            }
+        }
+
+
+
+        /// <summary>
         /// OleDbConnection 사용한 Select
         /// </summary>
         /// <param name="param"></param>

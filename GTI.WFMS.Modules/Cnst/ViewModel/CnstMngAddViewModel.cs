@@ -9,15 +9,13 @@ using System;
 using System.Collections;
 using System.ComponentModel;
 using System.Data;
-using System.Reflection;
 using System.Windows;
 using System.Windows.Controls;
 
 namespace GTI.WFMS.Modules.Cnst.ViewModel
 {
-    class SplyDtlViewModel : SplyDtl
+    class CnstMngAddViewModel : CnstDtl
     {
-
 
         #region ==========  Properties 정의 ==========
         /// <summary>
@@ -25,7 +23,6 @@ namespace GTI.WFMS.Modules.Cnst.ViewModel
         /// </summary>
         public DelegateCommand<object> LoadedCommand { get; set; }
         public DelegateCommand<object> SaveCommand { get; set; }
-        public DelegateCommand<object> DeleteCommand { get; set; }
         public DelegateCommand<object> BackCommand { get; set; }
         public DelegateCommand<object> DupCommand { get; set; }
 
@@ -34,30 +31,25 @@ namespace GTI.WFMS.Modules.Cnst.ViewModel
 
 
         #region ==========  Member 정의 ==========
-        SplyDtlView splyDtlView;
-        ComboBoxEdit cbHJD_CDE; 
+        CnstMngAddView cnstMngAddView;
+        ComboBoxEdit cbCTT_CDE; 
+        ComboBoxEdit cbCNT_CDE; 
         Button btnBack;
-        Button btnDelete;
         Button btnSave;
         Button btnDup;
-        
-        #endregion
 
-
-
+        #endregion                    
 
         /// 생성자
-        public SplyDtlViewModel()
+        public CnstMngAddViewModel()
         {
             this.LoadedCommand = new DelegateCommand<object>(OnLoaded);
             this.SaveCommand = new DelegateCommand<object>(OnSave);
-            this.DeleteCommand = new DelegateCommand<object>(OnDelete);
             this.BackCommand = new DelegateCommand<object>(OnBack);
-
 
             //입력항목 변경되면 중복버튼 복원
             this.DUP = "체크";
-            PropertyChanged += delegate(object sender, PropertyChangedEventArgs args) {
+            PropertyChanged += delegate (object sender, PropertyChangedEventArgs args) {
                 try
                 {
                     btnDup.Content = "체크";
@@ -65,15 +57,15 @@ namespace GTI.WFMS.Modules.Cnst.ViewModel
                 catch (Exception) { }
             };
 
-            this.DupCommand = new DelegateCommand<object>(delegate(object obj) {
+            this.DupCommand = new DelegateCommand<object>(delegate (object obj) {
                 if (btnDup.Content.Equals("OK")) return;
 
 
                 Hashtable param = new Hashtable();
-                param.Add("sqlId", "SelectWttSplyMaDup");
+                param.Add("sqlId", "SelectWttConsMaDup");
                 param.Add("CNT_NUM", this.CNT_NUM);
                 DataTable dt = BizUtil.SelectList(param);
-                if (dt.Rows.Count > 1)
+                if (dt.Rows.Count > 0)
                 {
                     Messages.ShowInfoMsgBox("공사번호가 중복되었습니다.");
                 }
@@ -82,11 +74,8 @@ namespace GTI.WFMS.Modules.Cnst.ViewModel
                     btnDup.Content = "OK";
                 }
             });
-            
+
         }
-
-
-
 
 
         #region ==========  이벤트 핸들러 ==========
@@ -97,19 +86,16 @@ namespace GTI.WFMS.Modules.Cnst.ViewModel
         /// <param name="obj"></param>
         private void OnLoaded(object obj)
         {
-            //throw new NotImplementedException();
-
             // 0.화면객체인스턴스화
             if (obj == null) return;
-            var values = (object[])obj;
 
-            splyDtlView = values[0] as SplyDtlView;
-            cbHJD_CDE = splyDtlView.cbHJD_CDE;
-            btnBack = splyDtlView.btnBack;
-            btnDelete = splyDtlView.btnDelete;
-            btnSave = splyDtlView.btnSave;
-            btnDup = splyDtlView.btnDup;
-            
+            cnstMngAddView = obj as CnstMngAddView;
+            cbCTT_CDE = cnstMngAddView.cbCTT_CDE;
+            cbCNT_CDE = cnstMngAddView.cbCNT_CDE;
+            btnBack = cnstMngAddView.btnBack;
+            btnSave = cnstMngAddView.btnSave;
+            btnDup = cnstMngAddView.btnDup;
+
 
             //2.화면데이터객체 초기화
             InitDataBinding();
@@ -119,37 +105,8 @@ namespace GTI.WFMS.Modules.Cnst.ViewModel
             permissionApply();
 
 
-
-
-            // 4.초기조회
-            //DataTable dt = new DataTable();
-            Hashtable param = new Hashtable();
-            param.Add("sqlId", "SelectWttSplyMaDtl");
-            param.Add("CNT_NUM", this.CNT_NUM);
-
-            SplyDtl result = new SplyDtl();
-            result = BizUtil.SelectObject(param) as SplyDtl;
-
-            //결과를 뷰모델멤버로 매칭
-            Type dbmodel = result.GetType();
-            Type model = this.GetType();
-
-            //모델프로퍼티 순회
-            foreach (PropertyInfo prop in model.GetProperties())
-            {
-                string propName = prop.Name;
-                //db프로퍼티 순회
-                foreach (PropertyInfo dbprop in dbmodel.GetProperties())
-                {
-                    string colName = dbprop.Name;
-                    var colValue = dbprop.GetValue(result, null);
-                    if (colName.Equals(propName))
-                    {
-                        prop.SetValue(this, Convert.ChangeType(colValue, prop.PropertyType));
-                    }
-                }
-               //Console.WriteLine(propName + " - " + prop.GetValue(this,null));
-            }
+            //공통팝업창 사이즈 변경
+            FmsUtil.popWinView.Height = 400;
 
         }
 
@@ -163,7 +120,7 @@ namespace GTI.WFMS.Modules.Cnst.ViewModel
         {
 
             // 필수체크 (Tag에 필수체크 표시한 EditBox, ComboBox 대상으로 수행)
-            if(!BizUtil.ValidReq(splyDtlView))  return;
+            if (!BizUtil.ValidReq(cnstMngAddView)) return;
 
             // 공사번호중복체크
             if (btnDup.Content.Equals("체크"))
@@ -171,82 +128,24 @@ namespace GTI.WFMS.Modules.Cnst.ViewModel
                 Messages.ShowInfoMsgBox("공사번호 (중복)체크를 하세요.");
                 return;
             }
-            
-
 
 
             if (Messages.ShowYesNoMsgBox("저장하시겠습니까?") != MessageBoxResult.Yes) return;
 
             try
             {
-                BizUtil.Update2(this, "updateSplyDtl");
-            }
-            catch (Exception ex)
-            {
-                Messages.ShowErrMsgBox("저장 처리중 오류가 발생하였습니다." + ex.Message);
-                return;
-            }
-            Messages.ShowOkMsgBox();
-
-        }
-
-        /// <summary>
-        /// 삭제처리
-        /// </summary>
-        /// <param name="obj"></param>
-        private void OnDelete(object obj)
-        {
-            //0.삭제전 체크
-            Hashtable param = new Hashtable();
-            param.Add("sqlId", "SelectFileMapList");
-            param.Add("sqlId2", "SelectFileMapList");
-            param.Add("CNT_NUM", this.CNT_NUM);
-
-            Hashtable result = BizUtil.SelectLists(param);
-            DataTable dt = new DataTable();
-            DataTable dt2 = new DataTable();
-
-            try
-            {
-                dt = result["dt"] as DataTable;
-                if (dt.Rows.Count > 0)
-                {
-                    Messages.ShowErrMsgBox("사진첨부내역이 존재합니다.");
-                    return;
-                }
-            }
-            catch (Exception) { }
-            try
-            {
-                dt2 = result["dt2"] as DataTable;
-                if (dt2.Rows.Count > 0)
-                {
-                    Messages.ShowErrMsgBox("파일첨부내역이 존재합니다.");
-                    return;
-                }
-            }
-            catch (Exception) { }
-
-
-
-            // 1.삭제처리
-            if (Messages.ShowYesNoMsgBox("급수전대장을 삭제하시겠습니까?") != MessageBoxResult.Yes) return;
-            try
-            {
-                BizUtil.Update2(this, "deleteSplyDtl");
+                BizUtil.Update2(this, "insertCnstMngDtl");
             }
             catch (Exception )
             {
-                Messages.ShowErrMsgBox("삭제 처리중 오류가 발생하였습니다.");
-                return;
+                Messages.ShowErrMsgBox("저장 처리중 오류가 발생하였습니다.");
+                btnBack.RaiseEvent(new RoutedEventArgs(Button.ClickEvent));
             }
             Messages.ShowOkMsgBox();
-
-
-
-            BackCommand.Execute(null);
-
+            btnBack.RaiseEvent(new RoutedEventArgs(Button.ClickEvent));
         }
+
+
 
         /// <summary>
         /// 뒤로가기처리
@@ -275,8 +174,11 @@ namespace GTI.WFMS.Modules.Cnst.ViewModel
         {
             try
             {
-                // cbHJD_CDE 행정동
-                BizUtil.SetCombo(cbHJD_CDE, "Select_ADAR_LIST", "HJD_CDE", "HJD_NAM", true);
+                // cbCTT_CDE 계약구분
+                BizUtil.SetCmbCode(cbCTT_CDE, "CTT_CDE", true);
+
+                // cbCNT_CDE 공사구분
+                BizUtil.SetCmbCode(cbCNT_CDE, "CNT_CDE", true);
             }
             catch (Exception ex)
             {
@@ -298,7 +200,6 @@ namespace GTI.WFMS.Modules.Cnst.ViewModel
                     case "W":
                         break;
                     case "R":
-                        btnDelete.Visibility = Visibility.Collapsed;
                         btnSave.Visibility = Visibility.Collapsed;
                         break;
                     case "N":
