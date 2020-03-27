@@ -6,7 +6,7 @@
              xmlns:local="clr-namespace:GTI.WFMS.GIS.Module"
              mc:Ignorable="d" 
         
-       Width="290" Height="660"
+       Width="290" Height="657"
        >
 
 
@@ -19,7 +19,7 @@
             </Grid>
 
             <Grid>
-                <ContentControl x:Name="ctl" Height="620"/>
+                <ContentControl x:Name="ctl" Height="618"/>
             </Grid>
 
 

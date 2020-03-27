@@ -26,6 +26,12 @@ namespace GTI.WFMS.Models.Common
         public static Popup __popMain;//열린팝업을 전역변수로 저장해놓음,사용안함
         public static Window popWinView;//팝업업무기본창 전역변수로 저장해놓음 - 사이즈변경위해
 
+        /// <summary>
+        /// 프로그램설정값으로부터 전역변수로 설정
+        /// </summary>
+        public static string sysCd;     //시스템코드
+        public static string fileDir;   //파일저장경로
+
 
         /// <summary>
         /// IsNull 오브젝트형

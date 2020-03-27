@@ -69,7 +69,7 @@
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
 
-        <Grid Grid.Row="0" Background="{DynamicResource TileCOLOR4Brush}" PreviewMouseLeftButtonDown="BdTitle_PreviewMouseLeftButtonDown" >
+        <Grid Grid.Row="0" Background="{DynamicResource PopupCOLOR1Brush }" PreviewMouseLeftButtonDown="BdTitle_PreviewMouseLeftButtonDown" >
             <Label Content="점검결과내용" FontSize="17" FontWeight="Bold" Foreground="White" 
                    HorizontalAlignment="Left" VerticalAlignment="Center" Padding="10 0 0 0" />
         </Grid>

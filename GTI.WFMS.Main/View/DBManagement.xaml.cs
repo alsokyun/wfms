@@ -1,4 +1,5 @@
 ﻿using DevExpress.Xpf.Core;
+using GTI.WFMS.Models.Common;
 using GTI.WFMS.Models.Main.Work;
 using GTIFramework.Common.ConfigClass;
 using GTIFramework.Common.Log;
@@ -8,6 +9,7 @@ using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Linq;
+using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
@@ -101,9 +103,10 @@ namespace GTI.WFMS.Main.View
             dtDBCAT.Columns.Add(dcDTL_CD);
             dtDBCAT.Columns.Add(dcNM);
 
+
             //티베로 DB 추가
             DataRow drTibero = dtDBCAT.NewRow();
-            drTibero["DTL_CD"] = "000007";
+            drTibero["DTL_CD"] = FmsUtil.sysCd;
             drTibero["NM"] = "Tibero";
             dtDBCAT.Rows.Add(drTibero);
 
@@ -129,7 +132,7 @@ namespace GTI.WFMS.Main.View
             if (cbDBCAT.EditValue != null)
             {
                 //Tibero
-               if (cbDBCAT.EditValue.Equals("000007"))
+               if (cbDBCAT.EditValue.Equals(FmsUtil.sysCd))
                 {
                     Logs.setDBConfig("TIBEROConfig");
                 }
@@ -217,7 +220,7 @@ namespace GTI.WFMS.Main.View
                         GTIFramework.Properties.Settings.Default.strID = txtConnID.EditValue.ToString();
                         GTIFramework.Properties.Settings.Default.strPWD = pwdConnPW.EditValue.ToString();
 
-                        if (cbDBCAT.EditValue.Equals("000007"))
+                        if (cbDBCAT.EditValue.Equals(FmsUtil.sysCd))
                         {
                             GTIFramework.Properties.Settings.Default.RES_DB_INS_DEFAULT = "TIBEROConfig";
                         }

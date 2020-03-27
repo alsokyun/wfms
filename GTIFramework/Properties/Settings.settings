@@ -20,8 +20,5 @@
     <Setting Name="RES_DB_INS_DEFAULT" Type="System.String" Scope="User">
       <Value Profile="(Default)">TIBEROConfig</Value>
     </Setting>
-    <Setting Name="SHAPE" Type="System.String" Scope="User">
-      <Value Profile="(Default)">D:\DEVGTI\GTI.WFMS\shape</Value>
-    </Setting>
   </Settings>
 </SettingsFile>

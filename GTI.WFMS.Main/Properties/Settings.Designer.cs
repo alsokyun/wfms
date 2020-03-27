@@ -58,5 +58,29 @@ namespace GTI.WFMS.Main.Properties {
                 this["strThemeName"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("000007")]
+        public string sysCd {
+            get {
+                return ((string)(this["sysCd"]));
+            }
+            set {
+                this["sysCd"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("D:\\GTI\\FILE")]
+        public string fileDir {
+            get {
+                return ((string)(this["fileDir"]));
+            }
+            set {
+                this["fileDir"] = value;
+            }
+        }
     }
 }

@@ -30,7 +30,7 @@ namespace GTI.WFMS.GIS
     /// <summary>
     /// Provides map data to an application
     /// </summary>
-    public class MapMainViewModel : LayerModel, INotifyPropertyChanged
+    public class MapMainViewModel : LocalServerModel, INotifyPropertyChanged
     {
 
 
@@ -92,7 +92,7 @@ namespace GTI.WFMS.GIS
         public RelayCommand<object> chkCmd { get; set; }
         public RelayCommand<object> toggleCmd { get; set; }
         public RelayCommand<object> resetCmd { get; set; }
-        public RelayCommand<object> ChartCmd { get; set; }
+        public RelayCommand<object> levelCmd { get; set; }
 
         
         public RelayCommand<object> completeCmd { get; set; }
@@ -180,8 +180,8 @@ namespace GTI.WFMS.GIS
                 CheckBox chkbox = doc.Template.FindName("chkLayer", doc) as CheckBox;
                 bool chk = (bool)chkbox.IsChecked;
 
-                //ShowLocalServerLayer(mapView, doc.Tag.ToString(), chk);
-                ShowShapeLayer(mapView, doc.Tag.ToString(), chk);
+                ShowLocalServerLayer(mapView, doc.Tag.ToString(), chk);
+                //ShowShapeLayer(mapView, doc.Tag.ToString(), chk);
 
 
                 //선택된 레이어저장
@@ -225,7 +225,10 @@ namespace GTI.WFMS.GIS
             // 레이어스타일 Renderer 초기화 - shape방식에서만 사용함
             //InitUniqueValueRenderer();
 
-
+            levelCmd = new RelayCommand<object>(delegate (object obj)
+            {
+                MessageBox.Show("MapScale - " + mapView.MapScale);
+            });
 
             //GIS초기화
             resetCmd = new RelayCommand<object>(delegate (object obj)
@@ -260,6 +263,10 @@ namespace GTI.WFMS.GIS
                 catch (Exception) { }
                 _selectedLayerNms.Clear();
                 _selectedLayerNm = "";
+
+
+                // 울산행정구역 표시
+                ShowLocalServerLayer(mapView, "BML_GADM_AS", true);
             });
 
             //시설물팝업에서 시설물메뉴화면 호출작업
@@ -343,7 +350,7 @@ namespace GTI.WFMS.GIS
 
 
             //0.해당레이어표시 - 내부에서자동으로 로딩여부 체크함
-            ShowShapeLayer(mapView, GisCmm.GetLayerNm(FTR_CDE), true);
+            ///ShowShapeLayer(mapView, GisCmm.GetLayerNm(FTR_CDE), true);
 
             //1.해당레이어 가져오기
             FeatureLayer layer = layers[GisCmm.GetLayerNm(FTR_CDE)];
@@ -471,13 +478,12 @@ namespace GTI.WFMS.GIS
 
 
             //울산행정구역표시
-            ShowShapeLayer(mapView, "BML_GADM_AS", true);
+            ///ShowShapeLayer(mapView, "BML_GADM_AS", true);
 
 
             //맵뷰 클릭이벤트 설정
             //mapView.GeoViewTapped -= handlerGeoViewTapped;
             mapView.GeoViewTapped += handlerGeoViewTapped;
-
 
             // Create graphics overlay to display sketch geometry
             _sketchOverlay = new GraphicsOverlay();

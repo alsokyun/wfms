@@ -1,4 +1,5 @@
 ﻿using DevExpress.Xpf.Core;
+using GTI.WFMS.Models.Common;
 using GTI.WFMS.Models.Main.Work;
 using GTIFramework.Common.Log;
 using GTIFramework.Common.MessageBox;
@@ -47,6 +48,11 @@ namespace GTI.WFMS.Main.View
 
             Loaded += Login_Loaded;
             Unloaded += Login_Unloaded;
+
+            //시스템코드 전역변수로 선언(Main설정값에서 가져옴)
+            FmsUtil.sysCd = Properties.Settings.Default.sysCd;
+            FmsUtil.fileDir = Properties.Settings.Default.fileDir;
+            
         }
 
 
@@ -80,7 +86,7 @@ namespace GTI.WFMS.Main.View
                 htconditions.Add("SITE_CD", cbSite.EditValue.ToString());
                 htconditions.Add("USER_ID", txtID.EditValue.ToString());
                 htconditions.Add("USER_PWD", EncryptionConvert.Base64Encoding(pwdPW.EditValue.ToString()));
-                htconditions.Add("SYS_CD", "000007");
+                htconditions.Add("SYS_CD", FmsUtil.sysCd);
 
                 DataTable dtLoginCheck = new DataTable();
                 dtLoginCheck = work.LoginCheck(htconditions);
@@ -298,7 +304,7 @@ namespace GTI.WFMS.Main.View
                                 }
                                 catch (Exception){}
                             }));
-                        htconditions.Add("SYS_CD", "000007");
+                        htconditions.Add("SYS_CD", FmsUtil.sysCd);
                         dtDBInfo = work.SelectDBInfo(htconditions);
                     }
 

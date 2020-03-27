@@ -61,7 +61,7 @@ namespace GTI.WFMS.Modules.Link.View
             param.Add("BIZ_ID", this.BIZ_ID);
             dt = BizUtil.SelectList(param);
             
-            string UriPrefix = @"D:\GTI\FILE";        
+            string UriPrefix = @"" + FmsUtil.fileDir;        
             var result = new List<BitmapImage>();
 
             this.FIL_SEQ = null;

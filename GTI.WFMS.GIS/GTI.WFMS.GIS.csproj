@@ -83,6 +83,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="GisCmm.cs" />
+    <Compile Include="LocalServerModel.cs" />
     <Compile Include="Module\ViewModel\UC_FIRE_PSModel.cs" />
     <Compile Include="Module\ViewModel\UC_VALV_PSModel.cs" />
     <Compile Include="Module\ViewModel\UC_RSRV_PSModel.cs" />
@@ -312,6 +313,9 @@
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="Esri.ArcGISRuntime">
+      <Version>100.6.0</Version>
+    </PackageReference>
+    <PackageReference Include="Esri.ArcGISRuntime.LocalServices">
       <Version>100.6.0</Version>
     </PackageReference>
     <PackageReference Include="Esri.ArcGISRuntime.Toolkit">

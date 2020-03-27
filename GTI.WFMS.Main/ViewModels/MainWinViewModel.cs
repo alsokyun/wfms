@@ -325,7 +325,7 @@ namespace GTI.WFMS.Main
 
 
                 htconditions.Clear();
-                htconditions.Add("SYS_CD", "000007");
+                htconditions.Add("SYS_CD", FmsUtil.sysCd);
 
                 dtMenuList = work.Select_MNU_LIST(htconditions);
 
@@ -794,7 +794,7 @@ namespace GTI.WFMS.Main
                 // 즐겨찾기메뉴 조회
                 Hashtable param = new Hashtable();
                 param.Add("sqlId", "Select_BASE_FLOW_CALC_INFO_R");
-                param.Add("SYS_CD", "000007");
+                param.Add("SYS_CD", FmsUtil.sysCd);
                 param.Add("USER_ID", Logs.strLogin_ID);
 
                 dtQuickMenuList = BizUtil.SelectList(param);

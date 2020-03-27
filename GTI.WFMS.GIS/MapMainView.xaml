@@ -55,13 +55,12 @@
 
         <Grid VerticalAlignment="Top" Height="30" Width="Auto" HorizontalAlignment="Left" >
             <StackPanel Orientation="Horizontal">
-                <Button Content="Reset" Style="{DynamicResource TxtButton}" Margin="2">
-                    <i:Interaction.Triggers>
-                        <i:EventTrigger EventName="Click">
-                            <i:InvokeCommandAction Command="{Binding resetCmd}" CommandParameter="{Binding ElementName=treeLayer}"/>
-                        </i:EventTrigger>
-                    </i:Interaction.Triggers>
-                </Button>
+                <Button Content="Reset" Style="{DynamicResource TxtButton}" Margin="2"
+                        Command="{Binding resetCmd}" CommandParameter="{Binding ElementName=treeLayer}"/>
+                <Button Content="Level" Style="{DynamicResource TxtButton}" Margin="2"
+                        Command="{Binding levelCmd}" />
+
+
                 <!--기타버튼:사용안함
                 <Button x:Name="ClearButton" 
                         Content="Clear" IsEnabled="False"

@@ -32,7 +32,7 @@ namespace GTI.WFMS.Modules.Pop.ViewModel
  
 
         // 파일관련 전역변수 - 환경설정으로 관리해야함
-        string dir_name = @"D:\GTI\FILE";
+        string dir_name = @"" + FmsUtil.fileDir;
 
         //파일다운로드 관련
         System.Windows.Forms.SaveFileDialog saveFileDialog;
