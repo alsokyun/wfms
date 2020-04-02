@@ -330,9 +330,9 @@ namespace GTI.WFMS.Modules.Cnst.ViewModel
         {
             try {
                 // cbCNT_CDE
-                BizUtil.SetCmbCode(cbCNT_CDE, "CNT_CDE", true);
+                BizUtil.SetCmbCode(cbCNT_CDE, "250039", true);
                 // cbCTT_CDE
-                BizUtil.SetCmbCode(cbCTT_CDE, "CTT_CDE", true);
+                BizUtil.SetCmbCode(cbCTT_CDE, "250038", true);
 
             }
             catch (Exception ex)

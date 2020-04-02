@@ -37,7 +37,7 @@ namespace GTI.WFMS.Modules.Mntc.View
             ThemeApply.Themeapply(this);
 
             //콤보세팅
-            BizUtil.SetCmbCode(cbCHK_PRD_CDE, "CHK_PRD_CDE", false, "250108");
+            BizUtil.SetCmbCode(cbCHK_PRD_CDE, "250108", false);
 
             // 초기조회
             InitModel();

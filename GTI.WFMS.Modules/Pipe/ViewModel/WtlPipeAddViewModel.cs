@@ -163,19 +163,19 @@ namespace GTI.WFMS.Modules.Pipe.ViewModel
             try
             {
                 // cbMNG_CDE
-                BizUtil.SetCmbCode(cbMNG_CDE, "MNG_CDE", true);
+                BizUtil.SetCmbCode(cbMNG_CDE, "250101", true);
 
                 // cbHJD_CDE 행정동
                 BizUtil.SetCombo(cbHJD_CDE, "Select_ADAR_LIST", "HJD_CDE", "HJD_NAM", true);
 
                 // cbMOP_CDE
-                BizUtil.SetCmbCode(cbMOP_CDE, "MOP_CDE", true, "250102");
+                BizUtil.SetCmbCode(cbMOP_CDE, "250102", true);
 
                 // cbJHT_CDE
-                BizUtil.SetCmbCode(cbJHT_CDE, "JHT_CDE", true);
+                BizUtil.SetCmbCode(cbJHT_CDE, "250026", true);
 
                 // cbSAA_CDE
-                BizUtil.SetCmbCode(cbSAA_CDE, "SAA_CDE", true);
+                BizUtil.SetCmbCode(cbSAA_CDE, "250018", true);
                 
             }
             catch (Exception ex)

@@ -346,6 +346,7 @@ namespace GTI.WFMS.GIS
 
                 // Create the feature service to serve the local data
                 _localFeatureService = new LocalFeatureService(myfeatureServicePath);
+                //_localFeatureService.MaxRecords = 3000; //피처서비스 최대 표현레코드 수
 
                 // Listen to feature service status changes
                 _localFeatureService.StatusChanged += _localFeatureService_StatusChanged;

@@ -178,10 +178,10 @@ namespace GTI.WFMS.Modules.Acmf.ViewModel
                 BizUtil.SetCombo(cbHOM_CDE, "Select_ADAR_LIST", "HJD_CDE", "HJD_NAM", true);
 
                 // cbSBI_CDE 업종
-                BizUtil.SetCmbCode(cbSBI_CDE, "SBI_CDE", true);
+                BizUtil.SetCmbCode(cbSBI_CDE, "250020", true);
 
                 // cbMOF_CDE 형식
-                BizUtil.SetCmbCode(cbMOF_CDE, "MOF_CDE", true, "250035");
+                BizUtil.SetCmbCode(cbMOF_CDE, "250035", true);
 
             }
             catch (Exception ex)

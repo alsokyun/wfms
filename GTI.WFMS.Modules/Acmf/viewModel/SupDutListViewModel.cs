@@ -505,16 +505,16 @@ namespace GTI.WFMS.Modules.Acmf.ViewModel
                 dtIST_YMD_TO.DisplayFormatString = "yyyy-MM-dd";
 
                 // cbMNG_CDE    0.관리기관
-                BizUtil.SetCmbCode(cbMNG_CDE, "MNG_CDE", true);
+                BizUtil.SetCmbCode(cbMNG_CDE, "250101", true);
 
                 // cbHJD_CDE    2.행정동
                 BizUtil.SetCombo(cbHJD_CDE, "Select_ADAR_LIST", "HJD_CDE", "HJD_NAM", true);
 
                 // cbSAA_CDE    7.관용도
-                BizUtil.SetCmbCode(cbSAA_CDE, "SAA_CDE", true);
+                BizUtil.SetCmbCode(cbSAA_CDE, "250018", true);
 
                 // cbJHT_CDE    8.접합종류
-                BizUtil.SetCmbCode(cbJHT_CDE, "JHT_CDE", true);
+                BizUtil.SetCmbCode(cbJHT_CDE, "250026", true);
 
             }
             catch (Exception ex)

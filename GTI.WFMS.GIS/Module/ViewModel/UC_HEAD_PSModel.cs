@@ -272,10 +272,10 @@ namespace GTI.WFMS.GIS.Module.ViewModel
                 BizUtil.SetCombo(uC_HEAD_PS.cbHJD_CDE, "Select_ADAR_LIST", "HJD_CDE", "HJD_NAM", true);
 
                 // cbMNG_CDE 관리기관
-                BizUtil.SetCmbCode(uC_HEAD_PS.cbMNG_CDE, "MNG_CDE", true);
+                BizUtil.SetCmbCode(uC_HEAD_PS.cbMNG_CDE, "250101", true);
 
                 // cbWSR_CDE 수원구분
-                BizUtil.SetCmbCode(uC_HEAD_PS.cbWSR_CDE, "WSR_CDE", true);
+                BizUtil.SetCmbCode(uC_HEAD_PS.cbWSR_CDE, "250058", true);
 
             }
             catch (Exception ex)

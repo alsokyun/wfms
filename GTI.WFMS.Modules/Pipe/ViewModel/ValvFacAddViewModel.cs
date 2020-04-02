@@ -184,29 +184,29 @@ namespace GTI.WFMS.Modules.Pipe.ViewModel
                 BizUtil.SetCombo(cbHJD_CDE, "Select_ADAR_LIST", "HJD_CDE", "HJD_NAM", true);
 
                 // cbMNG_CDE 관리기관
-                BizUtil.SetCmbCode(cbMNG_CDE, "MNG_CDE", true);
+                BizUtil.SetCmbCode(cbMNG_CDE, "250101", true);
 
 
                 // cbVAL_MOF 형식
-                BizUtil.SetCmbCode(cbVAL_MOF, "MOF_CDE", true, "250016");
+                BizUtil.SetCmbCode(cbVAL_MOF, "250016", true);
 
                 // cbVAL_MOP 관재질
-                BizUtil.SetCmbCode(cbVAL_MOP, "MOP_CDE", true, "250015");
+                BizUtil.SetCmbCode(cbVAL_MOP, "250015", true);
 
                 // cbSAE_CDE    제수변회전방향
-                BizUtil.SetCmbCode(cbSAE_CDE, "SAE_CDE", true);
+                BizUtil.SetCmbCode(cbSAE_CDE, "250027", true);
 
                 // cbMTH_CDE    제수변구동방법
-                BizUtil.SetCmbCode(cbMTH_CDE, "MTH_CDE", true);
+                BizUtil.SetCmbCode(cbMTH_CDE, "250065", true);
 
                 // cbVAL_FOR    시설물형태(=구조물형태)
-                BizUtil.SetCmbCode(cbVAL_FOR, "FOR_CDE", true);
+                BizUtil.SetCmbCode(cbVAL_FOR, "250007", true);
 
                 // cbCST_CDE    이상상태
-                BizUtil.SetCmbCode(cbCST_CDE, "CST_CDE", true);
+                BizUtil.SetCmbCode(cbCST_CDE, "250062", true);
 
                 // cbOFF_CDE    개폐여부
-                BizUtil.SetCmbCode(cbOFF_CDE, "OFF_CDE", true);
+                BizUtil.SetCmbCode(cbOFF_CDE, "250036", true);
 
             }
             catch (Exception ex)

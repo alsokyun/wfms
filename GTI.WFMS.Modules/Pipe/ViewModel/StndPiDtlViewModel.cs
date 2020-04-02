@@ -283,13 +283,13 @@ namespace GTI.WFMS.Modules.Pipe.ViewModel
                 BizUtil.SetCombo(cbHJD_CDE, "Select_ADAR_LIST", "HJD_CDE", "HJD_NAM", true);
 
                 // cbMNG_CDE 관리기관
-                BizUtil.SetCmbCode(cbMNG_CDE, "MNG_CDE", true);
+                BizUtil.SetCmbCode(cbMNG_CDE, "250101", true);
 
                 // cbSTP_MOP 관재질
-                BizUtil.SetCmbCode(cbSTP_MOP, "MOP_CDE", true, "250102");
+                BizUtil.SetCmbCode(cbSTP_MOP, "250102", true);
 
                 // cbVAL_MOF 형식
-                BizUtil.SetCmbCode(cbVAL_MOF, "MOF_CDE", true, "250035");
+                BizUtil.SetCmbCode(cbVAL_MOF, "250035", true);
 
             }
             catch (Exception ex)

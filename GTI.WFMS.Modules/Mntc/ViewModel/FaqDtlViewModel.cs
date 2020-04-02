@@ -282,8 +282,8 @@ namespace GTI.WFMS.Modules.Mntc.ViewModel
                 // cbFTR_CDE 시설물
                 BizUtil.SetCombo(cbFTR_CDE, "Select_FTR_LIST", "FTR_CDE", "FTR_NAM", true);
                 // cbFAQ_CAT_CDE 구분
-                BizUtil.SetCmbCode(cbFAQ_CAT_CDE, "FAQ_CAT_CDE", true, "250109");
-                BizUtil.SetCmbCode(cbFAQ_CUZ_CDE, "FAQ_CUZ_CDE", true, "250110");
+                BizUtil.SetCmbCode(cbFAQ_CAT_CDE, "250109", true);
+                BizUtil.SetCmbCode(cbFAQ_CUZ_CDE, "250110", true);
             }
             catch (Exception ex)
             {

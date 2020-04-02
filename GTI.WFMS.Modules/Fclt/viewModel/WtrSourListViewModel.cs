@@ -498,16 +498,13 @@ namespace GTI.WFMS.Modules.Fclt.ViewModel
                 dtFNS_YMD_TO.DisplayFormatString = "yyyy-MM-dd";
 
                 // cbMNG_CDE    0.관리기관
-                BizUtil.SetCmbCode(cbMNG_CDE, "MNG_CDE", true);
+                BizUtil.SetCmbCode(cbMNG_CDE, "250101", true);
 
                 // cbHJD_CDE    2.행정동
                 BizUtil.SetCombo(cbHJD_CDE, "Select_ADAR_LIST", "HJD_CDE", "HJD_NAM", true);
 
                 // cbWSR_CDE    7.수원구분
-                BizUtil.SetCmbCode(cbWSR_CDE, "WSR_CDE", true);
-
-                // cbWSR_CDE    8.수원구분
-                BizUtil.SetCmbCode(cbWSR_CDE, "WSR_CDE", true);
+                BizUtil.SetCmbCode(cbWSR_CDE, "250058", true);
 
             }
             catch (Exception ex)

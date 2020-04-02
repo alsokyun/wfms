@@ -226,11 +226,11 @@ namespace GTI.WFMS.Modules.Cmpl.ViewModel
                 //행정구역
                 BizUtil.SetCombo(lekSiteDtlView.cbHJD_CDE, "Select_ADAR_LIST", "HJD_CDE", "HJD_NAM", true);
                 //누수원인
-                BizUtil.SetCmbCode(lekSiteDtlView.cbLRS_CDE, "LRS_CDE", true, "250044");
+                BizUtil.SetCmbCode(lekSiteDtlView.cbLRS_CDE, "250044", true);
                 //누수상태
-                BizUtil.SetCmbCode(lekSiteDtlView.cbLEP_CDE, "LEP_CDE", true, "250043");
+                BizUtil.SetCmbCode(lekSiteDtlView.cbLEP_CDE, "250043", true);
                 //관재질
-                BizUtil.SetCmbCode(lekSiteDtlView.cbMOP_CDE, "MOP_CDE", true, "250102");
+                BizUtil.SetCmbCode(lekSiteDtlView.cbMOP_CDE, "250102", true);
 
             }
             catch (Exception ex)

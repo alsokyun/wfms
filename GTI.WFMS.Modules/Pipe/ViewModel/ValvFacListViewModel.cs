@@ -502,19 +502,19 @@ namespace GTI.WFMS.Modules.Pipe.ViewModel
                 dtIST_YMD_TO.DisplayFormatString = "yyyy-MM-dd";
 
                 // cbMNG_CDE    0.관리기관
-                BizUtil.SetCmbCode(cbMNG_CDE, "MNG_CDE", true);
+                BizUtil.SetCmbCode(cbMNG_CDE, "250101", true);
 
                 // cbHJD_CDE    2.행정동
                 BizUtil.SetCombo(cbHJD_CDE, "Select_ADAR_LIST", "HJD_CDE", "HJD_NAM", true);
 
                 // cbVAL_MOF    7.형식
-                BizUtil.SetCmbCode(cbVAL_MOF, "MOF_CDE", true, "250016");
+                BizUtil.SetCmbCode(cbVAL_MOF, "250016", true);
 
                 // cbVAL_MOP    8.관재질
-                BizUtil.SetCmbCode(cbVAL_MOP, "MOP_CDE", true, "250015");
+                BizUtil.SetCmbCode(cbVAL_MOP, "250015", true);
 
                 // cbVAL_FOR    10.시설물형태
-                BizUtil.SetCmbCode(cbVAL_FOR, "FOR_CDE", true);
+                BizUtil.SetCmbCode(cbVAL_FOR, "250007", true);
 
                 // cbFTR_CDE 지형지물
                 BizUtil.SetCombo(valvFacListView.cbFTR_CDE, "Select_FTR_LIST", "FTR_CDE", "FTR_NAM", true);

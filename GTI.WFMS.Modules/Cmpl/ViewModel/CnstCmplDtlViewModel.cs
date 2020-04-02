@@ -227,9 +227,9 @@ namespace GTI.WFMS.Modules.Cmpl.ViewModel
                 //행정구역
                 BizUtil.SetCombo(cnstCmplDtlView.cbAPL_HJD, "Select_ADAR_LIST", "HJD_CDE", "HJD_NAM", true);
                 //민원구분
-                BizUtil.SetCmbCode(cnstCmplDtlView.cbAPL_CDE, "APL_CDE", true, "250056");
+                BizUtil.SetCmbCode(cnstCmplDtlView.cbAPL_CDE, "250056", true);
                 //민원처리상태
-                BizUtil.SetCmbCode(cnstCmplDtlView.cbPRO_CDE, "PRO_CDE", true, "250050");
+                BizUtil.SetCmbCode(cnstCmplDtlView.cbPRO_CDE, "250050", true);
                 
             }
             catch (Exception ex)

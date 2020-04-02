@@ -270,10 +270,10 @@ namespace GTI.WFMS.GIS.Module.ViewModel
                 BizUtil.SetCombo(uC_PRGA_PS.cbHJD_CDE, "Select_ADAR_LIST", "HJD_CDE", "HJD_NAM", true);
 
                 // cbMNG_CDE 관리기관
-                BizUtil.SetCmbCode(uC_PRGA_PS.cbMNG_CDE, "MNG_CDE", true);
+                BizUtil.SetCmbCode(uC_PRGA_PS.cbMNG_CDE, "250101", true);
 
                 // cbSAG_CDE 관리방법
-                BizUtil.SetCmbCode(uC_PRGA_PS.cbSAG_CDE, "SAG_CDE", true);
+                BizUtil.SetCmbCode(uC_PRGA_PS.cbSAG_CDE, "250005", true);
             }
             catch (Exception ex)
             {

@@ -295,10 +295,10 @@ namespace GTI.WFMS.Modules.Acmf.ViewModel
                 BizUtil.SetCombo(cbHJD_CDE, "Select_ADAR_LIST", "HJD_CDE", "HJD_NAM", true);
 
                 // cbMNG_CDE 관리기관
-                BizUtil.SetCmbCode(cbMNG_CDE, "MNG_CDE", true);
+                BizUtil.SetCmbCode(cbMNG_CDE, "250101", true);
 
                 // cbBLS_CDE 건물유형
-                BizUtil.SetCmbCode(cbBLS_CDE, "BLS_CDE", true);
+                BizUtil.SetCmbCode(cbBLS_CDE, "250037", true);
             }
             catch (Exception ex)
             {

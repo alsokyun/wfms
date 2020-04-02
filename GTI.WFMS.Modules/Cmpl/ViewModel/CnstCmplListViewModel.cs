@@ -416,9 +416,9 @@ namespace GTI.WFMS.Modules.Cmpl.ViewModel
                 // cbHJD_CDE 행정동
                 BizUtil.SetCombo(cbHJD_CDE, "Select_ADAR_LIST", "HJD_CDE", "HJD_NAM", true);
                 // 민원구분
-                BizUtil.SetCmbCode(cbAPL_CDE, "APL_CDE", true, "250056");
+                BizUtil.SetCmbCode(cbAPL_CDE, "250056", true);
                 // 처리상태
-                BizUtil.SetCmbCode(cbPRO_CDE, "PRO_CDE", true, "250050");
+                BizUtil.SetCmbCode(cbPRO_CDE, "250050", true);
             }
             catch (Exception ex)
             {

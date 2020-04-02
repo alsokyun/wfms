@@ -2,9 +2,6 @@
 <SettingsFile xmlns="http://schemas.microsoft.com/VisualStudio/2004/01/settings" CurrentProfile="(Default)" GeneratedClassNamespace="GTIFramework.Properties" GeneratedClassName="Settings">
   <Profiles />
   <Settings>
-    <Setting Name="strIP" Type="System.String" Scope="User">
-      <Value Profile="(Default)">211.105.28.40</Value>
-    </Setting>
     <Setting Name="strPort" Type="System.String" Scope="User">
       <Value Profile="(Default)">8629</Value>
     </Setting>
@@ -19,6 +16,9 @@
     </Setting>
     <Setting Name="RES_DB_INS_DEFAULT" Type="System.String" Scope="User">
       <Value Profile="(Default)">TIBEROConfig</Value>
+    </Setting>
+    <Setting Name="strIP" Type="System.String" Scope="User">
+      <Value Profile="(Default)">172.16.0.242</Value>
     </Setting>
   </Settings>
 </SettingsFile>

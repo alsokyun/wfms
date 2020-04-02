@@ -494,13 +494,13 @@ namespace GTI.WFMS.Modules.Pipe.ViewModel
                 dtIST_YMD_TO.DisplayFormatString = "yyyy-MM-dd";
 
                 // cbMNG_CDE    0.관리기관
-                BizUtil.SetCmbCode(cbMNG_CDE, "MNG_CDE", true);
+                BizUtil.SetCmbCode(cbMNG_CDE, "250101", true);
 
                 // cbHJD_CDE    2.행정동
                 BizUtil.SetCombo(cbHJD_CDE, "Select_ADAR_LIST", "HJD_CDE", "HJD_NAM", true);
 
                 // cbMOF_CDE    7.형식
-                BizUtil.SetCmbCode(cbMOF_CDE, "MOF_CDE", true, "250016");
+                BizUtil.SetCmbCode(cbMOF_CDE, "250016", true);
             }
             catch (Exception ex)
             {

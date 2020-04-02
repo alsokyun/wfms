@@ -271,16 +271,16 @@ namespace GTI.WFMS.GIS.Module.ViewModel
                 BizUtil.SetCombo(uC_GAIN_PS.cbHJD_CDE, "Select_ADAR_LIST", "HJD_CDE", "HJD_NAM", true);
 
                 // cbMNG_CDE 관리기관
-                BizUtil.SetCmbCode(uC_GAIN_PS.cbMNG_CDE, "MNG_CDE", true);
+                BizUtil.SetCmbCode(uC_GAIN_PS.cbMNG_CDE, "250101", true);
 
                 // cbWSR_CDE 수원구분
-                BizUtil.SetCmbCode(uC_GAIN_PS.cbWSR_CDE, "WSR_CDE", true);
+                BizUtil.SetCmbCode(uC_GAIN_PS.cbWSR_CDE, "250058", true);
 
                 // cbWRW_CDE 도수방법
-                BizUtil.SetCmbCode(uC_GAIN_PS.cbWRW_CDE, "WRW_CDE", true);
+                BizUtil.SetCmbCode(uC_GAIN_PS.cbWRW_CDE, "250046", true);
 
                 // cbWRW_CDEE 취소방법
-                BizUtil.SetCmbCode(uC_GAIN_PS.cbWGW_CDE, "WGW_CDE", true);
+                BizUtil.SetCmbCode(uC_GAIN_PS.cbWGW_CDE, "250069", true);
             }
             catch (Exception ex)
             {

@@ -306,10 +306,10 @@ namespace GTI.WFMS.Modules.Cnst.ViewModel
             try
             {
                 // cbCTT_CDE 계약구분
-                BizUtil.SetCmbCode(cbCTT_CDE, "CTT_CDE", true);
+                BizUtil.SetCmbCode(cbCTT_CDE, "250038", true);
 
                 // cbCNT_CDE 공사구분
-                BizUtil.SetCmbCode(cbCNT_CDE, "CNT_CDE", true);
+                BizUtil.SetCmbCode(cbCNT_CDE, "250039", true);
             }
             catch (Exception ex)
             {

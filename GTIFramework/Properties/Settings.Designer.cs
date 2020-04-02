@@ -25,18 +25,6 @@ namespace GTIFramework.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("211.105.28.40")]
-        public string strIP {
-            get {
-                return ((string)(this["strIP"]));
-            }
-            set {
-                this["strIP"] = value;
-            }
-        }
-        
-        [global::System.Configuration.UserScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("8629")]
         public string strPort {
             get {
@@ -92,6 +80,18 @@ namespace GTIFramework.Properties {
             }
             set {
                 this["RES_DB_INS_DEFAULT"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("172.16.0.242")]
+        public string strIP {
+            get {
+                return ((string)(this["strIP"]));
+            }
+            set {
+                this["strIP"] = value;
             }
         }
     }

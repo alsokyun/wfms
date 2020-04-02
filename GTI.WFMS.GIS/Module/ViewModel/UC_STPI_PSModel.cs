@@ -255,13 +255,13 @@ namespace GTI.WFMS.GIS.Module.ViewModel
                 BizUtil.SetCombo(uC_STPI_PS.cbHJD_CDE, "Select_ADAR_LIST", "HJD_CDE", "HJD_NAM", true);
 
                 // cbMNG_CDE 관리기관
-                BizUtil.SetCmbCode(uC_STPI_PS.cbMNG_CDE, "MNG_CDE", true);
+                BizUtil.SetCmbCode(uC_STPI_PS.cbMNG_CDE, "250101", true);
 
                 // cbSTP_MOP 관재질
-                BizUtil.SetCmbCode(uC_STPI_PS.cbSTP_MOP, "MOP_CDE", true, "250102");
+                BizUtil.SetCmbCode(uC_STPI_PS.cbSTP_MOP, "250102", true);
 
                 // cbVAL_MOF 형식
-                BizUtil.SetCmbCode(uC_STPI_PS.cbVAL_MOF, "MOF_CDE", true, "250035");
+                BizUtil.SetCmbCode(uC_STPI_PS.cbVAL_MOF, "250035", true);
 
             }
             catch (Exception ex)

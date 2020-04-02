@@ -258,13 +258,13 @@ namespace GTI.WFMS.GIS.Module.ViewModel
                 BizUtil.SetCombo(uC_PRES_PS.cbHJD_CDE, "Select_ADAR_LIST", "HJD_CDE", "HJD_NAM", true);
 
                 // cbMNG_CDE 관리기관
-                BizUtil.SetCmbCode(uC_PRES_PS.cbMNG_CDE, "MNG_CDE", true);
+                BizUtil.SetCmbCode(uC_PRES_PS.cbMNG_CDE, "250101", true);
 
                 // cbPGA_CDE 수압계종류
-                BizUtil.SetCmbCode(uC_PRES_PS.cbPGA_CDE, "PGA_CDE", true);
+                BizUtil.SetCmbCode(uC_PRES_PS.cbPGA_CDE, "250057", true);
 
                 // cbMOF_CDE 형식
-                BizUtil.SetCmbCode(uC_PRES_PS.cbMOF_CDE, "MOF_CDE", true, "250035");
+                BizUtil.SetCmbCode(uC_PRES_PS.cbMOF_CDE, "250035", true);
 
             }
             catch (Exception ex)

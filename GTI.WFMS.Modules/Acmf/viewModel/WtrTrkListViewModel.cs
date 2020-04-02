@@ -495,7 +495,7 @@ namespace GTI.WFMS.Modules.Acmf.ViewModel
                 dtPMS_YMD.DisplayFormatString = "yyyy-MM-dd";
 
                 // cbMNG_CDE    0.관리기관
-                BizUtil.SetCmbCode(cbMNG_CDE, "MNG_CDE", true);
+                BizUtil.SetCmbCode(cbMNG_CDE, "250101", true);
 
                 // cbHJD_CDE    2.행정동
                 BizUtil.SetCombo(cbHJD_CDE, "Select_ADAR_LIST", "HJD_CDE", "HJD_NAM", true);

@@ -500,16 +500,16 @@ namespace GTI.WFMS.Modules.Pipe.ViewModel
                 dtIST_YMD_TO.DisplayFormatString = "yyyy-MM-dd";
 
                 // cbMNG_CDE    0.관리기관
-                BizUtil.SetCmbCode(cbMNG_CDE, "MNG_CDE", true);
+                BizUtil.SetCmbCode(cbMNG_CDE, "250101", true);
 
                 // cbHJD_CDE    2.행정동
                 BizUtil.SetCombo(cbHJD_CDE, "Select_ADAR_LIST", "HJD_CDE", "HJD_NAM", true);
 
                 // cbPGA_CDE    7.수압계종류
-                BizUtil.SetCmbCode(cbPGA_CDE, "PGA_CDE", true);
+                BizUtil.SetCmbCode(cbPGA_CDE, "250057", true);
 
                 // cbPGA_CDE    8.형식
-                BizUtil.SetCmbCode(cbMOF_CDE, "MOF_CDE", true, "250035");
+                BizUtil.SetCmbCode(cbMOF_CDE, "250035", true);
 
             }
             catch (Exception ex)

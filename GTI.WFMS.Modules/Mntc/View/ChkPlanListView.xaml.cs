@@ -50,11 +50,11 @@ namespace GTI.WFMS.Modules.Mntc.View
             try
             {
                 // 관리기관
-                BizUtil.SetCmbCode(cbMNG_CDE, "MNG_CDE", true, "250101");
+                BizUtil.SetCmbCode(cbMNG_CDE, "250101", true);
                 // 점검구분
-                BizUtil.SetCmbCode(cbSCL_CDE, "SCL_CDE", true, "250105");
+                BizUtil.SetCmbCode(cbSCL_CDE, "250105", true);
                 // 점검진행상태
-                BizUtil.SetCmbCode(cbSCL_STAT_CDE, "SCL_STAT_CDE", true, "250107");
+                BizUtil.SetCmbCode(cbSCL_STAT_CDE, "250107", true);
             }
             catch (Exception ex)
             {

@@ -420,9 +420,9 @@ namespace GTI.WFMS.Modules.Cmpl.ViewModel
                 // cbHJD_CDE 행정동
                 BizUtil.SetCombo(cbHJD_CDE, "Select_ADAR_LIST", "HJD_CDE", "HJD_NAM", true);
                 // 누수부위
-                BizUtil.SetCmbCode(cbLEP_CDE, "LEP_CDE", true, "250043");
+                BizUtil.SetCmbCode(cbLEP_CDE, "250043", true);
                 // 누수원인
-                BizUtil.SetCmbCode(cbLRS_CDE, "LRS_CDE", true, "250044");
+                BizUtil.SetCmbCode(cbLRS_CDE, "250044", true);
             }
             catch (Exception ex)
             {

@@ -44,7 +44,7 @@ namespace GTI.WFMS.Modules.Mntc.View
             try
             {
                 // cbPDT_CAT_CDE
-                BizUtil.SetCmbCode(cbPDT_CAT_CDE, "PDT_CAT_CDE", true);
+                BizUtil.SetCmbCode(cbPDT_CAT_CDE, "250106", true);
             }
             catch (Exception ex)
             {

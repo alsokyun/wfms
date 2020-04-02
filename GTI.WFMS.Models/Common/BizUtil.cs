@@ -189,14 +189,13 @@ namespace GTI.WFMS.Models.Common
         /// <param name="cmb"></param>
         /// <param name="MST_CD"></param>
         /// <param name="ALL 전체항목추가"></param>
-        public static void SetCmbCode(ComboBoxEdit cmb, string ETC, bool ALL, string MST_CD)
+        public static void SetCmbCode(ComboBoxEdit cmb, string MST_CD, bool ALL)
         {
             Hashtable conditions = new Hashtable();
             DataTable dt = new DataTable(MST_CD);
 
 
             conditions.Add("MST_CD", MST_CD);
-            conditions.Add("ETC", ETC);
             dt = cmmDao.Select_CODE_LIST(conditions);
 
             /* 전체추가 */
@@ -215,13 +214,9 @@ namespace GTI.WFMS.Models.Common
             cmb.ItemsSource = dt;
             cmb.SelectedIndex = 0;
         }
-        public static void SetCmbCode(ComboBoxEdit cmb, string ETC)
+        public static void SetCmbCode(ComboBoxEdit cmb, string MST_CD)
         {
-            SetCmbCode(cmb, ETC, false, null);
-        }
-        public static void SetCmbCode(ComboBoxEdit cmb, string ETC, bool ALL)
-        {
-            SetCmbCode(cmb, ETC, ALL, null);
+            SetCmbCode(cmb, MST_CD, false);
         }
 
 

@@ -232,9 +232,9 @@ namespace GTI.WFMS.Modules.Mntc.ViewModel
             try
             {
                 //관리기관
-                BizUtil.SetCmbCode(cbMNG_CDE, "MNG_CDE", true);
+                BizUtil.SetCmbCode(cbMNG_CDE, "250101", true);
                 //점검구분
-                BizUtil.SetCmbCode(cbSCL_CDE, "SCL_CDE", true);
+                BizUtil.SetCmbCode(cbSCL_CDE, "250105", true);
                 
 
             }

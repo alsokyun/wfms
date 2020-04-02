@@ -152,11 +152,11 @@ namespace GTI.WFMS.Modules.Cmpl.ViewModel
                 //지형지물
                 BizUtil.SetCombo(lekSiteAddView.cbFTR_CDE, "Select_FTR_LIST", "FTR_CDE", "FTR_NAM", false);
                 //누수원인
-                BizUtil.SetCmbCode(lekSiteAddView.cbLRS_CDE, "LRS_CDE", true, "250044");
+                BizUtil.SetCmbCode(lekSiteAddView.cbLRS_CDE, "250044", true);
                 //누수상태
-                BizUtil.SetCmbCode(lekSiteAddView.cbLEP_CDE, "LEP_CDE", true, "250043");
+                BizUtil.SetCmbCode(lekSiteAddView.cbLEP_CDE, "250043", true);
                 //관재질
-                BizUtil.SetCmbCode(lekSiteAddView.cbMOP_CDE, "MOP_CDE", true, "250102");
+                BizUtil.SetCmbCode(lekSiteAddView.cbMOP_CDE, "250102", true);
 
             }
             catch (Exception ex)
