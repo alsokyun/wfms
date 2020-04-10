@@ -18,7 +18,7 @@
       <Value Profile="(Default)">TIBEROConfig</Value>
     </Setting>
     <Setting Name="strIP" Type="System.String" Scope="User">
-      <Value Profile="(Default)">172.16.0.242</Value>
+      <Value Profile="(Default)">211.105.28.40</Value>
     </Setting>
   </Settings>
 </SettingsFile>

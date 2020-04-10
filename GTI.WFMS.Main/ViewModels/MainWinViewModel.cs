@@ -188,7 +188,8 @@ namespace GTI.WFMS.Main
                 //regionManager.RequestNavigate("ContentRegion", new Uri("OfflineBasemapByReference", UriKind.Relative));
                 //regionManager.RequestNavigate("ContentRegion", new Uri("Map3View", UriKind.Relative));
                 //regionManager.RequestNavigate("ContentRegion", new Uri("Map2View", UriKind.Relative));
-                regionManager.RequestNavigate("ContentRegion", new Uri("MapMainView", UriKind.Relative));
+                //regionManager.RequestNavigate("ContentRegion", new Uri("MapMainView", UriKind.Relative));
+                regionManager.RequestNavigate("ContentRegion", new Uri("MapArcObjView", UriKind.Relative));
 
                 //regionManager.RequestNavigate("ContentRegion", new Uri("MainWindow", UriKind.Relative));
 

@@ -21,6 +21,7 @@ namespace GTI.WFMS.Main
             Container.RegisterTypeForNavigation<SketchOnMap>("SketchOnMap");
             Container.RegisterTypeForNavigation<OfflineBasemapByReference>("OfflineBasemapByReference");
             Container.RegisterTypeForNavigation<MapMainView>("MapMainView");
+            Container.RegisterTypeForNavigation<MapArcObjView>("MapArcObjView");
             Container.RegisterTypeForNavigation<Map2View>("Map2View");
             Container.RegisterTypeForNavigation<Map3View>("Map3View");
 

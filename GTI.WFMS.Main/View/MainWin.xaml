@@ -14,7 +14,7 @@
         xmlns:gridani="clr-namespace:GTIFramework.Common.Utils.ViewEffect;assembly=GTIFramework"
         xmlns:dxmvvm="http://schemas.devexpress.com/winfx/2008/xaml/mvvm"
     
-        Title="InfoFacility" WindowStyle="None" WindowStartupLocation="CenterScreen" ResizeMode="CanResize" AllowsTransparency="True" 
+        Title="InfoFacility" WindowStyle="None" WindowStartupLocation="CenterScreen" ResizeMode="CanResize" 
         Width="1900" Height="1049" MinWidth="1280" MinHeight="720" 
         Style="{DynamicResource MAINWindow}" Background="{DynamicResource MainWindowColorBrush1}"
     
@@ -155,7 +155,7 @@
         </Grid>
 
         <!--즐겨찾기 숨김영역-->
-        <Grid Grid.Row="3" Grid.Column="1" HorizontalAlignment="Right">
+        <Grid Grid.Row="3" Grid.Column="1" HorizontalAlignment="Right" >
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="17"/>
                 <ColumnDefinition Width="7" x:Name="colQuick"/>

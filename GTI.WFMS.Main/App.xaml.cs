@@ -7,6 +7,7 @@ using GTIFramework.Common.Log;
 
 using GTIFramework.Common.MessageBox;
 using GTI.WFMS.Main.View;
+using ESRI.ArcGIS.esriSystem;
 
 namespace GTI.WFMS.Main
 {
@@ -35,6 +36,8 @@ namespace GTI.WFMS.Main
                 {
                     Logs.DBdefault();
 
+
+
                     Login login = new Login();
                     Application.Current.ShutdownMode = ShutdownMode.OnExplicitShutdown;
                     bool? res = login.ShowDialog();
@@ -46,6 +49,11 @@ namespace GTI.WFMS.Main
                     else
                     {
                         base.OnStartup(e);
+
+                        // ESRI ArcObject Engine 라이센스체크
+                        ESRI.ArcGIS.RuntimeManager.Bind(ESRI.ArcGIS.ProductCode.Engine);
+                        InitializeEngineLicense();
+
 
                         // 프리즘을 사용하기위해 Bootstrapper를 시작한다...
                         Bootstrapper bs = new Bootstrapper();
@@ -75,5 +83,50 @@ namespace GTI.WFMS.Main
                 Messages.ShowErrMsgBoxLog(ex);
             }
         }
+
+
+
+
+
+
+
+
+
+
+
+        #region ========= ArcObject Engine 라이센스관련 체크코드 ========= 
+
+
+        //private LicenseInitializer m_AOLicenseInitializer = new GTI.WFMS.Main.LicenseInitializer();
+
+        void Application_Startup(object sender, StartupEventArgs e)
+        {
+            //ESRI License Initializer generated code.
+            //m_AOLicenseInitializer.InitializeApplication(new esriLicenseProductCode[] { esriLicenseProductCode.esriLicenseProductCodeEngine },
+            //new esriLicenseExtensionCode[] { });
+        }
+
+        void Application_Exit(object sender, ExitEventArgs e)
+        {
+            //ESRI License Initializer generated code.
+            //Do not make any call to ArcObjects after ShutDownApplication()
+            //m_AOLicenseInitializer.ShutdownApplication();
+        }
+
+
+        private void InitializeEngineLicense()
+        {
+            AoInitialize aoi = new AoInitializeClass();
+
+            //more license choices could be included here
+            esriLicenseProductCode productCode = esriLicenseProductCode.esriLicenseProductCodeEngine;
+            if (aoi.IsProductCodeAvailable(productCode) == esriLicenseStatus.esriLicenseAvailable)
+            {
+                aoi.Initialize(productCode);
+            }
+        }
+
+
+        #endregion
     }
 }

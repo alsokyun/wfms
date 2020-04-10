@@ -168,11 +168,11 @@ namespace GTI.WFMS.Modules.Acmf.ViewModel
                 //MapMainViewMocel 인스턴스불러오기
                 foreach (var v in views)
                 {
-                    MapMainView mapMainView = v as MapMainView;
-                    MapMainViewModel vm = mapMainView.DataContext as MapMainViewModel;
+                    MapArcObjView mapMainView = v as MapArcObjView;
+                    MapArcObjViewModel vm = mapMainView.DataContext as MapArcObjViewModel;
 
                     //Find 메소드수행
-                    await vm.findFtrAsync(FTR_CDE, FTR_IDN);
+                    vm.findFtr(FTR_CDE, FTR_IDN);
                     break;
                 }
             });

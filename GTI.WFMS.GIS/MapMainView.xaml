@@ -15,9 +15,9 @@
              >
 
     <!--뷰의 데이터컨텍스트 세팅-->
-    <UserControl.DataContext>
+    <!--<UserControl.DataContext>
         <local:MapMainViewModel />
-    </UserControl.DataContext>
+    </UserControl.DataContext>-->
 
 
 

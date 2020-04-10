@@ -2,10 +2,6 @@
 using Esri.ArcGISRuntime.Symbology;
 using GTI.WFMS.Models.Common;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace GTI.WFMS.GIS
 {
@@ -29,11 +25,6 @@ namespace GTI.WFMS.GIS
 
         // 레이어 심볼 Renderer
         public static UniqueValueRenderer uniqueValueRenderer;
-
-
-
-
-
 
         // 레이어 심볼 Renderer 구성 초기화 - shape버전 레이어구성시에만 사용함
         public static void InitUniqueValueRenderer()
@@ -249,6 +240,13 @@ namespace GTI.WFMS.GIS
 
             return layerNm;
         }
+
+
+
+
+
+
+
 
 
     }

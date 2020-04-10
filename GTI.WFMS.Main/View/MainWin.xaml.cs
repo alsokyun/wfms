@@ -1,4 +1,5 @@
-﻿using GTIFramework.Common.MessageBox;
+﻿using GTI.WFMS.GIS;
+using GTIFramework.Common.MessageBox;
 using GTIFramework.Common.Utils.ViewEffect;
 using System;
 using System.Collections.Generic;
@@ -24,6 +25,7 @@ namespace GTI.WFMS.Main
         public MainWin()
         {
             InitializeComponent();
+
         }
 
         private void Border_PreviewMouseRightButtonDown(object sender, MouseButtonEventArgs e)

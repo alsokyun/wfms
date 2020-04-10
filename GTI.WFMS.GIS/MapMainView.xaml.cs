@@ -1,4 +1,5 @@
-﻿using GTIFramework.Common.Utils.ViewEffect;
+﻿using GTI.WFMS.GIS.Pop.View;
+using GTIFramework.Common.Utils.ViewEffect;
 using System;
 using System.Windows;
 using System.Windows.Controls;

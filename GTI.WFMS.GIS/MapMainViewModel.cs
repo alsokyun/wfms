@@ -279,7 +279,7 @@ namespace GTI.WFMS.GIS
 
                 foreach (var v in views)
                 {
-                    MapMainView mapMainView = v as MapMainView;
+                    MapArcObjView mapMainView = v as MapArcObjView;
                     //MainWinViewModel vm = ((System.Windows.Controls.Grid)((ContentControl)mapMainView.Parent).Parent).DataContext as MainWinViewModel;
                     break;
                 }

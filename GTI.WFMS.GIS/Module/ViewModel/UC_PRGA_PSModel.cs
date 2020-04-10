@@ -75,7 +75,7 @@ namespace GTI.WFMS.GIS.Module.ViewModel
 
 
         #region ==========  Member 정의 ==========
-        UC_PRGA_PS uC_PRES_PS;
+        UC_PRGA_PS uC_PRGA_PS;
         Button btnSave;
 
 
@@ -105,9 +105,9 @@ namespace GTI.WFMS.GIS.Module.ViewModel
                 // 0.화면객체인스턴스화
                 if (obj == null) return;
 
-                uC_PRES_PS = obj as UC_PRGA_PS;
+                uC_PRGA_PS = obj as UC_PRGA_PS;
 
-                btnSave = uC_PRES_PS.btnSave;
+                btnSave = uC_PRGA_PS.btnSave;
 
                 //2.화면데이터객체 초기화
                 InitDataBinding();
@@ -138,7 +138,7 @@ namespace GTI.WFMS.GIS.Module.ViewModel
         {
 
             // 필수체크 (Tag에 필수체크 표시한 EditBox, ComboBox 대상으로 수행)
-            if (!BizUtil.ValidReq(uC_PRES_PS)) return;
+            if (!BizUtil.ValidReq(uC_PRGA_PS)) return;
 
 
             if (Messages.ShowYesNoMsgBox("저장하시겠습니까?") != MessageBoxResult.Yes) return;
@@ -239,9 +239,9 @@ namespace GTI.WFMS.GIS.Module.ViewModel
             else
             {
                 //신규등록이면 상세화면표시
-                if (!"Y".Equals(uC_PRES_PS.btnDel.Tag))
+                if (!"Y".Equals(uC_PRGA_PS.btnDel.Tag))
                 {
-                    uC_PRES_PS.grid.Visibility = Visibility.Hidden; //DB데이터가 없으면 빈페이지표시
+                    uC_PRGA_PS.grid.Visibility = Visibility.Hidden; //DB데이터가 없으면 빈페이지표시
                 }
             }
         }
@@ -255,16 +255,16 @@ namespace GTI.WFMS.GIS.Module.ViewModel
             try
             {
                 // cbHJD_CDE 행정동
-                BizUtil.SetCombo(uC_PRES_PS.cbHJD_CDE, "Select_ADAR_LIST", "HJD_CDE", "HJD_NAM", true);
+                BizUtil.SetCombo(uC_PRGA_PS.cbHJD_CDE, "Select_ADAR_LIST", "HJD_CDE", "HJD_NAM", true);
 
                 // cbMNG_CDE 관리기관
-                BizUtil.SetCmbCode(uC_PRES_PS.cbMNG_CDE, "250101", true);
+                BizUtil.SetCmbCode(uC_PRGA_PS.cbMNG_CDE, "250101", true);
 
                 // cbPGA_CDE 수압계종류
-                BizUtil.SetCmbCode(uC_PRES_PS.cbPGA_CDE, "250057", true);
+                BizUtil.SetCmbCode(uC_PRGA_PS.cbPGA_CDE, "250057", true);
 
                 // cbMOF_CDE 형식
-                BizUtil.SetCmbCode(uC_PRES_PS.cbMOF_CDE, "250035", true);
+                BizUtil.SetCmbCode(uC_PRGA_PS.cbMOF_CDE, "250035", true);
 
             }
             catch (Exception ex)
