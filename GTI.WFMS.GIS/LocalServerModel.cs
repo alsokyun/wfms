@@ -408,7 +408,7 @@ namespace GTI.WFMS.GIS
         {
             //return DataManager.GetDataFolder("4e94fec734434d1288e6ebe36c3c461f", "PointsOfInterest.mpk");
             //return GetDataFolder("4e94fec734434d1288e6ebe36c3c461f", "PointsOfInterest.mpk");
-            return BizUtil.GetDataFolder("shape", "wfms.mpk");
+            return BizUtil.GetDataFolder("tile", "wfms.mpk");
         }
 
 

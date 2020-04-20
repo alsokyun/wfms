@@ -33,7 +33,6 @@
         <StackPanel Grid.Row="0" Orientation="Horizontal" HorizontalAlignment="Right" Margin="0 0 5 0">
             <Button x:Name="btnAdd" Content="추가" Style="{DynamicResource ResourceKey=GrdAddButton}" Click="BtnAdd_Click"  />
             <Button x:Name="btnDel" Content="삭제" Style="{DynamicResource ResourceKey=GrdDelButton}" Click="BtnDel_Click"  />
-            <Button x:Name="btnReg" Content="저장" Style="{DynamicResource ResourceKey=GrdRegButton}" Click="BtnReg_Click"  />
         </StackPanel>
 
 
@@ -73,7 +72,7 @@
                     <dxe:TextEditSettings HorizontalContentAlignment="Left"/>
                 </dxg:GridColumn.EditSettings>
             </dxg:GridColumn>
-            <dxg:GridColumn Header="저장일자" Width="4*" FieldName="UPD_YMD" HorizontalHeaderContentAlignment="Center">
+            <dxg:GridColumn Header="등록일자" Width="4*" FieldName="UPD_YMD" HorizontalHeaderContentAlignment="Center">
                 <dxg:GridColumn.EditSettings>
                     <dxe:TextEditSettings HorizontalContentAlignment="Center" DisplayTextConverter="{StaticResource ResourceKey=date3StrConverter}" />
                 </dxg:GridColumn.EditSettings>

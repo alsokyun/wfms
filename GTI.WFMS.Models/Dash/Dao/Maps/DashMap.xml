@@ -127,18 +127,18 @@
       <![CDATA[	
 		/* Dash_SQL.selectDashChart3List - 3.점검현황(금일기준) */		
 		SELECT M.DTL_CD AS SCL_STAT_CDE /*점검상태*/
-		     , M.CD_NM AS SCL_STAT_CDE_NAM
-         , M.CD_NM AS NAM         
+		     , M.NM AS SCL_STAT_CDE_NAM
+         , M.NM AS NAM         
 		     , SUM(CASE WHEN A.SCL_NUM IS NOT NULL THEN 1 ELSE 0 END) DATA_VAL         
-		  FROM CD_DTL_INFO M 
+		  FROM INFOUSER.CD_DTL_INFO M 
                LEFT JOIN FMS_CHSC_MA A
                  ON (M.DTL_CD = A.SCL_STAT_CDE
                      AND A.STA_YMD >= NVL(#pYm#, TO_CHAR(SYSDATE,'YYYYMM')) || '01'
                      AND A.END_YMD <= TO_CHAR(LAST_DAY(NVL(#pYm#, TO_CHAR(SYSDATE,'YYYYMM')) || '01' ),'YYYYMMDD') )
 		 WHERE 1=1
-           AND M.MST_CD = 'SCL_STAT_CDE'
-		 GROUP BY M.DTL_CD, M.CD_NM
-		 ORDER BY M.DTL_CD, M.CD_NM
+           AND M.MST_CD = '250107'
+		 GROUP BY M.DTL_CD, M.NM
+		 ORDER BY M.DTL_CD, M.NM
 	]]>
     </select>
 
@@ -176,17 +176,17 @@
       <![CDATA[	
 		/* Dash_SQL.selectDashChart5List - 5.보수사유 현황(금일기준) */		
 		SELECT M.DTL_CD AS RPR_CAT_CDE /* 보수구분 */
-		     , M.CD_NM AS RPR_CAT_CDE_NAM		     
-         , M.CD_NM AS NAM 
+		     , M.NM AS RPR_CAT_CDE_NAM		     
+         , M.NM AS NAM 
 		     , SUM(CASE WHEN A.SCL_NUM IS NOT NULL THEN 1 ELSE 0 END) DATA_VAL
 		  FROM CD_DTL_INFO M 
                LEFT JOIN FMS_CHSC_FTR_RES A
                  ON (M.DTL_CD = A.RPR_CAT_CDE
                      AND A.RPR_YMD LIKE NVL(#pYm#, TO_CHAR(SYSDATE,'YYYYMM')) || '%' )
 		 WHERE 1=1
-           AND M.MST_CD = 'RPR_CAT_CDE'
-		 GROUP BY M.DTL_CD, M.CD_NM
-		 ORDER BY M.DTL_CD, M.CD_NM
+           AND M.MST_CD = '250103'
+		 GROUP BY M.DTL_CD, M.NM
+		 ORDER BY M.DTL_CD, M.NM
 	]]>
     </select>
 

@@ -8,11 +8,10 @@
              d:DesignHeight="550" d:DesignWidth="950"
       
             xmlns:dxci="http://schemas.devexpress.com/winfx/2008/xaml/core/internal"
-            xmlns:uccontent="clr-namespace:GTI.WFMS.Modules.Link.View"
             xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
             xmlns:cm="clr-namespace:GTIFramework.Common.Utils.Converters;assembly=GTIFramework"
             xmlns:vm="clr-namespace:GTI.WFMS.Modules.Cnst.ViewModel"
-            x:Name="CnstMngDtl"
+            x:Name="cnstMngDtl"
             xmlns:cv="clr-namespace:GTI.WFMS.Models.Common;assembly=GTI.WFMS.Models"     
       >
 
@@ -168,8 +167,8 @@
             <Label Grid.Row="0" Grid.Column="0" Content="공사번호" Style="{DynamicResource ResourceKey=GridLabelReq}" >
             </Label>
             <!--키값으로 사용 : 부모페이지로부터 뷰생성자로 전달되고, 뷰에서 변경되면 뷰모델로 전달된다.-->
-            <dxe:TextEdit Grid.Row="0" Grid.Column="1" Style="{DynamicResource ResourceKey=GridTextEdit}" Tag="공사번호"    
-                          x:Name="txtCNT_NUM" EditValue="{Binding CNT_NUM, UpdateSourceTrigger=PropertyChanged}" Height="28" Margin="10,8,10,4"/>
+            <dxe:TextEdit Grid.Row="0" Grid.Column="1" Style="{DynamicResource ResourceKey=GridTextEdit}" Tag="공사번호"  IsReadOnly="True"
+                          x:Name="txtCNT_NUM" EditValue="{Binding CNT_NUM, UpdateSourceTrigger=PropertyChanged}" Height="28" />
 
 
             <Label Grid.Row="0" Grid.Column="2" Content="공사구분" Style="{DynamicResource ResourceKey=GridLabelReq}"/>
@@ -612,13 +611,7 @@
     <!--뷰와 연결된 뷰모델로 Loaded 이벤트전파-->
     <i:Interaction.Triggers>
         <i:EventTrigger EventName="Loaded">
-            <i:InvokeCommandAction Command="{Binding LoadedCommand}">
-                <i:InvokeCommandAction.CommandParameter>
-                    <MultiBinding Converter="{StaticResource multiValueConverter}">
-                        <Binding ElementName="CnstMngDtl"/>
-                    </MultiBinding>
-                </i:InvokeCommandAction.CommandParameter>
-            </i:InvokeCommandAction>
+            <i:InvokeCommandAction Command="{Binding LoadedCommand}" CommandParameter="{Binding ElementName=cnstMngDtl}"/>
         </i:EventTrigger>
     </i:Interaction.Triggers>
 

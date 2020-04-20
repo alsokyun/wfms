@@ -304,12 +304,12 @@ namespace GTI.WFMS.Modules.Pop.ViewModel
             //그리드뷰인스턴스
             fileMngView = obj as FileMngView;
             gv = fileMngView.gv;
-
             txtFIL_SEQ = fileMngView.txtFIL_SEQ;
             txtBIZ_ID = fileMngView.txtBIZ_ID;
-            
             btnClose = fileMngView.btnClose;
 
+            //등록일자
+            UPD_YMD = DateTime.Today.ToString("yyyyMMdd");
 
             // 초기조회
             InitModel();

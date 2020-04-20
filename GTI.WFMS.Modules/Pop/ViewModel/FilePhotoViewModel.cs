@@ -50,7 +50,7 @@ namespace GTI.WFMS.Modules.Pop.ViewModel
         Button btnClose;
         Image imgView;
         Grid grdImg;
-        
+        Border bdImg;
 
         #region =========  프로퍼티 ===========
 
@@ -251,6 +251,7 @@ namespace GTI.WFMS.Modules.Pop.ViewModel
 
                     imgView.Source = bi;
                     grdImg.Visibility = Visibility.Visible;
+                    bdImg.Visibility = Visibility.Visible;
                 }
                 catch (Exception ){
                     Messages.ShowInfoMsgBox("이미지 정보가 없습니다.");
@@ -263,7 +264,7 @@ namespace GTI.WFMS.Modules.Pop.ViewModel
             {
                 OpenFileDialog openFileDialog = new OpenFileDialog();
                 openFileDialog.Multiselect = true;
-                openFileDialog.Filter = "All files (*.*)|*.*";
+                openFileDialog.Filter = "Image Files |*.jpg;*.jpeg;*.png;*.gif;*.bmp;*.tif;*.tiff;";
                 openFileDialog.InitialDirectory = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
                 if (openFileDialog.ShowDialog() == true)
                 {
@@ -335,14 +336,16 @@ namespace GTI.WFMS.Modules.Pop.ViewModel
             //그리드뷰인스턴스
             filePhotoView = obj as FilePhotoView;
             gv = filePhotoView.gv;
-
             txtFIL_SEQ = filePhotoView.txtFIL_SEQ;
             txtBIZ_ID = filePhotoView.txtBIZ_ID;
-            
             btnClose = filePhotoView.btnClose;
             imgView = filePhotoView.imgView;
             grdImg = filePhotoView.grdImg;
+            bdImg = filePhotoView.bdImg;
             
+
+            //등록일자
+            UPD_YMD = DateTime.Today.ToString("yyyyMMdd");
 
             // 초기조회
             InitModel();
@@ -354,7 +357,8 @@ namespace GTI.WFMS.Modules.Pop.ViewModel
         private void InitModel()
         {
             grdImg.Visibility = Visibility.Hidden;
-
+            bdImg.Visibility = Visibility.Hidden;
+            
             Hashtable param = new Hashtable();
 
             // 0.파일첨부내역

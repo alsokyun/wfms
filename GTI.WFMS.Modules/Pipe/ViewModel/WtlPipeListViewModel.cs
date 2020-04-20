@@ -153,7 +153,7 @@ namespace GTI.WFMS.Modules.Pipe.ViewModel
             ExcelCmd = new DelegateCommand<object>(ExcelDownAction);
 
             // 시설물 지도상 위치찾아가기
-            cellPosCmd = new DelegateCommand<object>(async delegate(object obj) {
+            cellPosCmd = new DelegateCommand<object>(delegate(object obj) {
 
                 DataRowView row = obj as DataRowView;
                 string FTR_IDN = row["FTR_IDN"].ToString();

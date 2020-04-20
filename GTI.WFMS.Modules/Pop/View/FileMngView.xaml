@@ -128,7 +128,7 @@
             <Label Grid.Row="0" Grid.Column="0" Content="첨부제목" Style="{DynamicResource ResourceKey=GridLabelReq}" Margin="10,12,0,11"/>
             <dxe:TextEdit Grid.Row="0" Grid.Column="1" Grid.ColumnSpan="4" Style="{DynamicResource ResourceKey=GridTextEdit}" Tag="첨부제목" 
                           x:Name="txtTIT_NAM" EditValue="{Binding TIT_NAM, UpdateSourceTrigger=PropertyChanged}" />
-            <Label Grid.Row="1" Grid.Column="0" Content="첨부일자" Style="{DynamicResource ResourceKey=GridLabel}" Margin="10,9,0,10" />
+            <Label Grid.Row="1" Grid.Column="0" Content="등록일자" Style="{DynamicResource ResourceKey=GridLabel}" Margin="10,9,0,10" />
             <dxe:DateEdit Grid.Row="1" Grid.Column="1" Style="{DynamicResource ResourceKey=GridDateEdit}" HorizontalContentAlignment="Center" 
                           x:Name="dtUPD_YMD" EditValue="{Binding UPD_YMD, Converter={StaticResource date2StrConverter}}" Margin="10,7"  />
             <Label Grid.Row="1" Grid.Column="2" Content="등록자" Style="{DynamicResource ResourceKey=GridLabel}" Margin="10,9,0,10" />

@@ -52,6 +52,7 @@ namespace GTI.WFMS.Main.View
             //시스템코드 전역변수로 선언(Main설정값에서 가져옴)
             FmsUtil.sysCd = Properties.Settings.Default.sysCd;
             FmsUtil.fileDir = Properties.Settings.Default.fileDir;
+            FmsUtil.dbShapeDir = Properties.Settings.Default.dbShapeDir;
             
         }
 
@@ -165,7 +166,7 @@ namespace GTI.WFMS.Main.View
         // 창닫기
         private void BtnClose_Click(object sender, RoutedEventArgs e)
         {
-            if (DXMessageBox.Show("시스템을 종료합니다.", "InfoFacility", MessageBoxButton.YesNo, MessageBoxImage.Question, MessageBoxResult.Yes) == MessageBoxResult.Yes)
+            if (DXMessageBox.Show("시스템을 종료합니다.", "InfoFMS", MessageBoxButton.YesNo, MessageBoxImage.Question, MessageBoxResult.Yes) == MessageBoxResult.Yes)
             {
                 Environment.Exit(0);
             }

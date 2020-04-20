@@ -119,6 +119,12 @@ namespace GTI.WFMS.Main.View
             cbDBCAT.ItemsSource = dtDBCAT;
             cbDBCAT.SelectedIndex = 0;
 
+            //기존설정정보
+            txtIP.Text = GTIFramework.Properties.Settings.Default.strIP;
+            txtPort.Text = GTIFramework.Properties.Settings.Default.strPort;
+            txtSID.Text = GTIFramework.Properties.Settings.Default.strSID;
+            txtConnID.Text = GTIFramework.Properties.Settings.Default.strID;
+            pwdConnPW.Text = GTIFramework.Properties.Settings.Default.strPWD;
         }
 
 
@@ -212,7 +218,7 @@ namespace GTI.WFMS.Main.View
                     //    return;
                     //}
 
-                    if (DXMessageBox.Show("저장하시겠습니까?", "InfoFacility", MessageBoxButton.YesNo, MessageBoxImage.Question, MessageBoxResult.Yes) == MessageBoxResult.Yes)
+                    if (DXMessageBox.Show("저장하시겠습니까?", "InfoFMS", MessageBoxButton.YesNo, MessageBoxImage.Question, MessageBoxResult.Yes) == MessageBoxResult.Yes)
                     {
                         GTIFramework.Properties.Settings.Default.strIP = txtIP.EditValue.ToString();
                         GTIFramework.Properties.Settings.Default.strPort = txtPort.EditValue.ToString();
@@ -275,7 +281,7 @@ namespace GTI.WFMS.Main.View
         // 닫기버튼
         private void BtnClose_Click(object sender, RoutedEventArgs e)
         {
-            if (DXMessageBox.Show("작성중인 내용은 저장되지 않습니다.", "InfoFacility", MessageBoxButton.YesNo, MessageBoxImage.Question, MessageBoxResult.Yes) == MessageBoxResult.Yes)
+            if (DXMessageBox.Show("작성중인 내용은 저장되지 않습니다.", "InfoFMS", MessageBoxButton.YesNo, MessageBoxImage.Question, MessageBoxResult.Yes) == MessageBoxResult.Yes)
             {
                 Logs.configChange(oldConfig);
                 Logs.setDBConfig(strOldDBConfig);

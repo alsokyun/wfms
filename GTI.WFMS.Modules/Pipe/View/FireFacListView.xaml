@@ -144,7 +144,7 @@
                                 HorizontalAlignment="Center" />
 
             <Label Grid.Row="8" Grid.Column="0" Content="소화전구경" Style="{DynamicResource ResourceKey=GridLabel}"/>
-            <dxe:TextEdit Grid.Row="8" Grid.Column="2" x:Name="txtFIR_DIP" Style="{DynamicResource ResourceKey=SearchTextEdit}"  HorizontalAlignment="Center" >
+            <dxe:TextEdit Grid.Row="8" Grid.Column="2" x:Name="txtFIR_DIP" Style="{DynamicResource ResourceKey=SearchNumberEdit}"  HorizontalAlignment="Center" >
                 <dxe:TextEdit.InputBindings>
                     <KeyBinding Key="Enter" Command="{Binding SearchCommand}">
                     </KeyBinding>
@@ -152,7 +152,7 @@
             </dxe:TextEdit>
 
             <Label Grid.Row="9" Grid.Column="0" Content="급수탑높이(m)" Style="{DynamicResource ResourceKey=GridLabel}"/>
-            <dxe:TextEdit Grid.Row="9" Grid.Column="2" x:Name="txtSUP_HIT" Style="{DynamicResource ResourceKey=SearchTextEdit}"  HorizontalAlignment="Center" >
+            <dxe:TextEdit Grid.Row="9" Grid.Column="2" x:Name="txtSUP_HIT" Style="{DynamicResource ResourceKey=SearchNumberEdit}"  HorizontalAlignment="Center" >
                 <dxe:TextEdit.InputBindings>
                     <KeyBinding Key="Enter" Command="{Binding SearchCommand}">
                     </KeyBinding>
@@ -286,15 +286,15 @@
                 </dxg:GridColumn.EditSettings>
             </dxg:GridColumn>
 
-            <dxg:GridColumn Header="소화전구경" Width="100" FieldName="FIR_DIP" HorizontalHeaderContentAlignment="Center">
+            <dxg:GridColumn Header="소화전구경" Width="70" FieldName="FIR_DIP" HorizontalHeaderContentAlignment="Center">
                 <dxg:GridColumn.EditSettings>
-                    <dxe:TextEditSettings HorizontalContentAlignment="Right"/>
+                    <dxe:TextEditSettings HorizontalContentAlignment="Right" MaskType="Numeric" Mask="n0" MaskUseAsDisplayFormat="True" />
                 </dxg:GridColumn.EditSettings>
             </dxg:GridColumn>
 
-            <dxg:GridColumn Header="급수탑높이(m)" Width="100" FieldName="SUP_HIT" HorizontalHeaderContentAlignment="Center">
+            <dxg:GridColumn Header="급수탑높이(m)" Width="70" FieldName="SUP_HIT" HorizontalHeaderContentAlignment="Center">
                 <dxg:GridColumn.EditSettings>
-                    <dxe:TextEditSettings HorizontalContentAlignment="Right"/>
+                    <dxe:TextEditSettings HorizontalContentAlignment="Right" MaskType="Numeric" Mask="n0" MaskUseAsDisplayFormat="True" />
                 </dxg:GridColumn.EditSettings>
             </dxg:GridColumn>
 

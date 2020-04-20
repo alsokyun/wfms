@@ -23,7 +23,7 @@ using System.Windows.Controls;
 
 namespace GTI.WFMS.Modules.Cnst.ViewModel
 {
-    class CnstMngDtlViewModel : CnstDtl
+    public class CnstMngDtlViewModel : CnstDtl
     {
         public List<WttCostDt> Tab01List { get; set; }
         public List<WttChngDt> Tab02List { get; set; }
@@ -78,9 +78,8 @@ namespace GTI.WFMS.Modules.Cnst.ViewModel
 
             // 0.화면객체인스턴스화
             if (obj == null) return;
-            var values = (object[])obj;
 
-            cnstMngDtlView = values[0] as CnstMngDtlView;
+            cnstMngDtlView = obj as CnstMngDtlView;
             cbCTT_CDE = cnstMngDtlView.cbCTT_CDE;
             cbCNT_CDE = cnstMngDtlView.cbCNT_CDE;
             btnBack = cnstMngDtlView.btnBack;
@@ -99,12 +98,18 @@ namespace GTI.WFMS.Modules.Cnst.ViewModel
 
 
             // 4.초기조회
-            //DataTable dt = new DataTable();
+            InitModel();
+        }
+
+
+        // 초기조회
+        public void InitModel()
+        {
             Hashtable param = new Hashtable();
             param.Add("sqlId", "SelectWttConsMaDtl");
             param.Add("CNT_NUM", this.CNT_NUM);
 
-          
+
             CnstDtl result = new CnstDtl();
             result = BizUtil.SelectObject(param) as CnstDtl;
 
@@ -129,11 +134,10 @@ namespace GTI.WFMS.Modules.Cnst.ViewModel
                         prop.SetValue(this, Convert.ChangeType(colValue, prop.PropertyType));
                     }
                 }
-               //Console.WriteLine(propName + " - " + prop.GetValue(this,null));
+                //Console.WriteLine(propName + " - " + prop.GetValue(this,null));
             }
 
         }
-
 
 
         /// <summary>
@@ -158,8 +162,9 @@ namespace GTI.WFMS.Modules.Cnst.ViewModel
                 Messages.ShowErrMsgBox("저장 처리중 오류가 발생하였습니다.");
                 return;
             }
-            Messages.ShowOkMsgBox();
 
+            Messages.ShowOkMsgBox();
+            InitModel();
         }
 
         /// <summary>

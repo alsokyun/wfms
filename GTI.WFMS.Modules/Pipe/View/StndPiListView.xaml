@@ -150,7 +150,7 @@
                                 HorizontalAlignment="Center" />
 
             <Label Grid.Row="9" Grid.Column="0" Content="구경" Style="{DynamicResource ResourceKey=GridLabel}"/>
-            <dxe:TextEdit Grid.Row="9" Grid.Column="2" x:Name="txtSTD_DIP" Style="{DynamicResource ResourceKey=SearchTextEdit}"  HorizontalAlignment="Center" >
+            <dxe:TextEdit Grid.Row="9" Grid.Column="2" x:Name="txtSTD_DIP" Style="{DynamicResource ResourceKey=SearchNumberEdit}"  HorizontalAlignment="Center" >
                 <dxe:TextEdit.InputBindings>
                     <KeyBinding Key="Enter" Command="{Binding SearchCommand}">
                     </KeyBinding>
@@ -158,7 +158,7 @@
             </dxe:TextEdit>
 
             <Label Grid.Row="10" Grid.Column="0" Content="표고" Style="{DynamicResource ResourceKey=GridLabel}"/>
-            <dxe:TextEdit Grid.Row="10" Grid.Column="2" x:Name="txtSTP_ALT" Style="{DynamicResource ResourceKey=SearchTextEdit}"  HorizontalAlignment="Center" >
+            <dxe:TextEdit Grid.Row="10" Grid.Column="2" x:Name="txtSTP_ALT" Style="{DynamicResource ResourceKey=SearchNumberEdit}"  HorizontalAlignment="Center" >
                 <dxe:TextEdit.InputBindings>
                     <KeyBinding Key="Enter" Command="{Binding SearchCommand}">
                     </KeyBinding>
@@ -295,9 +295,14 @@
                 </dxg:GridColumn.EditSettings>
             </dxg:GridColumn>
 
-            <dxg:GridColumn Header="구경" Width="50" FieldName="FLO_DIP" HorizontalHeaderContentAlignment="Center">
+            <dxg:GridColumn Header="구경" Width="50" FieldName="STD_DIP" HorizontalHeaderContentAlignment="Center">
                 <dxg:GridColumn.EditSettings>
-                    <dxe:TextEditSettings HorizontalContentAlignment="Right"/>
+                    <dxe:TextEditSettings HorizontalContentAlignment="Right" MaskType="Numeric" Mask="n0" MaskUseAsDisplayFormat="True" />
+                </dxg:GridColumn.EditSettings>
+            </dxg:GridColumn>
+            <dxg:GridColumn Header="표고" Width="70" FieldName="STP_ALT" HorizontalHeaderContentAlignment="Center">
+                <dxg:GridColumn.EditSettings>
+                    <dxe:TextEditSettings HorizontalContentAlignment="Right" MaskType="Numeric" Mask="n0" MaskUseAsDisplayFormat="True" />
                 </dxg:GridColumn.EditSettings>
             </dxg:GridColumn>
 

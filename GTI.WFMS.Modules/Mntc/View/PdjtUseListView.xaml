@@ -54,7 +54,7 @@
 
         <Border Grid.Row="0" Grid.RowSpan="3" Grid.Column="1" Background="{DynamicResource TileCOLOR2Brush}" />
 
-        <Grid Grid.Row="1" Background="{DynamicResource PopupCOLOR3Brush}" Height="205" VerticalAlignment="Top" >
+        <Grid Grid.Row="1" Background="{DynamicResource PopupCOLOR3Brush}" Height="200" VerticalAlignment="Top" >
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="120"/>
                 <ColumnDefinition Width="*"/>

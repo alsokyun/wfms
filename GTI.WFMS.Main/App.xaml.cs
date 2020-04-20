@@ -24,7 +24,7 @@ namespace GTI.WFMS.Main
         /// <param name="e"></param>
         protected override void OnStartup(StartupEventArgs e)
         {
-            string strtitle = "InfoFacility";
+            string strtitle = "InfoFMS";
 
             bool bcreateNew = false;
 
@@ -62,7 +62,7 @@ namespace GTI.WFMS.Main
                 }
                 else
                 {
-                    MessageBox.Show("InfoFacility 실행중입니다.", "알림", MessageBoxButton.OK, MessageBoxImage.Exclamation);
+                    MessageBox.Show("InfoFMS 실행중입니다.", "알림", MessageBoxButton.OK, MessageBoxImage.Exclamation);
                     Environment.Exit(0);
                 }
             }

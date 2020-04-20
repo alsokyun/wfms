@@ -658,6 +658,9 @@
     <Compile Include="Cnst\ViewModel\CnstMngListViewModel.cs" />
     <Compile Include="Cnst\ViewModel\CnstMngDtlViewModel.cs" />
     <Compile Include="Cnst\ViewModel\SplyDtlViewModel.cs" />
+    <Compile Include="Cnst\ViewModel\WttFlawDtViewModel.cs" />
+    <Compile Include="Cnst\ViewModel\WttChngDtViewModel.cs" />
+    <Compile Include="Cnst\ViewModel\WttCostDtViewModel.cs" />
     <Compile Include="Cnst\ViewModel\WttSubcDtViewModel.cs" />
     <Compile Include="Cnst\ViewModel\CnstMngDtlViewMdl.cs" />
     <Compile Include="Cnst\View\CnstMngAddView.xaml.cs">

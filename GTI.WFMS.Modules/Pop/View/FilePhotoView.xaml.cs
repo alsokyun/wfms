@@ -62,6 +62,7 @@ namespace GTI.WFMS.Modules.Pop.View
         private void BtnOff_Click(object sender, RoutedEventArgs e)
         {
             grdImg.Visibility = Visibility.Hidden;
+            bdImg.Visibility = Visibility.Hidden;
         }
 
         //Esc 닫기
@@ -70,6 +71,7 @@ namespace GTI.WFMS.Modules.Pop.View
             if (e.Key == Key.Escape)
             {
                 grdImg.Visibility = Visibility.Hidden;
+                bdImg.Visibility = Visibility.Hidden;
             }
         }
     }

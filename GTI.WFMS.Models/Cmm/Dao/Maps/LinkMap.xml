@@ -32,7 +32,7 @@
               </isNotEmpty>
               <!-- 조건2. 관리번호 -->
               <isNotEmpty prepend="AND" property="FTR_IDN">
-                A.FTR_IDN = #FTR_IDN#
+                A.FTR_IDN like #FTR_IDN# 
               </isNotEmpty>
             ORDER BY A.FTR_CDE, A.FTR_IDN, A.RPR_YMD DESC
       )  M
@@ -68,7 +68,7 @@
                 FROM WTL_LEAK_PS A
                WHERE 1=1
                  AND A.FTR_CDE = #FTR_CDE#
-                 AND A.FTR_IDN = #FTR_IDN#
+                 AND A.FTR_IDN like #FTR_IDN# 
                ORDER BY  A.FTR_CDE DESC , A.FTR_IDN DESC
             ) M
     </select>

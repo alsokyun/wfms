@@ -9,6 +9,7 @@
                 xmlns:host="clr-namespace:System.Windows.Forms.Integration;assembly=WindowsFormsIntegration"
                 xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
                 xmlns:cv="clr-namespace:GTI.WFMS.Models.Common;assembly=GTI.WFMS.Models" 
+                xmlns:dx="http://schemas.devexpress.com/winfx/2008/xaml/core"
                 Loaded="Window_Loaded"
                 Background="Beige"
                 x:Name="mapArcObjView"
@@ -46,6 +47,8 @@
         <!--툴바-->
         <host:WindowsFormsHost Grid.Row="0" Name="toolbarHost" HorizontalAlignment="Left" />
         <StackPanel HorizontalAlignment="Right" Grid.Column="1" Orientation="Horizontal" >
+            <Button Content="Import SHP" Style="{DynamicResource TxtButton}" Margin="0 2 10 2" Height="30"
+                    Command="{Binding importCmd}" />
             <Button Content="시설물편집" Width="90" Style="{DynamicResource TxtButton}" Margin="0 2 5 2" Height="30"
                     Click="Button_Click" />
             <Button Content="Reset" Style="{DynamicResource TxtButton}" Margin="0 2 10 2" Height="30"
@@ -141,7 +144,7 @@
                                 </i:EventTrigger>
                             </i:Interaction.Triggers>
                         </Button>
-                        <TreeViewItem Header="소방시설" IsExpanded="True">
+                        <TreeViewItem Header="소방시설" IsExpanded="True" Foreground="Wheat" >
                             <TreeViewItem.Items>
                                 <Button  Tag="WTL_FIRE_PS^SA118" Content="급수탑" ToolTip="SA118.png" Template="{StaticResource ResourceKey=dockTemplate}">
                                     <i:Interaction.Triggers>
@@ -188,7 +191,7 @@
                             </i:Interaction.Triggers>
                         </Button>
 
-                        <TreeViewItem Header="변류시설" IsExpanded="True">
+                        <TreeViewItem Header="변류시설" IsExpanded="True" Foreground="Wheat">
                             <TreeViewItem.Items>
                                 <Button  Tag="WTL_VALV_PS^SA200" Content="제수변" ToolTip="SA200.png" Template="{StaticResource ResourceKey=dockTemplate}">
                                     <i:Interaction.Triggers>
@@ -260,6 +263,9 @@
         
         <!--상태바-->
         <TextBlock Grid.Row="2"  Name="textBlock1" >Ready</TextBlock>
+
+        <!--로딩바-->
+        <dx:WaitIndicator x:Name="waitindicator" Grid.Row="1" DeferedVisibility="False" Content="처리중..."/>
 
     </Grid>
 

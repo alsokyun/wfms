@@ -12,6 +12,11 @@ using System.Windows;
 using System.ComponentModel;
 using System.Collections.ObjectModel;
 using GTI.WFMS.Modules.Cnst.View;
+using System.Threading;
+using System.Collections.Generic;
+using System.Windows.Threading;
+using DevExpress.Xpf.Core;
+using GTIFramework.Common.Utils.Converters;
 
 namespace GTI.WFMS.Modules.Cnst.ViewModel
 {
@@ -88,7 +93,8 @@ namespace GTI.WFMS.Modules.Cnst.ViewModel
 
         public DelegateCommand<object> SearchCommand { get; set; }
         public DelegateCommand<object> ResetCommand { get; set; }
-        
+
+        public DelegateCommand<object> ExcelCmd { get; set; }
         public DelegateCommand<object> btnCmd { get; set; }
         #endregion
 
@@ -102,8 +108,8 @@ namespace GTI.WFMS.Modules.Cnst.ViewModel
 
         CnstMngListView cnstMngListView;
 
-        ComboBoxEdit cbCNT_CDE; DataTable dtCNT_CDE = new DataTable();
-        ComboBoxEdit cbCTT_CDE; DataTable dtCTT_CDE = new DataTable();
+        ComboBoxEdit cbCNT_CDE; 
+        ComboBoxEdit cbCTT_CDE; 
         
         TextEdit txtCNT_NUM;
         TextEdit txtCNT_NAM;
@@ -118,6 +124,15 @@ namespace GTI.WFMS.Modules.Cnst.ViewModel
 
         GridControl grid;
 
+        //엑셀다운로드 관련
+        System.Windows.Forms.SaveFileDialog saveFileDialog;
+        Thread thread;
+        string strFileName;
+        string strExcelFormPath = AppDomain.CurrentDomain.BaseDirectory + "/Resources/Excel/FmsBaseExcel.xlsx";
+        DataTable exceldt;
+        GridColumn[] columnList;
+        List<string> listCols;
+
         #endregion
 
 
@@ -131,7 +146,8 @@ namespace GTI.WFMS.Modules.Cnst.ViewModel
             LoadedCommand = new DelegateCommand<object>(OnLoaded);
             SearchCommand = new DelegateCommand<object>(SearchAction);
             ResetCommand = new DelegateCommand<object>(ResetAction);
-            
+
+            ExcelCmd = new DelegateCommand<object>(ExcelDownAction);
             btnCmd = new DelegateCommand<object>(btnMethod);
 
 
@@ -315,6 +331,131 @@ namespace GTI.WFMS.Modules.Cnst.ViewModel
             dtFNS_YMD_FROM.EditValue = null;
             dtFNS_YMD_TO.EditValue = null;
 
+        }
+
+
+
+        /// <summary>
+        /// 엑셀다운로드
+        /// </summary>
+        /// <param name="obj"></param>
+        private void ExcelDownAction(object obj)
+        {
+
+            try
+            {
+                /// 데이터조회
+                Hashtable conditions = new Hashtable();
+                conditions.Add("CNT_CDE", cbCNT_CDE.EditValue.ToString().Trim());
+                conditions.Add("CNT_NUM", txtCNT_NUM.Text.Trim());
+                conditions.Add("CNT_NAM", txtCNT_NAM.Text.Trim());
+                //conditions.Add("FTR_IDN", FmsUtil.Trim(txtFTR_IDN.EditValue));
+                conditions.Add("TCT_AMT_FROM", txtTCT_AMT_FROM.EditValue);
+                conditions.Add("TCT_AMT_TO", txtTCT_AMT_TO.EditValue);
+
+                try
+                {
+                    conditions.Add("BEG_YMD_FROM", dtBEG_YMD_FROM.EditValue == null ? null : Convert.ToDateTime(dtBEG_YMD_FROM.EditValue).ToString("yyyy-MM-dd"));
+                    conditions.Add("BEG_YMD_TO", dtBEG_YMD_TO.EditValue == null ? null : Convert.ToDateTime(dtBEG_YMD_TO.EditValue).ToString("yyyy-MM-dd"));
+                }
+                catch (Exception) { }
+                try
+                {
+                    conditions.Add("FNS_YMD_FROM", dtFNS_YMD_FROM.EditValue == null ? null : Convert.ToDateTime(dtFNS_YMD_FROM.EditValue).ToString("yyyy-MM-dd"));
+                    conditions.Add("FNS_YMD_TO", dtFNS_YMD_TO.EditValue == null ? null : Convert.ToDateTime(dtFNS_YMD_TO.EditValue).ToString("yyyy-MM-dd"));
+                }
+                catch (Exception) { }
+                conditions.Add("CTT_CDE", cbCTT_CDE.EditValue.ToString().Trim());
+                conditions.Add("CNT_LOC", txtCNT_LOC.Text.Trim());
+
+                conditions.Add("page", 0);
+                conditions.Add("rows", 1000000);
+
+                conditions.Add("sqlId", "SelectWttConsMaList");
+
+
+                exceldt = BizUtil.SelectList(conditions);
+
+
+                //그리드헤더정보 추출
+                columnList = new GridColumn[grid.Columns.Count];
+                grid.Columns.CopyTo(columnList, 0);
+                listCols = new List<string>(); //컬럼헤더정보 가져오기
+                foreach (GridColumn gcol in columnList)
+                {
+                    try
+                    {
+                        if ("PrintN".Equals(gcol.Tag.ToString())) continue; //엑셀출력제외컬럼
+                    }
+                    catch (Exception) { }
+
+                    listCols.Add(gcol.FieldName.ToString());
+                }
+
+
+                saveFileDialog = null;
+                saveFileDialog = new System.Windows.Forms.SaveFileDialog();
+                saveFileDialog.Title = "저장경로를 지정하세요.";
+
+                //초기 파일명 지정
+                saveFileDialog.FileName = DateTime.Now.ToString("yyyyMMdd") + "_" + "상수공사대장.xlsx";
+
+                saveFileDialog.OverwritePrompt = true;
+                saveFileDialog.Filter = "Excel|*.xlsx";
+
+                if (saveFileDialog.ShowDialog() == System.Windows.Forms.DialogResult.OK)
+                {
+                    strFileName = saveFileDialog.FileName;
+                    thread = new Thread(new ThreadStart(ExcelExportFX));
+                    thread.Start();
+                }
+            }
+            catch (Exception ex)
+            {
+                Messages.ShowErrMsgBoxLog(ex);
+            }
+        }
+
+        /// <summary>
+        /// 엑셀다운로드 쓰레드 Function
+        /// </summary>
+        private void ExcelExportFX()
+        {
+            try
+            {
+                cnstMngListView.Dispatcher.Invoke(DispatcherPriority.ApplicationIdle,
+                    new Action((delegate ()
+                    {
+                        (cnstMngListView.FindName("waitindicator") as WaitIndicator).DeferedVisibility = true;
+                    })));
+
+
+                //엑셀 표 데이터
+                DataTable dtExceltTableData = exceldt.DefaultView.ToTable(false, listCols.ToArray());
+
+                int[] tablePointXY = { 3, 1 };
+
+
+                //엑셀 유틸 호출
+                //ExcelUtil.ExcelTabulation(strFileName, strExcelFormPath, startPointXY, strSearchCondition, dtExceltTableData);
+                ExcelUtil.ExcelGrid(strExcelFormPath, strFileName, "상수공사대장 목록", dtExceltTableData, tablePointXY, grid, true);
+
+                cnstMngListView.Dispatcher.Invoke(DispatcherPriority.ApplicationIdle,
+                   new Action((delegate ()
+                   {
+                       (cnstMngListView.FindName("waitindicator") as WaitIndicator).DeferedVisibility = false;
+                       Messages.ShowInfoMsgBox("엑셀 다운로드가 완료되었습니다.");
+                   })));
+            }
+            catch (Exception ex)
+            {
+                cnstMngListView.Dispatcher.Invoke(DispatcherPriority.ApplicationIdle,
+                    new Action((delegate ()
+                    {
+                        (cnstMngListView.FindName("waitindicator") as WaitIndicator).DeferedVisibility = false;
+                        Messages.ShowErrMsgBoxLog(ex);
+                    })));
+            }
         }
 
         #endregion

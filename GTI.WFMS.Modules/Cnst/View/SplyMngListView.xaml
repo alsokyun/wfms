@@ -55,7 +55,7 @@
 
         <Border Grid.Row="0" Grid.RowSpan="3" Grid.Column="1" Background="{DynamicResource TileCOLOR2Brush}" />
 
-        <Grid Grid.Row="1" Background="{DynamicResource PopupCOLOR3Brush}" Height="245" VerticalAlignment="Top" >
+        <Grid Grid.Row="1" Background="{DynamicResource PopupCOLOR3Brush}" Height="240" VerticalAlignment="Top" >
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="120"/>
                 <ColumnDefinition Width="*"/>
@@ -189,9 +189,9 @@
                     <dxe:TextEditSettings HorizontalContentAlignment="Center"/>
                 </dxg:GridColumn.EditSettings>
             </dxg:GridColumn>
-            <dxg:GridColumn Header="설계총액" Width="100" FieldName="TOT_AMT" HorizontalHeaderContentAlignment="Center">
+            <dxg:GridColumn Header="설계수수료" Width="100" FieldName="DFE_AMT" HorizontalHeaderContentAlignment="Center">
                 <dxg:GridColumn.EditSettings>
-                    <dxe:TextEditSettings HorizontalContentAlignment="Right"/>
+                    <dxe:TextEditSettings HorizontalContentAlignment="Right" MaskType="Numeric" Mask="n0" MaskUseAsDisplayFormat="True"/>
                 </dxg:GridColumn.EditSettings>
             </dxg:GridColumn>
             <dxg:GridColumn Header="착수일자" Width="100" FieldName="BEG_YMD" HorizontalHeaderContentAlignment="Center">

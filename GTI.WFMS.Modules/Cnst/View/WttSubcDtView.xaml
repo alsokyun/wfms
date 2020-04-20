@@ -5,15 +5,14 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-             xmlns:local="clr-namespace:GTI.WFMS.Modules.Cnst.View"
              mc:Ignorable="d" 
              d:DesignHeight="300" d:DesignWidth="900"      
-            xmlns:dxci="http://schemas.devexpress.com/winfx/2008/xaml/core/internal"
+            
             xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
             xmlns:cm="clr-namespace:GTIFramework.Common.Utils.Converters;assembly=GTIFramework"
             xmlns:vm="clr-namespace:GTI.WFMS.Modules.Cnst.ViewModel"
-            x:Name="wttSubcDtView"
             xmlns:cv="clr-namespace:GTI.WFMS.Models.Common;assembly=GTI.WFMS.Models"   
+            x:Name="wttSubcDtView"
              >
 
 
@@ -30,18 +29,6 @@
         </ResourceDictionary>
     </UserControl.Resources>
 
-    <!--뷰와 연결된 뷰모델로 Loaded 이벤트전파-->
-    <i:Interaction.Triggers>
-        <i:EventTrigger EventName="Loaded">
-            <i:InvokeCommandAction Command="{Binding LoadedCommand}">
-                <i:InvokeCommandAction.CommandParameter>
-                    <MultiBinding Converter="{StaticResource multiValueConverter}">
-                        <Binding ElementName="wttSubcDtView"/>
-                    </MultiBinding>
-                </i:InvokeCommandAction.CommandParameter>
-            </i:InvokeCommandAction>
-        </i:EventTrigger>
-    </i:Interaction.Triggers>
 
     <Grid>
         <Grid.RowDefinitions>
@@ -51,27 +38,15 @@
 
         <StackPanel Grid.Row="0" Orientation="Horizontal" HorizontalAlignment="Right" Margin="0 0 5 0">
             <!--히든키-->
-            <dxe:TextEdit x:Name="txtCNT_NUM" EditValue="{Binding CNT_NUM, UpdateSourceTrigger=PropertyChanged}" Width="20" Visibility="Collapsed"/>
-            <Button x:Name="btnAdd" Style="{DynamicResource ResourceKey=GrdAddButton}" Click="BtnAdd_Click"/>
-            <Button x:Name="btnDel" Style="{DynamicResource ResourceKey=GrdDelButton}">
-                <i:Interaction.Triggers>
-                    <i:EventTrigger EventName="Click">
-                        <i:InvokeCommandAction Command="{Binding DeleteCommand}">
-                        </i:InvokeCommandAction>
-                    </i:EventTrigger>
-                </i:Interaction.Triggers>
-            </Button>
-            <Button x:Name="btnReg" Style="{DynamicResource ResourceKey=GrdRegButton}">
-                <i:Interaction.Triggers>
-                    <i:EventTrigger EventName="Click">
-                        <i:InvokeCommandAction Command="{Binding SaveCommand}">
-                        </i:InvokeCommandAction>
-                    </i:EventTrigger>
-                </i:Interaction.Triggers>
-            </Button>
+            <dxe:TextEdit x:Name="txtCNT_NUM" EditValue="{Binding CNT_NUM, UpdateSourceTrigger=PropertyChanged}" Visibility="Collapsed"/>
+            <Button x:Name="btnAdd" Style="{DynamicResource ResourceKey=GrdAddButton}" Command="{Binding AddCommand}" />
+            <Button x:Name="btnDel" Style="{DynamicResource ResourceKey=GrdDelButton}" Command="{Binding DeleteCommand}" />
+            <Button x:Name="btnReg" Style="{DynamicResource ResourceKey=GrdRegButton}" Command="{Binding SaveCommand}" />
+
         </StackPanel>
 
-        <dxg:GridControl x:Name="grid" ItemsSource="{Binding GrdLst}" Grid.Row="1" VerticalAlignment="Stretch" HorizontalAlignment="Stretch"  >
+        <dxg:GridControl x:Name="grid" ItemsSource="{Binding GrdLst}" Grid.Row="1" VerticalAlignment="Stretch" HorizontalAlignment="Stretch"  
+                         >
             <dxg:GridControl.View>
                 <dxg:TableView x:Name="gv"
                                 NavigationStyle="Row" 
@@ -93,7 +68,7 @@
                 </dxg:GridColumn.HeaderTemplate>
                 <dxg:GridColumn.CellTemplate>
                     <DataTemplate>
-                        <dxe:CheckEdit HorizontalAlignment="Center" EditValue="{Binding RowData.Row.CHK, TargetNullValue=false}" NullValue="false" IsThreeState="False"  />
+                        <dxe:CheckEdit HorizontalAlignment="Center" EditValue="{Binding RowData.Row.CHK, Mode=TwoWay, Converter={StaticResource toggleConverter}}" NullValue="false" IsThreeState="False"  />
                     </DataTemplate>
                 </dxg:GridColumn.CellTemplate>
             </dxg:GridColumn>
@@ -137,5 +112,12 @@
 
     </Grid>
 
+    
+    <!--뷰와 연결된 뷰모델로 Loaded 이벤트전파-->
+    <i:Interaction.Triggers>
+        <i:EventTrigger EventName="Loaded">
+            <i:InvokeCommandAction Command="{Binding LoadedCommand}" CommandParameter="{Binding ElementName=wttSubcDtView}"/>
+        </i:EventTrigger>
+    </i:Interaction.Triggers>
 
 </UserControl>

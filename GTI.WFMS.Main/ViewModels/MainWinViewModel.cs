@@ -98,6 +98,7 @@ namespace GTI.WFMS.Main
         public RelayCommand<object> CallPageCmd { get; set; }
 
         public RelayCommand<object> UserInfoMngCommand { get; set; }
+        public RelayCommand<object> InterestBlkCommand { get; set; }
 
         #endregion
 
@@ -124,9 +125,11 @@ namespace GTI.WFMS.Main
             QuickMngCommand = new DelegateCommand<object>(QuickMngAction);
 
 
-
             UserInfoMngCommand = new RelayCommand<object>(delegate (object obj) {
 
+            });
+            //상황판
+            InterestBlkCommand = new RelayCommand<object>(delegate (object obj) {
                 DashWinView dashWinView = new DashWinView();
                 if (dashWinView.ShowDialog() is bool)
                 {
@@ -607,7 +610,7 @@ namespace GTI.WFMS.Main
         {
             try
             {
-                if (DXMessageBox.Show("시스템을 종료합니다.", "InfoFacility", MessageBoxButton.YesNo, MessageBoxImage.Question, MessageBoxResult.Yes) == MessageBoxResult.Yes)
+                if (DXMessageBox.Show("시스템을 종료합니다.", "InfoFMS", MessageBoxButton.YesNo, MessageBoxImage.Question, MessageBoxResult.Yes) == MessageBoxResult.Yes)
                 {
                     Hashtable logconditions = new Hashtable();
                     logconditions.Add("USER_ID", Logs.strLogin_ID);

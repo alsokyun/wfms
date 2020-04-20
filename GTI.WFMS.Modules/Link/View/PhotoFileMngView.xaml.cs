@@ -289,7 +289,8 @@ namespace GTI.WFMS.Modules.Link.View
                 {
                     FIL_SEQ = filePhotoView.txtFIL_SEQ.Text;
 
-                    //AddFilSeqRow(FIL_SEQ); //첨부파일 한건추가할 필요없음
+                    //조회그리드형으로 변경
+                    InitModel();
                 }
 
 

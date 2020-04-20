@@ -162,7 +162,7 @@
 
 
             <Label Grid.Row="10" Grid.Column="0" Content="유효저수량(t)" Style="{DynamicResource ResourceKey=GridLabel}"/>
-            <dxe:TextEdit Grid.Row="10" Grid.Column="2" x:Name="txtRSV_VOL" Style="{DynamicResource ResourceKey=SearchTextEdit}"  HorizontalAlignment="Center" >
+            <dxe:TextEdit Grid.Row="10" Grid.Column="2" x:Name="txtRSV_VOL" Style="{DynamicResource ResourceKey=SearchNumberEdit}"  HorizontalAlignment="Center" >
                 <dxe:TextEdit.InputBindings>
                     <KeyBinding Key="Enter" Command="{Binding SearchCommand}">
                     </KeyBinding>
@@ -308,7 +308,7 @@
 
             <dxg:GridColumn Header="유효저수량(t)" Width="100" FieldName="RSV_VOL" HorizontalHeaderContentAlignment="Center">
                 <dxg:GridColumn.EditSettings>
-                    <dxe:TextEditSettings HorizontalContentAlignment="Left"/>
+                    <dxe:TextEditSettings HorizontalContentAlignment="Right" MaskType="Numeric" Mask="n0" MaskUseAsDisplayFormat="True" />
                 </dxg:GridColumn.EditSettings>
             </dxg:GridColumn>
 

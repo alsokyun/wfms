@@ -14,7 +14,7 @@ using System.Windows.Controls;
 namespace GTI.WFMS.Modules.Cnst.ViewModel
 {
 
-    public class WttSubcDtViewModel : INotifyPropertyChanged
+    public class WttCostDtViewModel : INotifyPropertyChanged
     {
         /// <summary>
         /// 인터페이스 구현부분
@@ -31,18 +31,18 @@ namespace GTI.WFMS.Modules.Cnst.ViewModel
 
 
 
-        public WttSubcDtView wttSubcDtView;
+        public WttCostDtView wttCostDtView;
 
 
         #region ============ 프로퍼티부분 ===============
         public DelegateCommand<object> LoadedCommand { get; set; }
         public DelegateCommand<object> SaveCommand { get; set; }
-        public DelegateCommand<object> DeleteCommand { get; set; }
+        public DelegateCommand<object> DelCommand { get; set; }
         public DelegateCommand<object> AddCommand { get; set; }
 
 
-        ObservableCollection<WttSubcDt> __GrdLst;
-        public ObservableCollection<WttSubcDt> GrdLst
+        ObservableCollection<WttCostDt> __GrdLst;
+        public ObservableCollection<WttCostDt> GrdLst
         {
             get { return __GrdLst; }
             set
@@ -65,14 +65,14 @@ namespace GTI.WFMS.Modules.Cnst.ViewModel
 
         #endregion
         
-        public WttSubcDtViewModel()
+        public WttCostDtViewModel()
         {
             this.LoadedCommand = new DelegateCommand<object>(OnLoaded);
             this.SaveCommand = new DelegateCommand<object>(OnSave);
-            this.DeleteCommand = new DelegateCommand<object>(OnDelete);
+            this.DelCommand = new DelegateCommand<object>(OnDelete);
             //행추가
             this.AddCommand = new DelegateCommand<object>(delegate(object obj) {
-                WttSubcDt addrow = new WttSubcDt();
+                WttCostDt addrow = new WttCostDt();
                 GrdLst.Add(addrow);
                 addrow.CHK = "Y";
             });
@@ -88,7 +88,7 @@ namespace GTI.WFMS.Modules.Cnst.ViewModel
         {
             // 0.화면객체인스턴스화
             if (obj == null) return;
-            wttSubcDtView = obj as WttSubcDtView;
+            wttCostDtView = obj as WttCostDtView;
 
             //초기조회
             initModel();
@@ -105,10 +105,10 @@ namespace GTI.WFMS.Modules.Cnst.ViewModel
 
                 //초기조회
                 Hashtable param = new Hashtable();
-                param.Add("sqlId", "SelectWttSubcDtList2");
+                param.Add("sqlId", "SelectWttCostDtList");
                 param.Add("CNT_NUM", this.CNT_NUM);
 
-                GrdLst = new ObservableCollection<WttSubcDt>(BizUtil.SelectListObj<WttSubcDt>(param));
+                GrdLst = new ObservableCollection<WttCostDt>(BizUtil.SelectListObj<WttCostDt>(param));
 
             }
             catch (Exception e)
@@ -120,13 +120,12 @@ namespace GTI.WFMS.Modules.Cnst.ViewModel
         //상위화면조회
         private void parentInitModel()
         {
-            CnstMngDtlView cnstMngDtlView = (((wttSubcDtView.Parent as DXTabItem).Parent as DXTabControl).Parent as Grid).Parent as CnstMngDtlView;
+            CnstMngDtlView cnstMngDtlView = (((wttCostDtView.Parent as DXTabItem).Parent as DXTabControl).Parent as Grid).Parent as CnstMngDtlView;
             cnstMngDtlView.refresh();
             //cnstMngDtlView.InvalidateVisual();
-
-
+            
             //CnstMngDtlViewModel vm =
-            //((((wttSubcDtView.Parent as DXTabItem).Parent as DXTabControl).Parent as Grid).Parent as CnstMngDtlView).DataContext as CnstMngDtlViewModel;
+            //((((wttCostDtView.Parent as DXTabItem).Parent as DXTabControl).Parent as Grid).Parent as CnstMngDtlView).DataContext as CnstMngDtlViewModel;
             //vm.InitModel();
         }
 
@@ -139,7 +138,7 @@ namespace GTI.WFMS.Modules.Cnst.ViewModel
             try
             {
                 bool isChecked = false;
-                foreach (WttSubcDt row in GrdLst)
+                foreach (WttCostDt row in GrdLst)
                 {
                     if ("Y".Equals(row.CHK))
                     {
@@ -155,7 +154,7 @@ namespace GTI.WFMS.Modules.Cnst.ViewModel
                 
                 if (Messages.ShowYesNoMsgBox("선택 항목을 삭제 하시겠습니까?") == MessageBoxResult.Yes)
                 {
-                    foreach (WttSubcDt row in GrdLst)
+                    foreach (WttCostDt row in GrdLst)
                     {
                         Hashtable param = new Hashtable();
                         try
@@ -163,10 +162,10 @@ namespace GTI.WFMS.Modules.Cnst.ViewModel
                             if ("Y".Equals(row.CHK))
                             {
                                 param.Clear();
-                                param.Add("sqlId", "DeleteWttSubcDt");
+                                param.Add("sqlId", "DeleteWttCostDt");
                                 param.Add("CNT_NUM", CNT_NUM);
 
-                                if (row.SUBC_SEQ == 0)
+                                if (row.COST_SEQ == 0)
                                 {
                                     //그리드행만 삭제
                                     GrdLst.RemoveAt(GrdLst.IndexOf(row));
@@ -175,7 +174,7 @@ namespace GTI.WFMS.Modules.Cnst.ViewModel
                                 else
                                 {
                                     //데이터삭제
-                                    param.Add("SUBC_SEQ", Convert.ToInt32(row.SUBC_SEQ));
+                                    param.Add("COST_SEQ", Convert.ToInt32(row.COST_SEQ));
                                     BizUtil.Update(param);
                                 }
                             }
@@ -207,7 +206,7 @@ namespace GTI.WFMS.Modules.Cnst.ViewModel
         private void OnSave(object obj)
         {
             bool isChecked = false;
-            foreach (WttSubcDt row in GrdLst)
+            foreach (WttCostDt row in GrdLst)
             {
                 if ("Y".Equals(row.CHK))
                 {
@@ -226,23 +225,14 @@ namespace GTI.WFMS.Modules.Cnst.ViewModel
             Hashtable param = new Hashtable();
 
             //그리드 저장
-            foreach (WttSubcDt row in GrdLst)
+            foreach (WttCostDt row in GrdLst)
             {
                 if (row.CHK != "Y")     continue;
 
-                param = new Hashtable();
-                param.Add("sqlId", "SaveWttSubcDt");
-                param.Add("CNT_NUM", CNT_NUM);
-                param.Add("SUBC_SEQ", Convert.ToInt32(row.SUBC_SEQ));
-
-                param.Add("SUB_NAM", row.SUB_NAM);  //하도급자
-                param.Add("PSB_NAM", row.PSB_NAM);  //하도급 대표자                
-                param.Add("SUB_TEL", row.SUB_TEL);  //하도급 전화번호
-                param.Add("SUB_ADR", row.SUB_ADR);  //하도급 주소
-
+                row.CNT_NUM = CNT_NUM;
                 try
                 {
-                    BizUtil.Update(param);
+                    BizUtil.Update2(row, "SaveWttCostDt");
                 }
                 catch (Exception)
                 {

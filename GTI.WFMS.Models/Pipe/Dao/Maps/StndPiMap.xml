@@ -17,7 +17,7 @@
 
         <!-- 조건2. 관리번호 -->
         <isNotEmpty prepend="AND" property="FTR_IDN">
-          A.FTR_IDN = #FTR_IDN#
+          A.FTR_IDN like #FTR_IDN# || '%'
         </isNotEmpty>
 
         <!-- 조건3. 행정읍면동 -->
@@ -98,7 +98,7 @@
 
       <!-- 조건2. 관리번호 -->
       <isNotEmpty prepend="AND" property="FTR_IDN">
-        A.FTR_IDN = #FTR_IDN#
+        A.FTR_IDN like #FTR_IDN# || '%'
       </isNotEmpty>
 
       <!-- 조건3. 행정읍면동 -->

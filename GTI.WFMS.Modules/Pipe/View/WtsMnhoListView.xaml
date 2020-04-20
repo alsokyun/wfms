@@ -158,7 +158,7 @@
                                 HorizontalAlignment="Center" />
 
             <Label Grid.Row="10" Grid.Column="0" Content="방향각" Style="{DynamicResource ResourceKey=GridLabel}"/>
-            <dxe:TextEdit Grid.Row="10" Grid.Column="2" x:Name="txtANG_DIR" Style="{DynamicResource ResourceKey=SearchTextEdit}"  HorizontalAlignment="Center" >
+            <dxe:TextEdit Grid.Row="10" Grid.Column="2" x:Name="txtANG_DIR" Style="{DynamicResource ResourceKey=SearchNumberEdit}"  HorizontalAlignment="Center" >
                 <dxe:TextEdit.InputBindings>
                     <KeyBinding Key="Enter" Command="{Binding SearchCommand}">
                     </KeyBinding>
@@ -300,9 +300,9 @@
                 </dxg:GridColumn.EditSettings>
             </dxg:GridColumn>
 
-            <dxg:GridColumn Header="방향각" Width="100" FieldName="ANG_DIR" HorizontalHeaderContentAlignment="Center">
+            <dxg:GridColumn Header="방향각" Width="60" FieldName="ANG_DIR" HorizontalHeaderContentAlignment="Center">
                 <dxg:GridColumn.EditSettings>
-                    <dxe:TextEditSettings HorizontalContentAlignment="Right"/>
+                    <dxe:TextEditSettings HorizontalContentAlignment="Right" MaskType="Numeric" Mask="n0" MaskUseAsDisplayFormat="True" />
                 </dxg:GridColumn.EditSettings>
             </dxg:GridColumn>
 

@@ -20,6 +20,11 @@ namespace GTI.WFMS.Modules.Cnst.Model
             {
                 PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
             }
+            //컬럼변경시 체크박스 
+            if (propertyName != "CHK")
+            {
+                this.CHK = "Y";
+            }
         }
 
         /// <summary>

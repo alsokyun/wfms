@@ -508,7 +508,7 @@
       LEFT JOIN V_FTR_CDE F2 ON A.PIP_CDE = F2.FTR_CDE
       WHERE 1=1
       AND A.FTR_CDE = #FTR_CDE#
-      AND A.FTR_IDN = #FTR_IDN#
+      AND A.FTR_IDN like #FTR_IDN# 
     </select>
 
 

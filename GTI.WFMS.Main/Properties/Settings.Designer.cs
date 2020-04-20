@@ -82,5 +82,17 @@ namespace GTI.WFMS.Main.Properties {
                 this["fileDir"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("D:\\shape")]
+        public string dbShapeDir {
+            get {
+                return ((string)(this["dbShapeDir"]));
+            }
+            set {
+                this["dbShapeDir"] = value;
+            }
+        }
     }
 }

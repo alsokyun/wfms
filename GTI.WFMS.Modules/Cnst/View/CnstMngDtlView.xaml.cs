@@ -31,6 +31,7 @@ namespace GTI.WFMS.Modules.Cnst.View
         Thread thread;
         private string _CNT_NUM;
 
+
         public CnstMngDtlView(string CNT_NUM)
         {
             InitializeComponent();
@@ -49,12 +50,16 @@ namespace GTI.WFMS.Modules.Cnst.View
 
             //정상적인 버튼클릭 이벤트
             btnBack.Click += _backCmd;
-           
+
+
+
 
             /* 탭항목 동적추가 */
             waitindicator.DeferedVisibility = true;
             thread = new Thread(new ThreadStart(LoadFx));
             thread.Start();
+
+
         }
 
         /// <summary>
@@ -75,7 +80,7 @@ namespace GTI.WFMS.Modules.Cnst.View
 
 
             }
-            catch (Exception )
+            catch (Exception)
             {
                 this.Dispatcher.Invoke(DispatcherPriority.ApplicationIdle,
                     new Action((delegate ()
@@ -86,8 +91,9 @@ namespace GTI.WFMS.Modules.Cnst.View
         }
 
 
+
         // 탭항목 동적추가
-        private void MakeTab(string CNT_NUM)
+        public void MakeTab(string CNT_NUM)
         {
             tabSubMenu.Items.Clear();
 
@@ -127,5 +133,13 @@ namespace GTI.WFMS.Modules.Cnst.View
         {
             NavigationService.Navigate(new CnstMngListView());
         }
+
+        //화면재로딩
+        public void refresh()
+        {
+            //NavigationService.Refresh();
+            NavigationService.Navigate(new CnstMngDtlView(_CNT_NUM));
+        }
+
     }
 }

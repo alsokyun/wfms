@@ -1,6 +1,7 @@
 ﻿<Page x:Class="GTI.WFMS.Modules.Cnst.View.CnstMngListView"
         xmlns:dxe="http://schemas.devexpress.com/winfx/2008/xaml/editors"  
         xmlns:dxg="http://schemas.devexpress.com/winfx/2008/xaml/grid"  
+        xmlns:dx="http://schemas.devexpress.com/winfx/2008/xaml/core"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
@@ -10,7 +11,6 @@
         d:DesignHeight="585" d:DesignWidth="1100"
       
         xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
-        xmlns:ei="http://schemas.microsoft.com/expression/2010/interactions"
         xmlns:vm="clr-namespace:GTI.WFMS.Modules.Cnst.ViewModel"
         xmlns:cm="clr-namespace:GTIFramework.Common.Utils.Converters;assembly=GTIFramework"
         xmlns:common="clr-namespace:GTI.WFMS.Models.Common;assembly=GTI.WFMS.Models"
@@ -52,7 +52,7 @@
 
         <Border Grid.Row="0" Grid.RowSpan="3" Grid.Column="1" Background="{DynamicResource TileCOLOR2Brush}" />
 
-        <Grid Grid.Row="1" Background="{DynamicResource PopupCOLOR3Brush}" Height="450" VerticalAlignment="Top" >
+        <Grid Grid.Row="1" Background="{DynamicResource PopupCOLOR3Brush}" Height="440" VerticalAlignment="Top" >
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="120"/>
                 <ColumnDefinition Width="*"/>
@@ -93,6 +93,8 @@
             <Border Grid.Row="8" Grid.Column="2" BorderThickness="0,0,0,1" BorderBrush="{DynamicResource TileCOLOR4Brush}" Margin="0,0,0,0"/>
             <Border Grid.Row="9" Grid.Column="0" BorderThickness="0,0,1,1" BorderBrush="{DynamicResource TileCOLOR4Brush}" Margin="0,0,0,0"/>
             <Border Grid.Row="9" Grid.Column="2" BorderThickness="0,0,0,1" BorderBrush="{DynamicResource TileCOLOR4Brush}" Margin="0,0,0,0"/>
+            <Border Grid.Row="10" Grid.Column="0" BorderThickness="0,0,1,1" BorderBrush="{DynamicResource TileCOLOR4Brush}" Margin="0,0,0,0"/>
+            <Border Grid.Row="10" Grid.Column="2" BorderThickness="0,0,0,1" BorderBrush="{DynamicResource TileCOLOR4Brush}" Margin="0,0,0,0"/>
 
             <!--라벨&입력창-->
             <Label Grid.Row="0" Grid.Column="0" Content="공사구분" Style="{DynamicResource ResourceKey=GridLabel}"/>
@@ -116,7 +118,7 @@
             </dxe:TextEdit>
 
             <Label Grid.Row="3" Grid.Column="0" Content="계약금액[이상]" Style="{DynamicResource ResourceKey=GridLabel}"/>
-            <dxe:TextEdit Grid.Row="3" Grid.Column="2" x:Name="txtTCT_AMT_FROM" Style="{DynamicResource ResourceKey=SearchTextEdit}"  HorizontalAlignment="Center" >
+            <dxe:TextEdit Grid.Row="3" Grid.Column="2" x:Name="txtTCT_AMT_FROM" Style="{DynamicResource ResourceKey=SearchNumberEdit}"  HorizontalAlignment="Center" >
                 <dxe:TextEdit.InputBindings>
                     <KeyBinding Key="Enter" Command="{Binding SearchCommand}">
                     </KeyBinding>
@@ -124,7 +126,7 @@
             </dxe:TextEdit>
 
             <Label Grid.Row="4" Grid.Column="0" Content="계약금액[이하]" Style="{DynamicResource ResourceKey=GridLabel}"/>
-            <dxe:TextEdit Grid.Row="4" Grid.Column="2" x:Name="txtTCT_AMT_TO" Style="{DynamicResource ResourceKey=SearchTextEdit}"  HorizontalAlignment="Center" >
+            <dxe:TextEdit Grid.Row="4" Grid.Column="2" x:Name="txtTCT_AMT_TO" Style="{DynamicResource ResourceKey=SearchNumberEdit}"  HorizontalAlignment="Center" >
                 <dxe:TextEdit.InputBindings>
                     <KeyBinding Key="Enter" Command="{Binding SearchCommand}">
                     </KeyBinding>
@@ -188,7 +190,7 @@
 
         <StackPanel Grid.Row="0" Grid.Column="2" Orientation="Horizontal" HorizontalAlignment="Right" Margin="0 0 10 0">
             <Button x:Name="btnAdd" Style="{DynamicResource ResourceKey=AddButton}" Click="BtnAdd_Click" />
-            <Button x:Name="btnExcel" Style="{DynamicResource ResourceKey=ExcelDownButton}"  />
+            <Button x:Name="btnExcel" Style="{DynamicResource ResourceKey=ExcelDownButton}" Command="{Binding ExcelCmd}"  />
         </StackPanel>
 
 
@@ -257,7 +259,7 @@
 
             <dxg:GridColumn Header="설계총액" Width="100" FieldName="DSN_AMT" HorizontalHeaderContentAlignment="Center">
                 <dxg:GridColumn.EditSettings>
-                    <dxe:TextEditSettings HorizontalContentAlignment="Right" Style="{DynamicResource GrdNumberBlock}" />
+                    <dxe:TextEditSettings HorizontalContentAlignment="Right" MaskType="Numeric" Mask="n0" MaskUseAsDisplayFormat="True"  />
                 </dxg:GridColumn.EditSettings>
             </dxg:GridColumn>
 
@@ -273,6 +275,7 @@
 
 
 
+        <dx:WaitIndicator x:Name="waitindicator" Grid.Row="0" Grid.RowSpan="2" Grid.Column="2" DeferedVisibility="False" Content="처리중..."/>
 
 
 

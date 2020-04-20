@@ -11,7 +11,6 @@
             xmlns:cv="clr-namespace:GTI.WFMS.Models.Common;assembly=GTI.WFMS.Models"
             xmlns:vm="clr-namespace:GTI.WFMS.Modules.Cmpl.ViewModel"
             xmlns:dxe="http://schemas.devexpress.com/winfx/2008/xaml/editors"
-            xmlns:dxg="http://schemas.devexpress.com/winfx/2008/xaml/grid"
             xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
                
             x:Name="splyCmplAddView"

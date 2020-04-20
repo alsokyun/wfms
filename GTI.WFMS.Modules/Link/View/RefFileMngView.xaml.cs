@@ -205,59 +205,7 @@ namespace GTI.WFMS.Modules.Link.View
         }
 
 
-        //그리드저장
-        private void BtnReg_Click(object sender, RoutedEventArgs e)
-        {
-            if (Messages.ShowYesNoMsgBox("저장하시겠습니까?") != MessageBoxResult.Yes) return;
 
-            Hashtable param = new Hashtable();
-            /*기존 파일 삭제
-            param.Add("sqlId", "DeleteFileMng");
-            param.Add("BIZ_ID", BIZ_ID);
-            BizUtil.Update(param);
-             */
-
-            //그리드 저장
-            DataTable dt = grid.ItemsSource as DataTable;
-            foreach (DataRow row in dt.Rows)
-            {
-                param = new Hashtable();
-
-                if (row.RowState == DataRowState.Modified || row.RowState == DataRowState.Added)
-                {
-                    param.Add("sqlId", "SaveFileMap");
-                    param.Add("BIZ_ID", BIZ_ID);
-                    param.Add("FIL_SEQ", Convert.ToInt32(row["FIL_SEQ"]));
-
-                    param.Add("GRP_TYP", "112"); //일반파일
-                    param.Add("TIT_NAM", row["TIT_NAM"].ToString());
-                    param.Add("UPD_YMD", row["UPD_YMD"].ToString());
-                    param.Add("UPD_USR", row["UPD_USR"].ToString());
-                    param.Add("CTNT", row["CTNT"].ToString());
-                }
-                else
-                {
-                    continue;
-                }
-
-
-                //저장처리
-                try
-                {
-                    BizUtil.Update(param);
-                }
-                catch (Exception ex)
-                {
-                    Messages.ShowErrMsgBox("저장 처리중 오류가 발생하였습니다." + ex.ToString());
-                    return;
-                }
-
-            }
-            //저장처리 성공
-            Messages.ShowOkMsgBox();
-            InitModel();
-
-        }
 
 
         private void Gv_InitNewRow(object sender, InitNewRowEventArgs e)
@@ -289,7 +237,8 @@ namespace GTI.WFMS.Modules.Link.View
                 {
                     FIL_SEQ = fileMngView.txtFIL_SEQ.Text;
 
-                    //AddFilSeqRow(FIL_SEQ); //첨부파일 한건추가할 필요없음
+                    //조회그리드형으로 변경
+                    InitModel();
                 }
 
 

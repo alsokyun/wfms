@@ -17,6 +17,14 @@ using System.Windows.Forms.Integration;
 using System.IO;
 using ESRI.ArcGIS.Geodatabase;
 using ESRI.ArcGIS.Display;
+using Microsoft.Win32;
+using System.Collections.ObjectModel;
+using System.Windows.Threading;
+using DevExpress.Xpf.Core;
+using GTIFramework.Common.MessageBox;
+using System.Management.Automation;
+using System.Management.Automation.Runspaces;
+using System.Threading;
 
 namespace GTI.WFMS.GIS
 {
@@ -33,19 +41,21 @@ namespace GTI.WFMS.GIS
         public string _selectedLayerNm = "";
         public List<string> _selectedLayerNms = new List<string>();
 
+        UserControl mapArcObjView;
         WindowsFormsHost mapHost;
         WindowsFormsHost toolbarHost;
         TreeView treeLayer;
-
         AxMapControl mapControl;
         AxToolbarControl toolbarControl;
 
-
         public event PropertyChangedEventHandler PropertyChanged;
-
         private Popup popFct = new Popup(); //시설물정보DIV
-
         public FmsStack<string> sts = new FmsStack<string>();
+
+        // 파일관련 전역변수 - 환경설정으로 관리해야함
+        string dbShapeDir = @"" + FmsUtil.dbShapeDir;
+        Thread upload_thread;
+
 
 
         public Dictionary<string, FeatureLayer> layers;
@@ -107,13 +117,14 @@ namespace GTI.WFMS.GIS
 
 
         #region ==========  Properties 정의 ==========
+        public virtual ObservableCollection<FileInfo> ItemsFile { get; set; } //파일객체
 
 
         public RelayCommand<object> loadedCmd { get; set; } //Loaded이벤트에서 ICommand 사용하여 뷰객체 전달받음
         public RelayCommand<object> chkCmd { get; set; }
         public RelayCommand<object> resetCmd { get; set; }
-
-
+        public RelayCommand<object> importCmd { get; set; }
+        
 
         //시설물기본정보
         private CmmDtl fctDtl = new CmmDtl(); 
@@ -152,7 +163,7 @@ namespace GTI.WFMS.GIS
             loadedCmd = new RelayCommand<object>(delegate (object obj)
             {
                 //뷰객체를 파라미터로 전달받기
-                UserControl mapArcObjView = obj as UserControl;
+                mapArcObjView = obj as UserControl;
 
                 mapHost = mapArcObjView.FindName("mapHost") as WindowsFormsHost;
                 toolbarHost = mapArcObjView.FindName("toolbarHost") as WindowsFormsHost;
@@ -175,7 +186,9 @@ namespace GTI.WFMS.GIS
                 ShowShapeLayer("BML_GADM_AS", true);
 
 
-                
+                // 파일인포리스트
+                ItemsFile = new ObservableCollection<FileInfo>();
+
                 //비트맵초기화(시설물상세DIV 아이콘)
                 BitImg = new BitmapImage();
             });
@@ -214,12 +227,149 @@ namespace GTI.WFMS.GIS
             //GIS초기화
             resetCmd = new RelayCommand<object>(resetAction);
 
+            //shp 임포트
+            importCmd = new RelayCommand<object>(importAction);
+            
+        }
+        #endregion
+
+        //shp 임포트
+        private void importAction(object obj)
+        {
+            OpenFileDialog openFileDialog = new OpenFileDialog();
+            openFileDialog.Multiselect = true;
+            openFileDialog.Filter = "Shape files |*.shp;*.dbf";
+            openFileDialog.InitialDirectory = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
+            if (openFileDialog.ShowDialog() == true)
+            {
+                FileInfo[] files = openFileDialog.FileNames.Select(f => new FileInfo(f)).ToArray();  //파일인포
+
+                foreach (FileInfo fi in files)
+                {
+                    try
+                    {
+                        //파일객체
+                        ItemsFile.Add(fi);
+                    }
+                    catch (Exception) { }
+                }
+
+                //파일업로드시작
+                upload_thread = new Thread(new ThreadStart(UploadFileListFX));
+                upload_thread.Start();
+            }
+        }
+
+
+
+        // 업로드 스레드핸들러
+        private void UploadFileListFX()
+        {
+            try
+            {
+                //로딩바..
+                mapArcObjView.Dispatcher.Invoke(DispatcherPriority.ApplicationIdle,
+                    new Action((delegate ()
+                    {
+                        (mapArcObjView.FindName("waitindicator") as WaitIndicator).DeferedVisibility = true;
+                    })));
+
+
+                //업로드시작...
+                UploadFileList();
+
+
+
+                mapArcObjView.Dispatcher.Invoke(DispatcherPriority.ApplicationIdle,
+                   new Action((delegate ()
+                   {
+                       //db 원격파워셀스크립트 수행 - 티베로 gisLoader, tbloader 
+                       ExPsCmd(@"d:\shape.ps1");
+
+
+                       (mapArcObjView.FindName("waitindicator") as WaitIndicator).DeferedVisibility = false;
+                       Messages.ShowOkMsgBox();
+                       //팝업닫기
+                       //btnClose.RaiseEvent(new RoutedEventArgs(Button.ClickEvent));
+                   })));
+
+
+            }
+            catch (Exception ex)
+            {
+                mapArcObjView.Dispatcher.Invoke(DispatcherPriority.ApplicationIdle,
+                    new Action((delegate ()
+                    {
+                        (mapArcObjView.FindName("waitindicator") as WaitIndicator).DeferedVisibility = false;
+                        Messages.ShowErrMsgBoxLog(ex);
+                    })));
+            }
+        }
+
+
+
+        //db 원격파워셀스크립트 수행 - 티베로 gisLoader, tbloader 
+        private void ExPsCmd(string scriptfile)
+        {
+            RunspaceConfiguration runspaceConfiguration = RunspaceConfiguration.Create();
+
+            Runspace runspace = RunspaceFactory.CreateRunspace(runspaceConfiguration);
+            runspace.Open();
+
+            RunspaceInvoke scriptInvoker = new RunspaceInvoke();
+            scriptInvoker.Invoke("Set-ExecutionPolicy RemoteSigned");
+
+            Pipeline pipeline = runspace.CreatePipeline();
+
+            //Here's how you add a new script with arguments
+            Command myCommand = new Command(scriptfile);
+            //CommandParameter testParam = new CommandParameter("key", "value");
+            //myCommand.Parameters.Add(testParam);
+
+            pipeline.Commands.Add(myCommand);
+
+            // Execute PowerShell script
+            pipeline.Invoke();
         }
 
 
 
 
-        #endregion
+        /// <summary>
+        /// 물리적파일을 업로드한후, 파일테이블에 등록하고, _FIL_SEQ를 생성한다
+        /// </summary>
+        /// <returns></returns>
+        private void UploadFileList()
+        {
+            // 1.shp 물리적파일 저장
+
+            /// Items는 추가된 파일객체만이다
+            foreach (FileInfo fi in ItemsFile)
+            {
+                string shp_file_path = Path.Combine(BizUtil.GetDataFolder("shape"), fi.Name);
+                string db_shp_file_path = Path.Combine(FmsUtil.dbShapeDir, fi.Name);
+
+                try
+                {
+                    // 1.shp파일 프로그램 위치에 저장
+                    fi.CopyTo(shp_file_path, true);
+
+                    // 2.shp파일 db서버 위치에 원격복사
+                    ExPsCmd(@"d:\shape_copy.ps1");
+
+
+
+                }
+                catch (Exception ex)
+                {
+                    Messages.ShowErrMsgBox(ex.Message);
+                }
+
+
+            }
+
+        }
+
 
 
 
@@ -244,7 +394,7 @@ namespace GTI.WFMS.GIS
         public void initMap()
         {
             //배경지도는 mxd파일로부터
-            string mxdfilePath = Path.Combine(BizUtil.GetDataFolder("shape", "also.mxd"));
+            string mxdfilePath = Path.Combine(BizUtil.GetDataFolder("tile", "also.mxd"));
             mapControl.LoadMxFile(mxdfilePath);
 
         }

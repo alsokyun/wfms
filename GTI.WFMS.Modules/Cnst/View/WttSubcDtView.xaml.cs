@@ -39,11 +39,6 @@ namespace GTI.WFMS.Modules.Cnst.View
             this.txtCNT_NUM.EditValue = _CNT_NUM; //키를 뷰모델로 넘기기위해 뷰바인딩 활용
         }
 
-        //그리드행추가시 이벤트처리
-        private void AddingNewRow(object sender, System.ComponentModel.AddingNewEventArgs e)
-        {
-
-        }
 
 
         /// <summary>
@@ -69,13 +64,6 @@ namespace GTI.WFMS.Modules.Cnst.View
         }
 
 
-        //행추가
-        private void BtnAdd_Click(object sender, RoutedEventArgs e)
-        {
-            gv.AddNewRow();
-        }
-       
-
         private void grid_CustomUnboundColumnData(object sender, DevExpress.Xpf.Grid.GridColumnDataEventArgs e)
         {
             if (e.Column.FieldName == "Total")
@@ -84,5 +72,6 @@ namespace GTI.WFMS.Modules.Cnst.View
                     Convert.ToDouble(grid.GetCellValueByListIndex(e.ListSourceRowIndex, "UnitsOnOrder"));
             }
         }
+
     }
 }
