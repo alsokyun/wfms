@@ -26,6 +26,7 @@ using System.Management.Automation;
 using System.Management.Automation.Runspaces;
 using System.Threading;
 using System.Security;
+using GTI.WFMS.GIS.Pop.View;
 
 namespace GTI.WFMS.GIS
 {
@@ -53,10 +54,7 @@ namespace GTI.WFMS.GIS
         private Popup popFct = new Popup(); //시설물정보DIV
         public FmsStack<string> sts = new FmsStack<string>();
 
-        // 파일관련 전역변수 - 환경설정으로 관리해야함
-        string dbShapeDir = @"" + FmsUtil.dbShapeDir;
-        Thread upload_thread;
-
+        
 
 
         public Dictionary<string, FeatureLayer> layers;
@@ -228,230 +226,21 @@ namespace GTI.WFMS.GIS
             //GIS초기화
             resetCmd = new RelayCommand<object>(resetAction);
 
-            //shp 임포트
-            importCmd = new RelayCommand<object>(importAction);
+            //SHP파일관리창
+            importCmd = new RelayCommand<object>(delegate(object obj) {
+
+                ShpMngView view = new ShpMngView();
+                if (view.ShowDialog() is bool)
+                {
+                    //재조회
+                    resetAction(null);
+                }
+            });
+
             
         }
         #endregion
 
-        //shp 임포트
-        private void importAction(object obj)
-        {
-            OpenFileDialog openFileDialog = new OpenFileDialog();
-            openFileDialog.Multiselect = true;
-            openFileDialog.Filter = "Shape files |*.shp;*.dbf";
-            openFileDialog.InitialDirectory = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
-            if (openFileDialog.ShowDialog() == true)
-            {
-                FileInfo[] files = openFileDialog.FileNames.Select(f => new FileInfo(f)).ToArray();  //파일인포
-
-                foreach (FileInfo fi in files)
-                {
-                    try
-                    {
-                        //파일객체
-                        ItemsFile.Add(fi);
-                    }
-                    catch (Exception) { }
-                }
-
-                //파일업로드시작
-                upload_thread = new Thread(new ThreadStart(UploadFileListFX));
-                upload_thread.Start();
-            }
-        }
-
-
-
-        // 업로드 스레드핸들러
-        private void UploadFileListFX()
-        {
-            try
-            {
-                //로딩바..
-                mapArcObjView.Dispatcher.Invoke(DispatcherPriority.ApplicationIdle,
-                    new Action((delegate ()
-                    {
-                        (mapArcObjView.FindName("waitindicator") as WaitIndicator).DeferedVisibility = true;
-                    })));
-
-
-                //업로드시작...
-                UploadFileList();
-
-
-
-                mapArcObjView.Dispatcher.Invoke(DispatcherPriority.ApplicationIdle,
-                   new Action((delegate ()
-                   {
-                       //db 원격파워셀스크립트 수행 - 티베로 gisLoader, tbloader 
-                       ExPsScript(@"d:\shape.ps1");
-
-
-                       (mapArcObjView.FindName("waitindicator") as WaitIndicator).DeferedVisibility = false;
-                       Messages.ShowOkMsgBox();
-                       //팝업닫기
-                       //btnClose.RaiseEvent(new RoutedEventArgs(Button.ClickEvent));
-                   })));
-
-
-            }
-            catch (Exception ex)
-            {
-                mapArcObjView.Dispatcher.Invoke(DispatcherPriority.ApplicationIdle,
-                    new Action((delegate ()
-                    {
-                        (mapArcObjView.FindName("waitindicator") as WaitIndicator).DeferedVisibility = false;
-                        Messages.ShowErrMsgBoxLog(ex);
-                    })));
-            }
-        }
-
-
-
-
-
-
-
-        /// <summary>
-        /// 물리적파일을 업로드한후, 파일테이블에 등록하고, _FIL_SEQ를 생성한다
-        /// </summary>
-        /// <returns></returns>
-        private void UploadFileList()
-        {
-            // 1.shp 물리적파일 저장
-
-            /// Items는 추가된 파일객체만이다
-            foreach (FileInfo fi in ItemsFile)
-            {
-                string shp_file_path = Path.Combine(BizUtil.GetDataFolder("shape"), fi.Name);
-                string db_shp_file_path = Path.Combine(FmsUtil.dbShapeDir, fi.Name);
-
-                try
-                {
-                    // 1.shp파일 프로그램 위치에 저장
-                    fi.CopyTo(shp_file_path, true);
-
-                    // 2.shp파일 db서버 위치에 원격복사
-                    ExPsScript(@"d:\shape_copy.ps1");
-
-
-
-                }
-                catch (Exception ex)
-                {
-                    Messages.ShowErrMsgBox(ex.Message);
-                }
-
-
-            }
-
-        }
-
-
-
-
-
-        /// <summary>
-        /// 파워셀 - db 원격스크립트 수행 - 티베로 gisLoader, tbloader 
-        /// </summary>
-        /// <param name="scriptfile"></param>
-        private void ExPsScript(string scriptfile)
-        {
-            RunspaceConfiguration runspaceConfiguration = RunspaceConfiguration.Create();
-
-            Runspace runspace = RunspaceFactory.CreateRunspace(runspaceConfiguration);
-            runspace.Open();
-
-            RunspaceInvoke scriptInvoker = new RunspaceInvoke();
-            scriptInvoker.Invoke("Set-ExecutionPolicy RemoteSigned");
-
-            Pipeline pipeline = runspace.CreatePipeline();
-
-            //Here's how you add a new script with arguments
-            Command myCommand = new Command(scriptfile);
-            //CommandParameter testParam = new CommandParameter("key", "value");
-            //myCommand.Parameters.Add(testParam);
-
-            pipeline.Commands.Add(myCommand);
-
-            // Execute PowerShell script
-            pipeline.Invoke();
-        }
-
-
-
-        /// <summary>
-        /// 파워셀 - 커맨드단위로 명령수행 - 파라미터를 전달하기위해.. 세션처리 사전작업필요
-        /// </summary>
-        private static void ExPsSessionCmd()
-        {
-            // Username and Password for the remote machine.
-            var userName = "administrator";
-            string pw = "greenTech!@3";
-
-            // Creates a secure string for the password
-            SecureString securePassword = new SecureString();
-            foreach (char c in pw)
-            {
-                securePassword.AppendChar(c);
-            }
-            securePassword.MakeReadOnly();
-
-            // Creates a PSCredential object
-            PSCredential creds = new PSCredential(userName, securePassword);
-
-
-
-
-            // Creates the runspace for PowerShell
-            Runspace runspace = RunspaceFactory.CreateRunspace();
-
-            // Create the PSSession connection to the remote machine.
-            //ComputerName
-            string computerName = "172.16.0.4";
-
-            PowerShell powershell = PowerShell.Create();
-            PSCommand command = new PSCommand();
-            command.AddCommand("New-PSSession");
-            command.AddParameter("ComputerName", computerName);
-            command.AddParameter("Credential", creds);
-            powershell.Commands = command;
-            runspace.Open();
-            powershell.Runspace = runspace;
-            Collection<PSObject> result = powershell.Invoke();
-
-
-
-            // Takes the PSSession object and places it into a PowerShell variable
-            powershell = PowerShell.Create();
-            command = new PSCommand();
-            command.AddCommand("Set-Variable");
-            command.AddParameter("Name", "session");
-            command.AddParameter("Value", result[0]);
-            powershell.Commands = command;
-            powershell.Runspace = runspace;
-            powershell.Invoke();
-
-
-
-            // Calls the Copy-Item cmdlet as a script and passes the PSSession, Path and destination parameters to it
-            string path = @"D:\SHAPE\shape_fms\WTL_SPLY_LS.shp";
-            string destination = @"D:\shape\WTL_SPLY_LS.shp";
-
-            powershell = PowerShell.Create();
-            command = new PSCommand();
-            command.AddScript("Copy-Item -Path " + path + " -Destination " + destination + " -ToSession $session");
-            powershell.Commands = command;
-            powershell.Runspace = runspace;
-            powershell.Invoke();
-
-            // 세션종료
-            powershell = PowerShell.Create();
-            powershell.Runspace = runspace;
-            powershell.AddScript("Remove-PSSession $session");
-            powershell.Invoke();
-        }
 
 
 

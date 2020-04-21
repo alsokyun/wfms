@@ -9,7 +9,6 @@
                 xmlns:host="clr-namespace:System.Windows.Forms.Integration;assembly=WindowsFormsIntegration"
                 xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
                 xmlns:cv="clr-namespace:GTI.WFMS.Models.Common;assembly=GTI.WFMS.Models" 
-                xmlns:dx="http://schemas.devexpress.com/winfx/2008/xaml/core"
                 Loaded="Window_Loaded"
                 Background="Beige"
                 x:Name="mapArcObjView"
@@ -46,13 +45,14 @@
 
         <!--툴바-->
         <host:WindowsFormsHost Grid.Row="0" Name="toolbarHost" HorizontalAlignment="Left" />
-        <StackPanel HorizontalAlignment="Right" Grid.Column="1" Orientation="Horizontal" >
-            <Button Content="Import SHP" Style="{DynamicResource TxtButton}" Margin="0 2 10 2" Height="30"
-                    Command="{Binding importCmd}" />
-            <Button Content="시설물편집" Width="90" Style="{DynamicResource TxtButton}" Margin="0 2 5 2" Height="30"
-                    Click="Button_Click" />
-            <Button Content="Reset" Style="{DynamicResource TxtButton}" Margin="0 2 10 2" Height="30"
+        
+        <StackPanel HorizontalAlignment="Right" Grid.Column="1" Orientation="Horizontal" Margin="0 0 12 0">
+            <Button Content="Reset" Style="{DynamicResource TxtButton}" 
                     Command="{Binding resetCmd}" />
+            <Button Content="시설물편집" Style="{DynamicResource TxtButton}" 
+                    Click="Button_Click" />
+            <Button Content="SHP 파일관리" Style="{DynamicResource TxtButton}" 
+                    Command="{Binding importCmd}" />
         </StackPanel>
 
         <!--맵-->
@@ -264,8 +264,6 @@
         <!--상태바-->
         <TextBlock Grid.Row="2"  Name="textBlock1" >Ready</TextBlock>
 
-        <!--로딩바-->
-        <dx:WaitIndicator x:Name="waitindicator" Grid.Row="1" DeferedVisibility="False" Content="처리중..."/>
 
     </Grid>
 

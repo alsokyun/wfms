@@ -197,6 +197,7 @@
     </Compile>
     <Compile Include="Pop\ViewModel\EditWinViewModel.cs" />
     <Compile Include="Pop\ViewModel\LyrModel.cs" />
+    <Compile Include="Pop\ViewModel\ShpMngViewModel.cs" />
     <Compile Include="Pop\View\CnstMngPopView.xaml.cs">
       <DependentUpon>CnstMngPopView.xaml</DependentUpon>
     </Compile>
@@ -208,8 +209,8 @@
       <DependentUpon>UC_FLOW_PS.xaml</DependentUpon>
     </Compile>
     <Compile Include="Pop\ViewModel\CnstMngPopViewModel.cs" />
-    <Compile Include="Pop\View\ShpMnglView.xaml.cs">
-      <DependentUpon>ShpMnglView.xaml</DependentUpon>
+    <Compile Include="Pop\View\ShpMngView.xaml.cs">
+      <DependentUpon>ShpMngView.xaml</DependentUpon>
     </Compile>
     <Compile Include="sample\SketchOnMap.xaml.cs">
       <DependentUpon>SketchOnMap.xaml</DependentUpon>
@@ -292,7 +293,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="Pop\View\ShpMnglView.xaml">
+    <Page Include="Pop\View\ShpMngView.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
