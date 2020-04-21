@@ -25,6 +25,7 @@ using GTIFramework.Common.MessageBox;
 using System.Management.Automation;
 using System.Management.Automation.Runspaces;
 using System.Threading;
+using System.Security;
 
 namespace GTI.WFMS.GIS
 {
@@ -284,7 +285,7 @@ namespace GTI.WFMS.GIS
                    new Action((delegate ()
                    {
                        //db 원격파워셀스크립트 수행 - 티베로 gisLoader, tbloader 
-                       ExPsCmd(@"d:\shape.ps1");
+                       ExPsScript(@"d:\shape.ps1");
 
 
                        (mapArcObjView.FindName("waitindicator") as WaitIndicator).DeferedVisibility = false;
@@ -308,29 +309,6 @@ namespace GTI.WFMS.GIS
 
 
 
-        //db 원격파워셀스크립트 수행 - 티베로 gisLoader, tbloader 
-        private void ExPsCmd(string scriptfile)
-        {
-            RunspaceConfiguration runspaceConfiguration = RunspaceConfiguration.Create();
-
-            Runspace runspace = RunspaceFactory.CreateRunspace(runspaceConfiguration);
-            runspace.Open();
-
-            RunspaceInvoke scriptInvoker = new RunspaceInvoke();
-            scriptInvoker.Invoke("Set-ExecutionPolicy RemoteSigned");
-
-            Pipeline pipeline = runspace.CreatePipeline();
-
-            //Here's how you add a new script with arguments
-            Command myCommand = new Command(scriptfile);
-            //CommandParameter testParam = new CommandParameter("key", "value");
-            //myCommand.Parameters.Add(testParam);
-
-            pipeline.Commands.Add(myCommand);
-
-            // Execute PowerShell script
-            pipeline.Invoke();
-        }
 
 
 
@@ -355,7 +333,7 @@ namespace GTI.WFMS.GIS
                     fi.CopyTo(shp_file_path, true);
 
                     // 2.shp파일 db서버 위치에 원격복사
-                    ExPsCmd(@"d:\shape_copy.ps1");
+                    ExPsScript(@"d:\shape_copy.ps1");
 
 
 
@@ -374,7 +352,106 @@ namespace GTI.WFMS.GIS
 
 
 
+        /// <summary>
+        /// 파워셀 - db 원격스크립트 수행 - 티베로 gisLoader, tbloader 
+        /// </summary>
+        /// <param name="scriptfile"></param>
+        private void ExPsScript(string scriptfile)
+        {
+            RunspaceConfiguration runspaceConfiguration = RunspaceConfiguration.Create();
 
+            Runspace runspace = RunspaceFactory.CreateRunspace(runspaceConfiguration);
+            runspace.Open();
+
+            RunspaceInvoke scriptInvoker = new RunspaceInvoke();
+            scriptInvoker.Invoke("Set-ExecutionPolicy RemoteSigned");
+
+            Pipeline pipeline = runspace.CreatePipeline();
+
+            //Here's how you add a new script with arguments
+            Command myCommand = new Command(scriptfile);
+            //CommandParameter testParam = new CommandParameter("key", "value");
+            //myCommand.Parameters.Add(testParam);
+
+            pipeline.Commands.Add(myCommand);
+
+            // Execute PowerShell script
+            pipeline.Invoke();
+        }
+
+
+
+        /// <summary>
+        /// 파워셀 - 커맨드단위로 명령수행 - 파라미터를 전달하기위해.. 세션처리 사전작업필요
+        /// </summary>
+        private static void ExPsSessionCmd()
+        {
+            // Username and Password for the remote machine.
+            var userName = "administrator";
+            string pw = "greenTech!@3";
+
+            // Creates a secure string for the password
+            SecureString securePassword = new SecureString();
+            foreach (char c in pw)
+            {
+                securePassword.AppendChar(c);
+            }
+            securePassword.MakeReadOnly();
+
+            // Creates a PSCredential object
+            PSCredential creds = new PSCredential(userName, securePassword);
+
+
+
+
+            // Creates the runspace for PowerShell
+            Runspace runspace = RunspaceFactory.CreateRunspace();
+
+            // Create the PSSession connection to the remote machine.
+            //ComputerName
+            string computerName = "172.16.0.4";
+
+            PowerShell powershell = PowerShell.Create();
+            PSCommand command = new PSCommand();
+            command.AddCommand("New-PSSession");
+            command.AddParameter("ComputerName", computerName);
+            command.AddParameter("Credential", creds);
+            powershell.Commands = command;
+            runspace.Open();
+            powershell.Runspace = runspace;
+            Collection<PSObject> result = powershell.Invoke();
+
+
+
+            // Takes the PSSession object and places it into a PowerShell variable
+            powershell = PowerShell.Create();
+            command = new PSCommand();
+            command.AddCommand("Set-Variable");
+            command.AddParameter("Name", "session");
+            command.AddParameter("Value", result[0]);
+            powershell.Commands = command;
+            powershell.Runspace = runspace;
+            powershell.Invoke();
+
+
+
+            // Calls the Copy-Item cmdlet as a script and passes the PSSession, Path and destination parameters to it
+            string path = @"D:\SHAPE\shape_fms\WTL_SPLY_LS.shp";
+            string destination = @"D:\shape\WTL_SPLY_LS.shp";
+
+            powershell = PowerShell.Create();
+            command = new PSCommand();
+            command.AddScript("Copy-Item -Path " + path + " -Destination " + destination + " -ToSession $session");
+            powershell.Commands = command;
+            powershell.Runspace = runspace;
+            powershell.Invoke();
+
+            // 세션종료
+            powershell = PowerShell.Create();
+            powershell.Runspace = runspace;
+            powershell.AddScript("Remove-PSSession $session");
+            powershell.Invoke();
+        }
 
 
 

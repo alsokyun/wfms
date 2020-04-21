@@ -208,6 +208,9 @@
       <DependentUpon>UC_FLOW_PS.xaml</DependentUpon>
     </Compile>
     <Compile Include="Pop\ViewModel\CnstMngPopViewModel.cs" />
+    <Compile Include="Pop\View\ShpMnglView.xaml.cs">
+      <DependentUpon>ShpMnglView.xaml</DependentUpon>
+    </Compile>
     <Compile Include="sample\SketchOnMap.xaml.cs">
       <DependentUpon>SketchOnMap.xaml</DependentUpon>
     </Compile>
@@ -286,6 +289,10 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Include="Module\FTR_POP.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Pop\View\ShpMnglView.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
