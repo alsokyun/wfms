@@ -220,7 +220,7 @@ namespace GTI.WFMS.Modules.Mntc.ViewModel
                 Hashtable conditions = new Hashtable();
                 conditions.Add("PDT_NAM", txtPDT_NAM.Text.Trim());
                 conditions.Add("PDT_MDL_STD", txtPDT_MDL_STD.Text.Trim());
-                conditions.Add("PDT_CAT_CDE", cbPDT_CAT_CDE.EditValue.ToString().Trim());
+                conditions.Add("PDT_CAT_CDE", cbPDT_CAT_CDE.EditValue);
                 try
                 {
                     conditions.Add("STA_YMD", dtSTA_YMD.EditValue == null ? null : Convert.ToDateTime(dtSTA_YMD.EditValue).ToString("yyyy-MM-dd"));
@@ -302,7 +302,7 @@ namespace GTI.WFMS.Modules.Mntc.ViewModel
                 Hashtable conditions = new Hashtable();
                 conditions.Add("PDT_NAM", txtPDT_NAM.Text.Trim());
                 conditions.Add("PDT_MDL_STD", txtPDT_MDL_STD.Text.Trim());
-                conditions.Add("PDT_CAT_CDE", cbPDT_CAT_CDE.EditValue.ToString().Trim());
+                conditions.Add("PDT_CAT_CDE", cbPDT_CAT_CDE.EditValue);
                 try
                 {
                     conditions.Add("STA_YMD", dtSTA_YMD.EditValue == null ? null : Convert.ToDateTime(dtSTA_YMD.EditValue).ToString("yyyy-MM-dd"));
@@ -413,7 +413,7 @@ namespace GTI.WFMS.Modules.Mntc.ViewModel
         {
             try {
                 // cbPDT_CAT_CDE 소모품구분
-                BizUtil.SetCmbCode(cbPDT_CAT_CDE, "250106", true);
+                BizUtil.SetCmbCode(cbPDT_CAT_CDE, "250106", "[전체]");
             }
             catch (Exception ex)
             {

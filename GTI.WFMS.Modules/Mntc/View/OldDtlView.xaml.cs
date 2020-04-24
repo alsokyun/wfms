@@ -37,7 +37,7 @@ namespace GTI.WFMS.Modules.Mntc.View
             ThemeApply.Themeapply(this);
 
             //콤보세팅
-            BizUtil.SetCmbCode(cbIMP_CDE, "250111", false);
+            BizUtil.SetCmbCode(cbIMP_CDE, "250111");
 
             // 초기조회
             InitModel();

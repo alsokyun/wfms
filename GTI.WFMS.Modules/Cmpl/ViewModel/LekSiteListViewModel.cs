@@ -215,9 +215,9 @@ namespace GTI.WFMS.Modules.Cmpl.ViewModel
                 conditions.Add("PIP_IDN", lekSiteListView.txtPIP_IDN.Text.Trim());
                 conditions.Add("SHT_NUM", lekSiteListView.txtSHT_NUM.Text.Trim());
                 conditions.Add("RCV_NUM", lekSiteListView.txtRCV_NUM.Text.Trim());
-                conditions.Add("HJD_CDE", cbHJD_CDE.EditValue.ToString().Trim());
-                conditions.Add("LEP_CDE", cbLEP_CDE.EditValue.ToString().Trim());
-                conditions.Add("LRS_CDE", cbLRS_CDE.EditValue.ToString().Trim());
+                conditions.Add("HJD_CDE", cbHJD_CDE.EditValue);
+                conditions.Add("LEP_CDE", cbLEP_CDE.EditValue);
+                conditions.Add("LRS_CDE", cbLRS_CDE.EditValue);
                 conditions.Add("LEK_YMD_FROM", lekSiteListView.dtLEK_YMD_FROM.EditValue == null ? "" : Convert.ToDateTime(lekSiteListView.dtLEK_YMD_FROM.EditValue).ToString("yyyyMMdd"));
                 conditions.Add("LEK_YMD_TO", lekSiteListView.dtLEK_YMD_TO.EditValue == null ? "" : Convert.ToDateTime(lekSiteListView.dtLEK_YMD_TO.EditValue).ToString("yyyyMMdd"));
                 conditions.Add("REP_YMD_FROM", lekSiteListView.dtREP_YMD_FROM.EditValue == null ? "" : Convert.ToDateTime(lekSiteListView.dtREP_YMD_FROM.EditValue).ToString("yyyyMMdd"));
@@ -306,9 +306,9 @@ namespace GTI.WFMS.Modules.Cmpl.ViewModel
                 conditions.Add("PIP_IDN", lekSiteListView.txtPIP_IDN.Text.Trim());
                 conditions.Add("SHT_NUM", lekSiteListView.txtSHT_NUM.Text.Trim());
                 conditions.Add("RCV_NUM", lekSiteListView.txtRCV_NUM.Text.Trim());
-                conditions.Add("HJD_CDE", cbHJD_CDE.EditValue.ToString().Trim());
-                conditions.Add("LEP_CDE", cbLEP_CDE.EditValue.ToString().Trim());
-                conditions.Add("LRS_CDE", cbLRS_CDE.EditValue.ToString().Trim());
+                conditions.Add("HJD_CDE", cbHJD_CDE.EditValue);
+                conditions.Add("LEP_CDE", cbLEP_CDE.EditValue);
+                conditions.Add("LRS_CDE", cbLRS_CDE.EditValue);
                 conditions.Add("LEK_YMD_FROM", lekSiteListView.dtLEK_YMD_FROM.EditValue == null ? "" : Convert.ToDateTime(lekSiteListView.dtLEK_YMD_FROM.EditValue).ToString("yyyyMMdd"));
                 conditions.Add("LEK_YMD_TO", lekSiteListView.dtLEK_YMD_TO.EditValue == null ? "" : Convert.ToDateTime(lekSiteListView.dtLEK_YMD_TO.EditValue).ToString("yyyyMMdd"));
                 conditions.Add("REP_YMD_FROM", lekSiteListView.dtREP_YMD_FROM.EditValue == null ? "" : Convert.ToDateTime(lekSiteListView.dtREP_YMD_FROM.EditValue).ToString("yyyyMMdd"));
@@ -418,11 +418,11 @@ namespace GTI.WFMS.Modules.Cmpl.ViewModel
         {
             try {
                 // cbHJD_CDE 행정동
-                BizUtil.SetCombo(cbHJD_CDE, "Select_ADAR_LIST", "HJD_CDE", "HJD_NAM", true);
+                BizUtil.SetCombo(cbHJD_CDE, "Select_ADAR_LIST", "HJD_CDE", "HJD_NAM", "[전체]");
                 // 누수부위
-                BizUtil.SetCmbCode(cbLEP_CDE, "250043", true);
+                BizUtil.SetCmbCode(cbLEP_CDE, "250043", "[전체]");
                 // 누수원인
-                BizUtil.SetCmbCode(cbLRS_CDE, "250044", true);
+                BizUtil.SetCmbCode(cbLRS_CDE, "250044", "[전체]");
             }
             catch (Exception ex)
             {

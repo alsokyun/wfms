@@ -215,9 +215,9 @@ namespace GTI.WFMS.Modules.Mntc.ViewModel
 
                 Hashtable conditions = new Hashtable();
                 conditions.Add("TTL", txtTTL.Text.Trim());
-                conditions.Add("FTR_CDE", cbFTR_CDE.EditValue.ToString().Trim());
-                conditions.Add("FAQ_CAT_CDE", cbFAQ_CAT_CDE.EditValue.ToString().Trim());
-                conditions.Add("FAQ_CUZ_CDE", cbFAQ_CUZ_CDE.EditValue.ToString().Trim());
+                conditions.Add("FTR_CDE", cbFTR_CDE.EditValue);
+                conditions.Add("FAQ_CAT_CDE", cbFAQ_CAT_CDE.EditValue);
+                conditions.Add("FAQ_CUZ_CDE", cbFAQ_CUZ_CDE.EditValue);
 
 
                 conditions.Add("firstIndex", 0);
@@ -293,9 +293,9 @@ namespace GTI.WFMS.Modules.Mntc.ViewModel
                 /// 데이터조회
                 Hashtable conditions = new Hashtable();
                 conditions.Add("TTL", txtTTL.Text.Trim());
-                conditions.Add("FTR_CDE", cbFTR_CDE.EditValue.ToString().Trim());
-                conditions.Add("FAQ_CAT_CDE", cbFAQ_CAT_CDE.EditValue.ToString().Trim());
-                conditions.Add("FAQ_CUZ_CDE", cbFAQ_CUZ_CDE.EditValue.ToString().Trim());
+                conditions.Add("FTR_CDE", cbFTR_CDE.EditValue);
+                conditions.Add("FAQ_CAT_CDE", cbFAQ_CAT_CDE.EditValue);
+                conditions.Add("FAQ_CUZ_CDE", cbFAQ_CUZ_CDE.EditValue);
 
 
                 conditions.Add("page", 0);
@@ -401,10 +401,10 @@ namespace GTI.WFMS.Modules.Mntc.ViewModel
         {
             try {
                 // cbFTR_CDE 시설물
-                BizUtil.SetCombo(cbFTR_CDE, "Select_FTR_LIST", "FTR_CDE", "FTR_NAM", true);
+                BizUtil.SetCombo(cbFTR_CDE, "Select_FTR_LIST", "FTR_CDE", "FTR_NAM", "[전체]");
                 // cbFAQ_CAT_CDE 구분
-                BizUtil.SetCmbCode(cbFAQ_CAT_CDE, "250109", true);
-                BizUtil.SetCmbCode(cbFAQ_CUZ_CDE, "250110", true);
+                BizUtil.SetCmbCode(cbFAQ_CAT_CDE, "250109", "[전체]");
+                BizUtil.SetCmbCode(cbFAQ_CUZ_CDE, "250110", "[전체]");
             }
             catch (Exception ex)
             {

@@ -267,11 +267,11 @@ namespace GTI.WFMS.Modules.Pipe.ViewModel
                 //if (treeList.FocusedNode == null) return;
 
                 Hashtable conditions = new Hashtable();
-                conditions.Add("MNG_CDE", cbMNG_CDE.EditValue.ToString().Trim());
-                conditions.Add("HJD_CDE", cbHJD_CDE.EditValue.ToString().Trim());
-                conditions.Add("VAL_MOF", cbVAL_MOF.EditValue.ToString().Trim());
-                conditions.Add("VAL_MOP", cbVAL_MOP.EditValue.ToString().Trim());
-                conditions.Add("FTR_CDE", valvFacListView.cbFTR_CDE.EditValue.ToString().Trim());
+                conditions.Add("MNG_CDE", cbMNG_CDE.EditValue);
+                conditions.Add("HJD_CDE", cbHJD_CDE.EditValue);
+                conditions.Add("VAL_MOF", cbVAL_MOF.EditValue);
+                conditions.Add("VAL_MOP", cbVAL_MOP.EditValue);
+                conditions.Add("FTR_CDE", valvFacListView.cbFTR_CDE.EditValue);
 
                 conditions.Add("FTR_IDN", FmsUtil.Trim(txtFTR_IDN.EditValue));
                 conditions.Add("CNT_NUM", txtCNT_NUM.Text.Trim());
@@ -368,11 +368,11 @@ namespace GTI.WFMS.Modules.Pipe.ViewModel
             {
                 /// 데이터조회
                 Hashtable conditions = new Hashtable();
-                conditions.Add("MNG_CDE", cbMNG_CDE.EditValue.ToString().Trim());
-                conditions.Add("HJD_CDE", cbHJD_CDE.EditValue.ToString().Trim());
-                conditions.Add("VAL_MOF", cbVAL_MOF.EditValue.ToString().Trim());
-                conditions.Add("VAL_MOP", cbVAL_MOP.EditValue.ToString().Trim());
-                conditions.Add("FTR_CDE", valvFacListView.cbFTR_CDE.EditValue.ToString().Trim());
+                conditions.Add("MNG_CDE", cbMNG_CDE.EditValue);
+                conditions.Add("HJD_CDE", cbHJD_CDE.EditValue);
+                conditions.Add("VAL_MOF", cbVAL_MOF.EditValue);
+                conditions.Add("VAL_MOP", cbVAL_MOP.EditValue);
+                conditions.Add("FTR_CDE", valvFacListView.cbFTR_CDE.EditValue);
 
                 conditions.Add("FTR_IDN", FmsUtil.Trim(txtFTR_IDN.EditValue));
                 conditions.Add("CNT_NUM", txtCNT_NUM.Text.Trim());
@@ -502,22 +502,22 @@ namespace GTI.WFMS.Modules.Pipe.ViewModel
                 dtIST_YMD_TO.DisplayFormatString = "yyyy-MM-dd";
 
                 // cbMNG_CDE    0.관리기관
-                BizUtil.SetCmbCode(cbMNG_CDE, "250101", true);
+                BizUtil.SetCmbCode(cbMNG_CDE, "250101", "[전체]");
 
                 // cbHJD_CDE    2.행정동
-                BizUtil.SetCombo(cbHJD_CDE, "Select_ADAR_LIST", "HJD_CDE", "HJD_NAM", true);
+                BizUtil.SetCombo(cbHJD_CDE, "Select_ADAR_LIST", "HJD_CDE", "HJD_NAM", "[전체]");
 
                 // cbVAL_MOF    7.형식
-                BizUtil.SetCmbCode(cbVAL_MOF, "250016", true);
+                BizUtil.SetCmbCode(cbVAL_MOF, "250016", "[전체]");
 
                 // cbVAL_MOP    8.관재질
-                BizUtil.SetCmbCode(cbVAL_MOP, "250015", true);
+                BizUtil.SetCmbCode(cbVAL_MOP, "250015", "[전체]");
 
                 // cbVAL_FOR    10.시설물형태
-                BizUtil.SetCmbCode(cbVAL_FOR, "250007", true);
+                BizUtil.SetCmbCode(cbVAL_FOR, "250007", "[전체]");
 
                 // cbFTR_CDE 지형지물
-                BizUtil.SetCombo(valvFacListView.cbFTR_CDE, "Select_FTR_LIST", "FTR_CDE", "FTR_NAM", true);
+                BizUtil.SetCombo(valvFacListView.cbFTR_CDE, "Select_FTR_LIST", "FTR_CDE", "FTR_NAM", "[전체]");
 
             }
             catch (Exception ex)

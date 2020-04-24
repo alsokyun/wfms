@@ -254,16 +254,16 @@ namespace GTI.WFMS.GIS.Module.ViewModel
             try
             {
                 // cbHJD_CDE 행정동
-                BizUtil.SetCombo(uC_FLOW_PS.cbHJD_CDE, "Select_ADAR_LIST", "HJD_CDE", "HJD_NAM", true);
+                BizUtil.SetCombo(uC_FLOW_PS.cbHJD_CDE, "Select_ADAR_LIST", "HJD_CDE", "HJD_NAM", "[선택하세요]");
 
                 // cbMNG_CDE 관리기관
-                BizUtil.SetCmbCode(uC_FLOW_PS.cbMNG_CDE, "250101", true);
+                BizUtil.SetCmbCode(uC_FLOW_PS.cbMNG_CDE, "250101", "[선택하세요]");
 
                 // cbGAG_CDE 유량계종류
-                BizUtil.SetCmbCode(uC_FLOW_PS.cbGAG_CDE, "250061", true);
+                BizUtil.SetCmbCode(uC_FLOW_PS.cbGAG_CDE, "250061", "[선택하세요]");
 
                 // cbMOF_CDE 형식
-                BizUtil.SetCmbCode(uC_FLOW_PS.cbMOF_CDE, "250035", true);
+                BizUtil.SetCmbCode(uC_FLOW_PS.cbMOF_CDE, "250035", "[선택하세요]");
 
             }
             catch (Exception ex)

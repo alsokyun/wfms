@@ -156,9 +156,9 @@ namespace GTI.WFMS.Modules.Mntc.ViewModel
             try
             {
                 //관리기관
-                BizUtil.SetCmbCode(cbMNG_CDE, "250101", true);
+                BizUtil.SetCmbCode(cbMNG_CDE, "250101", "[선택하세요]");
                 //점검구분
-                BizUtil.SetCmbCode(cbSCL_CDE, "250105", true);
+                BizUtil.SetCmbCode(cbSCL_CDE, "250105", "[선택하세요]");
                 
 
             }

@@ -145,7 +145,7 @@ namespace GTI.WFMS.Models.Cmpl.Model
         private string __PRO_CDE;
         public string PRO_CDE
         {
-            get { return __PRO_CDE; }
+            get { return __PRO_CDE ?? ""; }
             set
             {
                 this.__PRO_CDE = value;

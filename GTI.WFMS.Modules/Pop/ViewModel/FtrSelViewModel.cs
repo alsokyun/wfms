@@ -242,8 +242,8 @@ namespace GTI.WFMS.Modules.Pop.ViewModel
                 //if (treeList.FocusedNode == null) return;
 
                 Hashtable conditions = new Hashtable();
-                conditions.Add("HJD_CDE", cbHJD_CDE.EditValue.ToString().Trim());
-                conditions.Add("FTR_CDE", cbFTR_CDE.EditValue.ToString().Trim());                
+                conditions.Add("HJD_CDE", cbHJD_CDE.EditValue);
+                conditions.Add("FTR_CDE", cbFTR_CDE.EditValue);                
                 conditions.Add("FTR_IDN", FmsUtil.Trim(txtFTR_IDN.EditValue));
                 conditions.Add("FTR_NAM", FmsUtil.Trim(txtFTR_NAM.EditValue));                
                 conditions.Add("CNT_NUM", txtCNT_NUM.Text.Trim());
@@ -376,9 +376,9 @@ namespace GTI.WFMS.Modules.Pop.ViewModel
             try
             {
                 // cbHJD_CDE 행정동
-                BizUtil.SetCombo(cbHJD_CDE, "Select_ADAR_LIST", "HJD_CDE", "HJD_NAM", true);
+                BizUtil.SetCombo(cbHJD_CDE, "Select_ADAR_LIST", "HJD_CDE", "HJD_NAM", "[선택하세요]");
                 // cbFTR_CDE 시설물구분
-                BizUtil.SetCombo(cbFTR_CDE, "Select_FTR_LIST", "FTR_CDE", "FTR_NAM", true);
+                BizUtil.SetCombo(cbFTR_CDE, "Select_FTR_LIST", "FTR_CDE", "FTR_NAM", "[선택하세요]");
                 
             }
             catch (Exception ex)

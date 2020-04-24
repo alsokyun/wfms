@@ -229,7 +229,7 @@ namespace GTI.WFMS.Modules.Cnst.ViewModel
 
                 Hashtable conditions = new Hashtable();
                 conditions.Add("CNT_NUM", txtCNT_NUM.Text.Trim());
-                conditions.Add("HJD_CDE", cbHJD_CDE.EditValue.ToString().Trim());
+                conditions.Add("HJD_CDE", cbHJD_CDE.EditValue);
                 try
                 {
                     conditions.Add("BEG_YMD_FROM", dtBEG_YMD_FROM.EditValue == null ? null : Convert.ToDateTime(dtBEG_YMD_FROM.EditValue).ToString("yyyy-MM-dd"));
@@ -318,7 +318,7 @@ namespace GTI.WFMS.Modules.Cnst.ViewModel
                 /// 데이터조회
                 Hashtable conditions = new Hashtable();
                 conditions.Add("CNT_NUM", txtCNT_NUM.Text.Trim());
-                conditions.Add("HJD_CDE", cbHJD_CDE.EditValue.ToString().Trim());
+                conditions.Add("HJD_CDE", cbHJD_CDE.EditValue);
                 try
                 {
                     conditions.Add("BEG_YMD_FROM", dtBEG_YMD_FROM.EditValue == null ? null : Convert.ToDateTime(dtBEG_YMD_FROM.EditValue).ToString("yyyy-MM-dd"));
@@ -435,7 +435,7 @@ namespace GTI.WFMS.Modules.Cnst.ViewModel
         {
             try {
                 // cbHJD_CDE 행정동
-                BizUtil.SetCombo(cbHJD_CDE, "Select_ADAR_LIST", "HJD_CDE", "HJD_NAM", true);
+                BizUtil.SetCombo(cbHJD_CDE, "Select_ADAR_LIST", "HJD_CDE", "HJD_NAM", "[전체]");
             }
             catch (Exception ex)
             {

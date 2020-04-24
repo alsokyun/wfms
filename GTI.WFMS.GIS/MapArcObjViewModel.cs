@@ -17,15 +17,7 @@ using System.Windows.Forms.Integration;
 using System.IO;
 using ESRI.ArcGIS.Geodatabase;
 using ESRI.ArcGIS.Display;
-using Microsoft.Win32;
 using System.Collections.ObjectModel;
-using System.Windows.Threading;
-using DevExpress.Xpf.Core;
-using GTIFramework.Common.MessageBox;
-using System.Management.Automation;
-using System.Management.Automation.Runspaces;
-using System.Threading;
-using System.Security;
 using GTI.WFMS.GIS.Pop.View;
 
 namespace GTI.WFMS.GIS
@@ -89,6 +81,9 @@ namespace GTI.WFMS.GIS
 
                 {"WTL_PIPE_LM",  new FeatureLayer()},
                 {"WTL_SPLY_LS",  new FeatureLayer()},
+                {"WTL_PIPE_LX",  new FeatureLayer()},
+                {"WTL_SPLY_LX",  new FeatureLayer()},
+                {"WTL_PIPE_LY",  new FeatureLayer()},
             };
 
         }
@@ -182,7 +177,7 @@ namespace GTI.WFMS.GIS
                 GisCm.InitUniqueValueRenderer();
 
                 //3.울산행정구역표시
-                ShowShapeLayer("BML_GADM_AS", true);
+                ShowShapeLayer("BML_GADM_AS", true );
 
 
                 // 파일인포리스트
@@ -281,7 +276,7 @@ namespace GTI.WFMS.GIS
             sts.Clear();
 
             //4.울산행정구역표시
-            ShowShapeLayer("BML_GADM_AS", true);
+            ShowShapeLayer("BML_GADM_AS", true );
 
 
 

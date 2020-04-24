@@ -64,7 +64,7 @@
             </Grid.ColumnDefinitions>
 
             <host:WindowsFormsHost Grid.Column="0" x:Name="tocHost" />
-            <host:WindowsFormsHost Grid.Column="1" x:Name="mapHost" />
+            <host:WindowsFormsHost Grid.Column="1" x:Name="mapHost" ScrollViewer.HorizontalScrollBarVisibility="Hidden" ScrollViewer.VerticalScrollBarVisibility="Hidden" />
 
 
             <Grid Grid.Column="2">
@@ -255,6 +255,33 @@
 
 
                     </TreeView>
+
+
+
+                    <Button  Tag="WTL_PIPE_LX" Content="송산파이프" ToolTip="SA901.png" Template="{StaticResource ResourceKey=dockTemplate}">
+                        <i:Interaction.Triggers>
+                            <i:EventTrigger EventName="Click">
+                                <i:InvokeCommandAction Command="{Binding chkCmd}"  CommandParameter="{Binding RelativeSource={RelativeSource AncestorType={x:Type Button}}}" >
+                                </i:InvokeCommandAction>
+                            </i:EventTrigger>
+                        </i:Interaction.Triggers>
+                    </Button>
+                    <Button  Tag="WTL_SPLY_LX" Content="송산급수관" ToolTip="SA902.png" Template="{StaticResource ResourceKey=dockTemplate}">
+                        <i:Interaction.Triggers>
+                            <i:EventTrigger EventName="Click">
+                                <i:InvokeCommandAction Command="{Binding chkCmd}"  CommandParameter="{Binding RelativeSource={RelativeSource AncestorType={x:Type Button}}}" >
+                                </i:InvokeCommandAction>
+                            </i:EventTrigger>
+                        </i:Interaction.Triggers>
+                    </Button>
+                    <Button  Tag="WTL_PIPE_LY" Content="예천파이프" ToolTip="SA903.png" Template="{StaticResource ResourceKey=dockTemplate}">
+                        <i:Interaction.Triggers>
+                            <i:EventTrigger EventName="Click">
+                                <i:InvokeCommandAction Command="{Binding chkCmd}"  CommandParameter="{Binding RelativeSource={RelativeSource AncestorType={x:Type Button}}}" >
+                                </i:InvokeCommandAction>
+                            </i:EventTrigger>
+                        </i:Interaction.Triggers>
+                    </Button>
 
                 </StackPanel>
             </Grid>

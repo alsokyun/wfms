@@ -231,9 +231,9 @@ namespace GTI.WFMS.Modules.Pop.ViewModel
 
                 Hashtable conditions = new Hashtable();
                 conditions.Add("RCV_NUM", cnstCmplSelView.txtRCV_NUM.Text.Trim());
-                conditions.Add("APL_HJD", cbHJD_CDE.EditValue.ToString().Trim());
-                conditions.Add("APL_CDE", cbAPL_CDE.EditValue.ToString().Trim());
-                conditions.Add("PRO_CDE", cbPRO_CDE.EditValue.ToString().Trim());
+                conditions.Add("APL_HJD", cbHJD_CDE.EditValue);
+                conditions.Add("APL_CDE", cbAPL_CDE.EditValue);
+                conditions.Add("PRO_CDE", cbPRO_CDE.EditValue);
                 conditions.Add("RCV_YMD_FROM", cnstCmplSelView.dtRCV_YMD_FROM.EditValue == null ? "" : Convert.ToDateTime(cnstCmplSelView.dtRCV_YMD_FROM.EditValue).ToString("yyyyMMdd"));
                 conditions.Add("RCV_YMD_TO", cnstCmplSelView.dtRCV_YMD_TO.EditValue == null ? "" : Convert.ToDateTime(cnstCmplSelView.dtRCV_YMD_TO.EditValue).ToString("yyyyMMdd"));
                 conditions.Add("PRO_YMD_FROM", cnstCmplSelView.dtPRO_YMD_FROM.EditValue == null ? "" : Convert.ToDateTime(cnstCmplSelView.dtPRO_YMD_FROM.EditValue).ToString("yyyyMMdd"));
@@ -367,11 +367,11 @@ namespace GTI.WFMS.Modules.Pop.ViewModel
         {
             try {
                 // cbHJD_CDE 행정동
-                BizUtil.SetCombo(cbHJD_CDE, "Select_ADAR_LIST", "HJD_CDE", "HJD_NAM", true);
+                BizUtil.SetCombo(cbHJD_CDE, "Select_ADAR_LIST", "HJD_CDE", "HJD_NAM", "[선택하세요]");
                 // 민원구분
-                BizUtil.SetCmbCode(cbAPL_CDE, "250056", true);
+                BizUtil.SetCmbCode(cbAPL_CDE, "250056", "[선택하세요]");
                 // 처리상태
-                BizUtil.SetCmbCode(cbPRO_CDE, "250050", true);
+                BizUtil.SetCmbCode(cbPRO_CDE, "250050", "[선택하세요]");
             }
             catch (Exception ex)
             {

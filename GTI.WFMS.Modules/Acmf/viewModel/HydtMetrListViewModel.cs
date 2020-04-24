@@ -265,9 +265,9 @@ namespace GTI.WFMS.Modules.Acmf.ViewModel
                 //if (treeList.FocusedNode == null) return;
 
                 Hashtable conditions = new Hashtable();
-                conditions.Add("HJD_CDE", cbHJD_CDE.EditValue.ToString().Trim());
-                conditions.Add("HOM_CDE", cbHOM_CDE.EditValue.ToString().Trim());
-                conditions.Add("MOF_CDE", cbMOF_CDE.EditValue.ToString().Trim());
+                conditions.Add("HJD_CDE", cbHJD_CDE.EditValue);
+                conditions.Add("HOM_CDE", cbHOM_CDE.EditValue);
+                conditions.Add("MOF_CDE", cbMOF_CDE.EditValue);
 
                 conditions.Add("FTR_IDN", FmsUtil.Trim(txtFTR_IDN.EditValue));
                 conditions.Add("CNT_NUM", txtCNT_NUM.Text.Trim());
@@ -360,9 +360,9 @@ namespace GTI.WFMS.Modules.Acmf.ViewModel
             {
                 /// 데이터조회
                 Hashtable conditions = new Hashtable();
-                conditions.Add("HJD_CDE", cbHJD_CDE.EditValue.ToString().Trim());
-                conditions.Add("HOM_CDE", cbHOM_CDE.EditValue.ToString().Trim());
-                conditions.Add("MOF_CDE", cbMOF_CDE.EditValue.ToString().Trim());
+                conditions.Add("HJD_CDE", cbHJD_CDE.EditValue);
+                conditions.Add("HOM_CDE", cbHOM_CDE.EditValue);
+                conditions.Add("MOF_CDE", cbMOF_CDE.EditValue);
 
                 conditions.Add("FTR_IDN", FmsUtil.Trim(txtFTR_IDN.EditValue));
                 conditions.Add("CNT_NUM", txtCNT_NUM.Text.Trim());
@@ -491,13 +491,13 @@ namespace GTI.WFMS.Modules.Acmf.ViewModel
                 dtIST_YMD_TO.DisplayFormatString = "yyyy-MM-dd";
 
                 // cbHJD_CDE    2.행정동
-                BizUtil.SetCombo(cbHJD_CDE, "Select_ADAR_LIST", "HJD_CDE", "HJD_NAM", true);
+                BizUtil.SetCombo(cbHJD_CDE, "Select_ADAR_LIST", "HJD_CDE", "HJD_NAM", "[전체]");
 
                 // cbHJD_CDE    8.행정동
-                BizUtil.SetCombo(cbHOM_CDE, "Select_ADAR_LIST", "HJD_CDE", "HJD_NAM", true);
+                BizUtil.SetCombo(cbHOM_CDE, "Select_ADAR_LIST", "HJD_CDE", "HJD_NAM", "[전체]");
 
                 // cbMOF_CDE    9.형식
-                BizUtil.SetCmbCode(cbMOF_CDE, "250035", true);
+                BizUtil.SetCmbCode(cbMOF_CDE, "250035", "[전체]");
 
             }
             catch (Exception ex)

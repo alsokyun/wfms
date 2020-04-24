@@ -269,10 +269,10 @@ namespace GTI.WFMS.Modules.Pipe.ViewModel
                 //if (treeList.FocusedNode == null) return;
 
                 Hashtable conditions = new Hashtable();
-                conditions.Add("MNG_CDE", cbMNG_CDE.EditValue.ToString().Trim());
-                conditions.Add("HJD_CDE", cbHJD_CDE.EditValue.ToString().Trim());
-                conditions.Add("SOM_CDE", cbSOM_CDE.EditValue.ToString().Trim());
-                conditions.Add("MHS_CDE", cbMHS_CDE.EditValue.ToString().Trim());
+                conditions.Add("MNG_CDE", cbMNG_CDE.EditValue);
+                conditions.Add("HJD_CDE", cbHJD_CDE.EditValue);
+                conditions.Add("SOM_CDE", cbSOM_CDE.EditValue);
+                conditions.Add("MHS_CDE", cbMHS_CDE.EditValue);
 
                 conditions.Add("FTR_IDN", FmsUtil.Trim(txtFTR_IDN.EditValue));
                 conditions.Add("CNT_NUM", txtCNT_NUM.Text.Trim());
@@ -366,10 +366,10 @@ namespace GTI.WFMS.Modules.Pipe.ViewModel
             {
                 /// 데이터조회
                 Hashtable conditions = new Hashtable();
-                conditions.Add("MNG_CDE", cbMNG_CDE.EditValue.ToString().Trim());
-                conditions.Add("HJD_CDE", cbHJD_CDE.EditValue.ToString().Trim());
-                conditions.Add("SOM_CDE", cbSOM_CDE.EditValue.ToString().Trim());
-                conditions.Add("MHS_CDE", cbMHS_CDE.EditValue.ToString().Trim());
+                conditions.Add("MNG_CDE", cbMNG_CDE.EditValue);
+                conditions.Add("HJD_CDE", cbHJD_CDE.EditValue);
+                conditions.Add("SOM_CDE", cbSOM_CDE.EditValue);
+                conditions.Add("MHS_CDE", cbMHS_CDE.EditValue);
 
                 conditions.Add("FTR_IDN", FmsUtil.Trim(txtFTR_IDN.EditValue));
                 conditions.Add("CNT_NUM", txtCNT_NUM.Text.Trim());
@@ -500,16 +500,16 @@ namespace GTI.WFMS.Modules.Pipe.ViewModel
                 dtIST_YMD_TO.DisplayFormatString = "yyyy-MM-dd";
 
                 // cbMNG_CDE    0.관리기관
-                BizUtil.SetCmbCode(cbMNG_CDE, "250101", true);
+                BizUtil.SetCmbCode(cbMNG_CDE, "250101", "[전체]");
 
                 // cbHJD_CDE    2.행정동
-                BizUtil.SetCombo(cbHJD_CDE, "Select_ADAR_LIST", "HJD_CDE", "HJD_NAM", true);
+                BizUtil.SetCombo(cbHJD_CDE, "Select_ADAR_LIST", "HJD_CDE", "HJD_NAM", "[전체]");
 
                 // cbSOM_CDE    8.맨홀종류
-                BizUtil.SetCmbCode(cbSOM_CDE, "250012", true);
+                BizUtil.SetCmbCode(cbSOM_CDE, "250012", "[전체]");
 
                 // cbSOM_CDE    9.맨홀방법
-                BizUtil.SetCmbCode(cbMHS_CDE, "250049", true);
+                BizUtil.SetCmbCode(cbMHS_CDE, "250049", "[전체]");
 
             }
             catch (Exception ex)

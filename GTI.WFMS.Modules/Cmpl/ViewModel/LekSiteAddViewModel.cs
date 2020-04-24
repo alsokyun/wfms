@@ -148,15 +148,15 @@ namespace GTI.WFMS.Modules.Cmpl.ViewModel
             try
             {
                 //행정구역
-                BizUtil.SetCombo(lekSiteAddView.cbHJD_CDE, "Select_ADAR_LIST", "HJD_CDE", "HJD_NAM", true);
+                BizUtil.SetCombo(lekSiteAddView.cbHJD_CDE, "Select_ADAR_LIST", "HJD_CDE", "HJD_NAM", "[선택하세요]");
                 //지형지물
-                BizUtil.SetCombo(lekSiteAddView.cbFTR_CDE, "Select_FTR_LIST", "FTR_CDE", "FTR_NAM", false);
+                BizUtil.SetCombo(lekSiteAddView.cbFTR_CDE, "Select_FTR_LIST", "FTR_CDE", "FTR_NAM");
                 //누수원인
-                BizUtil.SetCmbCode(lekSiteAddView.cbLRS_CDE, "250044", true);
+                BizUtil.SetCmbCode(lekSiteAddView.cbLRS_CDE, "250044", "[선택하세요]");
                 //누수상태
-                BizUtil.SetCmbCode(lekSiteAddView.cbLEP_CDE, "250043", true);
+                BizUtil.SetCmbCode(lekSiteAddView.cbLEP_CDE, "250043", "[선택하세요]");
                 //관재질
-                BizUtil.SetCmbCode(lekSiteAddView.cbMOP_CDE, "250102", true);
+                BizUtil.SetCmbCode(lekSiteAddView.cbMOP_CDE, "250102", "[선택하세요]");
 
             }
             catch (Exception ex)

@@ -266,9 +266,9 @@ namespace GTI.WFMS.Modules.Fclt.ViewModel
                 //if (treeList.FocusedNode == null) return;
 
                 Hashtable conditions = new Hashtable();
-                conditions.Add("MNG_CDE", cbMNG_CDE.EditValue.ToString().Trim());
-                conditions.Add("HJD_CDE", cbHJD_CDE.EditValue.ToString().Trim());
-                conditions.Add("SAG_CDE", cbSAG_CDE.EditValue.ToString().Trim());
+                conditions.Add("MNG_CDE", cbMNG_CDE.EditValue);
+                conditions.Add("HJD_CDE", cbHJD_CDE.EditValue);
+                conditions.Add("SAG_CDE", cbSAG_CDE.EditValue);
 
                 conditions.Add("FTR_IDN", FmsUtil.Trim(txtFTR_IDN.EditValue));
                 conditions.Add("CNT_NUM", txtCNT_NUM.Text.Trim());
@@ -363,9 +363,9 @@ namespace GTI.WFMS.Modules.Fclt.ViewModel
             {
                 /// 데이터조회
                 Hashtable conditions = new Hashtable();
-                conditions.Add("MNG_CDE", cbMNG_CDE.EditValue.ToString().Trim());
-                conditions.Add("HJD_CDE", cbHJD_CDE.EditValue.ToString().Trim());
-                conditions.Add("SAG_CDE", cbSAG_CDE.EditValue.ToString().Trim());
+                conditions.Add("MNG_CDE", cbMNG_CDE.EditValue);
+                conditions.Add("HJD_CDE", cbHJD_CDE.EditValue);
+                conditions.Add("SAG_CDE", cbSAG_CDE.EditValue);
 
                 conditions.Add("FTR_IDN", FmsUtil.Trim(txtFTR_IDN.EditValue));
                 conditions.Add("CNT_NUM", txtCNT_NUM.Text.Trim());
@@ -498,13 +498,13 @@ namespace GTI.WFMS.Modules.Fclt.ViewModel
                 dtFNS_YMD_TO.DisplayFormatString = "yyyy-MM-dd";
 
                 // cbMNG_CDE    0.관리기관
-                BizUtil.SetCmbCode(cbMNG_CDE, "250101", true);
+                BizUtil.SetCmbCode(cbMNG_CDE, "250101", "[전체]");
 
                 // cbHJD_CDE    2.행정동
-                BizUtil.SetCombo(cbHJD_CDE, "Select_ADAR_LIST", "HJD_CDE", "HJD_NAM", true);
+                BizUtil.SetCombo(cbHJD_CDE, "Select_ADAR_LIST", "HJD_CDE", "HJD_NAM", "[전체]");
 
                 // cbSAG_CDE    8.관리방법
-                BizUtil.SetCmbCode(cbSAG_CDE, "250005", true);
+                BizUtil.SetCmbCode(cbSAG_CDE, "250005", "[전체]");
 
             }
             catch (Exception ex)

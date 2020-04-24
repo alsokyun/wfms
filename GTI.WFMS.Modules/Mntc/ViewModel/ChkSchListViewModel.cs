@@ -260,11 +260,11 @@ namespace GTI.WFMS.Modules.Mntc.ViewModel
             try
             {
                 // cbMNG_CDE
-                BizUtil.SetCmbCode(cbMNG_CDE, "250101", true);
+                BizUtil.SetCmbCode(cbMNG_CDE, "250101", "[전체]");
                 // cbSCL_CDE
-                BizUtil.SetCmbCode(cbSCL_CDE, "250105", true);
+                BizUtil.SetCmbCode(cbSCL_CDE, "250105", "[전체]");
                 // cbSCL_STAT_CDE
-                BizUtil.SetCmbCode(cbSCL_STAT_CDE, "250107", true);
+                BizUtil.SetCmbCode(cbSCL_STAT_CDE, "250107", "[전체]");
                 
             }
             catch (Exception e)
@@ -291,9 +291,9 @@ namespace GTI.WFMS.Modules.Mntc.ViewModel
             //점검스케줄
             Hashtable param = new Hashtable();
             param.Add("sqlId", "SelectChscMaList");
-            param.Add("MNG_CDE", cbMNG_CDE.EditValue.ToString().Trim());
-            param.Add("SCL_CDE", cbSCL_CDE.EditValue.ToString().Trim());
-            param.Add("SCL_STAT_CDE", cbSCL_STAT_CDE.EditValue.ToString().Trim());
+            param.Add("MNG_CDE", cbMNG_CDE.EditValue);
+            param.Add("SCL_CDE", cbSCL_CDE.EditValue);
+            param.Add("SCL_STAT_CDE", cbSCL_STAT_CDE.EditValue);
             param.Add("TIT_NAM", txtTIT_NAM.Text.Trim());
             param.Add("CKM_PEO", txtCKM_PEO.Text.Trim());
             

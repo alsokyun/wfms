@@ -189,7 +189,7 @@ namespace GTI.WFMS.Models.Common
         /// <param name="cmb"></param>
         /// <param name="MST_CD"></param>
         /// <param name="ALL 전체항목추가"></param>
-        public static void SetCmbCode(ComboBoxEdit cmb, string MST_CD, bool ALL)
+        public static void SetCmbCode(ComboBoxEdit cmb, string MST_CD, string ALL)
         {
             Hashtable conditions = new Hashtable();
             DataTable dt = new DataTable(MST_CD);
@@ -199,25 +199,26 @@ namespace GTI.WFMS.Models.Common
             dt = cmmDao.Select_CODE_LIST(conditions);
 
             /* 전체추가 */
-            if (ALL)
+            if (!FmsUtil.IsNull(ALL))
             {
                 DataRow dr = dt.NewRow();
-                dr["DTL_CD"] = " ";
-                dr["NM"] = "전체";
+                dr["DTL_CD"] = "";
+                dr["NM"] = ALL;
                 dt.Rows.InsertAt(dr, 0);
+
+                cmb.NullText = ALL;//널값은 NullText로 나옴
             }
 
             // combo Cd/Nm 필드매핑
             cmb.DisplayMember = "NM";
             cmb.ValueMember = "DTL_CD";
-
             cmb.ItemsSource = dt;
-            cmb.SelectedIndex = 0;
         }
         public static void SetCmbCode(ComboBoxEdit cmb, string MST_CD)
         {
-            SetCmbCode(cmb, MST_CD, false);
+            SetCmbCode(cmb, MST_CD, null);
         }
+
 
 
         /// <summary>
@@ -285,7 +286,6 @@ namespace GTI.WFMS.Models.Common
 
 
 
-
         /// <summary>
         /// 일반콤보 데이터바이딩
         /// </summary>
@@ -294,7 +294,7 @@ namespace GTI.WFMS.Models.Common
         /// <param name="ValueMember"></param>
         /// <param name="DisplayMember"></param>
         /// <param name="ALL 전체항목추가"></param>
-        public static void SetCombo(ComboBoxEdit cmb, string sqlId, string ValueMember, string DisplayMember, bool ALL)
+        public static void SetCombo(ComboBoxEdit cmb, string sqlId, string ValueMember, string DisplayMember, string ALL)
         {
             Hashtable conditions = new Hashtable();
             DataTable dt = new DataTable();
@@ -304,25 +304,26 @@ namespace GTI.WFMS.Models.Common
             dt = dao.SelectLIST(conditions);
 
             /* 전체추가 */
-            if (ALL)
+            if (!FmsUtil.IsNull(ALL))
             {
                 DataRow dr = dt.NewRow();
-                dr[ValueMember] = " ";
-                dr[DisplayMember] = "전체";
+                dr[ValueMember] = "";
+                dr[DisplayMember] = ALL;
                 dt.Rows.InsertAt(dr, 0);
+
+                cmb.NullText = ALL;//널값은 NullText로 나옴
             }
 
             // combo객체 Cd/Nm 필드매핑
             cmb.DisplayMember = DisplayMember;
             cmb.ValueMember = ValueMember;
-
             cmb.ItemsSource = dt;
-            cmb.SelectedIndex = 0;
         }
         public static void SetCombo(ComboBoxEdit cmb, string sqlId, string ValueMember, string DisplayMember)
         {
-            SetCombo(cmb, sqlId, ValueMember, DisplayMember, false);
+            SetCombo(cmb, sqlId, ValueMember, DisplayMember, null);
         }
+
 
 
         /// <summary>
@@ -380,6 +381,15 @@ namespace GTI.WFMS.Models.Common
         }
 
         #endregion
+
+
+
+
+
+
+
+
+
 
 
 

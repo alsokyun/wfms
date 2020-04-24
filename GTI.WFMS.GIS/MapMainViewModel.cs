@@ -266,7 +266,7 @@ namespace GTI.WFMS.GIS
 
 
                 // 울산행정구역 표시
-                ShowLocalServerLayer(mapView, "BML_GADM_AS", true);
+                ShowLocalServerLayer(mapView, "BML_GADM_AS", true ) ;
             });
 
             //시설물팝업에서 시설물메뉴화면 호출작업
@@ -478,7 +478,7 @@ namespace GTI.WFMS.GIS
 
 
             //울산행정구역표시
-            ///ShowShapeLayer(mapView, "BML_GADM_AS", true);
+            ///ShowShapeLayer(mapView, "BML_GADM_AS", true );
 
 
             //맵뷰 클릭이벤트 설정

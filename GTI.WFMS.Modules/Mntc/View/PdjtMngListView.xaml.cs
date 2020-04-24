@@ -44,7 +44,7 @@ namespace GTI.WFMS.Modules.Mntc.View
             try
             {
                 // cbPDT_CAT_CDE
-                BizUtil.SetCmbCode(cbPDT_CAT_CDE, "250106", true);
+                BizUtil.SetCmbCode(cbPDT_CAT_CDE, "250106", "[전체]");
             }
             catch (Exception ex)
             {
@@ -65,7 +65,7 @@ namespace GTI.WFMS.Modules.Mntc.View
             param.Add("PDT_NAM", txtPDT_NAM.Text);
             param.Add("PDT_MDL_STD", txtPDT_MDL_STD.Text);
             param.Add("PDT_MNF", txtPDT_MNF.Text);
-            param.Add("PDT_CAT_CDE", cbPDT_CAT_CDE.EditValue.ToString().Trim()); //소모품
+            param.Add("PDT_CAT_CDE", cbPDT_CAT_CDE.EditValue); //소모품
 
             dt = BizUtil.SelectList(param);
             grid.ItemsSource = dt;

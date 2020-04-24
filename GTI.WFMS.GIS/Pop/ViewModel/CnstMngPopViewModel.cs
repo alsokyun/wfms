@@ -199,7 +199,7 @@ namespace GTI.WFMS.GIS.Pop.ViewModel
             try
             {
                 Hashtable conditions = new Hashtable();
-                conditions.Add("CNT_CDE", cbCNT_CDE.EditValue.ToString().Trim());
+                conditions.Add("CNT_CDE", cbCNT_CDE.EditValue);
                 conditions.Add("CNT_NUM", txtCNT_NUM.Text.Trim());
                 conditions.Add("CNT_NAM", txtCNT_NAM.Text.Trim());
                 conditions.Add("TCT_AMT_FROM", txtTCT_AMT_FROM.EditValue);
@@ -217,7 +217,7 @@ namespace GTI.WFMS.GIS.Pop.ViewModel
                     conditions.Add("FNS_YMD_TO", dtFNS_YMD_TO.EditValue == null ? null : Convert.ToDateTime(dtFNS_YMD_TO.EditValue).ToString("yyyy-MM-dd"));
                 }
                 catch (Exception ) { }
-                conditions.Add("CTT_CDE", cbCTT_CDE.EditValue.ToString().Trim());
+                conditions.Add("CTT_CDE", cbCTT_CDE.EditValue);
                 conditions.Add("CNT_LOC", txtCNT_LOC.Text.Trim());
 
                 conditions.Add("firstIndex", 0);
@@ -300,9 +300,9 @@ namespace GTI.WFMS.GIS.Pop.ViewModel
         {
             try {
                 // cbCNT_CDE
-                BizUtil.SetCmbCode(cbCNT_CDE, "250039", true);
+                BizUtil.SetCmbCode(cbCNT_CDE, "250039", "[선택하세요]");
                 // cbCTT_CDE
-                BizUtil.SetCmbCode(cbCTT_CDE, "250038", true);
+                BizUtil.SetCmbCode(cbCTT_CDE, "250038", "[선택하세요]");
 
             }
             catch (Exception ex)

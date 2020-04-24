@@ -204,7 +204,7 @@
     <Compile Include="Pop\View\EditWinView.xaml.cs">
       <DependentUpon>EditWinView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Module\ViewModel\UC_FLOW_PSModel .cs" />
+    <Compile Include="Module\ViewModel\UC_FLOW_PSModel.cs" />
     <Compile Include="Module\View\UC_FLOW_PS.xaml.cs">
       <DependentUpon>UC_FLOW_PS.xaml</DependentUpon>
     </Compile>

@@ -35,17 +35,17 @@
           A.SHT_NUM = #SHT_NUM#
         </isNotEmpty>
 
-        <!-- 조건6. 설치일자[이상] -->
-        <isNotEmpty prepend="AND" property="IST_YMD_FROM">
-          A.IST_YMD <![CDATA[>=]]> decode(length(#IST_YMD_FROM#), 10, to_char(to_date(#IST_YMD_FROM#, 'yyyy-MM-dd'), 'yyyyMMdd'), '')
-        </isNotEmpty>
+      <!-- 조건6. 설치일자[이상] -->
+      <isNotEmpty prepend="AND" property="IST_YMD_FROM">
+        A.IST_YMD <![CDATA[>=]]> #IST_YMD_FROM#
+      </isNotEmpty>
 
-        <!-- 조건7. 설치일자[이하] -->
-        <isNotEmpty prepend="AND" property="IST_YMD_TO">
-          A.IST_YMD <![CDATA[<=]]> decode(length(#IST_YMD_TO#), 10, to_char(to_date(#IST_YMD_TO#, 'yyyy-MM-dd'), 'yyyyMMdd'), '')
-        </isNotEmpty>
+      <!-- 조건7. 설치일자[이하] -->
+      <isNotEmpty prepend="AND" property="IST_YMD_TO">
+        A.IST_YMD <![CDATA[<=]]> #IST_YMD_TO#
+      </isNotEmpty>
 
-        <!-- 조건8. 규격 -->
+      <!-- 조건8. 규격 -->
         <isNotEmpty prepend="AND" property="MAN_STD">
           A.MAN_STD = #MAN_STD#
         </isNotEmpty>
@@ -78,7 +78,7 @@
       , A.SHT_NUM
       , A.MNG_CDE
       , (SELECT NM FROM INFOUSER.CD_DTL_INFO WHERE MST_CD = '250101' AND DTL_CD = A.MNG_CDE ) AS MNG_NAM
-      , decode(length(A.IST_YMD), 8, to_char(to_date(A.IST_YMD, 'yyyyMMdd'), 'yyyy-MM-dd'), '') AS IST_YMD
+      , A.IST_YMD
       , A.MAN_STD	/*규격*/
       , A.SOM_CDE	/*맨홀종류*/
       , (SELECT NM FROM INFOUSER.CD_DTL_INFO WHERE MST_CD = '250012' AND DTL_CD = A.SOM_CDE ) AS SOM_NAM
@@ -117,12 +117,12 @@
 
         <!-- 조건6. 설치일자[이상] -->
         <isNotEmpty prepend="AND" property="IST_YMD_FROM">
-          A.IST_YMD <![CDATA[>=]]> decode(length(#IST_YMD_FROM#), 10, to_char(to_date(#IST_YMD_FROM#, 'yyyy-MM-dd'), 'yyyyMMdd'), '')
+          A.IST_YMD <![CDATA[>=]]> #IST_YMD_FROM#
         </isNotEmpty>
 
         <!-- 조건7. 설치일자[이하] -->
         <isNotEmpty prepend="AND" property="IST_YMD_TO">
-          A.IST_YMD <![CDATA[<=]]> decode(length(#IST_YMD_TO#), 10, to_char(to_date(#IST_YMD_TO#, 'yyyy-MM-dd'), 'yyyyMMdd'), '')
+          A.IST_YMD <![CDATA[<=]]> #IST_YMD_TO#
         </isNotEmpty>
 
         <!-- 조건8. 규격 -->

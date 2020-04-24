@@ -50,11 +50,11 @@ namespace GTI.WFMS.Modules.Mntc.View
             try
             {
                 // 관리기관
-                BizUtil.SetCmbCode(cbMNG_CDE, "250101", true);
+                BizUtil.SetCmbCode(cbMNG_CDE, "250101", "[전체]");
                 // 점검구분
-                BizUtil.SetCmbCode(cbSCL_CDE, "250105", true);
+                BizUtil.SetCmbCode(cbSCL_CDE, "250105", "[전체]");
                 // 점검진행상태
-                BizUtil.SetCmbCode(cbSCL_STAT_CDE, "250107", true);
+                BizUtil.SetCmbCode(cbSCL_STAT_CDE, "250107", "[전체]");
             }
             catch (Exception ex)
             {
@@ -78,9 +78,9 @@ namespace GTI.WFMS.Modules.Mntc.View
             //점검월
             param.Add("CHK_YM", Convert.ToDateTime(dtCHK_YM.EditValue).ToString("yyyyMM"));
 
-            param.Add("MNG_CDE", cbMNG_CDE.EditValue.ToString().Trim()); //관리기관
-            param.Add("SCL_CDE", cbSCL_CDE.EditValue.ToString().Trim()); 
-            param.Add("SCL_STAT_CDE", cbSCL_STAT_CDE.EditValue.ToString().Trim()); 
+            param.Add("MNG_CDE", cbMNG_CDE.EditValue); //관리기관
+            param.Add("SCL_CDE", cbSCL_CDE.EditValue); 
+            param.Add("SCL_STAT_CDE", cbSCL_STAT_CDE.EditValue); 
 
             
             List<ChscMaDtl> lst = (List<ChscMaDtl>)BizUtil.SelectListObj<ChscMaDtl>(param);

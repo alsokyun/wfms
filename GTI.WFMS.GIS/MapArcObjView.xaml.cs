@@ -41,6 +41,7 @@ namespace GTI.WFMS.GIS
             //set Engine controls to the child of each hosts 
             mapControl = new AxMapControl();
             mapHost.Child = mapControl;
+            mapControl.Dock = System.Windows.Forms.DockStyle.None;
 
             toolbarControl = new AxToolbarControl();
             toolbarHost.Child = toolbarControl;

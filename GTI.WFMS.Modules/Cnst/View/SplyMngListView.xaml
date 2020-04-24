@@ -168,7 +168,7 @@
                         ScrollViewer.VerticalScrollBarVisibility="Hidden"
                         HorizontalScrollbarVisibility="Auto"
                         VerticalScrollbarVisibility="Disabled"
-                        AutoWidth="False"
+                        AutoWidth="True"
                         >
                 </dxg:TableView>
             </dxg:GridControl.View>

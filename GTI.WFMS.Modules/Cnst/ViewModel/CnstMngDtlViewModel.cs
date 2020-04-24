@@ -311,10 +311,10 @@ namespace GTI.WFMS.Modules.Cnst.ViewModel
             try
             {
                 // cbCTT_CDE 계약구분
-                BizUtil.SetCmbCode(cbCTT_CDE, "250038", true);
+                BizUtil.SetCmbCode(cbCTT_CDE, "250038", "[선택하세요]");
 
                 // cbCNT_CDE 공사구분
-                BizUtil.SetCmbCode(cbCNT_CDE, "250039", true);
+                BizUtil.SetCmbCode(cbCNT_CDE, "250039", "[선택하세요]");
             }
             catch (Exception ex)
             {

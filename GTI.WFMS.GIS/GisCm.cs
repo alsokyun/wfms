@@ -313,6 +313,16 @@ namespace GTI.WFMS.GIS
                 case "BML_GADM_AS":
                     korNm = "울산행정구역";
                     break;
+
+                case "WTL_PIPE_LX":
+                    korNm = "송산파이프";
+                    break;
+                case "WTL_SPLY_LX":
+                    korNm = "송산급수관";
+                    break;
+                case "WTL_PIPE_LY":
+                    korNm = "예천파이프";
+                    break;
                 default:
                     break;
             }

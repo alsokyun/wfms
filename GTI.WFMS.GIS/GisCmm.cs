@@ -234,6 +234,12 @@ namespace GTI.WFMS.GIS
                 case "SA206": layerNm = "WTL_PRES_PS"; break;
                 case "SA300": layerNm = "WTL_LEAK_PS"; break;
 
+                case "SA901": layerNm = "WTL_PIPE_LX"; break;
+                case "SA902": layerNm = "WTL_SPLY_LX"; break;
+                case "SA903": layerNm = "WTL_PIPE_LY"; break;
+                    
+
+
                 default:
                     break;
             }

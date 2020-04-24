@@ -273,10 +273,10 @@ namespace GTI.WFMS.Modules.Pipe.ViewModel
                 //if (treeList.FocusedNode == null) return;
 
                 Hashtable conditions = new Hashtable();
-                conditions.Add("MNG_CDE", cbMNG_CDE.EditValue.ToString().Trim());
-                conditions.Add("HJD_CDE", cbHJD_CDE.EditValue.ToString().Trim());
-                conditions.Add("MOP_CDE", cbMOP_CDE.EditValue.ToString().Trim());
-                conditions.Add("JHT_CDE", cbJHT_CDE.EditValue.ToString().Trim());
+                conditions.Add("MNG_CDE", cbMNG_CDE.EditValue);
+                conditions.Add("HJD_CDE", cbHJD_CDE.EditValue);
+                conditions.Add("MOP_CDE", cbMOP_CDE.EditValue);
+                conditions.Add("JHT_CDE", cbJHT_CDE.EditValue);
                 conditions.Add("FTR_IDN", FmsUtil.Trim(txtFTR_IDN.EditValue));
                 conditions.Add("CNT_NUM", txtCNT_NUM.Text.Trim());
                 conditions.Add("SHT_NUM", txtSHT_NUM.Text.Trim());
@@ -371,16 +371,16 @@ namespace GTI.WFMS.Modules.Pipe.ViewModel
             try
             {
                 // cbMNG_CDE
-                BizUtil.SetCmbCode(cbMNG_CDE, "250101", true);
+                BizUtil.SetCmbCode(cbMNG_CDE, "250101", "[전체]");
 
                 // cbHJD_CDE 행정동
-                BizUtil.SetCombo(cbHJD_CDE, "Select_ADAR_LIST", "HJD_CDE", "HJD_NAM", true);
+                BizUtil.SetCombo(cbHJD_CDE, "Select_ADAR_LIST", "HJD_CDE", "HJD_NAM", "[전체]");
 
                 // cbMOP_CDE
-                BizUtil.SetCmbCode(cbMOP_CDE, "250102", true);
+                BizUtil.SetCmbCode(cbMOP_CDE, "250102", "[전체]");
 
                 // cbJHT_CDE
-                BizUtil.SetCmbCode(cbJHT_CDE, "250026", true);
+                BizUtil.SetCmbCode(cbJHT_CDE, "250026", "[전체]");
             }
             catch (Exception ex)
             {
@@ -434,10 +434,10 @@ namespace GTI.WFMS.Modules.Pipe.ViewModel
             {
                 /// 데이터조회
                 Hashtable conditions = new Hashtable();
-                conditions.Add("MNG_CDE", cbMNG_CDE.EditValue.ToString().Trim());
-                conditions.Add("HJD_CDE", cbHJD_CDE.EditValue.ToString().Trim());
-                conditions.Add("MOP_CDE", cbMOP_CDE.EditValue.ToString().Trim());
-                conditions.Add("JHT_CDE", cbJHT_CDE.EditValue.ToString().Trim());
+                conditions.Add("MNG_CDE", cbMNG_CDE.EditValue);
+                conditions.Add("HJD_CDE", cbHJD_CDE.EditValue);
+                conditions.Add("MOP_CDE", cbMOP_CDE.EditValue);
+                conditions.Add("JHT_CDE", cbJHT_CDE.EditValue);
                 conditions.Add("FTR_IDN", FmsUtil.Trim(txtFTR_IDN.EditValue));
                 conditions.Add("CNT_NUM", txtCNT_NUM.Text.Trim());
                 conditions.Add("SHT_NUM", txtSHT_NUM.Text.Trim());

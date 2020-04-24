@@ -242,7 +242,7 @@ namespace GTI.WFMS.Modules.Cnst.ViewModel
                 //if (treeList.FocusedNode == null) return;
 
                 Hashtable conditions = new Hashtable();
-                conditions.Add("CNT_CDE", cbCNT_CDE.EditValue.ToString().Trim());
+                conditions.Add("CNT_CDE", cbCNT_CDE.EditValue);
                 conditions.Add("CNT_NUM", txtCNT_NUM.Text.Trim());
                 conditions.Add("CNT_NAM", txtCNT_NAM.Text.Trim());
                 //conditions.Add("FTR_IDN", FmsUtil.Trim(txtFTR_IDN.EditValue));
@@ -261,7 +261,7 @@ namespace GTI.WFMS.Modules.Cnst.ViewModel
                     conditions.Add("FNS_YMD_TO", dtFNS_YMD_TO.EditValue == null ? null : Convert.ToDateTime(dtFNS_YMD_TO.EditValue).ToString("yyyy-MM-dd"));
                 }
                 catch (Exception ) { }
-                conditions.Add("CTT_CDE", cbCTT_CDE.EditValue.ToString().Trim());
+                conditions.Add("CTT_CDE", cbCTT_CDE.EditValue);
                 conditions.Add("CNT_LOC", txtCNT_LOC.Text.Trim());
 
                 conditions.Add("firstIndex", 0);
@@ -346,7 +346,7 @@ namespace GTI.WFMS.Modules.Cnst.ViewModel
             {
                 /// 데이터조회
                 Hashtable conditions = new Hashtable();
-                conditions.Add("CNT_CDE", cbCNT_CDE.EditValue.ToString().Trim());
+                conditions.Add("CNT_CDE", cbCNT_CDE.EditValue);
                 conditions.Add("CNT_NUM", txtCNT_NUM.Text.Trim());
                 conditions.Add("CNT_NAM", txtCNT_NAM.Text.Trim());
                 //conditions.Add("FTR_IDN", FmsUtil.Trim(txtFTR_IDN.EditValue));
@@ -365,7 +365,7 @@ namespace GTI.WFMS.Modules.Cnst.ViewModel
                     conditions.Add("FNS_YMD_TO", dtFNS_YMD_TO.EditValue == null ? null : Convert.ToDateTime(dtFNS_YMD_TO.EditValue).ToString("yyyy-MM-dd"));
                 }
                 catch (Exception) { }
-                conditions.Add("CTT_CDE", cbCTT_CDE.EditValue.ToString().Trim());
+                conditions.Add("CTT_CDE", cbCTT_CDE.EditValue);
                 conditions.Add("CNT_LOC", txtCNT_LOC.Text.Trim());
 
                 conditions.Add("page", 0);
@@ -471,9 +471,9 @@ namespace GTI.WFMS.Modules.Cnst.ViewModel
         {
             try {
                 // cbCNT_CDE
-                BizUtil.SetCmbCode(cbCNT_CDE, "250039", true);
+                BizUtil.SetCmbCode(cbCNT_CDE, "250039", "[전체]");
                 // cbCTT_CDE
-                BizUtil.SetCmbCode(cbCTT_CDE, "250038", true);
+                BizUtil.SetCmbCode(cbCTT_CDE, "250038", "[전체]");
 
             }
             catch (Exception ex)

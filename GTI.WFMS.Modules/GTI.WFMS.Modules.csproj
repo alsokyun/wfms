@@ -993,7 +993,7 @@
     <Compile Include="Pipe\ViewModel\WtlPipeListViewModel.cs" />
     <Compile Include="Pipe\ViewModel\FlowMtAddViewModel.cs" />
     <Compile Include="Pipe\ViewModel\WtsMnhoAddViewModel.cs" />
-    <Compile Include="Pipe\ViewModel\FlowMtDtlViewModel .cs" />
+    <Compile Include="Pipe\ViewModel\FlowMtDtlViewModel.cs" />
     <Compile Include="Pipe\ViewModel\WtsMnhoDtlViewModel.cs" />
     <Compile Include="Pipe\ViewModel\FlowMtListViewModel.cs" />
     <Compile Include="Pipe\ViewModel\WtsMnhoListViewModel.cs" />
