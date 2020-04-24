@@ -176,6 +176,30 @@ namespace GTI.WFMS.Models.Common
             return true;
         }
 
+
+
+        /// <summary>
+        /// 날짜 선후관계체크
+        /// </summary>
+        /// <param name="obj"></param>
+        public static bool ValidDateBtw(object from, object to)
+        {
+            try
+            {
+                if (Convert.ToInt32(from) == 0 || Convert.ToInt32(to) == 0)     return true;
+
+                if (Convert.ToInt32(from) > Convert.ToInt32(to))
+                {
+                    return false;
+                }
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e.Message);
+            }
+
+            return true;
+        }
         #endregion
 
 

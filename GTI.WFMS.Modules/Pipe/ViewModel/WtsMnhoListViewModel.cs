@@ -266,7 +266,6 @@ namespace GTI.WFMS.Modules.Pipe.ViewModel
         {
             try
             {
-                //if (treeList.FocusedNode == null) return;
 
                 Hashtable conditions = new Hashtable();
                 conditions.Add("MNG_CDE", cbMNG_CDE.EditValue);
@@ -283,10 +282,15 @@ namespace GTI.WFMS.Modules.Pipe.ViewModel
 
                 try
                 {
-                    conditions.Add("IST_YMD_FROM", dtIST_YMD_FROM.EditValue == null ? null : Convert.ToDateTime(dtIST_YMD_FROM.EditValue).ToString("yyyy-MM-dd"));
-                    conditions.Add("IST_YMD_TO", dtIST_YMD_TO.EditValue == null ? null : Convert.ToDateTime(dtIST_YMD_TO.EditValue).ToString("yyyy-MM-dd"));
+                    conditions.Add("IST_YMD_FROM", dtIST_YMD_FROM.EditValue == null ? null : Convert.ToDateTime(dtIST_YMD_FROM.EditValue).ToString("yyyyMMdd"));
+                    conditions.Add("IST_YMD_TO", dtIST_YMD_TO.EditValue == null ? null : Convert.ToDateTime(dtIST_YMD_TO.EditValue).ToString("yyyyMMdd"));
                 }
                 catch (Exception ) { }
+                if (!BizUtil.ValidDateBtw(conditions["IST_YMD_FROM"], conditions["IST_YMD_TO"]))
+                {
+                    Messages.ShowInfoMsgBox("To일자는 From일자 이후가 되어야합니다.");
+                    return;
+                }
 
                 conditions.Add("firstIndex", 0);
                 conditions.Add("lastIndex", 1000);
@@ -379,8 +383,8 @@ namespace GTI.WFMS.Modules.Pipe.ViewModel
 
                 try
                 {
-                    conditions.Add("IST_YMD_FROM", dtIST_YMD_FROM.EditValue == null ? null : Convert.ToDateTime(dtIST_YMD_FROM.EditValue).ToString("yyyy-MM-dd"));
-                    conditions.Add("IST_YMD_TO", dtIST_YMD_TO.EditValue == null ? null : Convert.ToDateTime(dtIST_YMD_TO.EditValue).ToString("yyyy-MM-dd"));
+                    conditions.Add("IST_YMD_FROM", dtIST_YMD_FROM.EditValue == null ? null : Convert.ToDateTime(dtIST_YMD_FROM.EditValue).ToString("yyyyMMdd"));
+                    conditions.Add("IST_YMD_TO", dtIST_YMD_TO.EditValue == null ? null : Convert.ToDateTime(dtIST_YMD_TO.EditValue).ToString("yyyyMMdd"));
                 }
                 catch (Exception ) { }
                 
