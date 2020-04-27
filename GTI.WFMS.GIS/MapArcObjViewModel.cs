@@ -24,6 +24,9 @@ namespace GTI.WFMS.GIS
 {
     /// <summary>
     /// Provides map data to an application
+    /// Provides map data to an application
+    /// Provides map data to an application
+    /// Provides map data to an application
     /// </summary>
     public class MapArcObjViewModel : INotifyPropertyChanged
     {
