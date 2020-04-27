@@ -1,0 +1,395 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{28BCAB02-61D3-4AFC-BE3A-713F062D3923}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>GTI.WFMS.GIS</RootNamespace>
+    <AssemblyName>GTI.WFMS.GIS</AssemblyName>
+    <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <ProjectTypeGuids>{60dc8134-eba5-43b8-bcc9-bb4bc16c2548};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
+    <WarningLevel>4</WarningLevel>
+    <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup>
+    <RestoreProjectStyle>PackageReference</RestoreProjectStyle>
+  </PropertyGroup>
+  <PropertyGroup>
+    <StartupObject />
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="DevExpress.Data.v19.1, Version=19.1.6.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL" />
+    <Reference Include="DevExpress.Images.v19.1, Version=19.1.6.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL" />
+    <Reference Include="DevExpress.Mvvm.v19.1, Version=19.1.6.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL" />
+    <Reference Include="DevExpress.Pdf.v19.1.Core, Version=19.1.6.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL" />
+    <Reference Include="DevExpress.Printing.v19.1.Core, Version=19.1.6.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL" />
+    <Reference Include="DevExpress.Xpf.Core.v19.1, Version=19.1.6.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL" />
+    <Reference Include="DevExpress.Xpf.Grid.v19.1, Version=19.1.6.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>C:\Program Files (x86)\DevExpress 19.1\Components\Bin\Framework\DevExpress.Xpf.Grid.v19.1.dll</HintPath>
+    </Reference>
+    <Reference Include="DevExpress.Xpf.Grid.v19.1.Core, Version=19.1.6.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>C:\Program Files (x86)\DevExpress 19.1\Components\Bin\Framework\DevExpress.Xpf.Grid.v19.1.Core.dll</HintPath>
+    </Reference>
+    <Reference Include="ESRI.ArcGIS.ADF.Local, Version=10.8.0.0, Culture=neutral, PublicKeyToken=8fc3cc631e44ad86, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>C:\Program Files (x86)\ArcGIS\DeveloperKit10.8\DotNet\ESRI.ArcGIS.ADF.Local.dll</HintPath>
+    </Reference>
+    <Reference Include="ESRI.ArcGIS.AxControls, Version=10.8.0.0, Culture=neutral, PublicKeyToken=8fc3cc631e44ad86, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>C:\Program Files (x86)\ArcGIS\DeveloperKit10.8\DotNet\ESRI.ArcGIS.AxControls.dll</HintPath>
+    </Reference>
+    <Reference Include="ESRI.ArcGIS.Carto, Version=10.8.0.0, Culture=neutral, PublicKeyToken=8fc3cc631e44ad86, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <EmbedInteropTypes>True</EmbedInteropTypes>
+      <HintPath>C:\Program Files (x86)\ArcGIS\DeveloperKit10.8\DotNet\ESRI.ArcGIS.Carto.dll</HintPath>
+    </Reference>
+    <Reference Include="ESRI.ArcGIS.DataSourcesFile, Version=10.8.0.0, Culture=neutral, PublicKeyToken=8fc3cc631e44ad86, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <EmbedInteropTypes>True</EmbedInteropTypes>
+      <HintPath>C:\Program Files (x86)\ArcGIS\DeveloperKit10.8\DotNet\ESRI.ArcGIS.DataSourcesFile.dll</HintPath>
+    </Reference>
+    <Reference Include="ESRI.ArcGIS.Display, Version=10.8.0.0, Culture=neutral, PublicKeyToken=8fc3cc631e44ad86, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <EmbedInteropTypes>True</EmbedInteropTypes>
+      <HintPath>C:\Program Files (x86)\ArcGIS\DeveloperKit10.8\DotNet\ESRI.ArcGIS.Display.dll</HintPath>
+    </Reference>
+    <Reference Include="ESRI.ArcGIS.Geodatabase, Version=10.8.0.0, Culture=neutral, PublicKeyToken=8fc3cc631e44ad86, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <EmbedInteropTypes>True</EmbedInteropTypes>
+      <HintPath>C:\Program Files (x86)\ArcGIS\DeveloperKit10.8\DotNet\ESRI.ArcGIS.Geodatabase.dll</HintPath>
+    </Reference>
+    <Reference Include="ESRI.ArcGIS.Geometry, Version=10.8.0.0, Culture=neutral, PublicKeyToken=8fc3cc631e44ad86, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <EmbedInteropTypes>True</EmbedInteropTypes>
+      <HintPath>C:\Program Files (x86)\ArcGIS\DeveloperKit10.8\DotNet\ESRI.ArcGIS.Geometry.dll</HintPath>
+    </Reference>
+    <Reference Include="ESRI.ArcGIS.System, Version=10.8.0.0, Culture=neutral, PublicKeyToken=8fc3cc631e44ad86, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <EmbedInteropTypes>True</EmbedInteropTypes>
+      <HintPath>C:\Program Files (x86)\ArcGIS\DeveloperKit10.8\DotNet\ESRI.ArcGIS.System.dll</HintPath>
+    </Reference>
+    <Reference Include="ESRI.ArcGIS.Version, Version=10.8.0.0, Culture=neutral, PublicKeyToken=8fc3cc631e44ad86, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>C:\Program Files (x86)\ArcGIS\DeveloperKit10.8\DotNet\ESRI.ArcGIS.Version.dll</HintPath>
+    </Reference>
+    <Reference Include="Prism.Wpf, Version=7.1.0.431, Culture=neutral, PublicKeyToken=40ee6c3a2184dc59, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Prism.Wpf.7.1.0.431\lib\net45\Prism.Wpf.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Management.Automation, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>C:\Program Files (x86)\Reference Assemblies\Microsoft\WindowsPowerShell\3.0\System.Management.Automation.dll</HintPath>
+    </Reference>
+    <Reference Include="System.ServiceModel" />
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Windows.Interactivity, Version=4.5.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />
+    <Reference Include="System.Xml" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="System.Net.Http" />
+    <Reference Include="System.Xaml">
+      <RequiredTargetFramework>4.0</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="UIAutomationProvider" />
+    <Reference Include="UIAutomationTypes" />
+    <Reference Include="WindowsBase" />
+    <Reference Include="PresentationCore" />
+    <Reference Include="PresentationFramework" />
+    <Reference Include="WindowsFormsIntegration" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="GisCm.cs" />
+    <Compile Include="GisCmm.cs" />
+    <Compile Include="LocalServerModel.cs" />
+    <Compile Include="MapArcObjView.xaml.cs">
+      <DependentUpon>MapArcObjView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="MapArcObjViewModel.cs" />
+    <Compile Include="Module\ViewModel\UC_FIRE_PSModel.cs" />
+    <Compile Include="Module\ViewModel\UC_VALV_PSModel.cs" />
+    <Compile Include="Module\ViewModel\UC_RSRV_PSModel.cs" />
+    <Compile Include="Module\ViewModel\UC_META_PSModel.cs" />
+    <Compile Include="Module\ViewModel\UC_SPLY_LSModel.cs" />
+    <Compile Include="Module\ViewModel\UC_PRGA_PSModel.cs" />
+    <Compile Include="Module\ViewModel\UC_SERV_PSModel.cs" />
+    <Compile Include="Module\ViewModel\UC_GAIN_PSModel.cs" />
+    <Compile Include="Module\ViewModel\UC_HEAD_PSModel.cs" />
+    <Compile Include="Module\ViewModel\UC_PRES_PSModel.cs" />
+    <Compile Include="Module\ViewModel\UC_STPI_PSModel.cs" />
+    <Compile Include="Module\ViewModel\UC_MANH_PSModel.cs" />
+    <Compile Include="Module\ViewModel\UC_PURI_ASModel.cs" />
+    <Compile Include="Module\ViewModel\UC_PIPE_LMModel.cs" />
+    <Compile Include="Module\View\UC_FIRE_PS.xaml.cs">
+      <DependentUpon>UC_FIRE_PS.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Module\View\UC_VALV_PS.xaml.cs">
+      <DependentUpon>UC_VALV_PS.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Module\View\UC_RSRV_PS.xaml.cs">
+      <DependentUpon>UC_RSRV_PS.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Module\View\UC_META_PS.xaml.cs">
+      <DependentUpon>UC_META_PS.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Module\View\UC_SPLY_LS.xaml.cs">
+      <DependentUpon>UC_SPLY_LS.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Module\View\UC_PRGA_PS.xaml.cs">
+      <DependentUpon>UC_PRGA_PS.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Module\View\UC_SERV_PS.xaml.cs">
+      <DependentUpon>UC_SERV_PS.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Module\View\UC_GAIN_PS.xaml.cs">
+      <DependentUpon>UC_GAIN_PS.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Module\View\UC_HEAD_PS.xaml.cs">
+      <DependentUpon>UC_HEAD_PS.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Module\View\UC_PRES_PS.xaml.cs">
+      <DependentUpon>UC_PRES_PS.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Module\View\UC_STPI_PS.xaml.cs">
+      <DependentUpon>UC_STPI_PS.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Module\View\UC_MANH_PS.xaml.cs">
+      <DependentUpon>UC_MANH_PS.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Module\View\UC_PURI_AS.xaml.cs">
+      <DependentUpon>UC_PURI_AS.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Module\View\UC_PIPE_LM.xaml.cs">
+      <DependentUpon>UC_PIPE_LM.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Module\FTR_POP.xaml.cs">
+      <DependentUpon>FTR_POP.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Pop\ViewModel\EditWinViewModel.cs" />
+    <Compile Include="Pop\ViewModel\LyrModel.cs" />
+    <Compile Include="Pop\ViewModel\ShpMngViewModel.cs" />
+    <Compile Include="Pop\View\CnstMngPopView.xaml.cs">
+      <DependentUpon>CnstMngPopView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Pop\View\EditWinView.xaml.cs">
+      <DependentUpon>EditWinView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Module\ViewModel\UC_FLOW_PSModel.cs" />
+    <Compile Include="Module\View\UC_FLOW_PS.xaml.cs">
+      <DependentUpon>UC_FLOW_PS.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Pop\ViewModel\CnstMngPopViewModel.cs" />
+    <Compile Include="Pop\View\ShpMngView.xaml.cs">
+      <DependentUpon>ShpMngView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="sample\SketchOnMap.xaml.cs">
+      <DependentUpon>SketchOnMap.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="sample\OfflineBasemapByReference.xaml.cs">
+      <DependentUpon>OfflineBasemapByReference.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="LayerModel.cs" />
+    <Compile Include="sample\Map3View.xaml.cs">
+      <DependentUpon>Map3View.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="sample\Map2View.xaml.cs">
+      <DependentUpon>Map2View.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="MapMainView.xaml.cs">
+      <DependentUpon>MapMainView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="MapMainViewModel.cs" />
+    <Page Include="MapArcObjView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Module\View\UC_FIRE_PS.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Module\View\UC_VALV_PS.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Module\View\UC_RSRV_PS.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Module\View\UC_META_PS.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Module\View\UC_SPLY_LS.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Module\View\UC_PRGA_PS.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Module\View\UC_SERV_PS.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Module\View\UC_GAIN_PS.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Module\View\UC_HEAD_PS.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Module\View\UC_PRES_PS.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Module\View\UC_STPI_PS.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Module\View\UC_MANH_PS.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Module\View\UC_PURI_AS.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Module\View\UC_PIPE_LM.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Module\FTR_POP.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Pop\View\ShpMngView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="sample\Map3View.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="sample\Map2View.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="MapMainView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Pop\View\CnstMngPopView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Pop\View\EditWinView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Module\View\UC_FLOW_PS.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="sample\SketchOnMap.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="sample\OfflineBasemapByReference.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Properties\AssemblyInfo.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Properties\Settings.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Settings.settings</DependentUpon>
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+    </Compile>
+    <EmbeddedResource Include="Properties\Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <None Include="Properties\Settings.settings">
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <LastGenOutput>Settings.Designer.cs</LastGenOutput>
+    </None>
+    <AppDesigner Include="Properties\" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\GTI.WFMS.Models\GTI.WFMS.Models.csproj">
+      <Project>{f098cedb-9897-4ad2-8323-2405ef88e192}</Project>
+      <Name>GTI.WFMS.Models</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\GTIFramework\GTIFramework.csproj">
+      <Project>{a4514546-40cd-4b24-9835-91d18dd9469a}</Project>
+      <Name>GTIFramework</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <WCFMetadata Include="Connected Services\" />
+  </ItemGroup>
+  <ItemGroup>
+    <PackageReference Include="Esri.ArcGISRuntime">
+      <Version>100.6.0</Version>
+    </PackageReference>
+    <PackageReference Include="Esri.ArcGISRuntime.LocalServices">
+      <Version>100.6.0</Version>
+    </PackageReference>
+    <PackageReference Include="Esri.ArcGISRuntime.Toolkit">
+      <Version>100.4.0</Version>
+    </PackageReference>
+    <PackageReference Include="Esri.ArcGISRuntime.WPF">
+      <Version>100.6.0</Version>
+    </PackageReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Pop\View\fms_search_line.png" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

@@ -1,0 +1,24 @@
+﻿<?xml version='1.0' encoding='utf-8'?>
+<SettingsFile xmlns="http://schemas.microsoft.com/VisualStudio/2004/01/settings" CurrentProfile="(Default)" GeneratedClassNamespace="GTIFramework.Properties" GeneratedClassName="Settings">
+  <Profiles />
+  <Settings>
+    <Setting Name="strPort" Type="System.String" Scope="User">
+      <Value Profile="(Default)">8629</Value>
+    </Setting>
+    <Setting Name="strID" Type="System.String" Scope="User">
+      <Value Profile="(Default)">infofms</Value>
+    </Setting>
+    <Setting Name="strPWD" Type="System.String" Scope="User">
+      <Value Profile="(Default)">infofms</Value>
+    </Setting>
+    <Setting Name="strSID" Type="System.String" Scope="User">
+      <Value Profile="(Default)">tibero</Value>
+    </Setting>
+    <Setting Name="RES_DB_INS_DEFAULT" Type="System.String" Scope="User">
+      <Value Profile="(Default)">TIBEROConfig</Value>
+    </Setting>
+    <Setting Name="strIP" Type="System.String" Scope="User">
+      <Value Profile="(Default)">211.105.28.40</Value>
+    </Setting>
+  </Settings>
+</SettingsFile>

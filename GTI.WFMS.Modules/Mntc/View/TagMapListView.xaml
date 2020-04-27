@@ -1,0 +1,186 @@
+﻿<UserControl xmlns:dxg="http://schemas.devexpress.com/winfx/2008/xaml/grid"  
+             xmlns:dxe="http://schemas.devexpress.com/winfx/2008/xaml/editors"  
+        x:Class="GTI.WFMS.Modules.Mntc.View.TagMapListView"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        mc:Ignorable="d"
+        d:DesignHeight="585" d:DesignWidth="1100"
+        
+        xmlns:dx="http://schemas.devexpress.com/winfx/2008/xaml/core"
+        xmlns:cv="clr-namespace:GTI.WFMS.Models.Common;assembly=GTI.WFMS.Models"
+        x:Name="tagMapList"
+        >
+
+
+    <UserControl.Resources>
+        <cv:ToggleConverter x:Key="toggleConverter" />
+        <cv:RownumConverter x:Key="rownumConverter" />
+    </UserControl.Resources>
+
+    <Grid  Background="{DynamicResource TileCOLOR4Brush}" >
+        <Grid.ColumnDefinitions >
+            <ColumnDefinition Width="280"/>
+            <ColumnDefinition Width="1"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+
+        <Grid Grid.Column="0" Margin="0 0 0 10">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="40" />
+                <RowDefinition Height="280" />
+                <RowDefinition Height="*" />
+            </Grid.RowDefinitions>
+
+
+            <StackPanel Grid.Row="0" Grid.Column="0" Orientation="Horizontal">
+                <Image Style="{DynamicResource TitleCircle}" Margin="10 0 0 0"/>
+                <Label Content="검색항목" Style="{DynamicResource CircleTitleLabel}"/>
+            </StackPanel>
+
+            <Grid Grid.Row="1" Background="{DynamicResource PopupCOLOR3Brush}" VerticalAlignment="Top"  >
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="100"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="40" />
+                    <RowDefinition Height="40" />
+                    <RowDefinition Height="40" />
+                    <RowDefinition Height="40" />
+                </Grid.RowDefinitions>
+
+                <!--테이블구분선-->
+                <Border Grid.Row="0" Grid.Column="0" BorderThickness="0,0,1,1" BorderBrush="{DynamicResource TileCOLOR4Brush}" Margin="0,0,0,0"/>
+                <Border Grid.Row="0" Grid.Column="2" BorderThickness="0,0,0,1" BorderBrush="{DynamicResource TileCOLOR4Brush}" Margin="0,0,0,0"/>
+                <Border Grid.Row="1" Grid.Column="0" BorderThickness="0,0,1,1" BorderBrush="{DynamicResource TileCOLOR4Brush}" Margin="0,0,0,0"/>
+                <Border Grid.Row="1" Grid.Column="2" BorderThickness="0,0,0,1" BorderBrush="{DynamicResource TileCOLOR4Brush}" Margin="0,0,0,0"/>
+                <Border Grid.Row="2" Grid.Column="0" BorderThickness="0,0,1,1" BorderBrush="{DynamicResource TileCOLOR4Brush}" Margin="0,0,0,0"/>
+                <Border Grid.Row="2" Grid.Column="2" BorderThickness="0,0,0,1" BorderBrush="{DynamicResource TileCOLOR4Brush}" Margin="0,0,0,0"/>
+                <Border Grid.Row="3" Grid.Column="0" BorderThickness="0,0,1,1" BorderBrush="{DynamicResource TileCOLOR4Brush}" Margin="0,0,0,0"/>
+                <Border Grid.Row="3" Grid.Column="2" BorderThickness="0,0,0,1" BorderBrush="{DynamicResource TileCOLOR4Brush}" Margin="0,0,0,0"/>
+
+                <!--라벨&입력창-->
+                <Label Grid.Row="0" Grid.Column="0" Content="관리번호" Style="{DynamicResource ResourceKey=GridLabel}"/>
+                <dxe:TextEdit Grid.Row="0" Grid.Column="1" x:Name="txtFTR_IDN" Style="{DynamicResource ResourceKey=SearchTextEdit}"  HorizontalAlignment="Center" Margin="0"
+                              KeyDown="Txt_KeyDown">
+                </dxe:TextEdit>
+                <Label Grid.Row="1" Grid.Column="0" Content="가압장명" Style="{DynamicResource ResourceKey=GridLabel}"/>
+                <dxe:TextEdit Grid.Row="1" Grid.Column="1" x:Name="txtPRS_NAM" Style="{DynamicResource ResourceKey=SearchTextEdit}"  HorizontalAlignment="Center" Margin="0"
+                              KeyDown="Txt_KeyDown">
+                </dxe:TextEdit>
+                <Label Grid.Row="2" Grid.Column="0" Content="세부시설명" Style="{DynamicResource ResourceKey=GridLabel}"/>
+                <dxe:TextEdit Grid.Row="2" Grid.Column="1" x:Name="txtATT_NAM" Style="{DynamicResource ResourceKey=SearchTextEdit}"  HorizontalAlignment="Center" Margin="0"
+                              KeyDown="Txt_KeyDown">
+                </dxe:TextEdit>
+                <Label Grid.Row="3" Grid.Column="0" Content="태그ID" Style="{DynamicResource ResourceKey=GridLabel}"/>
+                <dxe:TextEdit Grid.Row="3" Grid.Column="1" x:Name="txtTAG_ID" Style="{DynamicResource ResourceKey=SearchTextEdit}"  HorizontalAlignment="Center" Margin="0"
+                              KeyDown="Txt_KeyDown">
+                </dxe:TextEdit>
+
+            </Grid>
+
+
+
+            <Grid Grid.Row="2">
+                <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Bottom">
+                    <Button Command="{Binding BackCmd}"  Style="{DynamicResource ResourceKey=InitButton}" Click="Button_Click_1"/>
+                    <Button Command="{Binding SearchCmd}"  Style="{DynamicResource ResourceKey=SearchButton}" Click="Button_Click"/>
+                </StackPanel>
+            </Grid>
+
+        </Grid>
+
+
+        <Border Grid.Column="1" Background="{DynamicResource TileCOLOR2Brush}" />
+
+        <Grid Grid.Column="2" Margin="0 0 0 10">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="40" />
+                <RowDefinition Height="*" />
+            </Grid.RowDefinitions>
+
+            <StackPanel Grid.Row="0" Orientation="Horizontal">
+                <Image Style="{DynamicResource TitleCircle}" Margin="10 0 0 0"/>
+                <Label Content="목록" Style="{DynamicResource CircleTitleLabel}"/>
+            </StackPanel>
+
+
+            <StackPanel Grid.Row="0" Orientation="Horizontal" HorizontalAlignment="Right" Margin="0 0 5 0">
+                <Button x:Name="btnReg" Style="{DynamicResource ResourceKey=SaveButton}" Click="BtnReg_Click"  />
+                <Button x:Name="btnExcel" Style="{DynamicResource ResourceKey=ExcelDownButton}" Click="BtnExcel_Click" />
+            </StackPanel>
+
+            <dxg:GridControl Grid.Row="1" x:Name="grid" VerticalAlignment="Stretch" HorizontalAlignment="Stretch"  >
+
+                <dxg:GridControl.View>
+                    <dxg:TableView x:Name="gv"
+                                NavigationStyle="Row" 
+                                AllowPerPixelScrolling="True"  
+                                ShowHorizontalLines="True"
+                               
+                                ShowIndicator="False" 
+                                ShowGroupPanel="False" 
+                                AllowBandMultiRow="False" 
+
+                    />
+                </dxg:GridControl.View>
+
+                <!--
+                    <dxg:GridColumn Header="" Width="1*" HorizontalHeaderContentAlignment="Center"  AllowEditing="True">
+                        <dxg:GridColumn.CellTemplate>
+                            <DataTemplate>
+                                <TextBlock Text="{Binding RowData.RowHandle.Value, Converter={StaticResource rownumConverter}}" VerticalAlignment="Center" HorizontalAlignment="Center" />
+                            </DataTemplate>
+                        </dxg:GridColumn.CellTemplate>
+                    </dxg:GridColumn>
+                    -->
+                <dxg:GridColumn Header="일련번호" Width="2*" FieldName="G2_ID" HorizontalHeaderContentAlignment="Center" AllowEditing="True">
+                    <dxg:GridColumn.EditSettings>
+                        <dxe:TextEditSettings HorizontalContentAlignment="Center"/>
+                    </dxg:GridColumn.EditSettings>
+                </dxg:GridColumn>
+                <dxg:GridColumn Header="지형지물명" Width="5*" FieldName="FTR_NAM" HorizontalHeaderContentAlignment="Center" AllowEditing="True">
+                    <dxg:GridColumn.EditSettings>
+                        <dxe:TextEditSettings HorizontalContentAlignment="Center"/>
+                    </dxg:GridColumn.EditSettings>
+                </dxg:GridColumn>
+                <dxg:GridColumn Header="관리번호" Width="3*" FieldName="FTR_IDN" HorizontalHeaderContentAlignment="Center" AllowEditing="True">
+                    <dxg:GridColumn.EditSettings>
+                        <dxe:TextEditSettings HorizontalContentAlignment="Center"/>
+                    </dxg:GridColumn.EditSettings>
+                </dxg:GridColumn>
+                <dxg:GridColumn Header="가압장명" Width="5*" FieldName="PRS_NAM" HorizontalHeaderContentAlignment="Center" AllowEditing="True">
+                    <dxg:GridColumn.EditSettings>
+                        <dxe:TextEditSettings HorizontalContentAlignment="Center"/>
+                    </dxg:GridColumn.EditSettings>
+                </dxg:GridColumn>
+                <dxg:GridColumn Header="세부시설명" Width="5*" FieldName="ATT_NAM" HorizontalHeaderContentAlignment="Center" AllowEditing="True">
+                    <dxg:GridColumn.EditSettings>
+                        <dxe:TextEditSettings HorizontalContentAlignment="Center"/>
+                    </dxg:GridColumn.EditSettings>
+                </dxg:GridColumn>
+                <dxg:GridColumn Header="태그ID" Width="8*" FieldName="TAG_ID" HorizontalHeaderContentAlignment="Center" AllowEditing="True">
+                    <dxg:GridColumn.CellTemplate>
+                        <DataTemplate>
+                            <dxe:TextEdit  Style="{DynamicResource ResourceKey=GridTextEdit}" 
+                                           EditValue="{Binding  RowData.Row.TAG_ID, Mode=TwoWay }" />
+                        </DataTemplate>
+                    </dxg:GridColumn.CellTemplate>
+                </dxg:GridColumn>
+
+
+            </dxg:GridControl>
+
+            <dx:WaitIndicator x:Name="waitindicator" Grid.Row="1" DeferedVisibility="False" Content="처리중..."/>
+
+        </Grid>
+
+
+
+    </Grid>
+
+
+
+</UserControl>

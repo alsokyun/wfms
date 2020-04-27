@@ -1,0 +1,334 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<sqlMap namespace="Main" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://ibatis.apache.org/mapping">
+  <statements>
+
+    <!--정수장-->
+    <select id ="SelectFiltPltList" parameterClass="Hashtable" resultClass ="Hashtable">
+      /* FiltPltMap.SelectFiltPltList 정수장 목록*/
+
+      WITH C AS (
+      SELECT COUNT(1) AS ROWCNT
+      FROM INFOFMS.WTL_PURI_AS A
+      WHERE 1=1 
+        <!-- 조건1. 관리기관 -->
+        <isNotEmpty prepend="AND" property="MNG_CDE">
+          A.MNG_CDE = #MNG_CDE#
+        </isNotEmpty>
+
+        <!-- 조건2. 관리번호 -->
+        <isNotEmpty prepend="AND" property="FTR_IDN">
+          A.FTR_IDN like #FTR_IDN# || '%'
+        </isNotEmpty>
+
+        <!-- 조건3. 행정읍면동 -->
+        <isNotEmpty prepend="AND" property="HJD_CDE">
+          A.HJD_CDE = #HJD_CDE#
+        </isNotEmpty>
+
+        <!-- 조건4. 공사번호 -->
+        <isNotEmpty prepend="AND" property="CNT_NUM">
+          A.CNT_NUM = #CNT_NUM#
+        </isNotEmpty>
+
+        <!-- 조건5. 도엽번호 -->
+        <isNotEmpty prepend="AND" property="SHT_NUM">
+          A.SHT_NUM = #SHT_NUM#
+        </isNotEmpty>
+
+        <!-- 조건6. 준공일자[이상] -->
+        <isNotEmpty prepend="AND" property="FNS_YMD_FROM">
+          A.FNS_YMD <![CDATA[>=]]> #FNS_YMD_FROM#
+        </isNotEmpty>
+
+        <!-- 조건7. 준공일자[이하] -->
+        <isNotEmpty prepend="AND" property="FNS_YMD_TO">
+          A.FNS_YMD <![CDATA[<=]]> #FNS_YMD_TO#
+        </isNotEmpty>
+
+        <!-- 조건8. 정수장명 -->
+        <isNotEmpty prepend="AND" property="PUR_NAM">
+          A.PUR_NAM LIKE '%' ||#PUR_NAM#|| '%'
+        </isNotEmpty>
+
+        <!-- 조건9. 수원구분 -->
+        <isNotEmpty prepend="AND" property="WSR_CDE">
+          A.WSR_CDE = #WSR_CDE#
+        </isNotEmpty>
+
+        <!-- 조건10. 취수장명 -->
+        <isNotEmpty prepend="AND" property="GAI_NAM">
+          A.GAI_NAM LIKE '%' ||#GAI_NAM#|| '%'
+        </isNotEmpty>
+
+        <!-- 조건11. 배수지명 -->
+        <isNotEmpty prepend="AND" property="SRV_NAM">
+          A.SRV_NAM LIKE '%' ||#SRV_NAM#|| '%'
+        </isNotEmpty>
+      )
+
+      SELECT C.ROWCNT, X.*  FROM (
+
+       SELECT ROW_NUMBER() OVER( ORDER BY A.FTR_IDN DESC ) AS RN
+            , A.FTR_CDE
+            , (SELECT FTR_NAM FROM INFOFMS.V_FTR_CDE WHERE FTR_CDE = A.FTR_CDE) AS FTR_NAM
+            , A.FTR_IDN
+            , A.HJD_CDE
+            , (SELECT HJD_NAM FROM INFOFMS.CMT_ADAR_MA WHERE HJD_CDE = A.HJD_CDE) AS HJD_NAM
+            , A.SHT_NUM
+            , A.MNG_CDE
+            , (SELECT NM FROM INFOUSER.CD_DTL_INFO WHERE MST_CD = '250101' AND DTL_CD = A.MNG_CDE ) AS MNG_NAM
+            , A.FNS_YMD
+            , A.PUR_NAM
+            , A.WSR_CDE
+            , (SELECT NM FROM INFOUSER.CD_DTL_INFO WHERE MST_CD = '250058' AND DTL_CD = A.WSR_CDE ) AS WSR_NAM
+            , A.GAI_NAM
+            , A.SRV_NAM
+            , A.PUR_VOL
+            , A.PWR_VOL
+            , A.PUR_ARA
+            , A.SAM_CDE
+            , (SELECT NM FROM INFOUSER.CD_DTL_INFO WHERE MST_CD = '250021' AND DTL_CD = A.SAM_CDE ) AS SAM_NAM
+            , A.CNT_NUM
+            , A.SYS_CHK
+            , CASE WHEN ST_ISVALID(A.GEOM) = 1 THEN 'Y' ELSE 'N' END AS IS_GEOMETRY
+        FROM INFOFMS.WTL_PURI_AS A
+       WHERE 1=1
+        <!-- 조건1. 관리기관 -->
+        <isNotEmpty prepend="AND" property="MNG_CDE">
+          A.MNG_CDE = #MNG_CDE#
+        </isNotEmpty>
+
+        <!-- 조건2. 관리번호 -->
+        <isNotEmpty prepend="AND" property="FTR_IDN">
+          A.FTR_IDN like #FTR_IDN# || '%'
+        </isNotEmpty>
+
+        <!-- 조건3. 행정읍면동 -->
+        <isNotEmpty prepend="AND" property="HJD_CDE">
+          A.HJD_CDE = #HJD_CDE#
+        </isNotEmpty>
+
+        <!-- 조건4. 공사번호 -->
+        <isNotEmpty prepend="AND" property="CNT_NUM">
+          A.CNT_NUM = #CNT_NUM#
+        </isNotEmpty>
+
+        <!-- 조건5. 도엽번호 -->
+        <isNotEmpty prepend="AND" property="SHT_NUM">
+          A.SHT_NUM = #SHT_NUM#
+        </isNotEmpty>
+
+        <!-- 조건6. 준공일자[이상] -->
+        <isNotEmpty prepend="AND" property="FNS_YMD_FROM">
+          A.FNS_YMD <![CDATA[>=]]> #FNS_YMD_FROM#
+        </isNotEmpty>
+
+        <!-- 조건7. 준공일자[이하] -->
+        <isNotEmpty prepend="AND" property="FNS_YMD_TO">
+          A.FNS_YMD <![CDATA[<=]]> #FNS_YMD_TO#
+        </isNotEmpty>
+
+        <!-- 조건8. 정수장명 -->
+        <isNotEmpty prepend="AND" property="PUR_NAM">
+          A.PUR_NAM LIKE '%' ||#PUR_NAM#|| '%'
+        </isNotEmpty>
+
+        <!-- 조건9. 수원구분 -->
+        <isNotEmpty prepend="AND" property="WSR_CDE">
+          A.WSR_CDE = #WSR_CDE#
+        </isNotEmpty>
+
+        <!-- 조건10. 취수장명 -->
+        <isNotEmpty prepend="AND" property="GAI_NAM">
+          A.GAI_NAM LIKE '%' ||#GAI_NAM#|| '%'
+        </isNotEmpty>
+
+        <!-- 조건11. 배수지명 -->
+        <isNotEmpty prepend="AND" property="SRV_NAM">
+          A.SRV_NAM LIKE '%' ||#SRV_NAM#|| '%'
+        </isNotEmpty>
+
+        ORDER BY FTR_IDN DESC
+
+
+    ) X JOIN C ON 1=1
+    WHERE RN &lt;= ($page$+1) * $rows$
+      AND RN &gt;= ($page$) * $rows$ + 1
+
+    </select>
+
+    <select id="SelectFiltPltDtl"  parameterClass="Hashtable" resultClass ="GTI.WFMS.Models.Fclt.Model.FiltPltDtl">
+      /* FiltPltMap.SelectFiltPltDtl 정수장 상세정보*/
+      <![CDATA[
+		 	 SELECT A.FTR_CDE
+            , (SELECT FTR_NAM FROM INFOFMS.V_FTR_CDE WHERE FTR_CDE = A.FTR_CDE) AS FTR_NAM
+            , A.FTR_IDN
+            , A.HJD_CDE
+            , (SELECT HJD_NAM FROM INFOFMS.CMT_ADAR_MA WHERE HJD_CDE = A.HJD_CDE) AS HJD_NAM
+            , A.SHT_NUM
+            , A.MNG_CDE
+            , (SELECT NM FROM INFOUSER.CD_DTL_INFO WHERE MST_CD = '250101' AND DTL_CD = A.MNG_CDE ) AS MNG_NAM
+            , A.FNS_YMD
+            , A.PUR_NAM
+            , A.WSR_CDE
+            , (SELECT NM FROM INFOUSER.CD_DTL_INFO WHERE MST_CD = '250058' AND DTL_CD = A.WSR_CDE ) AS WSR_NAM
+            , A.GAI_NAM
+            , A.SRV_NAM
+            , A.PUR_VOL
+            , A.PWR_VOL
+            , A.PUR_ARA
+            , A.SAM_CDE
+            , (SELECT NM FROM INFOUSER.CD_DTL_INFO WHERE MST_CD = '250021' AND DTL_CD = A.SAM_CDE ) AS SAM_NAM
+            , A.CNT_NUM
+            , A.SYS_CHK
+            , decode(A.SYS_CHK,'1','유','무') as SYS_CHK_NAM
+         FROM INFOFMS.WTL_PURI_AS A 
+			  WHERE 1=1
+          AND FTR_CDE = #FTR_CDE# 
+				  AND FTR_IDN = #FTR_IDN#
+			]]>
+    </select>
+
+    <!--정수장 상세추가-->
+    <update id="insertFiltPltDtl" parameterClass="GTI.WFMS.Models.Fclt.Model.FiltPltDtl">
+      INSERT INTO INFOFMS.WTL_PURI_AS
+      ( FTR_CDE
+      , FTR_IDN
+      , HJD_CDE
+      , SHT_NUM
+      , MNG_CDE
+      , FNS_YMD
+      , PUR_NAM
+      , WSR_CDE
+      , GAI_NAM
+      , SRV_NAM
+      , PUR_VOL
+      , PWR_VOL
+      , PUR_ARA
+      , SAM_CDE
+      , CNT_NUM
+      , SYS_CHK
+      )
+      VALUES
+      ( #FTR_CDE#
+      , #FTR_IDN#
+      , #HJD_CDE#
+      , #SHT_NUM#
+      , #MNG_CDE#
+      , #FNS_YMD#
+      , #PUR_NAM#
+      , #WSR_CDE#
+      , #GAI_NAM#
+      , #SRV_NAM#
+      , #PUR_VOL#
+      , #PWR_VOL#
+      , #PUR_ARA#
+      , #SAM_CDE#
+      , #CNT_NUM#
+      , #SYS_CHK#
+      )
+    </update>
+
+    <!--정수장 상세저장-->
+    <update id="updateFiltPltDtl" parameterClass="GTI.WFMS.Models.Fclt.Model.FiltPltDtl">
+      /* 정수장 상세 수정 */
+      UPDATE INFOFMS.WTL_PURI_AS
+      SET HJD_CDE = #HJD_CDE#
+      , SHT_NUM = #SHT_NUM#
+      , MNG_CDE = #MNG_CDE#
+      , FNS_YMD = #FNS_YMD#
+      , PUR_NAM = #PUR_NAM#
+      , WSR_CDE = #WSR_CDE#
+      , GAI_NAM = #GAI_NAM#
+      , SRV_NAM = #SRV_NAM#
+      , PUR_VOL = #PUR_VOL#
+      , PWR_VOL = #PWR_VOL#
+      , PUR_ARA = #PUR_ARA#
+      , SAM_CDE = #SAM_CDE#
+      , CNT_NUM = #CNT_NUM#
+      , SYS_CHK = #SYS_CHK#
+      WHERE FTR_CDE = #FTR_CDE#
+      AND	FTR_IDN = #FTR_IDN#
+    </update>
+
+    <!--정수장 상세저장-->
+    <update id="SaveFiltPltDtl" parameterClass="GTI.WFMS.Models.Fclt.Model.FiltPltDtl">
+      /* 정수장 상세 수정 */
+      MERGE INTO INFOFMS.WTL_PURI_AS
+      USING DUAL ON (FTR_CDE = #FTR_CDE# AND	FTR_IDN = #FTR_IDN#)
+
+      WHEN MATCHED THEN
+      UPDATE
+      SET HJD_CDE = #HJD_CDE#
+      , SHT_NUM = #SHT_NUM#
+      , MNG_CDE = #MNG_CDE#
+      , FNS_YMD = #FNS_YMD#
+      , PUR_NAM = #PUR_NAM#
+      , WSR_CDE = #WSR_CDE#
+      , GAI_NAM = #GAI_NAM#
+      , SRV_NAM = #SRV_NAM#
+      , PUR_VOL = #PUR_VOL#
+      , PWR_VOL = #PWR_VOL#
+      , PUR_ARA = #PUR_ARA#
+      , SAM_CDE = #SAM_CDE#
+      , CNT_NUM = #CNT_NUM#
+      , SYS_CHK = #SYS_CHK#
+
+      WHEN NOT MATCHED THEN
+      INSERT
+      ( FTR_CDE
+      , FTR_IDN
+      , HJD_CDE
+      , SHT_NUM
+      , MNG_CDE
+      , FNS_YMD
+      , PUR_NAM
+      , WSR_CDE
+      , GAI_NAM
+      , SRV_NAM
+      , PUR_VOL
+      , PWR_VOL
+      , PUR_ARA
+      , SAM_CDE
+      , CNT_NUM
+      , SYS_CHK
+      )
+      VALUES
+      ( #FTR_CDE#
+      , #FTR_IDN#
+      , #HJD_CDE#
+      , #SHT_NUM#
+      , #MNG_CDE#
+      , #FNS_YMD#
+      , #PUR_NAM#
+      , #WSR_CDE#
+      , #GAI_NAM#
+      , #SRV_NAM#
+      , #PUR_VOL#
+      , #PWR_VOL#
+      , #PUR_ARA#
+      , #SAM_CDE#
+      , #CNT_NUM#
+      , #SYS_CHK#
+      )
+
+    </update>
+
+    <!--정수장 상세삭제-->
+    <update id="deleteFiltPltDtl" parameterClass="GTI.WFMS.Models.Fclt.Model.FiltPltDtl">
+      /* 정수장 상세 삭제 */
+      DELETE INFOFMS.WTL_PURI_AS
+      WHERE FTR_CDE = #FTR_CDE#
+      AND FTR_IDN = #FTR_IDN#
+    </update>
+
+    <!--정수장 관리번호 채번-->
+    <select id ="SelectFiltPltFTR_IDN" parameterClass="Hashtable" resultClass ="GTI.WFMS.Models.Fclt.Model.FiltPltDtl">
+      /* 정수장 관리번호 채번 */
+      SELECT NVL(MAX(FTR_IDN),0)+1 AS FTR_IDN FROM INFOFMS.WTL_PURI_AS
+      WHERE 1=1
+    </select>
+
+  </statements>
+  
+</sqlMap>

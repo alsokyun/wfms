@@ -1,0 +1,222 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    x:Name="Colors">
+
+    <Color x:Key="Monitor_Chart_Color">#FF124972</Color>
+    <SolidColorBrush x:Key="Monitor_Chart_ColorBrush1" Color="{DynamicResource Monitor_Chart_Color}"/>
+    
+    <Color x:Key="Default_Chart_Color">#000000</Color>
+    <SolidColorBrush x:Key="Default_Chart_ColorBrush1" Color="{DynamicResource Default_Chart_Color}"/>
+    
+    <!--메인 윈도우 컬러-->
+    <!--메인 헤더 버튼 구분-->
+    <Color x:Key="MainWindowColor">#FFFFFFFF</Color>
+    <SolidColorBrush x:Key="MainWindowColorBrush1" Color="{DynamicResource MainWindowColor}"/>
+
+    <Color x:Key="MainWindowColorOPT">#00FFFFFF</Color>
+    <SolidColorBrush x:Key="MainWindowColorOPTBrush1" Color="{DynamicResource MainWindowColorOPT}"/>
+
+
+    <!--메인컬러-->
+    <!--메인 헤더 버튼 구분-->
+    <Color x:Key="MainHeadGBN">#115f96</Color>
+    <SolidColorBrush x:Key="MainHeadGBNBrush1" Color="{DynamicResource MainHeadGBN}"/>
+
+    <!--메인 대메뉴-->
+    <Color x:Key="MainLMENU">#5190BC</Color>
+    <SolidColorBrush x:Key="MainLMENUBrush1" Color="{DynamicResource MainLMENU}"/>
+
+    <!--메인 대메뉴 아래라인-->
+    <Color x:Key="MainLMENUUnder">#125F97</Color>
+    <SolidColorBrush x:Key="MainLMENUUnderBrush1" Color="{DynamicResource MainLMENUUnder}"/>
+
+    <!--메인 대메뉴 구분-->
+    <Color x:Key="MainLMENUGBN">#5190BC</Color>
+    <SolidColorBrush x:Key="MainLMENUGBNBrush1" Color="{DynamicResource MainLMENUGBN}"/>
+
+    <!--메인 배경1-->
+    <Color x:Key="MainBack1">#144772</Color>
+    <SolidColorBrush x:Key="MainBack1Brush1" Color="{DynamicResource MainBack1}"/>
+
+    <!--메인 선색1-->
+    <Color x:Key="MainThin1">#1D3E61</Color>
+    <SolidColorBrush x:Key="MainThin1Brush1" Color="{DynamicResource MainThin1}"/>
+
+    <!--메인 아코디언색-->
+    <Color x:Key="MainAccr1">#2574AB</Color>
+    <SolidColorBrush x:Key="MainAccr1Brush1" Color="{DynamicResource MainAccr1}"/>
+
+    <!--알림창색상표1-->
+    <Color x:Key="NotifiCOLOR1">#144E7F</Color>
+    <SolidColorBrush x:Key="NotifiCOLOR1Brush" Color="{DynamicResource NotifiCOLOR1}"/>
+
+    <!--알림창색상표2-->
+    <Color x:Key="NotifiCOLOR2">#0C588D</Color>
+    <SolidColorBrush x:Key="NotifiCOLOR2Brush" Color="{DynamicResource NotifiCOLOR2}"/>
+
+
+
+    <!--Content (Uc) 컬러-->
+    <!--화면 배경-->
+    <Color x:Key="UcBackCOLOR1">#99FFFFFF</Color>
+    <SolidColorBrush x:Key="UcBackCOLOR1Brush1" Color="{DynamicResource UcBackCOLOR1}"/>
+
+    <!--화면 테두리-->
+    <Color x:Key="UcThickCOLOR1">#66999999</Color>
+    <SolidColorBrush x:Key="UcThickCOLOR1Brush1" Color="{DynamicResource UcThickCOLOR1}"/>
+
+    <!--조건 배경-->
+    <Color x:Key="ConditionBackCOLOR1">#A0A0A0</Color>
+    <SolidColorBrush x:Key="ConditionBackCOLOR1Brush1" Color="{DynamicResource ConditionBackCOLOR1}"/>
+
+    <!--조건 테두리-->
+    <Color x:Key="ConditionThickCOLOR1">#8B8B8B</Color>
+    <SolidColorBrush x:Key="ConditionThickCOLOR1Brush1" Color="{DynamicResource ConditionThickCOLOR1}"/>
+
+
+
+
+    <!--총괄수량수지 표헤더배경-->
+    <Color x:Key="TotalVolGridBackCOLOR1">#FFFFFF</Color>
+    <SolidColorBrush x:Key="TotalVolGridBackCOLOR1Brush" Color="{DynamicResource TotalVolGridBackCOLOR1}"/>
+
+    <!--총괄수량수지 표배경-->
+    <Color x:Key="TotalVolGridBackCOLOR2">#70A0A0</Color>
+    <SolidColorBrush x:Key="TotalVolGridBackCOLOR2Brush" Color="{DynamicResource TotalVolGridBackCOLOR2}"/>
+
+    <!--총괄수량수지 표라인-->
+    <Color x:Key="TotalVolGridThickCOLOR1">#2574AC</Color>
+    <SolidColorBrush x:Key="TotalVolGridThickCOLOR1Brush" Color="{DynamicResource TotalVolGridThickCOLOR1}"/>
+
+
+
+
+    <!--보더그리드표1-->
+    <Color x:Key="BorderGridCOLOR1">Transparent</Color>
+    <SolidColorBrush x:Key="BorderGridCOLOR1Brush" Color="{DynamicResource BorderGridCOLOR1}"/>
+
+    <!--보더그리드표2-->
+    <Color x:Key="BorderGridCOLOR2">#227AB4</Color>
+    <SolidColorBrush x:Key="BorderGridCOLOR2Brush" Color="{DynamicResource BorderGridCOLOR2}"/>
+
+    <!--보더그리드표3-->
+    <Color x:Key="BorderGridCOLOR3">#6AB4E5</Color>
+    <SolidColorBrush x:Key="BorderGridCOLOR3Brush" Color="{DynamicResource BorderGridCOLOR3}"/>
+
+    <!--보더그리드표4-->
+    <Color x:Key="BorderGridCOLOR4">#57A3D7</Color>
+    <SolidColorBrush x:Key="BorderGridCOLOR4Brush" Color="{DynamicResource BorderGridCOLOR4}"/>
+
+    <!--보더그리드표5-->
+    <Color x:Key="BorderGridCOLOR5">White</Color>
+    <SolidColorBrush x:Key="BorderGridCOLOR5Brush" Color="{DynamicResource BorderGridCOLOR5}"/>
+
+    <!--보더그리드표6-->
+    <Color x:Key="BorderGridCOLOR6">#BBDAEF</Color>
+    <SolidColorBrush x:Key="BorderGridCOLOR6Brush" Color="{DynamicResource BorderGridCOLOR6}"/>
+
+    <!--보더그리드표7-->
+    <Color x:Key="BorderGridCOLOR7">#f2f2f2</Color>
+    <SolidColorBrush x:Key="BorderGridCOLOR7Brush" Color="{DynamicResource BorderGridCOLOR7}"/>
+
+
+    
+
+    <!--팝업 색상표1-->
+    <Color x:Key="PopupCOLOR1">#144873</Color>
+    <SolidColorBrush x:Key="PopupCOLOR1Brush" Color="{DynamicResource PopupCOLOR1}"/>
+
+    <!--팝업 색상표2-->
+    <Color x:Key="PopupCOLOR2">#227ab4</Color>
+    <SolidColorBrush x:Key="PopupCOLOR2Brush" Color="{DynamicResource PopupCOLOR2}"/>
+
+    <!--팝업 색상표3-->
+    <Color x:Key="PopupCOLOR3">#a9cfeb</Color>
+    <SolidColorBrush x:Key="PopupCOLOR3Brush" Color="{DynamicResource PopupCOLOR3}"/>
+
+
+
+
+
+    <!--타일 색상표1-->
+    <Color x:Key="TileCOLOR1">#EFEFEF</Color>
+    <SolidColorBrush x:Key="TileCOLOR1Brush" Color="{DynamicResource TileCOLOR1}"/>
+
+    <!--타일 색상표2-->
+    <Color x:Key="TileCOLOR2">#d9dad9</Color>
+    <SolidColorBrush x:Key="TileCOLOR2Brush" Color="{DynamicResource TileCOLOR2}"/>
+
+    <!--타일 색상표3-->
+    <Color x:Key="TileCOLOR3">#FF4889B4</Color>
+    <SolidColorBrush x:Key="TileCOLOR3Brush" Color="{DynamicResource TileCOLOR3}"/>
+
+    <!--타일 색상표4-->
+    <Color x:Key="TileCOLOR4">#efefef</Color>
+    <SolidColorBrush x:Key="TileCOLOR4Brush" Color="{DynamicResource TileCOLOR4}"/>
+    
+    <!--타일 색상표5-->
+    <Color x:Key="TileCOLOR5">#FFFFFF</Color>
+    <SolidColorBrush x:Key="TileCOLOR5Brush" Color="{DynamicResource TileCOLOR5}"/>
+
+    <!--타일 색상표6-->
+    <Color x:Key="TileCOLOR6">#354a5f</Color>
+    <SolidColorBrush x:Key="TileCOLOR6Brush" Color="{DynamicResource TileCOLOR6}"/>
+
+    <!--타일 색상표7-->
+    <Color x:Key="TileCOLOR7">#FFFFFF</Color>
+    <SolidColorBrush x:Key="TileCOLOR7Brush" Color="{DynamicResource TileCOLOR7}"/>
+
+    <!--타일 색상표8-->
+    <Color x:Key="TileCOLOR8">#FFFFFF</Color>
+    <SolidColorBrush x:Key="TileCOLOR8Brush" Color="{DynamicResource TileCOLOR8}"/>
+
+    <!--타일 색상표9-->
+    <Color x:Key="TileCOLOR9">#FFAAAAAA</Color>
+    <SolidColorBrush x:Key="TileCOLOR9Brush" Color="{DynamicResource TileCOLOR9}"/>
+    
+
+
+    <!--모니터링 타이틀 색상표1-->
+    <Color x:Key="BLKMornitorTITLECOLOR1">#EFEFEF</Color>
+    <SolidColorBrush x:Key="BLKMornitorTITLECOLOR1Brush" Color="{DynamicResource BLKMornitorTITLECOLOR1}"/>
+
+    <!--모니터링 배경 색상표2-->
+    <Color x:Key="BLKMornitorCOLOR1">#FFFFFF</Color>
+    <SolidColorBrush x:Key="BLKMornitorCOLOR1Brush" Color="{DynamicResource BLKMornitorCOLOR1}"/>
+
+
+    <!--데이터관리 탭 관련 색상표1-->
+    <Color x:Key="DataMngTab1">#AA434343</Color>
+    <SolidColorBrush x:Key="DataMngTab1Brush" Color="{DynamicResource DataMngTab1}"/>                   
+                                                                                                        
+    <!--데이터관리 탭 관련 색상표2-->                                                                   
+    <Color x:Key="DataMngTab2">#434343</Color>                                                          
+    <SolidColorBrush x:Key="DataMngTab2Brush" Color="{DynamicResource DataMngTab2}"/>                   
+                                                                                                        
+    <!--데이터관리 탭 관련 색상표3-->
+    <Color x:Key="DataMngTab3">#91b8d4</Color>                                                          
+    <SolidColorBrush x:Key="DataMngTab3Brush" Color="{DynamicResource DataMngTab3}"/>                   
+                                                                                                        
+    <!--데이터관리 탭 관련 색상표4-->                                                                   
+    <Color x:Key="DataMngTab4">#5190BC</Color>                                                          
+    <SolidColorBrush x:Key="DataMngTab4Brush" Color="{DynamicResource DataMngTab4}"/>                   
+                                                                                                        
+    <!--데이터관리 탭 관련 색상표5-->                                                                   
+    <Color x:Key="DataMngTab5">LightGray</Color>                                                        
+    <SolidColorBrush x:Key="DataMngTab5Brush" Color="{DynamicResource DataMngTab5}"/>                   
+                                                                                                        
+                                                                                                        
+    <!--그리드 통계 색상1-->
+    <Color x:Key="GridControlTotal1">#DDDDDD</Color>
+    <SolidColorBrush x:Key="GridControlTotal1Brush" Color="{DynamicResource GridControlTotal1}"/>
+
+
+
+    <!--================== FMS 추가 ==================-->
+    <!--화면 색상표1-->
+    <Color x:Key="DivBack1">#45688a</Color>
+    <SolidColorBrush x:Key="DivBack1Brush1" Color="{DynamicResource DivBack1}"/>
+
+
+
+</ResourceDictionary>

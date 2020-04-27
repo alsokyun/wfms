@@ -1,0 +1,377 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<sqlMap namespace="Main" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://ibatis.apache.org/mapping">
+  <statements>
+
+    <!--수원지-->
+    <select id ="SelectWtrSourList" parameterClass="Hashtable" resultClass ="Hashtable">
+      /* WtrSourMap.SelectWtrSourList 수원지 목록*/
+
+      WITH C AS (
+      SELECT COUNT(1) AS ROWCNT
+      FROM INFOFMS.WTL_HEAD_PS A
+      WHERE 1=1
+        <!-- 조건1. 관리기관 -->
+        <isNotEmpty prepend="AND" property="MNG_CDE">
+          A.MNG_CDE = #MNG_CDE#
+        </isNotEmpty>
+
+        <!-- 조건2. 관리번호 -->
+        <isNotEmpty prepend="AND" property="FTR_IDN">
+          A.FTR_IDN like #FTR_IDN# || '%'
+        </isNotEmpty>
+
+        <!-- 조건3. 행정읍면동 -->
+        <isNotEmpty prepend="AND" property="HJD_CDE">
+          A.HJD_CDE = #HJD_CDE#
+        </isNotEmpty>
+
+        <!-- 조건4. 공사번호 -->
+        <isNotEmpty prepend="AND" property="CNT_NUM">
+          A.CNT_NUM = #CNT_NUM#
+        </isNotEmpty>
+
+        <!-- 조건5. 도엽번호 -->
+        <isNotEmpty prepend="AND" property="SHT_NUM">
+          A.SHT_NUM = #SHT_NUM#
+        </isNotEmpty>
+
+        <!-- 조건6. 준공일자[이상] -->
+        <isNotEmpty prepend="AND" property="FNS_YMD_FROM">
+          A.FNS_YMD <![CDATA[>=]]> #FNS_YMD_FROM#
+        </isNotEmpty>
+
+        <!-- 조건7. 준공일자[이하] -->
+        <isNotEmpty prepend="AND" property="FNS_YMD_TO">
+          A.FNS_YMD <![CDATA[<=]]> #FNS_YMD_TO#
+        </isNotEmpty>
+
+        <!-- 조건8. 수원지종류 -->
+        <isNotEmpty prepend="AND" property="HEA_NAM">
+          A.HEA_NAM LIKE '%' || #HEA_NAM# || '%'
+        </isNotEmpty>
+
+        <!-- 조건9. 수원구분 -->
+        <isNotEmpty prepend="AND" property="WSR_CDE">
+          A.WSR_CDE = #WSR_CDE#
+        </isNotEmpty>
+
+        <!-- 조건10. 하천명 -->
+        <isNotEmpty prepend="AND" property="IRV_NAM">
+          A.IRV_NAM LIKE '%' || #IRV_NAM# || '%'
+        </isNotEmpty>
+
+        <!-- 조건11. 유효저수량 -->
+        <isNotEmpty prepend="AND" property="RSV_VOL">
+          A.RSV_VOL = #RSV_VOL#
+        </isNotEmpty>
+      )
+
+      SELECT C.ROWCNT, X.*  FROM (
+
+       SELECT ROW_NUMBER() OVER( ORDER BY A.FTR_IDN DESC ) AS RN
+            , A.FTR_CDE
+            , (SELECT FTR_NAM FROM INFOFMS.V_FTR_CDE WHERE FTR_CDE = A.FTR_CDE) AS FTR_NAM
+            , A.FTR_IDN
+            , A.HJD_CDE
+            , (SELECT HJD_NAM FROM INFOFMS.CMT_ADAR_MA WHERE HJD_CDE = A.HJD_CDE) AS HJD_NAM
+            , A.SHT_NUM
+            , A.MNG_CDE
+            , (SELECT NM FROM INFOUSER.CD_DTL_INFO WHERE MST_CD = '250101' AND DTL_CD = A.MNG_CDE ) AS MNG_NAM
+            , A.FNS_YMD
+            , A.HEA_NAM
+            , A.WSR_CDE
+            , (SELECT NM FROM INFOUSER.CD_DTL_INFO WHERE MST_CD = '250058' AND DTL_CD = A.WSR_CDE ) AS WSR_NAM
+            , A.IRV_NAM
+            , A.RSV_VOL
+            , A.RSV_ARA
+            , A.FUL_ARA
+            , A.THR_WAL
+            , A.HTH_WAL
+            , A.AVG_WAL
+            , A.DRA_WAL
+            , A.HDR_WAL
+            , A.KEE_WAL
+            , A.GUA_ARA
+            , A.GUA_POP
+            , A.CNT_NUM
+            , A.SYS_CHK
+            , CASE WHEN ST_ISVALID(A.GEOM) = 1 THEN 'Y' ELSE 'N' END AS IS_GEOMETRY
+         FROM INFOFMS.WTL_HEAD_PS A
+        WHERE 1=1
+      <!-- 조건1. 관리기관 -->
+        <isNotEmpty prepend="AND" property="MNG_CDE">
+          A.MNG_CDE = #MNG_CDE#
+        </isNotEmpty>
+
+        <!-- 조건2. 관리번호 -->
+        <isNotEmpty prepend="AND" property="FTR_IDN">
+          A.FTR_IDN like #FTR_IDN# || '%'
+        </isNotEmpty>
+
+        <!-- 조건3. 행정읍면동 -->
+        <isNotEmpty prepend="AND" property="HJD_CDE">
+          A.HJD_CDE = #HJD_CDE#
+        </isNotEmpty>
+
+        <!-- 조건4. 공사번호 -->
+        <isNotEmpty prepend="AND" property="CNT_NUM">
+          A.CNT_NUM = #CNT_NUM#
+        </isNotEmpty>
+
+        <!-- 조건5. 도엽번호 -->
+        <isNotEmpty prepend="AND" property="SHT_NUM">
+          A.SHT_NUM = #SHT_NUM#
+        </isNotEmpty>
+
+        <!-- 조건6. 준공일자[이상] -->
+        <isNotEmpty prepend="AND" property="FNS_YMD_FROM">
+          A.FNS_YMD <![CDATA[>=]]> #FNS_YMD_FROM#
+        </isNotEmpty>
+
+        <!-- 조건7. 준공일자[이하] -->
+        <isNotEmpty prepend="AND" property="FNS_YMD_TO">
+          A.FNS_YMD <![CDATA[<=]]> #FNS_YMD_TO#
+        </isNotEmpty>
+
+        <!-- 조건8. 수원지종류 -->
+        <isNotEmpty prepend="AND" property="HEA_NAM">
+          A.HEA_NAM LIKE '%' || #HEA_NAM# || '%'
+        </isNotEmpty>
+
+        <!-- 조건9. 수원구분 -->
+        <isNotEmpty prepend="AND" property="WSR_CDE">
+          A.WSR_CDE = #WSR_CDE#
+        </isNotEmpty>
+
+        <!-- 조건10. 하천명 -->
+        <isNotEmpty prepend="AND" property="IRV_NAM">
+          A.IRV_NAM LIKE '%' || #IRV_NAM# || '%'
+        </isNotEmpty>
+
+        <!-- 조건11. 유효저수량 -->
+        <isNotEmpty prepend="AND" property="RSV_VOL">
+          A.RSV_VOL = #RSV_VOL#
+        </isNotEmpty>
+
+        ORDER BY FTR_IDN DESC
+
+
+    ) X JOIN C ON 1=1
+    WHERE RN &lt;= ($page$+1) * $rows$
+      AND RN &gt;= ($page$) * $rows$ + 1
+
+    </select>
+
+    <select id="SelectWtrSourDtl"  parameterClass="Hashtable" resultClass ="GTI.WFMS.Models.Fclt.Model.WtrSourDtl">
+      /* WtrSourMap.SelectWtrSourDtl 수원지 상세정보*/
+      <![CDATA[
+			SELECT A.FTR_CDE
+            , (SELECT FTR_NAM FROM INFOFMS.V_FTR_CDE WHERE FTR_CDE = A.FTR_CDE) AS FTR_NAM
+            , A.FTR_IDN
+            , A.HJD_CDE
+            , (SELECT HJD_NAM FROM INFOFMS.CMT_ADAR_MA WHERE HJD_CDE = A.HJD_CDE) AS HJD_NAM
+            , A.SHT_NUM
+            , A.MNG_CDE
+            , (SELECT NM FROM INFOUSER.CD_DTL_INFO WHERE MST_CD = '250101' AND DTL_CD = A.MNG_CDE ) AS MNG_NAM
+            , a.FNS_YMD
+            , A.HEA_NAM
+            , A.WSR_CDE
+            , (SELECT NM FROM INFOUSER.CD_DTL_INFO WHERE MST_CD = '250058' AND DTL_CD = A.WSR_CDE ) AS WSR_NAM
+            , A.IRV_NAM
+            , A.RSV_VOL
+            , A.RSV_ARA
+            , A.FUL_ARA
+            , A.THR_WAL
+            , A.HTH_WAL
+            , A.AVG_WAL
+            , A.DRA_WAL
+            , A.HDR_WAL
+            , A.KEE_WAL
+            , A.GUA_ARA
+            , A.GUA_POP
+            , A.CNT_NUM
+            , A.SYS_CHK
+            , decode(A.SYS_CHK,'1','유','무') as SYS_CHK_NAM
+       FROM INFOFMS.WTL_HEAD_PS A 
+			WHERE 1=1
+        AND FTR_CDE = #FTR_CDE# 
+				AND FTR_IDN = #FTR_IDN#
+			]]>
+    </select>
+
+    <!--수원지 상세추가-->
+    <update id="insertWtrSourDtl" parameterClass="GTI.WFMS.Models.Fclt.Model.WtrSourDtl">
+      INSERT INTO INFOFMS.WTL_HEAD_PS
+      (   FTR_CDE
+      , FTR_IDN
+      , HJD_CDE
+      , SHT_NUM
+      , MNG_CDE
+      , FNS_YMD
+      , HEA_NAM
+      , WSR_CDE
+      , IRV_NAM
+      , RSV_VOL
+      , RSV_ARA
+      , FUL_ARA
+      , THR_WAL
+      , HTH_WAL
+      , AVG_WAL
+      , DRA_WAL
+      , HDR_WAL
+      , KEE_WAL
+      , GUA_ARA
+      , GUA_POP
+      , CNT_NUM
+      , SYS_CHK
+      )
+      VALUES
+      (   #FTR_CDE#
+      , #FTR_IDN#
+      , #HJD_CDE#
+      , #SHT_NUM#
+      , #MNG_CDE#
+      , #FNS_YMD#
+      , #HEA_NAM#
+      , #WSR_CDE#
+      , #IRV_NAM#
+      , #RSV_VOL#
+      , #RSV_ARA#
+      , #FUL_ARA#
+      , #THR_WAL#
+      , #HTH_WAL#
+      , #AVG_WAL#
+      , #DRA_WAL#
+      , #HDR_WAL#
+      , #KEE_WAL#
+      , #GUA_ARA#
+      , #GUA_POP#
+      , #CNT_NUM#
+      , #SYS_CHK#
+      )
+    </update>
+
+    <!--수원지 상세저장-->
+    <update id="updateWtrSourDtl" parameterClass="GTI.WFMS.Models.Fclt.Model.WtrSourDtl">
+      /* 수원지 상세 수정 */
+      UPDATE INFOFMS.WTL_HEAD_PS
+      SET HJD_CDE = #HJD_CDE#
+      , SHT_NUM = #SHT_NUM#
+      , MNG_CDE = #MNG_CDE#
+      , FNS_YMD = #FNS_YMD#
+      , HEA_NAM = #HEA_NAM#
+      , WSR_CDE = #WSR_CDE#
+      , IRV_NAM = #IRV_NAM#
+      , RSV_VOL = #RSV_VOL#
+      , RSV_ARA = #RSV_ARA#
+      , FUL_ARA = #FUL_ARA#
+      , THR_WAL = #THR_WAL#
+      , HTH_WAL = #HTH_WAL#
+      , AVG_WAL = #AVG_WAL#
+      , DRA_WAL = #DRA_WAL#
+      , HDR_WAL = #HDR_WAL#
+      , KEE_WAL = #KEE_WAL#
+      , GUA_ARA = #GUA_ARA#
+      , GUA_POP = #GUA_POP#
+      , CNT_NUM = #CNT_NUM#
+      , SYS_CHK = #SYS_CHK#
+      WHERE FTR_CDE = #FTR_CDE#
+      AND	FTR_IDN = #FTR_IDN#
+    </update>
+    
+    <update id="SaveWtrSourDtl" parameterClass="GTI.WFMS.Models.Fclt.Model.WtrSourDtl">
+      MERGE INTO INFOFMS.WTL_HEAD_PS
+      USING DUAL ON (FTR_CDE = #FTR_CDE# AND	FTR_IDN = #FTR_IDN#)
+
+      WHEN MATCHED THEN
+      UPDATE
+      SET HJD_CDE = #HJD_CDE#
+      , SHT_NUM = #SHT_NUM#
+      , MNG_CDE = #MNG_CDE#
+      , FNS_YMD = #FNS_YMD#
+      , HEA_NAM = #HEA_NAM#
+      , WSR_CDE = #WSR_CDE#
+      , IRV_NAM = #IRV_NAM#
+      , RSV_VOL = #RSV_VOL#
+      , RSV_ARA = #RSV_ARA#
+      , FUL_ARA = #FUL_ARA#
+      , THR_WAL = #THR_WAL#
+      , HTH_WAL = #HTH_WAL#
+      , AVG_WAL = #AVG_WAL#
+      , DRA_WAL = #DRA_WAL#
+      , HDR_WAL = #HDR_WAL#
+      , KEE_WAL = #KEE_WAL#
+      , GUA_ARA = #GUA_ARA#
+      , GUA_POP = #GUA_POP#
+      , CNT_NUM = #CNT_NUM#
+      , SYS_CHK = #SYS_CHK#
+
+      WHEN NOT MATCHED THEN
+      INSERT
+      (   FTR_CDE
+      , FTR_IDN
+      , HJD_CDE
+      , SHT_NUM
+      , MNG_CDE
+      , FNS_YMD
+      , HEA_NAM
+      , WSR_CDE
+      , IRV_NAM
+      , RSV_VOL
+      , RSV_ARA
+      , FUL_ARA
+      , THR_WAL
+      , HTH_WAL
+      , AVG_WAL
+      , DRA_WAL
+      , HDR_WAL
+      , KEE_WAL
+      , GUA_ARA
+      , GUA_POP
+      , CNT_NUM
+      , SYS_CHK
+      )
+      VALUES
+      (   #FTR_CDE#
+      , #FTR_IDN#
+      , #HJD_CDE#
+      , #SHT_NUM#
+      , #MNG_CDE#
+      , #FNS_YMD#
+      , #HEA_NAM#
+      , #WSR_CDE#
+      , #IRV_NAM#
+      , #RSV_VOL#
+      , #RSV_ARA#
+      , #FUL_ARA#
+      , #THR_WAL#
+      , #HTH_WAL#
+      , #AVG_WAL#
+      , #DRA_WAL#
+      , #HDR_WAL#
+      , #KEE_WAL#
+      , #GUA_ARA#
+      , #GUA_POP#
+      , #CNT_NUM#
+      , #SYS_CHK#
+      )
+    </update>
+
+    <!--수원지 상세삭제-->
+    <update id="deleteWtrSourDtl" parameterClass="GTI.WFMS.Models.Fclt.Model.WtrSourDtl">
+      /* 수원지 상세 삭제 */
+      DELETE INFOFMS.WTL_HEAD_PS
+      WHERE FTR_CDE = #FTR_CDE#
+      AND FTR_IDN = #FTR_IDN#
+    </update>
+
+    <!--수원지 관리번호 채번-->
+    <select id ="SelectWtrSourFTR_IDN" parameterClass="Hashtable" resultClass ="GTI.WFMS.Models.Fclt.Model.WtrSourDtl">
+      /* 수원지 관리번호 채번 */
+      SELECT NVL(MAX(FTR_IDN),0)+1 AS FTR_IDN FROM INFOFMS.WTL_HEAD_PS
+      WHERE 1=1
+    </select>
+
+  </statements>
+  
+</sqlMap>

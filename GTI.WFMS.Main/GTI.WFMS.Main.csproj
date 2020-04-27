@@ -1,0 +1,685 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{54A57EE1-7CA2-4932-8E21-DF45359D42A1}</ProjectGuid>
+    <OutputType>WinExe</OutputType>
+    <RootNamespace>GTI.WFMS.Main</RootNamespace>
+    <AssemblyName>GTI.WFMS.Main</AssemblyName>
+    <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <ProjectTypeGuids>{60dc8134-eba5-43b8-bcc9-bb4bc16c2548};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
+    <WarningLevel>4</WarningLevel>
+    <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
+    <Deterministic>true</Deterministic>
+    <IsWebBootstrapper>false</IsWebBootstrapper>
+    <NuGetPackageImportStamp>
+    </NuGetPackageImportStamp>
+    <PublishUrl>D:\publish\</PublishUrl>
+    <Install>true</Install>
+    <InstallFrom>Disk</InstallFrom>
+    <UpdateEnabled>false</UpdateEnabled>
+    <UpdateMode>Foreground</UpdateMode>
+    <UpdateInterval>7</UpdateInterval>
+    <UpdateIntervalUnits>Days</UpdateIntervalUnits>
+    <UpdatePeriodically>false</UpdatePeriodically>
+    <UpdateRequired>false</UpdateRequired>
+    <MapFileExtensions>true</MapFileExtensions>
+    <ApplicationRevision>0</ApplicationRevision>
+    <ApplicationVersion>1.0.0.%2a</ApplicationVersion>
+    <UseApplicationTrust>false</UseApplicationTrust>
+    <PublishWizardCompleted>true</PublishWizardCompleted>
+    <BootstrapperEnabled>true</BootstrapperEnabled>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup>
+    <ManifestCertificateThumbprint>B1F703ACB70222A4A4E3A2FB3E12B4E6D5B25472</ManifestCertificateThumbprint>
+  </PropertyGroup>
+  <PropertyGroup>
+    <ManifestKeyFile>GTI.WFMS.Main_TemporaryKey.pfx</ManifestKeyFile>
+  </PropertyGroup>
+  <PropertyGroup>
+    <GenerateManifests>true</GenerateManifests>
+  </PropertyGroup>
+  <PropertyGroup>
+    <TargetZone>LocalIntranet</TargetZone>
+  </PropertyGroup>
+  <PropertyGroup>
+    <ApplicationManifest>Properties\app.manifest</ApplicationManifest>
+  </PropertyGroup>
+  <PropertyGroup>
+    <SignManifests>true</SignManifests>
+  </PropertyGroup>
+  <PropertyGroup>
+    <ApplicationIcon>InfoFMS.ico</ApplicationIcon>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="CommonServiceLocator, Version=2.0.4.0, Culture=neutral, PublicKeyToken=489b6accfaf20ef0, processorArchitecture=MSIL">
+      <HintPath>..\packages\CommonServiceLocator.2.0.4\lib\net46\CommonServiceLocator.dll</HintPath>
+    </Reference>
+    <Reference Include="DevExpress.Charts.v19.1.Core, Version=19.1.6.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL" />
+    <Reference Include="DevExpress.Data.v19.1, Version=19.1.6.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL" />
+    <Reference Include="DevExpress.Images.v19.1, Version=19.1.6.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL" />
+    <Reference Include="DevExpress.Mvvm.v19.1, Version=19.1.6.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL" />
+    <Reference Include="DevExpress.Pdf.v19.1.Core, Version=19.1.6.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL" />
+    <Reference Include="DevExpress.Printing.v19.1.Core, Version=19.1.6.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL" />
+    <Reference Include="DevExpress.Xpf.Accordion.v19.1, Version=19.1.6.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL" />
+    <Reference Include="DevExpress.Xpf.Charts.v19.1, Version=19.1.6.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL" />
+    <Reference Include="DevExpress.Xpf.Controls.v19.1, Version=19.1.6.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL" />
+    <Reference Include="DevExpress.Xpf.Core.v19.1, Version=19.1.6.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL" />
+    <Reference Include="DevExpress.Xpf.Grid.v19.1, Version=19.1.6.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL" />
+    <Reference Include="DevExpress.Xpf.Grid.v19.1.Core, Version=19.1.6.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL" />
+    <Reference Include="DevExpress.Xpf.Printing.v19.1, Version=19.1.6.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL" />
+    <Reference Include="DevExpress.Xpf.Themes.GTIBlueTheme.v19.1">
+      <HintPath>..\..\..\Dev_Src\WNMS_GreenTech\DLL\DevExpress.Xpf.Themes.GTIBlueTheme.v19.1.dll</HintPath>
+    </Reference>
+    <Reference Include="DevExpress.Xpf.Themes.GTINavyTheme.v19.1">
+      <HintPath>..\..\..\Dev_Src\WNMS_GreenTech\DLL\DevExpress.Xpf.Themes.GTINavyTheme.v19.1.dll</HintPath>
+    </Reference>
+    <Reference Include="DevExpress.Xpf.Themes.Office2016White.v19.1, Version=19.1.6.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\Dev_Src\WNMS_GreenTech\DLL\DevExpress.Xpf.Themes.Office2016White.v19.1.dll</HintPath>
+    </Reference>
+    <Reference Include="ESRI.ArcGIS.System, Version=10.8.0.0, Culture=neutral, PublicKeyToken=8fc3cc631e44ad86, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <EmbedInteropTypes>False</EmbedInteropTypes>
+      <HintPath>C:\Program Files (x86)\ArcGIS\DeveloperKit10.8\DotNet\ESRI.ArcGIS.System.dll</HintPath>
+    </Reference>
+    <Reference Include="ESRI.ArcGIS.Version, Version=10.8.0.0, Culture=neutral, PublicKeyToken=8fc3cc631e44ad86, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>C:\Program Files (x86)\ArcGIS\DeveloperKit10.8\DotNet\ESRI.ArcGIS.Version.dll</HintPath>
+    </Reference>
+    <Reference Include="Esri.ArcGISRuntime, Version=100.6.0.0, Culture=neutral, PublicKeyToken=8fc3cc631e44ad86, processorArchitecture=MSIL">
+      <HintPath>..\packages\Esri.ArcGISRuntime.WPF.100.6.0\lib\net461\Esri.ArcGISRuntime.dll</HintPath>
+    </Reference>
+    <Reference Include="Esri.ArcGISRuntime.Toolkit, Version=100.4.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Esri.ArcGISRuntime.Toolkit.100.4.0\lib\net461\Esri.ArcGISRuntime.Toolkit.dll</HintPath>
+    </Reference>
+    <Reference Include="Esri.ArcGISRuntime.Toolkit.Preview, Version=100.4.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Esri.ArcGISRuntime.Toolkit.Preview.100.4.0\lib\net461\Esri.ArcGISRuntime.Toolkit.Preview.dll</HintPath>
+    </Reference>
+    <Reference Include="Prism, Version=7.1.0.431, Culture=neutral, PublicKeyToken=40ee6c3a2184dc59, processorArchitecture=MSIL">
+      <HintPath>..\packages\Prism.Core.7.1.0.431\lib\net45\Prism.dll</HintPath>
+    </Reference>
+    <Reference Include="Prism.Unity.Wpf, Version=7.1.0.431, Culture=neutral, PublicKeyToken=40ee6c3a2184dc59, processorArchitecture=MSIL">
+      <HintPath>..\packages\Prism.Unity.7.1.0.431\lib\net45\Prism.Unity.Wpf.dll</HintPath>
+    </Reference>
+    <Reference Include="Prism.Wpf, Version=7.1.0.431, Culture=neutral, PublicKeyToken=40ee6c3a2184dc59, processorArchitecture=MSIL">
+      <HintPath>..\packages\Prism.Wpf.7.1.0.431\lib\net45\Prism.Wpf.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
+    <Reference Include="System.Configuration" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Printing" />
+    <Reference Include="System.Security" />
+    <Reference Include="System.ServiceModel" />
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Windows.Interactivity, Version=4.5.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Prism.Wpf.7.1.0.431\lib\net45\System.Windows.Interactivity.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Xml" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="System.Net.Http" />
+    <Reference Include="System.Xaml">
+      <RequiredTargetFramework>4.0</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="UIAutomationProvider" />
+    <Reference Include="UIAutomationTypes" />
+    <Reference Include="Unity.Abstractions, Version=3.3.1.0, Culture=neutral, PublicKeyToken=6d32ff45e0ccc69f, processorArchitecture=MSIL">
+      <HintPath>..\packages\Unity.Abstractions.3.3.1\lib\net46\Unity.Abstractions.dll</HintPath>
+    </Reference>
+    <Reference Include="Unity.Container, Version=5.8.11.0, Culture=neutral, PublicKeyToken=489b6accfaf20ef0, processorArchitecture=MSIL">
+      <HintPath>..\packages\Unity.Container.5.8.11\lib\net46\Unity.Container.dll</HintPath>
+    </Reference>
+    <Reference Include="WindowsBase" />
+    <Reference Include="PresentationCore" />
+    <Reference Include="PresentationFramework" />
+    <Reference Include="WindowsFormsIntegration" />
+  </ItemGroup>
+  <ItemGroup>
+    <ApplicationDefinition Include="App.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </ApplicationDefinition>
+    <Compile Include="App.xaml.cs">
+      <DependentUpon>App.xaml</DependentUpon>
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Bootstrapper.cs" />
+    <Compile Include="LicenseInitializer.cs" />
+    <Compile Include="LicenseInitializer.Designer.cs">
+      <DependentUpon>LicenseInitializer.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Settings.cs" />
+    <Compile Include="ViewModels\MainWinViewModel.cs" />
+    <Compile Include="View\DBManagement.xaml.cs">
+      <DependentUpon>DBManagement.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\Login.xaml.cs">
+      <DependentUpon>Login.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\MainWin.xaml.cs">
+      <DependentUpon>MainWin.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\Pop\PopupQuickMenuMng.xaml.cs">
+      <DependentUpon>PopupQuickMenuMng.xaml</DependentUpon>
+    </Compile>
+    <Page Include="Styles\Blue\Buttons.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Styles\Blue\Colors.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Styles\Blue\Controls.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Styles\Blue\Fonts.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Styles\Blue\Global.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Styles\Blue\Labels.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Styles\Navy\Buttons.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Styles\Navy\Colors.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Styles\Navy\Controls.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Styles\Navy\Fonts.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Styles\Navy\Global.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Styles\Navy\Labels.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="View\DBManagement.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\Login.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\MainWin.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\Pop\PopupQuickMenuMng.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Properties\AssemblyInfo.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Properties\Settings.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Settings.settings</DependentUpon>
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+    </Compile>
+    <Resource Include="View\login_logo.png" />
+    <EmbeddedResource Include="Properties\Licenses.licx" />
+    <EmbeddedResource Include="Properties\Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <None Include="GTI.WFMS.Main_TemporaryKey.pfx" />
+    <None Include="packages.config" />
+    <None Include="Properties\app.manifest" />
+    <None Include="Properties\Settings.settings">
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <LastGenOutput>Settings.Designer.cs</LastGenOutput>
+    </None>
+    <EmbeddedResource Include="Resources\Excel\FmsBaseExcel.xlsx">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <Resource Include="Resources\Navy\Images\Image\BackPT.png" />
+    <Resource Include="Resources\Navy\Images\Image\bar_bg.png" />
+    <Resource Include="Resources\Navy\Images\Image\bg.png" />
+    <Resource Include="Resources\Navy\Images\Image\bg_blkNM.png" />
+    <Resource Include="Resources\Navy\Images\Image\btn_add.png" />
+    <Resource Include="Resources\Navy\Images\Image\btn_add_on.png" />
+    <Resource Include="Resources\Navy\Images\Image\btn_alert_confirm.png" />
+    <Resource Include="Resources\Navy\Images\Image\btn_alert_confirm_on.png" />
+    <Resource Include="Resources\Navy\Images\Image\btn_anal.png" />
+    <Resource Include="Resources\Navy\Images\Image\btn_anal_on.png" />
+    <Resource Include="Resources\Navy\Images\Image\btn_back1.png" />
+    <Resource Include="Resources\Navy\Images\Image\btn_back1_on.png" />
+    <Resource Include="Resources\Navy\Images\Image\btn_back2.png" />
+    <Resource Include="Resources\Navy\Images\Image\btn_back2_on.png" />
+    <Resource Include="Resources\Navy\Images\Image\btn_back3.png" />
+    <Resource Include="Resources\Navy\Images\Image\btn_back3_on.png" />
+    <Resource Include="Resources\Navy\Images\Image\btn_blk_add.png" />
+    <Resource Include="Resources\Navy\Images\Image\btn_blk_add_on.png" />
+    <Resource Include="Resources\Navy\Images\Image\btn_blk_del.png" />
+    <Resource Include="Resources\Navy\Images\Image\btn_blk_del_on.png" />
+    <Resource Include="Resources\Navy\Images\Image\btn_blk_mvleft.png" />
+    <Resource Include="Resources\Navy\Images\Image\btn_blk_mvleft_on.png" />
+    <Resource Include="Resources\Navy\Images\Image\btn_blk_mvright.png" />
+    <Resource Include="Resources\Navy\Images\Image\btn_blk_mvright_on.png" />
+    <Resource Include="Resources\Navy\Images\Image\btn_blk_setting.png" />
+    <Resource Include="Resources\Navy\Images\Image\btn_blk_setting_on.png" />
+    <Resource Include="Resources\Navy\Images\Image\btn_chart.png" />
+    <Resource Include="Resources\Navy\Images\Image\btn_chart_on.png" />
+    <Resource Include="Resources\Navy\Images\Image\btn_chart_viewer.png" />
+    <Resource Include="Resources\Navy\Images\Image\btn_chart_viewer_on.png" />
+    <Resource Include="Resources\Navy\Images\Image\btn_conn_test.png" />
+    <Resource Include="Resources\Navy\Images\Image\btn_conn_test_on.png" />
+    <Resource Include="Resources\Navy\Images\Image\btn_database_setting.png" />
+    <Resource Include="Resources\Navy\Images\Image\btn_database_setting_on.png" />
+    <Resource Include="Resources\Navy\Images\Image\btn_decrease_arrow.png" />
+    <Resource Include="Resources\Navy\Images\Image\btn_del.png" />
+    <Resource Include="Resources\Navy\Images\Image\btn_del_on.png" />
+    <Resource Include="Resources\Navy\Images\Image\btn_diagram_viewer.png" />
+    <Resource Include="Resources\Navy\Images\Image\btn_diagram_viewer_on.png" />
+    <Resource Include="Resources\Navy\Images\Image\btn_excel_down.png" />
+    <Resource Include="Resources\Navy\Images\Image\btn_excel_down_on.png" />
+    <Resource Include="Resources\Navy\Images\Image\btn_excel_up.png" />
+    <Resource Include="Resources\Navy\Images\Image\btn_excel_up_on.png" />
+    <Resource Include="Resources\Navy\Images\Image\btn_front1.png" />
+    <Resource Include="Resources\Navy\Images\Image\btn_front1_on.png" />
+    <Resource Include="Resources\Navy\Images\Image\btn_front2.png" />
+    <Resource Include="Resources\Navy\Images\Image\btn_front2_on.png" />
+    <Resource Include="Resources\Navy\Images\Image\btn_front3.png" />
+    <Resource Include="Resources\Navy\Images\Image\btn_front3_on.png" />
+    <Resource Include="Resources\Navy\Images\Image\btn_increase_arrow.png" />
+    <Resource Include="Resources\Navy\Images\Image\btn_login.png" />
+    <Resource Include="Resources\Navy\Images\Image\btn_login_on.png" />
+    <Resource Include="Resources\Navy\Images\Image\btn_Main_setting.png" />
+    <Resource Include="Resources\Navy\Images\Image\btn_Main_setting_on.png" />
+    <Resource Include="Resources\Navy\Images\Image\btn_maxsize.png" />
+    <Resource Include="Resources\Navy\Images\Image\btn_maxsize_on.png" />
+    <Resource Include="Resources\Navy\Images\Image\btn_minsize.png" />
+    <Resource Include="Resources\Navy\Images\Image\btn_minsize_on.png" />
+    <Resource Include="Resources\Navy\Images\Image\btn_now.png" />
+    <Resource Include="Resources\Navy\Images\Image\btn_now_on.png" />
+    <Resource Include="Resources\Navy\Images\Image\btn_popup_Back.png" />
+    <Resource Include="Resources\Navy\Images\Image\btn_popup_Back_on.png" />
+    <Resource Include="Resources\Navy\Images\Image\btn_popup_close.png" />
+    <Resource Include="Resources\Navy\Images\Image\btn_popup_close_on.png" />
+    <Resource Include="Resources\Navy\Images\Image\btn_popup_Next.png" />
+    <Resource Include="Resources\Navy\Images\Image\btn_popup_Next_on.png" />
+    <Resource Include="Resources\Navy\Images\Image\btn_popup_save.png" />
+    <Resource Include="Resources\Navy\Images\Image\btn_popup_save_on.png" />
+    <Resource Include="Resources\Navy\Images\Image\btn_power.png" />
+    <Resource Include="Resources\Navy\Images\Image\btn_power_on.png" />
+    <Resource Include="Resources\Navy\Images\Image\btn_question.png" />
+    <Resource Include="Resources\Navy\Images\Image\btn_quick_close.png" />
+    <Resource Include="Resources\Navy\Images\Image\btn_quick_open.png" />
+    <Resource Include="Resources\Navy\Images\Image\btn_save.png" />
+    <Resource Include="Resources\Navy\Images\Image\btn_save_on.png" />
+    <Resource Include="Resources\Navy\Images\Image\btn_search.png" />
+    <Resource Include="Resources\Navy\Images\Image\btn_search_on.png" />
+    <Resource Include="Resources\Navy\Images\Image\btn_setting.png" />
+    <Resource Include="Resources\Navy\Images\Image\btn_setting_on.png" />
+    <Resource Include="Resources\Navy\Images\Image\btn_specilmng.png" />
+    <Resource Include="Resources\Navy\Images\Image\btn_specilmng_on.png" />
+    <Resource Include="Resources\Navy\Images\Image\btn_Tile_RPT_01.png" />
+    <Resource Include="Resources\Navy\Images\Image\btn_Tile_RPT_02.png" />
+    <Resource Include="Resources\Navy\Images\Image\btn_Tile_RPT_03.png" />
+    <Resource Include="Resources\Navy\Images\Image\btn_Tile_RPT_04.png" />
+    <Resource Include="Resources\Navy\Images\Image\btn_Tile_RPT_05.png" />
+    <Resource Include="Resources\Navy\Images\Image\btn_Tile_RPT_06.png" />
+    <Resource Include="Resources\Navy\Images\Image\btn_Tile_RPT_on_01.png" />
+    <Resource Include="Resources\Navy\Images\Image\btn_Tile_RPT_on_02.png" />
+    <Resource Include="Resources\Navy\Images\Image\btn_Tile_RPT_on_03.png" />
+    <Resource Include="Resources\Navy\Images\Image\btn_Tile_RPT_on_04.png" />
+    <Resource Include="Resources\Navy\Images\Image\btn_Tile_RPT_on_05.png" />
+    <Resource Include="Resources\Navy\Images\Image\btn_Tile_RPT_on_06.png" />
+    <Resource Include="Resources\Navy\Images\Image\btn_Tile_Setting.png" />
+    <Resource Include="Resources\Navy\Images\Image\btn_Tile_Setting_on.png" />
+    <Resource Include="Resources\Navy\Images\Image\btn_X_close.png" />
+    <Resource Include="Resources\Navy\Images\Image\btn_X_close_on.png" />
+    <Resource Include="Resources\Navy\Images\Image\btn_X_settings.png" />
+    <Resource Include="Resources\Navy\Images\Image\btn_X_settings_on.png" />
+    <Resource Include="Resources\Navy\Images\Image\bullet_title.png" />
+    <Resource Include="Resources\Navy\Images\Image\circle.png" />
+    <Resource Include="Resources\Navy\Images\Image\greentech_logo.png" />
+    <Resource Include="Resources\Navy\Images\Image\icon_sidemenu.png" />
+    <Resource Include="Resources\Navy\Images\Image\icon_sidemenu_on.png" />
+    <Resource Include="Resources\Navy\Images\Image\icon_sidemenu_open.png" />
+    <Resource Include="Resources\Navy\Images\Image\icon_sidemenu_open_on.png" />
+    <Resource Include="Resources\Navy\Images\Image\icon_user.png" />
+    <Resource Include="Resources\Navy\Images\Image\icon_user_on.png" />
+    <Resource Include="Resources\Navy\Images\Image\login_alram_abnormal.png" />
+    <Resource Include="Resources\Navy\Images\Image\login_alram_normal.png" />
+    <Resource Include="Resources\Navy\Images\Image\login_background.png" />
+    <Resource Include="Resources\Navy\Images\Image\login_logo.png" />
+    <Resource Include="Resources\Navy\Images\Image\menubg.png" />
+    <Resource Include="Resources\Navy\Images\Image\point.png" />
+    <Resource Include="Resources\Navy\Images\Image\Tilte_notification.png" />
+    <Resource Include="Resources\Navy\Images\Image\title_img.png" />
+    <Resource Include="Resources\Navy\Images\MNUImage\MNU_L_01.png" />
+    <Resource Include="Resources\Navy\Images\MNUImage\MNU_L_02.png" />
+    <Resource Include="Resources\Navy\Images\MNUImage\MNU_L_03.png" />
+    <Resource Include="Resources\Navy\Images\MNUImage\MNU_L_04.png" />
+    <Resource Include="Resources\Navy\Images\MNUImage\MNU_L_05.png" />
+    <Resource Include="Resources\Navy\Images\MNUImage\MNU_M_1_1.png" />
+    <Resource Include="Resources\Navy\Images\MNUImage\MNU_M_1_2.png" />
+    <Resource Include="Resources\Navy\Images\MNUImage\MNU_M_1_3.png" />
+    <Resource Include="Resources\Navy\Images\MNUImage\MNU_M_2_1.png" />
+    <Resource Include="Resources\Navy\Images\MNUImage\MNU_M_2_2.png" />
+    <Resource Include="Resources\Navy\Images\MNUImage\MNU_M_2_3.png" />
+    <Resource Include="Resources\Navy\Images\MNUImage\MNU_M_2_4.png" />
+    <Resource Include="Resources\Navy\Images\MNUImage\MNU_M_2_5.png" />
+    <Resource Include="Resources\Navy\Images\MNUImage\MNU_M_3_1.png" />
+    <Resource Include="Resources\Navy\Images\MNUImage\MNU_M_3_2.png" />
+    <Resource Include="Resources\Navy\Images\MNUImage\MNU_M_4_1.png" />
+    <Resource Include="Resources\Navy\Images\MNUImage\Tile_title_01.png" />
+    <Resource Include="Resources\Navy\Images\MNUImage\Tile_title_02.png" />
+    <Resource Include="Resources\Navy\Images\MNUImage\Tile_title_03.png" />
+    <Resource Include="Resources\Navy\Images\MNUImage\Tile_title_04.png" />
+    <Resource Include="Resources\Navy\Images\MNUImage\Tile_title_05.png" />
+    <Resource Include="Resources\Navy\Images\MNUImage\Tile_title_06.png" />
+    <Resource Include="Resources\Navy\Images\MNUImage\Tile_title_07.png" />
+    <Resource Include="Resources\Navy\Images\MNUImage\Tile_title_08.png" />
+    <Resource Include="Resources\Navy\Images\MNUImage\MNU_L_06.png" />
+    <Resource Include="Resources\Navy\Images\MNUImage\MNU_L_07.png" />
+    <Resource Include="Resources\Navy\Images\Image\btn_init_on.png" />
+    <Resource Include="Resources\Navy\Images\Image\btn_init.png" />
+    <Resource Include="Resources\Navy\Images\Image\btn_list.png" />
+    <Resource Include="Resources\Navy\Images\Image\btn_list_on.png" />
+    <Resource Include="Resources\Navy\Images\Image\btn_xs_add.png" />
+    <Resource Include="Resources\Navy\Images\Image\btn_xs_add_on.png" />
+    <Resource Include="Resources\Navy\Images\Image\btn_xs_delete.png" />
+    <Resource Include="Resources\Navy\Images\Image\btn_xs_delete_on.png" />
+    <Resource Include="Resources\Navy\Images\Image\btn_xs_regist.png" />
+    <Resource Include="Resources\Navy\Images\Image\btn_xs_regist_on.png" />
+    <Resource Include="Resources\Navy\Images\Image\btn_print.png" />
+    <Resource Include="Resources\Navy\Images\Image\btn_print_on.png" />
+    <Resource Include="Resources\Navy\Images\Image\icon_pos.png" />
+    <Resource Include="Resources\Navy\Images\Image\icon_position.png" />
+    <Resource Include="Resources\Navy\Images\Image\btn_xs_down.png" />
+    <Resource Include="Resources\Navy\Images\Image\btn_xs_down_on.png" />
+    <Resource Include="Resources\Navy\Images\Image\btn_pop_file_reg.png" />
+    <Resource Include="Resources\Navy\Images\Image\btn_pop_file_reg_on.png" />
+    <Resource Include="Resources\Navy\Images\Image\btn_pop_file_sel.png" />
+    <Resource Include="Resources\Navy\Images\Image\btn_pop_file_sel_on.png" />
+    <Resource Include="Resources\Navy\Images\Image\btn_s_add.png" />
+    <Resource Include="Resources\Navy\Images\Image\btn_s_add_on.png" />
+    <Resource Include="Resources\Navy\Images\Image\btn_s_del.png" />
+    <Resource Include="Resources\Navy\Images\Image\btn_s_del_on.png" />
+    <Resource Include="Resources\Navy\Images\Image\btn_s_reg.png" />
+    <Resource Include="Resources\Navy\Images\Image\btn_s_reg_on.png" />
+    <Resource Include="InfoFMS.ico" />
+    <Resource Include="Resources\Navy\Images\Image\btn_layer_add.png" />
+    <Resource Include="Resources\Navy\Images\Image\btn_layer_add_on.png" />
+    <Resource Include="Resources\Navy\Images\Image\btn_layer_del.png" />
+    <Resource Include="Resources\Navy\Images\Image\btn_layer_del_on.png" />
+    <Resource Include="Resources\Navy\Images\Image\btn_layer_move.png" />
+    <Resource Include="Resources\Navy\Images\Image\btn_layer_move_on.png" />
+    <Resource Include="Resources\Navy\Images\Image\icon_layer_close.png" />
+    <Resource Include="Resources\Navy\Images\Image\icon_layer_map_folder.png" />
+    <Resource Include="Resources\Navy\Images\Image\btn_modi.png" />
+    <Resource Include="Resources\Navy\Images\Image\btn_modi_on.png" />
+    <Resource Include="Resources\Navy\Images\Image\btn_pos_add.png" />
+    <Resource Include="Resources\Navy\Images\Image\btn_pos_add_on.png" />
+    <Resource Include="Resources\Navy\Images\Image\btn_pos_add_over.png" />
+    <Resource Include="Resources\Navy\Images\Image\btn_pos_del.png" />
+    <Resource Include="Resources\Navy\Images\Image\btn_pos_del_on.png" />
+    <Resource Include="Resources\Navy\Images\Image\btn_pos_del_over.png" />
+    <Resource Include="Resources\Navy\Images\Image\btn_pos_edit.png" />
+    <Resource Include="Resources\Navy\Images\Image\btn_pos_edit_on.png" />
+    <Resource Include="Resources\Navy\Images\Image\btn_pos_edit_over.png" />
+    <Resource Include="Resources\Navy\Images\Image\btn_appr.png" />
+    <Resource Include="Resources\Navy\Images\Image\btn_appr_on.png" />
+    <Resource Include="Resources\Navy\Images\Image\btn_sel.png" />
+    <Resource Include="Resources\Navy\Images\Image\btn_sel_on.png" />
+    <Resource Include="Resources\Navy\Images\Image\btn_instr.png" />
+    <Resource Include="Resources\Navy\Images\Image\btn_instr_on.png" />
+    <Resource Include="Resources\Navy\Images\Image\btn_s_save.png" />
+    <Resource Include="Resources\Navy\Images\Image\btn_s_save_on.png" />
+    <Resource Include="Resources\Blue\Images\Image\BackPT.png" />
+    <Resource Include="Resources\Blue\Images\Image\bar_bg.png" />
+    <Resource Include="Resources\Blue\Images\Image\bg_blkNM.png" />
+    <Resource Include="Resources\Blue\Images\Image\btn_add.png" />
+    <Resource Include="Resources\Blue\Images\Image\btn_add_on.png" />
+    <Resource Include="Resources\Blue\Images\Image\btn_alert_confirm.png" />
+    <Resource Include="Resources\Blue\Images\Image\btn_alert_confirm_on.png" />
+    <Resource Include="Resources\Blue\Images\Image\btn_anal.png" />
+    <Resource Include="Resources\Blue\Images\Image\btn_anal_on.png" />
+    <Resource Include="Resources\Blue\Images\Image\btn_back1.png" />
+    <Resource Include="Resources\Blue\Images\Image\btn_back1_on.png" />
+    <Resource Include="Resources\Blue\Images\Image\btn_back2.png" />
+    <Resource Include="Resources\Blue\Images\Image\btn_back2_on.png" />
+    <Resource Include="Resources\Blue\Images\Image\btn_back3.png" />
+    <Resource Include="Resources\Blue\Images\Image\btn_back3_on.png" />
+    <Resource Include="Resources\Blue\Images\Image\btn_blk_add.png" />
+    <Resource Include="Resources\Blue\Images\Image\btn_blk_add_on.png" />
+    <Resource Include="Resources\Blue\Images\Image\btn_blk_del.png" />
+    <Resource Include="Resources\Blue\Images\Image\btn_blk_del_on.png" />
+    <Resource Include="Resources\Blue\Images\Image\btn_blk_mvleft.png" />
+    <Resource Include="Resources\Blue\Images\Image\btn_blk_mvleft_on.png" />
+    <Resource Include="Resources\Blue\Images\Image\btn_blk_mvright.png" />
+    <Resource Include="Resources\Blue\Images\Image\btn_blk_mvright_on.png" />
+    <Resource Include="Resources\Blue\Images\Image\btn_blk_setting.png" />
+    <Resource Include="Resources\Blue\Images\Image\btn_blk_setting_on.png" />
+    <Resource Include="Resources\Blue\Images\Image\btn_chart.png" />
+    <Resource Include="Resources\Blue\Images\Image\btn_chart_on.png" />
+    <Resource Include="Resources\Blue\Images\Image\btn_chart_viewer.png" />
+    <Resource Include="Resources\Blue\Images\Image\btn_chart_viewer_on.png" />
+    <Resource Include="Resources\Blue\Images\Image\btn_conn_test.png" />
+    <Resource Include="Resources\Blue\Images\Image\btn_conn_test_on.png" />
+    <Resource Include="Resources\Blue\Images\Image\btn_database_setting.png" />
+    <Resource Include="Resources\Blue\Images\Image\btn_database_setting_on.png" />
+    <Resource Include="Resources\Blue\Images\Image\btn_decrease_arrow.png" />
+    <Resource Include="Resources\Blue\Images\Image\btn_del.png" />
+    <Resource Include="Resources\Blue\Images\Image\btn_del_on.png" />
+    <Resource Include="Resources\Blue\Images\Image\btn_diagram_viewer.png" />
+    <Resource Include="Resources\Blue\Images\Image\btn_diagram_viewer_on.png" />
+    <Resource Include="Resources\Blue\Images\Image\btn_excel_down.png" />
+    <Resource Include="Resources\Blue\Images\Image\btn_excel_down_on.png" />
+    <Resource Include="Resources\Blue\Images\Image\btn_excel_up.png" />
+    <Resource Include="Resources\Blue\Images\Image\btn_excel_up_on.png" />
+    <Resource Include="Resources\Blue\Images\Image\btn_front1.png" />
+    <Resource Include="Resources\Blue\Images\Image\btn_front1_on.png" />
+    <Resource Include="Resources\Blue\Images\Image\btn_front2.png" />
+    <Resource Include="Resources\Blue\Images\Image\btn_front2_on.png" />
+    <Resource Include="Resources\Blue\Images\Image\btn_front3.png" />
+    <Resource Include="Resources\Blue\Images\Image\btn_front3_on.png" />
+    <Resource Include="Resources\Blue\Images\Image\btn_increase_arrow.png" />
+    <Resource Include="Resources\Blue\Images\Image\btn_login.png" />
+    <Resource Include="Resources\Blue\Images\Image\btn_login_on.png" />
+    <Resource Include="Resources\Blue\Images\Image\btn_Main_setting.png" />
+    <Resource Include="Resources\Blue\Images\Image\btn_Main_setting_on.png" />
+    <Resource Include="Resources\Blue\Images\Image\btn_maxsize.png" />
+    <Resource Include="Resources\Blue\Images\Image\btn_maxsize_on.png" />
+    <Resource Include="Resources\Blue\Images\Image\btn_minsize.png" />
+    <Resource Include="Resources\Blue\Images\Image\btn_minsize_on.png" />
+    <Resource Include="Resources\Blue\Images\Image\btn_now.png" />
+    <Resource Include="Resources\Blue\Images\Image\btn_now_on.png" />
+    <Resource Include="Resources\Blue\Images\Image\btn_popup_Back.png" />
+    <Resource Include="Resources\Blue\Images\Image\btn_popup_Back_on.png" />
+    <Resource Include="Resources\Blue\Images\Image\btn_popup_close.png" />
+    <Resource Include="Resources\Blue\Images\Image\btn_popup_close_on.png" />
+    <Resource Include="Resources\Blue\Images\Image\btn_popup_Next.png" />
+    <Resource Include="Resources\Blue\Images\Image\btn_popup_Next_on.png" />
+    <Resource Include="Resources\Blue\Images\Image\btn_popup_save.png" />
+    <Resource Include="Resources\Blue\Images\Image\btn_popup_save_on.png" />
+    <Resource Include="Resources\Blue\Images\Image\btn_power.png" />
+    <Resource Include="Resources\Blue\Images\Image\btn_power_on.png" />
+    <Resource Include="Resources\Blue\Images\Image\btn_question.png" />
+    <Resource Include="Resources\Blue\Images\Image\btn_quick_close.png" />
+    <Resource Include="Resources\Blue\Images\Image\btn_quick_open.png" />
+    <Resource Include="Resources\Blue\Images\Image\btn_save.png" />
+    <Resource Include="Resources\Blue\Images\Image\btn_save_on.png" />
+    <Resource Include="Resources\Blue\Images\Image\btn_search.png" />
+    <Resource Include="Resources\Blue\Images\Image\btn_search_on.png" />
+    <Resource Include="Resources\Blue\Images\Image\btn_setting.png" />
+    <Resource Include="Resources\Blue\Images\Image\btn_setting_on.png" />
+    <Resource Include="Resources\Blue\Images\Image\btn_specilmng.png" />
+    <Resource Include="Resources\Blue\Images\Image\btn_specilmng_on.png" />
+    <Resource Include="Resources\Blue\Images\Image\btn_Tile_RPT_01.png" />
+    <Resource Include="Resources\Blue\Images\Image\btn_Tile_RPT_02.png" />
+    <Resource Include="Resources\Blue\Images\Image\btn_Tile_RPT_03.png" />
+    <Resource Include="Resources\Blue\Images\Image\btn_Tile_RPT_04.png" />
+    <Resource Include="Resources\Blue\Images\Image\btn_Tile_RPT_05.png" />
+    <Resource Include="Resources\Blue\Images\Image\btn_Tile_RPT_06.png" />
+    <Resource Include="Resources\Blue\Images\Image\btn_Tile_RPT_on_01.png" />
+    <Resource Include="Resources\Blue\Images\Image\btn_Tile_RPT_on_02.png" />
+    <Resource Include="Resources\Blue\Images\Image\btn_Tile_RPT_on_03.png" />
+    <Resource Include="Resources\Blue\Images\Image\btn_Tile_RPT_on_04.png" />
+    <Resource Include="Resources\Blue\Images\Image\btn_Tile_RPT_on_05.png" />
+    <Resource Include="Resources\Blue\Images\Image\btn_Tile_RPT_on_06.png" />
+    <Resource Include="Resources\Blue\Images\Image\btn_Tile_Setting.png" />
+    <Resource Include="Resources\Blue\Images\Image\btn_Tile_Setting_on.png" />
+    <Resource Include="Resources\Blue\Images\Image\btn_X_close.png" />
+    <Resource Include="Resources\Blue\Images\Image\btn_X_close_on.png" />
+    <Resource Include="Resources\Blue\Images\Image\btn_X_settings.png" />
+    <Resource Include="Resources\Blue\Images\Image\btn_X_settings_on.png" />
+    <Resource Include="Resources\Blue\Images\Image\bullet_title.png" />
+    <Resource Include="Resources\Blue\Images\Image\circle.png" />
+    <Resource Include="Resources\Blue\Images\Image\greentech_logo.png" />
+    <Resource Include="Resources\Blue\Images\Image\icon_Alert.png" />
+    <Resource Include="Resources\Blue\Images\Image\icon_AlertON.png" />
+    <Resource Include="Resources\Blue\Images\Image\icon_AlertON_on.png" />
+    <Resource Include="Resources\Blue\Images\Image\icon_Alert_on.png" />
+    <Resource Include="Resources\Blue\Images\Image\icon_sidemenu.png" />
+    <Resource Include="Resources\Blue\Images\Image\icon_sidemenu_on.png" />
+    <Resource Include="Resources\Blue\Images\Image\icon_user.png" />
+    <Resource Include="Resources\Blue\Images\Image\icon_user_on.png" />
+    <Resource Include="Resources\Blue\Images\Image\login_alram_abnormal.png" />
+    <Resource Include="Resources\Blue\Images\Image\login_alram_normal.png" />
+    <Resource Include="Resources\Blue\Images\Image\login_background.png" />
+    <Resource Include="Resources\Blue\Images\Image\login_logo.png" />
+    <Resource Include="Resources\Blue\Images\Image\menubg.png" />
+    <Resource Include="Resources\Blue\Images\Image\point.png" />
+    <Resource Include="Resources\Blue\Images\Image\Tilte_notification.png" />
+    <Resource Include="Resources\Blue\Images\Image\title_img.png" />
+    <Resource Include="Resources\Blue\Images\MNUImage\MNU_L_01.png" />
+    <Resource Include="Resources\Blue\Images\MNUImage\MNU_L_02.png" />
+    <Resource Include="Resources\Blue\Images\MNUImage\MNU_L_03.png" />
+    <Resource Include="Resources\Blue\Images\MNUImage\MNU_L_04.png" />
+    <Resource Include="Resources\Blue\Images\MNUImage\MNU_L_05.png" />
+    <Resource Include="Resources\Blue\Images\MNUImage\MNU_M_1_1.png" />
+    <Resource Include="Resources\Blue\Images\MNUImage\MNU_M_1_2.png" />
+    <Resource Include="Resources\Blue\Images\MNUImage\MNU_M_1_3.png" />
+    <Resource Include="Resources\Blue\Images\MNUImage\MNU_M_2_1.png" />
+    <Resource Include="Resources\Blue\Images\MNUImage\MNU_M_2_2.png" />
+    <Resource Include="Resources\Blue\Images\MNUImage\MNU_M_2_3.png" />
+    <Resource Include="Resources\Blue\Images\MNUImage\MNU_M_2_4.png" />
+    <Resource Include="Resources\Blue\Images\MNUImage\MNU_M_2_5.png" />
+    <Resource Include="Resources\Blue\Images\MNUImage\MNU_M_3_1.png" />
+    <Resource Include="Resources\Blue\Images\MNUImage\MNU_M_3_2.png" />
+    <Resource Include="Resources\Blue\Images\MNUImage\MNU_M_4_1.png" />
+    <Resource Include="Resources\Blue\Images\MNUImage\Tile_title_01.png" />
+    <Resource Include="Resources\Blue\Images\MNUImage\Tile_title_02.png" />
+    <Resource Include="Resources\Blue\Images\MNUImage\Tile_title_03.png" />
+    <Resource Include="Resources\Blue\Images\MNUImage\Tile_title_04.png" />
+    <Resource Include="Resources\Blue\Images\MNUImage\Tile_title_05.png" />
+    <Resource Include="Resources\Blue\Images\MNUImage\Tile_title_06.png" />
+    <Resource Include="Resources\Blue\Images\MNUImage\Tile_title_07.png" />
+    <Resource Include="Resources\Blue\Images\MNUImage\Tile_title_08.png" />
+    <Resource Include="Resources\Blue\Images\Image\btn_init.png" />
+    <Resource Include="Resources\Blue\Images\Image\btn_init_on.png" />
+    <Resource Include="Resources\Blue\Images\MNUImage\MNU_L_06.png" />
+    <Resource Include="Resources\Blue\Images\MNUImage\MNU_L_07.png" />
+    <Resource Include="Resources\Blue\Images\Image\btn_modi.png" />
+    <Resource Include="Resources\Blue\Images\Image\btn_modi_on.png" />
+    <Content Include="Styles\Fonts\malgun.ttf">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Styles\Fonts\malgunbd.ttf">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Styles\Fonts\malgunsl.ttf">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="App.config" />
+  </ItemGroup>
+  <ItemGroup />
+  <ItemGroup>
+    <ProjectReference Include="..\GTI.WFMS.GIS\GTI.WFMS.GIS.csproj">
+      <Project>{28bcab02-61d3-4afc-be3a-713f062d3923}</Project>
+      <Name>GTI.WFMS.GIS</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\GTI.WFMS.Models\GTI.WFMS.Models.csproj">
+      <Project>{f098cedb-9897-4ad2-8323-2405ef88e192}</Project>
+      <Name>GTI.WFMS.Models</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\GTI.WFMS.Modules\GTI.WFMS.Modules.csproj">
+      <Project>{894a5389-85e8-45ec-9a1c-ba546f657677}</Project>
+      <Name>GTI.WFMS.Modules</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\GTIFramework\GTIFramework.csproj">
+      <Project>{A4514546-40CD-4B24-9835-91D18DD9469A}</Project>
+      <Name>GTIFramework</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <BootstrapperPackage Include=".NETFramework,Version=v4.6.1">
+      <Visible>False</Visible>
+      <ProductName>Microsoft .NET Framework 4.6.1%28x86 및 x64%29</ProductName>
+      <Install>true</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Net.Framework.3.5.SP1">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 3.5 SP1</ProductName>
+      <Install>false</Install>
+    </BootstrapperPackage>
+  </ItemGroup>
+  <ItemGroup>
+    <WCFMetadata Include="Connected Services\" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <Import Project="..\packages\Esri.ArcGISRuntime.WPF.100.6.0\build\net461\Esri.ArcGISRuntime.WPF.targets" Condition="Exists('..\packages\Esri.ArcGISRuntime.WPF.100.6.0\build\net461\Esri.ArcGISRuntime.WPF.targets')" />
+  <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
+    <PropertyGroup>
+      <ErrorText>이 프로젝트는 이 컴퓨터에 없는 NuGet 패키지를 참조합니다. 해당 패키지를 다운로드하려면 NuGet 패키지 복원을 사용하십시오. 자세한 내용은 http://go.microsoft.com/fwlink/?LinkID=322105를 참조하십시오. 누락된 파일은 {0}입니다.</ErrorText>
+    </PropertyGroup>
+    <Error Condition="!Exists('..\packages\Esri.ArcGISRuntime.WPF.100.6.0\build\net461\Esri.ArcGISRuntime.WPF.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\Esri.ArcGISRuntime.WPF.100.6.0\build\net461\Esri.ArcGISRuntime.WPF.targets'))" />
+  </Target>
+</Project>

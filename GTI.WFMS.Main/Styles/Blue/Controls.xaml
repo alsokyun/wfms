@@ -1,0 +1,1588 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:dx="http://schemas.devexpress.com/winfx/2008/xaml/core"
+                    xmlns:dxe="http://schemas.devexpress.com/winfx/2008/xaml/editors"  
+                    xmlns:dxg="http://schemas.devexpress.com/winfx/2008/xaml/grid"
+                    xmlns:dxa="http://schemas.devexpress.com/winfx/2008/xaml/accordion"
+                    xmlns:dxet="http://schemas.devexpress.com/winfx/2008/xaml/editors/themekeys"
+                    xmlns:dxc="http://schemas.devexpress.com/winfx/2008/xaml/charts"
+                    xmlns:cvt="clr-namespace:GTIFramework.Common.Utils.Converters;assembly=GTIFramework" >
+
+    <cvt:InvertBoolConverter x:Key="invertBoolConverter"/>
+    <cvt:BooleanToVisibilityConverter x:Key="booleanToVisibilityConverter"/>
+
+    <!--===================================================================================-->
+    <!--Window-->
+    <Style TargetType="{x:Type Window}" x:Key="PopupWindow">
+        <Setter Property="RenderOptions.BitmapScalingMode" Value="NearestNeighbor"/>
+        <Setter Property="RenderOptions.EdgeMode" Value="Unspecified"/>
+        <Setter Property="AllowsTransparency" Value="True"/>
+        <Setter Property="Background" Value="#efefef"/>
+        <Setter Property="BorderBrush">
+            <Setter.Value>
+                <SolidColorBrush Color="#FFFFFF" Opacity="0.5"/>
+            </Setter.Value>
+        </Setter>
+        <Setter Property="BorderThickness" Value="5"/>
+    </Style>
+
+    <!--MAINWindow-->
+    <Style TargetType="{x:Type Window}" x:Key="MAINWindow">
+        <Setter Property="RenderOptions.BitmapScalingMode" Value="Unspecified"/>
+        <Setter Property="RenderOptions.EdgeMode" Value="Unspecified"/>
+    </Style>
+
+    <!--UserControl-->
+    <Style TargetType="{x:Type UserControl}" x:Key="UcPopupWindow">
+        <Setter Property="BorderBrush" Value="#227AB4"/>
+        <Setter Property="Margin" Value="-7,-6,-7,-6"/>
+        <Setter Property="BorderThickness" Value="5"/>
+    </Style>
+
+    <!--UserControl Content-->
+    <Style TargetType="{x:Type UserControl}" x:Key="UcContent">
+        <Setter Property="RenderOptions.BitmapScalingMode" Value="NearestNeighbor"/>
+        <Setter Property="RenderOptions.EdgeMode" Value="Unspecified"/>
+    </Style>
+
+
+
+    <!--===================================================================================-->
+    <!--RadioButton-->
+    <Style TargetType="{x:Type RadioButton}" x:Key="CircleTitleRadio">
+        <Setter Property="Padding" Value="0"/>
+        <Setter Property="VerticalAlignment" Value="Center"/>
+        <Setter Property="VerticalContentAlignment" Value="Center"/>
+        <Setter Property="HorizontalAlignment" Value="Left"/>
+        <Setter Property="FontSize" Value="16"/>
+        <Setter Property="FontWeight" Value="Bold"/>
+        <Setter Property="FontFamily" Value="{DynamicResource ResourceKey=malgunbd}"/>
+        <Setter Property="Foreground" Value="#ff144873"/>
+        <Setter Property="Margin" Value="15,0,0,0"/>
+    </Style>
+
+    <!--===================================================================================-->
+    <!--ToggleSwitch-->
+    <!--그리드 내 토글 스위치-->
+    <Style TargetType="{x:Type dxe:ToggleSwitch}" x:Key="GridToggle">
+        <Setter Property="ToggleSwitchHeight" Value="32"/>
+        <Setter Property="ToggleSwitchWidth" Value="200"/>
+        <Setter Property="Margin" Value="10,0,10,0"/>
+        <Setter Property="VerticalAlignment" Value="Center"/>
+        <Setter Property="HorizontalAlignment" Value="Left"/>
+        <Setter Property="EnableAnimation" Value="False"/>
+    </Style>
+
+
+    <!--===================================================================================-->
+    <!--DateEdit-->
+    <!--헤더 DateEdit 버튼 베이스-->
+    <Style TargetType="{x:Type dxe:DateEdit}" x:Key="graybuttondateedit"
+                   xmlns:dxi="http://schemas.devexpress.com/winfx/2008/xaml/core/internal"
+                   xmlns:dxet="http://schemas.devexpress.com/winfx/2008/xaml/editors/themekeys">
+        <Setter Property="dxe:DateEditCalendar.ShowClearButton" Value="False"/>
+        <Setter Property="StyleSettings">
+            <Setter.Value>
+                <dxe:DateEditCalendarStyleSettings/>
+            </Setter.Value>
+        </Setter>
+        <Style.Resources>
+            <ControlTemplate TargetType="{x:Type ButtonBase}" x:Key="{dxet:ButtonsThemeKey ResourceKey=ButtonTemplate, IsThemeIndependent=True}">
+                <Grid VerticalAlignment="Center" HorizontalAlignment="Center" SnapsToDevicePixels="True">
+                    <Path Fill="#2279B5" Width="20" Height="20" Data="M10,0C4.5,0,0,4.5,0,10s4.5,10,10,10c5.5,0,10-4.5,10-10
+			                    S15.5,0,10,0z M13.9,7.9c-0.2,0.3-3.1,5.3-3.4,5.8c-0.2,0.4-0.7,0.4-1,0c-0.2-0.4-3.2-5.4-3.4-5.9C5.9,7.5,6.1,7,6.6,7h6.9
+			                    C13.8,7,14.2,7.4,13.9,7.9z" Stretch="Uniform" Margin="5,0,5,0"/>
+                    <ContentPresenter Style="{dxi:ThemeResource {dxet:ButtonsThemeKey ResourceKey=ButtonInfoContentStyle}}" Visibility="Collapsed"/>
+                </Grid>
+            </ControlTemplate>
+        </Style.Resources>
+    </Style>
+
+    <!--그리드 내 데이트에딧-->
+    <Style TargetType="{x:Type dxe:DateEdit}" x:Key="GridDateEdit"
+                   xmlns:dxi="http://schemas.devexpress.com/winfx/2008/xaml/core/internal"
+                   xmlns:dxet="http://schemas.devexpress.com/winfx/2008/xaml/editors/themekeys">
+        <Style.Resources>
+            <ControlTemplate TargetType="{x:Type ButtonBase}" x:Key="{dxet:ButtonsThemeKey ResourceKey=ButtonTemplate, IsThemeIndependent=False}">
+                <Grid>
+                    <Border BorderBrush="#FFCECECE" BorderThickness="0,1,1,1" ClipToBounds="True" Background="Transparent" Margin="-2,-1,-1,-1">
+                        <Border BorderBrush="#FFCECECE" BorderThickness="0,1,0,0" Margin="-1">
+                            <Border.Effect>
+                                <DropShadowEffect ShadowDepth="0" BlurRadius="6" Opacity="0.5"/>
+                            </Border.Effect>
+                        </Border>
+                    </Border>
+                    <Path Fill="#555555" Width="10" Height="10" Data="M2.1,2c1.1,0,15.2,0,15.9,0c1,0,1.7,1,1.1,2c-0.4,0.8-7.2,12.2-7.9,13.5 c-0.5,0.9-1.7,0.9-2.2,0C8.4,16.6,1.7,5.1,1,4C0.6,3.1,1.1,2,2.1,2z" Stretch="Uniform" Margin="5,0,5,0"/>
+                </Grid>
+            </ControlTemplate>
+        </Style.Resources>
+        <Setter Property="dxe:DateEditCalendar.ShowClearButton" Value="False"/>
+        <Setter Property="StyleSettings">
+            <Setter.Value>
+                <dxe:DateEditCalendarStyleSettings/>
+            </Setter.Value>
+        </Setter>
+        <Setter Property="dx:ThemeManager.ThemeName" Value="None"/>
+        <Setter Property="Width" Value="Auto"/>
+        <Setter Property="Height" Value="27"/>
+        <Setter Property="HorizontalAlignment" Value="Stretch"/>
+        <Setter Property="VerticalAlignment" Value="Center"/>
+        <Setter Property="Margin" Value="10,0,10,0"/>
+        <Setter Property="ShowBorder" Value="False"/>
+        <Setter Property="EditTemplate">
+            <Setter.Value>
+                <ControlTemplate>
+                    <Grid>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="*"/>
+                        </Grid.RowDefinitions>
+
+                        <Border BorderBrush="#FFCECECE" BorderThickness="1,1,0,1" ClipToBounds="True" Background="Transparent">
+                            <Border BorderBrush="#FFCECECE" BorderThickness="1,1,0,0" Margin="-1">
+                                <Border.Effect>
+                                    <DropShadowEffect ShadowDepth="0" BlurRadius="6" Opacity="0.5"/>
+                                </Border.Effect>
+                            </Border>
+                        </Border>
+
+                        <TextBox x:Name="PART_Editor" Background="Transparent" BorderBrush="Transparent" 
+                                          IsReadOnly="True" HorizontalContentAlignment="Left" VerticalContentAlignment="Center"
+                                          IsHitTestVisible="False" Focusable="False" Foreground="#000000" Margin="2,0,0,0"/>
+                    </Grid>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <!--조회 기간 DateEdit-->
+    <Style TargetType="{x:Type dxe:DateEdit}" x:Key="HeaderDateEdit"
+                   xmlns:dxi="http://schemas.devexpress.com/winfx/2008/xaml/core/internal"
+                   xmlns:dxet="http://schemas.devexpress.com/winfx/2008/xaml/editors/themekeys">
+        <Style.Resources>
+            <ControlTemplate TargetType="{x:Type ButtonBase}" x:Key="{dxet:ButtonsThemeKey ResourceKey=ButtonTemplate, IsThemeIndependent=False}">
+                <Grid>
+                    <Border ClipToBounds="False" Margin="-3,-1,-1,-1" CornerRadius="0,4,4,0" BorderThickness="0,1,1,1" BorderBrush="#ff1b6394">
+                        <Border.Effect>
+                            <DropShadowEffect Opacity="0.1" Direction="-60"/>
+                        </Border.Effect>
+                        <Border.Background>
+                            <LinearGradientBrush  StartPoint="1,1" EndPoint="1,0">
+                                <GradientStop Color="#e8e9e9" Offset="1"/>
+                                <GradientStop Color="#bec3c6" Offset="0"/>
+                            </LinearGradientBrush>
+                        </Border.Background>
+                    </Border>
+                    <Path Fill="#2279B5" Data="M92.5,350h-14c-1.1,0-2,0.9-2,2v14c0,1.1,0.9,2,2,2h14c1.1,0,2-0.9,2-2v-14C94.5,350.9,93.6,350,92.5,350z
+	 M89.6,356.3c-0.2,0.4-3.3,5.5-3.6,6.1c-0.2,0.4-0.8,0.4-1,0c-0.3-0.4-3.3-5.6-3.6-6.1c-0.2-0.4,0-0.9,0.5-0.9c0.5,0,6.9,0,7.2,0
+	C89.5,355.4,89.8,355.8,89.6,356.3z" Stretch="Uniform" Width="20" Height="20" Margin="0,0,5,0"/>
+                </Grid>
+            </ControlTemplate>
+        </Style.Resources>
+        <Setter Property="Height" Value="30"/>
+        <Setter Property="Width" Value="150"/>
+        <Setter Property="HorizontalAlignment" Value="Center"/>
+        <Setter Property="HorizontalContentAlignment" Value="Center"/>
+        <Setter Property="VerticalAlignment" Value="Center"/>
+        <Setter Property="VerticalContentAlignment" Value="Center"/>
+        <Setter Property="ShowBorder" Value="False"/>
+        <Setter Property="FontSize" Value="14"/>
+        <Setter Property="Foreground" Value="#ff2279b5"/>
+        <Setter Property="dxe:DateEditCalendar.ShowClearButton" Value="False"/>
+        <Setter Property="StyleSettings">
+            <Setter.Value>
+                <dxe:DateEditCalendarStyleSettings/>
+            </Setter.Value>
+        </Setter>
+        <Setter Property="dx:ThemeManager.ThemeName" Value="None"/>
+        <Setter Property="AllowSpinOnMouseWheel" Value="False"/>
+        <Setter Property="EditTemplate">
+            <Setter.Value>
+                <ControlTemplate>
+                    <Grid>
+                        <Border Grid.Row="0" CornerRadius="4,0,0,4" BorderThickness="1,1,0,1" BorderBrush="#1b6394">
+                            <Border.Effect>
+                                <DropShadowEffect Opacity="0.1" Direction="-50"/>
+                            </Border.Effect>
+                            <Border.Background>
+                                <LinearGradientBrush  StartPoint="1,1" EndPoint="1,0">
+                                    <GradientStop Color="#e8e9e9" Offset="1"/>
+                                    <GradientStop Color="#bec3c6" Offset="0"/>
+                                </LinearGradientBrush>
+                            </Border.Background>
+                        </Border>
+                        <TextBox x:Name="PART_Editor" Background="Transparent" BorderBrush="Transparent"
+                                 IsReadOnly="True" HorizontalContentAlignment="Center" VerticalContentAlignment="Center"
+                                 IsHitTestVisible="False" Focusable="False" Margin="0" Foreground="#ff1b6394"/>
+                    </Grid>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+
+    <!--===================================================================================-->
+    <!--RichTextBox-->
+    <!--Grid RichTextBox-->
+    <Style TargetType="{x:Type RichTextBox}" x:Key="GridRichTextBox">
+        <Setter Property="BorderThickness" Value="1"/>
+        <Setter Property="BorderBrush" Value="#FFCECECE"/>
+        <Setter Property="Background" Value="Transparent"/>
+        <Setter Property="Foreground" Value="#000000"/>
+        <Setter Property="FontSize" Value="12"/>
+    </Style>
+
+    <!--TextBox-->
+    <!--Help TextBox-->
+    <Style TargetType="{x:Type TextBox}" x:Key="HelpTextBox">
+        <Setter Property="BorderThickness" Value="1"/>
+        <Setter Property="BorderBrush" Value="#FFCECECE"/>
+        <Setter Property="Background" Value="Transparent"/>
+        <Setter Property="Foreground" Value="#000000"/>
+    </Style>
+
+
+
+
+    <!--===================================================================================-->
+    <!--TextEdit-->
+    <!--로그인 폼 TextEdit (inner shadow)-->
+    <Style TargetType="{x:Type dxe:TextEdit}" x:Key="LoginTextEdit">
+        <Setter Property="Width" Value="227"/>
+        <Setter Property="Height" Value="30"/>
+        <Setter Property="HorizontalAlignment" Value="Left"/>
+        <Setter Property="VerticalAlignment" Value="Center"/>
+        <Setter Property="ShowBorder" Value="False"/>
+        <Setter Property="EditTemplate">
+            <Setter.Value>
+                <ControlTemplate>
+                    <Grid>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="*"/>
+                        </Grid.RowDefinitions>
+
+                        <Border Grid.Row="0" BorderBrush="#FFCECECE" BorderThickness="1" ClipToBounds="True" CornerRadius="4">
+                            <Border BorderBrush="#FFCECECE" BorderThickness="1,1,0,0" Margin="-1" CornerRadius="4"/>
+                        </Border>
+                        <TextBox x:Name="PART_Editor" Background="Transparent" BorderBrush="Transparent" BorderThickness="0"
+                                         HorizontalContentAlignment="Left" VerticalContentAlignment="Center" Focusable="True" Margin="5,0,0,0"/>
+                    </Grid>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <!--헤더 검색어-->
+    <Style TargetType="{x:Type dxe:TextEdit}" x:Key="SearchTextEdit">
+        <Setter Property="FontFamily" Value="맑은고딕"/>
+        <Setter Property="FontSize" Value="14"/>
+        <Setter Property="Foreground" Value="#ff2279b5"/>
+        <Setter Property="Width" Value="150"/>
+        <Setter Property="Height" Value="30"/>
+        <Setter Property="ShowBorder" Value="False"/>
+        <Setter Property="HorizontalAlignment" Value="Center"/>
+        <Setter Property="HorizontalContentAlignment" Value="Left"/>
+        <Setter Property="VerticalAlignment" Value="Center"/>
+        <Setter Property="VerticalContentAlignment" Value="Center"/>
+        <Setter Property="EditTemplate">
+            <Setter.Value>
+                <ControlTemplate>
+                    <Grid>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="*"/>
+                        </Grid.RowDefinitions>
+                        <Border Grid.Row="0" CornerRadius="4" BorderThickness="1" BorderBrush="#1b6394">
+                            <Border.Effect>
+                                <DropShadowEffect Opacity="0.1" Direction="-90"/>
+                            </Border.Effect>
+                            <Border.Background>
+                                <LinearGradientBrush  StartPoint="1,1" EndPoint="1,0">
+                                    <GradientStop Color="#e8e9e9" Offset="1"/>
+                                    <GradientStop Color="#bec3c6" Offset="0"/>
+                                </LinearGradientBrush>
+                            </Border.Background>
+                        </Border>
+                        <TextBox x:Name="PART_Editor" Background="Transparent" BorderBrush="Transparent" BorderThickness="0"
+                                 HorizontalContentAlignment="{Binding HorizontalContentAlignment}" VerticalContentAlignment="Center" 
+                                 Focusable="True" Padding="5,0,5,0" Margin="0" Foreground="#ff1b6394"/>
+                    </Grid>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <!--그리드 내 TextEdit (inner shadow)-->
+    <Style TargetType="{x:Type dxe:TextEdit}" x:Key="GridTextEdit">
+        <Setter Property="Width" Value="Auto"/>
+        <Setter Property="Height" Value="27"/>
+        <Setter Property="HorizontalAlignment" Value="Stretch"/>
+        <Setter Property="VerticalAlignment" Value="Center"/>
+        <Setter Property="Margin" Value="10,0,10,0"/>
+        <Setter Property="ShowBorder" Value="False"/>
+        <Setter Property="EditTemplate">
+            <Setter.Value>
+                <ControlTemplate>
+                    <Grid>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="*"/>
+                        </Grid.RowDefinitions>
+                        <Border Grid.Row="0" BorderBrush="#FFCECECE" BorderThickness="1" ClipToBounds="True">
+                            <Border BorderBrush="#FFCECECE" BorderThickness="1,1,0,0" Margin="-1">
+                                <Border.Effect>
+                                    <DropShadowEffect ShadowDepth="1" BlurRadius="6" Opacity="0.1"/>
+                                </Border.Effect>
+                            </Border>
+                        </Border>
+
+                        <TextBox x:Name="PART_Editor" Background="Transparent" BorderBrush="Transparent" Foreground="#000000"
+                                         HorizontalContentAlignment="Left" VerticalContentAlignment="Center" Focusable="True"/>
+                    </Grid>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+
+    <!--===================================================================================-->
+    <!--ProgressBar-->
+    <Style TargetType="ProgressBar" x:Key="ContentProgressBar">
+        <Setter Property="Height" Value="25"/>
+        <Setter Property="HorizontalAlignment" Value="Stretch"/>
+        <Setter Property="VerticalAlignment" Value="Center"/>
+        <Setter Property="Margin" Value="10,0,10,0"/>
+        <Setter Property="Foreground" Value="{DynamicResource ProgressBarCOLOR1Brush}"/>
+    </Style>
+
+
+    <!--===================================================================================-->
+    <!--ComboBoxEdit-->
+    <!--헤더 ComboBoxEdit 버튼 베이스-->
+    <Style TargetType="{x:Type dxe:ComboBoxEdit}" x:Key="graybuttoncomboboxedit"
+               xmlns:dxi="http://schemas.devexpress.com/winfx/2008/xaml/core/internal"
+               xmlns:dxet="http://schemas.devexpress.com/winfx/2008/xaml/editors/themekeys">
+        <Style.Resources>
+            <ControlTemplate TargetType="{x:Type ButtonBase}" x:Key="{dxet:ButtonsThemeKey ResourceKey=ButtonTemplate, IsThemeIndependent=True}">
+                <Grid VerticalAlignment="Center" HorizontalAlignment="Center" SnapsToDevicePixels="True">
+                    <Path Fill="#2279B5" Width="20" Height="20" Data="M92.5,350h-14c-1.1,0-2,0.9-2,2v14c0,1.1,0.9,2,2,2h14c1.1,0,2-0.9,2-2v-14C94.5,350.9,93.6,350,92.5,350z
+                          M89.6,356.3c-0.2,0.4-3.3,5.5-3.6,6.1c-0.2,0.4-0.8,0.4-1,0c-0.3-0.4-3.3-5.6-3.6-6.1c-0.2-0.4,0-0.9,0.5-0.9c0.5,0,6.9,0,7.2,0
+                          C89.5,355.4,89.8,355.8,89.6,356.3z" Stretch="Uniform" Margin="5,0,5,0"/>
+                    <ContentPresenter Style="{dxi:ThemeResource {dxet:ButtonsThemeKey ResourceKey=ButtonInfoContentStyle}}" Visibility="Collapsed"/>
+                </Grid>
+            </ControlTemplate>
+        </Style.Resources>
+    </Style>
+
+    <!--검색 헤더 콤보박스-->
+    <Style TargetType="{x:Type dxe:ComboBoxEdit}" x:Key="SearchComboBox"
+                   xmlns:dxi="http://schemas.devexpress.com/winfx/2008/xaml/core/internal"
+                   xmlns:dxet="http://schemas.devexpress.com/winfx/2008/xaml/editors/themekeys">
+        <Style.Resources>
+            <ControlTemplate TargetType="{x:Type ButtonBase}" x:Key="{dxet:ButtonsThemeKey ResourceKey=ButtonTemplate, IsThemeIndependent=False}">
+                <Grid>
+                    <Border ClipToBounds="False" Margin="-3,-1,-1,-1" CornerRadius="0,4,4,0" BorderThickness="0,1,1,1" BorderBrush="#ff1b6394">
+                        <Border.Effect>
+                            <DropShadowEffect Opacity="0.1" Direction="-70"/>
+                        </Border.Effect>
+                        <Border.Background>
+                            <LinearGradientBrush  StartPoint="1,1" EndPoint="1,0">
+                                <GradientStop Color="#e8e9e9" Offset="1"/>
+                                <GradientStop Color="#bec3c6" Offset="0"/>
+                            </LinearGradientBrush>
+                        </Border.Background>
+                    </Border>
+                    <Path Fill="#2279B5" Data="M10,0C4.5,0,0,4.5,0,10s4.5,10,10,10c5.5,0,10-4.5,10-10
+                                  S15.5,0,10,0z M13.9,7.9c-0.2,0.3-3.1,5.3-3.4,5.8c-0.2,0.4-0.7,0.4-1,0c-0.2-0.4-3.2-5.4-3.4-5.9C5.9,7.5,6.1,7,6.6,7h6.9
+                                  C13.8,7,14.2,7.4,13.9,7.9z" Stretch="Uniform" Width="20" Height="20" Margin="0,0,5,0"/>
+                </Grid>
+            </ControlTemplate>
+        </Style.Resources>
+        <Setter Property="Width" Value="150"/>
+        <Setter Property="Height" Value="30"/>
+        <Setter Property="HorizontalAlignment" Value="Left"/>
+        <Setter Property="VerticalAlignment" Value="Center"/>
+        <Setter Property="VerticalContentAlignment" Value="Center"/>
+        <Setter Property="FontWeight" Value="Normal"/>
+        <Setter Property="Foreground" Value="#ff2279b5"/>
+        <Setter Property="ShowBorder" Value="False"/>
+        <Setter Property="FontSize" Value="14"/>
+        <Setter Property="dx:ThemeManager.ThemeName" Value="None"/>
+        <Setter Property="EditTemplate">
+            <Setter.Value>
+                <ControlTemplate>
+                    <Grid>
+                        <Border Grid.Row="0" CornerRadius="4,0,0,4" BorderThickness="1,1,0,1" BorderBrush="#ff1b6394">
+                            <Border.Effect>
+                                <DropShadowEffect Opacity="0.1" Direction="-90"/>
+                            </Border.Effect>
+                            <Border.Background>
+                                <LinearGradientBrush  StartPoint="1,1" EndPoint="1,0">
+                                    <GradientStop Color="#e8e9e9" Offset="1"/>
+                                    <GradientStop Color="#bec3c6" Offset="0"/>
+                                </LinearGradientBrush>
+                            </Border.Background>
+                        </Border>
+
+                        <TextBox x:Name="PART_Editor" Background="Transparent" BorderBrush="Transparent" 
+                                 IsReadOnly="True" HorizontalContentAlignment="Left" VerticalContentAlignment="Center"
+                                 IsHitTestVisible="False" Focusable="False" Margin="5,0,0,0" Foreground="#ff1b6394"/>
+                    </Grid>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <!--로그인 폼 콤보박스-->
+    <Style TargetType="{x:Type dxe:ComboBoxEdit}" x:Key="LoginCombo"
+                   xmlns:dxi="http://schemas.devexpress.com/winfx/2008/xaml/core/internal"
+                   xmlns:dxet="http://schemas.devexpress.com/winfx/2008/xaml/editors/themekeys">
+        <Style.Resources>
+            <ControlTemplate TargetType="{x:Type ButtonBase}" x:Key="{dxet:ButtonsThemeKey ResourceKey=ButtonTemplate, IsThemeIndependent=False}">
+                <Grid>
+                    <Border BorderBrush="#FFCECECE" BorderThickness="0,0,1,1" ClipToBounds="True" Background="White" Margin="-2,-1,-1,-1"  CornerRadius="0,4,4,0">
+                        <Border BorderBrush="#FFCECECE" BorderThickness="0,1,0,0" Margin="-1"/>
+                    </Border>
+                    <Path Fill="#555555" Width="10" Height="10" Data="M2.1,2c1.1,0,15.2,0,15.9,0c1,0,1.7,1,1.1,2c-0.4,0.8-7.2,12.2-7.9,13.5 c-0.5,0.9-1.7,0.9-2.2,0C8.4,16.6,1.7,5.1,1,4C0.6,3.1,1.1,2,2.1,2z" Stretch="Uniform" Margin="5,0,5,0"/>
+                </Grid>
+            </ControlTemplate>
+        </Style.Resources>
+        <Setter Property="Width" Value="227"/>
+        <Setter Property="Height" Value="30"/>
+        <Setter Property="HorizontalAlignment" Value="Left"/>
+        <Setter Property="VerticalAlignment" Value="Center"/>
+        <Setter Property="FontWeight" Value="Normal"/>
+        <Setter Property="ShowBorder" Value="False"/>
+        <Setter Property="FontSize" Value="13"/>
+        <Setter Property="dx:ThemeManager.ThemeName" Value="None"/>
+        <Setter Property="EditTemplate">
+            <Setter.Value>
+                <ControlTemplate>
+                    <Grid>
+                        <Border BorderBrush="#FFCECECE" BorderThickness="0,0,0,1" ClipToBounds="True" Background="White"  CornerRadius="4,0,0,4">
+                            <Border BorderBrush="#FFCECECE" BorderThickness="1,1,0,0" Margin="0,-1,0,0"  CornerRadius="4,0,0,4"/>
+                        </Border>
+
+                        <TextBox x:Name="PART_Editor" Background="Transparent" BorderBrush="Transparent" Margin="5,0,0,0"
+                                          IsReadOnly="True" HorizontalContentAlignment="Left" VerticalContentAlignment="Center"
+                                          IsHitTestVisible="False" Focusable="False"/>
+                    </Grid>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <!--그리드 내 콤보박스-->
+    <Style TargetType="{x:Type dxe:ComboBoxEdit}" x:Key="GridComboBox"
+                   xmlns:dxi="http://schemas.devexpress.com/winfx/2008/xaml/core/internal"
+                   xmlns:dxet="http://schemas.devexpress.com/winfx/2008/xaml/editors/themekeys">
+        <Style.Resources>
+            <ControlTemplate TargetType="{x:Type ButtonBase}" x:Key="{dxet:ButtonsThemeKey ResourceKey=ButtonTemplate, IsThemeIndependent=False}">
+                <Grid>
+                    <Border BorderBrush="#FFCECECE" BorderThickness="0,1,1,1" ClipToBounds="True" Background="Transparent" Margin="-2,-1,-1,-1">
+                        <Border BorderBrush="#FFCECECE" BorderThickness="0,1,0,0" Margin="-1">
+                            <Border.Effect>
+                                <DropShadowEffect ShadowDepth="0" BlurRadius="6" Opacity="0.5"/>
+                            </Border.Effect>
+                        </Border>
+                    </Border>
+                    <Path Fill="#555555" Width="10" Height="10" Data="M2.1,2c1.1,0,15.2,0,15.9,0c1,0,1.7,1,1.1,2c-0.4,0.8-7.2,12.2-7.9,13.5 c-0.5,0.9-1.7,0.9-2.2,0C8.4,16.6,1.7,5.1,1,4C0.6,3.1,1.1,2,2.1,2z" Stretch="Uniform" Margin="5,0,5,0"/>
+                </Grid>
+            </ControlTemplate>
+        </Style.Resources>
+        <Setter Property="dx:ThemeManager.ThemeName" Value="None"/>
+        <Setter Property="Width" Value="Auto"/>
+        <Setter Property="Height" Value="27"/>
+        <Setter Property="HorizontalAlignment" Value="Stretch"/>
+        <Setter Property="VerticalAlignment" Value="Center"/>
+        <Setter Property="Margin" Value="10,0,10,0"/>
+        <Setter Property="ShowBorder" Value="False"/>
+        <Setter Property="EditTemplate">
+            <Setter.Value>
+                <ControlTemplate>
+                    <Grid>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="*"/>
+                        </Grid.RowDefinitions>
+
+                        <Border BorderBrush="#FFCECECE" BorderThickness="1,1,0,1" ClipToBounds="True" Background="Transparent">
+                            <Border BorderBrush="#FFCECECE" BorderThickness="1,1,0,0" Margin="-1">
+                                <Border.Effect>
+                                    <DropShadowEffect ShadowDepth="0" BlurRadius="6" Opacity="0.0"/>
+                                </Border.Effect>
+                            </Border>
+                        </Border>
+
+                        <TextBox x:Name="PART_Editor" Background="Transparent" BorderBrush="Transparent" 
+                                          IsReadOnly="True" HorizontalContentAlignment="Left" VerticalContentAlignment="Center"
+                                          IsHitTestVisible="False" Focusable="False" Foreground="#000000" Margin="2,0,0,0"/>
+                    </Grid>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+
+    <!--===================================================================================-->
+    <!--LookUpEdit-->
+    <!--입력 lookup-->
+    <Style TargetType="{x:Type dxg:LookUpEdit}" x:Key="InputLookUp"
+                   xmlns:dxi="http://schemas.devexpress.com/winfx/2008/xaml/core/internal"
+                   xmlns:dxet="http://schemas.devexpress.com/winfx/2008/xaml/editors/themekeys">
+        <Style.Resources>
+            <ControlTemplate TargetType="{x:Type ButtonBase}" x:Key="{dxet:ButtonsThemeKey ResourceKey=ButtonTemplate, IsThemeIndependent=False}">
+                <Grid>
+                    <Border BorderBrush="#FFCECECE" BorderThickness="0,1,1,1" ClipToBounds="True" Background="White" Margin="-2,-1,-1,-1">
+                        <Border BorderBrush="#FFCECECE" BorderThickness="0,1,0,0" Margin="-1">
+                            <Border.Effect>
+                                <DropShadowEffect ShadowDepth="0" BlurRadius="6" Opacity="0.5"/>
+                            </Border.Effect>
+                        </Border>
+                    </Border>
+                    <Path Fill="#555555" Width="10" Height="10" Data="M2.1,2c1.1,0,15.2,0,15.9,0c1,0,1.7,1,1.1,2c-0.4,0.8-7.2,12.2-7.9,13.5 c-0.5,0.9-1.7,0.9-2.2,0C8.4,16.6,1.7,5.1,1,4C0.6,3.1,1.1,2,2.1,2z" Stretch="Uniform" Margin="5,0,5,0"/>
+                </Grid>
+            </ControlTemplate>
+        </Style.Resources>
+        <Setter Property="dx:ThemeManager.ThemeName" Value="None"/>
+        <Setter Property="Width" Value="200"/>
+        <Setter Property="Height" Value="27"/>
+        <Setter Property="HorizontalAlignment" Value="Left"/>
+        <Setter Property="VerticalAlignment" Value="Center"/>
+        <Setter Property="Margin" Value="10,0,10,0"/>
+        <Setter Property="ShowBorder" Value="False"/>
+        <Setter Property="EditTemplate">
+            <Setter.Value>
+                <ControlTemplate>
+                    <Grid>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="*"/>
+                        </Grid.RowDefinitions>
+
+                        <Border BorderBrush="#FFCECECE" BorderThickness="1,1,0,1" ClipToBounds="True" Background="White">
+                            <Border BorderBrush="#FFCECECE" BorderThickness="1,1,0,0" Margin="-1">
+                                <Border.Effect>
+                                    <DropShadowEffect ShadowDepth="0" BlurRadius="6" Opacity="0.5"/>
+                                </Border.Effect>
+                            </Border>
+                        </Border>
+
+                        <TextBox x:Name="PART_Editor" Background="Transparent" BorderBrush="Transparent" 
+                                         IsReadOnly="True" HorizontalContentAlignment="Left" VerticalContentAlignment="Center"
+                                         IsHitTestVisible="False" Focusable="False" Foreground="#000000" Margin="2,0,0,0"/>
+                    </Grid>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <!--그리드 lookup-->
+    <Style TargetType="{x:Type dxg:LookUpEdit}" x:Key="GridLookUp">
+        <Setter Property="Height" Value="30"/>
+        <Setter Property="Width" Value="180"/>
+        <Setter Property="Margin" Value="10,0,10,0"/>
+        <Setter Property="HorizontalAlignment" Value="Left"/>
+        <Setter Property="VerticalAlignment" Value="Center"/>
+        <Setter Property="IsTextEditable" Value="False"/>
+        <Setter Property="ShowSizeGrip" Value="False"/>
+        <Setter Property="EditTemplate">
+            <Setter.Value>
+                <ControlTemplate>
+                    <Grid>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="*"/>
+                        </Grid.RowDefinitions>
+
+                        <Border Grid.Row="0" Background="White" CornerRadius="15" BorderThickness="2" BorderBrush="#FF0D8CB6">
+                            <Border.Effect>
+                                <DropShadowEffect Opacity="1" Direction="-90"/>
+                            </Border.Effect>
+                        </Border>
+
+                        <TextBox x:Name="PART_Editor" Background="Transparent" BorderBrush="Transparent" 
+                                         HorizontalContentAlignment="Left" VerticalContentAlignment="Center" Focusable="True" Foreground="#000000" Margin="2,0,0,0"/>
+
+                    </Grid>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <!--검색 헤더 콤보박스-->
+    <Style TargetType="{x:Type dxg:LookUpEdit}" x:Key="SearchLookUp"
+           xmlns:dxi="http://schemas.devexpress.com/winfx/2008/xaml/core/internal"
+           xmlns:dxet="http://schemas.devexpress.com/winfx/2008/xaml/editors/themekeys">
+        <Style.Resources>
+            <ControlTemplate TargetType="{x:Type ButtonBase}" x:Key="{dxet:ButtonsThemeKey ResourceKey=ButtonTemplate, IsThemeIndependent=False}">
+                <Grid>
+                    <Border ClipToBounds="False" Margin="-3,-1,-1,-1" CornerRadius="0,4,4,0" BorderThickness="0,1,1,1" BorderBrush="#ff1b6394">
+                        <Border.Effect>
+                            <DropShadowEffect Opacity="0.1" Direction="-70"/>
+                        </Border.Effect>
+                        <Border.Background>
+                            <LinearGradientBrush  StartPoint="1,1" EndPoint="1,0">
+                                <GradientStop Color="#e8e9e9" Offset="1"/>
+                                <GradientStop Color="#bec3c6" Offset="0"/>
+                            </LinearGradientBrush>
+                        </Border.Background>
+                    </Border>
+                    <Path Fill="#2279B5" Data="M92.5,350h-14c-1.1,0-2,0.9-2,2v14c0,1.1,0.9,2,2,2h14c1.1,0,2-0.9,2-2v-14C94.5,350.9,93.6,350,92.5,350z
+                          M89.6,356.3c-0.2,0.4-3.3,5.5-3.6,6.1c-0.2,0.4-0.8,0.4-1,0c-0.3-0.4-3.3-5.6-3.6-6.1c-0.2-0.4,0-0.9,0.5-0.9c0.5,0,6.9,0,7.2,0
+                          C89.5,355.4,89.8,355.8,89.6,356.3z" Stretch="Uniform" Width="20" Height="20" Margin="0,0,5,0"/>
+                </Grid>
+            </ControlTemplate>
+        </Style.Resources>
+        <Setter Property="Width" Value="150"/>
+        <Setter Property="Height" Value="30"/>
+        <Setter Property="HorizontalAlignment" Value="Left"/>
+        <Setter Property="VerticalAlignment" Value="Center"/>
+        <Setter Property="FontWeight" Value="Normal"/>
+        <Setter Property="Foreground" Value="#ff2279b5"/>
+        <Setter Property="ShowBorder" Value="False"/>
+        <Setter Property="FontSize" Value="14"/>
+        <Setter Property="dx:ThemeManager.ThemeName" Value="None"/>
+        <Setter Property="EditTemplate">
+            <Setter.Value>
+                <ControlTemplate>
+                    <Grid>
+                        <Border Grid.Row="0" CornerRadius="4,0,0,4" BorderThickness="1,1,0,1" BorderBrush="#ff1b6394">
+                            <Border.Effect>
+                                <DropShadowEffect Opacity="0.1" Direction="-90"/>
+                            </Border.Effect>
+                            <Border.Background>
+                                <LinearGradientBrush  StartPoint="1,1" EndPoint="1,0">
+                                    <GradientStop Color="#e8e9e9" Offset="1"/>
+                                    <GradientStop Color="#bec3c6" Offset="0"/>
+                                </LinearGradientBrush>
+                            </Border.Background>
+                        </Border>
+
+                        <TextBox x:Name="PART_Editor" Background="Transparent" BorderBrush="Transparent"
+                                 IsReadOnly="True" HorizontalContentAlignment="Left" VerticalContentAlignment="Center"
+                                 IsHitTestVisible="False" Focusable="False" Margin="10,0,0,0" Foreground="#ff1b6394"/>
+                    </Grid>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+
+    <!--===================================================================================-->
+    <!--PasswordBoxEdit-->
+    <!--로그인 폼 패스워드 박스-->
+    <Style TargetType="{x:Type dxe:PasswordBoxEdit}" x:Key="LoginPasswordBox">
+        <Setter Property="Width" Value="227"/>
+        <Setter Property="Height" Value="32"/>
+        <Setter Property="HorizontalAlignment" Value="Right"/>
+        <Setter Property="VerticalAlignment" Value="Center"/>
+        <Setter Property="ShowBorder" Value="False"/>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type dxe:PasswordBoxEdit}">
+                    <dxe:EditorControl x:Name="PART_Content" VerticalContentAlignment="Top" VerticalAlignment="Top" BorderBrush="Transparent" Margin="0" BorderThickness="0">
+                        <dxe:EditorControl.Template>
+                            <ControlTemplate>
+                                <!--그림자-->
+                                <Grid>
+                                    <Border Grid.Row="0" BorderBrush="#FFCECECE" BorderThickness="1" Margin="1,0,0,0" ClipToBounds="True" CornerRadius="4">
+                                        <Border BorderBrush="#FFCECECE" BorderThickness="1,1,0,0" Margin="-1" CornerRadius="4"/>
+                                    </Border>
+                                    <Grid x:Name="LayoutGrid" Height="{Binding Height}">
+                                        <PasswordBox x:Name="PART_Editor" Grid.Column="0" BorderThickness="0" BorderBrush="Transparent" VerticalAlignment="Center" Margin="5,0,0,0">
+                                            <PasswordBox.Style>
+                                                <Style TargetType="PasswordBox">
+                                                    <Setter Property="Foreground" Value="Black" />
+                                                </Style>
+                                            </PasswordBox.Style>
+                                            <PasswordBox.Template>
+                                                <ControlTemplate TargetType="{x:Type PasswordBox}">
+                                                    <ScrollViewer Name="PART_ContentHost"/>
+                                                </ControlTemplate>
+                                            </PasswordBox.Template>
+                                        </PasswordBox>
+                                        <TextBlock x:Name="PART_PasswordNullText" IsHitTestVisible="False" Text="{Binding Path=NullText, RelativeSource={RelativeSource AncestorType=dxe:PasswordBoxEdit}}" Margin="5,0,0,0">
+                                            <TextBlock.Visibility>
+                                                <Binding Path="IsNullTextVisible" RelativeSource="{RelativeSource AncestorType=dxe:PasswordBoxEdit}" >
+                                                    <Binding.Converter>
+                                                        <BooleanToVisibilityConverter/>
+                                                    </Binding.Converter>
+                                                </Binding>
+                                            </TextBlock.Visibility>
+                                        </TextBlock>
+                                    </Grid>
+                                </Grid>
+                            </ControlTemplate>
+                        </dxe:EditorControl.Template>
+                    </dxe:EditorControl>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <!--그리드 내 패스워드 박스-->
+    <Style TargetType="{x:Type dxe:PasswordBoxEdit}" x:Key="GirdPasswordBox">
+        <Setter Property="Width" Value="200"/>
+        <Setter Property="Height" Value="27"/>
+        <Setter Property="Margin" Value="10,0,10,0"/>
+        <Setter Property="HorizontalAlignment" Value="Left"/>
+        <Setter Property="VerticalAlignment" Value="Center"/>
+        <Setter Property="ShowBorder" Value="False"/>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type dxe:PasswordBoxEdit}">
+                    <dxe:EditorControl x:Name="PART_Content" VerticalContentAlignment="Top" VerticalAlignment="Top" BorderBrush="Transparent" Margin="0" BorderThickness="0">
+                        <dxe:EditorControl.Template>
+                            <ControlTemplate>
+                                <!--그림자-->
+                                <Grid>
+                                    <Border x:Name="Border" BorderBrush="#FFCECECE" BorderThickness="1" ClipToBounds="True">
+                                        <Border BorderBrush="#FFCECECE" BorderThickness="1,1,0,0" Margin="-1">
+                                            <Border.Effect>
+                                                <DropShadowEffect ShadowDepth="1" BlurRadius="6" Opacity="0.0"/>
+                                            </Border.Effect>
+                                        </Border>
+                                    </Border>
+
+                                    <Grid x:Name="LayoutGrid">
+                                        <Grid.RowDefinitions>
+                                            <RowDefinition Height="27"/>
+                                        </Grid.RowDefinitions>
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="*" />
+                                            <!--<ColumnDefinition Width="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=ActualHeight}" />-->
+                                        </Grid.ColumnDefinitions>
+                                        <PasswordBox x:Name="PART_Editor" Grid.Column="0" BorderThickness="0" BorderBrush="Transparent" VerticalAlignment="Center">
+                                            <PasswordBox.Style>
+                                                <Style TargetType="PasswordBox">
+                                                    <Setter Property="Foreground" Value="Black" />
+                                                </Style>
+                                            </PasswordBox.Style>
+                                            <PasswordBox.Template>
+                                                <ControlTemplate TargetType="{x:Type PasswordBox}">
+                                                    <ScrollViewer Name="PART_ContentHost"/>
+                                                </ControlTemplate>
+                                            </PasswordBox.Template>
+                                        </PasswordBox>
+                                        <TextBlock x:Name="PART_PasswordNullText" IsHitTestVisible="False" Text="{Binding Path=NullText, RelativeSource={RelativeSource AncestorType=dxe:PasswordBoxEdit}}">
+                                            <TextBlock.Visibility>
+                                                <Binding Path="IsNullTextVisible" RelativeSource="{RelativeSource AncestorType=dxe:PasswordBoxEdit}">
+                                                    <Binding.Converter>
+                                                        <BooleanToVisibilityConverter/>
+                                                    </Binding.Converter>
+                                                </Binding>
+                                            </TextBlock.Visibility>
+                                        </TextBlock>
+                                    </Grid>
+                                </Grid>
+                            </ControlTemplate>
+                        </dxe:EditorControl.Template>
+                    </dxe:EditorControl>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+
+    <!--===================================================================================-->
+    <!--image-->
+    <!--메뉴 내 헤더 Point-->
+    <Style TargetType="{x:Type Image}" x:Key="LabelPoint">
+        <Setter Property="Source" Value="/Resources/Blue/Images/Image/point.png"/>
+        <Setter Property="Width" Value="6"/>
+        <Setter Property="Height" Value="11"/>
+    </Style>
+
+    <!--메뉴 내 타이틀 Circle-->
+    <Style TargetType="{x:Type Image}" x:Key="TitleCircle">
+        <Setter Property="Source" Value="/Resources/Blue/Images/Image/circle.png"/>
+        <Setter Property="Stretch" Value="None"/>
+    </Style>
+
+    <!--느낌표-->
+    <Style TargetType="{x:Type Image}" x:Key="ExclamationMark">
+        <Setter Property="Source" Value="/Resources/Blue/Images/Image/ExclamationMark.png"/>
+        <Setter Property="Stretch" Value="None"/>
+    </Style>
+
+    <!--그리드 내 증가 화살표-->
+    <Style TargetType="{x:Type Image}" x:Key="IncreaseArrow">
+        <Setter Property="Source" Value="/Resources/Blue/Images/Image/btn_increase_arrow.png"/>
+        <Setter Property="Stretch" Value="None"/>
+    </Style>
+
+    <!--그리드 내 감소 화살표-->
+    <Style TargetType="{x:Type Image}" x:Key="DecreaseArrow">
+        <Setter Property="Source" Value="/Resources/Blue/Images/Image/btn_decrease_arrow.png"/>
+        <Setter Property="Stretch" Value="None"/>
+    </Style>
+
+
+    <!--===================================================================================-->
+    <!--GridSplitter-->
+    <Style TargetType="{x:Type GridSplitter}" x:Key="splitBar">
+        <Style.Setters>
+            <Setter Property="VerticalAlignment" Value="Stretch"/>
+            <Setter Property="HorizontalAlignment" Value="Stretch"/>
+            <Setter Property="BorderThickness" Value="1"/>
+            <Setter Property="BorderBrush" Value="#8B8B8B"/>
+            <Setter Property="ShowsPreview" Value="False"/>
+            <Setter Property="Background">
+                <Setter.Value>
+                    <ImageBrush ImageSource="/Resources/Blue/Images/Image/bar_bg.png" TileMode="None" ViewportUnits="RelativeToBoundingBox"/>
+                </Setter.Value>
+            </Setter>
+        </Style.Setters>
+    </Style>
+
+
+    <!--===================================================================================-->
+    <!--TreeListView-->
+    <!--트리 Row 스타일-->
+    <Style TargetType="{x:Type dxg:RowControl}" x:Key="BasicTreeRowStlye">
+        <Setter Property="Foreground" Value="#144873" />
+        <Setter Property="Margin" Value="10,15,10,0" />
+        <Style.Triggers>
+            <Trigger Property="SelectionState" Value="Focused">
+                <Setter Property="Foreground" Value="#144873"/>
+                <Setter Property="Background" Value="#cce3f3"/>
+            </Trigger>
+        </Style.Triggers>
+    </Style>
+
+    <!--트리 스타일-->
+    <Style TargetType="{x:Type dxg:TreeListView}" x:Key="BasicTree">
+        <Setter Property="AllowPerPixelScrolling" Value="True"/>
+        <Setter Property="ShowIndicator" Value="False"/>
+        <Setter Property="NavigationStyle" Value="Row"/>
+        <Setter Property="AutoWidth" Value="True"/>
+        <Setter Property="AllowScrollAnimation" Value="True"/>
+        <Setter Property="ShowVerticalLines" Value="False"/>
+        <Setter Property="ShowHorizontalLines" Value="False"/>
+        <Setter Property="ShowColumnHeaders" Value="False"/>
+        <Setter Property="RowMinHeight" Value="20"/>
+        <Setter Property="AllowEditing" Value="False"/>
+        <Setter Property="FontSize" Value="13"/>
+        <Setter Property="AutoExpandAllNodes" Value="True"/>
+        <Setter Property="TreeLineStyle" Value="None"/>
+        <Setter Property="TextOptions.TextFormattingMode" Value="Display"/>
+        <Setter Property="RowStyle" Value="{DynamicResource BasicTreeRowStlye}"/>
+        <Setter Property="AllowDragDrop" Value="False"/>
+    </Style>
+
+    <!--트리 스타일-->
+    <Style TargetType="{x:Type dxg:TreeListView}" x:Key="DataTree">
+        <Setter Property="AllowPerPixelScrolling" Value="True"/>
+        <Setter Property="ShowIndicator" Value="False"/>
+        <Setter Property="NavigationStyle" Value="Row"/>
+        <Setter Property="AllowScrollAnimation" Value="True"/>
+        <Setter Property="ShowHorizontalLines" Value="True"/>
+        <Setter Property="ShowColumnHeaders" Value="True"/>
+        <Setter Property="RowMinHeight" Value="40"/>
+        <Setter Property="AllowEditing" Value="False"/>
+        <Setter Property="FontSize" Value="13"/>
+        <Setter Property="AutoExpandAllNodes" Value="True"/>
+        <Setter Property="TreeLineStyle" Value="None"/>
+        <Setter Property="TextOptions.TextFormattingMode" Value="Display"/>
+        <Setter Property="AllowDragDrop" Value="False"/>
+        <Setter Property="HeaderPanelMinHeight" Value="34"/>
+        <Setter Property="UseEvenRowBackground" Value="False"/>
+        <Setter Property="AllowColumnFiltering" Value="False"/>
+        <Setter Property="AllowSorting" Value="False"/>
+        <Setter Property="AllowColumnMoving" Value="False"/>
+        <Setter Property="AllowBandMoving" Value="False"/>
+    </Style>
+
+    <!--===================================================================================-->
+    <!--Border-->
+    <!--메뉴 헤더 Border-->
+    <Style TargetType="{x:Type Border}" x:Key="ContentBorder">
+        <Setter Property="Background" Value="#99FFFFFF"/>
+        <!--<Setter Property="BorderBrush" Value="#66999999"/>
+        <Setter Property="BorderThickness" Value="3"/>-->
+    </Style>
+
+    <!--메뉴 헤더 Border-->
+    <Style TargetType="{x:Type Border}" x:Key="MenuHeaderBorder">
+        <Setter Property="Background" Value="#32a7a8a3"/>
+        <Setter Property="BorderThickness" Value="2"/>
+        <Setter Property="BorderBrush" Value="#3213202e"/>
+    </Style>
+
+    <!--총괄수량수지 헤더 Border-->
+    <Style TargetType="{x:Type Border}" x:Key="TotalVolHeadBorder">
+        <Setter Property="Background" Value="{DynamicResource TotalVolGridBackCOLOR2Brush}"/>
+        <Setter Property="BorderBrush" Value="{DynamicResource TotalVolGridThickCOLOR1Brush}"/>
+        <Setter Property="BorderThickness" Value="2"/>
+    </Style>
+
+    <!--총괄수량수지 Border-->
+    <Style TargetType="{x:Type Border}" x:Key="TotalVolMidBorder">
+        <Setter Property="Background" Value="{DynamicResource TotalVolGridBackCOLOR1Brush}"/>
+        <Setter Property="BorderBrush" Value="{DynamicResource TotalVolGridThickCOLOR1Brush}"/>
+        <Setter Property="BorderThickness" Value="2,0,2,2"/>
+    </Style>
+
+    <!--총괄수량수지 Border-->
+    <Style TargetType="{x:Type Border}" x:Key="TotalVolBottomBorder">
+        <Setter Property="Background" Value="{DynamicResource TotalVolGridBackCOLOR1Brush}"/>
+        <Setter Property="BorderBrush" Value="{DynamicResource TotalVolGridThickCOLOR1Brush}"/>
+        <Setter Property="BorderThickness" Value="2,0,2,2"/>
+        <Setter Property="CornerRadius" Value="0,0,5,5"/>
+    </Style>
+
+    <!--총괄수량수지 V Line Border-->
+    <Style TargetType="{x:Type Border}" x:Key="TotalVolVBorderLine">
+        <Setter Property="BorderBrush" Value="{DynamicResource TotalVolGridThickCOLOR1Brush}"/>
+        <Setter Property="BorderThickness" Value="0,0,2,0"/>
+    </Style>
+
+    <!--총괄수량수지 H Line Border-->
+    <Style TargetType="{x:Type Border}" x:Key="TotalVolHBorderLine">
+        <Setter Property="BorderBrush" Value="{DynamicResource TotalVolGridThickCOLOR1Brush}"/>
+        <Setter Property="BorderThickness" Value="0,0,0,2"/>
+        <Setter Property="Margin" Value="-2,0,0,0"/>
+    </Style>
+
+    <!--메인 타일 배경 Border-->
+    <Style TargetType="{x:Type Border}" x:Key="TileBLKNMBACK">
+        <Setter Property="Height" Value="30"/>
+        <Setter Property="Margin" Value="-1,0,-1,0"/>
+        <Setter Property="Background">
+            <Setter.Value>
+                <ImageBrush ImageSource="/Resources/Blue/Images/Image/bg_blkNM.png" TileMode="FlipX"/>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+
+    <!--===================================================================================-->
+    <!--UserControl-->
+    <!--타일 UserControl-->
+    <Style TargetType="{x:Type UserControl}" x:Key="TileUserControl">
+        <Setter Property="BorderBrush" Value="#AAAAAA"/>
+        <Setter Property="Background" Value="#FFFFFF"/>
+        <Setter Property="BorderThickness" Value="2"/>
+    </Style>
+
+    <!--===================================================================================-->
+    <!--GridControl-->
+    <!--TableView-->
+    <Style TargetType="{x:Type dxg:TableView}" x:Key="TileTableView">
+        <Setter Property="AllowPerPixelScrolling" Value="True"/>
+        <Setter Property="ShowIndicator" Value="False"/>
+        <Setter Property="NavigationStyle" Value="None"/>
+        <Setter Property="ShowGroupPanel" Value="False"/>
+        <Setter Property="AllowSorting" Value="False"/>
+        <Setter Property="AllowColumnFiltering" Value="False"/>
+        <Setter Property="HeaderPanelMinHeight" Value="34"/>
+        <Setter Property="RowMinHeight" Value="40"/>
+        <Setter Property="AllowMoveColumnToDropArea" Value="False"/>
+        <Setter Property="IsColumnMenuEnabled" Value="False"/>
+        <Setter Property="AllowBandResizing" Value="True"/>
+        <Setter Property="AllowEditing" Value="False"/>
+        <Setter Property="AllowBandMultiRow" Value="False"/>
+        <Setter Property="EvenRowBackground" Value="White"/>
+        <Setter Property="UseEvenRowBackground" Value="True"/>
+        <Setter Property="ShowHorizontalLines" Value="True"/>
+        <Setter Property="ClipboardMode" Value="PlainText"/>
+        <Setter Property="FontSize" Value="13"/>
+        <Setter Property="TextOptions.TextRenderingMode" Value="Auto"/>
+        <Setter Property="TextOptions.TextFormattingMode" Value="Display"/>
+        <Setter Property="AllowDragDrop" Value="False"/>
+        <Setter Property="ShowSelectionRectangle" Value="False"/>
+    </Style>
+
+    <!--===================================================================================-->
+    <!--GridControl Columns Control-->
+    <!--그리드 View 내 콤보박스-->
+    <Style TargetType="{x:Type dxe:ComboBoxEdit}" x:Key="GridViewComboBox"
+                   xmlns:dxi="http://schemas.devexpress.com/winfx/2008/xaml/core/internal"
+                   xmlns:dxet="http://schemas.devexpress.com/winfx/2008/xaml/editors/themekeys">
+        <Style.Resources>
+            <ControlTemplate TargetType="{x:Type ButtonBase}" x:Key="{dxet:ButtonsThemeKey ResourceKey=ButtonTemplate, IsThemeIndependent=False}">
+                <Grid>
+                    <Border BorderBrush="#FFCECECE" BorderThickness="0,1,1,1" ClipToBounds="True" Background="White" Margin="-2,-1,-1,-1">
+                        <Border BorderBrush="#FFCECECE" BorderThickness="0,1,0,0" Margin="-1"/>
+                    </Border>
+                    <Path Fill="#555555" Width="10" Height="10" Data="M2.1,2c1.1,0,15.2,0,15.9,0c1,0,1.7,1,1.1,2c-0.4,0.8-7.2,12.2-7.9,13.5 c-0.5,0.9-1.7,0.9-2.2,0C8.4,16.6,1.7,5.1,1,4C0.6,3.1,1.1,2,2.1,2z" Stretch="Uniform" Margin="5,0,5,0"/>
+                </Grid>
+            </ControlTemplate>
+        </Style.Resources>
+        <Setter Property="dx:ThemeManager.ThemeName" Value="None"/>
+        <Setter Property="Width" Value="{Binding ElementName=Parent, Path=ActualWidth}"/>
+        <Setter Property="Height" Value="27"/>
+        <Setter Property="HorizontalAlignment" Value="Stretch"/>
+        <Setter Property="VerticalAlignment" Value="Center"/>
+        <Setter Property="Margin" Value="10,0,10,0"/>
+        <Setter Property="ShowBorder" Value="False"/>
+        <Setter Property="EditTemplate">
+            <Setter.Value>
+                <ControlTemplate>
+                    <Grid>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="*"/>
+                        </Grid.RowDefinitions>
+                        <Border BorderBrush="#FFCECECE" BorderThickness="1,1,0,1" ClipToBounds="True" Background="White">
+                            <Border BorderBrush="#FFCECECE" BorderThickness="1,1,0,0" Margin="-1"/>
+                        </Border>
+                        <TextBox x:Name="PART_Editor" Background="Transparent" BorderBrush="Transparent"
+                                 IsReadOnly="True" HorizontalContentAlignment="{Binding Path=HorizontalContentAlignment}" VerticalContentAlignment="Center"
+                                 IsHitTestVisible="False" Focusable="False"/>
+                    </Grid>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <!--그리드 lookup-->
+    <Style TargetType="{x:Type dxg:LookUpEdit}" x:Key="GridViewLookUpEdit"
+           xmlns:dxi="http://schemas.devexpress.com/winfx/2008/xaml/core/internal"
+           xmlns:dxet="http://schemas.devexpress.com/winfx/2008/xaml/editors/themekeys">
+        <Style.Resources>
+            <ControlTemplate TargetType="{x:Type ButtonBase}" x:Key="{dxet:ButtonsThemeKey ResourceKey=ButtonTemplate, IsThemeIndependent=False}">
+                <Grid>
+                    <Border BorderBrush="#FFCECECE" BorderThickness="0,1,1,1" ClipToBounds="True" Background="White" Margin="-2,-1,-1,-1">
+                        <Border BorderBrush="#FFCECECE" BorderThickness="0,1,0,0" Margin="-1"/>
+                    </Border>
+                    <Path Fill="#555555" Width="10" Height="10" Data="M2.1,2c1.1,0,15.2,0,15.9,0c1,0,1.7,1,1.1,2c-0.4,0.8-7.2,12.2-7.9,13.5 c-0.5,0.9-1.7,0.9-2.2,0C8.4,16.6,1.7,5.1,1,4C0.6,3.1,1.1,2,2.1,2z" Stretch="Uniform" Margin="5,0,5,0"/>
+                </Grid>
+            </ControlTemplate>
+        </Style.Resources>
+        <Setter Property="dx:ThemeManager.ThemeName" Value="None"/>
+        <Setter Property="Width" Value="{Binding ElementName=Parent, Path=ActualWidth}"/>
+        <Setter Property="Height" Value="27"/>
+        <Setter Property="HorizontalAlignment" Value="Stretch"/>
+        <Setter Property="VerticalAlignment" Value="Center"/>
+        <Setter Property="Margin" Value="10,0,10,0"/>
+        <Setter Property="ShowBorder" Value="False"/>
+        <Setter Property="EditTemplate">
+            <Setter.Value>
+                <ControlTemplate>
+                    <Grid>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="*"/>
+                        </Grid.RowDefinitions>
+                        <Border BorderBrush="#FFCECECE" BorderThickness="1,1,0,1" ClipToBounds="True" Background="White">
+                            <Border BorderBrush="#FFCECECE" BorderThickness="1,1,0,0" Margin="-1"/>
+                        </Border>
+
+                        <TextBox x:Name="PART_Editor" Background="Transparent" BorderBrush="Transparent"
+                                 IsReadOnly="True" HorizontalContentAlignment="{Binding Path=HorizontalContentAlignment}" VerticalContentAlignment="Center"
+                                 IsHitTestVisible="False" Focusable="False">
+                        </TextBox>
+
+                    </Grid>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <!--그리드 View 내 TextEdit-->
+    <Style TargetType="{x:Type dxe:TextEdit}" x:Key="GridViewTextEdit">
+        <Setter Property="Width" Value="{Binding ElementName=Parent, Path=ActualWidth}"/>
+        <Setter Property="Height" Value="27"/>
+        <Setter Property="HorizontalAlignment" Value="Stretch"/>
+        <Setter Property="VerticalAlignment" Value="Center"/>
+        <Setter Property="Margin" Value="10,0,10,0"/>
+        <Setter Property="ShowBorder" Value="False"/>
+        <Setter Property="EditTemplate">
+            <Setter.Value>
+                <ControlTemplate>
+                    <Grid>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="*"/>
+                        </Grid.RowDefinitions>
+
+                        <Border Grid.Row="0" BorderBrush="#FFCECECE" BorderThickness="1" ClipToBounds="True" Background="White">
+                            <Border BorderBrush="#FFCECECE" BorderThickness="1,1,0,0" Margin="-1"/>
+                        </Border>
+
+                        <TextBox x:Name="PART_Editor" Background="Transparent" BorderBrush="Transparent"
+                                 HorizontalContentAlignment="{Binding Path=HorizontalContentAlignment}" VerticalContentAlignment="Center" Focusable="True"/>
+                    </Grid>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <!--그리드 View 내 콤보박스-->
+    <Style TargetType="{x:Type dxe:SpinEdit}" x:Key="GridViewSpinEdit">
+        <Setter Property="Width" Value="{Binding ElementName=Parent, Path=ActualWidth}"/>
+        <Setter Property="Height" Value="27"/>
+        <Setter Property="HorizontalAlignment" Value="Stretch"/>
+        <Setter Property="VerticalAlignment" Value="Center"/>
+        <Setter Property="Margin" Value="10,0,10,0"/>
+        <Setter Property="ShowBorder" Value="False"/>
+        <Setter Property="ShowEditorButtons" Value="False"/>
+        <Setter Property="EditTemplate">
+            <Setter.Value>
+                <ControlTemplate>
+                    <Grid>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="*"/>
+                        </Grid.RowDefinitions>
+
+                        <Border Grid.Row="0" BorderBrush="#FFCECECE" BorderThickness="1" ClipToBounds="True" Background="White">
+                            <Border BorderBrush="#FFCECECE" BorderThickness="1,1,0,0" Margin="-1"/>
+                        </Border>
+
+                        <TextBox x:Name="PART_Editor" Background="Transparent" BorderBrush="Transparent"
+                                 HorizontalContentAlignment="{Binding Path=HorizontalContentAlignment}" 
+                                 VerticalContentAlignment="Center" Focusable="True"/>
+                    </Grid>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <!--그리드 내 토글 스위치-->
+    <Style TargetType="dxe:ToggleSwitch" x:Key="GridViewToggle">
+        <Setter Property="ToggleSwitchHeight" Value="32"/>
+        <Setter Property="ToggleSwitchWidth" Value="150"/>
+        <Setter Property="Margin" Value="10,0,10,0"/>
+        <Setter Property="VerticalAlignment" Value="Center"/>
+        <Setter Property="HorizontalAlignment" Value="Left"/>
+        <Setter Property="EnableAnimation" Value="False"/>
+    </Style>
+
+    <!--그리드 내 토글 스위치-->
+    <Style TargetType="{x:Type dxe:DateEdit}" x:Key="GridViewDateEdit"
+                   xmlns:dxi="http://schemas.devexpress.com/winfx/2008/xaml/core/internal"
+                   xmlns:dxet="http://schemas.devexpress.com/winfx/2008/xaml/editors/themekeys">
+        <Style.Resources>
+            <ControlTemplate TargetType="{x:Type ButtonBase}" x:Key="{dxet:ButtonsThemeKey ResourceKey=ButtonTemplate, IsThemeIndependent=False}">
+                <Grid>
+                    <Border BorderBrush="#FFCECECE" BorderThickness="0,1,1,1" ClipToBounds="True" Background="White" Margin="-2,-1,-1,-1">
+                        <Border BorderBrush="#FFCECECE" BorderThickness="0,1,0,0" Margin="-1"/>
+                    </Border>
+                    <Path Fill="#555555" Width="10" Height="10" Data="M2.1,2c1.1,0,15.2,0,15.9,0c1,0,1.7,1,1.1,2c-0.4,0.8-7.2,12.2-7.9,13.5 c-0.5,0.9-1.7,0.9-2.2,0C8.4,16.6,1.7,5.1,1,4C0.6,3.1,1.1,2,2.1,2z" Stretch="Uniform" Margin="5,0,5,0"/>
+                </Grid>
+            </ControlTemplate>
+        </Style.Resources>
+        <Setter Property="dxe:DateEditCalendar.ShowClearButton" Value="False"/>
+        <Setter Property="StyleSettings">
+            <Setter.Value>
+                <dxe:DateEditCalendarStyleSettings/>
+            </Setter.Value>
+        </Setter>
+        <Setter Property="dx:ThemeManager.ThemeName" Value="None"/>
+        <Setter Property="Width" Value="{Binding ElementName=Parent, Path=ActualWidth}"/>
+        <Setter Property="Height" Value="27"/>
+        <Setter Property="HorizontalAlignment" Value="Stretch"/>
+        <Setter Property="VerticalAlignment" Value="Center"/>
+        <Setter Property="Margin" Value="10,0,10,0"/>
+        <Setter Property="ShowBorder" Value="False"/>
+        <Setter Property="EditTemplate">
+            <Setter.Value>
+                <ControlTemplate>
+                    <Grid>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="*"/>
+                        </Grid.RowDefinitions>
+                        <Border BorderBrush="#FFCECECE" BorderThickness="1,1,0,1" ClipToBounds="True" Background="White">
+                            <Border BorderBrush="#FFCECECE" BorderThickness="1,1,0,0" Margin="-1"/>
+                        </Border>
+                        <TextBox x:Name="PART_Editor" Background="Transparent" BorderBrush="Transparent" 
+                                 IsReadOnly="True" HorizontalContentAlignment="{Binding Path=HorizontalContentAlignment}" VerticalContentAlignment="Center"
+                                 IsHitTestVisible="False" Focusable="False"/>
+                    </Grid>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <!--===================================================================================-->
+    <!--ChartControl-->
+    <Style TargetType="{x:Type dxc:PieTotalLabel}" x:Key="PieTotal">
+        <Setter Property="Foreground" Value="#144873"/>
+        <Setter Property="FontFamily" Value="{StaticResource malgunbd}"/>
+        <Setter Property="FontSize" Value="30"/>
+    </Style>
+
+
+    <!--기능별===================================================================================-->
+    <!--로그인-->
+    <!--로그인배경-->
+    <Style TargetType="{x:Type Grid}" x:Key="LoginGridBackground">
+        <Setter Property="Background">
+            <Setter.Value>
+                <ImageBrush ImageSource="/Resources/Blue/Images/Image/login_background.png" Stretch="Fill"/>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <!--로그인 정보 보더-->
+    <Style TargetType="{x:Type Border}" x:Key="LoginInfoBorder">
+        <Setter Property="Background" Value="#b307365f"/>
+    </Style>
+
+    <!--로그인 아이디저장-->
+    <Style TargetType="{x:Type dxe:CheckEdit}" x:Key="LoginIDSaveChk">
+        <Setter Property="HorizontalAlignment" Value="Right"/>
+        <Setter Property="Foreground" Value="White"/>
+        <Setter Property="FontSize" Value="12"/>
+        <Setter Property="FontFamily" Value="{StaticResource malgun}"/>
+    </Style>
+
+    <!--로그인로고-->
+    <Style TargetType="{x:Type Image}" x:Key="LoginLogo">
+        <Setter Property="Source" Value="/Resources/Blue/Images/Image/login_logo.png"/>
+        <Setter Property="Stretch" Value="Fill"/>
+    </Style>
+
+    <!--로그인 연결상태-->
+    <Style TargetType="{x:Type Image}" x:Key="LoginConnStat">
+        <Setter Property="Source" Value="/Resources/Blue/Images/Image/login_alram_abnormal.png"/>
+        <Setter Property="Stretch" Value="None"/>
+    </Style>
+
+    <!--로그인 회사로고-->
+    <Style TargetType="{x:Type Image}" x:Key="LoginCompanyLog">
+        <Setter Property="Source" Value="/Resources/Blue/Images/Image/greentech_logo.png"/>
+        <Setter Property="Stretch" Value="Fill"/>
+    </Style>
+
+
+
+
+    <!--메인-->
+    <!--메인배경-->
+    <Style TargetType="{x:Type Grid}" x:Key="MainGridBackground">
+        <Setter Property="Background">
+            <Setter.Value>
+                <ImageBrush ImageSource="/Resources/Blue/Images/Image/BackPT.png" Stretch="None" TileMode="Tile" ViewportUnits="Absolute" Viewport="0,0,15,15"/>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <!--메인 타이틀 헤더-->
+    <Style TargetType="{x:Type Grid}" x:Key="MainTitleHead">
+        <Setter Property="Background" Value="#144772"/>
+    </Style>
+
+    <!--메인 타이틀-->
+    <Style TargetType="{x:Type Image}" x:Key="MainTitle">
+        <Setter Property="Source" Value="/Resources/Blue/Images/Image/title_img.png"/>
+        <Setter Property="Stretch" Value="Fill"/>
+    </Style>
+
+    <!--메인 타이틀 불릿-->
+    <Style TargetType="{x:Type Image}" x:Key="MainTitleBullet">
+        <Setter Property="Margin" Value="20,0,0,0"/>
+        <Setter Property="Source" Value="/Resources/Blue/Images/Image/bullet_title.png"/>
+        <Setter Property="Width" Value="16"/>
+        <Setter Property="Height" Value="16"/>
+    </Style>
+
+    <!--메인 시스템-->
+    <Style TargetType="{x:Type dxe:ComboBoxEdit}" x:Key="SysComboBox"
+                   xmlns:dxi="http://schemas.devexpress.com/winfx/2008/xaml/core/internal"
+                   xmlns:dxet="http://schemas.devexpress.com/winfx/2008/xaml/editors/themekeys">
+        <Style.Resources>
+            <ControlTemplate TargetType="{x:Type ButtonBase}" x:Key="{dxet:ButtonsThemeKey ResourceKey=ButtonTemplate, IsThemeIndependent=False}">
+                <Grid>
+                    <Border ClipToBounds="False" Margin="-3,-1,-1,-1" CornerRadius="0,4,4,0" BorderThickness="0,2,2,2" BorderBrush="#192f4a" Background="#2e425b">
+                        <Border.Effect>
+                            <DropShadowEffect Opacity="0.1" Direction="-70"/>
+                        </Border.Effect>
+                    </Border>
+                    <Path Fill="#6d8199" Data="M480,0C326,0,200,126,200,280s126,280,280,280s280-126,280-280S634,0,480,0z M589.2,221.2
+                          c-5.6,8.4-86.8,148.4-95.2,162.4c-5.6,11.2-19.6,11.2-28,0c-5.6-11.2-89.6-151.2-95.2-165.2c-5.6-8.4,0-22.4,14-22.4H578
+                          C586.4,196,597.6,207.2,589.2,221.2z" Stretch="Uniform" Width="20" Height="20" Margin="0,0,5,0"/>
+                </Grid>
+            </ControlTemplate>
+        </Style.Resources>
+        <Setter Property="Width" Value="150"/>
+        <Setter Property="Height" Value="30"/>
+        <Setter Property="HorizontalAlignment" Value="Left"/>
+        <Setter Property="VerticalAlignment" Value="Center"/>
+        <Setter Property="VerticalContentAlignment" Value="Center"/>
+        <Setter Property="FontWeight" Value="Normal"/>
+        <Setter Property="Foreground" Value="#ff2279b5"/>
+        <Setter Property="ShowBorder" Value="False"/>
+        <Setter Property="FontSize" Value="14"/>
+        <Setter Property="dx:ThemeManager.ThemeName" Value="None"/>
+        <Setter Property="EditTemplate">
+            <Setter.Value>
+                <ControlTemplate>
+                    <Grid>
+                        <Border Grid.Row="0" CornerRadius="4,0,0,4" BorderThickness="2,2,0,2" BorderBrush="#192f4a" Background="#2e425b">
+                            <Border.Effect>
+                                <DropShadowEffect Opacity="0.1" Direction="-90"/>
+                            </Border.Effect>
+                        </Border>
+
+                        <TextBox x:Name="PART_Editor" Background="Transparent" BorderBrush="Transparent" 
+                                 IsReadOnly="True" HorizontalContentAlignment="Left" VerticalContentAlignment="Center"
+                                 IsHitTestVisible="False" Focusable="False" Margin="5,0,0,0" Foreground="#768ba3"/>
+                    </Grid>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+
+    <!--메뉴-->
+    <!--메뉴 보더-->
+    <Style TargetType="{x:Type Border}" x:Key="MenuBorder">
+        <Setter Property="BorderThickness" Value="3"/>
+        <Setter Property="Background" Value="#99FFFFFF"/>
+        <Setter Property="BorderBrush" Value="#66999999"/>
+    </Style>
+
+    <!--메뉴 외각선-->
+    <Style TargetType="{x:Type Border}" x:Key="MenuLlineBorder">
+        <Setter Property="BorderThickness" Value="0"/>
+    </Style>
+
+    <!--메뉴 조건절-->
+    <Style TargetType="{x:Type Border}" x:Key="MenuControlBorder">
+        <Setter Property="BorderThickness" Value="1"/>
+        <Setter Property="Background" Value="#A0A0A0"/>
+        <Setter Property="BorderBrush" Value="#8B8B8B"/>
+    </Style>
+
+    <!--메뉴 조건 항목-->
+    <Style TargetType="{x:Type Border}" x:Key="MenuControlGBNBorder">
+        <Setter Property="Background" Value="#5190bc"/>
+        <Setter Property="CornerRadius" Value="4"/>
+        <Setter Property="Margin" Value="10,0,0,0"/>
+        <Setter Property="Padding" Value="0"/>
+        <Setter Property="HorizontalAlignment" Value="Left"/>
+    </Style>
+
+    <!--메뉴 조건 내용-->
+    <Style TargetType="{x:Type Border}" x:Key="ControlContentBorder">
+        <Setter Property="Background" Value="#32A7A8A3"/>
+        <Setter Property="BorderBrush" Value="#3313202E"/>
+        <Setter Property="BorderThickness" Value="2"/>
+    </Style>
+
+    <!--장비 내용-->
+    <Style TargetType="{x:Type Border}" x:Key="DeviceContentBorder">
+        <Setter Property="Background" Value="#213753"/>
+        <Setter Property="BorderBrush" Value="#3313202E"/>
+        <Setter Property="BorderThickness" Value="2"/>
+    </Style>
+
+    <!--메뉴 내용 외각선(내)-->
+    <Style TargetType="{x:Type Border}" x:Key="MenuContentinBorder">
+        <Setter Property="Background" Value="#f2f2f2"/>
+        <Setter Property="BorderBrush" Value="#FFFFFF"/>
+        <Setter Property="BorderThickness" Value="2"/>
+    </Style>
+
+    <!--메뉴 내용 외각선(외)-->
+    <Style TargetType="{x:Type Border}" x:Key="MenuContentoutBorder">
+        <Setter Property="BorderBrush" Value="#FF4889B4"/>
+        <Setter Property="BorderThickness" Value="1"/>
+    </Style>
+
+
+    <!--타일 타이틀 불릿1-->
+    <Style TargetType="{x:Type Image}" x:Key="TileTitleBullet1">
+        <Setter Property="Margin" Value="10,0,0,0"/>
+        <Setter Property="Source" Value="/Resources/Blue/Images/MNUImage/Tile_title_01.png"/>
+        <Setter Property="Width" Value="12"/>
+        <Setter Property="Height" Value="12"/>
+    </Style>
+
+    <!--타일 타이틀 불릿2-->
+    <Style TargetType="{x:Type Image}" x:Key="TileTitleBullet2">
+        <Setter Property="Margin" Value="10,0,0,0"/>
+        <Setter Property="Source" Value="/Resources/Blue/Images/MNUImage/Tile_title_02.png"/>
+        <Setter Property="Width" Value="12"/>
+        <Setter Property="Height" Value="12"/>
+    </Style>
+
+    <!--타일 타이틀 불릿3-->
+    <Style TargetType="{x:Type Image}" x:Key="TileTitleBullet3">
+        <Setter Property="Margin" Value="10,0,0,0"/>
+        <Setter Property="Source" Value="/Resources/Blue/Images/MNUImage/Tile_title_03.png"/>
+        <Setter Property="Width" Value="12"/>
+        <Setter Property="Height" Value="12"/>
+    </Style>
+
+    <!--타일 타이틀 불릿4-->
+    <Style TargetType="{x:Type Image}" x:Key="TileTitleBullet4">
+        <Setter Property="Margin" Value="10,0,0,0"/>
+        <Setter Property="Source" Value="/Resources/Blue/Images/MNUImage/Tile_title_04.png"/>
+        <Setter Property="Width" Value="12"/>
+        <Setter Property="Height" Value="12"/>
+    </Style>
+
+    <!--타일 타이틀 불릿5-->
+    <Style TargetType="{x:Type Image}" x:Key="TileTitleBullet5">
+        <Setter Property="Margin" Value="10,0,0,0"/>
+        <Setter Property="Source" Value="/Resources/Blue/Images/MNUImage/Tile_title_05.png"/>
+        <Setter Property="Width" Value="12"/>
+        <Setter Property="Height" Value="12"/>
+    </Style>
+
+    <!--타일 타이틀 불릿6-->
+    <Style TargetType="{x:Type Image}" x:Key="TileTitleBullet6">
+        <Setter Property="Margin" Value="10,0,0,0"/>
+        <Setter Property="Source" Value="/Resources/Blue/Images/MNUImage/Tile_title_06.png"/>
+        <Setter Property="Width" Value="12"/>
+        <Setter Property="Height" Value="12"/>
+    </Style>
+
+    <!--타일 타이틀 불릿7-->
+    <Style TargetType="{x:Type Image}" x:Key="TileTitleBullet7">
+        <Setter Property="Margin" Value="10,0,0,0"/>
+        <Setter Property="Source" Value="/Resources/Blue/Images/MNUImage/Tile_title_07.png"/>
+        <Setter Property="Width" Value="12"/>
+        <Setter Property="Height" Value="12"/>
+    </Style>
+
+    <!--타일 타이틀 불릿8-->
+    <Style TargetType="{x:Type Image}" x:Key="TileTitleBullet8">
+        <Setter Property="Margin" Value="10,0,0,0"/>
+        <Setter Property="Source" Value="/Resources/Blue/Images/MNUImage/Tile_title_08.png"/>
+        <Setter Property="Width" Value="12"/>
+        <Setter Property="Height" Value="12"/>
+    </Style>
+
+
+
+
+
+    <!--================= FMS 추가 =================-->
+
+    <!--그리드 내 NumberEdit (inner shadow)-->
+    <Style TargetType="{x:Type dxe:TextEdit}" x:Key="GridNumberEdit">
+        <Setter Property="Width" Value="Auto"/>
+        <Setter Property="Height" Value="27"/>
+        <Setter Property="HorizontalAlignment" Value="Stretch"/>
+        <Setter Property="VerticalAlignment" Value="Center"/>
+        <Setter Property="Margin" Value="10,0,10,0"/>
+        <Setter Property="ShowBorder" Value="False"/>
+        <Setter Property="MaskType" Value="Numeric"/>
+        <Setter Property="Mask" Value="n0"/>
+        <Setter Property="MaskUseAsDisplayFormat" Value="True"/>
+        <Setter Property="EditTemplate">
+            <Setter.Value>
+                <ControlTemplate>
+                    <Grid>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="*"/>
+                        </Grid.RowDefinitions>
+                        <Border Grid.Row="0" BorderBrush="#FFCECECE" BorderThickness="1" ClipToBounds="True">
+                            <Border BorderBrush="#FFCECECE" BorderThickness="1,1,0,0" Margin="-1">
+                                <Border.Effect>
+                                    <DropShadowEffect ShadowDepth="1" BlurRadius="6" Opacity="0.1"/>
+                                </Border.Effect>
+                            </Border>
+                        </Border>
+
+                        <TextBox x:Name="PART_Editor" Background="Transparent" BorderBrush="Transparent" Foreground="#000000"
+                                         HorizontalContentAlignment="Right" VerticalContentAlignment="Center" Focusable="True"/>
+                    </Grid>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <Style TargetType="{x:Type dxe:TextEdit}" x:Key="SearchNumberEdit">
+        <Setter Property="FontFamily" Value="맑은고딕"/>
+        <Setter Property="FontSize" Value="14"/>
+        <Setter Property="Foreground" Value="#ff2279b5"/>
+        <Setter Property="Width" Value="150"/>
+        <Setter Property="Height" Value="30"/>
+        <Setter Property="ShowBorder" Value="False"/>
+        <Setter Property="HorizontalAlignment" Value="Center"/>
+        <Setter Property="HorizontalContentAlignment" Value="Right"/>
+        <Setter Property="VerticalAlignment" Value="Center"/>
+        <Setter Property="VerticalContentAlignment" Value="Center"/>
+        <Setter Property="MaskType" Value="Numeric"/>
+        <Setter Property="Mask" Value="n0"/>
+        <Setter Property="MaskUseAsDisplayFormat" Value="True"/>
+        <Setter Property="EditTemplate">
+            <Setter.Value>
+                <ControlTemplate>
+                    <Grid>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="*"/>
+                        </Grid.RowDefinitions>
+                        <Border Grid.Row="0" CornerRadius="4" BorderThickness="1" BorderBrush="#1b6394">
+                            <Border.Effect>
+                                <DropShadowEffect Opacity="0.1" Direction="-90"/>
+                            </Border.Effect>
+                            <Border.Background>
+                                <LinearGradientBrush  StartPoint="1,1" EndPoint="1,0">
+                                    <GradientStop Color="#FFFFFF" Offset="1"/>
+                                    <GradientStop Color="#bec3c6" Offset="0"/>
+                                </LinearGradientBrush>
+                            </Border.Background>
+                        </Border>
+                        <TextBox x:Name="PART_Editor" Background="Transparent" BorderBrush="Transparent" BorderThickness="0"
+                                 HorizontalContentAlignment="{Binding HorizontalContentAlignment}" VerticalContentAlignment="Center" 
+                                 Focusable="True" Padding="5,0,5,0" Margin="0" Foreground="#2C405A"/>
+                    </Grid>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+
+    <!--///////////////// TextBlock /////////////////-->
+    <!--그리드 내 TextEdit (inner shadow)-->
+    <Style TargetType="{x:Type TextBox}" x:Key="GridTextBox">
+        <Setter Property="Width" Value="Auto"/>
+        <Setter Property="Height" Value="27"/>
+        <Setter Property="HorizontalAlignment" Value="Stretch"/>
+        <Setter Property="VerticalAlignment" Value="Center"/>
+        <Setter Property="Margin" Value="10,0,10,0"/>
+    </Style>
+    <!--그리드 내 NumberEdit (inner shadow)-->
+    <Style TargetType="{x:Type TextBox}" x:Key="GridNumberBox">
+        <Setter Property="Width" Value="Auto"/>
+        <Setter Property="Height" Value="27"/>
+        <Setter Property="HorizontalAlignment" Value="Stretch"/>
+        <Setter Property="VerticalAlignment" Value="Center"/>
+        <Setter Property="Margin" Value="10,0,10,0"/>
+    </Style>
+
+
+    <!--스크롤뷰어-->
+    <Style x:Key="RightScrollViewer"
+       TargetType="{x:Type ScrollViewer}">
+        <Setter Property="OverridesDefaultStyle" Value="True" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type ScrollViewer}">
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto" />
+                            <ColumnDefinition />
+                        </Grid.ColumnDefinitions>
+                        <Grid.RowDefinitions>
+                            <RowDefinition />
+                            <RowDefinition Height="Auto" />
+                        </Grid.RowDefinitions>
+
+                        <Border Grid.Column="0" BorderThickness="1,1,0,1">
+                            <Border.BorderBrush>
+                                <SolidColorBrush Color="{DynamicResource PopCOLOR2}" />
+                            </Border.BorderBrush>
+                            <ScrollContentPresenter />
+                        </Border>
+
+                        <ScrollBar Grid.Column="1" x:Name="PART_VerticalScrollBar"
+                             Value="{TemplateBinding VerticalOffset}"
+                             Maximum="{TemplateBinding ScrollableHeight}"
+                             ViewportSize="{TemplateBinding ViewportHeight}"
+                             Visibility="{TemplateBinding ComputedVerticalScrollBarVisibility}"
+                             Background="{DynamicResource PopCOLOR2Brush}"
+                                   />
+                    </Grid>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <!--로그인 연결상태 정상-->
+    <Style TargetType="{x:Type Image}" x:Key="LoginConnStatNormal">
+        <Setter Property="Source" Value="/Resources/Blue/Images/Image/login_alram_normal.png"/>
+        <Setter Property="Stretch" Value="None"/>
+    </Style>
+
+
+
+</ResourceDictionary>

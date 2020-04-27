@@ -1,0 +1,232 @@
+﻿<UserControl xmlns:dxg="http://schemas.devexpress.com/winfx/2008/xaml/grid"  xmlns:dxe="http://schemas.devexpress.com/winfx/2008/xaml/editors"  
+        x:Class="GTI.WFMS.Modules.Mntc.View.PdjtMngListView"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        mc:Ignorable="d"
+        d:DesignHeight="585" d:DesignWidth="1100"
+        
+        xmlns:cv="clr-namespace:GTI.WFMS.Models.Common;assembly=GTI.WFMS.Models"
+        x:Name="pdjtMngListView"
+        >
+
+
+    <UserControl.Resources>
+        <cv:ToggleConverter x:Key="toggleConverter" />
+        <cv:RownumConverter x:Key="rownumConverter" />
+    </UserControl.Resources>
+
+    <Grid  Background="{DynamicResource TileCOLOR4Brush}" >
+        <Grid.ColumnDefinitions >
+            <ColumnDefinition Width="280"/>
+            <ColumnDefinition Width="1"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+
+        <Grid Grid.Column="0" Margin="0 0 0 10">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="40" />
+                <RowDefinition Height="280" />
+                <RowDefinition Height="*" />
+            </Grid.RowDefinitions>
+
+
+            <StackPanel Grid.Row="0" Grid.Column="0" Orientation="Horizontal">
+                <Image Style="{DynamicResource TitleCircle}" Margin="10 0 0 0"/>
+                <Label Content="검색항목" Style="{DynamicResource CircleTitleLabel}"/>
+            </StackPanel>
+
+            <Grid Grid.Row="1" Background="{DynamicResource PopupCOLOR3Brush}" VerticalAlignment="Top"  >
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="100"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="40" />
+                    <RowDefinition Height="40" />
+                    <RowDefinition Height="40" />
+                    <RowDefinition Height="40" />
+                </Grid.RowDefinitions>
+
+                <!--테이블구분선-->
+                <Border Grid.Row="0" Grid.Column="0" BorderThickness="0,0,1,1" BorderBrush="{DynamicResource TileCOLOR4Brush}" Margin="0,0,0,0"/>
+                <Border Grid.Row="0" Grid.Column="2" BorderThickness="0,0,0,1" BorderBrush="{DynamicResource TileCOLOR4Brush}" Margin="0,0,0,0"/>
+                <Border Grid.Row="1" Grid.Column="0" BorderThickness="0,0,1,1" BorderBrush="{DynamicResource TileCOLOR4Brush}" Margin="0,0,0,0"/>
+                <Border Grid.Row="1" Grid.Column="2" BorderThickness="0,0,0,1" BorderBrush="{DynamicResource TileCOLOR4Brush}" Margin="0,0,0,0"/>
+                <Border Grid.Row="2" Grid.Column="0" BorderThickness="0,0,1,1" BorderBrush="{DynamicResource TileCOLOR4Brush}" Margin="0,0,0,0"/>
+                <Border Grid.Row="2" Grid.Column="2" BorderThickness="0,0,0,1" BorderBrush="{DynamicResource TileCOLOR4Brush}" Margin="0,0,0,0"/>
+                <Border Grid.Row="3" Grid.Column="0" BorderThickness="0,0,1,1" BorderBrush="{DynamicResource TileCOLOR4Brush}" Margin="0,0,0,0"/>
+                <Border Grid.Row="3" Grid.Column="2" BorderThickness="0,0,0,1" BorderBrush="{DynamicResource TileCOLOR4Brush}" Margin="0,0,0,0"/>
+
+                <!--라벨&입력창-->
+                <Label Grid.Row="0" Grid.Column="0" Content="품명" Style="{DynamicResource ResourceKey=GridLabel}"/>
+                <dxe:TextEdit Grid.Row="0" Grid.Column="1" x:Name="txtPDT_NAM" Style="{DynamicResource ResourceKey=SearchTextEdit}"  HorizontalAlignment="Center" Margin="0">
+                    <dxe:TextEdit.InputBindings>
+                        <KeyBinding Key="Enter" Command="{Binding SearchCmd}"/>
+                    </dxe:TextEdit.InputBindings>
+                </dxe:TextEdit>
+                <Label Grid.Row="1" Grid.Column="0" Content="모델및규격" Style="{DynamicResource ResourceKey=GridLabel}"/>
+                <dxe:TextEdit Grid.Row="1" Grid.Column="1" x:Name="txtPDT_MDL_STD" Style="{DynamicResource ResourceKey=SearchTextEdit}"  HorizontalAlignment="Center" Margin="0">
+                    <dxe:TextEdit.InputBindings>
+                        <KeyBinding Key="Enter" Command="{Binding SearchCmd}"/>
+                    </dxe:TextEdit.InputBindings>
+                </dxe:TextEdit>
+                <Label Grid.Row="2" Grid.Column="0" Content="제조사" Style="{DynamicResource ResourceKey=GridLabel}"/>
+                <dxe:TextEdit Grid.Row="2" Grid.Column="1" x:Name="txtPDT_MNF" Style="{DynamicResource ResourceKey=SearchTextEdit}"  HorizontalAlignment="Center" Margin="0">
+                    <dxe:TextEdit.InputBindings>
+                        <KeyBinding Key="Enter" Command="{Binding SearchCmd}"/>
+                    </dxe:TextEdit.InputBindings>
+                </dxe:TextEdit>
+                <Label Grid.Row="3" Grid.Column="0" Content="구분" Style="{DynamicResource ResourceKey=GridLabel}"/>
+                <dxe:ComboBoxEdit Grid.Row="3" Grid.Column="1" x:Name="cbPDT_CAT_CDE" DisplayMember="NM" ValueMember="DTL_CD" Style="{DynamicResource ResourceKey=SearchComboBox}" 
+                               HorizontalAlignment="Center" Margin="0"/>
+            </Grid>
+
+
+
+            <Grid Grid.Row="2">
+                <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Bottom">
+                    <Button Style="{DynamicResource ResourceKey=InitButton}" Click="Button_Click_1"/>
+                    <Button Style="{DynamicResource ResourceKey=SearchButton}" Click="Button_Click"/>
+                </StackPanel>
+            </Grid>
+
+        </Grid>
+
+
+        <Border Grid.Column="1" Background="{DynamicResource TileCOLOR2Brush}" />
+
+        <Grid Grid.Column="2" Margin="0 0 0 10">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="40" />
+                <RowDefinition Height="*" />
+            </Grid.RowDefinitions>
+
+            <StackPanel Grid.Row="0" Orientation="Horizontal">
+                <Image Style="{DynamicResource TitleCircle}" Margin="10 0 0 0"/>
+                <Label Content="목록" Style="{DynamicResource CircleTitleLabel}"/>
+            </StackPanel>
+
+
+            <StackPanel Grid.Row="0" Orientation="Horizontal" HorizontalAlignment="Right" Margin="0 0 5 0">
+                <Button x:Name="btnIn" Content="입고등록" Click="BtnIn_Click" Style="{DynamicResource InStrButton}" />
+                <Button x:Name="btnAdd" Style="{DynamicResource ResourceKey=GrdAddButton}" Click="BtnAdd_Click"  />
+                <Button x:Name="btnDel" Style="{DynamicResource ResourceKey=GrdDelButton}" Click="BtnDel_Click"  />
+                <Button x:Name="btnReg" Style="{DynamicResource ResourceKey=GrdRegButton}" Click="BtnReg_Click"  />
+            </StackPanel>
+
+            <dxg:GridControl Grid.Row="1" x:Name="grid" VerticalAlignment="Stretch" HorizontalAlignment="Stretch"  >
+
+                <dxg:GridControl.View>
+                    <dxg:TableView x:Name="gv"
+                                NavigationStyle="Row" 
+                                AllowPerPixelScrolling="True"  
+                                ShowHorizontalLines="True"
+                               
+                                ShowIndicator="False" 
+                                ShowGroupPanel="False" 
+                                AllowBandMultiRow="False" 
+
+                    />
+                </dxg:GridControl.View>
+
+                <!--
+                    <dxg:GridColumn Header="" Width="1*" HorizontalHeaderContentAlignment="Center"  AllowEditing="True">
+                        <dxg:GridColumn.CellTemplate>
+                            <DataTemplate>
+                                <TextBlock Text="{Binding RowData.RowHandle.Value, Converter={StaticResource rownumConverter}}" VerticalAlignment="Center" HorizontalAlignment="Center" />
+                            </DataTemplate>
+                        </dxg:GridColumn.CellTemplate>
+                    </dxg:GridColumn>
+                    -->
+                <dxg:GridColumn Header="" Width="1*" HorizontalHeaderContentAlignment="Center"  AllowEditing="True">
+                    <dxg:GridColumn.HeaderTemplate>
+                        <DataTemplate>
+                            <dxe:CheckEdit x:Name="allChk"  
+                                NullValue="false" IsThreeState="False"  EditMode="InplaceActive" Checked="AllChk_Checked" Unchecked="AllChk_Unchecked"/>
+                        </DataTemplate>
+                    </dxg:GridColumn.HeaderTemplate>
+                    <dxg:GridColumn.CellTemplate>
+                        <DataTemplate>
+                            <dxe:CheckEdit EditValue="{Binding RowData.Row.CHK, Mode=TwoWay, Converter={StaticResource toggleConverter}}" HorizontalAlignment="Center" />
+                        </DataTemplate>
+                    </dxg:GridColumn.CellTemplate>
+                </dxg:GridColumn>
+                <dxg:GridColumn Header="구분" Width="4*" FieldName="PDT_CAT_CDE" HorizontalHeaderContentAlignment="Center"  AllowEditing="True">
+                    <dxg:GridColumn.CellTemplate>
+                        <DataTemplate>
+                            <dxe:ComboBoxEdit EditValue="{Binding RowData.Row.PDT_CAT_CDE, Mode=TwoWay}" ValueMember="DTL_CD" DisplayMember="NM"
+                                            Loaded="PDT_CAT_CDE_Loaded"  
+                                    Style="{DynamicResource ResourceKey=GridComboBox}" >
+                                <dxe:ComboBoxEdit.ItemContainerStyle>
+                                    <Style TargetType="{x:Type dxe:ComboBoxEditItem}">
+                                        <Setter Property="Foreground" Value="#2279b5"/>
+                                    </Style>
+                                </dxe:ComboBoxEdit.ItemContainerStyle>
+                            </dxe:ComboBoxEdit>
+                        </DataTemplate>
+                    </dxg:GridColumn.CellTemplate>
+                </dxg:GridColumn>
+                <dxg:GridColumn Header="품명" Width="5*" FieldName="PDT_NAM" HorizontalHeaderContentAlignment="Center" AllowEditing="True">
+                    <dxg:GridColumn.CellTemplate>
+                        <DataTemplate>
+                            <dxe:TextEdit  Style="{DynamicResource ResourceKey=GridTextEdit}" 
+                            EditValue="{Binding  RowData.Row.PDT_NAM, Mode=TwoWay }" />
+                        </DataTemplate>
+                    </dxg:GridColumn.CellTemplate>
+                </dxg:GridColumn>
+                <dxg:GridColumn Header="모델및규격" Width="5*" FieldName="PDT_MDL_STD" HorizontalHeaderContentAlignment="Center" AllowEditing="True">
+                    <dxg:GridColumn.CellTemplate>
+                        <DataTemplate>
+                            <dxe:TextEdit  Style="{DynamicResource ResourceKey=GridTextEdit}" 
+                            EditValue="{Binding  RowData.Row.PDT_MDL_STD, Mode=TwoWay }" />
+                        </DataTemplate>
+                    </dxg:GridColumn.CellTemplate>
+                </dxg:GridColumn>
+                <dxg:GridColumn Header="단위" Width="3*" FieldName="PDT_UNT" HorizontalHeaderContentAlignment="Center" AllowEditing="True">
+                    <dxg:GridColumn.CellTemplate>
+                        <DataTemplate>
+                            <dxe:TextEdit  Style="{DynamicResource ResourceKey=GridTextEdit}" 
+                            EditValue="{Binding  RowData.Row.PDT_UNT, Mode=TwoWay }" />
+                        </DataTemplate>
+                    </dxg:GridColumn.CellTemplate>
+                </dxg:GridColumn>
+                <dxg:GridColumn Header="제조사" Width="5*" FieldName="PDT_MNF" HorizontalHeaderContentAlignment="Center" AllowEditing="True">
+                    <dxg:GridColumn.CellTemplate>
+                        <DataTemplate>
+                            <dxe:TextEdit  Style="{DynamicResource ResourceKey=GridTextEdit}" 
+                            EditValue="{Binding  RowData.Row.PDT_MNF, Mode=TwoWay }" />
+                        </DataTemplate>
+                    </dxg:GridColumn.CellTemplate>
+                </dxg:GridColumn>
+                <dxg:GridColumn Header="사용여부" Width="2*" FieldName="USE_YN" HorizontalHeaderContentAlignment="Center"  AllowEditing="True">
+                    <dxg:GridColumn.CellTemplate>
+                        <DataTemplate>
+                            <dxe:CheckEdit EditValue="{Binding RowData.Row.USE_YN, Mode=TwoWay, Converter={StaticResource toggleConverter}}" HorizontalAlignment="Center" />
+                        </DataTemplate>
+                    </dxg:GridColumn.CellTemplate>
+                </dxg:GridColumn>
+                <!--히든컬럼-->
+                <dxg:GridColumn FieldName="PDH_NUM" Visible="False">
+                    <dxg:GridColumn.EditSettings>
+                        <dxe:TextEditSettings />
+                    </dxg:GridColumn.EditSettings>
+                </dxg:GridColumn>
+                <dxg:GridColumn FieldName="CNT" Visible="False">
+                    <dxg:GridColumn.EditSettings>
+                        <dxe:TextEditSettings />
+                    </dxg:GridColumn.EditSettings>
+                </dxg:GridColumn>
+
+            </dxg:GridControl>
+
+        </Grid>
+
+
+
+    </Grid>
+
+
+
+</UserControl>

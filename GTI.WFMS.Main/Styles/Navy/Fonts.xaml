@@ -1,0 +1,48 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:dx="http://schemas.devexpress.com/winfx/2008/xaml/core" 
+                    xmlns:dxg="http://schemas.devexpress.com/winfx/2008/xaml/grid"
+                    xmlns:dxe="http://schemas.devexpress.com/winfx/2008/xaml/editors"  
+                    xmlns:dxc="http://schemas.devexpress.com/winfx/2008/xaml/charts">
+
+    <FontFamily x:Key="malgun">pack://application;,,,/Resources/Fonts/#맑은 고딕</FontFamily>
+    <FontFamily x:Key="malgunsl">pack://application;,,,/Resources/Fonts/#맑은 고딕 Semilight</FontFamily>
+    <FontFamily x:Key="malgunbd">pack://application;,,,/Resources/Fonts/#맑은 고딕 Bold</FontFamily>
+
+    <!--얇은-->
+    <Style TargetType="{x:Type Control}" x:Key="BaseslfontStyle">
+        <Setter Property="FontFamily" Value="{StaticResource malgunsl}"/>
+        <Setter Property="TextOptions.TextRenderingMode" Value="Auto"/>
+        <Setter Property="TextOptions.TextFormattingMode" Value="Ideal"/>
+    </Style>
+    
+    <!--보통-->
+    <Style TargetType="{x:Type Control}" x:Key="BasefontStyle">
+        <Setter Property="FontFamily" Value="{StaticResource malgun}"/>
+        <Setter Property="TextOptions.TextRenderingMode" Value="Auto"/>
+        <Setter Property="TextOptions.TextFormattingMode" Value="Ideal"/>
+    </Style>
+
+    <!--굵은-->
+    <Style TargetType="{x:Type Control}" x:Key="BasebdfontStyle">
+        <Setter Property="FontFamily" Value="{StaticResource malgunbd}"/>
+        <Setter Property="FontWeight" Value="Bold"/>
+        <Setter Property="TextOptions.TextRenderingMode" Value="Auto"/>
+        <Setter Property="TextOptions.TextFormattingMode" Value="Ideal"/>
+    </Style>
+
+    <!--기본설정-->
+    <Style TargetType="{x:Type Window}" BasedOn="{StaticResource BasefontStyle}"/>
+    <Style TargetType="{x:Type Label}" BasedOn="{StaticResource BasefontStyle}"/>
+    
+    <Style TargetType="{x:Type dx:DXTabItem}" BasedOn="{StaticResource BasefontStyle}"/>
+    
+    <Style TargetType="{x:Type dxg:TableView}" BasedOn="{StaticResource BasefontStyle}"/>
+    <Style TargetType="{x:Type dxg:TreeListView}" BasedOn="{StaticResource BasefontStyle}"/>
+    
+    <Style TargetType="{x:Type dxe:ToggleSwitch}" BasedOn="{StaticResource BasefontStyle}"/>
+    <Style TargetType="{x:Type dxe:DateEdit}" BasedOn="{StaticResource BasefontStyle}"/>
+    <Style TargetType="{x:Type dxe:TextEdit}" BasedOn="{StaticResource BasefontStyle}"/>
+    <Style TargetType="{x:Type dxe:ComboBoxEdit}" BasedOn="{StaticResource BasefontStyle}"/>
+    <Style TargetType="{x:Type dxc:ChartControl}" BasedOn="{StaticResource BasefontStyle}"/>
+</ResourceDictionary>

@@ -1,0 +1,359 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<sqlMap namespace="Main" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://ibatis.apache.org/mapping">
+  <statements>
+
+    <!--수압계-->
+    <select id ="SelectWtprMtList" parameterClass="Hashtable" resultClass ="Hashtable">
+      /* WtprMtMap.SelectWtprMtList 수압계 목록*/
+
+      WITH C AS (
+      SELECT COUNT(1) AS ROWCNT
+      FROM INFOFMS.WTL_PRGA_PS A
+      WHERE 1=1
+        <!-- 조건1. 관리기관 -->
+        <isNotEmpty prepend="AND" property="MNG_CDE">
+          A.MNG_CDE = #MNG_CDE#
+        </isNotEmpty>
+
+        <!-- 조건2. 관리번호 -->
+        <isNotEmpty prepend="AND" property="FTR_IDN">
+          A.FTR_IDN like #FTR_IDN# || '%'
+        </isNotEmpty>
+
+        <!-- 조건3. 행정읍면동 -->
+        <isNotEmpty prepend="AND" property="HJD_CDE">
+          A.HJD_CDE = #HJD_CDE#
+        </isNotEmpty>
+
+        <!-- 조건4. 공사번호 -->
+        <isNotEmpty prepend="AND" property="CNT_NUM">
+          A.CNT_NUM = #CNT_NUM#
+        </isNotEmpty>
+
+        <!-- 조건5. 도엽번호 -->
+        <isNotEmpty prepend="AND" property="SHT_NUM">
+          A.SHT_NUM = #SHT_NUM#
+        </isNotEmpty>
+
+        <!-- 조건6. 설치일자[이상] -->
+        <isNotEmpty prepend="AND" property="IST_YMD_FROM">
+          A.IST_YMD <![CDATA[>=]]> #IST_YMD_FROM#
+        </isNotEmpty>
+
+        <!-- 조건7. 설치일자[이하] -->
+        <isNotEmpty prepend="AND" property="IST_YMD_TO">
+          A.IST_YMD <![CDATA[<=]]> #IST_YMD_TO#
+        </isNotEmpty>
+
+        <!-- 조건8. 수압계종류 -->
+        <isNotEmpty prepend="AND" property="PGA_CDE">
+          A.PGA_CDE = #PGA_CDE#
+        </isNotEmpty>
+
+        <!-- 조건9. 형식 -->
+        <isNotEmpty prepend="AND" property="MOF_CDE">
+          A.MOF_CDE = #MOF_CDE#
+        </isNotEmpty>
+
+        <!-- 조건10. 구경 -->
+        <isNotEmpty prepend="AND" property="PGA_DIP">
+          A.PGA_DIP = #PGA_DIP#
+        </isNotEmpty>
+
+        <!-- 조건11. 제작회사명 -->
+        <isNotEmpty prepend="AND" property="PRD_NAM">
+          A.PRD_NAM = #PRD_NAM#
+        </isNotEmpty>
+      )
+
+      SELECT C.ROWCNT, X.*  FROM (
+
+      SELECT ROW_NUMBER() OVER( ORDER BY A.FTR_IDN DESC ) AS RN
+      , A.FTR_CDE
+      , (SELECT FTR_NAM FROM INFOFMS.V_FTR_CDE WHERE FTR_CDE = A.FTR_CDE) AS FTR_NAM
+      , A.FTR_IDN
+      , A.HJD_CDE
+      , (SELECT HJD_NAM FROM INFOFMS.CMT_ADAR_MA WHERE HJD_CDE = A.HJD_CDE) AS HJD_NAM
+      , A.SHT_NUM
+      , A.MNG_CDE
+      , (SELECT NM FROM INFOUSER.CD_DTL_INFO WHERE MST_CD = '250101' AND DTL_CD = A.MNG_CDE ) AS MNG_NAM
+      , A.IST_YMD
+      , A.PGA_CDE
+      , (SELECT NM FROM INFOUSER.CD_DTL_INFO WHERE MST_CD = '250057' AND DTL_CD = A.PGA_CDE ) AS PGA_NAM
+      , A.MOF_CDE
+      , (SELECT NM FROM INFOUSER.CD_DTL_INFO WHERE MST_CD = '250035' AND DTL_CD = A.MOF_CDE ) AS MOF_NAM
+      , A.PGA_DIP
+      , A.STD_SAF
+      , A.AVG_SAF
+      , A.MSR_SAF
+      , A.PIP_DIP
+      , A.PRD_NAM
+      , A.PIP_CDE
+      , A.PIP_IDN
+      , A.CNT_NUM
+      , A.SYS_CHK
+      , A.ANG_DIR
+      , CASE WHEN ST_ISVALID(A.GEOM) = 1 THEN 'Y' ELSE 'N' END AS IS_GEOMETRY
+      FROM INFOFMS.WTL_PRGA_PS A
+      WHERE 1=1
+      <!-- 조건1. 관리기관 -->
+        <isNotEmpty prepend="AND" property="MNG_CDE">
+          A.MNG_CDE = #MNG_CDE#
+        </isNotEmpty>
+
+        <!-- 조건2. 관리번호 -->
+        <isNotEmpty prepend="AND" property="FTR_IDN">
+          A.FTR_IDN like #FTR_IDN# || '%'
+        </isNotEmpty>
+
+        <!-- 조건3. 행정읍면동 -->
+        <isNotEmpty prepend="AND" property="HJD_CDE">
+          A.HJD_CDE = #HJD_CDE#
+        </isNotEmpty>
+
+        <!-- 조건4. 공사번호 -->
+        <isNotEmpty prepend="AND" property="CNT_NUM">
+          A.CNT_NUM = #CNT_NUM#
+        </isNotEmpty>
+
+        <!-- 조건5. 도엽번호 -->
+        <isNotEmpty prepend="AND" property="SHT_NUM">
+          A.SHT_NUM = #SHT_NUM#
+        </isNotEmpty>
+
+        <!-- 조건6. 설치일자[이상] -->
+        <isNotEmpty prepend="AND" property="IST_YMD_FROM">
+          A.IST_YMD <![CDATA[>=]]> #IST_YMD_FROM#
+        </isNotEmpty>
+
+        <!-- 조건7. 설치일자[이하] -->
+        <isNotEmpty prepend="AND" property="IST_YMD_TO">
+          A.IST_YMD <![CDATA[<=]]> #IST_YMD_TO#
+        </isNotEmpty>
+
+        <!-- 조건8. 수압계종류 -->
+        <isNotEmpty prepend="AND" property="PGA_CDE">
+          A.PGA_CDE = #PGA_CDE#
+        </isNotEmpty>
+
+        <!-- 조건9. 형식 -->
+        <isNotEmpty prepend="AND" property="MOF_CDE">
+          A.MOF_CDE = #MOF_CDE#
+        </isNotEmpty>
+
+        <!-- 조건10. 구경 -->
+        <isNotEmpty prepend="AND" property="PGA_DIP">
+          A.PGA_DIP = #PGA_DIP#
+        </isNotEmpty>
+
+        <!-- 조건11. 제작회사명 -->
+        <isNotEmpty prepend="AND" property="PRD_NAM">
+          A.PRD_NAM = #PRD_NAM#
+        </isNotEmpty>
+
+        ORDER BY FTR_IDN DESC
+
+
+    ) X JOIN C ON 1=1
+    WHERE RN &lt;= ($page$+1) * $rows$
+      AND RN &gt;= ($page$) * $rows$ + 1
+
+    </select>
+
+    <select id="SelectWtprMtDtl"  parameterClass="Hashtable" resultClass ="GTI.WFMS.Models.Pipe.Model.WtprMtDtl">
+      /* WtprMtMap.SelectWtprMtDtl 수압계 상세정보*/
+      <![CDATA[
+			SELECT A.FTR_CDE
+          , (SELECT FTR_NAM FROM INFOFMS.V_FTR_CDE WHERE FTR_CDE = A.FTR_CDE) AS FTR_NAM
+          , A.FTR_IDN
+          , A.HJD_CDE
+          , (SELECT HJD_NAM FROM INFOFMS.CMT_ADAR_MA WHERE HJD_CDE = A.HJD_CDE) AS HJD_NAM
+          , A.SHT_NUM
+          , A.MNG_CDE
+          , (SELECT NM FROM INFOUSER.CD_DTL_INFO WHERE MST_CD = '250101' AND DTL_CD = A.MNG_CDE ) AS MNG_NAM
+          , a.IST_YMD
+          , A.PGA_CDE
+          , (SELECT NM FROM INFOUSER.CD_DTL_INFO WHERE MST_CD = '250061' AND DTL_CD = A.PGA_CDE ) AS GAG_NAM
+          , A.MOF_CDE
+          , (SELECT NM FROM INFOUSER.CD_DTL_INFO WHERE MST_CD = '250004' AND DTL_CD = A.MOF_CDE ) AS MOF_NAM
+          , A.PGA_DIP
+          , A.STD_SAF
+          , A.AVG_SAF
+          , A.MSR_SAF
+          , A.PIP_DIP
+          , A.PRD_NAM
+          , A.PIP_CDE
+          , A.PIP_IDN
+          , A.CNT_NUM
+          , A.SYS_CHK
+          , A.ANG_DIR
+          , decode(A.SYS_CHK,'1','유','무') as SYS_CHK_NAM
+       FROM INFOFMS.WTL_PRGA_PS A 
+			WHERE 1=1
+        AND FTR_CDE = #FTR_CDE# 
+				AND FTR_IDN = #FTR_IDN#
+			]]>
+    </select>
+
+    <!--수압계 상세추가-->
+    <update id="insertWtprMtDtl" parameterClass="GTI.WFMS.Models.Pipe.Model.WtprMtDtl">
+      INSERT INTO INFOFMS.WTL_PRGA_PS
+      ( FTR_CDE
+      , FTR_IDN
+      , HJD_CDE
+      , SHT_NUM
+      , MNG_CDE
+      , IST_YMD
+      , PGA_CDE
+      , MOF_CDE
+      , PGA_DIP
+      , STD_SAF
+      , AVG_SAF
+      , MSR_SAF
+      , PIP_DIP
+      , PRD_NAM
+      , PIP_CDE
+      , PIP_IDN
+      , CNT_NUM
+      , SYS_CHK
+      , ANG_DIR
+      )
+      VALUES
+      ( #FTR_CDE#
+      , #FTR_IDN#
+      , #HJD_CDE#
+      , #SHT_NUM#
+      , #MNG_CDE#
+      , #IST_YMD#
+      , #PGA_CDE#
+      , #MOF_CDE#
+      , #PGA_DIP#
+      , #STD_SAF#
+      , #AVG_SAF#
+      , #MSR_SAF#
+      , #PIP_DIP#
+      , #PRD_NAM#
+      , #PIP_CDE#
+      , #PIP_IDN#
+      , #CNT_NUM#
+      , #SYS_CHK#
+      , #ANG_DIR#
+      )
+    </update>
+
+    <!--수압계 상세저장-->
+    <update id="updateWtprMtDtl" parameterClass="GTI.WFMS.Models.Pipe.Model.WtprMtDtl">
+      /* 수압계 상세 수정 */
+      UPDATE INFOFMS.WTL_PRGA_PS
+      SET HJD_CDE = #HJD_CDE#
+      , SHT_NUM = #SHT_NUM#
+      , MNG_CDE = #MNG_CDE#
+      , IST_YMD = #IST_YMD#
+      , PGA_CDE = #PGA_CDE#
+      , MOF_CDE = #MOF_CDE#
+      , PGA_DIP = #PGA_DIP#
+      , STD_SAF = #STD_SAF#
+      , AVG_SAF = #AVG_SAF#
+      , MSR_SAF = #MSR_SAF#
+      , PIP_DIP = #PIP_DIP#
+      , PRD_NAM = #PRD_NAM#
+      , PIP_CDE = #PIP_CDE#
+      , PIP_IDN = #PIP_IDN#
+      , CNT_NUM = #CNT_NUM#
+      , SYS_CHK = #SYS_CHK#
+      , ANG_DIR = #ANG_DIR#
+      WHERE FTR_CDE = #FTR_CDE#
+      AND	FTR_IDN = #FTR_IDN#
+    </update>
+
+    <update id="SaveWtprMtDtl" parameterClass="GTI.WFMS.Models.Pipe.Model.WtprMtDtl">
+      MERGE INTO INFOFMS.WTL_PRGA_PS
+      USING DUAL ON (FTR_CDE = #FTR_CDE# AND	FTR_IDN = #FTR_IDN#)
+
+      WHEN MATCHED THEN
+      UPDATE
+      SET HJD_CDE = #HJD_CDE#
+      , SHT_NUM = #SHT_NUM#
+      , MNG_CDE = #MNG_CDE#
+      , IST_YMD = #IST_YMD#
+      , PGA_CDE = #PGA_CDE#
+      , MOF_CDE = #MOF_CDE#
+      , PGA_DIP = #PGA_DIP#
+      , STD_SAF = #STD_SAF#
+      , AVG_SAF = #AVG_SAF#
+      , MSR_SAF = #MSR_SAF#
+      , PIP_DIP = #PIP_DIP#
+      , PRD_NAM = #PRD_NAM#
+      , PIP_CDE = #PIP_CDE#
+      , PIP_IDN = #PIP_IDN#
+      , CNT_NUM = #CNT_NUM#
+      , SYS_CHK = #SYS_CHK#
+      , ANG_DIR = #ANG_DIR#
+
+
+      WHEN NOT MATCHED THEN
+      INSERT
+      ( FTR_CDE
+      , FTR_IDN
+      , HJD_CDE
+      , SHT_NUM
+      , MNG_CDE
+      , IST_YMD
+      , PGA_CDE
+      , MOF_CDE
+      , PGA_DIP
+      , STD_SAF
+      , AVG_SAF
+      , MSR_SAF
+      , PIP_DIP
+      , PRD_NAM
+      , PIP_CDE
+      , PIP_IDN
+      , CNT_NUM
+      , SYS_CHK
+      , ANG_DIR
+      )
+      VALUES
+      ( #FTR_CDE#
+      , #FTR_IDN#
+      , #HJD_CDE#
+      , #SHT_NUM#
+      , #MNG_CDE#
+      , #IST_YMD#
+      , #PGA_CDE#
+      , #MOF_CDE#
+      , #PGA_DIP#
+      , #STD_SAF#
+      , #AVG_SAF#
+      , #MSR_SAF#
+      , #PIP_DIP#
+      , #PRD_NAM#
+      , #PIP_CDE#
+      , #PIP_IDN#
+      , #CNT_NUM#
+      , #SYS_CHK#
+      , #ANG_DIR#
+      )
+
+
+
+    </update>
+
+    <!--수압계 상세삭제-->
+    <update id="deleteWtprMtDtl" parameterClass="GTI.WFMS.Models.Pipe.Model.WtprMtDtl">
+      /* 수압계 상세 삭제 */
+      DELETE INFOFMS.WTL_PRGA_PS
+      WHERE FTR_CDE = #FTR_CDE#
+      AND FTR_IDN = #FTR_IDN#
+    </update>
+
+    <!--수압계 관리번호 채번-->
+    <select id ="SelectWtprMtFTR_IDN" parameterClass="Hashtable" resultClass ="GTI.WFMS.Models.Pipe.Model.WtprMtDtl">
+      /* 수압계 관리번호 채번 */
+      SELECT NVL(MAX(FTR_IDN),0)+1 AS FTR_IDN FROM INFOFMS.WTL_PRGA_PS
+      WHERE 1=1
+    </select>
+
+  </statements>
+  
+</sqlMap>

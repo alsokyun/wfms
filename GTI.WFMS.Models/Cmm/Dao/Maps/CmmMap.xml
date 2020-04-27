@@ -1,0 +1,104 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<sqlMap namespace="Main" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://ibatis.apache.org/mapping">
+  <statements>
+
+    <!--공통코드 콤보-->
+    <select id ="Select_CODE_LIST" parameterClass="Hashtable" resultClass ="Hashtable">
+      SELECT X.* FROM (
+
+      SELECT A.MST_CD, A.NM MST_NM, B.DTL_CD, B.NM, B.ETC DTL_ETC, B.ORD
+      FROM INFOUSER.CD_MST_INFO A
+      ,INFOUSER.CD_DTL_INFO B
+      WHERE 1=1
+      AND B.MST_CD = A.MST_CD
+      AND A.USE_YN = 'Y'
+      AND B.USE_YN = 'Y'
+      <isNotEmpty prepend="AND" property="MST_CD">
+        A.MST_CD = #MST_CD#
+      </isNotEmpty>
+      <isNotEmpty prepend="AND" property="ETC">
+        A.ETC = #ETC#
+      </isNotEmpty>
+
+      <!--전체옵션-->
+      <isNotEmpty prepend="UNION ALL" property="ALL">
+        <isEqual property="ALL" compareValue="Y">
+          SELECT '' AS MST_CD, NULL AS MST_NM, ' ' AS DTL_CD, '전체' AS NM, NULL AS DTL_ETC, NULL AS ORD
+          FROM DUAL
+        </isEqual>
+      </isNotEmpty>
+
+      ) X
+      ORDER BY X.ORD ASC, X.DTL_CD
+    </select>
+
+    <!--공통코드명-->
+    <select id ="Select_CODE_NAME" parameterClass="Hashtable" resultClass ="Hashtable">
+
+      SELECT A.MST_CD, A.NM MST_NM, B.DTL_CD, B.NM, B.ETC DTL_ETC, B.ORD
+      FROM INFOUSER.CD_MST_INFO A
+      ,INFOUSER.CD_DTL_INFO B
+      WHERE 1=1
+      AND B.MST_CD = A.MST_CD
+      AND A.USE_YN = 'Y'
+      AND B.USE_YN = 'Y'
+      AND A.MST_CD = #MST_CD#
+      AND B.DTL_CD = #DTL_CD#
+    </select>
+
+
+    <!--메뉴 바인딩을 위한 메뉴 조회-->
+    <select id ="Select_MNU_LIST" parameterClass="Hashtable" resultClass ="Hashtable">
+      SELECT MNU_CD, SYS_CD, MNU_NM, MNU_DESC, MNU_PATH, MNU_IMG, UPPER_CD, MNU_STEP, ORD, DEL_YN, EDT_ID, EDT_DT
+      FROM INFOUSER.SYS_MNU_INFO
+      WHERE SYS_CD = #SYS_CD#
+      AND DEL_YN = 'N'
+      ORDER BY ORD ASC
+    </select>
+
+
+    <!--메뉴 바인딩을 위한 메뉴 조회-->
+    <select id ="Select_MNU_LIST2" parameterClass="Hashtable" resultClass ="Hashtable">
+      SELECT MNU_CD, SYS_CD, MNU_NM, MNU_DESC, MNU_PATH, MNU_IMG, UPPER_CD, MNU_STEP, ORD, DEL_YN, EDT_ID, EDT_DT
+      FROM INFOUSER.SYS_MNU_INFO
+      WHERE SYS_CD = #SYS_CD#
+      AND MNU_STEP = #MNU_STEP#
+      AND DEL_YN = 'N'
+      <isEqual property="MNU_STEP" compareValue="2">
+        AND UPPER_CD = #UPPER_CD#
+      </isEqual>
+      ORDER BY ORD ASC
+    </select>
+
+
+    <!--행정구역코드-->
+    <select id ="Select_ADAR_LIST" parameterClass="Hashtable" resultClass ="Hashtable">
+      SELECT 	HJD_CDE, HJD_NAM, HJD_EXP
+      FROM 	INFOFMS.CMT_ADAR_MA
+      ORDER BY HJD_CDE
+    </select>
+
+    <!--행정구역명-->
+    <select id ="Select_ADAR_NM" parameterClass="Hashtable" resultClass ="Hashtable">
+      SELECT 	HJD_CDE, HJD_NAM AS NAME, HJD_EXP
+      FROM 	INFOFMS.CMT_ADAR_MA
+      WHERE HJD_CDE = #CODE#
+      ORDER BY HJD_CDE
+    </select>
+
+    <!--시설물코드 명칭-->
+    <select id ="Select_FTR_NM" parameterClass="Hashtable" resultClass ="Hashtable">
+      SELECT FTR_CDE, FTR_NAM AS NAME FROM V_FTR_CDE
+      WHERE FTR_CDE = #CODE#
+    </select>
+
+    <!--시설물코드 List -->
+    <select id ="Select_FTR_LIST" parameterClass="Hashtable" resultClass ="Hashtable">
+      SELECT FTR_CDE, FTR_NAM 
+      FROM V_FTR_CDE
+      WHERE 1=1
+      ORDER BY FTR_CDE
+    </select>
+
+  </statements>
+</sqlMap>

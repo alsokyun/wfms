@@ -1,0 +1,364 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<sqlMap namespace="Main" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://ibatis.apache.org/mapping">
+  <statements>
+
+    <!--급수전계량기-->
+    <select id ="SelectHydtMetrList" parameterClass="Hashtable" resultClass ="Hashtable">
+      /* HydtMetrMap.SelectHydtMetrList 급수전계량기 목록*/
+
+      WITH C AS (
+      SELECT COUNT(1) AS ROWCNT
+      FROM INFOFMS.WTL_META_PS A
+      WHERE 1=1 
+       
+        <!-- 조건1. 관리번호 -->
+        <isNotEmpty prepend="AND" property="FTR_IDN">
+          A.FTR_IDN like #FTR_IDN# || '%'
+        </isNotEmpty>
+
+        <!-- 조건2. 행정읍면동 -->
+        <isNotEmpty prepend="AND" property="HJD_CDE">
+          A.HJD_CDE = #HJD_CDE#
+        </isNotEmpty>
+
+        <!-- 조건33. 공사번호 -->
+        <isNotEmpty prepend="AND" property="CNT_NUM">
+          A.CNT_NUM = #CNT_NUM#
+        </isNotEmpty>
+
+        <!-- 조건4. 도엽번호 -->
+        <isNotEmpty prepend="AND" property="SHT_NUM">
+          A.SHT_NUM = #SHT_NUM#
+        </isNotEmpty>
+
+        <!-- 조건5. 준공일자[이상] -->
+        <isNotEmpty prepend="AND" property="IST_YMD_FROM">
+          A.IST_YMD <![CDATA[>=]]> #IST_YMD_FROM#
+        </isNotEmpty>
+
+        <!-- 조건6. 준공일자[이하] -->
+        <isNotEmpty prepend="AND" property="IST_YMD_TO">
+          A.IST_YMD <![CDATA[<=]]> #IST_YMD_TO#
+        </isNotEmpty>
+
+        <!-- 조건7. 수용가번호 -->
+        <isNotEmpty prepend="AND" property="HOM_NUM">
+          A.HOM_NUM LIKE '%' ||#HOM_NUM#|| '%'
+        </isNotEmpty>
+
+        <!-- 조건8. 수용가성명 -->
+        <isNotEmpty prepend="AND" property="HOM_NAM">
+          A.HOM_NAM LIKE '%' || #HOM_NAM# || '%'
+        </isNotEmpty>
+
+        <!-- 조건9. 수용가행정읍면동 -->
+        <isNotEmpty prepend="AND" property="HOM_CDE">
+          A.HOM_CDE = #HOM_CDE#
+        </isNotEmpty>
+
+        <!-- 조건10. 형식 -->
+        <isNotEmpty prepend="AND" property="MOF_CDE">
+          A.MOF_CDE = #MOF_CDE#
+        </isNotEmpty>
+      )
+
+      SELECT C.ROWCNT, X.*  FROM (
+
+       SELECT ROW_NUMBER() OVER( ORDER BY A.FTR_IDN DESC ) AS RN
+            , A.FTR_CDE
+            , (SELECT FTR_NAM FROM INFOFMS.V_FTR_CDE WHERE FTR_CDE = A.FTR_CDE) AS FTR_NAM
+            , A.FTR_IDN
+            , A.HJD_CDE
+            , (SELECT HJD_NAM FROM INFOFMS.CMT_ADAR_MA WHERE HJD_CDE = A.HJD_CDE) AS HJD_NAM
+            , A.SHT_NUM
+            , A.IST_YMD
+            , A.HOM_NUM
+            , A.HOM_NAM
+            , A.HOM_CDE
+            , (SELECT HJD_NAM FROM INFOFMS.CMT_ADAR_MA WHERE HJD_CDE = A.HOM_CDE) AS HOM_CDE_NAM
+            , A.HOM_ADR
+            , A.HOM_CNT
+            , A.SBI_CDE
+            , (SELECT NM FROM INFOUSER.CD_DTL_INFO WHERE MST_CD = '250020' AND DTL_CD = A.SBI_CDE ) AS SBI_NAM
+            , A.MET_DIP
+            , A.MOF_CDE
+            , A.PRD_NUM
+            , A.PIP_CDE
+            , A.PIP_IDN
+            , A.CNT_NUM
+            , A.SYS_CHK
+            , A.MET_NUM
+            , A.MET_MOF
+            , A.HOM_HJD
+            , CASE WHEN ST_ISVALID(A.GEOM) = 1 THEN 'Y' ELSE 'N' END AS IS_GEOMETRY
+         FROM INFOFMS.WTL_META_PS A
+        WHERE 1=1
+      <!-- 조건1. 관리번호 -->
+        <isNotEmpty prepend="AND" property="FTR_IDN">
+          A.FTR_IDN like #FTR_IDN# || '%'
+        </isNotEmpty>
+
+        <!-- 조건2. 행정읍면동 -->
+        <isNotEmpty prepend="AND" property="HJD_CDE">
+          A.HJD_CDE = #HJD_CDE#
+        </isNotEmpty>
+
+        <!-- 조건3. 공사번호 -->
+        <isNotEmpty prepend="AND" property="CNT_NUM">
+          A.CNT_NUM = #CNT_NUM#
+        </isNotEmpty>
+
+        <!-- 조건4. 도엽번호 -->
+        <isNotEmpty prepend="AND" property="SHT_NUM">
+          A.SHT_NUM = #SHT_NUM#
+        </isNotEmpty>
+
+        <!-- 조건5. 준공일자[이상] -->
+        <isNotEmpty prepend="AND" property="IST_YMD_FROM">
+          A.IST_YMD <![CDATA[>=]]> #IST_YMD_FROM#
+        </isNotEmpty>
+
+        <!-- 조건6. 준공일자[이하] -->
+        <isNotEmpty prepend="AND" property="IST_YMD_TO">
+          A.IST_YMD <![CDATA[<=]]> #IST_YMD_TO#
+        </isNotEmpty>
+
+        <!-- 조건7. 수용가번호 -->
+        <isNotEmpty prepend="AND" property="HOM_NUM">
+          A.HOM_NUM LIKE '%' ||#HOM_NUM#|| '%'
+        </isNotEmpty>
+
+        <!-- 조건8. 수용가성명 -->
+        <isNotEmpty prepend="AND" property="HOM_NAM">
+          A.HOM_NAM LIKE '%' || #HOM_NAM# || '%'
+        </isNotEmpty>
+
+        <!-- 조건9. 수용가행정읍면동 -->
+        <isNotEmpty prepend="AND" property="HOM_CDE">
+          A.HOM_CDE = #HOM_CDE#
+        </isNotEmpty>
+
+        <!-- 조건10. 형식 -->
+        <isNotEmpty prepend="AND" property="MOF_CDE">
+          A.MOF_CDE = #MOF_CDE#
+        </isNotEmpty>
+
+        ORDER BY FTR_IDN DESC
+
+
+    ) X JOIN C ON 1=1
+    WHERE RN &lt;= ($page$+1) * $rows$
+      AND RN &gt;= ($page$) * $rows$ + 1
+
+    </select>
+
+    <select id="SelectHydtMetrDtl"  parameterClass="Hashtable" resultClass ="GTI.WFMS.Models.Acmf.Model.HydtMetrDtl">
+      /* HydtMetrMap.SelectHydtMetrDtl 급수전계량기 상세정보*/
+      <![CDATA[
+        SELECT ROWNUM AS RNO, M.*
+          FROM (
+		 	           SELECT A.FTR_CDE
+                      , (SELECT FTR_NAM FROM INFOFMS.V_FTR_CDE WHERE FTR_CDE = A.FTR_CDE) AS FTR_NAM
+                      , A.FTR_IDN
+                      , A.HJD_CDE
+                      , (SELECT HJD_NAM FROM INFOFMS.CMT_ADAR_MA WHERE HJD_CDE = A.HJD_CDE) AS HJD_NAM
+                      , A.SHT_NUM            
+                      , a.IST_YMD
+                      , A.HOM_NUM
+                      , A.HOM_NAM
+                      , A.HOM_CDE
+                      , (SELECT HJD_NAM FROM INFOFMS.CMT_ADAR_MA WHERE HJD_CDE = A.HOM_CDE) AS HOM_CDE_NAM
+                      , A.HOM_ADR
+                      , A.HOM_CNT
+                      , A.SBI_CDE
+                      , (SELECT NM FROM INFOUSER.CD_DTL_INFO WHERE MST_CD = '250020' AND DTL_CD = A.SBI_CDE ) AS SBI_NAM
+                      , A.MET_DIP
+                      , A.MOF_CDE
+                      , A.PRD_NUM
+                      , A.PIP_CDE
+                      , A.PIP_IDN
+                      , A.CNT_NUM
+                      , A.SYS_CHK
+                      , A.MET_NUM
+                      , A.MET_MOF
+                      , A.HOM_HJD
+                      , decode(A.SYS_CHK,'1','유','무') as SYS_CHK_NAM
+                   FROM INFOFMS.WTL_META_PS A 
+			            WHERE 1=1
+                    AND FTR_CDE = #FTR_CDE# 
+				            AND FTR_IDN = #FTR_IDN# 
+                    ) M
+			]]>
+    </select>
+
+    <!--급수전계량기 상세추가-->
+    <update id="insertHydtMetrDtl" parameterClass="GTI.WFMS.Models.Acmf.Model.HydtMetrDtl">
+      INSERT INTO INFOFMS.WTL_META_PS
+      (   FTR_CDE
+      , FTR_IDN
+      , HJD_CDE
+      , SHT_NUM
+      , IST_YMD
+      , HOM_NUM
+      , HOM_NAM
+      , HOM_CDE
+      , HOM_ADR
+      , HOM_CNT
+      , SBI_CDE
+      , MET_DIP
+      , MOF_CDE
+      , PRD_NUM
+      , PIP_CDE
+      , PIP_IDN
+      , CNT_NUM
+      , SYS_CHK
+      , MET_NUM
+      , MET_MOF
+      , HOM_HJD
+      )
+      VALUES
+      (   #FTR_CDE#
+      , #FTR_IDN#
+      , #HJD_CDE#
+      , #SHT_NUM#
+      , #IST_YMD#
+      , #HOM_NUM#
+      , #HOM_NAM#
+      , #HOM_CDE#
+      , #HOM_ADR#
+      , #HOM_CNT#
+      , #SBI_CDE#
+      , #MET_DIP#
+      , #MOF_CDE#
+      , #PRD_NUM#
+      , #PIP_CDE#
+      , #PIP_IDN#
+      , #CNT_NUM#
+      , #SYS_CHK#
+      , #MET_NUM#
+      , #MET_MOF#
+      , #HOM_HJD#
+      )
+    </update>
+
+    <!--급수전계량기 상세저장-->
+    <update id="updateHydtMetrDtl" parameterClass="GTI.WFMS.Models.Acmf.Model.HydtMetrDtl">
+      /* 급수전계량기 상세 수정 */
+      UPDATE INFOFMS.WTL_META_PS
+      SET HJD_CDE = #HJD_CDE#
+      , SHT_NUM = #SHT_NUM#
+      , IST_YMD = #IST_YMD#
+      , HOM_NUM = #HOM_NUM#
+      , HOM_NAM = #HOM_NAM#
+      , HOM_CDE = #HOM_CDE#
+      , HOM_ADR = #HOM_ADR#
+      , HOM_CNT = #HOM_CNT#
+      , SBI_CDE = #SBI_CDE#
+      , MET_DIP = #MET_DIP#
+      , MOF_CDE = #MOF_CDE#
+      , PRD_NUM = #PRD_NUM#
+      , PIP_CDE = #PIP_CDE#
+      , PIP_IDN = #PIP_IDN#
+      , CNT_NUM = #CNT_NUM#
+      , SYS_CHK = #SYS_CHK#
+      , MET_NUM = #MET_NUM#
+      , MET_MOF = #MET_MOF#
+      , HOM_HJD = #HOM_HJD#
+      WHERE FTR_CDE = #FTR_CDE#
+      AND	FTR_IDN = #FTR_IDN#
+    </update>
+
+    <update id="SaveHydtMetrDtl" parameterClass="GTI.WFMS.Models.Acmf.Model.HydtMetrDtl">
+      MERGE INTO INFOFMS.WTL_META_PS
+      USING DUAL ON (FTR_CDE = #FTR_CDE# AND	FTR_IDN = #FTR_IDN#)
+
+      WHEN MATCHED THEN
+      UPDATE
+      SET HJD_CDE = #HJD_CDE#
+      , SHT_NUM = #SHT_NUM#
+      , IST_YMD = #IST_YMD#
+      , HOM_NUM = #HOM_NUM#
+      , HOM_NAM = #HOM_NAM#
+      , HOM_CDE = #HOM_CDE#
+      , HOM_ADR = #HOM_ADR#
+      , HOM_CNT = #HOM_CNT#
+      , SBI_CDE = #SBI_CDE#
+      , MET_DIP = #MET_DIP#
+      , MOF_CDE = #MOF_CDE#
+      , PRD_NUM = #PRD_NUM#
+      , PIP_CDE = #PIP_CDE#
+      , PIP_IDN = #PIP_IDN#
+      , CNT_NUM = #CNT_NUM#
+      , SYS_CHK = #SYS_CHK#
+      , MET_NUM = #MET_NUM#
+      , MET_MOF = #MET_MOF#
+      , HOM_HJD = #HOM_HJD#
+
+
+      WHEN NOT MATCHED THEN
+      INSERT
+      (   FTR_CDE
+      , FTR_IDN
+      , HJD_CDE
+      , SHT_NUM
+      , IST_YMD
+      , HOM_NUM
+      , HOM_NAM
+      , HOM_CDE
+      , HOM_ADR
+      , HOM_CNT
+      , SBI_CDE
+      , MET_DIP
+      , MOF_CDE
+      , PRD_NUM
+      , PIP_CDE
+      , PIP_IDN
+      , CNT_NUM
+      , SYS_CHK
+      , MET_NUM
+      , MET_MOF
+      , HOM_HJD
+      )
+      VALUES
+      (   #FTR_CDE#
+      , #FTR_IDN#
+      , #HJD_CDE#
+      , #SHT_NUM#
+      , #IST_YMD#
+      , #HOM_NUM#
+      , #HOM_NAM#
+      , #HOM_CDE#
+      , #HOM_ADR#
+      , #HOM_CNT#
+      , #SBI_CDE#
+      , #MET_DIP#
+      , #MOF_CDE#
+      , #PRD_NUM#
+      , #PIP_CDE#
+      , #PIP_IDN#
+      , #CNT_NUM#
+      , #SYS_CHK#
+      , #MET_NUM#
+      , #MET_MOF#
+      , #HOM_HJD#
+      )
+    </update>
+
+    <!--급수전계량기 상세삭제-->
+    <update id="deleteHydtMetrDtl" parameterClass="GTI.WFMS.Models.Acmf.Model.HydtMetrDtl">
+      /* 급수전계량기 상세 삭제 */
+      DELETE INFOFMS.WTL_META_PS
+      WHERE FTR_CDE = #FTR_CDE#
+      AND FTR_IDN = #FTR_IDN#
+    </update>
+
+    <!--급수전계량기 관리번호 채번-->
+    <select id ="SelectHydtMetrFTR_IDN" parameterClass="Hashtable" resultClass ="GTI.WFMS.Models.Acmf.Model.HydtMetrDtl">
+      /* 급수전계량기 관리번호 채번 */
+      SELECT NVL(MAX(FTR_IDN),0)+1 AS FTR_IDN FROM INFOFMS.WTL_META_PS
+      WHERE 1=1
+    </select>
+
+  </statements>
+  
+</sqlMap>

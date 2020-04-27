@@ -1,0 +1,594 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<sqlMap namespace="Main" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://ibatis.apache.org/mapping">
+  <statements>
+
+    <!--상수공사민원목록-->
+    <select id ="SelectCnstCmplList" parameterClass="Hashtable" resultClass ="Hashtable">
+
+      WITH C AS (
+      SELECT COUNT(1) AS ROWCNT
+
+      FROM WTT_WSER_MA A
+      LEFT JOIN INFOUSER.CD_DTL_INFO C ON C.DTL_CD = A.APL_CDE AND C.MST_CD = '250056'
+      LEFT JOIN INFOUSER.CD_DTL_INFO C2 ON C2.DTL_CD = A.PRO_CDE AND C2.MST_CD = '250050'
+      LEFT JOIN CMT_ADAR_MA H ON A.APL_HJD = H.HJD_CDE
+      INNER JOIN WTT_CONS_MA M ON M.CNT_NUM = A.CNT_NUM
+      WHERE 1=1
+
+      <isNotEmpty prepend="AND" property="RCV_NUM">
+        RCV_NUM = #RCV_NUM#
+      </isNotEmpty>
+      <isNotEmpty prepend="AND" property="APL_HJD">
+        APL_HJD = #APL_HJD#
+      </isNotEmpty>
+      <isNotEmpty prepend="AND" property="APL_CDE">
+        APL_CDE = #APL_CDE#
+      </isNotEmpty>
+      <isNotEmpty prepend="AND" property="RCV_YMD_FROM">
+        RCV_YMD <![CDATA[>=]]> #RCV_YMD_FROM#
+      </isNotEmpty>
+      <isNotEmpty prepend="AND" property="RCV_YMD_TO">
+        RCV_YMD <![CDATA[<=]]> #RCV_YMD_TO#
+      </isNotEmpty>
+      <isNotEmpty prepend="AND" property="PRO_YMD_FROM">
+        PRO_YMD <![CDATA[>=]]> #PRO_YMD_FROM#
+      </isNotEmpty>
+      <isNotEmpty prepend="AND" property="PRO_YMD_TO">
+        PRO_YMD <![CDATA[<=]]> #PRO_YMD_TO#
+      </isNotEmpty>
+      <isNotEmpty prepend="AND" property="PRO_CDE">
+        PRO_CDE = #PRO_CDE#
+      </isNotEmpty>
+
+      )
+
+
+      SELECT C.ROWCNT, X.*  FROM (
+
+      SELECT ROW_NUMBER() OVER( ORDER BY A.RCV_NUM DESC ) AS RN
+      , A.RCV_NUM
+      , A.WSER_SEQ
+      , A.RCV_YMD
+      , A.RCV_NAM
+      , A.APL_HJD, H.HJD_NAM AS APL_HJD_NAM
+      , A.APL_ADR
+      , A.APL_EXP
+      , A.APL_CDE, C.NM AS APL_NAM
+      , A.APM_NAM
+      , A.APM_ADR
+      , A.APM_TEL
+      , A.DUR_YMD
+      , A.PRO_CDE, C2.NM AS PRO_NAM
+      , A.PRO_EXP
+      , A.PRO_YMD
+      , A.PRO_NAM
+      , A.CNT_NUM
+      , NULL AS CHK
+      FROM WTT_WSER_MA A
+      LEFT JOIN INFOUSER.CD_DTL_INFO C ON C.DTL_CD = A.APL_CDE AND C.MST_CD = '250056'
+      LEFT JOIN INFOUSER.CD_DTL_INFO C2 ON C2.DTL_CD = A.PRO_CDE AND C2.MST_CD = '250050'
+      LEFT JOIN CMT_ADAR_MA H ON A.APL_HJD = H.HJD_CDE
+      INNER JOIN WTT_CONS_MA M ON M.CNT_NUM = A.CNT_NUM
+      WHERE 1=1
+
+      <isNotEmpty prepend="AND" property="RCV_NUM">
+        RCV_NUM = #RCV_NUM#
+      </isNotEmpty>
+      <isNotEmpty prepend="AND" property="APL_HJD">
+        APL_HJD = #APL_HJD#
+      </isNotEmpty>
+      <isNotEmpty prepend="AND" property="APL_CDE">
+        APL_CDE = #APL_CDE#
+      </isNotEmpty>
+      <isNotEmpty prepend="AND" property="RCV_YMD_FROM">
+        RCV_YMD <![CDATA[>=]]> #RCV_YMD_FROM#
+      </isNotEmpty>
+      <isNotEmpty prepend="AND" property="RCV_YMD_TO">
+        RCV_YMD <![CDATA[<=]]> #RCV_YMD_TO#
+      </isNotEmpty>
+      <isNotEmpty prepend="AND" property="PRO_YMD_FROM">
+        PRO_YMD <![CDATA[>=]]> #PRO_YMD_FROM#
+      </isNotEmpty>
+      <isNotEmpty prepend="AND" property="PRO_YMD_TO">
+        PRO_YMD <![CDATA[<=]]> #PRO_YMD_TO#
+      </isNotEmpty>
+      <isNotEmpty prepend="AND" property="PRO_CDE">
+        PRO_CDE = #PRO_CDE#
+      </isNotEmpty>      
+      
+
+      ) X JOIN C ON 1=1
+      WHERE RN &lt;= ($page$+1) * $rows$
+      AND RN &gt;= ($page$) * $rows$ + 1
+
+    </select>
+
+    <!--상수공사민원 상세-->
+    <select id="SelectWttWserMa" resultClass="GTI.WFMS.Models.Cmpl.Model.WserDtl">
+      SELECT
+      RCV_NUM
+      , WSER_SEQ
+      , RCV_YMD
+      , RCV_NAM
+      , APL_HJD
+      , APL_ADR
+      , APL_EXP
+      , APL_CDE
+      , APM_NAM
+      , APM_ADR
+      , APM_TEL
+      , DUR_YMD
+      , PRO_CDE
+      , PRO_EXP
+      , PRO_YMD
+      , PRO_NAM
+      , CNT_NUM
+      FROM WTT_WSER_MA
+      WHERE 1=1
+      AND WSER_SEQ=#WSER_SEQ#
+    </select>
+
+      <!--상수공사민원(누수지점) 조회-->
+    <select id="SelectCmplLeakList" resultClass="GTI.WFMS.Models.Cmpl.Model.LeakDtl">
+      SELECT
+      A.FTR_CDE, F.FTR_NAM
+      , A.FTR_IDN
+      , A.HJD_CDE, H.HJD_NAM
+      , A.SHT_NUM
+      , A.RCV_NUM
+      , A.LEK_YMD
+      , A.LEK_LOC
+      , A.PIP_CDE
+      , A.PIP_IDN
+      , A.MOP_CDE
+      , A.LRS_CDE, C.NM AS LRS_NAM
+      , A.LEP_CDE
+      , A.REP_YMD
+      , A.REP_EXP
+      , A.MAT_DES
+      , A.REP_NAM
+      , A.SYS_CHK
+      , A.PIP_DIP
+      , A.LEK_EXP
+      FROM WTL_LEAK_PS A
+      LEFT JOIN V_FTR_CDE F ON A.FTR_CDE = F.FTR_CDE
+      LEFT JOIN CMT_ADAR_MA H ON A.HJD_CDE = H.HJD_CDE
+      LEFT JOIN INFOUSER.CD_DTL_INFO C ON C.DTL_CD = A.LRS_CDE AND C.MST_CD = '250044'
+
+      WHERE 1=1
+      AND A.RCV_NUM = #RCV_NUM#
+      ORDER BY  A.FTR_CDE DESC , A.FTR_IDN DESC
+    </select>
+
+
+
+    <!--상수공사 민원번호 중복체크-->
+    <select id ="SelectWserDup" parameterClass="Hashtable" resultClass ="Hashtable">
+      SELECT
+      A.RCV_NUM
+      FROM
+      WTT_WSER_MA A
+      WHERE 1 = 1
+      AND A.RCV_NUM = #RCV_NUM#
+    </select>
+
+    <!--상수공사 민원번호 채번-->
+    <select id ="SelectRevNum" parameterClass="Hashtable" resultClass ="Hashtable">
+      SELECT TO_CHAR(SYSDATE,'YYYY') || NVL(MAX(WSER_SEQ),0) + 1 AS RCV_NUM
+      FROM WTT_WSER_MA
+    </select>
+
+
+    <!--상수공사 민원 수정-->
+    <update id="SaveCmplWserMa" >
+      MERGE INTO WTT_WSER_MA
+      USING DUAL ON (WSER_SEQ=#WSER_SEQ#)
+
+      WHEN MATCHED THEN
+      UPDATE
+      SET RCV_NUM=#RCV_NUM#
+      , RCV_YMD=#RCV_YMD#
+      , RCV_NAM=#RCV_NAM#
+      , APL_HJD=#APL_HJD#
+      , APL_ADR=#APL_ADR#
+      , APL_EXP=#APL_EXP#
+      , APL_CDE=#APL_CDE#
+      , APM_NAM=#APM_NAM#
+      , APM_ADR=#APM_ADR#
+      , APM_TEL=#APM_TEL#
+      , DUR_YMD=#DUR_YMD#
+      , PRO_CDE=#PRO_CDE#
+      , PRO_EXP=#PRO_EXP#
+      , PRO_YMD=#PRO_YMD#
+      , PRO_NAM=#PRO_NAM#
+      , CNT_NUM=#CNT_NUM#
+
+      WHEN NOT MATCHED THEN
+      INSERT
+      ( RCV_NUM
+      , WSER_SEQ
+      , RCV_YMD
+      , RCV_NAM
+      , APL_HJD
+      , APL_ADR
+      , APL_EXP
+      , APL_CDE
+      , APM_NAM
+      , APM_ADR
+      , APM_TEL
+      , DUR_YMD
+      , PRO_CDE
+      , PRO_EXP
+      , PRO_YMD
+      , PRO_NAM
+      , CNT_NUM)
+      VALUES ( #RCV_NUM#
+      , (SELECT NVL(MAX(WSER_SEQ+1),1) AS WSER_SEQ FROM WTT_WSER_MA)
+      , #RCV_YMD#
+      , #RCV_NAM#
+      , #APL_HJD#
+      , #APL_ADR#
+      , #APL_EXP#
+      , #APL_CDE#
+      , #APM_NAM#
+      , #APM_ADR#
+      , #APM_TEL#
+      , #DUR_YMD#
+      , #PRO_CDE#
+      , #PRO_EXP#
+      , #PRO_YMD#
+      , #PRO_NAM#
+      , #CNT_NUM# )
+
+
+    </update>
+
+    <!--상수공사 민원 삭제-->
+    <update id="DeleteWserMa" >
+      DELETE FROM WTT_WSER_MA
+      WHERE 1=1
+      AND WSER_SEQ=#WSER_SEQ#
+    </update>
+
+
+
+
+    <!--상수공사민원목록-->
+    <select id ="SelectSplyCmplList" parameterClass="Hashtable" resultClass ="Hashtable">
+
+      WITH C AS (
+      SELECT COUNT(1) AS ROWCNT
+
+      FROM WTT_WSER_MA A
+      LEFT JOIN INFOUSER.CD_DTL_INFO C ON C.DTL_CD = A.APL_CDE AND C.MST_CD = '250056'
+      LEFT JOIN INFOUSER.CD_DTL_INFO C2 ON C2.DTL_CD = A.PRO_CDE AND C2.MST_CD = '250050'
+      LEFT JOIN CMT_ADAR_MA H ON A.APL_HJD = H.HJD_CDE
+      INNER JOIN WTT_SPLY_MA M ON M.CNT_NUM = A.CNT_NUM
+      WHERE 1=1
+
+      <isNotEmpty prepend="AND" property="RCV_NUM">
+        RCV_NUM = #RCV_NUM#
+      </isNotEmpty>
+      <isNotEmpty prepend="AND" property="APL_HJD">
+        APL_HJD = #APL_HJD#
+      </isNotEmpty>
+      <isNotEmpty prepend="AND" property="APL_CDE">
+        APL_CDE = #APL_CDE#
+      </isNotEmpty>
+      <isNotEmpty prepend="AND" property="RCV_YMD_FROM">
+        RCV_YMD <![CDATA[>=]]> #RCV_YMD_FROM#
+      </isNotEmpty>
+      <isNotEmpty prepend="AND" property="RCV_YMD_TO">
+        RCV_YMD <![CDATA[<=]]> #RCV_YMD_TO#
+      </isNotEmpty>
+      <isNotEmpty prepend="AND" property="PRO_YMD_FROM">
+        PRO_YMD <![CDATA[>=]]> #PRO_YMD_FROM#
+      </isNotEmpty>
+      <isNotEmpty prepend="AND" property="PRO_YMD_TO">
+        PRO_YMD <![CDATA[<=]]> #PRO_YMD_TO#
+      </isNotEmpty>
+      <isNotEmpty prepend="AND" property="PRO_CDE">
+        PRO_CDE = #PRO_CDE#
+      </isNotEmpty>
+
+      )
+
+
+      SELECT C.ROWCNT, X.*  FROM (
+
+      SELECT ROW_NUMBER() OVER( ORDER BY A.RCV_NUM DESC ) AS RN
+      , A.RCV_NUM
+      , A.WSER_SEQ
+      , A.RCV_YMD
+      , A.RCV_NAM
+      , A.APL_HJD, H.HJD_NAM AS APL_HJD_NAM
+      , A.APL_ADR
+      , A.APL_EXP
+      , A.APL_CDE, C.NM AS APL_NAM
+      , A.APM_NAM
+      , A.APM_ADR
+      , A.APM_TEL
+      , A.DUR_YMD
+      , A.PRO_CDE, C2.NM AS PRO_NAM
+      , A.PRO_EXP
+      , A.PRO_YMD
+      , A.PRO_NAM
+      , A.CNT_NUM
+      FROM WTT_WSER_MA A
+      LEFT JOIN INFOUSER.CD_DTL_INFO C ON C.DTL_CD = A.APL_CDE AND C.MST_CD = '250056'
+      LEFT JOIN INFOUSER.CD_DTL_INFO C2 ON C2.DTL_CD = A.PRO_CDE AND C2.MST_CD = '250050'
+      LEFT JOIN CMT_ADAR_MA H ON A.APL_HJD = H.HJD_CDE
+      INNER JOIN WTT_SPLY_MA M ON M.CNT_NUM = A.CNT_NUM
+      WHERE 1=1
+
+      <isNotEmpty prepend="AND" property="RCV_NUM">
+        RCV_NUM = #RCV_NUM#
+      </isNotEmpty>
+      <isNotEmpty prepend="AND" property="APL_HJD">
+        APL_HJD = #APL_HJD#
+      </isNotEmpty>
+      <isNotEmpty prepend="AND" property="APL_CDE">
+        APL_CDE = #APL_CDE#
+      </isNotEmpty>
+      <isNotEmpty prepend="AND" property="RCV_YMD_FROM">
+        RCV_YMD <![CDATA[>=]]> #RCV_YMD_FROM#
+      </isNotEmpty>
+      <isNotEmpty prepend="AND" property="RCV_YMD_TO">
+        RCV_YMD <![CDATA[<=]]> #RCV_YMD_TO#
+      </isNotEmpty>
+      <isNotEmpty prepend="AND" property="PRO_YMD_FROM">
+        PRO_YMD <![CDATA[>=]]> #PRO_YMD_FROM#
+      </isNotEmpty>
+      <isNotEmpty prepend="AND" property="PRO_YMD_TO">
+        PRO_YMD <![CDATA[<=]]> #PRO_YMD_TO#
+      </isNotEmpty>
+      <isNotEmpty prepend="AND" property="PRO_CDE">
+        PRO_CDE = #PRO_CDE#
+      </isNotEmpty>
+
+
+      ) X JOIN C ON 1=1
+      WHERE RN &lt;= ($page$+1) * $rows$
+      AND RN &gt;= ($page$) * $rows$ + 1
+
+    </select>
+
+
+
+    <!--누수지점관리목록-->
+    <select id ="SelectWtlLeakList" parameterClass="Hashtable" resultClass ="Hashtable">
+
+      WITH C AS (
+      SELECT COUNT(1) AS ROWCNT
+
+      FROM WTL_LEAK_PS A
+      LEFT JOIN V_FTR_CDE FC ON A.FTR_CDE = FC.FTR_CDE
+      LEFT JOIN CMT_ADAR_MA H ON H.HJD_CDE = A.HJD_CDE
+      LEFT JOIN INFOUSER.CD_DTL_INFO C ON C.MST_CD = '250044' AND C.DTL_CD = A.LRS_CDE
+      LEFT JOIN INFOUSER.CD_DTL_INFO C2 ON C2.MST_CD = '250043' AND C2.DTL_CD = A.LEP_CDE
+      WHERE 1=1
+
+      <isNotEmpty prepend="AND" property="FTR_CDE">
+        A.FTR_CDE like '%' || #FTR_CDE# || '%'
+      </isNotEmpty>
+      <isNotEmpty prepend="AND" property="FTR_IDN">
+        A.FTR_IDN like '%' || #FTR_IDN# || '%'
+      </isNotEmpty>
+      <isNotEmpty prepend="AND" property="SHT_NUM">
+        A.SHT_NUM like '%' ||  #SHT_NUM# || '%'
+      </isNotEmpty>
+      <isNotEmpty prepend="AND" property="HJD_CDE">
+        A.HJD_CDE = #HJD_CDE#
+      </isNotEmpty>
+      <isNotEmpty prepend="AND" property="PIP_IDN">
+        A.PIP_IDN like '%' ||  #PIP_IDN# || '%'
+      </isNotEmpty>
+      <isNotEmpty prepend="AND" property="LEK_YMD_FROM">
+        A.LEK_YMD <![CDATA[>=]]> #LEK_YMD_FROM#
+      </isNotEmpty>
+      <isNotEmpty prepend="AND" property="LEK_YMD_TO">
+        A.LEK_YMD <![CDATA[<=]]> #LEK_YMD_TO#
+      </isNotEmpty>
+      <isNotEmpty prepend="AND" property="REP_YMD_FROM">
+        A.REP_YMD <![CDATA[>=]]> #REP_YMD_FROM#
+      </isNotEmpty>
+      <isNotEmpty prepend="AND" property="REP_YMD_TO">
+        A.REP_YMD <![CDATA[<=]]> #REP_YMD_TO#
+      </isNotEmpty>
+      <isNotEmpty prepend="AND" property="LEP_CDE">
+        A.LEP_CDE = #LEP_CDE#
+      </isNotEmpty>
+      <isNotEmpty prepend="AND" property="LRS_CDE">
+        A.LRS_CDE = #LRS_CDE#
+      </isNotEmpty>
+      <isNotEmpty prepend="AND" property="RCV_NUM">
+        A.RCV_NUM like '%' ||  #RCV_NUM# || '%'
+      </isNotEmpty>
+
+      )
+
+
+      SELECT C.ROWCNT, X.*  FROM (
+
+      SELECT ROW_NUMBER() OVER( ORDER BY A.FTR_IDN DESC ) AS RN
+      , A.FTR_CDE, FC.FTR_NAM
+      , A.FTR_IDN
+      , A.HJD_CDE, H.HJD_NAM
+      , A.SHT_NUM
+      , A.RCV_NUM
+      , A.LEK_YMD
+      , A.LEK_LOC
+      , A.PIP_CDE
+      , A.PIP_IDN
+      , A.MOP_CDE
+      , A.LRS_CDE, C.NM AS LRS_NAM
+      , A.LEP_CDE, C2.NM AS LEP_NAM
+      , A.REP_YMD
+      , A.REP_EXP
+      , A.MAT_DES
+      , A.REP_NAM
+      , A.SYS_CHK
+      , A.PIP_DIP
+      , A.LEK_EXP
+      FROM WTL_LEAK_PS A
+      LEFT JOIN V_FTR_CDE FC ON A.FTR_CDE = FC.FTR_CDE
+      LEFT JOIN CMT_ADAR_MA H ON H.HJD_CDE = A.HJD_CDE
+      LEFT JOIN INFOUSER.CD_DTL_INFO C ON C.MST_CD = '250044' AND C.DTL_CD = A.LRS_CDE
+      LEFT JOIN INFOUSER.CD_DTL_INFO C2 ON C2.MST_CD = '250043' AND C2.DTL_CD = A.LEP_CDE
+      WHERE 1=1
+
+      <isNotEmpty prepend="AND" property="FTR_CDE">
+        A.FTR_CDE like '%' || #FTR_CDE# || '%'
+      </isNotEmpty>
+      <isNotEmpty prepend="AND" property="FTR_IDN">
+        A.FTR_IDN like '%' || #FTR_IDN# || '%'
+      </isNotEmpty>
+      <isNotEmpty prepend="AND" property="SHT_NUM">
+        A.SHT_NUM like '%' ||  #SHT_NUM# || '%'
+      </isNotEmpty>
+      <isNotEmpty prepend="AND" property="HJD_CDE">
+        A.HJD_CDE = #HJD_CDE#
+      </isNotEmpty>
+      <isNotEmpty prepend="AND" property="PIP_IDN">
+        A.PIP_IDN like '%' ||  #PIP_IDN# || '%'
+      </isNotEmpty>
+      <isNotEmpty prepend="AND" property="LEK_YMD_FROM">
+        A.LEK_YMD <![CDATA[>=]]> #LEK_YMD_FROM#
+      </isNotEmpty>
+      <isNotEmpty prepend="AND" property="LEK_YMD_TO">
+        A.LEK_YMD <![CDATA[<=]]> #LEK_YMD_TO#
+      </isNotEmpty>
+      <isNotEmpty prepend="AND" property="REP_YMD_FROM">
+        A.REP_YMD <![CDATA[>=]]> #REP_YMD_FROM#
+      </isNotEmpty>
+      <isNotEmpty prepend="AND" property="REP_YMD_TO">
+        A.REP_YMD <![CDATA[<=]]> #REP_YMD_TO#
+      </isNotEmpty>
+      <isNotEmpty prepend="AND" property="LEP_CDE">
+        A.LEP_CDE = #LEP_CDE#
+      </isNotEmpty>
+      <isNotEmpty prepend="AND" property="LRS_CDE">
+        A.LRS_CDE = #LRS_CDE#
+      </isNotEmpty>
+      <isNotEmpty prepend="AND" property="RCV_NUM">
+        A.RCV_NUM like '%' ||  #RCV_NUM# || '%'
+      </isNotEmpty>
+
+      ) X JOIN C ON 1=1
+      WHERE RN &lt;= ($page$+1) * $rows$
+      AND RN &gt;= ($page$) * $rows$ + 1
+
+    </select>
+    
+    
+    <!-- 누수지점 상세 -->
+	  <select id="SelectWtlLeakDtl" resultClass="GTI.WFMS.Models.Cmpl.Model.LeakDtl">
+      SELECT
+      A.FTR_CDE, F.FTR_NAM
+      , A.FTR_IDN
+      , A.HJD_CDE
+      , A.SHT_NUM
+      , A.RCV_NUM
+      , A.LEK_YMD
+      , A.LEK_LOC
+      , A.PIP_CDE, F2.FTR_NAM AS PIP_NAM
+      , A.PIP_IDN
+      , A.MOP_CDE
+      , A.LRS_CDE
+      , A.LEP_CDE
+      , A.REP_YMD
+      , A.REP_EXP
+      , A.MAT_DES
+      , A.REP_NAM
+      , A.SYS_CHK
+      , A.PIP_DIP
+      , A.LEK_EXP
+      FROM WTL_LEAK_PS A
+      LEFT JOIN V_FTR_CDE F ON A.FTR_CDE = F.FTR_CDE
+      LEFT JOIN V_FTR_CDE F2 ON A.PIP_CDE = F2.FTR_CDE
+      WHERE 1=1
+      AND A.FTR_CDE = #FTR_CDE#
+      AND A.FTR_IDN like #FTR_IDN# 
+    </select>
+
+
+    <!--누수지점 등록수정-->
+    <update id="SaveWtlLeakDtl" parameterClass="GTI.WFMS.Models.Cmpl.Model.LeakDtl">
+      MERGE INTO WTL_LEAK_PS
+      USING DUAL ON (FTR_CDE=#FTR_CDE# AND FTR_IDN = #FTR_IDN#)
+
+      WHEN MATCHED THEN
+      UPDATE
+      SET HJD_CDE=#HJD_CDE#
+      , SHT_NUM=#SHT_NUM#
+      , LEK_YMD=#LEK_YMD#
+      , LEK_LOC=#LEK_LOC#
+      , PIP_CDE=#PIP_CDE#
+      , PIP_IDN=#PIP_IDN#
+      , MOP_CDE=#MOP_CDE#
+      , LRS_CDE=#LRS_CDE#
+      , LEP_CDE=#LEP_CDE#
+      , REP_YMD=#REP_YMD#
+      , REP_EXP=#REP_EXP#
+      , MAT_DES=#MAT_DES#
+      , REP_NAM=#REP_NAM#
+      , SYS_CHK=#SYS_CHK#
+      , PIP_DIP=#PIP_DIP#
+      , LEK_EXP=#LEK_EXP#
+      , RCV_NUM=#RCV_NUM#
+
+      WHEN NOT MATCHED THEN
+      INSERT
+      ( FTR_CDE
+      , FTR_IDN
+      , HJD_CDE
+      , SHT_NUM
+      , RCV_NUM
+      , LEK_YMD
+      , LEK_LOC
+      , PIP_CDE
+      , PIP_IDN
+      , MOP_CDE
+      , LRS_CDE
+      , LEP_CDE
+      , REP_YMD
+      , REP_EXP
+      , MAT_DES
+      , REP_NAM
+      , SYS_CHK
+      , PIP_DIP
+      , LEK_EXP )
+      VALUES ( #FTR_CDE#
+      , (SELECT NVL(MAX(FTR_IDN),0)+1 FROM WTL_LEAK_PS)
+      , #HJD_CDE#
+      , #SHT_NUM#
+      , #RCV_NUM#
+      , #LEK_YMD#
+      , #LEK_LOC#
+      , #PIP_CDE#
+      , #PIP_IDN#
+      , #MOP_CDE#
+      , #LRS_CDE#
+      , #LEP_CDE#
+      , #REP_YMD#
+      , #REP_EXP#
+      , #MAT_DES#
+      , #REP_NAM#
+      , #SYS_CHK#
+      , #PIP_DIP#
+      , #LEK_EXP# )
+
+    </update>
+
+    <!-- 누수지점 삭제	 -->
+    <update id="DeleteWtlLeakDtl">
+      DELETE FROM WTL_LEAK_PS
+      WHERE 1=1
+      AND FTR_CDE=#FTR_CDE#
+      AND FTR_IDN=#FTR_IDN#
+    </update>
+
+
+  </statements>
+  
+</sqlMap>

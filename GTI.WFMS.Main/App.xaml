@@ -1,0 +1,18 @@
+﻿<Application x:Class="GTI.WFMS.Main.App"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             DispatcherUnhandledException="Application_DispatcherUnhandledException">
+    <Application.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="Styles/Navy/Buttons.xaml"/>
+                <ResourceDictionary Source="Styles/Navy/Colors.xaml"/>
+                <ResourceDictionary Source="Styles/Navy/Controls.xaml"/>
+                <ResourceDictionary Source="Styles/Navy/Fonts.xaml"/>
+                <ResourceDictionary Source="Styles/Navy/Labels.xaml"/>
+            </ResourceDictionary.MergedDictionaries>
+
+
+        </ResourceDictionary>
+    </Application.Resources>
+</Application>

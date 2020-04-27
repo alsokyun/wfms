@@ -1,0 +1,261 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{F098CEDB-9897-4AD2-8323-2405EF88E192}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <RootNamespace>GTI.WFMS.Models</RootNamespace>
+    <AssemblyName>GTI.WFMS.Models</AssemblyName>
+    <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <AutoGenerateBindingRedirects>false</AutoGenerateBindingRedirects>
+    <Deterministic>true</Deterministic>
+    <TargetFrameworkProfile />
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <Prefer32Bit>false</Prefer32Bit>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup>
+    <StartupObject />
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="DevExpress.Data.v19.1, Version=19.1.6.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL" />
+    <Reference Include="DevExpress.Images.v19.1, Version=19.1.6.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL" />
+    <Reference Include="DevExpress.Mvvm.v19.1, Version=19.1.6.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL" />
+    <Reference Include="DevExpress.Pdf.v19.1.Core, Version=19.1.6.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL" />
+    <Reference Include="DevExpress.Printing.v19.1.Core, Version=19.1.6.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL" />
+    <Reference Include="DevExpress.Xpf.Core.v19.1, Version=19.1.6.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL" />
+    <Reference Include="Interop.SHDocVw, Version=1.1.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <EmbedInteropTypes>True</EmbedInteropTypes>
+      <HintPath>Lib\Interop.SHDocVw.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="Microsoft.Expression.Interactions, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Windows.Interactivity.WPF.2.0.20525\lib\net40\Microsoft.Expression.Interactions.dll</HintPath>
+    </Reference>
+    <Reference Include="PresentationCore" />
+    <Reference Include="PresentationFramework" />
+    <Reference Include="Prism.Wpf">
+      <HintPath>..\packages\Prism.Wpf.7.1.0.431\lib\net45\Prism.Wpf.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="System.Data.Linq" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.ServiceModel" />
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Windows.Interactivity, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Windows.Interactivity.WPF.2.0.20525\lib\net40\System.Windows.Interactivity.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Xaml" />
+    <Reference Include="System.Xml" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="UIAutomationProvider" />
+    <Reference Include="UIAutomationTypes" />
+    <Reference Include="WindowsBase" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Acmf\Dao\Maps\WtrTrkMap.xml">
+      <SubType>Designer</SubType>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Acmf\Dao\Maps\SupDutMap.xml">
+      <SubType>Designer</SubType>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Acmf\Dao\Maps\HydtMetrMap.xml">
+      <SubType>Designer</SubType>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Adm\Dao\Maps\AdmMap.xml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      <SubType>Designer</SubType>
+    </Content>
+    <Content Include="Cmm\Dao\Maps\FileMap.xml">
+      <SubType>Designer</SubType>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Cmm\Dao\Maps\LinkMap.xml">
+      <SubType>Designer</SubType>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Cmm\Dao\Maps\CmmMap.xml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      <SubType>Designer</SubType>
+    </Content>
+    <Content Include="Cmpl\Dao\Maps\CmplMap.xml">
+      <SubType>Designer</SubType>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Cnst\Dao\Maps\CnstMap.xml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      <SubType>Designer</SubType>
+    </Content>
+    <Content Include="Dash\Dao\Maps\DashMap.xml">
+      <SubType>Designer</SubType>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Lib\Interop.SHDocVw.dll" />
+    <Content Include="Main\Dao\Maps\MainMap.xml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      <SubType>Designer</SubType>
+    </Content>
+    <Content Include="Mntc\Dao\Maps\PdjtMap.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Mntc\Dao\Maps\MntcMap.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <SubType>Designer</SubType>
+    </Content>
+    <Content Include="Pipe\Dao\Maps\FireFacMap.xml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      <SubType>Designer</SubType>
+    </Content>
+    <Content Include="Pipe\Dao\Maps\WtprMtMap.xml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Pipe\Dao\Maps\StndPiMap.xml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      <SubType>Designer</SubType>
+    </Content>
+    <Content Include="Pipe\Dao\Maps\ValvFacMap.xml">
+      <SubType>Designer</SubType>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Pipe\Dao\Maps\PipeMap.xml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      <SubType>Designer</SubType>
+    </Content>
+    <Content Include="Pipe\Dao\Maps\FlowMtMap.xml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      <SubType>Designer</SubType>
+    </Content>
+    <Content Include="Pipe\Dao\Maps\WtsMnhoMap.xml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Fclt\Dao\Maps\PrsPmpMap.xml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Fclt\Dao\Maps\FiltPltMap.xml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      <SubType>Designer</SubType>
+    </Content>
+    <Content Include="Fclt\Dao\Maps\WtrSupMap.xml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      <SubType>Designer</SubType>
+    </Content>
+    <Content Include="Fclt\Dao\Maps\IntkStMap.xml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Fclt\Dao\Maps\WtrSourMap.xml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Stat\Dao\Maps\StatMap.xml">
+      <SubType>Designer</SubType>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Acmf\Model\WtrTrkDtl.cs" />
+    <Compile Include="Acmf\Model\SupDutDtl.cs" />
+    <Compile Include="Acmf\Model\HydtMetrDtl.cs" />
+    <Compile Include="Adm\Dao\AdmDao.cs" />
+    <Compile Include="Cmm\Dao\CommonDao.cs" />
+    <Compile Include="Cmm\Dao\CmmDao.cs" />
+    <Compile Include="Cmm\Model\CmmDtl.cs" />
+    <Compile Include="Cmm\Model\FctDtl.cs" />
+    <Compile Include="Cmm\Model\FileDtl.cs" />
+    <Compile Include="Cmm\Model\FileMapDtl.cs" />
+    <Compile Include="Cmm\Model\LinkWttRsrvHt.cs" />
+    <Compile Include="Cmm\Model\LinkWttMetaHt.cs" />
+    <Compile Include="Cmm\Model\LinkWtlLeakPs.cs" />
+    <Compile Include="Cmm\Work\CmmWork.cs" />
+    <Compile Include="Cmpl\Model\WserDtl.cs" />
+    <Compile Include="Cmpl\Model\LeakDtl.cs" />
+    <Compile Include="Cnst\Model\CnstDtl.cs" />
+    <Compile Include="Cnst\Model\WttChngDt.cs" />
+    <Compile Include="Cnst\Model\WttFlawDt.cs" />
+    <Compile Include="Cnst\Model\WttCostDt.cs" />
+    <Compile Include="Cnst\Model\SplyDtl.cs" />
+    <Compile Include="Cnst\Model\WttSubcDt.cs" />
+    <Compile Include="Common\BizUtil.cs" />
+    <Compile Include="Common\FmsUtil.cs" />
+    <Compile Include="Common\FmsValueConverter.cs" />
+    <Compile Include="Common\Integer.cs" />
+    <Compile Include="Common\RelayCommand.cs" />
+    <Compile Include="Common\SourcesBehavior.cs" />
+    <Compile Include="Adm\Work\AdmWork.cs" />
+    <Compile Include="Dash\Model\DashDtl.cs" />
+    <Compile Include="Fclt\Model\WttAttaDt.cs" />
+    <Compile Include="FileUtils\CompleteRecordDragDropEventArgsConverter.cs" />
+    <Compile Include="FileUtils\DragRecordOverEventArgsConverter.cs" />
+    <Compile Include="FileUtils\DropRecordEventArgsConverter.cs" />
+    <Compile Include="FileUtils\GiveRecordDragFeedbackEventArgsConverter.cs" />
+    <Compile Include="FileUtils\StartRecordDragEventArgsConverter.cs" />
+    <Compile Include="Main\Dao\MainDao.cs" />
+    <Compile Include="Main\Work\MainWork.cs" />
+    <Compile Include="Mntc\Model\ChscMaDtl.cs" />
+    <Compile Include="Cmm\Model\LinkFmsChscFtrRes.cs" />
+    <Compile Include="Mntc\Model\FaqDtl.cs" />
+    <Compile Include="Mntc\Model\ResSrc.cs" />
+    <Compile Include="Pipe\Dao\PipeDao.cs" />
+    <Compile Include="Pipe\Model\FireFacDtl.cs" />
+    <Compile Include="Pipe\Model\WtprMtDtl.cs" />
+    <Compile Include="Pipe\Model\StndPiDtl.cs" />
+    <Compile Include="Pipe\Model\PipeDtl.cs" />
+    <Compile Include="Pipe\Model\ValvFacDtl.cs" />
+    <Compile Include="Pipe\Model\FlowMtDtl .cs" />
+    <Compile Include="Pipe\Model\WtsMnhoDtl.cs" />
+    <Compile Include="Pipe\Work\PipeWork.cs" />
+    <Compile Include="Fclt\Model\PrsPmpDtl.cs" />
+    <Compile Include="Fclt\Model\IntkStDtl.cs" />
+    <Compile Include="Fclt\Model\FiltPltDtl.cs" />
+    <Compile Include="Fclt\Model\WtrSupDtl.cs" />
+    <Compile Include="Fclt\Model\WtrSourDtl.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\GTIFramework\GTIFramework.csproj">
+      <Project>{a4514546-40cd-4b24-9835-91d18dd9469a}</Project>
+      <Name>GTIFramework</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="app.config" />
+    <None Include="DBConfig\ORACLEConfig.config">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="DBConfig\TIBEROConfig.config">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <WCFMetadata Include="Connected Services\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Stat\Model\" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+</Project>

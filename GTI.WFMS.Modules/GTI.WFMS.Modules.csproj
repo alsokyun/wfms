@@ -1,0 +1,1172 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{894A5389-85E8-45EC-9A1C-BA546F657677}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <RootNamespace>GTI.WFMS.Modules</RootNamespace>
+    <AssemblyName>GTI.WFMS.Modules</AssemblyName>
+    <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <AutoGenerateBindingRedirects>false</AutoGenerateBindingRedirects>
+    <Deterministic>true</Deterministic>
+    <TargetFrameworkProfile />
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <Prefer32Bit>false</Prefer32Bit>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup>
+    <StartupObject />
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="CommonServiceLocator, Version=2.0.4.0, Culture=neutral, PublicKeyToken=489b6accfaf20ef0, processorArchitecture=MSIL">
+      <HintPath>..\packages\CommonServiceLocator.2.0.4\lib\net45\CommonServiceLocator.dll</HintPath>
+    </Reference>
+    <Reference Include="DevExpress.Charts.v19.1.Core, Version=19.1.6.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL" />
+    <Reference Include="DevExpress.Data.v19.1, Version=19.1.6.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL" />
+    <Reference Include="DevExpress.DataAccess.v19.1, Version=19.1.6.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a" />
+    <Reference Include="DevExpress.Images.v19.1, Version=19.1.6.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL" />
+    <Reference Include="DevExpress.Mvvm.v19.1, Version=19.1.6.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL" />
+    <Reference Include="DevExpress.Office.v19.1.Core, Version=19.1.6.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL" />
+    <Reference Include="DevExpress.Pdf.v19.1.Core, Version=19.1.6.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL" />
+    <Reference Include="DevExpress.PivotGrid.v19.1.Core, Version=19.1.6.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL" />
+    <Reference Include="DevExpress.Printing.v19.1.Core, Version=19.1.6.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL" />
+    <Reference Include="DevExpress.RichEdit.v19.1.Core, Version=19.1.6.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL" />
+    <Reference Include="DevExpress.RichEdit.v19.1.Export, Version=19.1.6.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL" />
+    <Reference Include="DevExpress.Sparkline.v19.1.Core, Version=19.1.6.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL" />
+    <Reference Include="DevExpress.Xpf.Charts.v19.1, Version=19.1.6.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL" />
+    <Reference Include="DevExpress.Xpf.Core.v19.1, Version=19.1.6.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL" />
+    <Reference Include="DevExpress.Xpf.Docking.v19.1, Version=19.1.6.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL" />
+    <Reference Include="DevExpress.Xpf.Grid.v19.1, Version=19.1.6.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL" />
+    <Reference Include="DevExpress.Xpf.Grid.v19.1.Core, Version=19.1.6.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL" />
+    <Reference Include="DevExpress.Xpf.Layout.v19.1.Core, Version=19.1.6.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL" />
+    <Reference Include="DevExpress.Xpf.LayoutControl.v19.1, Version=19.1.6.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL" />
+    <Reference Include="DevExpress.Xpf.Printing.v19.1, Version=19.1.6.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL" />
+    <Reference Include="DevExpress.Xpf.Ribbon.v19.1, Version=19.1.6.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL" />
+    <Reference Include="DevExpress.Xpf.RichEdit.v19.1, Version=19.1.6.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL" />
+    <Reference Include="DevExpress.Xpf.Scheduling.v19.1, Version=19.1.6.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL" />
+    <Reference Include="DevExpress.Xpo.v19.1, Version=19.1.6.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a" />
+    <Reference Include="DevExpress.XtraCharts.v19.1, Version=19.1.6.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL" />
+    <Reference Include="DevExpress.XtraGauges.v19.1.Core, Version=19.1.6.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL" />
+    <Reference Include="DevExpress.XtraPrinting.v19.1, Version=19.1.6.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>C:\Program Files (x86)\DevExpress 19.1\Components\Bin\Framework\DevExpress.XtraPrinting.v19.1.dll</HintPath>
+    </Reference>
+    <Reference Include="DevExpress.XtraReports.v19.1, Version=19.1.6.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL" />
+    <Reference Include="DevExpress.XtraReports.v19.1.Extensions, Version=19.1.6.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL" />
+    <Reference Include="DevExpress.XtraScheduler.v19.1.Core, Version=19.1.6.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="PresentationCore" />
+    <Reference Include="PresentationFramework" />
+    <Reference Include="Prism, Version=7.1.0.431, Culture=neutral, PublicKeyToken=40ee6c3a2184dc59, processorArchitecture=MSIL">
+      <HintPath>..\packages\Prism.Core.7.1.0.431\lib\net45\Prism.dll</HintPath>
+    </Reference>
+    <Reference Include="Prism.Unity.Wpf, Version=7.1.0.431, Culture=neutral, PublicKeyToken=40ee6c3a2184dc59, processorArchitecture=MSIL">
+      <HintPath>..\packages\Prism.Unity.7.1.0.431\lib\net45\Prism.Unity.Wpf.dll</HintPath>
+    </Reference>
+    <Reference Include="Prism.Wpf, Version=7.1.0.431, Culture=neutral, PublicKeyToken=40ee6c3a2184dc59, processorArchitecture=MSIL">
+      <HintPath>..\packages\Prism.Wpf.7.1.0.431\lib\net45\Prism.Wpf.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
+    <Reference Include="System.Configuration" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Printing" />
+    <Reference Include="System.ServiceModel" />
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Windows.Interactivity, Version=4.5.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Prism.Wpf.7.1.0.431\lib\net45\System.Windows.Interactivity.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Xaml" />
+    <Reference Include="System.Xml" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="UIAutomationProvider" />
+    <Reference Include="UIAutomationTypes" />
+    <Reference Include="Unity.Abstractions, Version=3.3.1.0, Culture=neutral, PublicKeyToken=6d32ff45e0ccc69f, processorArchitecture=MSIL">
+      <HintPath>..\packages\Unity.Abstractions.3.3.1\lib\net45\Unity.Abstractions.dll</HintPath>
+    </Reference>
+    <Reference Include="Unity.Container, Version=5.8.11.0, Culture=neutral, PublicKeyToken=489b6accfaf20ef0, processorArchitecture=MSIL">
+      <HintPath>..\packages\Unity.Container.5.8.11\lib\net45\Unity.Container.dll</HintPath>
+    </Reference>
+    <Reference Include="WindowsBase" />
+  </ItemGroup>
+  <ItemGroup>
+    <Page Include="Acmf\view\WtrTrkAddView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Acmf\view\SupDutAddView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Acmf\view\WtrTrkDtlView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Acmf\view\SupDutDtlView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Acmf\view\WtrTrkListView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Acmf\view\SupDutListView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Acmf\view\HydtMetrAddView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Acmf\view\HydtMetrDtlView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Acmf\view\HydtMetrListView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Cmpl\View\LekSiteAddView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Cmpl\View\LekSiteDtlView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Cmpl\View\LekSiteListView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Cmpl\View\SplyCmplAddView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Cmpl\View\CnstCmplAddView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Cmpl\View\SplyCmplDtlView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Cmpl\View\CnstCmplDtlView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Cmpl\View\SplyCmplListView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Cmpl\View\CnstCmplListView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Cnst\View\CnstMngAddView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Cnst\View\SplyAddView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Cnst\View\SplyMngListView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Cnst\View\SplyDtlView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Cnst\View\WttFlawDtView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Cnst\View\WttSubcDtView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Cnst\View\WttChngDtView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Cnst\View\WttCostDtView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Cnst\View\CnstMngListView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Cnst\View\CnstMngDtlView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Dash\View\UcChartMnu.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Dash\View\UcChart07.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Dash\View\UcChart06.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Dash\View\UcChart05.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Dash\View\UcChart04.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Dash\View\UcChart03.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Dash\View\UcChart02.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Dash\View\UcChart01.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Dash\View\DashWinView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Fclt\view\PrsPmpAddView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Fclt\view\IntkStAddView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Fclt\view\FiltPltAddView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Fclt\view\PrsPmpDtlView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Fclt\view\IntkStDtlView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Fclt\view\PrsPmpListView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Fclt\view\IntkStListView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Fclt\view\WtrSupAddView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Fclt\view\WtrSourAddView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Fclt\view\FiltPltDtlView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Fclt\view\WtrSupDtlView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Fclt\view\WtrSourDtlView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Fclt\view\FiltPltListView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Fclt\view\WtrSupListView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Fclt\view\WtrSourListView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Link\View\ChscResSubListView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Link\View\AttFacListView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Dash\View\DashView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Mntc\View\FaqDocView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Mntc\View\FaqAddView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Pop\View\CnstCmplSelView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Pop\View\CnstMngPopView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Link\View\ImgFileMngView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Link\View\PhotoFileMngView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Link\View\PhoFileMngView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Link\View\RefFileMngView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Main\PopMain.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Main\View\PopWinView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Mntc\View\ChkSchDtlView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Mntc\View\ChkSchAddView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Mntc\View\OldMngListView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Mntc\View\OldDtlView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Mntc\View\OptMtListView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Mntc\View\OptMtDtlView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Mntc\View\ChkPlanListView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Mntc\View\PdjtStockView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Mntc\View\FaqListView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Mntc\View\FaqDtlView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Mntc\View\TagMapListView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Mntc\View\PdjtUseDtlView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Mntc\View\PdjtMngListView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Mntc\View\ChkSchListView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Mntc\View\PdjtHt2View.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Mntc\View\PdjtHtView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Mntc\View\PdjtUseListView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Pipe\View\FireFacAddView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Pipe\View\FireFacDtlView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Pipe\View\FireFacListView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Pipe\View\WtprMtAddView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Pipe\View\WtprMtDtlView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Pipe\View\WtprMtListView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Pipe\View\StndPiAddView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Pipe\View\StndPiDtlView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Pipe\View\StndPiListView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Pipe\View\ValvFacAddView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Pipe\View\ValvFacDtlView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Pipe\View\ValvFacListView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Pipe\View\WtlPipeAddView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Pipe\View\WtlPipeDtlView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Pipe\View\WtlPipeListView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Pipe\View\FlowMtAddView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Pipe\View\WtsMnhoAddView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Pipe\View\FlowMtDtlView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Pipe\View\WtsMnhoDtlView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Pipe\View\FlowMtListView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Pipe\View\WtsMnhoListView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Pop\View\AttFacDtlView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Pop\View\FilePhotoView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Pop\View\FileMngView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Pop\View\FilePopView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Pop\View\FtrSelView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Stat\View\FcltStatListView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Stat\View\StatCmplListView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Acmf\Report\HydtMetrReport.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Acmf\Report\HydtMetrReport.Designer.cs">
+      <DependentUpon>HydtMetrReport.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Acmf\Report\SupDutReport.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Acmf\Report\SupDutReport.Designer.cs">
+      <DependentUpon>SupDutReport.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Acmf\Report\WtrTrkReport.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Acmf\Report\WtrTrkReport.Designer.cs">
+      <DependentUpon>WtrTrkReport.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Acmf\viewModel\WtrTrkDtlViewMdl.cs" />
+    <Compile Include="Acmf\viewModel\SupDutDtlViewMdl.cs" />
+    <Compile Include="Acmf\viewModel\HydtMetrDtlViewMdl.cs" />
+    <Compile Include="Acmf\viewModel\WtrTrkAddViewModel.cs" />
+    <Compile Include="Acmf\viewModel\SupDutAddViewModel.cs" />
+    <Compile Include="Acmf\viewModel\WtrTrkDtlViewModel.cs" />
+    <Compile Include="Acmf\viewModel\SupDutDtlViewModel.cs" />
+    <Compile Include="Acmf\viewModel\WtrTrkListViewModel.cs" />
+    <Compile Include="Acmf\viewModel\SupDutListViewModel.cs" />
+    <Compile Include="Acmf\viewModel\HydtMetrAddViewModel.cs" />
+    <Compile Include="Acmf\viewModel\HydtMetrDtlViewModel.cs" />
+    <Compile Include="Acmf\viewModel\HydtMetrListViewModel.cs" />
+    <Compile Include="Acmf\view\WtrTrkAddView.xaml.cs">
+      <DependentUpon>WtrTrkAddView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Acmf\view\SupDutAddView.xaml.cs">
+      <DependentUpon>SupDutAddView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Acmf\view\WtrTrkDtlView.xaml.cs">
+      <DependentUpon>WtrTrkDtlView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Acmf\view\SupDutDtlView.xaml.cs">
+      <DependentUpon>SupDutDtlView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Acmf\view\WtrTrkListView.xaml.cs">
+      <DependentUpon>WtrTrkListView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Acmf\view\SupDutListView.xaml.cs">
+      <DependentUpon>SupDutListView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Acmf\view\HydtMetrAddView.xaml.cs">
+      <DependentUpon>HydtMetrAddView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Acmf\view\HydtMetrDtlView.xaml.cs">
+      <DependentUpon>HydtMetrDtlView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Acmf\view\HydtMetrListView.xaml.cs">
+      <DependentUpon>HydtMetrListView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Cmpl\ViewModel\LekSiteAddViewModel.cs" />
+    <Compile Include="Cmpl\ViewModel\LekSiteDtlViewModel.cs" />
+    <Compile Include="Cmpl\ViewModel\LekSiteListViewModel.cs" />
+    <Compile Include="Cmpl\ViewModel\SplyCmplAddViewModel.cs" />
+    <Compile Include="Cmpl\ViewModel\CnstCmplAddViewModel.cs" />
+    <Compile Include="Cmpl\ViewModel\SplyCmplDtlViewModel.cs" />
+    <Compile Include="Cmpl\ViewModel\CnstCmplDtlViewModel.cs" />
+    <Compile Include="Cmpl\ViewModel\SplyCmplListViewModel.cs" />
+    <Compile Include="Cmpl\ViewModel\CnstCmplListViewModel.cs" />
+    <Compile Include="Cmpl\View\LekSiteAddView.xaml.cs">
+      <DependentUpon>LekSiteAddView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Cmpl\View\LekSiteDtlView.xaml.cs">
+      <DependentUpon>LekSiteDtlView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Cmpl\View\LekSiteListView.xaml.cs">
+      <DependentUpon>LekSiteListView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Cmpl\View\SplyCmplAddView.xaml.cs">
+      <DependentUpon>SplyCmplAddView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Cmpl\View\CnstCmplAddView.xaml.cs">
+      <DependentUpon>CnstCmplAddView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Cmpl\View\SplyCmplDtlView.xaml.cs">
+      <DependentUpon>SplyCmplDtlView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Cmpl\View\CnstCmplDtlView.xaml.cs">
+      <DependentUpon>CnstCmplDtlView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Cmpl\View\SplyCmplListView.xaml.cs">
+      <DependentUpon>SplyCmplListView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Cmpl\View\CnstCmplListView.xaml.cs">
+      <DependentUpon>CnstCmplListView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Cnst\Report\CnstMngReport.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Cnst\Report\CnstMngReport.Designer.cs">
+      <DependentUpon>CnstMngReport.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Cnst\ViewModel\CnstMngAddViewModel.cs" />
+    <Compile Include="Cnst\ViewModel\SplyAddViewModel.cs" />
+    <Compile Include="Cnst\ViewModel\SplyMngListViewModel.cs" />
+    <Compile Include="Cnst\ViewModel\CnstMngListViewModel.cs" />
+    <Compile Include="Cnst\ViewModel\CnstMngDtlViewModel.cs" />
+    <Compile Include="Cnst\ViewModel\SplyDtlViewModel.cs" />
+    <Compile Include="Cnst\ViewModel\WttFlawDtViewModel.cs" />
+    <Compile Include="Cnst\ViewModel\WttChngDtViewModel.cs" />
+    <Compile Include="Cnst\ViewModel\WttCostDtViewModel.cs" />
+    <Compile Include="Cnst\ViewModel\WttSubcDtViewModel.cs" />
+    <Compile Include="Cnst\ViewModel\CnstMngDtlViewMdl.cs" />
+    <Compile Include="Cnst\View\CnstMngAddView.xaml.cs">
+      <DependentUpon>CnstMngAddView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Cnst\View\SplyAddView.xaml.cs">
+      <DependentUpon>SplyAddView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Cnst\View\SplyMngListView.xaml.cs">
+      <DependentUpon>SplyMngListView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Cnst\View\SplyDtlView.xaml.cs">
+      <DependentUpon>SplyDtlView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Cnst\View\WttFlawDtView.xaml.cs">
+      <DependentUpon>WttFlawDtView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Cnst\View\WttSubcDtView.xaml.cs">
+      <DependentUpon>WttSubcDtView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Cnst\View\WttChngDtView.xaml.cs">
+      <DependentUpon>WttChngDtView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Cnst\View\WttCostDtView.xaml.cs">
+      <DependentUpon>WttCostDtView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Cnst\View\CnstMngListView.xaml.cs">
+      <DependentUpon>CnstMngListView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Cnst\View\CnstMngDtlView.xaml.cs">
+      <DependentUpon>CnstMngDtlView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Dash\ViewModel\UcChartMnuModel.cs" />
+    <Compile Include="Dash\ViewModel\UcChart07Model.cs" />
+    <Compile Include="Dash\ViewModel\UcChart06Model.cs" />
+    <Compile Include="Dash\ViewModel\UcChart05Model.cs" />
+    <Compile Include="Dash\ViewModel\UcChart04Model.cs" />
+    <Compile Include="Dash\ViewModel\UcChart03Model.cs" />
+    <Compile Include="Dash\ViewModel\UcChart02Model.cs" />
+    <Compile Include="Dash\ViewModel\UcChart01Model.cs" />
+    <Compile Include="Dash\ViewModel\DashViewModel.cs" />
+    <Compile Include="Dash\ViewModel\DashWinViewModel.cs" />
+    <Compile Include="Dash\View\UcChartMnu.xaml.cs">
+      <DependentUpon>UcChartMnu.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Dash\View\UcChart07.xaml.cs">
+      <DependentUpon>UcChart07.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Dash\View\UcChart06.xaml.cs">
+      <DependentUpon>UcChart06.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Dash\View\UcChart05.xaml.cs">
+      <DependentUpon>UcChart05.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Dash\View\UcChart04.xaml.cs">
+      <DependentUpon>UcChart04.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Dash\View\UcChart03.xaml.cs">
+      <DependentUpon>UcChart03.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Dash\View\UcChart02.xaml.cs">
+      <DependentUpon>UcChart02.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Dash\View\UcChart01.xaml.cs">
+      <DependentUpon>UcChart01.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Dash\View\DashWinView.xaml.cs">
+      <DependentUpon>DashWinView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Fclt\Report\FiltPltReport.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Fclt\Report\FiltPltReport.Designer.cs">
+      <DependentUpon>FiltPltReport.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Fclt\Report\IntkStReport.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Fclt\Report\IntkStReport.Designer.cs">
+      <DependentUpon>IntkStReport.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Fclt\Report\PrsPmpReport.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Fclt\Report\PrsPmpReport.Designer.cs">
+      <DependentUpon>PrsPmpReport.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Fclt\Report\WtrSourReport.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Fclt\Report\WtrSourReport.Designer.cs">
+      <DependentUpon>WtrSourReport.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Fclt\Report\WtrSupReport.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Fclt\Report\WtrSupReport.Designer.cs">
+      <DependentUpon>WtrSupReport.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Fclt\viewModel\WtrSupDtlViewMdl.cs" />
+    <Compile Include="Fclt\viewModel\WtrSourDtlViewMdl.cs" />
+    <Compile Include="Fclt\viewModel\PrsPmpDtlViewMdl.cs" />
+    <Compile Include="Fclt\viewModel\IntkStDtlViewMdl.cs" />
+    <Compile Include="Fclt\viewModel\PrsPmpAddViewModel.cs" />
+    <Compile Include="Fclt\viewModel\IntkStAddViewModel.cs" />
+    <Compile Include="Fclt\viewModel\FiltPltAddViewModel.cs" />
+    <Compile Include="Fclt\viewModel\PrsPmpDtlViewModel.cs" />
+    <Compile Include="Fclt\viewModel\IntkStDtlViewModel.cs" />
+    <Compile Include="Fclt\viewModel\PrsPmpListViewModel.cs" />
+    <Compile Include="Fclt\viewModel\IntkStListViewModel.cs" />
+    <Compile Include="Fclt\viewModel\WtrSupAddViewModel.cs" />
+    <Compile Include="Fclt\viewModel\WtrSourAddViewModel.cs" />
+    <Compile Include="Fclt\viewModel\FiltPltDtlViewModel.cs" />
+    <Compile Include="Fclt\viewModel\WtrSupDtlViewModel.cs" />
+    <Compile Include="Fclt\viewModel\WtrSourDtlViewModel.cs" />
+    <Compile Include="Fclt\viewModel\FiltPltListViewModel.cs" />
+    <Compile Include="Fclt\viewModel\WtrSupListViewModel.cs" />
+    <Compile Include="Fclt\viewModel\WtrSourListViewModel.cs" />
+    <Compile Include="Fclt\viewModel\FiltPltDtlViewMdl.cs" />
+    <Compile Include="Fclt\view\PrsPmpAddView.xaml.cs">
+      <DependentUpon>PrsPmpAddView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Fclt\view\IntkStAddView.xaml.cs">
+      <DependentUpon>IntkStAddView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Fclt\view\FiltPltAddView.xaml.cs">
+      <DependentUpon>FiltPltAddView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Fclt\view\PrsPmpDtlView.xaml.cs">
+      <DependentUpon>PrsPmpDtlView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Fclt\view\IntkStDtlView.xaml.cs">
+      <DependentUpon>IntkStDtlView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Fclt\view\PrsPmpListView.xaml.cs">
+      <DependentUpon>PrsPmpListView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Fclt\view\IntkStListView.xaml.cs">
+      <DependentUpon>IntkStListView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Fclt\view\WtrSupAddView.xaml.cs">
+      <DependentUpon>WtrSupAddView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Fclt\view\WtrSourAddView.xaml.cs">
+      <DependentUpon>WtrSourAddView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Fclt\view\FiltPltDtlView.xaml.cs">
+      <DependentUpon>FiltPltDtlView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Fclt\view\WtrSupDtlView.xaml.cs">
+      <DependentUpon>WtrSupDtlView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Fclt\view\WtrSourDtlView.xaml.cs">
+      <DependentUpon>WtrSourDtlView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Fclt\view\FiltPltListView.xaml.cs">
+      <DependentUpon>FiltPltListView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Fclt\view\WtrSupListView.xaml.cs">
+      <DependentUpon>WtrSupListView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Fclt\view\WtrSourListView.xaml.cs">
+      <DependentUpon>WtrSourListView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Link\View\ChscResSubListView.xaml.cs">
+      <DependentUpon>ChscResSubListView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Link\View\AttFacListView.xaml.cs">
+      <DependentUpon>AttFacListView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Dash\View\DashView.xaml.cs">
+      <DependentUpon>DashView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Mntc\ViewModel\FaqDocViewModel.cs" />
+    <Compile Include="Mntc\ViewModel\FaqAddViewModel.cs" />
+    <Compile Include="Mntc\View\FaqDocView.xaml.cs">
+      <DependentUpon>FaqDocView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Mntc\View\FaqAddView.xaml.cs">
+      <DependentUpon>FaqAddView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Pop\ViewModel\CnstCmplSelViewModel.cs" />
+    <Compile Include="Pop\View\CnstCmplSelView.xaml.cs">
+      <DependentUpon>CnstCmplSelView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Pop\View\CnstMngPopView.xaml.cs">
+      <DependentUpon>CnstMngPopView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Link\View\ImgFileMngView.xaml.cs">
+      <DependentUpon>ImgFileMngView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Link\View\PhotoFileMngView.xaml.cs">
+      <DependentUpon>PhotoFileMngView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Link\View\PhoFileMngView.xaml.cs">
+      <DependentUpon>PhoFileMngView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Link\View\RefFileMngView.xaml.cs">
+      <DependentUpon>RefFileMngView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Main\PopMain.xaml.cs">
+      <DependentUpon>PopMain.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Main\ViewModel\PopWinViewModel.cs" />
+    <Compile Include="Main\View\PopWinView.xaml.cs">
+      <DependentUpon>PopWinView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Mntc\ViewModel\ChkSchAddViewModel.cs" />
+    <Compile Include="Mntc\ViewModel\ChkSchDtlViewModel.cs" />
+    <Compile Include="Mntc\ViewModel\ChkSchListViewModel.cs" />
+    <Compile Include="Mntc\ViewModel\FaqDtlViewModel.cs" />
+    <Compile Include="Mntc\ViewModel\OldMngListViewModel.cs" />
+    <Compile Include="Mntc\ViewModel\OptMtListViewModel.cs" />
+    <Compile Include="Mntc\ViewModel\PdjtUseListViewModel.cs" />
+    <Compile Include="Mntc\ViewModel\FaqListViewModel.cs" />
+    <Compile Include="Mntc\View\ChkSchDtlView.xaml.cs">
+      <DependentUpon>ChkSchDtlView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Mntc\View\ChkSchAddView.xaml.cs">
+      <DependentUpon>ChkSchAddView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Mntc\View\OldMngListView.xaml.cs">
+      <DependentUpon>OldMngListView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Mntc\View\OldDtlView.xaml.cs">
+      <DependentUpon>OldDtlView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Mntc\View\OptMtListView.xaml.cs">
+      <DependentUpon>OptMtListView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Mntc\View\OptMtDtlView.xaml.cs">
+      <DependentUpon>OptMtDtlView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Mntc\View\ChkPlanListView.xaml.cs">
+      <DependentUpon>ChkPlanListView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Mntc\View\PdjtStockView.xaml.cs">
+      <DependentUpon>PdjtStockView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Mntc\View\FaqListView.xaml.cs">
+      <DependentUpon>FaqListView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Mntc\View\FaqDtlView.xaml.cs">
+      <DependentUpon>FaqDtlView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Mntc\View\TagMapListView.xaml.cs">
+      <DependentUpon>TagMapListView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Mntc\View\PdjtUseDtlView.xaml.cs">
+      <DependentUpon>PdjtUseDtlView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Mntc\View\PdjtMngListView.xaml.cs">
+      <DependentUpon>PdjtMngListView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Mntc\View\ChkSchListView.xaml.cs">
+      <DependentUpon>ChkSchListView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Mntc\View\PdjtHt2View.xaml.cs">
+      <DependentUpon>PdjtHt2View.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Mntc\View\PdjtHtView.xaml.cs">
+      <DependentUpon>PdjtHtView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Mntc\View\PdjtUseListView.xaml.cs">
+      <DependentUpon>PdjtUseListView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Pipe\Report\FireFacReport.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Pipe\Report\FireFacReport.Designer.cs">
+      <DependentUpon>FireFacReport.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Pipe\Report\FlowMtReport.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Pipe\Report\FlowMtReport.Designer.cs">
+      <DependentUpon>FlowMtReport.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Pipe\Report\StndPiReport.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Pipe\Report\StndPiReport.Designer.cs">
+      <DependentUpon>StndPiReport.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Pipe\Report\WtlPipeDtlReport.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Pipe\Report\WtlPipeDtlReport.Designer.cs">
+      <DependentUpon>WtlPipeDtlReport.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Pipe\Report\ValvFacReport.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Pipe\Report\ValvFacReport.Designer.cs">
+      <DependentUpon>ValvFacReport.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Pipe\Report\WtprMtReport.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Pipe\Report\WtprMtReport.Designer.cs">
+      <DependentUpon>WtprMtReport.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Pipe\Report\WtsMnhoReport.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Pipe\Report\WtsMnhoReport.Designer.cs">
+      <DependentUpon>WtsMnhoReport.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Pipe\ViewModel\FireFacAddViewModel.cs" />
+    <Compile Include="Pipe\ViewModel\StndPiDtlViewMdl.cs" />
+    <Compile Include="Pipe\ViewModel\WtprMtDtlViewMdl.cs" />
+    <Compile Include="Pipe\ViewModel\FlowMtDtlViewMdl.cs" />
+    <Compile Include="Pipe\ViewModel\WtsMnhoDtlViewMdl.cs" />
+    <Compile Include="Pipe\ViewModel\ValvFacDtlViewMdl.cs" />
+    <Compile Include="Pipe\ViewModel\FireFacDtlViewModel.cs" />
+    <Compile Include="Pipe\ViewModel\FireFacListViewModel.cs" />
+    <Compile Include="Pipe\ViewModel\FireFacDtlViewMdl.cs" />
+    <Compile Include="Pipe\ViewModel\WtlPipeDtlViewMdl.cs" />
+    <Compile Include="Pipe\ViewModel\WtprMtAddViewModel.cs" />
+    <Compile Include="Pipe\ViewModel\WtprMtDtlViewModel.cs" />
+    <Compile Include="Pipe\ViewModel\WtprMtListViewModel.cs" />
+    <Compile Include="Pipe\ViewModel\StndPiAddViewModel.cs" />
+    <Compile Include="Pipe\ViewModel\StndPiDtlViewModel.cs" />
+    <Compile Include="Pipe\ViewModel\StndPiListViewModel.cs" />
+    <Compile Include="Pipe\ViewModel\ValvFacAddViewModel.cs" />
+    <Compile Include="Pipe\ViewModel\ValvFacDtlViewModel.cs" />
+    <Compile Include="Pipe\ViewModel\ValvFacListViewModel.cs" />
+    <Compile Include="Pipe\ViewModel\WtlPipeAddViewModel.cs" />
+    <Compile Include="Pipe\ViewModel\WtlPipeDtlViewModel.cs" />
+    <Compile Include="Pipe\ViewModel\WtlPipeListViewModel.cs" />
+    <Compile Include="Pipe\ViewModel\FlowMtAddViewModel.cs" />
+    <Compile Include="Pipe\ViewModel\WtsMnhoAddViewModel.cs" />
+    <Compile Include="Pipe\ViewModel\FlowMtDtlViewModel.cs" />
+    <Compile Include="Pipe\ViewModel\WtsMnhoDtlViewModel.cs" />
+    <Compile Include="Pipe\ViewModel\FlowMtListViewModel.cs" />
+    <Compile Include="Pipe\ViewModel\WtsMnhoListViewModel.cs" />
+    <Compile Include="Pipe\View\FireFacAddView.xaml.cs">
+      <DependentUpon>FireFacAddView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Pipe\View\FireFacDtlView.xaml.cs">
+      <DependentUpon>FireFacDtlView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Pipe\View\FireFacListView.xaml.cs">
+      <DependentUpon>FireFacListView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Pipe\View\WtprMtAddView.xaml.cs">
+      <DependentUpon>WtprMtAddView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Pipe\View\WtprMtDtlView.xaml.cs">
+      <DependentUpon>WtprMtDtlView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Pipe\View\WtprMtListView.xaml.cs">
+      <DependentUpon>WtprMtListView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Pipe\View\StndPiAddView.xaml.cs">
+      <DependentUpon>StndPiAddView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Pipe\View\StndPiDtlView.xaml.cs">
+      <DependentUpon>StndPiDtlView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Pipe\View\StndPiListView.xaml.cs">
+      <DependentUpon>StndPiListView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Pipe\View\ValvFacAddView.xaml.cs">
+      <DependentUpon>ValvFacAddView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Pipe\View\ValvFacDtlView.xaml.cs">
+      <DependentUpon>ValvFacDtlView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Pipe\View\ValvFacListView.xaml.cs">
+      <DependentUpon>ValvFacListView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Pipe\View\WtlPipeAddView.xaml.cs">
+      <DependentUpon>WtlPipeAddView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Pipe\View\WtlPipeDtlView.xaml.cs">
+      <DependentUpon>WtlPipeDtlView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Pipe\View\WtlPipeListView.xaml.cs">
+      <DependentUpon>WtlPipeListView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Pipe\View\FlowMtAddView.xaml.cs">
+      <DependentUpon>FlowMtAddView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Pipe\View\WtsMnhoAddView.xaml.cs">
+      <DependentUpon>WtsMnhoAddView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Pipe\View\FlowMtDtlView.xaml.cs">
+      <DependentUpon>FlowMtDtlView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Pipe\View\WtsMnhoDtlView.xaml.cs">
+      <DependentUpon>WtsMnhoDtlView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Pipe\View\FlowMtListView.xaml.cs">
+      <DependentUpon>FlowMtListView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Pipe\View\WtsMnhoListView.xaml.cs">
+      <DependentUpon>WtsMnhoListView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Pop\ViewModel\CnstMngPopViewModel.cs" />
+    <Compile Include="Pop\ViewModel\FilePhotoViewModel.cs" />
+    <Compile Include="Pop\ViewModel\FilePopViewModel.cs" />
+    <Compile Include="Pop\ViewModel\FileMngViewModel.cs" />
+    <Compile Include="Pop\ViewModel\AttFacDtlViewModel.cs" />
+    <Compile Include="Pop\ViewModel\FtrSelViewModel.cs" />
+    <Compile Include="Pop\View\AttFacDtlView.xaml.cs">
+      <DependentUpon>AttFacDtlView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Pop\View\FilePhotoView.xaml.cs">
+      <DependentUpon>FilePhotoView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Pop\View\FileMngView.xaml.cs">
+      <DependentUpon>FileMngView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Pop\View\FilePopView.xaml.cs">
+      <DependentUpon>FilePopView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Pop\View\FtrSelView.xaml.cs">
+      <DependentUpon>FtrSelView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Stat\ViewModel\FcltStatListViewModel.cs" />
+    <Compile Include="Stat\ViewModel\StatCmplListViewModel.cs" />
+    <Compile Include="Stat\View\FcltStatListView.xaml.cs">
+      <DependentUpon>FcltStatListView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Stat\View\StatCmplListView.xaml.cs">
+      <DependentUpon>StatCmplListView.xaml</DependentUpon>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="app.config" />
+    <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\GTI.WFMS.GIS\GTI.WFMS.GIS.csproj">
+      <Project>{28bcab02-61d3-4afc-be3a-713f062d3923}</Project>
+      <Name>GTI.WFMS.GIS</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\GTI.WFMS.Models\GTI.WFMS.Models.csproj">
+      <Project>{f098cedb-9897-4ad2-8323-2405ef88e192}</Project>
+      <Name>GTI.WFMS.Models</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\GTIFramework\GTIFramework.csproj">
+      <Project>{a4514546-40cd-4b24-9835-91d18dd9469a}</Project>
+      <Name>GTIFramework</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Acmf\Report\HydtMetrReport.resx">
+      <DependentUpon>HydtMetrReport.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Acmf\Report\SupDutReport.resx">
+      <DependentUpon>SupDutReport.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Acmf\Report\WtrTrkReport.resx">
+      <DependentUpon>WtrTrkReport.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Cnst\Report\CnstMngReport.resx">
+      <DependentUpon>CnstMngReport.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Fclt\Report\FiltPltReport.resx">
+      <DependentUpon>FiltPltReport.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Fclt\Report\IntkStReport.resx">
+      <DependentUpon>IntkStReport.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Fclt\Report\PrsPmpReport.resx">
+      <DependentUpon>PrsPmpReport.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Fclt\Report\WtrSourReport.resx">
+      <DependentUpon>WtrSourReport.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Fclt\Report\WtrSupReport.resx">
+      <DependentUpon>WtrSupReport.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Pipe\Report\FireFacReport.resx">
+      <DependentUpon>FireFacReport.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Pipe\Report\FlowMtReport.resx">
+      <DependentUpon>FlowMtReport.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Pipe\Report\StndPiReport.resx">
+      <DependentUpon>StndPiReport.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Pipe\Report\WtlPipeDtlReport.resx">
+      <DependentUpon>WtlPipeDtlReport.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Pipe\Report\ValvFacReport.resx">
+      <DependentUpon>ValvFacReport.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Pipe\Report\WtprMtReport.resx">
+      <DependentUpon>WtprMtReport.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Pipe\Report\WtsMnhoReport.resx">
+      <DependentUpon>WtsMnhoReport.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Properties\Licenses.licx" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Link\ViewModel\" />
+  </ItemGroup>
+  <ItemGroup>
+    <WCFMetadata Include="Connected Services\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Pop\View\2020020620052218.jpg" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+</Project>
