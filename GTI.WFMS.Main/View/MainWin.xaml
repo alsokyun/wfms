@@ -14,7 +14,7 @@
         xmlns:gridani="clr-namespace:GTIFramework.Common.Utils.ViewEffect;assembly=GTIFramework"
         xmlns:dxmvvm="http://schemas.devexpress.com/winfx/2008/xaml/mvvm"
     
-        Title="InfoFacility" WindowStyle="None" WindowStartupLocation="CenterScreen" ResizeMode="CanResize" AllowsTransparency="True" 
+        Title="InfoFMS" WindowStyle="None" WindowStartupLocation="CenterScreen" ResizeMode="CanResize" 
         Width="1900" Height="1049" MinWidth="1280" MinHeight="720" 
         Style="{DynamicResource MAINWindow}" Background="{DynamicResource MainWindowColorBrush1}"
     
@@ -81,8 +81,8 @@
 
             <StackPanel Grid.Row="1" Grid.Column="1" Orientation="Horizontal" HorizontalAlignment="Right">
                 <Button x:Name="btnUser" Style="{DynamicResource UserButton}" Command="{Binding UserInfoMngCommand}" CommandParameter="{Binding RelativeSource={RelativeSource AncestorType={x:Type Window}, Mode=FindAncestor}}"/>
-                <Border Width="1" Background="{DynamicResource MainHeadGBNBrush1}"/>
-                <Button Command="{Binding InterestBlkCommand}" Style="{DynamicResource SettingButton}"/>
+                <Border Width="1" Background="{DynamicResource MainHeadGBNBrush1}" />
+                <Button Command="{Binding InterestBlkCommand}" Style="{DynamicResource SettingButton}"  />
                 <Border Width="1" Background="{DynamicResource MainHeadGBNBrush1}"/>
                 <Button Style="{DynamicResource MinWindowButton}" Command="{Binding MinimizeCommand}" 
                         CommandParameter="{Binding RelativeSource={RelativeSource AncestorType={x:Type Window}, Mode=FindAncestor}}"/>
@@ -92,11 +92,12 @@
                 <Border Width="1" Background="{DynamicResource MainHeadGBNBrush1}"/>
                 <Button Style="{DynamicResource PowerButton}" Command="{Binding CloseCommand}"/>
             </StackPanel>
+            
         </Grid>
 
         <!--탑메뉴버튼 영역-->
         <Border Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="3" x:Name="borderTop"
-                Background="{DynamicResource MainLMENUBrush1}"  BorderThickness="0,0,0,3" BorderBrush="{DynamicResource MainLMENUUnderBrush1}">
+                Background="{DynamicResource MainLMENUBrush1}"  BorderThickness="0,1,0,3" BorderBrush="{DynamicResource MainLMENUUnderBrush1}">
             <Border.Effect>
                 <DropShadowEffect Direction="-90" ShadowDepth="3" Opacity="0.3"/>
             </Border.Effect>
@@ -154,7 +155,7 @@
         </Grid>
 
         <!--즐겨찾기 숨김영역-->
-        <Grid Grid.Row="3" Grid.Column="1" HorizontalAlignment="Right">
+        <Grid Grid.Row="3" Grid.Column="1" HorizontalAlignment="Right" >
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="17"/>
                 <ColumnDefinition Width="7" x:Name="colQuick"/>
@@ -195,7 +196,7 @@
         <Border Grid.Row="4" Grid.Column="0" Grid.ColumnSpan="3" Margin="0,0,0,0" VerticalAlignment="Stretch" Background="{DynamicResource MainBack1Brush1}" BorderBrush="{DynamicResource MainThin1Brush1}" BorderThickness="1,1,1,0">
             <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="0,0,10,0">
                 <ProgressBar x:Name="progressunlimit" Width="100" FlowDirection="LeftToRight" IsIndeterminate="True" Visibility="Hidden"/>
-                <Label Content="GREENTECHINC InfoFacility v1.0" Foreground="Gray" Margin="10,0,0,0"/>
+                <Label Content="GREENTECHINC InfoFMS v1.0" Foreground="Gray" Margin="10,0,0,0"/>
             </StackPanel>
         </Border>
 

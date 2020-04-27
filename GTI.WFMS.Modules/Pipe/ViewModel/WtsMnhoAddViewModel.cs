@@ -8,7 +8,6 @@ using Prism.Commands;
 using System;
 using System.Collections;
 using System.Data;
-using System.Reflection;
 using System.Windows;
 using System.Windows.Controls;
 
@@ -33,10 +32,10 @@ namespace GTI.WFMS.Modules.Pipe.ViewModel
         #region ==========  Member 정의 ==========
         WtsMnhoAddView wtsMnhoAddView;
         //ComboBoxEdit cbFTR_CDE; DataTable dtFTR_CDE = new DataTable();		//지형지물
-        ComboBoxEdit cbHJD_CDE; DataTable dtHJD_CDE = new DataTable();		//행정동
-        ComboBoxEdit cbMNG_CDE; DataTable dtMNG_CDE = new DataTable();      //관리기관
-        ComboBoxEdit cbSOM_CDE; DataTable dtSOM_CDE = new DataTable();      //맨홀종류
-        ComboBoxEdit cbMHS_CDE; DataTable dtMHS_CDE = new DataTable();      //맨홀종류
+        ComboBoxEdit cbHJD_CDE; //행정동
+        ComboBoxEdit cbMNG_CDE; //관리기관
+        ComboBoxEdit cbSOM_CDE; //맨홀종류
+        ComboBoxEdit cbMHS_CDE; //맨홀종류
 
         Button btnBack;
         Button btnSave;
@@ -103,6 +102,11 @@ namespace GTI.WFMS.Modules.Pipe.ViewModel
                 this.FTR_CDE = "SA100";
 
                 this.IST_YMD = Convert.ToDateTime(DateTime.Today).ToString("yyyy-MM-dd");
+
+
+                //공통팝업창 사이즈 
+                FmsUtil.popWinView.Height = 320;
+
             }
             catch (Exception e)
             {
@@ -130,7 +134,7 @@ namespace GTI.WFMS.Modules.Pipe.ViewModel
             {
                 BizUtil.Update2(this, "insertWtsMnhoDtl");
             }
-            catch (Exception e)
+            catch (Exception )
             {
                 Messages.ShowErrMsgBox("저장 처리중 오류가 발생하였습니다.");
                 return;
@@ -168,16 +172,16 @@ namespace GTI.WFMS.Modules.Pipe.ViewModel
                 //BizUtil.SetCombo(cbFTR_CDE, "Select_FTR_LIST", "FTR_CDE", "FTR_NAM", false);
 
                 // cbHJD_CDE 행정동
-                BizUtil.SetCombo(cbHJD_CDE, "Select_ADAR_LIST", "HJD_CDE", "HJD_NAM", true);
+                BizUtil.SetCombo(cbHJD_CDE, "Select_ADAR_LIST", "HJD_CDE", "HJD_NAM", "[선택하세요]");
 
                 // cbMNG_CDE 관리기관
-                BizUtil.SetCmbCode(cbMNG_CDE, "MNG_CDE", true);
+                BizUtil.SetCmbCode(cbMNG_CDE, "250101", "[선택하세요]");
                 
                 // cbSOM_CDE 맨홀종류
-                BizUtil.SetCmbCode(cbSOM_CDE, "SOM_CDE", true);
+                BizUtil.SetCmbCode(cbSOM_CDE, "250012", "[선택하세요]");
 
                 // cbMHS_CDE 맨홀형태
-                BizUtil.SetCmbCode(cbMHS_CDE, "MHS_CDE", true);
+                BizUtil.SetCmbCode(cbMHS_CDE, "250049", "[선택하세요]");
 
             }
             catch (Exception ex)

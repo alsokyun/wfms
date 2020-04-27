@@ -17,7 +17,7 @@
 
         <!-- 조건2. 관리번호 -->
         <isNotEmpty prepend="AND" property="FTR_IDN">
-          A.FTR_IDN = #FTR_IDN#
+          A.FTR_IDN like #FTR_IDN# || '%'
         </isNotEmpty>
 
         <!-- 조건3. 행정읍면동 -->
@@ -105,7 +105,7 @@
 
         <!-- 조건2. 관리번호 -->
         <isNotEmpty prepend="AND" property="FTR_IDN">
-          A.FTR_IDN = #FTR_IDN#
+          A.FTR_IDN like #FTR_IDN# || '%'
         </isNotEmpty>
 
         <!-- 조건3. 행정읍면동 -->
@@ -173,7 +173,7 @@
             , A.SHT_NUM
             , A.MNG_CDE
             , (SELECT NM FROM INFOUSER.CD_DTL_INFO WHERE MST_CD = '250101' AND DTL_CD = A.MNG_CDE ) AS MNG_NAM
-            , decode(length(A.FNS_YMD), 8, to_char(to_date(A.FNS_YMD, 'yyyyMMdd'), 'yyyy-MM-dd'), '') AS FNS_YMD
+            , a.FNS_YMD
             , A.HEA_NAM
             , A.WSR_CDE
             , (SELECT NM FROM INFOUSER.CD_DTL_INFO WHERE MST_CD = '250058' AND DTL_CD = A.WSR_CDE ) AS WSR_NAM
@@ -203,51 +203,51 @@
     <update id="insertWtrSourDtl" parameterClass="GTI.WFMS.Models.Fclt.Model.WtrSourDtl">
       INSERT INTO INFOFMS.WTL_HEAD_PS
       (   FTR_CDE
-        , FTR_IDN
-        , HJD_CDE
-        , SHT_NUM
-        , MNG_CDE
-        , FNS_YMD
-        , HEA_NAM
-        , WSR_CDE
-        , IRV_NAM
-        , RSV_VOL
-        , RSV_ARA
-        , FUL_ARA
-        , THR_WAL
-        , HTH_WAL
-        , AVG_WAL
-        , DRA_WAL
-        , HDR_WAL
-        , KEE_WAL
-        , GUA_ARA
-        , GUA_POP
-        , CNT_NUM
-        , SYS_CHK
+      , FTR_IDN
+      , HJD_CDE
+      , SHT_NUM
+      , MNG_CDE
+      , FNS_YMD
+      , HEA_NAM
+      , WSR_CDE
+      , IRV_NAM
+      , RSV_VOL
+      , RSV_ARA
+      , FUL_ARA
+      , THR_WAL
+      , HTH_WAL
+      , AVG_WAL
+      , DRA_WAL
+      , HDR_WAL
+      , KEE_WAL
+      , GUA_ARA
+      , GUA_POP
+      , CNT_NUM
+      , SYS_CHK
       )
       VALUES
       (   #FTR_CDE#
-        , #FTR_IDN#
-        , #HJD_CDE#
-        , #SHT_NUM#
-        , #MNG_CDE#
-        , decode(length(#FNS_YMD#), 10, to_char(to_date(#FNS_YMD#, 'yyyy-MM-dd'), 'yyyyMMdd'), '')
-        , #HEA_NAM#
-        , #WSR_CDE#
-        , #IRV_NAM#
-        , #RSV_VOL#
-        , #RSV_ARA#
-        , #FUL_ARA#
-        , #THR_WAL#
-        , #HTH_WAL#
-        , #AVG_WAL#
-        , #DRA_WAL#
-        , #HDR_WAL#
-        , #KEE_WAL#
-        , #GUA_ARA#
-        , #GUA_POP#
-        , #CNT_NUM#
-        , #SYS_CHK#
+      , #FTR_IDN#
+      , #HJD_CDE#
+      , #SHT_NUM#
+      , #MNG_CDE#
+      , #FNS_YMD#
+      , #HEA_NAM#
+      , #WSR_CDE#
+      , #IRV_NAM#
+      , #RSV_VOL#
+      , #RSV_ARA#
+      , #FUL_ARA#
+      , #THR_WAL#
+      , #HTH_WAL#
+      , #AVG_WAL#
+      , #DRA_WAL#
+      , #HDR_WAL#
+      , #KEE_WAL#
+      , #GUA_ARA#
+      , #GUA_POP#
+      , #CNT_NUM#
+      , #SYS_CHK#
       )
     </update>
 
@@ -256,27 +256,105 @@
       /* 수원지 상세 수정 */
       UPDATE INFOFMS.WTL_HEAD_PS
       SET HJD_CDE = #HJD_CDE#
-        , SHT_NUM = #SHT_NUM#
-        , MNG_CDE = #MNG_CDE#
-        , FNS_YMD = decode(length(#FNS_YMD#), 10, to_char(to_date(#FNS_YMD#, 'yyyy-MM-dd'), 'yyyyMMdd'), '')
-        , HEA_NAM = #HEA_NAM#
-        , WSR_CDE = #WSR_CDE#
-        , IRV_NAM = #IRV_NAM#
-        , RSV_VOL = #RSV_VOL#
-        , RSV_ARA = #RSV_ARA#
-        , FUL_ARA = #FUL_ARA#
-        , THR_WAL = #THR_WAL#
-        , HTH_WAL = #HTH_WAL#
-        , AVG_WAL = #AVG_WAL#
-        , DRA_WAL = #DRA_WAL#
-        , HDR_WAL = #HDR_WAL#
-        , KEE_WAL = #KEE_WAL#
-        , GUA_ARA = #GUA_ARA#
-        , GUA_POP = #GUA_POP#
-        , CNT_NUM = #CNT_NUM#
-        , SYS_CHK = #SYS_CHK#
+      , SHT_NUM = #SHT_NUM#
+      , MNG_CDE = #MNG_CDE#
+      , FNS_YMD = #FNS_YMD#
+      , HEA_NAM = #HEA_NAM#
+      , WSR_CDE = #WSR_CDE#
+      , IRV_NAM = #IRV_NAM#
+      , RSV_VOL = #RSV_VOL#
+      , RSV_ARA = #RSV_ARA#
+      , FUL_ARA = #FUL_ARA#
+      , THR_WAL = #THR_WAL#
+      , HTH_WAL = #HTH_WAL#
+      , AVG_WAL = #AVG_WAL#
+      , DRA_WAL = #DRA_WAL#
+      , HDR_WAL = #HDR_WAL#
+      , KEE_WAL = #KEE_WAL#
+      , GUA_ARA = #GUA_ARA#
+      , GUA_POP = #GUA_POP#
+      , CNT_NUM = #CNT_NUM#
+      , SYS_CHK = #SYS_CHK#
       WHERE FTR_CDE = #FTR_CDE#
       AND	FTR_IDN = #FTR_IDN#
+    </update>
+    
+    <update id="SaveWtrSourDtl" parameterClass="GTI.WFMS.Models.Fclt.Model.WtrSourDtl">
+      MERGE INTO INFOFMS.WTL_HEAD_PS
+      USING DUAL ON (FTR_CDE = #FTR_CDE# AND	FTR_IDN = #FTR_IDN#)
+
+      WHEN MATCHED THEN
+      UPDATE
+      SET HJD_CDE = #HJD_CDE#
+      , SHT_NUM = #SHT_NUM#
+      , MNG_CDE = #MNG_CDE#
+      , FNS_YMD = #FNS_YMD#
+      , HEA_NAM = #HEA_NAM#
+      , WSR_CDE = #WSR_CDE#
+      , IRV_NAM = #IRV_NAM#
+      , RSV_VOL = #RSV_VOL#
+      , RSV_ARA = #RSV_ARA#
+      , FUL_ARA = #FUL_ARA#
+      , THR_WAL = #THR_WAL#
+      , HTH_WAL = #HTH_WAL#
+      , AVG_WAL = #AVG_WAL#
+      , DRA_WAL = #DRA_WAL#
+      , HDR_WAL = #HDR_WAL#
+      , KEE_WAL = #KEE_WAL#
+      , GUA_ARA = #GUA_ARA#
+      , GUA_POP = #GUA_POP#
+      , CNT_NUM = #CNT_NUM#
+      , SYS_CHK = #SYS_CHK#
+
+      WHEN NOT MATCHED THEN
+      INSERT
+      (   FTR_CDE
+      , FTR_IDN
+      , HJD_CDE
+      , SHT_NUM
+      , MNG_CDE
+      , FNS_YMD
+      , HEA_NAM
+      , WSR_CDE
+      , IRV_NAM
+      , RSV_VOL
+      , RSV_ARA
+      , FUL_ARA
+      , THR_WAL
+      , HTH_WAL
+      , AVG_WAL
+      , DRA_WAL
+      , HDR_WAL
+      , KEE_WAL
+      , GUA_ARA
+      , GUA_POP
+      , CNT_NUM
+      , SYS_CHK
+      )
+      VALUES
+      (   #FTR_CDE#
+      , #FTR_IDN#
+      , #HJD_CDE#
+      , #SHT_NUM#
+      , #MNG_CDE#
+      , #FNS_YMD#
+      , #HEA_NAM#
+      , #WSR_CDE#
+      , #IRV_NAM#
+      , #RSV_VOL#
+      , #RSV_ARA#
+      , #FUL_ARA#
+      , #THR_WAL#
+      , #HTH_WAL#
+      , #AVG_WAL#
+      , #DRA_WAL#
+      , #HDR_WAL#
+      , #KEE_WAL#
+      , #GUA_ARA#
+      , #GUA_POP#
+      , #CNT_NUM#
+      , #SYS_CHK#
+      )
     </update>
 
     <!--수원지 상세삭제-->

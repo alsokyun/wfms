@@ -719,7 +719,7 @@ namespace GTIFramework.Core.Managers
 
                     CommitTransaction();
                 }
-                catch (Exception ex)
+                catch (Exception )
                 { }
             }
         }

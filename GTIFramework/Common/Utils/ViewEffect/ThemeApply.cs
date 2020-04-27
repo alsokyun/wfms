@@ -51,7 +51,7 @@ namespace GTIFramework.Common.Utils.ViewEffect
                     ThemeManager.SetThemeName(DO, strThemeName);
                 }
             }
-            catch (Exception ex)
+            catch (Exception )
             {
             }
         }
@@ -88,7 +88,7 @@ namespace GTIFramework.Common.Utils.ViewEffect
                     }
                 }
             }
-            catch (Exception ex)
+            catch (Exception )
             {
             }
         }

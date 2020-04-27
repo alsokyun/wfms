@@ -1,6 +1,10 @@
-﻿using DevExpress.Xpf.Editors;
+﻿using DevExpress.DataAccess.ObjectBinding;
+using DevExpress.Xpf.Editors;
+using DevExpress.XtraReports.UI;
 using GTI.WFMS.Models.Common;
+using GTI.WFMS.Models.Fctl.Model;
 using GTI.WFMS.Models.Pipe.Model;
+using GTI.WFMS.Modules.Pipe.Report;
 using GTI.WFMS.Modules.Pipe.View;
 using GTIFramework.Common.Log;
 using GTIFramework.Common.MessageBox;
@@ -8,12 +12,8 @@ using Prism.Commands;
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.ComponentModel;
 using System.Data;
-using System.Linq;
 using System.Reflection;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 
@@ -31,8 +31,10 @@ namespace GTI.WFMS.Modules.Pipe.ViewModel
         public DelegateCommand<object> SaveCommand { get; set; }
         public DelegateCommand<object> DeleteCommand { get; set; }
         public DelegateCommand<object> BackCommand { get; set; }
+        public DelegateCommand<object> PrintCommand { get; set; }
 
-
+        //public List<PipeDtl> LstDtl { get; set; }
+        public List<WttAttaDt> LstAttDt { get; set; }
         #endregion
 
 
@@ -59,7 +61,31 @@ namespace GTI.WFMS.Modules.Pipe.ViewModel
             this.SaveCommand = new DelegateCommand<object>(OnSave);
             this.DeleteCommand = new DelegateCommand<object>(OnDelete);
             this.BackCommand = new DelegateCommand<object>(OnBack);
-            
+
+            this.PrintCommand = new DelegateCommand<object>(delegate(object obj) {
+
+                //0.Datasource 새성
+                WtlPipeDtlViewMdl mdl = new WtlPipeDtlViewMdl(this.FTR_CDE, this.FTR_IDN);
+
+                //3.레포트호출
+                WtlPipeDtlReport report = new WtlPipeDtlReport();
+
+                ObjectDataSource ods = new ObjectDataSource();
+                ods.Name = "objectDataSource1";
+                ods.DataSource = mdl;
+
+                report.DataSource = ods;
+                report.ShowPreviewDialog();
+            });
+
+
+
+
+
+            //LstDtl = new List<PipeDtl>();
+            LstAttDt = new List<WttAttaDt>();
+
+
         }
 
 
@@ -98,47 +124,50 @@ namespace GTI.WFMS.Modules.Pipe.ViewModel
                 //3.권한처리
                 permissionApply();
 
+                //4.상세조회
+                InitModel();
 
 
-
-                // 4.초기조회
-                //DataTable dt = new DataTable();
-                Hashtable param = new Hashtable();
-                param.Add("sqlId", "SelectWtlPipeDtl2");
-                param.Add("FTR_CDE", this.FTR_CDE);
-                param.Add("FTR_IDN", this.FTR_IDN);
-
-                PipeDtl result = new PipeDtl();
-                result = BizUtil.SelectObject(param) as PipeDtl;
-
-
-
-                //결과를 뷰모델멤버로 매칭
-                Type dbmodel = result.GetType();
-                Type model = this.GetType();
-
-                //모델프로퍼티 순회
-                foreach (PropertyInfo prop in model.GetProperties())
-                {
-                    string propName = prop.Name;
-                    //db프로퍼티 순회
-                    foreach (PropertyInfo dbprop in dbmodel.GetProperties())
-                    {
-                        string colName = dbprop.Name;
-                        var colValue = dbprop.GetValue(result, null);
-                        if (colName.Equals(propName))
-                        {
-                            prop.SetValue(this, Convert.ChangeType(colValue, prop.PropertyType));
-                        }
-                    }
-                    Console.WriteLine(propName + " - " + prop.GetValue(this, null));
-                }
             }
             catch (Exception e)
             {
                 Console.WriteLine(e);
             }
 
+        }
+
+        private void InitModel()
+        {
+            //DataTable dt = new DataTable();
+            Hashtable param = new Hashtable();
+            param.Add("sqlId", "SelectWtlPipeDtl2");
+            param.Add("FTR_CDE", this.FTR_CDE);
+            param.Add("FTR_IDN", this.FTR_IDN);
+
+            PipeDtl result = new PipeDtl();
+            result = BizUtil.SelectObject(param) as PipeDtl;
+
+
+            //결과를 뷰모델멤버로 매칭
+            Type dbmodel = result.GetType();
+            Type model = this.GetType();
+
+            //모델프로퍼티 순회
+            foreach (PropertyInfo prop in model.GetProperties())
+            {
+                string propName = prop.Name;
+                //db프로퍼티 순회
+                foreach (PropertyInfo dbprop in dbmodel.GetProperties())
+                {
+                    string colName = dbprop.Name;
+                    var colValue = dbprop.GetValue(result, null);
+                    if (colName.Equals(propName))
+                    {
+                        prop.SetValue(this, Convert.ChangeType(colValue, prop.PropertyType));
+                    }
+                }
+                Console.WriteLine(propName + " - " + prop.GetValue(this, null));
+            }
         }
 
 
@@ -160,12 +189,47 @@ namespace GTI.WFMS.Modules.Pipe.ViewModel
             {
                 BizUtil.Update2(this, "saveWtlPipeDtl");
             }
-            catch (Exception e)
+            catch (Exception )
             {
                 Messages.ShowErrMsgBox("저장 처리중 오류가 발생하였습니다.");
                 return;
             }
             Messages.ShowOkMsgBox();
+            //FmsUtil.__popMain.IsOpen = true;
+
+        }
+
+        /// <summary>
+        /// 인쇄작업
+        /// </summary>
+        /// <param name="obj"></param>
+        private void OnPrint(object obj)
+        {
+
+            // 필수체크 (Tag에 필수체크 표시한 EditBox, ComboBox 대상으로 수행)
+            //if (!BizUtil.ValidReq(wtlPipeDtlView)) return;
+            
+            //if (Messages.ShowYesNoMsgBox("인쇄하시겠습니까?") != MessageBoxResult.Yes) return;
+
+            try
+            {
+                //0.Datasource 생성
+                FireFacDtlViewMdl mdl = new FireFacDtlViewMdl(this.FTR_CDE, this.FTR_IDN);
+                //1.Report 호출
+                FireFacReport report = new FireFacReport();
+                ObjectDataSource ods = new ObjectDataSource();
+                ods.Name = "objectDataSource1";
+                ods.DataSource = mdl;
+
+                report.DataSource = ods;
+                report.ShowPreviewDialog();
+
+            }
+            catch (Exception)
+            {
+                Messages.ShowErrMsgBox("인쇄 처리중 오류가 발생하였습니다.");
+                return;
+            }
 
         }
 
@@ -178,8 +242,9 @@ namespace GTI.WFMS.Modules.Pipe.ViewModel
             //0.삭제전 체크
             Hashtable param = new Hashtable();
             param.Add("sqlId", "selectChscResSubList");
-            param.Add("sqlId2", "selectFileMapList");
+            param.Add("sqlId2", "SelectFileMapList");
             param.Add("sqlId3", "selectWtlLeakSubList");
+
             param.Add("FTR_CDE", this.FTR_CDE);
             param.Add("FTR_IDN", this.FTR_IDN);
             param.Add("BIZ_ID", string.Concat(this.FTR_CDE , this.FTR_IDN) );
@@ -210,13 +275,13 @@ namespace GTI.WFMS.Modules.Pipe.ViewModel
             }
             catch (Exception) { }
             try
-            {
+            {                
                 dt3 = result["dt3"] as DataTable;
                 if (dt3.Rows.Count > 0)
                 {
-                    Messages.ShowErrMsgBox("누수지점내역이 존재합니다.");
+                    Messages.ShowErrMsgBox("누수지점 및 복구내역이 존재합니다.");
                     return;
-                }
+                }             
             }
             catch (Exception) { }
 
@@ -228,7 +293,7 @@ namespace GTI.WFMS.Modules.Pipe.ViewModel
             {
                 BizUtil.Update2(this, "deleteWtlPipeDtl");
             }
-            catch (Exception e)
+            catch (Exception )
             {
                 Messages.ShowErrMsgBox("삭제 처리중 오류가 발생하였습니다.");
                 return;
@@ -269,19 +334,19 @@ namespace GTI.WFMS.Modules.Pipe.ViewModel
             try
             {
                 // cbMNG_CDE
-                BizUtil.SetCmbCode(cbMNG_CDE, "MNG_CDE", true);
+                BizUtil.SetCmbCode(cbMNG_CDE, "250101", "[선택하세요]");
 
                 // cbHJD_CDE 행정동
-                BizUtil.SetCombo(cbHJD_CDE, "Select_ADAR_LIST", "HJD_CDE", "HJD_NAM", true);
+                BizUtil.SetCombo(cbHJD_CDE, "Select_ADAR_LIST", "HJD_CDE", "HJD_NAM", "[선택하세요]");
 
                 // cbMOP_CDE
-                BizUtil.SetCmbCode(cbMOP_CDE, "MOP_CDE", true, "250102");
+                BizUtil.SetCmbCode(cbMOP_CDE, "250102", "[선택하세요]");
 
                 // cbJHT_CDE
-                BizUtil.SetCmbCode(cbJHT_CDE, "JHT_CDE", true);
+                BizUtil.SetCmbCode(cbJHT_CDE, "250026", "[선택하세요]");
 
                 // cbSAA_CDE
-                BizUtil.SetCmbCode(cbSAA_CDE, "SAA_CDE", true);
+                BizUtil.SetCmbCode(cbSAA_CDE, "250018", "[선택하세요]");
                 
             }
             catch (Exception ex)

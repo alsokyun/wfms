@@ -1,6 +1,9 @@
-﻿using DevExpress.Xpf.Editors;
+﻿using DevExpress.DataAccess.ObjectBinding;
+using DevExpress.Xpf.Editors;
+using DevExpress.XtraReports.UI;
 using GTI.WFMS.Models.Common;
 using GTI.WFMS.Models.Fclt.Model;
+using GTI.WFMS.Modules.Fclt.Report;
 using GTI.WFMS.Modules.Fclt.View;
 using GTIFramework.Common.Log;
 using GTIFramework.Common.MessageBox;
@@ -24,6 +27,7 @@ namespace GTI.WFMS.Modules.Fclt.ViewModel
         /// </summary>
         public DelegateCommand<object> LoadedCommand { get; set; }
         public DelegateCommand<object> SaveCommand { get; set; }
+        public DelegateCommand<object> PrintCommand { get; set; }
         public DelegateCommand<object> DeleteCommand { get; set; }
         public DelegateCommand<object> BackCommand { get; set; }
 
@@ -35,7 +39,7 @@ namespace GTI.WFMS.Modules.Fclt.ViewModel
         PrsPmpDtlView prsPmpDtlView;
       
         //ComboBoxEdit cbFTR_CDE; DataTable dtFTR_CDE = new DataTable();	//지형지물
-        //ComboBoxEdit cbHJD_CDE; DataTable dtHJD_CDE = new DataTable();	//행정동
+        ComboBoxEdit cbHJD_CDE; DataTable dtHJD_CDE = new DataTable();	//행정동
         ComboBoxEdit cbMNG_CDE; DataTable dtMNG_CDE = new DataTable();		//관리기관
         ComboBoxEdit cbSAG_CDE; DataTable dtSAG_CDE = new DataTable();      //관리방법
 
@@ -53,6 +57,7 @@ namespace GTI.WFMS.Modules.Fclt.ViewModel
         {
             this.LoadedCommand = new DelegateCommand<object>(OnLoaded);
             this.SaveCommand = new DelegateCommand<object>(OnSave);
+            this.PrintCommand = new DelegateCommand<object>(OnPrint);
             this.DeleteCommand = new DelegateCommand<object>(OnDelete);
             this.BackCommand = new DelegateCommand<object>(OnBack);
             
@@ -74,7 +79,7 @@ namespace GTI.WFMS.Modules.Fclt.ViewModel
 
                 prsPmpDtlView = values[0] as PrsPmpDtlView;
                 //cbFTR_CDE = prsPmpDtlView.cbFTR_CDE;     //지형지물
-                //cbHJD_CDE = prsPmpDtlView.cbHJD_CDE;     //행정동
+                cbHJD_CDE = prsPmpDtlView.cbHJD_CDE;     //행정동
                 cbMNG_CDE = prsPmpDtlView.cbMNG_CDE;       //관리기관
                 cbSAG_CDE = prsPmpDtlView.cbSAG_CDE;       //관리방법
 
@@ -127,8 +132,6 @@ namespace GTI.WFMS.Modules.Fclt.ViewModel
 
         }
 
-
-
         /// <summary>
         /// 저장작업
         /// </summary>
@@ -146,13 +149,45 @@ namespace GTI.WFMS.Modules.Fclt.ViewModel
             {
                 BizUtil.Update2(this, "updatePrsPmpDtl");
             }
-            catch (Exception e)
+            catch (Exception )
             {
                 Messages.ShowErrMsgBox("저장 처리중 오류가 발생하였습니다.");
                 return;
             }
             Messages.ShowOkMsgBox();
 
+        }
+
+        /// <summary>
+        /// 인쇄작업
+        /// </summary>
+        /// <param name="obj"></param>
+        private void OnPrint(object obj)
+        {
+            // 필수체크 (Tag에 필수체크 표시한 EditBox, ComboBox 대상으로 수행)
+            //if (!BizUtil.ValidReq(fireFacDtlView)) return;
+
+            //if (Messages.ShowYesNoMsgBox("인쇄하시겠습니까?") != MessageBoxResult.Yes) return;
+
+            try
+            {
+                //0.Datasource 생성
+                PrsPmpDtlViewMdl mdl = new PrsPmpDtlViewMdl(this.FTR_CDE, this.FTR_IDN);
+                //1.Report 호출
+                PrsPmpReport report = new PrsPmpReport();
+                ObjectDataSource ods = new ObjectDataSource();
+                ods.Name = "objectDataSource1";
+                ods.DataSource = mdl;
+
+                report.DataSource = ods;
+                report.ShowPreviewDialog();
+
+            }
+            catch (Exception)
+            {
+                Messages.ShowErrMsgBox("인쇄 처리중 오류가 발생하였습니다.");
+                return;
+            }
         }
 
         /// <summary>
@@ -164,7 +199,7 @@ namespace GTI.WFMS.Modules.Fclt.ViewModel
             //0.삭제전 체크
             Hashtable param = new Hashtable();
             param.Add("sqlId" , "selectChscResSubList");
-            param.Add("sqlId2", "selectFileMapList");
+            param.Add("sqlId2", "SelectFileMapList");
             param.Add("sqlId3", "selectWtlLeakSubList");
 
             param.Add("FTR_CDE", this.FTR_CDE);
@@ -215,7 +250,7 @@ namespace GTI.WFMS.Modules.Fclt.ViewModel
             {
                 BizUtil.Update2(this, "deletePrsPmpDtl");
             }
-            catch (Exception e)
+            catch (Exception )
             {
                 Messages.ShowErrMsgBox("삭제 처리중 오류가 발생하였습니다.");
                 return;
@@ -255,13 +290,13 @@ namespace GTI.WFMS.Modules.Fclt.ViewModel
                 //BizUtil.SetCombo(cbFTR_CDE, "Select_FTR_LIST", "FTR_CDE", "FTR_NAM", false);
 
                 // cbHJD_CDE 행정동
-                // BizUtil.SetCombo(cbHJD_CDE, "Select_ADAR_LIST", "HJD_CDE", "HJD_NAM", true);
+                BizUtil.SetCombo(cbHJD_CDE, "Select_ADAR_LIST", "HJD_CDE", "HJD_NAM", "[선택하세요]");
 
                 // cbMNG_CDE 관리기관
-                BizUtil.SetCmbCode(cbMNG_CDE, "MNG_CDE", true);
+                BizUtil.SetCmbCode(cbMNG_CDE, "250101", "[선택하세요]");
 
                 // cbSAG_CDE 관리방법
-                BizUtil.SetCmbCode(cbSAG_CDE, "SAG_CDE", true);
+                BizUtil.SetCmbCode(cbSAG_CDE, "250005", "[선택하세요]");
 
                 
             }

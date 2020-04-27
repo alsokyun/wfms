@@ -17,7 +17,7 @@
 
         <!-- 조건2. 관리번호 -->
         <isNotEmpty prepend="AND" property="FTR_IDN">
-          A.FTR_IDN = #FTR_IDN#
+          A.FTR_IDN like #FTR_IDN# || '%'
         </isNotEmpty>
 
         <!-- 조건3. 행정읍면동 -->
@@ -103,7 +103,7 @@
 
         <!-- 조건2. 관리번호 -->
         <isNotEmpty prepend="AND" property="FTR_IDN">
-          A.FTR_IDN = #FTR_IDN#
+          A.FTR_IDN like #FTR_IDN# || '%'
         </isNotEmpty>
 
         <!-- 조건3. 행정읍면동 -->
@@ -171,7 +171,7 @@
           , A.SHT_NUM
           , A.MNG_CDE
           , (SELECT NM FROM INFOUSER.CD_DTL_INFO WHERE MST_CD = '250101' AND DTL_CD = A.MNG_CDE ) AS MNG_NAM
-          , decode(length(A.IST_YMD), 8, to_char(to_date(A.IST_YMD, 'yyyyMMdd'), 'yyyy-MM-dd'), '') AS IST_YMD
+          , a.IST_YMD
           , A.PGA_CDE
           , (SELECT NM FROM INFOUSER.CD_DTL_INFO WHERE MST_CD = '250061' AND DTL_CD = A.PGA_CDE ) AS GAG_NAM
           , A.MOF_CDE
@@ -224,7 +224,7 @@
       , #HJD_CDE#
       , #SHT_NUM#
       , #MNG_CDE#
-      , decode(length(#IST_YMD#), 10, to_char(to_date(#IST_YMD#, 'yyyy-MM-dd'), 'yyyyMMdd'), '')
+      , #IST_YMD#
       , #PGA_CDE#
       , #MOF_CDE#
       , #PGA_DIP#
@@ -246,24 +246,97 @@
       /* 수압계 상세 수정 */
       UPDATE INFOFMS.WTL_PRGA_PS
       SET HJD_CDE = #HJD_CDE#
-        , SHT_NUM = #SHT_NUM#
-        , MNG_CDE = #MNG_CDE#
-        , IST_YMD = decode(length(#IST_YMD#), 10, to_char(to_date(#IST_YMD#, 'yyyy-MM-dd'), 'yyyyMMdd'), '')
-        , PGA_CDE = #PGA_CDE#
-        , MOF_CDE = #MOF_CDE#
-        , PGA_DIP = #PGA_DIP#
-        , STD_SAF = #STD_SAF#
-        , AVG_SAF = #AVG_SAF#
-        , MSR_SAF = #MSR_SAF#
-        , PIP_DIP = #PIP_DIP#
-        , PRD_NAM = #PRD_NAM#
-        , PIP_CDE = #PIP_CDE#
-        , PIP_IDN = #PIP_IDN#
-        , CNT_NUM = #CNT_NUM#
-        , SYS_CHK = #SYS_CHK#
-        , ANG_DIR = #ANG_DIR#
+      , SHT_NUM = #SHT_NUM#
+      , MNG_CDE = #MNG_CDE#
+      , IST_YMD = #IST_YMD#
+      , PGA_CDE = #PGA_CDE#
+      , MOF_CDE = #MOF_CDE#
+      , PGA_DIP = #PGA_DIP#
+      , STD_SAF = #STD_SAF#
+      , AVG_SAF = #AVG_SAF#
+      , MSR_SAF = #MSR_SAF#
+      , PIP_DIP = #PIP_DIP#
+      , PRD_NAM = #PRD_NAM#
+      , PIP_CDE = #PIP_CDE#
+      , PIP_IDN = #PIP_IDN#
+      , CNT_NUM = #CNT_NUM#
+      , SYS_CHK = #SYS_CHK#
+      , ANG_DIR = #ANG_DIR#
       WHERE FTR_CDE = #FTR_CDE#
       AND	FTR_IDN = #FTR_IDN#
+    </update>
+
+    <update id="SaveWtprMtDtl" parameterClass="GTI.WFMS.Models.Pipe.Model.WtprMtDtl">
+      MERGE INTO INFOFMS.WTL_PRGA_PS
+      USING DUAL ON (FTR_CDE = #FTR_CDE# AND	FTR_IDN = #FTR_IDN#)
+
+      WHEN MATCHED THEN
+      UPDATE
+      SET HJD_CDE = #HJD_CDE#
+      , SHT_NUM = #SHT_NUM#
+      , MNG_CDE = #MNG_CDE#
+      , IST_YMD = #IST_YMD#
+      , PGA_CDE = #PGA_CDE#
+      , MOF_CDE = #MOF_CDE#
+      , PGA_DIP = #PGA_DIP#
+      , STD_SAF = #STD_SAF#
+      , AVG_SAF = #AVG_SAF#
+      , MSR_SAF = #MSR_SAF#
+      , PIP_DIP = #PIP_DIP#
+      , PRD_NAM = #PRD_NAM#
+      , PIP_CDE = #PIP_CDE#
+      , PIP_IDN = #PIP_IDN#
+      , CNT_NUM = #CNT_NUM#
+      , SYS_CHK = #SYS_CHK#
+      , ANG_DIR = #ANG_DIR#
+
+
+      WHEN NOT MATCHED THEN
+      INSERT
+      ( FTR_CDE
+      , FTR_IDN
+      , HJD_CDE
+      , SHT_NUM
+      , MNG_CDE
+      , IST_YMD
+      , PGA_CDE
+      , MOF_CDE
+      , PGA_DIP
+      , STD_SAF
+      , AVG_SAF
+      , MSR_SAF
+      , PIP_DIP
+      , PRD_NAM
+      , PIP_CDE
+      , PIP_IDN
+      , CNT_NUM
+      , SYS_CHK
+      , ANG_DIR
+      )
+      VALUES
+      ( #FTR_CDE#
+      , #FTR_IDN#
+      , #HJD_CDE#
+      , #SHT_NUM#
+      , #MNG_CDE#
+      , #IST_YMD#
+      , #PGA_CDE#
+      , #MOF_CDE#
+      , #PGA_DIP#
+      , #STD_SAF#
+      , #AVG_SAF#
+      , #MSR_SAF#
+      , #PIP_DIP#
+      , #PRD_NAM#
+      , #PIP_CDE#
+      , #PIP_IDN#
+      , #CNT_NUM#
+      , #SYS_CHK#
+      , #ANG_DIR#
+      )
+
+
+
     </update>
 
     <!--수압계 상세삭제-->

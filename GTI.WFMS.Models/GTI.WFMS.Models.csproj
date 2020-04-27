@@ -55,6 +55,9 @@
     </Reference>
     <Reference Include="PresentationCore" />
     <Reference Include="PresentationFramework" />
+    <Reference Include="Prism.Wpf">
+      <HintPath>..\packages\Prism.Wpf.7.1.0.431\lib\net45\Prism.Wpf.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Data" />
@@ -102,20 +105,33 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
       <SubType>Designer</SubType>
     </Content>
+    <Content Include="Cmpl\Dao\Maps\CmplMap.xml">
+      <SubType>Designer</SubType>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <Content Include="Cnst\Dao\Maps\CnstMap.xml">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
       <SubType>Designer</SubType>
+    </Content>
+    <Content Include="Dash\Dao\Maps\DashMap.xml">
+      <SubType>Designer</SubType>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="Lib\Interop.SHDocVw.dll" />
     <Content Include="Main\Dao\Maps\MainMap.xml">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
       <SubType>Designer</SubType>
     </Content>
+    <Content Include="Mntc\Dao\Maps\PdjtMap.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <Content Include="Mntc\Dao\Maps\MntcMap.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <SubType>Designer</SubType>
     </Content>
     <Content Include="Pipe\Dao\Maps\FireFacMap.xml">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      <SubType>Designer</SubType>
     </Content>
     <Content Include="Pipe\Dao\Maps\WtprMtMap.xml">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
@@ -156,19 +172,32 @@
     <Content Include="Fclt\Dao\Maps\WtrSourMap.xml">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <Content Include="Stat\Dao\Maps\StatMap.xml">
+      <SubType>Designer</SubType>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Acmf\Model\WtrTrkDtl.cs" />
     <Compile Include="Acmf\Model\SupDutDtl.cs" />
     <Compile Include="Acmf\Model\HydtMetrDtl.cs" />
     <Compile Include="Adm\Dao\AdmDao.cs" />
-    <Compile Include="Adm\Work\AdmWork.cs" />
     <Compile Include="Cmm\Dao\CommonDao.cs" />
     <Compile Include="Cmm\Dao\CmmDao.cs" />
     <Compile Include="Cmm\Model\CmmDtl.cs" />
     <Compile Include="Cmm\Model\FctDtl.cs" />
+    <Compile Include="Cmm\Model\FileDtl.cs" />
+    <Compile Include="Cmm\Model\FileMapDtl.cs" />
+    <Compile Include="Cmm\Model\LinkWttRsrvHt.cs" />
+    <Compile Include="Cmm\Model\LinkWttMetaHt.cs" />
+    <Compile Include="Cmm\Model\LinkWtlLeakPs.cs" />
     <Compile Include="Cmm\Work\CmmWork.cs" />
+    <Compile Include="Cmpl\Model\WserDtl.cs" />
+    <Compile Include="Cmpl\Model\LeakDtl.cs" />
     <Compile Include="Cnst\Model\CnstDtl.cs" />
+    <Compile Include="Cnst\Model\WttChngDt.cs" />
+    <Compile Include="Cnst\Model\WttFlawDt.cs" />
+    <Compile Include="Cnst\Model\WttCostDt.cs" />
     <Compile Include="Cnst\Model\SplyDtl.cs" />
     <Compile Include="Cnst\Model\WttSubcDt.cs" />
     <Compile Include="Common\BizUtil.cs" />
@@ -177,6 +206,8 @@
     <Compile Include="Common\Integer.cs" />
     <Compile Include="Common\RelayCommand.cs" />
     <Compile Include="Common\SourcesBehavior.cs" />
+    <Compile Include="Adm\Work\AdmWork.cs" />
+    <Compile Include="Dash\Model\DashDtl.cs" />
     <Compile Include="Fclt\Model\WttAttaDt.cs" />
     <Compile Include="FileUtils\CompleteRecordDragDropEventArgsConverter.cs" />
     <Compile Include="FileUtils\DragRecordOverEventArgsConverter.cs" />
@@ -186,6 +217,8 @@
     <Compile Include="Main\Dao\MainDao.cs" />
     <Compile Include="Main\Work\MainWork.cs" />
     <Compile Include="Mntc\Model\ChscMaDtl.cs" />
+    <Compile Include="Cmm\Model\LinkFmsChscFtrRes.cs" />
+    <Compile Include="Mntc\Model\FaqDtl.cs" />
     <Compile Include="Mntc\Model\ResSrc.cs" />
     <Compile Include="Pipe\Dao\PipeDao.cs" />
     <Compile Include="Pipe\Model\FireFacDtl.cs" />
@@ -209,17 +242,20 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <None Include="..\GTI.WFMS.Main\bin\Debug\DBConfig\ORACLEConfig.config">
-      <Link>DBConfig\ORACLEConfig.config</Link>
-    </None>
-    <None Include="..\GTI.WFMS.Main\bin\Debug\DBConfig\TIBEROConfig.config">
-      <SubType>Designer</SubType>
-      <Link>DBConfig\TIBEROConfig.config</Link>
+    <None Include="app.config" />
+    <None Include="DBConfig\ORACLEConfig.config">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Include="app.config" />
+    <None Include="DBConfig\TIBEROConfig.config">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
     <None Include="packages.config" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <WCFMetadata Include="Connected Services\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Stat\Model\" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

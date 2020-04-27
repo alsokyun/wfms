@@ -1,4 +1,5 @@
 ﻿using DevExpress.Xpf.Core;
+using GTI.WFMS.Models.Common;
 using GTI.WFMS.Models.Main.Work;
 using GTIFramework.Common.ConfigClass;
 using GTIFramework.Common.Log;
@@ -8,6 +9,7 @@ using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Linq;
+using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
@@ -35,7 +37,6 @@ namespace GTI.WFMS.Main.View
         ConnectConfig userConfig = new ConnectConfig();
         string strOldDBConfig = string.Empty; //DB종류
 
-        bool bConnTest = false;
 
 
         /// <summary>
@@ -102,9 +103,10 @@ namespace GTI.WFMS.Main.View
             dtDBCAT.Columns.Add(dcDTL_CD);
             dtDBCAT.Columns.Add(dcNM);
 
+
             //티베로 DB 추가
             DataRow drTibero = dtDBCAT.NewRow();
-            drTibero["DTL_CD"] = "000007";
+            drTibero["DTL_CD"] = FmsUtil.sysCd;
             drTibero["NM"] = "Tibero";
             dtDBCAT.Rows.Add(drTibero);
 
@@ -117,6 +119,12 @@ namespace GTI.WFMS.Main.View
             cbDBCAT.ItemsSource = dtDBCAT;
             cbDBCAT.SelectedIndex = 0;
 
+            //기존설정정보
+            txtIP.Text = GTIFramework.Properties.Settings.Default.strIP;
+            txtPort.Text = GTIFramework.Properties.Settings.Default.strPort;
+            txtSID.Text = GTIFramework.Properties.Settings.Default.strSID;
+            txtConnID.Text = GTIFramework.Properties.Settings.Default.strID;
+            pwdConnPW.Text = GTIFramework.Properties.Settings.Default.strPWD;
         }
 
 
@@ -130,7 +138,7 @@ namespace GTI.WFMS.Main.View
             if (cbDBCAT.EditValue != null)
             {
                 //Tibero
-               if (cbDBCAT.EditValue.Equals("000007"))
+               if (cbDBCAT.EditValue.Equals(FmsUtil.sysCd))
                 {
                     Logs.setDBConfig("TIBEROConfig");
                 }
@@ -210,7 +218,7 @@ namespace GTI.WFMS.Main.View
                     //    return;
                     //}
 
-                    if (DXMessageBox.Show("저장하시겠습니까?", "InfoFacility", MessageBoxButton.YesNo, MessageBoxImage.Question, MessageBoxResult.Yes) == MessageBoxResult.Yes)
+                    if (DXMessageBox.Show("저장하시겠습니까?", "InfoFMS", MessageBoxButton.YesNo, MessageBoxImage.Question, MessageBoxResult.Yes) == MessageBoxResult.Yes)
                     {
                         GTIFramework.Properties.Settings.Default.strIP = txtIP.EditValue.ToString();
                         GTIFramework.Properties.Settings.Default.strPort = txtPort.EditValue.ToString();
@@ -218,7 +226,7 @@ namespace GTI.WFMS.Main.View
                         GTIFramework.Properties.Settings.Default.strID = txtConnID.EditValue.ToString();
                         GTIFramework.Properties.Settings.Default.strPWD = pwdConnPW.EditValue.ToString();
 
-                        if (cbDBCAT.EditValue.Equals("000007"))
+                        if (cbDBCAT.EditValue.Equals(FmsUtil.sysCd))
                         {
                             GTIFramework.Properties.Settings.Default.RES_DB_INS_DEFAULT = "TIBEROConfig";
                         }
@@ -273,7 +281,7 @@ namespace GTI.WFMS.Main.View
         // 닫기버튼
         private void BtnClose_Click(object sender, RoutedEventArgs e)
         {
-            if (DXMessageBox.Show("작성중인 내용은 저장되지 않습니다.", "InfoFacility", MessageBoxButton.YesNo, MessageBoxImage.Question, MessageBoxResult.Yes) == MessageBoxResult.Yes)
+            if (DXMessageBox.Show("작성중인 내용은 저장되지 않습니다.", "InfoFMS", MessageBoxButton.YesNo, MessageBoxImage.Question, MessageBoxResult.Yes) == MessageBoxResult.Yes)
             {
                 Logs.configChange(oldConfig);
                 Logs.setDBConfig(strOldDBConfig);
@@ -309,18 +317,15 @@ namespace GTI.WFMS.Main.View
                 DataTable dtSysdate = work.Select_SYSDATE(null);
                 if (dtSysdate.Rows.Count > 0)
                 {
-                    bConnTest = true;
                     Messages.ShowInfoMsgBox("접속 성공!");
                 }
                 else
                 {
-                    bConnTest = false;
                     Messages.ShowInfoMsgBox("접속 실패");
                 }
             }
             catch (Exception ex)
             {
-                bConnTest = false;
                 Messages.ShowInfoMsgBox("접속 실패");
                 Messages.ErrLog(ex);
             }

@@ -1,5 +1,7 @@
 ﻿using System;
+using System.Collections.ObjectModel;
 using System.Globalization;
+using System.IO;
 using System.Windows.Data;
 
 namespace GTI.WFMS.Models.Common
@@ -33,6 +35,37 @@ namespace GTI.WFMS.Models.Common
         }
     }
 
+
+    /// <summary>
+    /// 토글스위치 매핑컨버터 - alsokyun
+    /// </summary>
+    public class Toggle3Converter : IValueConverter
+    {
+        public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
+        {
+            if ("Y".Equals(value))
+            {
+                return "Visible";
+            }
+            else
+            {
+                return "Hidden";
+            }
+        }
+
+        public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
+        {
+            bool val = (bool)value;
+            if (val)
+                return "Y";
+            else
+                return "N";
+
+        }
+    }
+
+
+
     /// <summary>
     /// 토글스위치 매핑컨버터 (1/0)- alsokyun
     /// </summary>
@@ -60,6 +93,7 @@ namespace GTI.WFMS.Models.Common
 
         }
     }
+
 
     /// <summary>
     /// Rownumber 컨버터 - alsokyun
@@ -97,7 +131,7 @@ namespace GTI.WFMS.Models.Common
 
 
     /// <summary>
-    /// Date2StrConverter 컨버터 - alsokyun
+    /// DateStrConverter 컨버터 - alsokyun
     /// </summary>
     public class Date2StrConverter : IValueConverter
     {
@@ -121,7 +155,7 @@ namespace GTI.WFMS.Models.Common
             }
             catch (Exception)
             {
-                return value;
+                return null;
             }
         }
 
@@ -143,6 +177,39 @@ namespace GTI.WFMS.Models.Common
             return value;
         }
     }
+
+
+
+    /// <summary>
+    /// FileLenConverter - 파일사이즈 kb & 컴마
+    /// </summary>
+    public class FileLenConverter : IValueConverter
+    {
+        public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
+        {
+            double len = 0;
+            string size = "";
+
+            //kbyte
+            try
+            {
+                len = System.Convert.ToDouble(value);
+                len = Math.Round(len / 1000, 0);
+            }
+            catch (Exception) { }
+
+            //컴마추가
+            size = string.Format("{0:n0}", len);
+
+            return size;
+        }
+
+        public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
+        {
+            return value;
+        }
+    }
+
 
 
 }

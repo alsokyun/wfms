@@ -1,4 +1,5 @@
-﻿using GTIFramework.Common.Utils.ViewEffect;
+﻿using GTI.WFMS.GIS.Pop.View;
+using GTIFramework.Common.Utils.ViewEffect;
 using System;
 using System.Windows;
 using System.Windows.Controls;
@@ -16,19 +17,6 @@ namespace GTI.WFMS.GIS
         {
             InitializeComponent();
 
-
-            //스타일로딩
-            this.Resources.MergedDictionaries.Clear();
-            if (ThemeApply.strThemeName.Equals("GTIBlueTheme"))
-            {
-                this.Resources.MergedDictionaries.Add(new ResourceDictionary() { Source = new Uri("pack://application:,,,/GTI.WFMS.GIS;component/Styles/Blue/GisStyles.xaml", UriKind.Absolute) });
-                //this.Resources = Application.LoadComponent(new Uri("pack://application:,,,/GTI.WFMS.GIS;component/Styles/Blue/GisStyles.xaml", UriKind.Absolute)) as ResourceDictionary;
-            }
-            else
-            {
-                this.Resources.MergedDictionaries.Add(new ResourceDictionary() { Source = new Uri("pack://application:,,,/GTI.WFMS.GIS;component/Styles/Navy/GisStyles.xaml", UriKind.Absolute) });
-                //this.Resources = Application.LoadComponent(new Uri("pack://application:,,,/GTI.WFMS.GIS;component/Styles/Navy/GisStyles.xaml", UriKind.Absolute)) as ResourceDictionary;
-            }
 
             //StartLocalMapService();
         }

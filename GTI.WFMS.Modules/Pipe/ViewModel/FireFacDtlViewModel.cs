@@ -1,12 +1,17 @@
-﻿using DevExpress.Xpf.Editors;
+﻿using DevExpress.DataAccess.ObjectBinding;
+using DevExpress.Xpf.Editors;
+using DevExpress.XtraReports.UI;
+using GTI.WFMS.Models.Cmm.Model;
 using GTI.WFMS.Models.Common;
 using GTI.WFMS.Models.Pipe.Model;
+using GTI.WFMS.Modules.Pipe.Report;
 using GTI.WFMS.Modules.Pipe.View;
 using GTIFramework.Common.Log;
 using GTIFramework.Common.MessageBox;
 using Prism.Commands;
 using System;
 using System.Collections;
+using System.Collections.Generic;
 using System.Data;
 using System.Reflection;
 using System.Windows;
@@ -14,9 +19,9 @@ using System.Windows.Controls;
 
 namespace GTI.WFMS.Modules.Pipe.ViewModel
 {
-    public class FireFacDtlViewModel : FireFacDtl
+    public class FireFacDtlViewModel : FireFacDtl 
     {
-
+        public List<LinkFmsChscFtrRes> Tab01List { get; set; }
 
         #region ==========  Properties 정의 ==========
         /// <summary>
@@ -24,44 +29,39 @@ namespace GTI.WFMS.Modules.Pipe.ViewModel
         /// </summary>
         public DelegateCommand<object> LoadedCommand { get; set; }
         public DelegateCommand<object> SaveCommand { get; set; }
+        public DelegateCommand<object> PrintCommand { get; set; }
         public DelegateCommand<object> DeleteCommand { get; set; }
         public DelegateCommand<object> BackCommand { get; set; }
-
-
+     
         #endregion
 
 
         #region ==========  Member 정의 ==========
-        FireFacDtlView valvFacDtlView;
+        FireFacDtlView fireFacDtlView;
       
-        ComboBoxEdit cbFTR_CDE; DataTable dtFTR_CDE = new DataTable();		//지형지물
+        //ComboBoxEdit cbFTR_CDE; DataTable dtFTR_CDE = new DataTable();	//지형지물
         ComboBoxEdit cbHJD_CDE; DataTable dtHJD_CDE = new DataTable();		//행정동
         ComboBoxEdit cbMNG_CDE; DataTable dtMNG_CDE = new DataTable();		//관리기관
         ComboBoxEdit cbMOF_CDE; DataTable dtMOF_CDE = new DataTable();		//형식
         
         Button btnBack;
+        Button btnPrint;
         Button btnDelete;
         Button btnSave;
-        
+
         #endregion
-
-
-
-
+                     
         /// 생성자
         public FireFacDtlViewModel()
         {
             this.LoadedCommand = new DelegateCommand<object>(OnLoaded);
             this.SaveCommand = new DelegateCommand<object>(OnSave);
+            this.PrintCommand = new DelegateCommand<object>(OnPrint);
             this.DeleteCommand = new DelegateCommand<object>(OnDelete);
             this.BackCommand = new DelegateCommand<object>(OnBack);
             
         }
-
-
-
-
-
+                          
         #region ==========  이벤트 핸들러 ==========
 
         /// <summary>
@@ -76,19 +76,20 @@ namespace GTI.WFMS.Modules.Pipe.ViewModel
                 if (obj == null) return;
                 var values = (object[])obj;
 
-                valvFacDtlView = values[0] as FireFacDtlView;
-                //cbFTR_CDE = valvFacDtlView.cbFTR_CDE;   //지형지물
-                //cbHJD_CDE = valvFacDtlView.cbHJD_CDE;   //행정동
-                cbMNG_CDE = valvFacDtlView.cbMNG_CDE;   //관리기관
-                cbMOF_CDE = valvFacDtlView.cbMOF_CDE;   //형식
+                fireFacDtlView = values[0] as FireFacDtlView;
 
-                btnBack = valvFacDtlView.btnBack;
-                btnDelete = valvFacDtlView.btnDelete;
-                btnSave = valvFacDtlView.btnSave;
+                //cbFTR_CDE = fireFacDtlView.cbFTR_CDE;   //지형지물
+                cbHJD_CDE = fireFacDtlView.cbHJD_CDE;   //행정동
+                cbMNG_CDE = fireFacDtlView.cbMNG_CDE;   //관리기관
+                cbMOF_CDE = fireFacDtlView.cbMOF_CDE;   //형식
+
+                btnBack = fireFacDtlView.btnBack;
+                btnPrint = fireFacDtlView.btnPrint;
+                btnDelete = fireFacDtlView.btnDelete;
+                btnSave = fireFacDtlView.btnSave;
                 
                 //2.화면데이터객체 초기화
-                InitDataBinding();
-
+                InitDataBinding();                             
 
                 //3.권한처리
                 permissionApply();
@@ -139,18 +140,18 @@ namespace GTI.WFMS.Modules.Pipe.ViewModel
         /// <param name="obj"></param>
         private void OnSave(object obj)
         {
+            fireFacDtlView.btnSave.Focus();
 
             // 필수체크 (Tag에 필수체크 표시한 EditBox, ComboBox 대상으로 수행)
-            if (!BizUtil.ValidReq(valvFacDtlView)) return;
-
-
+            if (!BizUtil.ValidReq(fireFacDtlView)) return;
+            
             if (Messages.ShowYesNoMsgBox("저장하시겠습니까?") != MessageBoxResult.Yes) return;
 
             try
             {
                 BizUtil.Update2(this, "updateFireFacDtl");
             }
-            catch (Exception e)
+            catch (Exception )
             {
                 Messages.ShowErrMsgBox("저장 처리중 오류가 발생하였습니다.");
                 return;
@@ -160,16 +161,49 @@ namespace GTI.WFMS.Modules.Pipe.ViewModel
         }
 
         /// <summary>
+        /// 인쇄작업
+        /// </summary>
+        /// <param name="obj"></param>
+        private void OnPrint(object obj)
+        {
+            // 필수체크 (Tag에 필수체크 표시한 EditBox, ComboBox 대상으로 수행)
+            //if (!BizUtil.ValidReq(fireFacDtlView)) return;
+            
+            //if (Messages.ShowYesNoMsgBox("인쇄하시겠습니까?") != MessageBoxResult.Yes) return;
+
+            try
+            {
+                //0.Datasource 생성
+                FireFacDtlViewMdl mdl = new FireFacDtlViewMdl(this.FTR_CDE, this.FTR_IDN);
+                //1.Report 호출
+                FireFacReport report = new FireFacReport();
+                ObjectDataSource ods = new ObjectDataSource();
+                ods.Name = "objectDataSource1";
+                ods.DataSource = mdl;
+
+                report.DataSource = ods;
+                report.ShowPreviewDialog();
+
+            }
+            catch (Exception )
+            {
+                Messages.ShowErrMsgBox("인쇄 처리중 오류가 발생하였습니다.");
+                return;
+            }
+        } 
+
+        /// <summary>
         /// 삭제처리
         /// </summary>
         /// <param name="obj"></param>
         private void OnDelete(object obj)
         {
+            fireFacDtlView.btnDelete.Focus();
+
             //0.삭제전 체크
             Hashtable param = new Hashtable();
             param.Add("sqlId" , "selectChscResSubList");
-            param.Add("sqlId2", "selectFileMapList");
-            param.Add("sqlId3", "selectWtlLeakSubList");
+            param.Add("sqlId2", "SelectFileMapList");
 
             param.Add("FTR_CDE", this.FTR_CDE);
             param.Add("FTR_IDN", this.FTR_IDN);
@@ -178,7 +212,6 @@ namespace GTI.WFMS.Modules.Pipe.ViewModel
             Hashtable result = BizUtil.SelectLists(param);
             DataTable dt  = new DataTable();
             DataTable dt2 = new DataTable();
-            DataTable dt3 = new DataTable();
 
             try
             {
@@ -200,26 +233,16 @@ namespace GTI.WFMS.Modules.Pipe.ViewModel
                 }
             }
             catch (Exception) { }
-            try
-            {
-                dt3 = result["dt3"] as DataTable;
-                if (dt3.Rows.Count > 0)
-                {
-                    Messages.ShowErrMsgBox("누수지점내역이 존재합니다.");
-                    return;
-                }
-            }
-            catch (Exception) { }
 
 
 
             // 1.삭제처리
-            if (Messages.ShowYesNoMsgBox("변로를 삭제하시겠습니까?") != MessageBoxResult.Yes) return;
+            if (Messages.ShowYesNoMsgBox("소방시설를 삭제하시겠습니까?") != MessageBoxResult.Yes) return;
             try
             {
                 BizUtil.Update2(this, "deleteFireFacDtl");
             }
-            catch (Exception e)
+            catch (Exception )
             {
                 Messages.ShowErrMsgBox("삭제 처리중 오류가 발생하였습니다.");
                 return;
@@ -259,14 +282,13 @@ namespace GTI.WFMS.Modules.Pipe.ViewModel
                 //BizUtil.SetCombo(cbFTR_CDE, "Select_FTR_LIST", "FTR_CDE", "FTR_NAM", false);
 
                 // cbHJD_CDE 행정동
-                // BizUtil.SetCombo(cbHJD_CDE, "Select_ADAR_LIST", "HJD_CDE", "HJD_NAM", true);
+                BizUtil.SetCombo(cbHJD_CDE, "Select_ADAR_LIST", "HJD_CDE", "HJD_NAM", "[선택하세요]");
 
                 // cbMNG_CDE 관리기관
-                BizUtil.SetCmbCode(cbMNG_CDE, "MNG_CDE", true);
-
+                BizUtil.SetCmbCode(cbMNG_CDE, "250101", "[선택하세요]");
 
                 // cbMOF_CDE 형식
-                BizUtil.SetCmbCode(cbMOF_CDE, "MOF_CDE", true, "250019");
+                BizUtil.SetCmbCode(cbMOF_CDE, "250019", "[선택하세요]");
 
             }
             catch (Exception ex)
@@ -289,6 +311,7 @@ namespace GTI.WFMS.Modules.Pipe.ViewModel
                     case "W":
                         break;
                     case "R":
+                        btnPrint.Visibility = Visibility.Collapsed;
                         btnDelete.Visibility = Visibility.Collapsed;
                         btnSave.Visibility = Visibility.Collapsed;
                         break;

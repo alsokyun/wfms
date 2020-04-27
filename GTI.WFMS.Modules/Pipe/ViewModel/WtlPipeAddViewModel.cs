@@ -7,13 +7,7 @@ using GTIFramework.Common.MessageBox;
 using Prism.Commands;
 using System;
 using System.Collections;
-using System.Collections.Generic;
-using System.ComponentModel;
 using System.Data;
-using System.Linq;
-using System.Reflection;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 
@@ -71,49 +65,53 @@ namespace GTI.WFMS.Modules.Pipe.ViewModel
         /// <param name="obj"></param>
         private void OnLoaded(object obj)
         {
-            //throw new NotImplementedException();
+            try
+            {
 
-            // 0.화면객체인스턴스화
-            if (obj == null) return;
-            var values = (object[])obj;
+                // 0.화면객체인스턴스화
+                if (obj == null) return;
+                var values = (object[])obj;
 
-            wtlPipeAddView = values[0] as WtlPipeAddView;
-            cbMNG_CDE = wtlPipeAddView.cbMNG_CDE;
-            cbHJD_CDE = wtlPipeAddView.cbHJD_CDE;
-            cbMOP_CDE = wtlPipeAddView.cbMOP_CDE;
-            cbJHT_CDE = wtlPipeAddView.cbJHT_CDE;
-            cbSAA_CDE = wtlPipeAddView.cbSAA_CDE;
-            btnBack = wtlPipeAddView.btnBack;
-            btnSave = wtlPipeAddView.btnSave;
-            
+                wtlPipeAddView = values[0] as WtlPipeAddView;
+                cbMNG_CDE = wtlPipeAddView.cbMNG_CDE;
+                cbHJD_CDE = wtlPipeAddView.cbHJD_CDE;
+                cbMOP_CDE = wtlPipeAddView.cbMOP_CDE;
+                cbJHT_CDE = wtlPipeAddView.cbJHT_CDE;
+                cbSAA_CDE = wtlPipeAddView.cbSAA_CDE;
 
-            //2.화면데이터객체 초기화
-            InitDataBinding();
+                btnBack = wtlPipeAddView.btnBack;
+                btnSave = wtlPipeAddView.btnSave;            
+
+                //2.화면데이터객체 초기화
+                InitDataBinding();
+
+                //3.권한처리
+                permissionApply();
+
+                // 4.초기조회 - 신규관리번호 채번
+                //DataTable dt = new DataTable();
+                Hashtable param = new Hashtable();
+                param.Add("sqlId", "SelectWtlPipeFTR_IDN");
+                param.Add("FTR_CDE", "SA001");
+
+                PipeDtl result = new PipeDtl();
+                result = BizUtil.SelectObject(param) as PipeDtl;
+
+                //채번결과 매칭
+                this.FTR_IDN = result.FTR_IDN;
+                this.FTR_CDE = "SA001";
+                this.IST_YMD = Convert.ToDateTime(DateTime.Today).ToString("yyyy-MM-dd");
 
 
-            //3.권한처리
-            permissionApply();
+                //공통팝업창 사이즈 
+                FmsUtil.popWinView.Height = 360;
 
-
-
-
-            // 4.초기조회 - 신규관리번호 채번
-            //DataTable dt = new DataTable();
-            Hashtable param = new Hashtable();
-            param.Add("sqlId", "SelectWtlPipeFTR_IDN");
-            param.Add("FTR_CDE", "SA001");
-
-            PipeDtl result = new PipeDtl();
-            result = BizUtil.SelectObject(param) as PipeDtl;
-
-            //채번결과 매칭
-            this.FTR_IDN = result.FTR_IDN;
-            this.FTR_CDE = "SA001";
-            this.IST_YMD = Convert.ToDateTime(DateTime.Today).ToString("yyyy-MM-dd");
-
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+            }
         }
-
-
 
         /// <summary>
         /// 저장작업
@@ -130,17 +128,15 @@ namespace GTI.WFMS.Modules.Pipe.ViewModel
             {
                 BizUtil.Update2(this, "insertWtlPipeDtl");
             }
-            catch (Exception e)
+            catch (Exception )
             {
                 Messages.ShowErrMsgBox("저장 처리중 오류가 발생하였습니다.");
                 return;
             }
             Messages.ShowOkMsgBox();
 
-
             BackCommand.Execute(null); //닫기
         }
-
 
 
         /// <summary>
@@ -155,11 +151,7 @@ namespace GTI.WFMS.Modules.Pipe.ViewModel
 
 
         #endregion
-
-
-
-
-
+         
         #region ============= 메소드정의 ================
 
 
@@ -171,19 +163,19 @@ namespace GTI.WFMS.Modules.Pipe.ViewModel
             try
             {
                 // cbMNG_CDE
-                BizUtil.SetCmbCode(cbMNG_CDE, "MNG_CDE", true);
+                BizUtil.SetCmbCode(cbMNG_CDE, "250101", "[선택하세요]");
 
                 // cbHJD_CDE 행정동
-                BizUtil.SetCombo(cbHJD_CDE, "Select_ADAR_LIST", "HJD_CDE", "HJD_NAM", true);
+                BizUtil.SetCombo(cbHJD_CDE, "Select_ADAR_LIST", "HJD_CDE", "HJD_NAM", "[선택하세요]");
 
                 // cbMOP_CDE
-                BizUtil.SetCmbCode(cbMOP_CDE, "MOP_CDE", true, "250102");
+                BizUtil.SetCmbCode(cbMOP_CDE, "250102", "[선택하세요]");
 
                 // cbJHT_CDE
-                BizUtil.SetCmbCode(cbJHT_CDE, "JHT_CDE", true);
+                BizUtil.SetCmbCode(cbJHT_CDE, "250026", "[선택하세요]");
 
                 // cbSAA_CDE
-                BizUtil.SetCmbCode(cbSAA_CDE, "SAA_CDE", true);
+                BizUtil.SetCmbCode(cbSAA_CDE, "250018", "[선택하세요]");
                 
             }
             catch (Exception ex)

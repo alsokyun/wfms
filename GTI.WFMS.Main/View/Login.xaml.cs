@@ -1,4 +1,5 @@
 ﻿using DevExpress.Xpf.Core;
+using GTI.WFMS.Models.Common;
 using GTI.WFMS.Models.Main.Work;
 using GTIFramework.Common.Log;
 using GTIFramework.Common.MessageBox;
@@ -47,6 +48,12 @@ namespace GTI.WFMS.Main.View
 
             Loaded += Login_Loaded;
             Unloaded += Login_Unloaded;
+
+            //시스템코드 전역변수로 선언(Main설정값에서 가져옴)
+            FmsUtil.sysCd = Properties.Settings.Default.sysCd;
+            FmsUtil.fileDir = Properties.Settings.Default.fileDir;
+            FmsUtil.dbShapeDir = Properties.Settings.Default.dbShapeDir;
+            
         }
 
 
@@ -80,7 +87,7 @@ namespace GTI.WFMS.Main.View
                 htconditions.Add("SITE_CD", cbSite.EditValue.ToString());
                 htconditions.Add("USER_ID", txtID.EditValue.ToString());
                 htconditions.Add("USER_PWD", EncryptionConvert.Base64Encoding(pwdPW.EditValue.ToString()));
-                htconditions.Add("SYS_CD", "000007");
+                htconditions.Add("SYS_CD", FmsUtil.sysCd);
 
                 DataTable dtLoginCheck = new DataTable();
                 dtLoginCheck = work.LoginCheck(htconditions);
@@ -159,7 +166,7 @@ namespace GTI.WFMS.Main.View
         // 창닫기
         private void BtnClose_Click(object sender, RoutedEventArgs e)
         {
-            if (DXMessageBox.Show("시스템을 종료합니다.", "InfoFacility", MessageBoxButton.YesNo, MessageBoxImage.Question, MessageBoxResult.Yes) == MessageBoxResult.Yes)
+            if (DXMessageBox.Show("시스템을 종료합니다.", "InfoFMS", MessageBoxButton.YesNo, MessageBoxImage.Question, MessageBoxResult.Yes) == MessageBoxResult.Yes)
             {
                 Environment.Exit(0);
             }
@@ -242,7 +249,7 @@ namespace GTI.WFMS.Main.View
                 thread.Name = "thread";
                 thread.Start();
             }
-            catch (Exception ex)
+            catch (Exception )
             {
 
             }
@@ -292,9 +299,13 @@ namespace GTI.WFMS.Main.View
                         Dispatcher.Invoke(DispatcherPriority.ApplicationIdle,
                             new Action(delegate ()
                             {
-                                htconditions.Add("SITE_CD", cbSite.EditValue.ToString());
+                                try
+                                {
+                                    htconditions.Add("SITE_CD", cbSite.EditValue.ToString());
+                                }
+                                catch (Exception){}
                             }));
-                        htconditions.Add("SYS_CD", "000007");
+                        htconditions.Add("SYS_CD", FmsUtil.sysCd);
                         dtDBInfo = work.SelectDBInfo(htconditions);
                     }
 
@@ -310,6 +321,7 @@ namespace GTI.WFMS.Main.View
                                     new Action(delegate ()
                                     {
                                         imgConnAbnormal.Visibility = Visibility.Collapsed;
+                                        imgConnNormal.Visibility = Visibility.Visible;
                                     }));
                             }
                             else
@@ -318,6 +330,7 @@ namespace GTI.WFMS.Main.View
                                     new Action(delegate ()
                                     {
                                         imgConnAbnormal.Visibility = Visibility.Visible;
+                                        imgConnNormal.Visibility = Visibility.Collapsed;
                                     }));
                             }
                         }
@@ -329,6 +342,7 @@ namespace GTI.WFMS.Main.View
                         new Action(delegate ()
                         {
                             imgConnAbnormal.Visibility = Visibility.Visible;
+                            imgConnNormal.Visibility = Visibility.Collapsed;
                         }));
                 }
             }

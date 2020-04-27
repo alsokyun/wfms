@@ -1,23 +1,24 @@
-﻿using DevExpress.Xpf.Editors;
+﻿using DevExpress.Xpf.Core;
+using DevExpress.Xpf.Editors;
 using DevExpress.Xpf.Grid;
+using GTI.WFMS.GIS;
 using GTI.WFMS.Models.Cmm.Work;
 using GTI.WFMS.Models.Common;
 using GTI.WFMS.Modules.Fclt.View;
 using GTIFramework.Common.Log;
 using GTIFramework.Common.MessageBox;
+using GTIFramework.Common.Utils.Converters;
 using Prism.Commands;
+using Prism.Regions;
 using System;
 using System.Collections;
-using System.Data;
-using System.Windows;
-using System.ComponentModel;
-using System.Collections.ObjectModel;
-using System.Windows.Navigation;
-using System.Threading;
-using System.Windows.Threading;
-using DevExpress.Xpf.Core;
-using GTIFramework.Common.Utils.Converters;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
+using System.ComponentModel;
+using System.Data;
+using System.Threading;
+using System.Windows;
+using System.Windows.Threading;
 
 namespace GTI.WFMS.Modules.Fclt.ViewModel
 {
@@ -97,6 +98,7 @@ namespace GTI.WFMS.Modules.Fclt.ViewModel
         public DelegateCommand<object> ExcelCmd { get; set; }
         
         public DelegateCommand<object> btnCmd { get; set; }
+        public DelegateCommand<object> cellPosCmd { get; set; }
 
         #endregion
 
@@ -153,6 +155,28 @@ namespace GTI.WFMS.Modules.Fclt.ViewModel
             btnCmd = new DelegateCommand<object>(btnMethod);
             ExcelCmd = new DelegateCommand<object>(ExcelDownAction);
 
+            // 시설물 지도상 위치찾아가기
+            cellPosCmd = new DelegateCommand<object>(async delegate (object obj) {
+
+                DataRowView row = obj as DataRowView;
+                string FTR_IDN = row["FTR_IDN"].ToString();
+                string FTR_CDE = row["FTR_CDE"].ToString();
+                //MessageBox.Show("지도상 위치찾아가기..FTR_IDN - " + FTR_IDN + ", FTR_CDE - " + FTR_CDE);
+
+                IRegionManager regionManager = FmsUtil.__regionManager;
+                ViewsCollection views = regionManager.Regions["ContentRegion"].ActiveViews as ViewsCollection;
+
+                //MapMainViewMocel 인스턴스불러오기
+                foreach (var v in views)
+                {
+                    MapArcObjView mapMainView = v as MapArcObjView;
+                    MapArcObjViewModel vm = mapMainView.DataContext as MapArcObjViewModel;
+
+                    //Find 메소드수행
+                    vm.findFtr(FTR_CDE, FTR_IDN);
+                    break;
+                }
+            });
 
             // 조회데이터 초기화
             this.PagedCollection = new ObservableCollection<DataTable>();
@@ -242,10 +266,10 @@ namespace GTI.WFMS.Modules.Fclt.ViewModel
                 //if (treeList.FocusedNode == null) return;
 
                 Hashtable conditions = new Hashtable();
-                conditions.Add("MNG_CDE", cbMNG_CDE.EditValue.ToString().Trim());
-                conditions.Add("HJD_CDE", cbHJD_CDE.EditValue.ToString().Trim());
-                conditions.Add("SAG_CDE", cbSAG_CDE.EditValue.ToString().Trim());
-                conditions.Add("SCW_CDE", cbSCW_CDE.EditValue.ToString().Trim());
+                conditions.Add("MNG_CDE", cbMNG_CDE.EditValue);
+                conditions.Add("HJD_CDE", cbHJD_CDE.EditValue);
+                conditions.Add("SAG_CDE", cbSAG_CDE.EditValue);
+                conditions.Add("SCW_CDE", cbSCW_CDE.EditValue);
 
                 conditions.Add("FTR_IDN", FmsUtil.Trim(txtFTR_IDN.EditValue));
                 conditions.Add("CNT_NUM", txtCNT_NUM.Text.Trim());
@@ -259,7 +283,7 @@ namespace GTI.WFMS.Modules.Fclt.ViewModel
                     conditions.Add("FNS_YMD_FROM", dtFNS_YMD_FROM.EditValue == null ? null : Convert.ToDateTime(dtFNS_YMD_FROM.EditValue).ToString("yyyy-MM-dd"));
                     conditions.Add("FNS_YMD_TO", dtFNS_YMD_TO.EditValue == null ? null : Convert.ToDateTime(dtFNS_YMD_TO.EditValue).ToString("yyyy-MM-dd"));
                 }
-                catch (Exception e) { }
+                catch (Exception ) { }
 
                 conditions.Add("firstIndex", 0);
                 conditions.Add("lastIndex", 1000);
@@ -287,7 +311,7 @@ namespace GTI.WFMS.Modules.Fclt.ViewModel
                         this.TotalCnt = Convert.ToInt32(dt.Rows[0]["ROWCNT"]);
                         this.ItemCnt = (int)Math.Ceiling((double)this.TotalCnt / FmsUtil.PageSize);
                     }
-                    catch (Exception e)
+                    catch (Exception )
                     {
                         this.TotalCnt = 0;
                         this.ItemCnt = 0;
@@ -339,10 +363,10 @@ namespace GTI.WFMS.Modules.Fclt.ViewModel
             {
                 /// 데이터조회
                 Hashtable conditions = new Hashtable();
-                conditions.Add("MNG_CDE", cbMNG_CDE.EditValue.ToString().Trim());
-                conditions.Add("HJD_CDE", cbHJD_CDE.EditValue.ToString().Trim());
-                conditions.Add("SAG_CDE", cbSAG_CDE.EditValue.ToString().Trim());
-                conditions.Add("SCW_CDE", cbSCW_CDE.EditValue.ToString().Trim());                
+                conditions.Add("MNG_CDE", cbMNG_CDE.EditValue);
+                conditions.Add("HJD_CDE", cbHJD_CDE.EditValue);
+                conditions.Add("SAG_CDE", cbSAG_CDE.EditValue);
+                conditions.Add("SCW_CDE", cbSCW_CDE.EditValue);                
 
                 conditions.Add("FTR_IDN", FmsUtil.Trim(txtFTR_IDN.EditValue));
                 conditions.Add("CNT_NUM", txtCNT_NUM.Text.Trim());
@@ -356,7 +380,7 @@ namespace GTI.WFMS.Modules.Fclt.ViewModel
                     conditions.Add("FNS_YMD_FROM", dtFNS_YMD_FROM.EditValue == null ? null : Convert.ToDateTime(dtFNS_YMD_FROM.EditValue).ToString("yyyy-MM-dd"));
                     conditions.Add("FNS_YMD_TO", dtFNS_YMD_TO.EditValue == null ? null : Convert.ToDateTime(dtFNS_YMD_TO.EditValue).ToString("yyyy-MM-dd"));
                 }
-                catch (Exception e) { }
+                catch (Exception ) { }
                 
                 conditions.Add("page", 0);
                 conditions.Add("rows", 1000000);
@@ -474,16 +498,16 @@ namespace GTI.WFMS.Modules.Fclt.ViewModel
                 dtFNS_YMD_TO.DisplayFormatString = "yyyy-MM-dd";
 
                 // cbMNG_CDE    0.관리기관
-                BizUtil.SetCmbCode(cbMNG_CDE, "MNG_CDE", true);
+                BizUtil.SetCmbCode(cbMNG_CDE, "250101", "[전체]");
 
                 // cbHJD_CDE    2.행정동
-                BizUtil.SetCombo(cbHJD_CDE, "Select_ADAR_LIST", "HJD_CDE", "HJD_NAM", true);
+                BizUtil.SetCombo(cbHJD_CDE, "Select_ADAR_LIST", "HJD_CDE", "HJD_NAM", "[전체]");
 
                 // cbSAG_CDE    7.관리방법
-                BizUtil.SetCmbCode(cbSAG_CDE, "SAG_CDE", true);
+                BizUtil.SetCmbCode(cbSAG_CDE, "250005", "[전체]");
 
                 // cbSCW_CDE    9.배수지제어방법
-                BizUtil.SetCmbCode(cbSCW_CDE, "SCW_CDE", true);
+                BizUtil.SetCmbCode(cbSCW_CDE, "250052", "[전체]");
 
             }
             catch (Exception ex)
@@ -535,7 +559,7 @@ namespace GTI.WFMS.Modules.Fclt.ViewModel
 
 
             string name_space = "GTI.WFMS.Modules.Fclt.Model";
-            string class_name = "ValvFacDtl";
+            string class_name = "WtrSupDtl";
 
             Hashtable param = new Hashtable();
             param.Add("sqlId", "SelectWtrSupList");

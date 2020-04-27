@@ -3,21 +3,17 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-             xmlns:local="clr-namespace:GTI.WFMS.Modules.Pipe.View"
-      
+             xmlns:local="clr-namespace:GTI.WFMS.Modules.Pipe.View"      
             xmlns:dxci="http://schemas.devexpress.com/winfx/2008/xaml/core/internal"
             xmlns:uccontent="clr-namespace:GTI.WFMS.Modules.Link.View"
             xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
             xmlns:cm="clr-namespace:GTIFramework.Common.Utils.Converters;assembly=GTIFramework"
             xmlns:vm="clr-namespace:GTI.WFMS.Modules.Pipe.ViewModel"
             xmlns:cv="clr-namespace:GTI.WFMS.Models.Common;assembly=GTI.WFMS.Models"     
-      xmlns:System="clr-namespace:System;assembly=mscorlib"  
+            xmlns:System="clr-namespace:System;assembly=mscorlib"  
             x:Class="GTI.WFMS.Modules.Pipe.View.WtprMtAddView"
-             mc:Ignorable="d" 
-             d:DesignHeight="400" d:DesignWidth="950"
-      
-            x:Name="flowMtAddView"     
-      >
+            mc:Ignorable="d" 
+            d:DesignHeight="400" d:DesignWidth="950" x:Name="wtprMtAddView"  >
 
     <!--페이지내 리소스정의-->
     <Page.Resources>
@@ -25,7 +21,7 @@
 
             <cm:MultiValueConverter x:Key="multiValueConverter"/>
             <cv:Toggle2Converter x:Key="toggleConverter" />
-            <cv:Date2StrConverter x:Key="date2StrConverter" />
+            <cv:Date3StrConverter x:Key="date2StrConverter" />
 
         </ResourceDictionary>
     </Page.Resources>
@@ -41,7 +37,7 @@
             <i:InvokeCommandAction Command="{Binding LoadedCommand}">
                 <i:InvokeCommandAction.CommandParameter>
                     <MultiBinding Converter="{StaticResource multiValueConverter}">
-                        <Binding ElementName="flowMtAddView"/>
+                        <Binding ElementName="wtprMtAddView"/>
                     </MultiBinding>
                 </i:InvokeCommandAction.CommandParameter>
             </i:InvokeCommandAction>
@@ -51,7 +47,7 @@
 
 
 
-    <Grid  Background="{DynamicResource PopCOLOR2Brush}" >
+    <Grid  Background="{DynamicResource TileCOLOR4Brush}" >
         <Grid.RowDefinitions>
             <RowDefinition Height="40" />
             <RowDefinition Height="Auto" />
@@ -120,27 +116,28 @@
                         
             <Label Grid.Row="0" Grid.Column="0" Content="관리번호" Style="{DynamicResource ResourceKey=GridLabelReq}" Margin="10,11,0,11"/>
             <!--키값으로 사용 : 부모페이지로부터 뷰생성자로 전달되고, 뷰에서 변경되면 뷰모델로 전달된다.-->
-            <dxe:TextEdit Grid.Row="0" Grid.Column="1" Style="{DynamicResource ResourceKey=GrdTextEdit}" HorizontalAlignment="Stretch" IsEnabled="False" Tag="관리번호"
+            <dxe:TextEdit Grid.Row="0" Grid.Column="1" Style="{DynamicResource ResourceKey=GridTextEdit}" HorizontalAlignment="Stretch" IsEnabled="False" Tag="관리번호"
                         x:Name="txtFTR_IDN" EditValue="{Binding FTR_IDN, UpdateSourceTrigger=PropertyChanged}" Height="28" Margin="10,6"  />
 
             <Label Grid.Row="0" Grid.Column="2" Content="행정동" Style="{DynamicResource ResourceKey=GridLabelReq}" Margin="10,11,0,11"/>
-            <dxe:ComboBoxEdit Grid.Row="0" Grid.Column="3" Style="{DynamicResource ResourceKey=GrdComboBox}" Tag="행정동"
+            <dxe:ComboBoxEdit Grid.Row="0" Grid.Column="3" Style="{DynamicResource ResourceKey=GridComboBox}" Tag="행정동"
                               x:Name="cbHJD_CDE" EditValue="{Binding HJD_CDE, Mode=TwoWay}" Height="28" Margin="10,6" />
-            
+
             <Label Grid.Row="0" Grid.Column="4" Content="공사번호" Style="{DynamicResource ResourceKey=GridLabel}" Margin="10,9,0,9" />
-            <dxe:TextEdit Grid.Row="0" Grid.Column="5" Style="{DynamicResource ResourceKey=GrdTextEdit}" 
-                          x:Name="txtCNT_NUM" EditValue="{Binding CNT_NUM}" Height="28" Margin="10,6"/>
+            <dxe:TextEdit Grid.Row="0" Grid.Column="5" Style="{DynamicResource ResourceKey=GridTextEdit}" 
+                          x:Name="txtCNT_NUM" EditValue="{Binding CNT_NUM}" Height="28" Margin="10,6,34,6"/>
+            <Button Grid.Row="0" Grid.Column="5"  x:Name="btnSel" Style="{DynamicResource ResourceKey=GdAddButton}" HorizontalAlignment="Right" Margin="0 0 10 0" Click="BtnSel_Click"/>
 
             <Label Grid.Row="0" Grid.Column="6" Content="관리기관" Style="{DynamicResource ResourceKey=GridLabel}" Margin="10,9,0,9"/>
-            <dxe:ComboBoxEdit Grid.Row="0" Grid.Column="7" Style="{DynamicResource ResourceKey=GrdComboBox}"  
+            <dxe:ComboBoxEdit Grid.Row="0" Grid.Column="7" Style="{DynamicResource ResourceKey=GridComboBox}"  
                               x:Name="cbMNG_CDE" EditValue="{Binding MNG_CDE}" Height="28" Margin="10,6" />
 
             <Label Grid.Row="1" Grid.Column="0" Content="도엽번호" Style="{DynamicResource ResourceKey=GridLabel}" Margin="10,9,0,9"/>
-            <dxe:TextEdit Grid.Row="1" Grid.Column="1" Style="{DynamicResource ResourceKey=GrdTextEdit}"  
+            <dxe:TextEdit Grid.Row="1" Grid.Column="1" Style="{DynamicResource ResourceKey=GridTextEdit}"  
                           x:Name="txtSHT_NUM" EditValue="{Binding SHT_NUM}" Height="28" Margin="10,6"/>
 
             <Label Grid.Row="1" Grid.Column="2" Content="설치일자" Style="{DynamicResource ResourceKey=GridLabel}" Margin="10,9,0,9"/>
-            <dxe:DateEdit Grid.Row="1" Grid.Column="3" Style="{DynamicResource ResourceKey=GrdDateEdit}" HorizontalContentAlignment="Center" 
+            <dxe:DateEdit Grid.Row="1" Grid.Column="3" Style="{DynamicResource ResourceKey=GridDateEdit}" HorizontalContentAlignment="Center" 
                           x:Name="dtIST_YMD" EditValue="{Binding IST_YMD, Mode=TwoWay, Converter={StaticResource date2StrConverter}}" Height="28" Margin="10,6"  />
 
             <Label Grid.Row="1" Grid.Column="4" Content="" Style="{DynamicResource ResourceKey=GridLabel}" Margin="10,9,0,9"/>
@@ -204,35 +201,35 @@
             <Border Grid.Row="2" Grid.Column="7" BorderThickness="0 0 1 1" BorderBrush="{DynamicResource MainBack1Brush1}"/>
 
             <Label Grid.Row="0" Grid.Column="0" Content="수압계종류" Style="{DynamicResource ResourceKey=GridLabel}"/>
-            <dxe:ComboBoxEdit Grid.Row="0" Grid.Column="1" Style="{DynamicResource ResourceKey=GrdComboBox}" 
+            <dxe:ComboBoxEdit Grid.Row="0" Grid.Column="1" Style="{DynamicResource ResourceKey=GridComboBox}" 
                               x:Name="cbPGA_CDE" EditValue="{Binding PGA_CDE}" />
             <Label Grid.Row="0" Grid.Column="2" Content="형식" Style="{DynamicResource ResourceKey=GridLabel}"/>
-            <dxe:ComboBoxEdit Grid.Row="0" Grid.Column="3" Style="{DynamicResource ResourceKey=GrdComboBox}" 
+            <dxe:ComboBoxEdit Grid.Row="0" Grid.Column="3" Style="{DynamicResource ResourceKey=GridComboBox}" 
                               x:Name="cbMOF_CDE" EditValue="{Binding MOF_CDE}" />
             <Label Grid.Row="0" Grid.Column="4" Content="구경" Style="{DynamicResource ResourceKey=GridLabel}"/>
-            <dxe:TextEdit Grid.Row="0" Grid.Column="5" Style="{DynamicResource ResourceKey=GrdNumberEdit}"   
+            <dxe:TextEdit Grid.Row="0" Grid.Column="5" Style="{DynamicResource ResourceKey=GridNumberEdit}"   
                           x:Name="txtPGA_DIP" EditValue="{Binding PGA_DIP}"/>
             <Label Grid.Row="0" Grid.Column="6" Content="기준압력" Style="{DynamicResource ResourceKey=GridLabel}"/>
-            <dxe:TextEdit Grid.Row="0" Grid.Column="7" Style="{DynamicResource ResourceKey=GrdNumberEdit}"   
+            <dxe:TextEdit Grid.Row="0" Grid.Column="7" Style="{DynamicResource ResourceKey=GridNumberEdit}"   
                           x:Name="txtSTD_SAF" EditValue="{Binding STD_SAF}"/>
             <Label Grid.Row="1" Grid.Column="0" Content="평균압력" Style="{DynamicResource ResourceKey=GridLabel}"/>
-            <dxe:TextEdit Grid.Row="1" Grid.Column="1" Style="{DynamicResource ResourceKey=GrdNumberEdit}"   
+            <dxe:TextEdit Grid.Row="1" Grid.Column="1" Style="{DynamicResource ResourceKey=GridNumberEdit}"   
                           x:Name="txtAVG_SAF" EditValue="{Binding AVG_SAF}"/>
             <Label Grid.Row="1" Grid.Column="2" Content="측정압력" Style="{DynamicResource ResourceKey=GridLabel}"/>
-            <dxe:TextEdit Grid.Row="1" Grid.Column="3" Style="{DynamicResource ResourceKey=GrdNumberEdit}"   
+            <dxe:TextEdit Grid.Row="1" Grid.Column="3" Style="{DynamicResource ResourceKey=GridNumberEdit}"   
                           x:Name="txtMSR_SAF" EditValue="{Binding MSR_SAF}"/>
             <Label Grid.Row="1" Grid.Column="4" Content="배수관" Style="{DynamicResource ResourceKey=GridLabel}"/>
-            <dxe:TextEdit Grid.Row="1" Grid.Column="5" Style="{DynamicResource ResourceKey=GrdNumberEdit}"   
+            <dxe:TextEdit Grid.Row="1" Grid.Column="5" Style="{DynamicResource ResourceKey=GridNumberEdit}"   
                           x:Name="txtPIP_DIP" EditValue="{Binding PIP_DIP}"/>
             <Label Grid.Row="1" Grid.Column="6" Content="제작회사명" Style="{DynamicResource ResourceKey=GridLabel}"/>
-            <dxe:TextEdit Grid.Row="1" Grid.Column="7" Style="{DynamicResource ResourceKey=GrdTextEdit}"   
+            <dxe:TextEdit Grid.Row="1" Grid.Column="7" Style="{DynamicResource ResourceKey=GridTextEdit}"   
                           x:Name="txtPRD_NAM" EditValue="{Binding PRD_NAM}"/>
 
             <Label Grid.Row="2" Grid.Column="0" Content="지형지물부호" Style="{DynamicResource ResourceKey=GridLabel}"/>
-            <dxe:TextEdit Grid.Row="2" Grid.Column="1" Style="{DynamicResource ResourceKey=GrdTextEdit}"   
+            <dxe:TextEdit Grid.Row="2" Grid.Column="1" Style="{DynamicResource ResourceKey=GridTextEdit}"   
                           x:Name="txtPIP_CDE" EditValue="{Binding PIP_CDE}"/>
             <Label Grid.Row="2" Grid.Column="2" Content="관로관리번호" Style="{DynamicResource ResourceKey=GridLabel}"/>
-            <dxe:TextEdit Grid.Row="2" Grid.Column="3" Style="{DynamicResource ResourceKey=GrdTextEdit}"   
+            <dxe:TextEdit Grid.Row="2" Grid.Column="3" Style="{DynamicResource ResourceKey=GridTextEdit}"   
                           x:Name="txtPIP_IDN" EditValue="{Binding PIP_IDN}"/>
             <Label Grid.Row="2" Grid.Column="4" Content="대장초기화" Style="{DynamicResource ResourceKey=GridLabel}"/>
             <dxe:ToggleSwitch Grid.Row="2" Grid.Column="5" HorizontalAlignment="Center"  VerticalAlignment="Center" Foreground="White"

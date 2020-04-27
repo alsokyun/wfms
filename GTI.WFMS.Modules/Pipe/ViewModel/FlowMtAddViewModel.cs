@@ -103,6 +103,11 @@ namespace GTI.WFMS.Modules.Pipe.ViewModel
                 this.FTR_CDE = "SA117";
 
                 this.IST_YMD = Convert.ToDateTime(DateTime.Today).ToString("yyyy-MM-dd");
+
+
+                //공통팝업창 사이즈 변경
+                FmsUtil.popWinView.Height = 320;
+
             }
             catch (Exception e)
             {
@@ -130,7 +135,7 @@ namespace GTI.WFMS.Modules.Pipe.ViewModel
             {
                 BizUtil.Update2(this, "insertFlowMtDtl");
             }
-            catch (Exception e)
+            catch (Exception )
             {
                 Messages.ShowErrMsgBox("저장 처리중 오류가 발생하였습니다.");
                 return;
@@ -168,16 +173,16 @@ namespace GTI.WFMS.Modules.Pipe.ViewModel
                 //BizUtil.SetCombo(cbFTR_CDE, "Select_FTR_LIST", "FTR_CDE", "FTR_NAM", false);
 
                 // cbHJD_CDE 행정동
-                BizUtil.SetCombo(cbHJD_CDE, "Select_ADAR_LIST", "HJD_CDE", "HJD_NAM", true);
+                BizUtil.SetCombo(cbHJD_CDE, "Select_ADAR_LIST", "HJD_CDE", "HJD_NAM", "[선택하세요]");
 
                 // cbMNG_CDE 관리기관
-                BizUtil.SetCmbCode(cbMNG_CDE, "MNG_CDE", true);
+                BizUtil.SetCmbCode(cbMNG_CDE, "250101", "[선택하세요]");
                 
                 // cbGAG_CDE 유량계종류
-                BizUtil.SetCmbCode(cbGAG_CDE, "GAG_CDE", true);
+                BizUtil.SetCmbCode(cbGAG_CDE, "250061", "[선택하세요]");
 
                 // cbMOF_CDE 유형
-                BizUtil.SetCmbCode(cbMOF_CDE, "MOF_CDE", true, "250035");
+                BizUtil.SetCmbCode(cbMOF_CDE, "250035", "[선택하세요]");
 
             }
             catch (Exception ex)

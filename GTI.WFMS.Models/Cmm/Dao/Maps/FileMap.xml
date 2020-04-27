@@ -27,12 +27,33 @@
       ORDER BY M.FIL_SEQ
     </select>
 
+    <select id="SelectFileMap"  resultClass="GTI.WFMS.Models.Cmm.Model.FileMapDtl">
+      SELECT
+      M.BIZ_ID
+      , M.FIL_SEQ
+      , M.TIT_NAM
+      , M.GRP_TYP
+      , M.CRE_USR, U.USER_NM
+      , M.CRE_YMD
+      , M.UPD_USR
+      , M.UPD_YMD
+      , M.CTNT
+      , NULL AS CHK
+      FROM FMS_FILE_MAP M
+      LEFT JOIN INFOUSER.SYS_USER_INFO U ON M.CRE_USR = U.USER_ID
+      WHERE 1=1
+      AND M.BIZ_ID = #BIZ_ID#
+      AND M.FIL_SEQ = #FIL_SEQ#
+      <isNotEmpty property="GRP_TYP">
+        AND M.GRP_TYP = #GRP_TYP#
+      </isNotEmpty>
 
-    
-    
-    
-    
-    <!-- 업무파일정보 삭제 -->
+    </select>
+
+
+
+
+      <!-- 업무파일정보 삭제 -->
     <update id="DeleteFileMap" parameterClass="Hashtable">
       DELETE FROM FMS_FILE_MAP WHERE 1=1
         AND BIZ_ID = #BIZ_ID#
@@ -48,30 +69,24 @@
 
     WHEN MATCHED THEN
     UPDATE SET
-    UPD_USR = #ID#
+    UPD_USR = #UPD_USR#
       <isNotEmpty property="UPD_YMD">
-        , UPD_YMD = decode(length(#UPD_YMD#), 10, to_char(to_date(#UPD_YMD#, 'yyyy-MM-dd'), 'yyyyMMdd'), '')
+        , UPD_YMD = #UPD_YMD#
       </isNotEmpty>
       <isNotEmpty property="GRP_TYP">
         , GRP_TYP = #GRP_TYP#
       </isNotEmpty>
       <isNotEmpty property="TIT_NAM">
 	        , TIT_NAM = #TIT_NAM#
-	        </isNotEmpty>
+	    </isNotEmpty>
       <isNotEmpty property="CTNT">
         , CTNT = #CTNT#
-      </isNotEmpty>
-      <isNotEmpty property="UPD_YMD">
-        , UPD_YMD = to_char(to_date(#UPD_YMD#, 'yyyy-MM-dd'), 'yyyyMMdd'), '')
-      </isNotEmpty>
-      <isNotEmpty property="UPD_USR">
-        , UPD_USR = #UPD_USR#
       </isNotEmpty>
 
     WHEN NOT MATCHED THEN
     INSERT
-    (BIZ_ID, FIL_SEQ
-    <isNotEmpty property="GRP_TYP">
+      (BIZ_ID, FIL_SEQ
+          <isNotEmpty property="GRP_TYP">
 					    , GRP_TYP 
 				  </isNotEmpty>				
 		      <isNotEmpty property="TIT_NAM">
@@ -86,10 +101,10 @@
         <isNotEmpty property="UPD_USR">
           , UPD_USR
         </isNotEmpty>
-    , CRE_USR, CRE_YMD )
+      , CRE_USR, CRE_YMD )
     VALUES
     ( #BIZ_ID#, #FIL_SEQ#
-    <isNotEmpty property="GRP_TYP">
+        <isNotEmpty property="GRP_TYP">
 				    ,#GRP_TYP#
 				</isNotEmpty>				
 		    <isNotEmpty property="TIT_NAM">
@@ -99,18 +114,77 @@
 	        , #CTNT#
 		    </isNotEmpty>
         <isNotEmpty property="UPD_YMD">
-          , decode(length(#UPD_YMD#), 10, to_char(to_date(#UPD_YMD#, 'yyyy-MM-dd'), 'yyyyMMdd'), '')
+          , #UPD_YMD#
         </isNotEmpty>
         <isNotEmpty property="UPD_USR">
           , #UPD_USR#
         </isNotEmpty>
       , #ID#, TO_CHAR(SYSDATE, 'yyyyMMdd'))
-  </update>	
+  </update>
+
+    <!-- 업무파일 저장 : 오브젝트 -->
+    <update id="SaveFileMap2" parameterClass="GTI.WFMS.Models.Cmm.Model.FileDtl">
+      MERGE INTO FMS_FILE_MAP
+      USING DUAL ON ( BIZ_ID = #BIZ_ID# AND FIL_SEQ = #FIL_SEQ# )
+
+      WHEN MATCHED THEN
+      UPDATE SET
+      UPD_USR = #UPD_USR#
+      <isNotEmpty property="UPD_YMD">
+        , UPD_YMD = #UPD_YMD#
+      </isNotEmpty>
+      <isNotEmpty property="GRP_TYP">
+        , GRP_TYP = #GRP_TYP#
+      </isNotEmpty>
+      <isNotEmpty property="TIT_NAM">
+        , TIT_NAM = #TIT_NAM#
+      </isNotEmpty>
+      <isNotEmpty property="CTNT">
+        , CTNT = #CTNT#
+      </isNotEmpty>
+
+      WHEN NOT MATCHED THEN
+      INSERT
+      (BIZ_ID, FIL_SEQ
+      <isNotEmpty property="GRP_TYP">
+        , GRP_TYP
+      </isNotEmpty>
+      <isNotEmpty property="TIT_NAM">
+        , TIT_NAM
+      </isNotEmpty>
+      <isNotEmpty property="CTNT">
+        , CTNT
+      </isNotEmpty>
+      <isNotEmpty property="UPD_YMD">
+        , UPD_YMD
+      </isNotEmpty>
+      <isNotEmpty property="UPD_USR">
+        , UPD_USR
+      </isNotEmpty>
+      , CRE_USR, CRE_YMD )
+      VALUES
+      ( #BIZ_ID#, #FIL_SEQ#
+      <isNotEmpty property="GRP_TYP">
+        ,#GRP_TYP#
+      </isNotEmpty>
+      <isNotEmpty property="TIT_NAM">
+        , #TIT_NAM#
+      </isNotEmpty>
+      <isNotEmpty property="CTNT">
+        , #CTNT#
+      </isNotEmpty>
+      <isNotEmpty property="UPD_YMD">
+        , #UPD_YMD#
+      </isNotEmpty>
+      <isNotEmpty property="UPD_USR">
+        , #UPD_USR#
+      </isNotEmpty>
+      , #ID#, TO_CHAR(SYSDATE, 'yyyyMMdd'))
+    </update>
 
 
 
-
-      <!-- 첨부파일상세 목록	 -->
+    <!-- 첨부파일상세 목록	 -->
     <select id="SelectFileDtl"  resultClass="Hashtable">
       SELECT
       SEQ
@@ -131,6 +205,56 @@
       AND FIL_SEQ = #FIL_SEQ#
       <isNotEmpty property="SEQ">
         AND SEQ = #SEQ#
+      </isNotEmpty>
+    </select>
+    
+    <select id="SelectFileDtl2"  resultClass="GTI.WFMS.Models.Cmm.Model.FileDtl">
+      SELECT
+      SEQ
+      , FIL_SEQ
+      , DWN_NAM
+      , UPF_NAM
+      , FIL_PTH
+      , FIL_TYP
+      , FIL_SIZ
+      , FIL_RST
+      , CUR_TFS
+      , CRE_YMD
+      , CRE_USR
+      , UPD_YMD
+      , UPD_USR
+      FROM FMS_FILE_DTL
+      WHERE 1=1
+      AND FIL_SEQ = #FIL_SEQ#
+      <isNotEmpty property="SEQ">
+        AND SEQ = #SEQ#
+      </isNotEmpty>
+    </select>
+
+    
+
+    <!-- BizId 첨부파일 목록 (사진 111, 파일 112) -->
+    <select id="SelectBizIdFileDtl"  resultClass="Hashtable">
+      SELECT B.SEQ
+      , A.FIL_SEQ
+      , B.DWN_NAM
+      , B.UPF_NAM
+      , B.FIL_PTH
+      , B.FIL_TYP
+      , B.FIL_SIZ
+      , B.FIL_RST
+      , B.CUR_TFS
+      , B.CRE_YMD
+      , B.CRE_USR
+      , B.UPD_YMD
+      , B.UPD_USR
+      FROM INFOFMS.FMS_FILE_MAP A
+           LEFT JOIN FMS_FILE_DTL B ON (A.FIL_SEQ = B.FIL_SEQ )
+      WHERE 1=1
+      AND A.BIZ_ID = #BIZ_ID#
+      AND A.GRP_TYP = '111'
+      <isNotEmpty property="FIL_SEQ">
+      AND A.FIL_SEQ = #FIL_SEQ#
       </isNotEmpty>
     </select>
     
@@ -184,7 +308,6 @@
       , FIL_TYP
       , FIL_SIZ
       , FIL_RST
-      , FIL_EXP
       , CUR_TFS
       , UPD_USR
       , UPD_YMD
@@ -198,7 +321,40 @@
       , #FIL_TYP#
       , #FIL_SIZ#
       , #FIL_RST#
-      , #FIL_EXP#
+      , '1'
+      , #ID#
+      , TO_CHAR(SYSDATE, 'yyyyMMdd')
+      , #ID#
+      , TO_CHAR(SYSDATE, 'yyyyMMdd') )
+    </insert>
+
+    <insert id="InsertFileDtl2" parameterClass="GTI.WFMS.Models.Cmm.Model.FileDtl">
+      <selectKey property="_seq" resultClass="int"  type="pre">
+        SELECT NVL(MAX(SEQ),0)+1 FROM FMS_FILE_DTL WHERE FIL_SEQ = #FIL_SEQ#
+      </selectKey>
+
+      INSERT INTO FMS_FILE_DTL
+      ( SEQ
+      , FIL_SEQ
+      , DWN_NAM
+      , UPF_NAM
+      , FIL_PTH
+      , FIL_TYP
+      , FIL_SIZ
+      , FIL_RST
+      , CUR_TFS
+      , UPD_USR
+      , UPD_YMD
+      , CRE_USR
+      , CRE_YMD )
+      VALUES ( #_seq#
+      , #FIL_SEQ#
+      , #DWN_NAM#
+      , #UPF_NAM#
+      , #FIL_PTH#
+      , #FIL_TYP#
+      , #FIL_SIZ#
+      , #FIL_RST#
       , '1'
       , #ID#
       , TO_CHAR(SYSDATE, 'yyyyMMdd')

@@ -11,5 +11,14 @@
     <Setting Name="strThemeName" Type="System.String" Scope="User">
       <Value Profile="(Default)">GTINavyTheme</Value>
     </Setting>
+    <Setting Name="sysCd" Type="System.String" Scope="User">
+      <Value Profile="(Default)">000007</Value>
+    </Setting>
+    <Setting Name="fileDir" Type="System.String" Scope="User">
+      <Value Profile="(Default)">D:\GTI\FILE</Value>
+    </Setting>
+    <Setting Name="dbShapeDir" Type="System.String" Scope="User">
+      <Value Profile="(Default)">D:\shape</Value>
+    </Setting>
   </Settings>
 </SettingsFile>

@@ -1,0 +1,190 @@
+﻿<UserControl xmlns:dxg="http://schemas.devexpress.com/winfx/2008/xaml/grid"  xmlns:dxe="http://schemas.devexpress.com/winfx/2008/xaml/editors"  
+        x:Class="GTI.WFMS.Modules.Mntc.View.ChkPlanListView"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        mc:Ignorable="d"
+        d:DesignHeight="585" d:DesignWidth="1100"
+        
+        xmlns:cv="clr-namespace:GTI.WFMS.Models.Common;assembly=GTI.WFMS.Models"
+        x:Name="chkPlanListView"
+        >
+
+
+    <UserControl.Resources>
+        <cv:ToggleConverter x:Key="toggleConverter" />
+        <cv:Date3StrConverter x:Key="date3StrConverter" />
+    </UserControl.Resources>
+
+    <Grid  Background="{DynamicResource TileCOLOR4Brush}" >
+        <Grid.ColumnDefinitions >
+            <ColumnDefinition Width="280"/>
+            <ColumnDefinition Width="1"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+
+        <Grid Grid.Column="0" Margin="0 0 0 10">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="40" />
+                <RowDefinition Height="280" />
+                <RowDefinition Height="*" />
+            </Grid.RowDefinitions>
+
+
+            <StackPanel Grid.Row="0" Grid.Column="0" Orientation="Horizontal">
+                <Image Style="{DynamicResource TitleCircle}" Margin="10 0 0 0"/>
+                <Label Content="검색항목" Style="{DynamicResource CircleTitleLabel}"/>
+            </StackPanel>
+
+            <Grid Grid.Row="1" Background="{DynamicResource PopupCOLOR3Brush}" VerticalAlignment="Top"  >
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="100"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="40" />
+                    <RowDefinition Height="40" />
+                    <RowDefinition Height="40" />
+                    <RowDefinition Height="40" />
+                    <RowDefinition Height="40" />
+                    <RowDefinition Height="40" />
+                </Grid.RowDefinitions>
+
+                <!--테이블구분선-->
+                <Border Grid.Row="0" Grid.Column="0" BorderThickness="0,0,1,1" BorderBrush="{DynamicResource TileCOLOR4Brush}" Margin="0,0,0,0"/>
+                <Border Grid.Row="0" Grid.Column="2" BorderThickness="0,0,0,1" BorderBrush="{DynamicResource TileCOLOR4Brush}" Margin="0,0,0,0"/>
+                <Border Grid.Row="1" Grid.Column="0" BorderThickness="0,0,1,1" BorderBrush="{DynamicResource TileCOLOR4Brush}" Margin="0,0,0,0"/>
+                <Border Grid.Row="1" Grid.Column="2" BorderThickness="0,0,0,1" BorderBrush="{DynamicResource TileCOLOR4Brush}" Margin="0,0,0,0"/>
+                <Border Grid.Row="2" Grid.Column="0" BorderThickness="0,0,1,1" BorderBrush="{DynamicResource TileCOLOR4Brush}" Margin="0,0,0,0"/>
+                <Border Grid.Row="2" Grid.Column="2" BorderThickness="0,0,0,1" BorderBrush="{DynamicResource TileCOLOR4Brush}" Margin="0,0,0,0"/>
+                <Border Grid.Row="3" Grid.Column="0" BorderThickness="0,0,1,1" BorderBrush="{DynamicResource TileCOLOR4Brush}" Margin="0,0,0,0"/>
+                <Border Grid.Row="3" Grid.Column="2" BorderThickness="0,0,0,1" BorderBrush="{DynamicResource TileCOLOR4Brush}" Margin="0,0,0,0"/>
+                <Border Grid.Row="4" Grid.Column="0" BorderThickness="0,0,1,1" BorderBrush="{DynamicResource TileCOLOR4Brush}" Margin="0,0,0,0"/>
+                <Border Grid.Row="4" Grid.Column="2" BorderThickness="0,0,0,1" BorderBrush="{DynamicResource TileCOLOR4Brush}" Margin="0,0,0,0"/>
+                <Border Grid.Row="5" Grid.Column="0" BorderThickness="0,0,1,1" BorderBrush="{DynamicResource TileCOLOR4Brush}" Margin="0,0,0,0"/>
+                <Border Grid.Row="5" Grid.Column="2" BorderThickness="0,0,0,1" BorderBrush="{DynamicResource TileCOLOR4Brush}" Margin="0,0,0,0"/>
+
+                <!--라벨&입력창-->
+                <Label Grid.Row="0" Grid.Column="0" Content="관리기관" Style="{DynamicResource ResourceKey=GridLabel}"/>
+                <dxe:ComboBoxEdit Grid.Row="0" Grid.Column="2" x:Name="cbMNG_CDE" DisplayMember="NM" ValueMember="DTL_CD" Style="{DynamicResource ResourceKey=SearchComboBox}" 
+                               HorizontalAlignment="Center" />
+                <Label Grid.Row="1" Grid.Column="0" Content="점검구분" Style="{DynamicResource ResourceKey=GridLabel}"/>
+                <dxe:ComboBoxEdit Grid.Row="1" Grid.Column="2" x:Name="cbSCL_CDE" DisplayMember="NM" ValueMember="DTL_CD" Style="{DynamicResource ResourceKey=SearchComboBox}" 
+                               HorizontalAlignment="Center" />
+                <Label Grid.Row="2" Grid.Column="0" Content="점검명" Style="{DynamicResource ResourceKey=GridLabel}"/>
+                <dxe:TextEdit Grid.Row="2" Grid.Column="1" x:Name="txtTIT_NAM" Style="{DynamicResource ResourceKey=SearchTextEdit}"  HorizontalAlignment="Center" 
+                              KeyDown="Enter_KeyDown"/>
+                <Label Grid.Row="3" Grid.Column="0" Content="점검월" Style="{DynamicResource ResourceKey=GridLabel}"/>
+                <dxe:DateEdit  Grid.Row="3" Grid.Column="1" Style="{DynamicResource ResourceKey=HeaderDateEdit}" x:Name="dtCHK_YM" 
+                               Mask="yyyy-MM"  MaskUseAsDisplayFormat="True" MaskType="DateTime">
+                    <dxe:DateEdit.StyleSettings>
+                        <dxe:DateEditPickerStyleSettings />
+                    </dxe:DateEdit.StyleSettings>
+                </dxe:DateEdit>
+                <Label Grid.Row="4" Grid.Column="0" Content="점검자" Style="{DynamicResource ResourceKey=GridLabel}"/>
+                <dxe:TextEdit Grid.Row="4" Grid.Column="1" x:Name="txtCKM_PEO" Style="{DynamicResource ResourceKey=SearchTextEdit}"  HorizontalAlignment="Center" 
+                              KeyDown="Enter_KeyDown"/>
+                <Label Grid.Row="5" Grid.Column="0" Content="진행상태" Style="{DynamicResource ResourceKey=GridLabel}"/>
+                <dxe:ComboBoxEdit Grid.Row="5" Grid.Column="1" x:Name="cbSCL_STAT_CDE" DisplayMember="NM" ValueMember="DTL_CD" Style="{DynamicResource ResourceKey=SearchComboBox}" 
+                               HorizontalAlignment="Center" />
+
+            </Grid>
+
+
+
+            <Grid Grid.Row="2">
+                <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Bottom">
+                    <Button Style="{DynamicResource ResourceKey=InitButton}" Click="Button_Click_1"/>
+                    <Button Style="{DynamicResource ResourceKey=SearchButton}" Click="Button_Click"/>
+                </StackPanel>
+            </Grid>
+
+        </Grid>
+
+
+        <Border Grid.Column="1" Background="{DynamicResource TileCOLOR2Brush}" />
+
+        <Grid Grid.Column="2" Margin="0 0 0 10">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="40" />
+                <RowDefinition Height="*" />
+            </Grid.RowDefinitions>
+
+            <StackPanel Grid.Row="0" Orientation="Horizontal">
+                <Image Style="{DynamicResource TitleCircle}" Margin="10 0 0 0"/>
+                <Label Content="목록" Style="{DynamicResource CircleTitleLabel}"/>
+            </StackPanel>
+
+
+            <StackPanel Grid.Row="0" Orientation="Horizontal" HorizontalAlignment="Right" Margin="0 0 10 0">
+                <Button x:Name="btnAdd" Style="{DynamicResource ResourceKey=GrdAddButton}" Click="BtnAdd_Click"  />
+                <!--<Button x:Name="btnDel" Style="{DynamicResource ResourceKey=GrdDelButton}" Click="BtnDel_Click"  />-->
+            </StackPanel>
+
+            <dxg:GridControl Grid.Row="1" x:Name="grid" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" 
+                                MouseDoubleClick="Grid_MouseDoubleClick">
+
+                <dxg:GridControl.View>
+                    <dxg:TableView x:Name="gv"
+                                NavigationStyle="Row" 
+                                AllowPerPixelScrolling="True"  
+                                ShowHorizontalLines="True"
+                               
+                                ShowIndicator="False" 
+                                ShowGroupPanel="False" 
+                                AllowBandMultiRow="False" 
+                    />
+                </dxg:GridControl.View>
+
+                <!--<dxg:GridColumn Header="삭제" Width="1*" HorizontalHeaderContentAlignment="Center"  AllowEditing="True">
+                    <dxg:GridColumn.CellTemplate>
+                        <DataTemplate>
+                            <dxe:CheckEdit EditValue="{Binding RowData.Row.CHK, Mode=TwoWay, Converter={StaticResource toggleConverter}}" HorizontalAlignment="Center" />
+                        </DataTemplate>
+                    </dxg:GridColumn.CellTemplate>
+                </dxg:GridColumn>-->
+                <dxg:GridColumn Header="구분" Width="3*" FieldName="SCL_NM" HorizontalHeaderContentAlignment="Center"  AllowEditing="True">
+                    <dxg:GridColumn.EditSettings>
+                        <dxe:TextEditSettings HorizontalContentAlignment="Center" />
+                    </dxg:GridColumn.EditSettings>
+                </dxg:GridColumn>
+                <dxg:GridColumn Header="점검명" Width="8*" FieldName="TIT_NAM" HorizontalHeaderContentAlignment="Center" AllowEditing="True">
+                    <dxg:GridColumn.EditSettings>
+                        <dxe:TextEditSettings HorizontalContentAlignment="Left" />
+                    </dxg:GridColumn.EditSettings>
+                </dxg:GridColumn>
+                <dxg:GridColumn Header="점검시작일자" Width="3*" FieldName="STA_YMD" HorizontalHeaderContentAlignment="Center" AllowEditing="True">
+                    <dxg:GridColumn.EditSettings>
+                        <dxe:TextEditSettings HorizontalContentAlignment="Center" DisplayTextConverter="{StaticResource ResourceKey=date3StrConverter}" />
+                    </dxg:GridColumn.EditSettings>
+                </dxg:GridColumn>
+                <dxg:GridColumn Header="점검종료일자" Width="3*" FieldName="END_YMD" HorizontalHeaderContentAlignment="Center" AllowEditing="True">
+                    <dxg:GridColumn.EditSettings>
+                        <dxe:TextEditSettings HorizontalContentAlignment="Center" DisplayTextConverter="{StaticResource ResourceKey=date3StrConverter}" />
+                    </dxg:GridColumn.EditSettings>
+                </dxg:GridColumn>
+                <dxg:GridColumn Header="점검그룹(자)" Width="5*" FieldName="CKM_PEO" HorizontalHeaderContentAlignment="Center" AllowEditing="True">
+                    <dxg:GridColumn.EditSettings>
+                        <dxe:TextEditSettings HorizontalContentAlignment="Left" />
+                    </dxg:GridColumn.EditSettings>
+                </dxg:GridColumn>
+
+                <!--히든컬럼-->
+                <dxg:GridColumn FieldName="SCL_NUM" Visible="False">
+                    <dxg:GridColumn.EditSettings>
+                        <dxe:TextEditSettings />
+                    </dxg:GridColumn.EditSettings>
+                </dxg:GridColumn>
+                
+            </dxg:GridControl>
+
+        </Grid>
+
+
+
+    </Grid>
+
+
+
+</UserControl>

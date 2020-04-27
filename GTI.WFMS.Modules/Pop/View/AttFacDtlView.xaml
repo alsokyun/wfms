@@ -5,7 +5,7 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         mc:Ignorable="d"
-        Title="AttFacDtlView" Height="380" Width="600"
+        Title="InfoFMS" Height="380" Width="600"
         
         xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
         xmlns:vm="clr-namespace:GTI.WFMS.Modules.Pop.ViewModel"
@@ -33,7 +33,7 @@
             <Button DockPanel.Dock="Right" x:Name="btnClose" Style="{DynamicResource XSignCloseButton}" Margin="10" Click="BtnClose_Click" />
         </DockPanel>
 
-        <Grid  Background="{DynamicResource PopCOLOR2Brush}" >
+        <Grid  Background="{DynamicResource TileCOLOR4Brush}" >
             <Grid.RowDefinitions>
                 <RowDefinition Height="40" />
                 <RowDefinition Height="Auto" />
@@ -100,30 +100,30 @@
 
 
                 <Label Grid.Row="0" Grid.Column="0" Content="관리번호" Style="{DynamicResource ResourceKey=GridLabelReq}"/>
-                <dxe:TextEdit Grid.Row="0" Grid.Column="1" Style="{DynamicResource ResourceKey=GrdTextEdit}"  IsEnabled="False"
+                <dxe:TextEdit Grid.Row="0" Grid.Column="1" Style="{DynamicResource ResourceKey=GridTextEdit}"  IsEnabled="False"
                           x:Name="txtFTR_IDN" EditValue="{Binding FTR_IDN, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
 
                 <Label Grid.Row="0" Grid.Column="2" Content="지형지물" Style="{DynamicResource ResourceKey=GridLabelReq}"/>
-                <dxe:TextEdit Grid.Row="0" Grid.Column="3" Style="{DynamicResource ResourceKey=GrdTextEdit}"  IsEnabled="False" 
+                <dxe:TextEdit Grid.Row="0" Grid.Column="3" Style="{DynamicResource ResourceKey=GridTextEdit}"  IsEnabled="False" 
                           x:Name="txtFTR_NAM" EditValue="{Binding FTR_NAM}"/>
                 <!--키값-->
                 <TextBlock Grid.Row="0" Grid.Column="3" x:Name="txtFTR_CDE" Text="{Binding FTR_CDE, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Visibility="Collapsed"/>
                 <TextBlock Grid.Row="0" Grid.Column="3" x:Name="txtATTA_SEQ" Text="{Binding ATTA_SEQ, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Visibility="Collapsed"/>
 
                 <Label Grid.Row="1" Grid.Column="0" Content="세부시설번호" Style="{DynamicResource ResourceKey=GridLabelReq}"/>
-                <dxe:TextEdit Grid.Row="1" Grid.Column="1" Style="{DynamicResource ResourceKey=GrdTextEdit}" Tag="세부시설번호"
+                <dxe:TextEdit Grid.Row="1" Grid.Column="1" Style="{DynamicResource ResourceKey=GridTextEdit}" Tag="세부시설번호"
                           x:Name="txtATT_IDN" EditValue="{Binding ATT_IDN, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
 
                 <Label Grid.Row="1" Grid.Column="2" Content="설치년도" Style="{DynamicResource ResourceKey=GridLabel}"/>
-                <dxe:ComboBoxEdit Grid.Row="1" Grid.Column="3" Style="{DynamicResource ResourceKey=GrdComboBox}" 
+                <dxe:ComboBoxEdit Grid.Row="1" Grid.Column="3" Style="{DynamicResource ResourceKey=GridComboBox}" 
                               x:Name="cbCRE_YY" EditValue="{Binding CRE_YY,Mode=TwoWay}" />
 
                 <Label Grid.Row="2" Grid.Column="0" Content="세부시설명" Style="{DynamicResource ResourceKey=GridLabel}"/>
-                <dxe:TextEdit Grid.Row="2" Grid.Column="1" Grid.ColumnSpan="3" Style="{DynamicResource ResourceKey=GrdTextEdit}"  
+                <dxe:TextEdit Grid.Row="2" Grid.Column="1" Grid.ColumnSpan="3" Style="{DynamicResource ResourceKey=GridTextEdit}"  
                           x:Name="txtATT_NAM" EditValue="{Binding ATT_NAM,Mode=TwoWay}"/>
 
                 <Label Grid.Row="3" Grid.Column="0" Content="시설개요" Style="{DynamicResource ResourceKey=GridLabel}"/>
-                <dxe:TextEdit Grid.Row="3" Grid.Column="1" Grid.ColumnSpan="3" Style="{DynamicResource ResourceKey=GrdTextEdit}"  
+                <dxe:TextEdit Grid.Row="3" Grid.Column="1" Grid.ColumnSpan="3" Style="{DynamicResource ResourceKey=GridTextEdit}"  
                           x:Name="txtATT_DES" EditValue="{Binding ATT_DES,Mode=TwoWay}" Height="90"
                             VerticalContentAlignment="Top" AcceptsReturn="True" AcceptsTab="True" TextWrapping="WrapWithOverflow"
                               />

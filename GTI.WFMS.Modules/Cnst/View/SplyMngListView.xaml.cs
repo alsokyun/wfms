@@ -1,4 +1,5 @@
 ﻿using DevExpress.Xpf.Grid;
+using GTI.WFMS.Models.Common;
 using GTIFramework.Common.Utils.ViewEffect;
 using System;
 using System.Data;
@@ -15,10 +16,12 @@ namespace GTI.WFMS.Modules.Cnst.View
     {
         public SplyMngListView()
         {
-            InitializeComponent();
 
+            InitializeComponent();
+            
             // 테마일괄적용...
             ThemeApply.Themeapply(this);
+
         }
 
 
@@ -48,7 +51,7 @@ namespace GTI.WFMS.Modules.Cnst.View
         // 등록 팝업
         private void BtnAdd_Click(object sender, RoutedEventArgs e)
         {
-            //NavigationService.Navigate(new WtlPipeAddView());
+            NavigationService.Navigate(new SplyAddView());
         }
     }
 }

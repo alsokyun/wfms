@@ -109,7 +109,7 @@ namespace GTI.WFMS.Modules.Cnst.ViewModel
         SplyMngListView splyMngListView;
 
         TextEdit txtCNT_NUM;
-        ComboBoxEdit cbHJD_CDE; DataTable dtHJD_CDE = new DataTable();
+        ComboBoxEdit cbHJD_CDE; 
         DateEdit dtBEG_YMD_FROM;
         DateEdit dtBEG_YMD_TO;
         DateEdit dtFNS_YMD_FROM;
@@ -229,19 +229,19 @@ namespace GTI.WFMS.Modules.Cnst.ViewModel
 
                 Hashtable conditions = new Hashtable();
                 conditions.Add("CNT_NUM", txtCNT_NUM.Text.Trim());
-                conditions.Add("HJD_CDE", cbHJD_CDE.EditValue.ToString().Trim());
+                conditions.Add("HJD_CDE", cbHJD_CDE.EditValue);
                 try
                 {
                     conditions.Add("BEG_YMD_FROM", dtBEG_YMD_FROM.EditValue == null ? null : Convert.ToDateTime(dtBEG_YMD_FROM.EditValue).ToString("yyyy-MM-dd"));
                     conditions.Add("BEG_YMD_TO", dtBEG_YMD_TO.EditValue == null ? null : Convert.ToDateTime(dtBEG_YMD_TO.EditValue).ToString("yyyy-MM-dd"));
                 }
-                catch (Exception e) { }
+                catch (Exception ) { }
                 try
                 {
                     conditions.Add("FNS_YMD_FROM", dtFNS_YMD_FROM.EditValue == null ? null : Convert.ToDateTime(dtFNS_YMD_FROM.EditValue).ToString("yyyy-MM-dd"));
                     conditions.Add("FNS_YMD_TO", dtFNS_YMD_TO.EditValue == null ? null : Convert.ToDateTime(dtFNS_YMD_TO.EditValue).ToString("yyyy-MM-dd"));
                 }
-                catch (Exception e) { }
+                catch (Exception ) { }
 
                 conditions.Add("firstIndex", 0);
                 conditions.Add("lastIndex", 1000);
@@ -270,7 +270,7 @@ namespace GTI.WFMS.Modules.Cnst.ViewModel
                         this.TotalCnt = Convert.ToInt32(dt.Rows[0]["ROWCNT"]);
                         this.ItemCnt = (int)Math.Ceiling((double)this.TotalCnt / FmsUtil.PageSize);
                     }
-                    catch (Exception e)
+                    catch (Exception )
                     {
                         this.TotalCnt = 0;
                         this.ItemCnt = 0;
@@ -318,19 +318,19 @@ namespace GTI.WFMS.Modules.Cnst.ViewModel
                 /// 데이터조회
                 Hashtable conditions = new Hashtable();
                 conditions.Add("CNT_NUM", txtCNT_NUM.Text.Trim());
-                conditions.Add("HJD_CDE", cbHJD_CDE.EditValue.ToString().Trim());
+                conditions.Add("HJD_CDE", cbHJD_CDE.EditValue);
                 try
                 {
                     conditions.Add("BEG_YMD_FROM", dtBEG_YMD_FROM.EditValue == null ? null : Convert.ToDateTime(dtBEG_YMD_FROM.EditValue).ToString("yyyy-MM-dd"));
                     conditions.Add("BEG_YMD_TO", dtBEG_YMD_TO.EditValue == null ? null : Convert.ToDateTime(dtBEG_YMD_TO.EditValue).ToString("yyyy-MM-dd"));
                 }
-                catch (Exception e) { }
+                catch (Exception ) { }
                 try
                 {
                     conditions.Add("FNS_YMD_FROM", dtFNS_YMD_FROM.EditValue == null ? null : Convert.ToDateTime(dtFNS_YMD_FROM.EditValue).ToString("yyyy-MM-dd"));
                     conditions.Add("FNS_YMD_TO", dtFNS_YMD_TO.EditValue == null ? null : Convert.ToDateTime(dtFNS_YMD_TO.EditValue).ToString("yyyy-MM-dd"));
                 }
-                catch (Exception e) { }
+                catch (Exception ) { }
 
                 conditions.Add("page", 0);
                 conditions.Add("rows", 1000000);
@@ -435,7 +435,7 @@ namespace GTI.WFMS.Modules.Cnst.ViewModel
         {
             try {
                 // cbHJD_CDE 행정동
-                BizUtil.SetCombo(cbHJD_CDE, "Select_ADAR_LIST", "HJD_CDE", "HJD_NAM", true);
+                BizUtil.SetCombo(cbHJD_CDE, "Select_ADAR_LIST", "HJD_CDE", "HJD_NAM", "[전체]");
             }
             catch (Exception ex)
             {
@@ -485,14 +485,12 @@ namespace GTI.WFMS.Modules.Cnst.ViewModel
         {
 
 
-            string name_space = "GTI.WFMS.Models.Fctl.Model";
-            string class_name = "WttAttaDt";
+            string name_space = "GTI.WFMS.Models.Cmpl.Model";
+            string class_name = "WserDtl";
             
             Hashtable param = new Hashtable();
-            param.Add("sqlId", "SelectCmmWttAttaDtList");
-            param.Add("FTR_CDE", "SA206");
-            param.Add("FTR_IDN", 80);
-            param.Add("ATT_IDN", 11313);
+            param.Add("sqlId", "SelectWttWserMa");
+            param.Add("WSER_SEQ", 13);
             
             DataTable dt = BizUtil.SelectList(param);
             DataRow dr = dt.Rows[0];

@@ -5,7 +5,7 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         mc:Ignorable="d"
-        Title="ChkSchListView" Height="600" Width="1100"
+        Title="InfoFMS" Height="600" Width="1200"
         
         xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
         xmlns:vm="clr-namespace:GTI.WFMS.Modules.Mntc.ViewModel"
@@ -27,7 +27,7 @@
     <DockPanel >
         <DockPanel DockPanel.Dock="Top" Height="40" Margin="10 0 5 0">
             <Label DockPanel.Dock="Left" Content="점검일정조회" 
-                   Width="840" FontSize="18" FontWeight="Bold" Foreground="White"  
+                   Width="1000" FontSize="18" FontWeight="Bold" Foreground="White"  
                    VerticalContentAlignment="Center"
                    x:Name="bdTitle" PreviewMouseLeftButtonDown="BdTitle_PreviewMouseLeftButtonDown"/>
 
@@ -36,19 +36,20 @@
 
 
 
-        <Grid  Background="{DynamicResource PopCOLOR2Brush}" >
+        <Grid  Background="{DynamicResource TileCOLOR4Brush}" >
             <Grid.ColumnDefinitions >
-                <ColumnDefinition Width="200"/>
+                <ColumnDefinition Width="250"/>
                 <ColumnDefinition Width="*"/>
             </Grid.ColumnDefinitions>
 
             <Grid Grid.Column="0">
                 <Grid.RowDefinitions>
-                    <RowDefinition Height="220" />
+                    <RowDefinition Height="200" />
+                    <RowDefinition Height="250" />
                     <RowDefinition Height="*" />
                 </Grid.RowDefinitions>
 
-                <dxe:DateNavigator Grid.Row="0" x:Name="datenavigator" VerticalAlignment="Stretch" CalendarView="Year" Visibility="Visible">
+                <dxe:DateNavigator Grid.Row="0" x:Name="datenavigator" VerticalAlignment="Stretch" CalendarView="Year" Visibility="Visible" Margin="10 0 10 0">
                     <dxe:DateNavigator.StyleSettings>
                         <dxsch:SchedulerDateNavigatorStyleSettings Scheduler="{Binding ElementName=scheduler}" 
                                                                     CustomizeSpecialDates="SchedulerDateNavigatorStyleSettings_CustomizeSpecialDates" 
@@ -58,10 +59,68 @@
                     </dxe:DateNavigator.StyleSettings>
                 </dxe:DateNavigator>
 
-                <Grid Grid.Row="1">
+
+
+                <Grid Grid.Row="1" Background="{DynamicResource PopupCOLOR3Brush}" Height="205" VerticalAlignment="Top"  Margin="10">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="80"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="40" />
+                        <RowDefinition Height="40" />
+                        <RowDefinition Height="40" />
+                        <RowDefinition Height="40" />
+                        <RowDefinition Height="40" />
+                    </Grid.RowDefinitions>
+
+                    <!--테이블구분선-->
+                    <Border Grid.Row="0" Grid.Column="0" BorderThickness="0,0,1,1" BorderBrush="{DynamicResource TileCOLOR4Brush}" Margin="0,0,0,0"/>
+                    <Border Grid.Row="0" Grid.Column="2" BorderThickness="0,0,0,1" BorderBrush="{DynamicResource TileCOLOR4Brush}" Margin="0,0,0,0"/>
+                    <Border Grid.Row="1" Grid.Column="0" BorderThickness="0,0,1,1" BorderBrush="{DynamicResource TileCOLOR4Brush}" Margin="0,0,0,0"/>
+                    <Border Grid.Row="1" Grid.Column="2" BorderThickness="0,0,0,1" BorderBrush="{DynamicResource TileCOLOR4Brush}" Margin="0,0,0,0"/>
+                    <Border Grid.Row="2" Grid.Column="0" BorderThickness="0,0,1,1" BorderBrush="{DynamicResource TileCOLOR4Brush}" Margin="0,0,0,0"/>
+                    <Border Grid.Row="2" Grid.Column="2" BorderThickness="0,0,0,1" BorderBrush="{DynamicResource TileCOLOR4Brush}" Margin="0,0,0,0"/>
+                    <Border Grid.Row="3" Grid.Column="0" BorderThickness="0,0,1,1" BorderBrush="{DynamicResource TileCOLOR4Brush}" Margin="0,0,0,0"/>
+                    <Border Grid.Row="3" Grid.Column="2" BorderThickness="0,0,0,1" BorderBrush="{DynamicResource TileCOLOR4Brush}" Margin="0,0,0,0"/>
+                    <Border Grid.Row="4" Grid.Column="0" BorderThickness="0,0,1,1" BorderBrush="{DynamicResource TileCOLOR4Brush}" Margin="0,0,0,0"/>
+                    <Border Grid.Row="4" Grid.Column="2" BorderThickness="0,0,0,1" BorderBrush="{DynamicResource TileCOLOR4Brush}" Margin="0,0,0,0"/>
+
+                    <!--라벨&입력창-->
+                    <Label Grid.Row="0" Grid.Column="0" Content="관리기관" Style="{DynamicResource ResourceKey=GridLabel}"/>
+                    <dxe:ComboBoxEdit Grid.Row="0" Grid.Column="1" x:Name="cbMNG_CDE" DisplayMember="NM" ValueMember="DTL_CD" Style="{DynamicResource ResourceKey=SearchComboBox}" 
+                               HorizontalAlignment="Center" Margin="0"/>
+                    <Label Grid.Row="1" Grid.Column="0" Content="점검구분" Style="{DynamicResource ResourceKey=GridLabel}"/>
+                    <dxe:ComboBoxEdit Grid.Row="1" Grid.Column="1" x:Name="cbSCL_CDE" DisplayMember="NM" ValueMember="DTL_CD" Style="{DynamicResource ResourceKey=SearchComboBox}" 
+                               HorizontalAlignment="Center" Margin="0"/>
+                    <Label Grid.Row="2" Grid.Column="0" Content="점검명" Style="{DynamicResource ResourceKey=GridLabel}"/>
+                    <dxe:TextEdit Grid.Row="2" Grid.Column="1" x:Name="txtTIT_NAM" Style="{DynamicResource ResourceKey=SearchTextEdit}"  HorizontalAlignment="Center" Margin="0">
+                        <dxe:TextEdit.InputBindings>
+                            <KeyBinding Key="Enter" Command="{Binding SearchCmd}">
+                            </KeyBinding>
+                        </dxe:TextEdit.InputBindings>
+                    </dxe:TextEdit>
+                    <Label Grid.Row="3" Grid.Column="0" Content="점검자" Style="{DynamicResource ResourceKey=GridLabel}"/>
+                    <dxe:TextEdit Grid.Row="3" Grid.Column="1" x:Name="txtCKM_PEO" Style="{DynamicResource ResourceKey=SearchTextEdit}"  HorizontalAlignment="Center" Margin="0">
+                        <dxe:TextEdit.InputBindings>
+                            <KeyBinding Key="Enter" Command="{Binding SearchCmd}">
+                            </KeyBinding>
+                        </dxe:TextEdit.InputBindings>
+                    </dxe:TextEdit>
+                    <Label Grid.Row="4" Grid.Column="0" Content="진행상태" Style="{DynamicResource ResourceKey=GridLabel}"/>
+                    <dxe:ComboBoxEdit Grid.Row="4" Grid.Column="1" x:Name="cbSCL_STAT_CDE" DisplayMember="NM" ValueMember="DTL_CD" Style="{DynamicResource ResourceKey=SearchComboBox}" 
+                               HorizontalAlignment="Center" Margin="0"/>
+
+
+
+                </Grid>
+
+
+
+                <Grid Grid.Row="2">
                     <StackPanel Orientation="Horizontal" Height="40" HorizontalAlignment="Center">
-                        <Button Command="{Binding SearchCmd}">검색</Button>
-                        <Button Command="{Binding BackCmd}">달력으로</Button>
+                        <Button Command="{Binding SearchCmd}" >검색</Button>
+                        <Button Command="{Binding BackCmd}" >달력으로</Button>
                         <Button Command="{Binding ChscResCmd}">점검결과→</Button>
                     </StackPanel>
                 </Grid>

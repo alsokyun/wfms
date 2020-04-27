@@ -8,7 +8,6 @@ using Prism.Commands;
 using System;
 using System.Collections;
 using System.Data;
-using System.Reflection;
 using System.Windows;
 using System.Windows.Controls;
 
@@ -101,6 +100,9 @@ namespace GTI.WFMS.Modules.Fclt.ViewModel
                 this.FTR_CDE = "SA110";
 
                 this.FNS_YMD = Convert.ToDateTime(DateTime.Today).ToString("yyyy-MM-dd");
+            
+                //공통팝업창 사이즈 변경 4
+                FmsUtil.popWinView.Height = 400;
             }
             catch (Exception e)
             {
@@ -128,7 +130,7 @@ namespace GTI.WFMS.Modules.Fclt.ViewModel
             {
                 BizUtil.Update2(this, "insertWtrSourDtl");
             }
-            catch (Exception e)
+            catch (Exception )
             {
                 Messages.ShowErrMsgBox("저장 처리중 오류가 발생하였습니다.");
                 return;
@@ -166,13 +168,13 @@ namespace GTI.WFMS.Modules.Fclt.ViewModel
                 //BizUtil.SetCombo(cbFTR_CDE, "Select_FTR_LIST", "FTR_CDE", "FTR_NAM", false);
 
                 // cbHJD_CDE 행정동
-                BizUtil.SetCombo(cbHJD_CDE, "Select_ADAR_LIST", "HJD_CDE", "HJD_NAM", true);
+                BizUtil.SetCombo(cbHJD_CDE, "Select_ADAR_LIST", "HJD_CDE", "HJD_NAM", "[선택하세요]");
 
                 // cbMNG_CDE 관리기관
-                BizUtil.SetCmbCode(cbMNG_CDE, "MNG_CDE", true);
+                BizUtil.SetCmbCode(cbMNG_CDE, "250101", "[선택하세요]");
                 
                 // cbWSR_CDE 수원구분
-                BizUtil.SetCmbCode(cbWSR_CDE, "WSR_CDE", true);
+                BizUtil.SetCmbCode(cbWSR_CDE, "250058", "[선택하세요]");
 
             }
             catch (Exception ex)

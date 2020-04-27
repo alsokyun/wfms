@@ -5,6 +5,7 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:GTI.WFMS.Modules.Cnst.View"
+             xmlns:link="clr-namespace:GTI.WFMS.Modules.Link.View"
              mc:Ignorable="d" 
              d:DesignHeight="550" d:DesignWidth="950"
       
@@ -14,6 +15,7 @@
             xmlns:vm="clr-namespace:GTI.WFMS.Modules.Cnst.ViewModel"
             x:Name="splyDtl"
             xmlns:cv="clr-namespace:GTI.WFMS.Models.Common;assembly=GTI.WFMS.Models"     
+            xmlns:sys="clr-namespace:System;assembly=mscorlib"
       >
 
     <!--뷰와 뷰모델 바인딩
@@ -28,7 +30,7 @@
         <ResourceDictionary>
 
             <cm:MultiValueConverter x:Key="multiValueConverter"/>
-            <cv:Date2StrConverter x:Key="date2StrConverter" />
+            <cv:Date3StrConverter x:Key="date2StrConverter" />
 
 
             <dx:BoolToObjectConverter x:Key="foregroundConverter">
@@ -43,25 +45,25 @@
             <DataTemplate x:Key="TabItemNormalBackground">
                 <Border BorderBrush="{DynamicResource DataMngTab5Brush}" CornerRadius="1,1,0,0" BorderThickness="1" Margin="0 0 1 0">
                     <dxci:TabBorder ViewInfo="{Binding}" BorderBackground="{DynamicResource DataMngTab3Brush}" BorderBrush="{DynamicResource DataMngTab1Brush}" BorderCornerRadius="1,1,0,0"
-                            BackgroundMode="BorderBackground" BorderMode="BorderBrush" BorderThickness="0,0,0,5" BorderMargin="0,0,1,0" HoldBorderThickness="2" HoldBorderMargin="5,0,0,0"/>
+                            BackgroundMode="BorderBackground" BorderMode="BorderBrush" BorderThickness="0,0,0,2" BorderMargin="0,0,1,0" HoldBorderThickness="2" HoldBorderMargin="5,0,0,0"/>
                 </Border>
             </DataTemplate>
             <DataTemplate x:Key="TabItemSelectedBackground">
                 <Border BorderBrush="{DynamicResource DataMngTab5Brush}" CornerRadius="1,1,0,0" BorderThickness="1" Margin="0 0 1 0">
                     <dxci:TabBorder ViewInfo="{Binding}" BorderBackground="{DynamicResource DataMngTab4Brush}" BorderBrush="{DynamicResource DataMngTab2Brush}" BorderCornerRadius="1,1,0,0"
-                            BackgroundMode="BorderBackground" BorderMode="BorderBrush" BorderThickness="0,0,0,5" BorderMargin="0,0,1,0" HoldBorderThickness="2" HoldBorderMargin="5,0,0,0"/>
+                            BackgroundMode="BorderBackground" BorderMode="BorderBrush" BorderThickness="0,0,0,2" BorderMargin="0,0,1,0" HoldBorderThickness="2" HoldBorderMargin="5,0,0,0"/>
                 </Border>
             </DataTemplate>
             <DataTemplate x:Key="TabItemFocusedBackground" >
                 <Border BorderBrush="{DynamicResource DataMngTab5Brush}" CornerRadius="1,1,0,0" BorderThickness="1" Margin="0 0 1 0">
                     <dxci:TabBorder ViewInfo="{Binding}"  BorderBackground="{DynamicResource DataMngTab4Brush}" BorderBrush="{DynamicResource DataMngTab2Brush}" BorderCornerRadius="1,1,0,0"
-                            BackgroundMode="BorderBackground" BorderMode="BorderBrush" BorderThickness="0,0,0,5" BorderMargin="0,0,1,0" HoldBorderThickness="2" HoldBorderMargin="5,0,0,0" />
+                            BackgroundMode="BorderBackground" BorderMode="BorderBrush" BorderThickness="0,0,0,2" BorderMargin="0,0,1,0" HoldBorderThickness="2" HoldBorderMargin="5,0,0,0" />
                 </Border>
             </DataTemplate>
             <DataTemplate x:Key="TabItemHoverBackground">
                 <Border BorderBrush="{DynamicResource DataMngTab5Brush}" CornerRadius="1,1,0,0" BorderThickness="1" Margin="0 0 1 0">
                     <dxci:TabBorder ViewInfo="{Binding}" BorderBackground="{DynamicResource DataMngTab4Brush}" BorderBrush="{DynamicResource DataMngTab2Brush}" BorderCornerRadius="1,1,0,0"
-                            BackgroundMode="BorderBackground" BorderMode="BorderBrush" BorderThickness="0,0,0,5" BorderMargin="0,0,1,0" HoldBorderThickness="2" HoldBorderMargin="0,0,2,2"/>
+                            BackgroundMode="BorderBackground" BorderMode="BorderBrush" BorderThickness="0,0,0,2" BorderMargin="0,0,1,0" HoldBorderThickness="2" HoldBorderMargin="0,0,2,2"/>
                 </Border>
             </DataTemplate>
 
@@ -71,7 +73,7 @@
 
 
 
-    <Grid  Background="{DynamicResource PopCOLOR2Brush}" >
+    <Grid  Background="{DynamicResource TileCOLOR4Brush}" >
         <Grid.RowDefinitions>
             <RowDefinition Height="40" />
             <RowDefinition Height="Auto" />
@@ -86,14 +88,6 @@
             </StackPanel>
         </StackPanel>
         <StackPanel Grid.Row="0" Orientation="Horizontal" HorizontalAlignment="Right" Margin="10 0 10 0">
-            <Button x:Name="btnPrint" Style="{DynamicResource ResourceKey=PrintButton}"  >
-                <i:Interaction.Triggers>
-                    <i:EventTrigger EventName="Click">
-                        <i:InvokeCommandAction Command="{Binding SearchCommand}">
-                        </i:InvokeCommandAction>
-                    </i:EventTrigger>
-                </i:Interaction.Triggers>
-            </Button>
             <Button x:Name="btnDelete" Style="{DynamicResource ResourceKey=DelButton}"  >
                 <i:Interaction.Triggers>
                     <i:EventTrigger EventName="Click">
@@ -164,39 +158,39 @@
 
 
             <Label Grid.Row="0" Grid.Column="0" Content="공사번호" Style="{DynamicResource ResourceKey=GridLabelReq}"/>
-            <dxe:TextEdit Grid.Row="0" Grid.Column="1" Style="{DynamicResource ResourceKey=GrdTextEdit}" Tag="공사번호" Width="90" HorizontalAlignment="Left"
-                          x:Name="txtCNT_NUM" EditValue="{Binding CNT_NUM, UpdateSourceTrigger=PropertyChanged}"/>
-            <Button Grid.Row="0" Grid.Column="1" HorizontalAlignment="Right" Width="Auto" Height="20" Padding="0" Margin="0 0 10 0"
-                    x:Name="btnDup" Command="{Binding DupCommand}" Content="{Binding Dup, Mode=TwoWay}" />
+            <dxe:TextEdit Grid.Row="0" Grid.Column="1" Style="{DynamicResource ResourceKey=GridTextEdit}" Tag="공사번호"  
+                          x:Name="txtCNT_NUM" EditValue="{Binding CNT_NUM, UpdateSourceTrigger=PropertyChanged}" IsEnabled="False" />
+            <Button Grid.Row="0" Grid.Column="1" HorizontalAlignment="Right" Width="Auto" Height="22" Margin="0 0 10 0"
+                    x:Name="btnDup" Command="{Binding DupCommand}" Content="체크" Style="{DynamicResource TxtButton}" Visibility="Collapsed" />
 
             <Label Grid.Row="0" Grid.Column="2" Content="시공자명" Style="{DynamicResource ResourceKey=GridLabel}"/>
-            <dxe:TextEdit Grid.Row="0" Grid.Column="3" Style="{DynamicResource ResourceKey=GrdTextEdit}"  
+            <dxe:TextEdit Grid.Row="0" Grid.Column="3" Style="{DynamicResource ResourceKey=GridTextEdit}"  
                           x:Name="txtOPR_NAM" EditValue="{Binding OPR_NAM}"/>
             <Label Grid.Row="0" Grid.Column="4" Content="준공검사자명" Style="{DynamicResource ResourceKey=GridLabel}"/>
-            <dxe:TextEdit Grid.Row="0" Grid.Column="5" Style="{DynamicResource ResourceKey=GrdTextEdit}"  
+            <dxe:TextEdit Grid.Row="0" Grid.Column="5" Style="{DynamicResource ResourceKey=GridTextEdit}"  
                           x:Name="txtFCH_NAM" EditValue="{Binding FCH_NAM}"/>
             <Label Grid.Row="0" Grid.Column="6" Content="감독자명" Style="{DynamicResource ResourceKey=GridLabel}"/>
-            <dxe:TextEdit Grid.Row="0" Grid.Column="7" Style="{DynamicResource ResourceKey=GrdTextEdit}"  
+            <dxe:TextEdit Grid.Row="0" Grid.Column="7" Style="{DynamicResource ResourceKey=GridTextEdit}"  
                           x:Name="txtSVS_NAM" EditValue="{Binding SVS_NAM}"/>
 
             <Label Grid.Row="1" Grid.Column="0" Content="착수일자" Style="{DynamicResource ResourceKey=GridLabel}" />
-            <dxe:DateEdit Grid.Row="1" Grid.Column="1" Style="{DynamicResource ResourceKey=GrdDateEdit}" HorizontalContentAlignment="Center" 
+            <dxe:DateEdit Grid.Row="1" Grid.Column="1" Style="{DynamicResource ResourceKey=GridDateEdit}" HorizontalContentAlignment="Center" 
                           x:Name="dtBEG_YMD" EditValue="{Binding BEG_YMD, Converter={StaticResource date2StrConverter}}"  />
             <Label Grid.Row="1" Grid.Column="2" Content="준공일자" Style="{DynamicResource ResourceKey=GridLabel}" />
-            <dxe:DateEdit Grid.Row="1" Grid.Column="3" Style="{DynamicResource ResourceKey=GrdDateEdit}" HorizontalContentAlignment="Center" 
+            <dxe:DateEdit Grid.Row="1" Grid.Column="3" Style="{DynamicResource ResourceKey=GridDateEdit}" HorizontalContentAlignment="Center" 
                           x:Name="dtFNS_YMD" EditValue="{Binding FNS_YMD, Converter={StaticResource date2StrConverter}}"  />
             <Label Grid.Row="1" Grid.Column="4" Content="수납일자" Style="{DynamicResource ResourceKey=GridLabel}" />
-            <dxe:DateEdit Grid.Row="1" Grid.Column="5" Style="{DynamicResource ResourceKey=GrdDateEdit}" HorizontalContentAlignment="Center" 
+            <dxe:DateEdit Grid.Row="1" Grid.Column="5" Style="{DynamicResource ResourceKey=GridDateEdit}" HorizontalContentAlignment="Center" 
                           x:Name="dtRCP_YMD" EditValue="{Binding RCP_YMD, Converter={StaticResource date2StrConverter}}"  />
             <Label Grid.Row="1" Grid.Column="6" Content="행정동" Style="{DynamicResource ResourceKey=GridLabel}"/>
-            <dxe:ComboBoxEdit Grid.Row="1" Grid.Column="7" Style="{DynamicResource ResourceKey=GrdComboBox}" 
+            <dxe:ComboBoxEdit Grid.Row="1" Grid.Column="7" Style="{DynamicResource ResourceKey=GridComboBox}" 
                               x:Name="cbHJD_CDE" EditValue="{Binding HJD_CDE,Mode=TwoWay}" />
 
             <Label Grid.Row="2" Grid.Column="0" Content="민원접수번호" Style="{DynamicResource ResourceKey=GridLabel}" />
-            <dxe:TextEdit Grid.Row="2" Grid.Column="1" Style="{DynamicResource ResourceKey=GrdTextEdit}"  
+            <dxe:TextEdit Grid.Row="2" Grid.Column="1" Style="{DynamicResource ResourceKey=GridTextEdit}"  
                           x:Name="txtRCV_NUM" EditValue="{Binding RCV_NUM}"/>
             <Label Grid.Row="2" Grid.Column="2" Content="설계수수료" Style="{DynamicResource ResourceKey=GridLabel}" />
-            <dxe:TextEdit Grid.Row="2" Grid.Column="3" Style="{DynamicResource ResourceKey=GrdNumberEdit}"  
+            <dxe:TextEdit Grid.Row="2" Grid.Column="3" Style="{DynamicResource ResourceKey=GridNumberEdit}"  
                           x:Name="txtDFE_AMT" EditValue="{Binding DFE_AMT}"/>
 
         </Grid>
@@ -243,13 +237,16 @@
             </dx:DXTabControl.BackgroundTemplate>
 
             <!--
-            -->
             <dx:DXTabItem Header="사진첨부">
             </dx:DXTabItem>
             <dx:DXTabItem Header="참조자료">
             </dx:DXTabItem>
 
+            -->
         </dx:DXTabControl>
+
+        <dx:WaitIndicator x:Name="waitindicator" Grid.Row="2" DeferedVisibility="False" Content="Loading..."/>
+
     </Grid>
 
 

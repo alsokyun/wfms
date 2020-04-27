@@ -30,7 +30,7 @@ namespace GTI.WNMS.Main.View.Pop
     {
         Hashtable htconditions = new Hashtable();
         DataTable dtresult = new DataTable();
-
+        
 
         DataTable dtcbdata { get; set; }
 
@@ -39,6 +39,7 @@ namespace GTI.WNMS.Main.View.Pop
             InitializeComponent();
             ThemeApply.Themeapply(this);
             Loaded += PopupQuickMenuMng_Loaded;
+            
         }
 
         #region 이벤트
@@ -102,7 +103,7 @@ namespace GTI.WNMS.Main.View.Pop
             try
             {
                 htconditions.Clear();
-                htconditions.Add("SYS_CD", "000007");
+                htconditions.Add("SYS_CD", FmsUtil.sysCd);
                 htconditions.Add("USER_ID", Logs.strLogin_ID);
                 htconditions.Add("MNU_CD", "");
                 htconditions.Add("SHRTEN_KEY", "");
@@ -218,7 +219,7 @@ namespace GTI.WNMS.Main.View.Pop
             try
             {
                 htconditions.Clear();
-                htconditions.Add("SYS_CD", "000007");
+                htconditions.Add("SYS_CD", FmsUtil.sysCd);
                 htconditions.Add("USER_ID", Logs.strLogin_ID);
 
 

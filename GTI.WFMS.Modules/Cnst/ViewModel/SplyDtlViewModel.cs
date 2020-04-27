@@ -35,7 +35,7 @@ namespace GTI.WFMS.Modules.Cnst.ViewModel
 
         #region ==========  Member 정의 ==========
         SplyDtlView splyDtlView;
-        ComboBoxEdit cbHJD_CDE; DataTable dtHJD_CDE = new DataTable();
+        ComboBoxEdit cbHJD_CDE; 
         Button btnBack;
         Button btnDelete;
         Button btnSave;
@@ -130,8 +130,6 @@ namespace GTI.WFMS.Modules.Cnst.ViewModel
             SplyDtl result = new SplyDtl();
             result = BizUtil.SelectObject(param) as SplyDtl;
 
-
-
             //결과를 뷰모델멤버로 매칭
             Type dbmodel = result.GetType();
             Type model = this.GetType();
@@ -150,7 +148,7 @@ namespace GTI.WFMS.Modules.Cnst.ViewModel
                         prop.SetValue(this, Convert.ChangeType(colValue, prop.PropertyType));
                     }
                 }
-               Console.WriteLine(propName + " - " + prop.GetValue(this,null));
+               //Console.WriteLine(propName + " - " + prop.GetValue(this,null));
             }
 
         }
@@ -183,9 +181,9 @@ namespace GTI.WFMS.Modules.Cnst.ViewModel
             {
                 BizUtil.Update2(this, "updateSplyDtl");
             }
-            catch (Exception e)
+            catch (Exception ex)
             {
-                Messages.ShowErrMsgBox("저장 처리중 오류가 발생하였습니다.");
+                Messages.ShowErrMsgBox("저장 처리중 오류가 발생하였습니다." + ex.Message);
                 return;
             }
             Messages.ShowOkMsgBox();
@@ -200,8 +198,8 @@ namespace GTI.WFMS.Modules.Cnst.ViewModel
         {
             //0.삭제전 체크
             Hashtable param = new Hashtable();
-            param.Add("sqlId", "selectFileMapList");
-            param.Add("sqlId2", "selectFileMapList");
+            param.Add("sqlId", "SelectFileMapList");
+            param.Add("sqlId2", "SelectFileMapList");
             param.Add("CNT_NUM", this.CNT_NUM);
 
             Hashtable result = BizUtil.SelectLists(param);
@@ -237,7 +235,7 @@ namespace GTI.WFMS.Modules.Cnst.ViewModel
             {
                 BizUtil.Update2(this, "deleteSplyDtl");
             }
-            catch (Exception e)
+            catch (Exception )
             {
                 Messages.ShowErrMsgBox("삭제 처리중 오류가 발생하였습니다.");
                 return;
@@ -278,7 +276,7 @@ namespace GTI.WFMS.Modules.Cnst.ViewModel
             try
             {
                 // cbHJD_CDE 행정동
-                BizUtil.SetCombo(cbHJD_CDE, "Select_ADAR_LIST", "HJD_CDE", "HJD_NAM", true);
+                BizUtil.SetCombo(cbHJD_CDE, "Select_ADAR_LIST", "HJD_CDE", "HJD_NAM", "[선택하세요]");
             }
             catch (Exception ex)
             {

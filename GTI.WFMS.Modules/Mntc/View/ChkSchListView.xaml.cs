@@ -12,7 +12,7 @@ namespace GTI.WFMS.Modules.Mntc.View
     public partial class ChkSchListView: Window
     {
 
-        //사업소 DB연결이 없으면
+        // 생성자
         public ChkSchListView( )
         {
             InitializeComponent();

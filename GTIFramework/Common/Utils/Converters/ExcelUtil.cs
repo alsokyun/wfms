@@ -1652,12 +1652,14 @@ namespace GTIFramework.Common.Utils.Converters
                 //출력컬럼수
                 int cnt = 0;
 
+                List<string> headerAry = new List<string>(); //실제헤더커럼명 배열
                 foreach (GridColumn gcol in columnList)
                 {
                     string strColHeader = string.Empty;
                     bool bColVisible = false;
                     bool bColPrint = true;
-                    string wid = string.Empty;
+                    string wid = string.Empty;//Width
+                    string fieldName = string.Empty;//필드명
 
                     gridControl.Dispatcher.Invoke(DispatcherPriority.Normal, new Action(delegate
                     {
@@ -1670,6 +1672,7 @@ namespace GTIFramework.Common.Utils.Converters
 
                         bColVisible = gcol.Visible && bColPrint;
                         wid = gcol.Width.ToString();
+                        fieldName = gcol.FieldName;
                     }));
 
                     
@@ -1688,6 +1691,7 @@ namespace GTIFramework.Common.Utils.Converters
                         rangeHeader = ws.get_Range(sPoint, ePoint);
                         ws.get_Range(sPoint, ePoint).Merge();
                         rangeHeader.Value = strColHeader;
+                        headerAry.Add(fieldName);//헤더명을 저장해놓고 컬럼타입 선별할때 활용
 
                         //다음 데이터가 쓰여질 시작 y좌표 +1
                         intStartY_Bnd++;
@@ -1813,6 +1817,35 @@ namespace GTIFramework.Common.Utils.Converters
                 {
                     rangeTable.Borders.LineStyle = Excel.XlLineStyle.xlContinuous;
                 }
+
+                //데이터셀 정렬설정
+                int col_idx = intStartY_TD;
+                foreach (string col_name in headerAry)
+                {
+
+                    //모든row에 적용
+                    for (int row_idx = intStartX_TD; row_idx < intStartX_TD + TDRowCNT; row_idx++)
+                    {
+                        //컬럼의 타입가져오기
+                        if (col_name.Contains("_AMT") || col_name.Contains("_DIP") || col_name.Contains("_SAF") || col_name.Contains("_DIR"))
+                        {
+                            ws.Cells[row_idx, col_idx].HorizontalAlignment = Microsoft.Office.Interop.Excel.XlHAlign.xlHAlignRight;
+                            ws.Cells[row_idx, col_idx].NumberFormat = "#,##0";
+                        }
+                        else if (col_name.Contains("_YMD"))
+                        {
+                            ws.Cells[row_idx, col_idx].HorizontalAlignment = Microsoft.Office.Interop.Excel.XlHAlign.xlHAlignCenter;
+                         
+                        }
+                        else
+                        {
+                            ws.Cells[row_idx, col_idx].HorizontalAlignment = Microsoft.Office.Interop.Excel.XlHAlign.xlHAlignLeft;
+                        }
+                    }
+                    col_idx++;
+                }
+
+
 
 
                 //RN 이 존재했을경우 = 그룹데이터 존재

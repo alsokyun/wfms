@@ -1,9 +1,12 @@
 ﻿using DevExpress.Xpf.Accordion;
 using DevExpress.Xpf.Core;
+using GTI.WFMS.GIS;
+using GTI.WFMS.Models.Cmm.Model;
 using GTI.WFMS.Models.Common;
 using GTI.WFMS.Models.Main.Work;
+using GTI.WFMS.Modules.Dash.View;
 using GTI.WFMS.Modules.Main;
-using GTI.WFMS.Modules.Mntc.View;
+using GTI.WFMS.Modules.Main.View;
 using GTI.WNMS.Main.View.Pop;
 using GTIFramework.Common.Log;
 using GTIFramework.Common.MessageBox;
@@ -14,6 +17,7 @@ using Prism.Regions;
 using System;
 using System.Collections;
 using System.Data;
+using System.Reflection;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Controls.Primitives;
@@ -32,7 +36,9 @@ namespace GTI.WFMS.Main
         MainWin mainwin;
         PopMain pmain = new PopMain();
         Border borderTop = new Border();
-        ChkSchListView chkSchListView;
+        //public static Window popWinView;
+        //Assembly assembly = Assembly.GetExecutingAssembly();
+        Assembly ModulesAssembly = Assembly.Load("GTI.WFMS.Modules");
 
         private readonly IRegionManager regionManager;
 
@@ -89,6 +95,10 @@ namespace GTI.WFMS.Main
         /// </summary>
         public DelegateCommand<object> QuickMngCommand { get; set; }
 
+        public RelayCommand<object> CallPageCmd { get; set; }
+
+        public RelayCommand<object> UserInfoMngCommand { get; set; }
+        public RelayCommand<object> InterestBlkCommand { get; set; }
 
         #endregion
 
@@ -101,7 +111,7 @@ namespace GTI.WFMS.Main
         {
             /// 프리즘 regionManager 초기화...
             regionManager = _regionManager;
-
+            FmsUtil.__regionManager = _regionManager; //regionManager 전역변수로 서정
 
             LoadedCommand = new DelegateCommand<object>(OnLoaded);
 
@@ -115,7 +125,23 @@ namespace GTI.WFMS.Main
             QuickMngCommand = new DelegateCommand<object>(QuickMngAction);
 
 
+            UserInfoMngCommand = new RelayCommand<object>(delegate (object obj) {
 
+            });
+            //상황판
+            InterestBlkCommand = new RelayCommand<object>(delegate (object obj) {
+                DashWinView dashWinView = new DashWinView();
+                if (dashWinView.ShowDialog() is bool)
+                {
+                    //재조회
+                }
+            });
+
+            //시설물팝업에서 시설물메뉴화면 호출작업
+            CallPageCmd = new RelayCommand<object>(delegate (object obj) {
+
+                FctDtl fctDtl = obj as FctDtl;
+            });
         }
 
 
@@ -165,7 +191,9 @@ namespace GTI.WFMS.Main
                 //regionManager.RequestNavigate("ContentRegion", new Uri("OfflineBasemapByReference", UriKind.Relative));
                 //regionManager.RequestNavigate("ContentRegion", new Uri("Map3View", UriKind.Relative));
                 //regionManager.RequestNavigate("ContentRegion", new Uri("Map2View", UriKind.Relative));
-                regionManager.RequestNavigate("ContentRegion", new Uri("MapMainView", UriKind.Relative));
+                //regionManager.RequestNavigate("ContentRegion", new Uri("MapMainView", UriKind.Relative));
+                regionManager.RequestNavigate("ContentRegion", new Uri("MapArcObjView", UriKind.Relative));
+
                 //regionManager.RequestNavigate("ContentRegion", new Uri("MainWindow", UriKind.Relative));
 
 
@@ -301,7 +329,7 @@ namespace GTI.WFMS.Main
 
 
                 htconditions.Clear();
-                htconditions.Add("SYS_CD", "000007");
+                htconditions.Add("SYS_CD", FmsUtil.sysCd);
 
                 dtMenuList = work.Select_MNU_LIST(htconditions);
 
@@ -324,7 +352,7 @@ namespace GTI.WFMS.Main
                             }
                             else
                             {
-                                btnMenu.Tag = "/Resources/Navy/Images/MNUImage/" + r["MNU_IMG"].ToString();
+                                btnMenu.Tag = "/Resources/Blue/Images/MNUImage/" + r["MNU_IMG"].ToString();
                             }
 
                             btnMenu.Click += btnMenu_Click;
@@ -409,21 +437,17 @@ namespace GTI.WFMS.Main
                                 /*
                                  * ContentsRegion표시하지않고 팝업윈도우를 호출
                                  */
-                                /*1.윈도우팝업 방식
-                                PopWin pwin = new PopWin(dr[0]["MNU_PATH"].ToString());
-                                Label lbTitle = pwin.FindName("lbTitle") as Label;//화면타이틀
-                                lbTitle.Content = dr[0]["MNU_NM"].ToString();
-                                bool? ret = pwin.ShowDialog();
-                                 */
 
-                                /*2.Popup클래그 방식
+                                // 0.현재열려있는 팝업을 닫는다
+                                /* Popup클래그 방식
+                                pmain.IsOpen = false; 
                                  */
-                                pmain.IsOpen = false; //현재열려있는 팝업을 닫는다
                                 try
                                 {
-                                    chkSchListView.Close();
+                                    FmsUtil.popWinView.Close();
                                 }
                                 catch (Exception) { }
+
 
 
                                 if (FmsUtil.IsNull(dr[0]["MNU_PATH"].ToString()))
@@ -432,26 +456,55 @@ namespace GTI.WFMS.Main
                                     return;
                                 }
 
-                                //점검달력은 윈도우형태로 팝업
-                                if ("Mntc/View/ChkSchListView.xaml".Equals(dr[0]["MNU_PATH"]))
+
+
+
+                                // 2.점검관리화면은 단독윈도우형태
+                                if (dr[0]["MNU_PATH"].ToString().Contains("Mntc/View/ChkSchListView.xaml") )
                                 {
-                                    // 점검달력윈도우
-                                    chkSchListView = new ChkSchListView();
+                                    //클래스풀패키지명 만들기
+                                    string className = "GTI.WFMS.Modules";
+                                    var paths = dr[0]["MNU_PATH"].ToString().Split('/');
+                                    foreach (string p in paths)
+                                    {
+                                        className += "." + p.Replace(".xaml", "");
+                                    }
 
+                                    //Type t = ModulesAssembly.GetType("GTI.WFMS.Modules.Mntc.View.ChkSchListView");
+                                    Type t = ModulesAssembly.GetType(className);
+                                    FmsUtil.popWinView = Activator.CreateInstance(t) as Window;
+                                    //popWinView = new ChkSchListView();
 
-                                    //FIL_SEQ 리턴
-                                    if (chkSchListView.ShowDialog() is bool)
+                                    //공통팝업창 사이즈 초기화
+                                    FmsUtil.popWinView.Height = 631;
+                                    //팝업결과리턴
+                                    if (FmsUtil.popWinView.ShowDialog() is bool)
+                                    {
+                                        //재조회
+                                    }
+                                }
+                                // 3.일반 업무화면은 Page 형태의 팝업
+                                else
+                                {
+                                    /* Window 공통화면 형태
+                                     */
+                                    FmsUtil.popWinView = new PopWinView(dr[0]["MNU_PATH"].ToString());
+                                    Label lbTitle = FmsUtil.popWinView.FindName("lbTitle") as Label;//화면타이틀
+                                    lbTitle.Content = dr[0]["MNU_NM"].ToString();
+
+                                    //팝업결과리턴
+                                    if (FmsUtil.popWinView.ShowDialog() is bool)
                                     {
                                         //재조회
                                     }
 
-                                }
-                                //일반 업무화면은 Page 형태의 팝업
-                                else
-                                {
+
+
+                                    /* Popup 공통화면 형태
                                     try
                                     {
                                         pmain = new PopMain(dr[0]["MNU_PATH"].ToString());
+                                        pmain.DataContext = this;//팝업에 현재데이터컨텍스트를 전달한다...
                                     }
                                     catch (Exception)
                                     {
@@ -467,6 +520,10 @@ namespace GTI.WFMS.Main
                                     pmain.Placement = PlacementMode.Left;
                                     pmain.HorizontalOffset = 100;
                                     pmain.IsOpen = true;
+                                    pmain.StaysOpen = false;
+                                    //pmain.Focusable = true;
+                                    //FmsUtil.__popMain = pmain; //열린팝업을 전역변수로 저장해놓음
+                                     */
                                 }
 
 
@@ -553,7 +610,7 @@ namespace GTI.WFMS.Main
         {
             try
             {
-                if (DXMessageBox.Show("시스템을 종료합니다.", "InfoFacility", MessageBoxButton.YesNo, MessageBoxImage.Question, MessageBoxResult.Yes) == MessageBoxResult.Yes)
+                if (DXMessageBox.Show("시스템을 종료합니다.", "InfoFMS", MessageBoxButton.YesNo, MessageBoxImage.Question, MessageBoxResult.Yes) == MessageBoxResult.Yes)
                 {
                     Hashtable logconditions = new Hashtable();
                     logconditions.Add("USER_ID", Logs.strLogin_ID);
@@ -741,7 +798,7 @@ namespace GTI.WFMS.Main
                 // 즐겨찾기메뉴 조회
                 Hashtable param = new Hashtable();
                 param.Add("sqlId", "Select_BASE_FLOW_CALC_INFO_R");
-                param.Add("SYS_CD", "000007");
+                param.Add("SYS_CD", FmsUtil.sysCd);
                 param.Add("USER_ID", Logs.strLogin_ID);
 
                 dtQuickMenuList = BizUtil.SelectList(param);
@@ -810,6 +867,47 @@ namespace GTI.WFMS.Main
                 Messages.ShowErrMsgBoxLog(ex);
             }
         }
+
+
+
+
+
+        /// <summary>
+        /// GIS에서 메뉴화면선택 수동액션
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        public void SelMenuPage(string strSelectMenu)
+        {
+            try
+            {
+                //strSelectMenu = (sender as Button).Name.Replace("MN_", "");
+                AccordionControl accrMenu = mainwin.FindName("accrMenu") as AccordionControl;
+
+                DataRow[] dr = dtMenuList.Select("MNU_CD = '" + strSelectMenu + "' AND MNU_STEP = '3'");
+
+                if (dr.Length == 1)
+                {
+                    if (!Logs.htPermission[strSelectMenu].ToString().Equals("N"))
+                    {
+                        if (!dr[0]["MNU_PATH"].ToString().Equals(""))
+                        {
+                            //탑메뉴버튼 수동클릭
+                            btnMenu_Click(mainwin.FindName("MN_" + dr[0]["MNU_CD"].ToString().Substring(0, 4)), null);
+                            //레프트메뉴(아코디언) 표시
+                            accrMenu.SelectedItem = mainwin.FindName("MN_" + dr[0]["MNU_CD"].ToString());
+                            //레프트메뉴 수동선택
+                            MenuControlAction(null);
+                        }
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                Messages.ShowErrMsgBoxLog(ex);
+            }
+        }
+
 
         #endregion
     }

@@ -30,24 +30,15 @@ namespace GTI.WFMS.Modules.Cnst.View
 
         public DataTable dt; //그리드데이터 소스
 
-
+        private string CNT_NUM;
         public WttSubcDtView(string _CNT_NUM)
         {
             InitializeComponent();
 
+            this.CNT_NUM = _CNT_NUM;
             this.txtCNT_NUM.EditValue = _CNT_NUM; //키를 뷰모델로 넘기기위해 뷰바인딩 활용
         }
 
-
-
-
-
-
-        //그리드행추가시 이벤트처리
-        private void AddingNewRow(object sender, System.ComponentModel.AddingNewEventArgs e)
-        {
-
-        }
 
 
         /// <summary>
@@ -57,27 +48,19 @@ namespace GTI.WFMS.Modules.Cnst.View
         /// <param name="e"></param>
         private void AllChk_Checked(object sender, RoutedEventArgs e)
         {
-
+            //CheckEdit ce = sender as CheckEdit;
+            //bool chk = ce.IsChecked is bool;
+            foreach (WttSubcDt row in ((List<WttSubcDt>)grid.ItemsSource))
+            {
+                row.CHK = "True";
+            }
         }
-
-
-        //행추가
-        private void BtnAdd_Click(object sender, RoutedEventArgs e)
+        private void AllChk_Unchecked(object sender, RoutedEventArgs e)
         {
-            //gv.AddNewRow();
-        }
-        //행삭제
-        private void BtnDel_Click(object sender, RoutedEventArgs e)
-        {
-            //gv.DeleteRow(gv.FocusedRowHandle);
-        }
-
-
-        //그리드저장
-        private void BtnReg_Click(object sender, RoutedEventArgs e)
-        {
-
-
+            foreach (WttSubcDt row in ((List<WttSubcDt>)grid.ItemsSource))
+            {
+                row.CHK = null;
+            }
         }
 
 
@@ -89,5 +72,6 @@ namespace GTI.WFMS.Modules.Cnst.View
                     Convert.ToDouble(grid.GetCellValueByListIndex(e.ListSourceRowIndex, "UnitsOnOrder"));
             }
         }
+
     }
 }

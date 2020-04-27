@@ -1,4 +1,5 @@
-﻿using GTIFramework.Common.MessageBox;
+﻿using GTI.WFMS.GIS;
+using GTIFramework.Common.MessageBox;
 using GTIFramework.Common.Utils.ViewEffect;
 using System;
 using System.Collections.Generic;
@@ -24,6 +25,7 @@ namespace GTI.WFMS.Main
         public MainWin()
         {
             InitializeComponent();
+
         }
 
         private void Border_PreviewMouseRightButtonDown(object sender, MouseButtonEventArgs e)
@@ -64,20 +66,25 @@ namespace GTI.WFMS.Main
                 Properties.Settings.Default.strThemeName = "GTINavyTheme";
                 Properties.Settings.Default.Save();
 
+
+
                 ThemeApply.strThemeName = "GTINavyTheme";
                 ThemeApply.ThemeChange(this);
-                ThemeApply.Themeapply(this);
-
                 //메뉴 Image 변경
                 foreach (var item in spMenuArea.Children)
                 {
                     if (item is Button)
+                    {
                         (item as Button).Tag = (item as Button).Tag.ToString().Replace("Blue", "Navy");
+                        (item as Button).Style = Application.Current.Resources["MainMNUButton"] as Style;
+                    }
                 }
+                ThemeApply.Themeapply(this);
+
 
                 ((sender as MenuItem).Parent as ContextMenu).IsOpen = false;
             }
-            catch (Exception ex)
+            catch (Exception )
             {
             }
         }
@@ -89,20 +96,24 @@ namespace GTI.WFMS.Main
                 Properties.Settings.Default.strThemeName = "GTIBlueTheme";
                 Properties.Settings.Default.Save();
 
+
+
                 ThemeApply.strThemeName = "GTIBlueTheme";
                 ThemeApply.ThemeChange(this);
-                ThemeApply.Themeapply(this);
-
                 //메뉴 Image 변경
                 foreach (var item in spMenuArea.Children)
                 {
                     if (item is Button)
+                    {
                         (item as Button).Tag = (item as Button).Tag.ToString().Replace("Navy", "Blue");
+                        (item as Button).Style = Application.Current.Resources["MainMNUButton"] as Style;
+                    }
                 }
+                ThemeApply.Themeapply(this);
 
                 ((sender as MenuItem).Parent as ContextMenu).IsOpen = false;
             }
-            catch (Exception ex)
+            catch (Exception )
             {
             }
         }

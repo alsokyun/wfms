@@ -13,7 +13,7 @@
        
         <!-- 조건1. 관리번호 -->
         <isNotEmpty prepend="AND" property="FTR_IDN">
-          A.FTR_IDN = #FTR_IDN#
+          A.FTR_IDN like #FTR_IDN# || '%'
         </isNotEmpty>
 
         <!-- 조건2. 행정읍면동 -->
@@ -95,7 +95,7 @@
         WHERE 1=1
       <!-- 조건1. 관리번호 -->
         <isNotEmpty prepend="AND" property="FTR_IDN">
-          A.FTR_IDN = #FTR_IDN#
+          A.FTR_IDN like #FTR_IDN# || '%'
         </isNotEmpty>
 
         <!-- 조건2. 행정읍면동 -->
@@ -155,36 +155,39 @@
     <select id="SelectHydtMetrDtl"  parameterClass="Hashtable" resultClass ="GTI.WFMS.Models.Acmf.Model.HydtMetrDtl">
       /* HydtMetrMap.SelectHydtMetrDtl 급수전계량기 상세정보*/
       <![CDATA[
-		 	 SELECT A.FTR_CDE
-            , (SELECT FTR_NAM FROM INFOFMS.V_FTR_CDE WHERE FTR_CDE = A.FTR_CDE) AS FTR_NAM
-            , A.FTR_IDN
-            , A.HJD_CDE
-            , (SELECT HJD_NAM FROM INFOFMS.CMT_ADAR_MA WHERE HJD_CDE = A.HJD_CDE) AS HJD_NAM
-            , A.SHT_NUM            
-            , decode(length(A.IST_YMD), 8, to_char(to_date(A.IST_YMD, 'yyyyMMdd'), 'yyyy-MM-dd'), '') AS IST_YMD
-            , A.HOM_NUM
-            , A.HOM_NAM
-            , A.HOM_CDE
-            , (SELECT HJD_NAM FROM INFOFMS.CMT_ADAR_MA WHERE HJD_CDE = A.HOM_CDE) AS HOM_CDE_NAM
-            , A.HOM_ADR
-            , A.HOM_CNT
-            , A.SBI_CDE
-            , (SELECT NM FROM INFOUSER.CD_DTL_INFO WHERE MST_CD = '250020' AND DTL_CD = A.SBI_CDE ) AS SBI_NAM
-            , A.MET_DIP
-            , A.MOF_CDE
-            , A.PRD_NUM
-            , A.PIP_CDE
-            , A.PIP_IDN
-            , A.CNT_NUM
-            , A.SYS_CHK
-            , A.MET_NUM
-            , A.MET_MOF
-            , A.HOM_HJD
-            , decode(A.SYS_CHK,'1','유','무') as SYS_CHK_NAM
-         FROM INFOFMS.WTL_META_PS A 
-			  WHERE 1=1
-          AND FTR_CDE = #FTR_CDE# 
-				  AND FTR_IDN = #FTR_IDN#
+        SELECT ROWNUM AS RNO, M.*
+          FROM (
+		 	           SELECT A.FTR_CDE
+                      , (SELECT FTR_NAM FROM INFOFMS.V_FTR_CDE WHERE FTR_CDE = A.FTR_CDE) AS FTR_NAM
+                      , A.FTR_IDN
+                      , A.HJD_CDE
+                      , (SELECT HJD_NAM FROM INFOFMS.CMT_ADAR_MA WHERE HJD_CDE = A.HJD_CDE) AS HJD_NAM
+                      , A.SHT_NUM            
+                      , a.IST_YMD
+                      , A.HOM_NUM
+                      , A.HOM_NAM
+                      , A.HOM_CDE
+                      , (SELECT HJD_NAM FROM INFOFMS.CMT_ADAR_MA WHERE HJD_CDE = A.HOM_CDE) AS HOM_CDE_NAM
+                      , A.HOM_ADR
+                      , A.HOM_CNT
+                      , A.SBI_CDE
+                      , (SELECT NM FROM INFOUSER.CD_DTL_INFO WHERE MST_CD = '250020' AND DTL_CD = A.SBI_CDE ) AS SBI_NAM
+                      , A.MET_DIP
+                      , A.MOF_CDE
+                      , A.PRD_NUM
+                      , A.PIP_CDE
+                      , A.PIP_IDN
+                      , A.CNT_NUM
+                      , A.SYS_CHK
+                      , A.MET_NUM
+                      , A.MET_MOF
+                      , A.HOM_HJD
+                      , decode(A.SYS_CHK,'1','유','무') as SYS_CHK_NAM
+                   FROM INFOFMS.WTL_META_PS A 
+			            WHERE 1=1
+                    AND FTR_CDE = #FTR_CDE# 
+				            AND FTR_IDN = #FTR_IDN# 
+                    ) M
 			]]>
     </select>
 
@@ -192,49 +195,49 @@
     <update id="insertHydtMetrDtl" parameterClass="GTI.WFMS.Models.Acmf.Model.HydtMetrDtl">
       INSERT INTO INFOFMS.WTL_META_PS
       (   FTR_CDE
-        , FTR_IDN
-        , HJD_CDE
-        , SHT_NUM
-        , IST_YMD
-        , HOM_NUM
-        , HOM_NAM
-        , HOM_CDE
-        , HOM_ADR
-        , HOM_CNT
-        , SBI_CDE
-        , MET_DIP
-        , MOF_CDE
-        , PRD_NUM
-        , PIP_CDE
-        , PIP_IDN
-        , CNT_NUM
-        , SYS_CHK
-        , MET_NUM
-        , MET_MOF
-        , HOM_HJD
+      , FTR_IDN
+      , HJD_CDE
+      , SHT_NUM
+      , IST_YMD
+      , HOM_NUM
+      , HOM_NAM
+      , HOM_CDE
+      , HOM_ADR
+      , HOM_CNT
+      , SBI_CDE
+      , MET_DIP
+      , MOF_CDE
+      , PRD_NUM
+      , PIP_CDE
+      , PIP_IDN
+      , CNT_NUM
+      , SYS_CHK
+      , MET_NUM
+      , MET_MOF
+      , HOM_HJD
       )
       VALUES
       (   #FTR_CDE#
-        , #FTR_IDN#
-        , #HJD_CDE#
-        , #SHT_NUM#
-        , decode(length(#IST_YMD#), 10, to_char(to_date(#IST_YMD#, 'yyyy-MM-dd'), 'yyyyMMdd'), '')
-        , #HOM_NUM#
-        , #HOM_NAM#
-        , #HOM_CDE#
-        , #HOM_ADR#
-        , #HOM_CNT#
-        , #SBI_CDE#
-        , #MET_DIP#
-        , #MOF_CDE#
-        , #PRD_NUM#
-        , #PIP_CDE#
-        , #PIP_IDN#
-        , #CNT_NUM#
-        , #SYS_CHK#
-        , #MET_NUM#
-        , #MET_MOF#
-        , #HOM_HJD#
+      , #FTR_IDN#
+      , #HJD_CDE#
+      , #SHT_NUM#
+      , #IST_YMD#
+      , #HOM_NUM#
+      , #HOM_NAM#
+      , #HOM_CDE#
+      , #HOM_ADR#
+      , #HOM_CNT#
+      , #SBI_CDE#
+      , #MET_DIP#
+      , #MOF_CDE#
+      , #PRD_NUM#
+      , #PIP_CDE#
+      , #PIP_IDN#
+      , #CNT_NUM#
+      , #SYS_CHK#
+      , #MET_NUM#
+      , #MET_MOF#
+      , #HOM_HJD#
       )
     </update>
 
@@ -242,27 +245,103 @@
     <update id="updateHydtMetrDtl" parameterClass="GTI.WFMS.Models.Acmf.Model.HydtMetrDtl">
       /* 급수전계량기 상세 수정 */
       UPDATE INFOFMS.WTL_META_PS
-        SET HJD_CDE = #HJD_CDE#
-          , SHT_NUM = #SHT_NUM#
-          , IST_YMD = decode(length(#IST_YMD#), 10, to_char(to_date(#IST_YMD#, 'yyyy-MM-dd'), 'yyyyMMdd'), '')
-          , HOM_NUM = #HOM_NUM#
-          , HOM_NAM = #HOM_NAM#
-          , HOM_CDE = #HOM_CDE#
-          , HOM_ADR = #HOM_ADR#
-          , HOM_CNT = #HOM_CNT#
-          , SBI_CDE = #SBI_CDE#
-          , MET_DIP = #MET_DIP#
-          , MOF_CDE = #MOF_CDE#
-          , PRD_NUM = #PRD_NUM#
-          , PIP_CDE = #PIP_CDE#
-          , PIP_IDN = #PIP_IDN#
-          , CNT_NUM = #CNT_NUM#
-          , SYS_CHK = #SYS_CHK#
-          , MET_NUM = #MET_NUM#
-          , MET_MOF = #MET_MOF#
-          , HOM_HJD = #HOM_HJD#
+      SET HJD_CDE = #HJD_CDE#
+      , SHT_NUM = #SHT_NUM#
+      , IST_YMD = #IST_YMD#
+      , HOM_NUM = #HOM_NUM#
+      , HOM_NAM = #HOM_NAM#
+      , HOM_CDE = #HOM_CDE#
+      , HOM_ADR = #HOM_ADR#
+      , HOM_CNT = #HOM_CNT#
+      , SBI_CDE = #SBI_CDE#
+      , MET_DIP = #MET_DIP#
+      , MOF_CDE = #MOF_CDE#
+      , PRD_NUM = #PRD_NUM#
+      , PIP_CDE = #PIP_CDE#
+      , PIP_IDN = #PIP_IDN#
+      , CNT_NUM = #CNT_NUM#
+      , SYS_CHK = #SYS_CHK#
+      , MET_NUM = #MET_NUM#
+      , MET_MOF = #MET_MOF#
+      , HOM_HJD = #HOM_HJD#
       WHERE FTR_CDE = #FTR_CDE#
-        AND	FTR_IDN = #FTR_IDN#
+      AND	FTR_IDN = #FTR_IDN#
+    </update>
+
+    <update id="SaveHydtMetrDtl" parameterClass="GTI.WFMS.Models.Acmf.Model.HydtMetrDtl">
+      MERGE INTO INFOFMS.WTL_META_PS
+      USING DUAL ON (FTR_CDE = #FTR_CDE# AND	FTR_IDN = #FTR_IDN#)
+
+      WHEN MATCHED THEN
+      UPDATE
+      SET HJD_CDE = #HJD_CDE#
+      , SHT_NUM = #SHT_NUM#
+      , IST_YMD = #IST_YMD#
+      , HOM_NUM = #HOM_NUM#
+      , HOM_NAM = #HOM_NAM#
+      , HOM_CDE = #HOM_CDE#
+      , HOM_ADR = #HOM_ADR#
+      , HOM_CNT = #HOM_CNT#
+      , SBI_CDE = #SBI_CDE#
+      , MET_DIP = #MET_DIP#
+      , MOF_CDE = #MOF_CDE#
+      , PRD_NUM = #PRD_NUM#
+      , PIP_CDE = #PIP_CDE#
+      , PIP_IDN = #PIP_IDN#
+      , CNT_NUM = #CNT_NUM#
+      , SYS_CHK = #SYS_CHK#
+      , MET_NUM = #MET_NUM#
+      , MET_MOF = #MET_MOF#
+      , HOM_HJD = #HOM_HJD#
+
+
+      WHEN NOT MATCHED THEN
+      INSERT
+      (   FTR_CDE
+      , FTR_IDN
+      , HJD_CDE
+      , SHT_NUM
+      , IST_YMD
+      , HOM_NUM
+      , HOM_NAM
+      , HOM_CDE
+      , HOM_ADR
+      , HOM_CNT
+      , SBI_CDE
+      , MET_DIP
+      , MOF_CDE
+      , PRD_NUM
+      , PIP_CDE
+      , PIP_IDN
+      , CNT_NUM
+      , SYS_CHK
+      , MET_NUM
+      , MET_MOF
+      , HOM_HJD
+      )
+      VALUES
+      (   #FTR_CDE#
+      , #FTR_IDN#
+      , #HJD_CDE#
+      , #SHT_NUM#
+      , #IST_YMD#
+      , #HOM_NUM#
+      , #HOM_NAM#
+      , #HOM_CDE#
+      , #HOM_ADR#
+      , #HOM_CNT#
+      , #SBI_CDE#
+      , #MET_DIP#
+      , #MOF_CDE#
+      , #PRD_NUM#
+      , #PIP_CDE#
+      , #PIP_IDN#
+      , #CNT_NUM#
+      , #SYS_CHK#
+      , #MET_NUM#
+      , #MET_MOF#
+      , #HOM_HJD#
+      )
     </update>
 
     <!--급수전계량기 상세삭제-->

@@ -1,4 +1,7 @@
-﻿using DevExpress.Xpf.Editors;
+﻿using DevExpress.DataAccess.ObjectBinding;
+using DevExpress.Xpf.Editors;
+using DevExpress.XtraReports.UI;
+using GTI.WFMS.Models.Cmm.Model;
 using GTI.WFMS.Models.Common;
 using GTI.WFMS.Models.Pipe.Model;
 using GTI.WFMS.Modules.Pipe.View;
@@ -7,6 +10,7 @@ using GTIFramework.Common.MessageBox;
 using Prism.Commands;
 using System;
 using System.Collections;
+using System.Collections.Generic;
 using System.Data;
 using System.Reflection;
 using System.Windows;
@@ -16,7 +20,7 @@ namespace GTI.WFMS.Modules.Pipe.ViewModel
 {
     public class ValvFacDtlViewModel : ValvFacDtl
     {
-
+        public List<LinkFmsChscFtrRes> Tab01List { get; set; }
 
         #region ==========  Properties 정의 ==========
         /// <summary>
@@ -24,6 +28,7 @@ namespace GTI.WFMS.Modules.Pipe.ViewModel
         /// </summary>
         public DelegateCommand<object> LoadedCommand { get; set; }
         public DelegateCommand<object> SaveCommand { get; set; }
+        public DelegateCommand<object> PrintCommand { get; set; }
         public DelegateCommand<object> DeleteCommand { get; set; }
         public DelegateCommand<object> BackCommand { get; set; }
 
@@ -34,8 +39,6 @@ namespace GTI.WFMS.Modules.Pipe.ViewModel
         #region ==========  Member 정의 ==========
         ValvFacDtlView valvFacDtlView;
       
-        ComboBoxEdit cbFTR_CDE; DataTable dtFTR_CDE = new DataTable();		//지형지물
-        ComboBoxEdit cbHJD_CDE; DataTable dtHJD_CDE = new DataTable();		//행정동
         ComboBoxEdit cbMNG_CDE; DataTable dtMNG_CDE = new DataTable();		//관리기관
         ComboBoxEdit cbVAL_MOF; DataTable dtVAL_MOF = new DataTable();		//형식
         ComboBoxEdit cbVAL_MOP; DataTable dtVAL_MOP = new DataTable();		//관재질
@@ -59,14 +62,11 @@ namespace GTI.WFMS.Modules.Pipe.ViewModel
         {
             this.LoadedCommand = new DelegateCommand<object>(OnLoaded);
             this.SaveCommand = new DelegateCommand<object>(OnSave);
+            this.PrintCommand = new DelegateCommand<object>(OnPrint);
             this.DeleteCommand = new DelegateCommand<object>(OnDelete);
             this.BackCommand = new DelegateCommand<object>(OnBack);
             
         }
-
-
-
-
 
         #region ==========  이벤트 핸들러 ==========
 
@@ -162,12 +162,46 @@ namespace GTI.WFMS.Modules.Pipe.ViewModel
             {
                 BizUtil.Update2(this, "updateValvFacDtl");
             }
-            catch (Exception e)
+            catch (Exception )
             {
                 Messages.ShowErrMsgBox("저장 처리중 오류가 발생하였습니다.");
                 return;
             }
             Messages.ShowOkMsgBox();
+
+        }
+
+        /// <summary>
+        /// 인쇄작업
+        /// </summary>
+        /// <param name="obj"></param>
+        private void OnPrint(object obj)
+        {
+
+            // 필수체크 (Tag에 필수체크 표시한 EditBox, ComboBox 대상으로 수행)
+            //if (!BizUtil.ValidReq(valvFacDtlView)) return;
+
+            //if (Messages.ShowYesNoMsgBox("인쇄하시겠습니까?") != MessageBoxResult.Yes) return;
+
+            try
+            {
+                //0.Datasource 생성
+                ValvFacDtlViewMdl mdl = new ValvFacDtlViewMdl(this.FTR_CDE, this.FTR_IDN);
+                //1.Report 호출
+
+                ValvFacReport report = new ValvFacReport();
+                ObjectDataSource ods = new ObjectDataSource();
+                ods.Name = "objectDataSource1";
+                ods.DataSource = mdl;
+
+                report.DataSource = ods;
+                report.ShowPreviewDialog();
+            }
+            catch (Exception)
+            {
+                Messages.ShowErrMsgBox("인쇄 처리중 오류가 발생하였습니다.");
+                return;
+            }
 
         }
 
@@ -180,8 +214,7 @@ namespace GTI.WFMS.Modules.Pipe.ViewModel
             //0.삭제전 체크
             Hashtable param = new Hashtable();
             param.Add("sqlId" , "selectChscResSubList");
-            param.Add("sqlId2", "selectFileMapList");
-            param.Add("sqlId3", "selectWtlLeakSubList");
+            param.Add("sqlId2", "SelectFileMapList");
 
             param.Add("FTR_CDE", this.FTR_CDE);
             param.Add("FTR_IDN", this.FTR_IDN);
@@ -190,7 +223,6 @@ namespace GTI.WFMS.Modules.Pipe.ViewModel
             Hashtable result = BizUtil.SelectLists(param);
             DataTable dt  = new DataTable();
             DataTable dt2 = new DataTable();
-            DataTable dt3 = new DataTable();
 
             try
             {
@@ -212,26 +244,14 @@ namespace GTI.WFMS.Modules.Pipe.ViewModel
                 }
             }
             catch (Exception) { }
-            try
-            {
-                dt3 = result["dt3"] as DataTable;
-                if (dt3.Rows.Count > 0)
-                {
-                    Messages.ShowErrMsgBox("누수지점내역이 존재합니다.");
-                    return;
-                }
-            }
-            catch (Exception) { }
-
-
-
+           
             // 1.삭제처리
-            if (Messages.ShowYesNoMsgBox("변로를 삭제하시겠습니까?") != MessageBoxResult.Yes) return;
+            if (Messages.ShowYesNoMsgBox("변류시설를 삭제하시겠습니까?") != MessageBoxResult.Yes) return;
             try
             {
                 BizUtil.Update2(this, "deleteValvFacDtl");
             }
-            catch (Exception e)
+            catch (Exception )
             {
                 Messages.ShowErrMsgBox("삭제 처리중 오류가 발생하였습니다.");
                 return;
@@ -271,32 +291,32 @@ namespace GTI.WFMS.Modules.Pipe.ViewModel
                 //BizUtil.SetCombo(cbFTR_CDE, "Select_FTR_LIST", "FTR_CDE", "FTR_NAM", false);
 
                 // cbHJD_CDE 행정동
-                // BizUtil.SetCombo(cbHJD_CDE, "Select_ADAR_LIST", "HJD_CDE", "HJD_NAM", true);
+                // BizUtil.SetCombo(cbHJD_CDE, "Select_ADAR_LIST", "HJD_CDE", "HJD_NAM", "[선택하세요]");
 
                 // cbMNG_CDE 관리기관
-                BizUtil.SetCmbCode(cbMNG_CDE, "MNG_CDE", true);
+                BizUtil.SetCmbCode(cbMNG_CDE, "250101", "[선택하세요]");
 
 
                 // cbVAL_MOF 형식
-                BizUtil.SetCmbCode(cbVAL_MOF, "MOF_CDE", true, "250016");
+                BizUtil.SetCmbCode(cbVAL_MOF, "250016", "[선택하세요]");
 
                 // cbVAL_MOP 관재질
-                BizUtil.SetCmbCode(cbVAL_MOP, "MOP_CDE", true, "250015");
+                BizUtil.SetCmbCode(cbVAL_MOP, "250015", "[선택하세요]");
 
                 // cbSAE_CDE    제수변회전방향
-                BizUtil.SetCmbCode(cbSAE_CDE, "SAE_CDE", true);
+                BizUtil.SetCmbCode(cbSAE_CDE, "250027", "[선택하세요]");
 
                 // cbMTH_CDE    제수변구동방법
-                BizUtil.SetCmbCode(cbMTH_CDE, "MTH_CDE", true);
+                BizUtil.SetCmbCode(cbMTH_CDE, "250065", "[선택하세요]");
 
                 // cbVAL_FOR    시설물형태(=구조물형태)
-                BizUtil.SetCmbCode(cbVAL_FOR, "FOR_CDE", true);
+                BizUtil.SetCmbCode(cbVAL_FOR, "250007", "[선택하세요]");
 
                 // cbCST_CDE    이상상태
-                BizUtil.SetCmbCode(cbCST_CDE, "CST_CDE", true);
+                BizUtil.SetCmbCode(cbCST_CDE, "250062", "[선택하세요]");
 
                 // cbOFF_CDE    개폐여부
-                BizUtil.SetCmbCode(cbOFF_CDE, "OFF_CDE", true);
+                BizUtil.SetCmbCode(cbOFF_CDE, "250036", "[선택하세요]");
 
             }
             catch (Exception ex)

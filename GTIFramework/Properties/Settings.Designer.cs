@@ -25,18 +25,6 @@ namespace GTIFramework.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("172.16.0.4")]
-        public string strIP {
-            get {
-                return ((string)(this["strIP"]));
-            }
-            set {
-                this["strIP"] = value;
-            }
-        }
-        
-        [global::System.Configuration.UserScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("8629")]
         public string strPort {
             get {
@@ -49,7 +37,7 @@ namespace GTIFramework.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("infouser")]
+        [global::System.Configuration.DefaultSettingValueAttribute("infofms")]
         public string strID {
             get {
                 return ((string)(this["strID"]));
@@ -61,7 +49,7 @@ namespace GTIFramework.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("infouser")]
+        [global::System.Configuration.DefaultSettingValueAttribute("infofms")]
         public string strPWD {
             get {
                 return ((string)(this["strPWD"]));
@@ -97,13 +85,13 @@ namespace GTIFramework.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("D:\\DEVGTI\\GTI.WFMS\\shape")]
-        public string SHAPE {
+        [global::System.Configuration.DefaultSettingValueAttribute("211.105.28.40")]
+        public string strIP {
             get {
-                return ((string)(this["SHAPE"]));
+                return ((string)(this["strIP"]));
             }
             set {
-                this["SHAPE"] = value;
+                this["strIP"] = value;
             }
         }
     }

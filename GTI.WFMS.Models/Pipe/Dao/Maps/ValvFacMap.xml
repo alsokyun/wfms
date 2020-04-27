@@ -2,7 +2,7 @@
 <sqlMap namespace="Main" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://ibatis.apache.org/mapping">
   <statements>
 
-    <!--상수관로-->
+    <!--변류시설-->
     <select id ="SelectValvFacList" parameterClass="Hashtable" resultClass ="Hashtable">
       /* ValvFacMap.SelectValvFacList 변류시설 목록*/
 
@@ -17,7 +17,12 @@
 
       <!-- 조건2. 관리번호 -->
       <isNotEmpty prepend="AND" property="FTR_IDN">
-        A.FTR_IDN = #FTR_IDN#
+        A.FTR_IDN like #FTR_IDN# || '%'
+      </isNotEmpty>
+
+      <!-- 조건2. 관리번호 -->
+      <isNotEmpty prepend="AND" property="FTR_CDE">
+        A.FTR_CDE= #FTR_CDE#
       </isNotEmpty>
 
       <!-- 조건3. 행정읍면동 -->
@@ -109,7 +114,12 @@
 
       <!-- 조건2. 관리번호 -->
       <isNotEmpty prepend="AND" property="FTR_IDN">
-        A.FTR_IDN = #FTR_IDN#
+        A.FTR_IDN like #FTR_IDN# || '%'
+      </isNotEmpty>
+
+      <!-- 조건2. 관리번호 -->
+      <isNotEmpty prepend="AND" property="FTR_CDE">
+        A.FTR_CDE= #FTR_CDE#
       </isNotEmpty>
 
       <!-- 조건3. 행정읍면동 -->
@@ -177,7 +187,7 @@
            , A.SHT_NUM
            , A.MNG_CDE
            , (SELECT NM FROM INFOUSER.CD_DTL_INFO WHERE MST_CD = '250101' AND DTL_CD = A.MNG_CDE ) AS MNG_NAM
-           , decode(length(IST_YMD), 8, to_char(to_date(IST_YMD, 'yyyyMMdd'), 'yyyy-MM-dd'), '') AS IST_YMD
+           , A.IST_YMD
            , A.VAL_MOF
            , (SELECT NM FROM INFOUSER.CD_DTL_INFO WHERE MST_CD = '250016' AND DTL_CD = A.VAL_MOF ) AS MOF_NAM
            , A.VAL_MOP
@@ -248,7 +258,7 @@
       , #HJD_CDE#
       , #SHT_NUM#
       , #MNG_CDE#
-      , decode(length(#IST_YMD#), 10, to_char(to_date(#IST_YMD#, 'yyyy-MM-dd'), 'yyyyMMdd'), '')
+      , #IST_YMD#
       , #VAL_MOF#
       , #VAL_MOP#
       , #VAL_DIP#
@@ -277,7 +287,7 @@
       SET HJD_CDE = #HJD_CDE#
       , SHT_NUM = #SHT_NUM#
       , MNG_CDE = #MNG_CDE#
-      , IST_YMD = decode(length(#IST_YMD#), 10, to_char(to_date(#IST_YMD#, 'yyyy-MM-dd'), 'yyyyMMdd'), '')
+      , IST_YMD = #IST_YMD#
       , VAL_MOF = #VAL_MOF#
       , VAL_MOP = #VAL_MOP#
       , VAL_DIP = #VAL_DIP#
@@ -298,6 +308,94 @@
       , ANG_DIR = #ANG_DIR#
       WHERE FTR_CDE = #FTR_CDE#
       AND	FTR_IDN = #FTR_IDN#
+    </update>
+
+    <update id="SaveValvFacDtl" parameterClass="GTI.WFMS.Models.Pipe.Model.ValvFacDtl">
+      MERGE INTO INFOFMS.WTL_VALV_PS
+      USING DUAL ON (FTR_CDE = #FTR_CDE# AND	FTR_IDN = #FTR_IDN#)
+
+      WHEN MATCHED THEN
+
+      UPDATE
+      SET HJD_CDE = #HJD_CDE#
+      , SHT_NUM = #SHT_NUM#
+      , MNG_CDE = #MNG_CDE#
+      , IST_YMD = #IST_YMD#
+      , VAL_MOF = #VAL_MOF#
+      , VAL_MOP = #VAL_MOP#
+      , VAL_DIP = #VAL_DIP#
+      , SAE_CDE = #SAE_CDE#
+      , TRO_CNT = #TRO_CNT#
+      , CRO_CNT = #CRO_CNT#
+      , MTH_CDE = #MTH_CDE#
+      , VAL_FOR = #VAL_FOR#
+      , VAL_STD = #VAL_STD#
+      , VAL_SAF = #VAL_SAF#
+      , PRD_NAM = #PRD_NAM#
+      , PIP_CDE = #PIP_CDE#
+      , PIP_IDN = #PIP_IDN#
+      , CST_CDE = #CST_CDE#
+      , OFF_CDE = #OFF_CDE#
+      , CNT_NUM = #CNT_NUM#
+      , SYS_CHK = #SYS_CHK#
+      , ANG_DIR = #ANG_DIR#
+
+
+      WHEN NOT MATCHED THEN
+      INSERT
+      (
+      FTR_CDE
+      , FTR_IDN
+      , HJD_CDE
+      , SHT_NUM
+      , MNG_CDE
+      , IST_YMD
+      , VAL_MOF
+      , VAL_MOP
+      , VAL_DIP
+      , SAE_CDE
+      , TRO_CNT
+      , CRO_CNT
+      , MTH_CDE
+      , VAL_FOR
+      , VAL_STD
+      , VAL_SAF
+      , PRD_NAM
+      , PIP_CDE
+      , PIP_IDN
+      , CST_CDE
+      , OFF_CDE
+      , CNT_NUM
+      , SYS_CHK
+      , ANG_DIR
+      )
+      VALUES
+      (
+      #FTR_CDE#
+      , #FTR_IDN#
+      , #HJD_CDE#
+      , #SHT_NUM#
+      , #MNG_CDE#
+      , #IST_YMD#
+      , #VAL_MOF#
+      , #VAL_MOP#
+      , #VAL_DIP#
+      , #SAE_CDE#
+      , #TRO_CNT#
+      , #CRO_CNT#
+      , #MTH_CDE#
+      , #VAL_FOR#
+      , #VAL_STD#
+      , #VAL_SAF#
+      , #PRD_NAM#
+      , #PIP_CDE#
+      , #PIP_IDN#
+      , #CST_CDE#
+      , #OFF_CDE#
+      , #CNT_NUM#
+      , #SYS_CHK#
+      , #ANG_DIR#
+      )
     </update>
 
     <!--변류시설 상세삭제-->

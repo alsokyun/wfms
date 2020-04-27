@@ -1,6 +1,9 @@
-﻿using DevExpress.Xpf.Editors;
+﻿using DevExpress.DataAccess.ObjectBinding;
+using DevExpress.Xpf.Editors;
+using DevExpress.XtraReports.UI;
 using GTI.WFMS.Models.Common;
 using GTI.WFMS.Models.Pipe.Model;
+using GTI.WFMS.Modules.Pipe.Report;
 using GTI.WFMS.Modules.Pipe.View;
 using GTIFramework.Common.Log;
 using GTIFramework.Common.MessageBox;
@@ -24,6 +27,7 @@ namespace GTI.WFMS.Modules.Pipe.ViewModel
         /// </summary>
         public DelegateCommand<object> LoadedCommand { get; set; }
         public DelegateCommand<object> SaveCommand { get; set; }
+        public DelegateCommand<object> PrintCommand { get; set; }
         public DelegateCommand<object> DeleteCommand { get; set; }
         public DelegateCommand<object> BackCommand { get; set; }
 
@@ -35,7 +39,7 @@ namespace GTI.WFMS.Modules.Pipe.ViewModel
         WtprMtDtlView wtprMtDtlView;
       
         //ComboBoxEdit cbFTR_CDE; DataTable dtFTR_CDE = new DataTable();	//지형지물
-        //ComboBoxEdit cbHJD_CDE; DataTable dtHJD_CDE = new DataTable();	//행정동
+        ComboBoxEdit cbHJD_CDE; DataTable dtHJD_CDE = new DataTable();	//행정동
         ComboBoxEdit cbMNG_CDE; DataTable dtMNG_CDE = new DataTable();		//관리기관
         ComboBoxEdit cbPGA_CDE; DataTable dtPGA_CDE = new DataTable();      //수압계종류
         ComboBoxEdit cbMOF_CDE; DataTable dtMOF_CDE = new DataTable();      //형식
@@ -54,6 +58,7 @@ namespace GTI.WFMS.Modules.Pipe.ViewModel
         {
             this.LoadedCommand = new DelegateCommand<object>(OnLoaded);
             this.SaveCommand = new DelegateCommand<object>(OnSave);
+            this.PrintCommand = new DelegateCommand<object>(OnPrint);
             this.DeleteCommand = new DelegateCommand<object>(OnDelete);
             this.BackCommand = new DelegateCommand<object>(OnBack);
             
@@ -75,7 +80,7 @@ namespace GTI.WFMS.Modules.Pipe.ViewModel
 
                 wtprMtDtlView = values[0] as WtprMtDtlView;
                 //cbFTR_CDE = wtprMtDtlView.cbFTR_CDE;     //지형지물
-                //cbHJD_CDE = wtprMtDtlView.cbHJD_CDE;     //행정동
+                cbHJD_CDE = wtprMtDtlView.cbHJD_CDE;     //행정동
                 cbMNG_CDE = wtprMtDtlView.cbMNG_CDE;       //관리기관
                 cbPGA_CDE = wtprMtDtlView.cbPGA_CDE;       //수압계종류
                 cbMOF_CDE = wtprMtDtlView.cbMOF_CDE;       //형식
@@ -148,13 +153,45 @@ namespace GTI.WFMS.Modules.Pipe.ViewModel
             {
                 BizUtil.Update2(this, "updateWtprMtDtl");
             }
-            catch (Exception e)
+            catch (Exception )
             {
                 Messages.ShowErrMsgBox("저장 처리중 오류가 발생하였습니다.");
                 return;
             }
             Messages.ShowOkMsgBox();
 
+        }
+
+        /// <summary>
+        /// 인쇄작업
+        /// </summary>
+        /// <param name="obj"></param>
+        private void OnPrint(object obj)
+        {
+            // 필수체크 (Tag에 필수체크 표시한 EditBox, ComboBox 대상으로 수행)
+            //if (!BizUtil.ValidReq(wtprMtDtlView)) return;
+
+            //if (Messages.ShowYesNoMsgBox("인쇄하시겠습니까?") != MessageBoxResult.Yes) return;
+
+            try
+            {
+                //0.Datasource 생성
+                WtprMtDtlViewMdl mdl = new WtprMtDtlViewMdl(this.FTR_CDE, this.FTR_IDN);
+                //1.Report 호출
+                WtprMtReport report = new WtprMtReport();
+                ObjectDataSource ods = new ObjectDataSource();
+                ods.Name = "objectDataSource1";
+                ods.DataSource = mdl;
+
+                report.DataSource = ods;
+                report.ShowPreviewDialog();
+
+            }
+            catch (Exception)
+            {
+                Messages.ShowErrMsgBox("인쇄 처리중 오류가 발생하였습니다.");
+                return;
+            }
         }
 
         /// <summary>
@@ -166,8 +203,7 @@ namespace GTI.WFMS.Modules.Pipe.ViewModel
             //0.삭제전 체크
             Hashtable param = new Hashtable();
             param.Add("sqlId" , "selectChscResSubList");
-            param.Add("sqlId2", "selectFileMapList");
-            param.Add("sqlId3", "selectWtlLeakSubList");
+            param.Add("sqlId2", "SelectFileMapList");
 
             param.Add("FTR_CDE", this.FTR_CDE);
             param.Add("FTR_IDN", this.FTR_IDN);
@@ -176,7 +212,6 @@ namespace GTI.WFMS.Modules.Pipe.ViewModel
             Hashtable result = BizUtil.SelectLists(param);
             DataTable dt  = new DataTable();
             DataTable dt2 = new DataTable();
-            DataTable dt3 = new DataTable();
 
             try
             {
@@ -196,28 +231,18 @@ namespace GTI.WFMS.Modules.Pipe.ViewModel
                     Messages.ShowErrMsgBox("파일첨부내역이 존재합니다.");
                     return;
                 }
-            }
-            catch (Exception) { }
-            try
-            {
-                dt3 = result["dt3"] as DataTable;
-                if (dt3.Rows.Count > 0)
-                {
-                    Messages.ShowErrMsgBox("누수지점내역이 존재합니다.");
-                    return;
-                }
-            }
+            }           
             catch (Exception) { }
 
 
 
             // 1.삭제처리
-            if (Messages.ShowYesNoMsgBox("변로를 삭제하시겠습니까?") != MessageBoxResult.Yes) return;
+            if (Messages.ShowYesNoMsgBox("수압계시설를 삭제하시겠습니까?") != MessageBoxResult.Yes) return;
             try
             {
                 BizUtil.Update2(this, "deleteWtprMtDtl");
             }
-            catch (Exception e)
+            catch (Exception )
             {
                 Messages.ShowErrMsgBox("삭제 처리중 오류가 발생하였습니다.");
                 return;
@@ -257,16 +282,16 @@ namespace GTI.WFMS.Modules.Pipe.ViewModel
                 //BizUtil.SetCombo(cbFTR_CDE, "Select_FTR_LIST", "FTR_CDE", "FTR_NAM", false);
 
                 // cbHJD_CDE 행정동
-                // BizUtil.SetCombo(cbHJD_CDE, "Select_ADAR_LIST", "HJD_CDE", "HJD_NAM", true);
+                BizUtil.SetCombo(cbHJD_CDE, "Select_ADAR_LIST", "HJD_CDE", "HJD_NAM", "[선택하세요]");
 
                 // cbMNG_CDE 관리기관
-                BizUtil.SetCmbCode(cbMNG_CDE, "MNG_CDE", true);
+                BizUtil.SetCmbCode(cbMNG_CDE, "250101", "[선택하세요]");
 
                 // cbPGA_CDE 수압계종류
-                BizUtil.SetCmbCode(cbPGA_CDE, "PGA_CDE", true);
+                BizUtil.SetCmbCode(cbPGA_CDE, "250057", "[선택하세요]");
 
                 // cbMOF_CDE 형식
-                BizUtil.SetCmbCode(cbMOF_CDE, "MOF_CDE", true, "250035");
+                BizUtil.SetCmbCode(cbMOF_CDE, "250035", "[선택하세요]");
 
             }
             catch (Exception ex)

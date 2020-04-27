@@ -94,9 +94,10 @@
 
     <!--시설물코드 List -->
     <select id ="Select_FTR_LIST" parameterClass="Hashtable" resultClass ="Hashtable">
-      SELECT FTR_CDE, FTR_NAM FROM V_FTR_CDE
+      SELECT FTR_CDE, FTR_NAM 
+      FROM V_FTR_CDE
       WHERE 1=1
-      ORDER BY FTR_NAM
+      ORDER BY FTR_CDE
     </select>
 
   </statements>

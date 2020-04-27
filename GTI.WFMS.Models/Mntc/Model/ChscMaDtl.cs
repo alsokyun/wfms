@@ -1,5 +1,6 @@
 ﻿using DevExpress.Mvvm.POCO;
 using GTI.WFMS.Models.Cmm.Model;
+using GTI.WFMS.Models.Common;
 using System;
 using System.ComponentModel;
 using System.Globalization;
@@ -21,6 +22,7 @@ namespace GTI.WFMS.Models.Mntc.Model
         }
 
 
+        Date3StrConverter date3StrConverter = new Date3StrConverter();
 
 
         // dxmvvm 모델형태로 생성자 구현
@@ -221,10 +223,27 @@ namespace GTI.WFMS.Models.Mntc.Model
         private string __CHK_APR_YMD;
         public string CHK_APR_YMD
         {
-            get { return __CHK_APR_YMD; }
+            get
+            {
+                try
+                {
+                    return date3StrConverter.Convert(__CHK_APR_YMD, null, null, null) as string ; //yyyy-MM-dd 형태변환
+                }
+                catch (Exception)
+                {
+                    return __CHK_APR_YMD;
+                }
+            }
             set
             {
-                this.__CHK_APR_YMD = value;
+                try
+                {
+                    this.__CHK_APR_YMD = date3StrConverter.ConvertBack(value, null, null, null) as string; //yyyyMMdd 형태변환
+                }
+                catch (Exception)
+                {
+                    this.__CHK_APR_YMD = value;
+                }
                 RaisePropertyChanged("CHK_APR_YMD");
             }
         }
@@ -241,20 +260,54 @@ namespace GTI.WFMS.Models.Mntc.Model
         private string __CHK_CMP_YMD;
         public string CHK_CMP_YMD
         {
-            get { return __CHK_CMP_YMD; }
+            get
+            {
+                try
+                {
+                    return date3StrConverter.Convert(__CHK_CMP_YMD, null, null, null) as string; //yyyy-MM-dd 형태변환
+                }
+                catch (Exception)
+                {
+                    return __CHK_CMP_YMD;
+                }
+            }
             set
             {
-                this.__CHK_CMP_YMD = value;
+                try
+                {
+                    this.__CHK_CMP_YMD = date3StrConverter.ConvertBack(value, null, null, null) as string; //yyyyMMdd 형태변환
+                }
+                catch (Exception)
+                {
+                    this.__CHK_CMP_YMD = value;
+                }
                 RaisePropertyChanged("CHK_CMP_YMD");
             }
         }
         private string __CHK_RESULT_YMD;
         public string CHK_RESULT_YMD
         {
-            get { return __CHK_RESULT_YMD; }
+            get
+            {
+                try
+                {
+                    return date3StrConverter.Convert(__CHK_RESULT_YMD, null, null, null) as string; //yyyy-MM-dd 형태변환
+                }
+                catch (Exception)
+                {
+                    return __CHK_RESULT_YMD;
+                }
+            }
             set
             {
-                this.__CHK_RESULT_YMD = value;
+                try
+                {
+                    this.__CHK_RESULT_YMD = date3StrConverter.ConvertBack(value, null, null, null) as string; //yyyyMMdd 형태변환
+                }
+                catch (Exception)
+                {
+                    this.__CHK_RESULT_YMD = value;
+                }
                 RaisePropertyChanged("CHK_RESULT_YMD");
             }
         }
@@ -306,6 +359,16 @@ namespace GTI.WFMS.Models.Mntc.Model
             {
                 this.__UPD_USR = value;
                 RaisePropertyChanged("UPD_USR");
+            }
+        }
+        private string __CHK_GRP_NM;
+        public string CHK_GRP_NM
+        {
+            get { return __CHK_GRP_NM; }
+            set
+            {
+                this.__CHK_GRP_NM = value;
+                RaisePropertyChanged("CHK_GRP_NM");
             }
         }
 

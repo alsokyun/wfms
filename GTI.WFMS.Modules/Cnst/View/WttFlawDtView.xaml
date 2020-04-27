@@ -4,13 +4,13 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-             xmlns:local="clr-namespace:GTI.WFMS.Modules.Cnst.View"
              mc:Ignorable="d" 
              d:DesignHeight="300" d:DesignWidth="900"
              
+             xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
              xmlns:vm="clr-namespace:GTI.WFMS.Modules.Cnst.ViewModel"
-             xmlns:cm="clr-namespace:GTIFramework.Common.Utils.Converters;assembly=GTIFramework"
              xmlns:cv="clr-namespace:GTI.WFMS.Models.Common;assembly=GTI.WFMS.Models"
+             x:Name="wttFlawDtView"
              >
 
     <UserControl.Resources>
@@ -19,7 +19,9 @@
         <cv:Date3StrConverter x:Key="date2StrConverter" />
     </UserControl.Resources>
 
-
+    <UserControl.DataContext>
+        <vm:WttFlawDtViewModel/>
+    </UserControl.DataContext>
 
 
 
@@ -31,14 +33,16 @@
         </Grid.RowDefinitions>
 
 
-        <StackPanel Grid.Row="0" Orientation="Horizontal" HorizontalAlignment="Right" Margin="0 0 5 3">
-            <Button x:Name="btnAdd" Style="{DynamicResource ResourceKey=GrdAddButton}" Click="BtnAdd_Click"  />
-            <Button x:Name="btnDel" Style="{DynamicResource ResourceKey=GrdDelButton}" Click="BtnDel_Click"  />
-            <Button x:Name="btnReg" Style="{DynamicResource ResourceKey=GrdRegButton}" Click="BtnReg_Click"  />
+        <StackPanel Grid.Row="0" Orientation="Horizontal" HorizontalAlignment="Right" Margin="0 0 5 0">
+            <!--히든키-->
+            <dxe:TextEdit x:Name="txtCNT_NUM" EditValue="{Binding CNT_NUM, UpdateSourceTrigger=PropertyChanged}" Visibility="Collapsed"/>
+            <Button x:Name="btnAdd" Style="{DynamicResource ResourceKey=GrdAddButton}" Command="{Binding AddCommand}" />
+            <Button x:Name="btnDel" Style="{DynamicResource ResourceKey=GrdDelButton}" Command="{Binding DelCommand}" />
+            <Button x:Name="btnReg" Style="{DynamicResource ResourceKey=GrdRegButton}" Command="{Binding SaveCommand }"  />
         </StackPanel>
 
 
-        <dxg:GridControl Grid.Row="1" x:Name="grid" VerticalAlignment="Stretch" HorizontalAlignment="Stretch"  >
+        <dxg:GridControl Grid.Row="1" x:Name="grid" ItemsSource="{Binding GrdLst}" VerticalAlignment="Stretch" HorizontalAlignment="Stretch"  >
 
             <dxg:GridControl.View>
                 <dxg:TableView x:Name="gv"
@@ -64,31 +68,31 @@
                 </dxg:GridColumn.HeaderTemplate>
                 <dxg:GridColumn.CellTemplate>
                     <DataTemplate>
-                        <dxe:CheckEdit EditValue="{Binding RowData.Row.CHK, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged , Converter={StaticResource toggleConverter}}" HorizontalAlignment="Center" />
+                        <dxe:CheckEdit EditValue="{Binding RowData.Row.CHK, Mode=TwoWay , Converter={StaticResource toggleConverter}}" HorizontalAlignment="Center" />
                     </DataTemplate>
                 </dxg:GridColumn.CellTemplate>
             </dxg:GridColumn>
             <dxg:GridColumn Header="하자발생일자" Width="3*" FieldName="FLA_YMD" HorizontalHeaderContentAlignment="Center" AllowEditing="True">
                 <dxg:GridColumn.CellTemplate>
                     <DataTemplate>
-                        <dxe:DateEdit Style="{DynamicResource ResourceKey=GrdDateEdit}" 
-                            EditValue="{Binding RowData.Row.FLA_YMD, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged , Converter={StaticResource date2StrConverter}}"  />
+                        <dxe:DateEdit Style="{DynamicResource ResourceKey=GridDateEdit}" 
+                            EditValue="{Binding RowData.Row.FLA_YMD, Mode=TwoWay , Converter={StaticResource date2StrConverter}}"  />
                     </DataTemplate>
                 </dxg:GridColumn.CellTemplate>
             </dxg:GridColumn>
             <dxg:GridColumn Header="하자보수일자" Width="3*" FieldName="RPR_YMD" HorizontalHeaderContentAlignment="Center" AllowEditing="True">
                 <dxg:GridColumn.CellTemplate>
                     <DataTemplate>
-                        <dxe:DateEdit Style="{DynamicResource ResourceKey=GrdDateEdit}" 
-                            EditValue="{Binding RowData.Row.RPR_YMD, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged , Converter={StaticResource date2StrConverter}}"  />
+                        <dxe:DateEdit Style="{DynamicResource ResourceKey=GridDateEdit}" 
+                            EditValue="{Binding RowData.Row.RPR_YMD, Mode=TwoWay , Converter={StaticResource date2StrConverter}}"  />
                     </DataTemplate>
                 </dxg:GridColumn.CellTemplate>
             </dxg:GridColumn>
             <dxg:GridColumn Header="하자보수내용" Width="4*" FieldName="RPR_DES" HorizontalHeaderContentAlignment="Center" AllowEditing="True">
                 <dxg:GridColumn.CellTemplate>
                     <DataTemplate>
-                        <dxe:TextEdit Style="{DynamicResource ResourceKey=GrdTextEdit}"   
-                            EditValue="{Binding  RowData.Row.RPR_DES, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged }"/>
+                        <dxe:TextEdit Style="{DynamicResource ResourceKey=GridTextEdit}"   
+                            EditValue="{Binding  RowData.Row.RPR_DES, Mode=TwoWay }"/>
                     </DataTemplate>
                 </dxg:GridColumn.CellTemplate>
             </dxg:GridColumn>
@@ -99,5 +103,11 @@
 
     </Grid>
 
+    <!--뷰와 연결된 뷰모델로 Loaded 이벤트전파-->
+    <i:Interaction.Triggers>
+        <i:EventTrigger EventName="Loaded">
+            <i:InvokeCommandAction Command="{Binding LoadedCommand}" CommandParameter="{Binding ElementName=wttFlawDtView}"/>
+        </i:EventTrigger>
+    </i:Interaction.Triggers>
 
 </UserControl>

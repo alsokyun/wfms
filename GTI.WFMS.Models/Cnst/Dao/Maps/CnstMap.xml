@@ -26,11 +26,11 @@
       </isNotEmpty>
 
       <isNotEmpty prepend="AND" property="TCT_AMT_FROM">
-        decode(A.TCT_AMT, NULL, A.TCT_AMT, 0) <![CDATA[>=]]> #TCT_AMT_FROM#
+        A.TCT_AMT <![CDATA[>=]]> #TCT_AMT_FROM#
       </isNotEmpty>
 
       <isNotEmpty prepend="AND" property="TCT_AMT_TO">
-        decode(A.TCT_AMT, NULL, A.TCT_AMT, 0) <![CDATA[<=]]> #TCT_AMT_TO#
+        A.TCT_AMT <![CDATA[<=]]> #TCT_AMT_TO#
       </isNotEmpty>
 
       <isNotEmpty prepend="AND" property="BEG_YMD_FROM">
@@ -161,6 +161,17 @@
     </select>
 
 
+    <!--상수공사대장 중복체크-->
+    <select id ="SelectWttConsMaDup" parameterClass="Hashtable" resultClass ="Hashtable">
+      SELECT
+      A.CNT_NUM
+      FROM
+      WTT_CONS_MA A
+      WHERE 1 = 1
+      AND A.CNT_NUM = #CNT_NUM#
+    </select>
+
+
     <!--공사대장상세-->
     <select id ="SelectWttConsMaDtl" parameterClass="Hashtable" resultClass ="GTI.WFMS.Modules.Cnst.Model.CnstDtl">
       /* SelectWttConsMaDtl 공사대장 상세*/
@@ -185,9 +196,9 @@
       , A.HNG_EXP
       , A.SHN_EXP
       , A.MOK_EXP
-      , decode(length(A.BID_YMD), 8, to_char(to_date(A.BID_YMD, 'yyyyMMdd'), 'yyyy-MM-dd'), '') AS BID_YMD
+      , A.BID_YMD
       , A.EST_AMT
-      , decode(length(A.CTT_YMD), 8, to_char(to_date(A.CTT_YMD, 'yyyyMMdd'), 'yyyy-MM-dd'), '') AS CTT_YMD
+      , A.CTT_YMD
       , A.TCT_AMT
       , A.CPC_AMT
       , A.CGV_AMT
@@ -196,11 +207,11 @@
       , A.POC_NAM
       , A.GCN_ADR
       , A.GCN_TEL
-      , decode(length(A.BEG_YMD), 8, to_char(to_date(A.BEG_YMD, 'yyyyMMdd'), 'yyyy-MM-dd'), '') AS BEG_YMD
-      , decode(length(A.FNS_YMD), 8, to_char(to_date(A.FNS_YMD, 'yyyyMMdd'), 'yyyy-MM-dd'), '') AS FNS_YMD
+      , A.BEG_YMD
+      , A.FNS_YMD
       , A.SVS_NSM
-      , decode(length(A.RFN_YMD), 8, to_char(to_date(A.RFN_YMD, 'yyyyMMdd'), 'yyyy-MM-dd'), '') AS RFN_YMD
-      , decode(length(A.FCH_YMD), 8, to_char(to_date(A.FCH_YMD, 'yyyyMMdd'), 'yyyy-MM-dd'), '') AS FCH_YMD
+      , A.RFN_YMD
+      , A.FCH_YMD
       , A.FCH_NAM
       , A.CNT_DES
       , A.GVR_DES
@@ -221,46 +232,46 @@
     <update id="updateCnstMngDtl" parameterClass="GTI.WFMS.Modules.Cnst.Model.CnstDtl">
       UPDATE WTT_CONS_MA
       SET
-	        CNT_CDE = 	#CNT_CDE#
-	      , DSN_NAM = 	#DSN_NAM#
-	      , CNT_LOC = 	#CNT_LOC#
-	      , DGV_AMT = 	#DGV_AMT#
-	      , DET_AMT = 	#DET_AMT#
-	      , CNT_NAM = 	#CNT_NAM#
-	      , DSN_AMT = 	#DSN_AMT#
-	      , DPC_AMT = 	#DPC_AMT#
-	      , SVS_NSM = 	#SVS_NSM#
-	      , BEG_YMD = 	DECODE(LENGTH(#BEG_YMD#), 10, TO_CHAR(TO_DATE(#BEG_YMD#, 'yyyy-MM-dd'), 'yyyyMMdd'), '')
-	      , FCH_YMD = 	DECODE(LENGTH(#FCH_YMD#), 10, TO_CHAR(TO_DATE(#FCH_YMD#, 'yyyy-MM-dd'), 'yyyyMMdd'), '')
-	      , FCH_NAM = 	#FCH_NAM#
-	      , FNS_YMD = 	DECODE(LENGTH(#FNS_YMD#), 10, TO_CHAR(TO_DATE(#FNS_YMD#, 'yyyy-MM-dd'), 'yyyyMMdd'), '')
-	      , RFN_YMD = 	DECODE(LENGTH(#RFN_YMD#), 10, TO_CHAR(TO_DATE(#RFN_YMD#, 'yyyy-MM-dd'), 'yyyyMMdd'), '')
-	      , GVR_DES = 	#GVR_DES#
-	      , CNT_DES = 	#CNT_DES#
-	      , BID_YMD = 	DECODE(LENGTH(#BID_YMD#), 10, TO_CHAR(TO_DATE(#BID_YMD#, 'yyyy-MM-dd'), 'yyyyMMdd'), '')
-	      , CTT_YMD = 	DECODE(LENGTH(#CTT_YMD#), 10, TO_CHAR(TO_DATE(#CTT_YMD#, 'yyyy-MM-dd'), 'yyyyMMdd'), '')
-	      , EST_AMT = 	#EST_AMT#
-	      , CTT_CDE = 	#CTT_CDE#
-	      , TCT_AMT = 	#TCT_AMT#
-	      , CET_AMT = 	#CET_AMT#
-	      , CPC_AMT = 	#CPC_AMT#
-	      , CGV_AMT = 	#CGV_AMT#
-	      , NAT_AMT = 	#NAT_AMT#
-	      , GCN_NAM = 	#GCN_NAM#
-	      , KWN_EXP = 	#KWN_EXP#
-	      , COU_AMT = 	#COU_AMT#
-	      , POC_NAM = 	#POC_NAM#
-	      , HNG_EXP = 	#HNG_EXP#
-	      , CIT_AMT = 	#CIT_AMT#
-	      , GCN_ADR = 	#GCN_ADR#
-	      , SHN_EXP = 	#SHN_EXP#
-	      , BND_AMT = 	#BND_AMT#
-	      , GCN_TEL = 	#GCN_TEL#
-	      , MOK_EXP = 	#MOK_EXP#
-	      , CSS_AMT = 	#CSS_AMT#
-	      , UPD_YMD = 	SYSDATE
-	      , UPD_USR = 	#ID#
-	
+      CNT_CDE = 	#CNT_CDE#
+      , DSN_NAM = 	#DSN_NAM#
+      , CNT_LOC = 	#CNT_LOC#
+      , DGV_AMT = 	#DGV_AMT#
+      , DET_AMT = 	#DET_AMT#
+      , CNT_NAM = 	#CNT_NAM#
+      , DSN_AMT = 	#DSN_AMT#
+      , DPC_AMT = 	#DPC_AMT#
+      , SVS_NSM = 	#SVS_NSM#
+      , BEG_YMD = 	#BEG_YMD#
+      , FCH_YMD = 	#FCH_YMD#
+      , FCH_NAM = 	#FCH_NAM#
+      , FNS_YMD = 	#FNS_YMD#
+      , RFN_YMD = 	#RFN_YMD#
+      , GVR_DES = 	#GVR_DES#
+      , CNT_DES = 	#CNT_DES#
+      , BID_YMD = 	#BID_YMD#
+      , CTT_YMD = 	#CTT_YMD#
+      , EST_AMT = 	#EST_AMT#
+      , CTT_CDE = 	#CTT_CDE#
+      , TCT_AMT = 	#TCT_AMT#
+      , CET_AMT = 	#CET_AMT#
+      , CPC_AMT = 	#CPC_AMT#
+      , CGV_AMT = 	#CGV_AMT#
+      , NAT_AMT = 	#NAT_AMT#
+      , GCN_NAM = 	#GCN_NAM#
+      , KWN_EXP = 	#KWN_EXP#
+      , COU_AMT = 	#COU_AMT#
+      , POC_NAM = 	#POC_NAM#
+      , HNG_EXP = 	#HNG_EXP#
+      , CIT_AMT = 	#CIT_AMT#
+      , GCN_ADR = 	#GCN_ADR#
+      , SHN_EXP = 	#SHN_EXP#
+      , BND_AMT = 	#BND_AMT#
+      , GCN_TEL = 	#GCN_TEL#
+      , MOK_EXP = 	#MOK_EXP#
+      , CSS_AMT = 	#CSS_AMT#
+      , UPD_YMD = 	SYSDATE
+      , UPD_USR = 	#ID#
+
       WHERE CNT_NUM = #CNT_NUM#
 
     </update>
@@ -334,9 +345,9 @@
 				  #HNG_EXP#, 
 				  #SHN_EXP#, 
 				  #MOK_EXP#,
-				  decode(length(#BID_YMD#), 10, to_char(to_date(#BID_YMD#, 'yyyy-MM-dd'), 'yyyyMMdd'), ''), 
+				  #BID_YMD#, 
 				  #EST_AMT#, 
-				  decode(length(#CTT_YMD#), 10, to_char(to_date(#CTT_YMD#, 'yyyy-MM-dd'), 'yyyyMMdd'), ''), 
+				  #CTT_YMD#, 
 				  #CTT_CDE#, 
 				  #TCT_AMT#, 
 				  #CPC_AMT#, 
@@ -346,11 +357,11 @@
 				  #POC_NAM#, 
 				  #GCN_ADR#, 
 				  #GCN_TEL#,
-				  decode(length(#BEG_YMD#), 10, to_char(to_date(#BEG_YMD#, 'yyyy-MM-dd'), 'yyyyMMdd'), ''), 
-				  decode(length(#FNS_YMD#), 10, to_char(to_date(#FNS_YMD#, 'yyyy-MM-dd'), 'yyyyMMdd'), ''),
+				  #BEG_YMD#, 
+				  #FNS_YMD#,
 				  #SVS_NSM#, 
-				  decode(length(#RFN_YMD#), 10, to_char(to_date(#RFN_YMD#, 'yyyy-MM-dd'), 'yyyyMMdd'), ''),
-				  decode(length(#FCH_YMD#), 10, to_char(to_date(#FCH_YMD#, 'yyyy-MM-dd'), 'yyyyMMdd'), ''),
+				  #RFN_YMD#,
+				  #FCH_YMD#,
 				  #FCH_NAM#, 
 				  #CNT_DES#, 
 				  #GVR_DES#, 
@@ -368,22 +379,26 @@
     </update>
 
       <!-- 공사비지급내역 목록	 -->
-    <select id ="SelectWttCostDtList" parameterClass="Hashtable" resultClass ="Hashtable">
-      SELECT COST_SEQ,
-      CNT_NUM,
-      PAY_NUM,
-      PTY_CDE,
-      NVL(PAY_YMD, '') AS PAY_YMD,
-      PAY_AMT
+    <select id ="SelectWttCostDtList" parameterClass="Hashtable" resultClass="GTI.WFMS.Modules.Cnst.Model.WttCostDt">
+      SELECT ROWNUM AS RNO, M.*
+      FROM (
+      SELECT COST_SEQ
+      , CNT_NUM
+      , PAY_NUM
+      , PTY_CDE
+      , (SELECT NM FROM INFOUSER.CD_DTL_INFO WHERE MST_CD = '250066' AND DTL_CD = PTY_CDE ) AS PTY_NAM
+      , NVL(PAY_YMD, '') AS PAY_YMD
+      , decode(length(PAY_YMD), 8, to_char(to_date(PAY_YMD, 'yyyyMMdd'), 'yyyy-MM-dd'), '') as PAY_YMD_FMT
+      , PAY_AMT
       , NULL AS CHK
-
       FROM WTT_COST_DT
       WHERE 1=1
       <isNotEmpty prepend="AND">
-				CNT_NUM = #CNT_NUM#
-			</isNotEmpty>
-			
-			ORDER BY PAY_NUM DESC
+				        CNT_NUM = #CNT_NUM#
+			        </isNotEmpty>
+
+      ORDER BY COST_SEQ
+      ) M
     </select>
 
     <!-- 공사비지급내역 상세저장 -->
@@ -417,6 +432,36 @@
       )
     </update>
 
+    <!-- 공사비지급내역 상세저장2 -->
+    <update id="SaveWttCostDt2" parameterClass="GTI.WFMS.Modules.Cnst.Model.WttCostDt">
+      MERGE INTO WTT_COST_DT
+      USING DUAL ON ( CNT_NUM=#CNT_NUM# AND COST_SEQ=#COST_SEQ#  )
+
+      WHEN MATCHED THEN
+
+      UPDATE
+      SET  PTY_CDE=#PTY_CDE#
+      , PAY_YMD = #PAY_YMD#
+      , PAY_AMT=#PAY_AMT#
+
+      WHEN NOT MATCHED THEN
+      INSERT
+      ( CNT_NUM
+      , PAY_NUM
+      , PTY_CDE
+      , PAY_YMD
+      , PAY_AMT
+      , COST_SEQ
+
+      )
+      VALUES ( #CNT_NUM#
+      , (SELECT NVL(MAX(PAY_NUM),0)+1 as PAY_NUM FROM WTT_COST_DT)
+      , #PTY_CDE#
+      , #PAY_YMD#
+      , #PAY_AMT#
+      , (SELECT NVL(MAX(COST_SEQ),0)+1 as COST_SEQ FROM WTT_COST_DT)
+      )
+    </update>
     <update id="DeleteWttCostDt"  parameterClass="Hashtable">
       DELETE  FROM WTT_COST_DT
       WHERE CNT_NUM=#CNT_NUM#
@@ -427,10 +472,53 @@
 
 
     <!-- 설정변경내역 목록	 -->
-    <select id ="SelectWttChngDtList" parameterClass="Hashtable" resultClass ="Hashtable">
-      SELECT
-      CNT_NUM
+    <select id ="SelectWttChngDtList" parameterClass="Hashtable" resultClass="GTI.WFMS.Modules.Cnst.Model.WttChngDt">
+      SELECT ROWNUM AS RNO, M.*
+      FROM ( SELECT CNT_NUM
       , CHNG_SEQ
+      , CHG_NUM
+      , CHG_YMD
+      , decode(length(CHG_YMD), 8, to_char(to_date(CHG_YMD, 'yyyyMMdd'), 'yyyy-MM-dd'), '') as CHG_YMD_FMT
+      , INC_AMT
+      , IGV_AMT
+      , CHG_AMT
+      , CHG_DES
+      , CGV_DES
+      , ATT_USR
+      , ATT_TIM
+      , decode(length(ATT_TIM), 8, to_char(to_date(ATT_TIM, 'yyyyMMdd'), 'yyyy-MM-dd'), '') as ATT_TIM_FMT
+      , NULL AS CHK
+      FROM WTT_CHNG_DT
+      WHERE 1=1
+      <isNotEmpty prepend="AND">
+				          CNT_NUM = #CNT_NUM#
+			          </isNotEmpty>
+
+      ORDER BY CHNG_SEQ
+      ) M
+    </select>
+
+    <!-- 설계변경내역 상세저장	 -->
+    <update id="SaveWttChngDt"  parameterClass="Hashtable">
+      MERGE INTO WTT_CHNG_DT
+      USING DUAL ON ( CNT_NUM=#CNT_NUM# AND CHNG_SEQ=#CHNG_SEQ# )
+
+      WHEN MATCHED THEN
+      UPDATE
+      SET
+      CHG_YMD=#CHG_YMD#
+      , INC_AMT=#INC_AMT#
+      , IGV_AMT=#IGV_AMT#
+      , CHG_AMT=#CHG_AMT#
+      , CHG_DES=#CHG_DES#
+      , CGV_DES=#CGV_DES#
+      , ATT_USR=#ID#
+      , ATT_TIM=to_char(sysdate, 'yyyyMMdd')
+
+      WHEN NOT MATCHED THEN
+      INSERT
+      ( CHNG_SEQ
+      , CNT_NUM
       , CHG_NUM
       , CHG_YMD
       , INC_AMT
@@ -439,20 +527,23 @@
       , CHG_DES
       , CGV_DES
       , ATT_USR
-      , ATT_TIM
-      , NULL AS CHK
-      FROM WTT_CHNG_DT
-
-      WHERE 1=1
-      <isNotEmpty prepend="AND">
-				CNT_NUM = #CNT_NUM#
-			</isNotEmpty>
-			
-			ORDER BY CHG_NUM DESC
-    </select>
-
-    <!-- 설계변경내역 상세저장	 -->
-    <update id="SaveWttChngDt"  parameterClass="Hashtable">
+      , ATT_TIM )
+      VALUES (
+      (SELECT NVL(MAX(CHNG_SEQ),0)+1 as CHNG_SEQ FROM WTT_CHNG_DT)
+      , #CNT_NUM#
+      , (SELECT NVL(MAX(CHG_NUM),0)+1 as CHG_NUM FROM WTT_CHNG_DT)
+      , #CHG_YMD#
+      , #INC_AMT#
+      , #IGV_AMT#
+      , #CHG_AMT#
+      , #CHG_DES#
+      , #CGV_DES#
+      , #ID#
+      , to_char(sysdate, 'yyyyMMdd')
+      )
+    </update>
+    <!-- 설계변경내역 상세저장2	 -->
+    <update id="SaveWttChngDt2"  parameterClass="GTI.WFMS.Modules.Cnst.Model.WttChngDt">
       MERGE INTO WTT_CHNG_DT
       USING DUAL ON ( CNT_NUM=#CNT_NUM# AND CHNG_SEQ=#CHNG_SEQ# )
 
@@ -524,18 +615,22 @@
 
     <!-- 공사하도급 목록	 -->
     <select id ="SelectWttSubcDtList2" parameterClass="Hashtable" resultClass ="GTI.WFMS.Modules.Cnst.Model.WttSubcDt">
-      SELECT	CNT_NUM, SUBC_SEQ
-      , SUB_NUM
-      , SUB_NAM
-      , PSB_NAM
-      , SUB_ADR
-      , SUB_TEL
-      FROM WTT_SUBC_DT
-      WHERE 1=1
-      <isNotEmpty prepend="AND">
-        CNT_NUM = #CNT_NUM#
-      </isNotEmpty>
-      ORDER BY SUB_NUM DESC
+     SELECT ROWNUM AS RNO, M.*
+       FROM (  SELECT NULL AS CHK
+                    , CNT_NUM
+                    , SUBC_SEQ
+                    , SUB_NUM
+                    , SUB_NAM
+                    , PSB_NAM
+                    , SUB_ADR
+                    , SUB_TEL
+              FROM WTT_SUBC_DT
+              WHERE 1=1
+              <isNotEmpty prepend="AND">
+                CNT_NUM = #CNT_NUM#
+              </isNotEmpty>
+      ORDER BY SUBC_SEQ
+      ) M
     </select>
 
     <update id="DeleteWttSubcDt"  parameterClass="Hashtable">
@@ -580,20 +675,23 @@
 
 
     <!-- 하자보수 목록	 -->
-    <select id ="SelectWttFlawDtList" parameterClass="Hashtable" resultClass ="Hashtable">
-      SELECT
-      CNT_NUM, FLAW_SEQ
-      , RPR_NUM
-      , FLA_YMD
-      , RPR_YMD
-      , RPR_DES
-      , NULL AS CHK
-      FROM WTT_FLAW_DT
-      WHERE 1=1
-      <isNotEmpty prepend="AND">
-			CNT_NUM = #CNT_NUM#
-		</isNotEmpty>
-		ORDER BY RPR_NUM DESC
+    <select id ="SelectWttFlawDtList" parameterClass="Hashtable" resultClass ="GTI.WFMS.Modules.Cnst.Model.WttFlawDt">
+      SELECT ROWNUM AS RNO, M.*
+       FROM (  SELECT CNT_NUM, FLAW_SEQ
+                    , RPR_NUM
+                    , FLA_YMD
+                    , decode(length(FLA_YMD), 8, to_char(to_date(FLA_YMD, 'yyyyMMdd'), 'yyyy-MM-dd'), '') as FLA_YMD_FMT
+                    , RPR_YMD
+                    , decode(length(RPR_YMD), 8, to_char(to_date(RPR_YMD, 'yyyyMMdd'), 'yyyy-MM-dd'), '') as RPR_YMD_FMT
+                    , RPR_DES
+                    , NULL AS CHK
+              FROM WTT_FLAW_DT
+              WHERE 1=1
+              <isNotEmpty prepend="AND">
+			        CNT_NUM = #CNT_NUM#
+		        </isNotEmpty>
+      ORDER BY FLAW_SEQ
+      ) M
     </select>
 
     <update id="DeleteWttFlawDt"  parameterClass="Hashtable">
@@ -607,6 +705,33 @@
 
     <!-- 하자보수그리드 저장	 -->
     <update id="SaveWttFlawDt" parameterClass="Hashtable">
+      MERGE INTO WTT_FLAW_DT
+      USING DUAL ON ( CNT_NUM=#CNT_NUM# AND FLAW_SEQ=#FLAW_SEQ# )
+
+      WHEN MATCHED THEN
+      UPDATE
+      SET
+      FLA_YMD=#FLA_YMD#
+      , RPR_YMD=#RPR_YMD#
+      , RPR_DES=#RPR_DES#
+
+      WHEN NOT MATCHED THEN
+      INSERT
+      ( CNT_NUM
+      , RPR_NUM
+      , FLA_YMD
+      , RPR_YMD
+      , RPR_DES
+      , FLAW_SEQ )
+      VALUES ( #CNT_NUM#
+      , (SELECT nvl(MAX(RPR_NUM),0)+1 as RPR_NUM FROM WTT_FLAW_DT)
+      , #FLA_YMD#
+      , #RPR_YMD#
+      , #RPR_DES#
+      , (SELECT NVL(MAX(FLAW_SEQ),0)+1 as FLAW_SEQ FROM WTT_FLAW_DT) )
+    </update>
+    <!-- 하자보수그리드 저장2	 -->
+    <update id="SaveWttFlawDt2" parameterClass="GTI.WFMS.Modules.Cnst.Model.WttFlawDt">
       MERGE INTO WTT_FLAW_DT
       USING DUAL ON ( CNT_NUM=#CNT_NUM# AND FLAW_SEQ=#FLAW_SEQ# )
 
@@ -646,7 +771,7 @@
       WITH C AS (
       SELECT COUNT(1) AS ROWCNT
       FROM WTT_SPLY_MA A
-      LEFT JOIN INFOFMS.BML_HADM_AS H ON A.HJD_CDE = H.HJD_CDE
+      LEFT JOIN INFOFMS.CMT_ADAR_MA H ON A.HJD_CDE = H.HJD_CDE
 
       WHERE 1=1
       <isNotEmpty prepend="AND" property="CNT_NUM">
@@ -699,7 +824,7 @@
       , A.DFE_AMT
 
       FROM WTT_SPLY_MA A
-      LEFT JOIN INFOFMS.BML_HADM_AS H ON A.HJD_CDE = H.HJD_CDE
+      LEFT JOIN INFOFMS.CMT_ADAR_MA H ON A.HJD_CDE = H.HJD_CDE
 
       WHERE 1=1
       <isNotEmpty prepend="AND" property="CNT_NUM">
@@ -741,8 +866,8 @@
       SELECT
       A.CNT_NUM
       , A.HJD_CDE
-      , decode(length(A.BEG_YMD), 8, to_char(to_date(A.BEG_YMD, 'yyyyMMdd'), 'yyyy-MM-dd'), '') AS BEG_YMD
-      , decode(length(A.FNS_YMD), 8, to_char(to_date(A.FNS_YMD, 'yyyyMMdd'), 'yyyy-MM-dd'), '') AS FNS_YMD
+      , A.BEG_YMD
+      , A.FNS_YMD
       , A.GVR_AMT
       , A.PRV_AMT
       , A.TAX_AMT
@@ -753,14 +878,14 @@
       , A.DIV_AMT
       , A.ETC_AMT
       , A.TOT_AMT
-      , decode(length(A.RCP_YMD), 8, to_char(to_date(A.RCP_YMD, 'yyyyMMdd'), 'yyyy-MM-dd'), '') AS RCP_YMD
+      , A.RCP_YMD
       , A.OPR_NAM
       , A.SVS_NAM
       , A.FNS_NAM
       , A.RCV_NUM
       , A.DFE_AMT
       , A.FCH_NAM
-      
+
       FROM
       WTT_SPLY_MA A
       WHERE 1 = 1
@@ -787,8 +912,8 @@
         UPD_YMD = SYSDATE
         , UPD_USR = #ID#
         <isNotEmpty property="HJD_CDE" > , HJD_CDE = #HJD_CDE#</isNotEmpty>
-        <isNotEmpty property="BEG_YMD" > , BEG_YMD = decode(length(#BEG_YMD#), 10, to_char(to_date(#BEG_YMD#, 'yyyy-MM-dd'), 'yyyyMMdd'), '')</isNotEmpty>
-        <isNotEmpty property="FNS_YMD" > , FNS_YMD = decode(length(#FNS_YMD#), 10, to_char(to_date(#FNS_YMD#, 'yyyy-MM-dd'), 'yyyyMMdd'), '')</isNotEmpty>
+        <isNotEmpty property="BEG_YMD" > , BEG_YMD = #BEG_YMD#</isNotEmpty>
+        <isNotEmpty property="FNS_YMD" > , FNS_YMD = #FNS_YMD#</isNotEmpty>
         <isNotEmpty property="GVR_AMT" > , GVR_AMT = #GVR_AMT#</isNotEmpty>
         <isNotEmpty property="PRV_AMT" > , PRV_AMT = #PRV_AMT#</isNotEmpty>
         <isNotEmpty property="TAX_AMT" > , TAX_AMT = #TAX_AMT#</isNotEmpty>
@@ -800,7 +925,7 @@
         <isNotEmpty property="DIV_AMT" > , DIV_AMT = #DIV_AMT#</isNotEmpty>
         <isNotEmpty property="ETC_AMT" > , ETC_AMT = #ETC_AMT#</isNotEmpty>
         <isNotEmpty property="TOT_AMT" > , TOT_AMT = #TOT_AMT#</isNotEmpty>
-        <isNotEmpty property="RCP_YMD" > , RCP_YMD = decode(length(#RCP_YMD#), 10, to_char(to_date(#RCP_YMD#, 'yyyy-MM-dd'), 'yyyyMMdd'), '')</isNotEmpty>
+        <isNotEmpty property="RCP_YMD" > , RCP_YMD = #RCP_YMD#</isNotEmpty>
         <isNotEmpty property="OPR_NAM" > , OPR_NAM = #OPR_NAM#</isNotEmpty>
         <isNotEmpty property="SVS_NAM" > , SVS_NAM = #SVS_NAM#</isNotEmpty>
         <isNotEmpty property="FNS_NAM" > , FNS_NAM = #FNS_NAM#</isNotEmpty>
@@ -814,7 +939,68 @@
     </update>
 
 
-    <!--급수전대장 삭제-->
+    <!--급수전대장 추가-->
+    <update id="InsertSplyDtl" parameterClass="GTI.WFMS.Modules.Cnst.Model.SplyDtl">
+      insert into INFOFMS.WTT_SPLY_MA (
+      CNT_NUM,
+      BEG_YMD,
+      FNS_YMD,
+      GVR_AMT,
+      PRV_AMT,
+      TAX_AMT,
+      ROR_AMT,
+      DFE_AMT,
+      GFE_AMT,
+      FFE_AMT,
+      DIV_AMT,
+      ETC_AMT,
+      TOT_AMT,
+      RCP_YMD,
+      OPR_NAM,
+      SUR_NAM,
+      FCH_NAM,
+      RCV_NUM,
+      FNS_NAM,
+      SVS_NAM,
+      DEF_AMT,
+      HJD_CDE,
+      CRE_YMD,
+      CRE_USR,
+      UPD_YMD,
+      UPD_USR
+      )
+
+      values(
+      #CNT_NUM#,
+      #BEG_YMD#,
+      #FNS_YMD#,
+      #GVR_AMT#,
+      #PRV_AMT#,
+      #TAX_AMT#,
+      #ROR_AMT#,
+      #DFE_AMT#,
+      #GFE_AMT#,
+      #FFE_AMT#,
+      #DIV_AMT#,
+      #ETC_AMT#,
+      #TOT_AMT#,
+      #RCP_YMD#,
+      #OPR_NAM#,
+      #SUR_NAM#,
+      #FCH_NAM#,
+      #RCV_NUM#,
+      #FNS_NAM#,
+      #SVS_NAM#,
+      #DEF_AMT#,
+      #HJD_CDE#,
+      SYSDATE,
+      #ID#,
+      SYSDATE,
+      #ID#
+      )
+    </update>
+
+      <!--급수전대장 삭제-->
     <update id="deleteSplyDtl" parameterClass="GTI.WFMS.Modules.Cnst.Model.SplyDtl">
       DELETE FROM WTT_SPLY_MA
       WHERE CNT_NUM = #CNT_NUM#

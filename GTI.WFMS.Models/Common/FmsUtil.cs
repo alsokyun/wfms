@@ -1,10 +1,15 @@
-﻿using System;
+﻿using Prism.Regions;
+using System;
 using System.Collections.Generic;
+using System.ComponentModel;
+using System.Data;
 using System.IO;
 using System.Linq;
+using System.Reflection;
 using System.Runtime.Serialization;
 using System.Runtime.Serialization.Formatters.Binary;
 using System.Windows;
+using System.Windows.Controls;
 using System.Windows.Controls.Primitives;
 using System.Windows.Media;
 
@@ -16,6 +21,17 @@ namespace GTI.WFMS.Models.Common
         /// 전역변수 설정
         /// </summary>
         public static int PageSize = 10; //페이지의 row 수
+
+        public static IRegionManager __regionManager;
+        public static Popup __popMain;//열린팝업을 전역변수로 저장해놓음,사용안함
+        public static Window popWinView;//팝업업무기본창 전역변수로 저장해놓음 - 사이즈변경위해
+
+        /// <summary>
+        /// 프로그램설정값으로부터 전역변수로 설정
+        /// </summary>
+        public static string sysCd;     //시스템코드
+        public static string fileDir;   //파일저장경로
+        public static string dbShapeDir;   //db서버에 복사되는 shp 저장위치
 
 
 
@@ -29,12 +45,19 @@ namespace GTI.WFMS.Models.Common
             bool ret = false;
             string str = "";
 
+            if(obj == null)
+            {
+                return true;
+            }
+
             try
             {
-                str  = obj as string;
+                str  = obj.ToString();
                 ret = String.IsNullOrWhiteSpace(str);
             }
-            catch (Exception e){}
+            catch (Exception ){
+                ret = true;
+            }
 
 
             return ret;
@@ -59,7 +82,7 @@ namespace GTI.WFMS.Models.Common
                     str = rep;
                 }
             }
-            catch (Exception e) { }
+            catch (Exception ) { }
 
             return str;
         }
@@ -79,7 +102,7 @@ namespace GTI.WFMS.Models.Common
 
                 str = str.Trim();
             }
-            catch (Exception e) { }
+            catch (Exception ) { }
 
             return str;
         }
@@ -155,6 +178,28 @@ namespace GTI.WFMS.Models.Common
                 return (T)formatter.Deserialize(stream);
             }
         }
+
+
+        /// <summary>
+        /// ContentControl 에 걸려있는 EventName 이벤트를 모두 제거
+        /// </summary>
+        /// <param name="b"></param>
+        /// <param name="EventName"></param>
+        public static void RemoveEvent(Control b, string EventName)
+        {
+            FieldInfo f1 = typeof(Control).GetField(EventName, BindingFlags.Static | BindingFlags.NonPublic);
+            if (f1 != null)
+            {
+                object obj = f1.GetValue(b);
+
+                PropertyInfo pi = b.GetType().GetProperty("Events", BindingFlags.NonPublic | BindingFlags.Instance);
+                EventHandlerList list = (EventHandlerList)pi.GetValue(b, null);
+
+                list.RemoveHandler(obj, list[obj]);
+            }
+        }
+
+
 
 
     }

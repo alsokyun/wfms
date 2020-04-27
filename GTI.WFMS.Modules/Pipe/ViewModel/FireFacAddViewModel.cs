@@ -8,7 +8,6 @@ using Prism.Commands;
 using System;
 using System.Collections;
 using System.Data;
-using System.Reflection;
 using System.Windows;
 using System.Windows.Controls;
 
@@ -101,6 +100,10 @@ namespace GTI.WFMS.Modules.Pipe.ViewModel
                 this.FTR_CDE = "SA119";
 
                 this.IST_YMD = Convert.ToDateTime(DateTime.Today).ToString("yyyy-MM-dd");
+
+                //공통팝업창 사이즈 변경
+                FmsUtil.popWinView.Height = 320;
+
             }
             catch (Exception e)
             {
@@ -128,7 +131,7 @@ namespace GTI.WFMS.Modules.Pipe.ViewModel
             {
                 BizUtil.Update2(this, "insertFireFacDtl");
             }
-            catch (Exception e)
+            catch (Exception )
             {
                 Messages.ShowErrMsgBox("저장 처리중 오류가 발생하였습니다.");
                 return;
@@ -189,14 +192,14 @@ namespace GTI.WFMS.Modules.Pipe.ViewModel
                 cbFTR_CDE.SelectedIndex = 0;
 
                 // cbHJD_CDE 행정동
-                BizUtil.SetCombo(cbHJD_CDE, "Select_ADAR_LIST", "HJD_CDE", "HJD_NAM", true);
+                BizUtil.SetCombo(cbHJD_CDE, "Select_ADAR_LIST", "HJD_CDE", "HJD_NAM", "[선택하세요]");
 
                 // cbMNG_CDE 관리기관
-                BizUtil.SetCmbCode(cbMNG_CDE, "MNG_CDE", true);
+                BizUtil.SetCmbCode(cbMNG_CDE, "250101", "[선택하세요]");
 
 
                 // cbMOF_CDE 형식
-                BizUtil.SetCmbCode(cbMOF_CDE, "MOF_CDE", true, "250019");
+                BizUtil.SetCmbCode(cbMOF_CDE, "250019", "[선택하세요]");
 
             }
             catch (Exception ex)

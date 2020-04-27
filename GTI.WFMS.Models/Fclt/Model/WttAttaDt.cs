@@ -17,11 +17,19 @@ namespace GTI.WFMS.Models.Fctl.Model
             }
         }
 
-
-
         /// <summary>
         /// 프로퍼티 부분
         /// </summary>
+        private int __RNO;
+        public int RNO
+        {
+            get { return __RNO; }
+            set
+            {
+                this.__RNO = value;
+                RaisePropertyChanged("RNO");
+            }
+        }
         private decimal __ATT_IDN;
         public decimal ATT_IDN
         {

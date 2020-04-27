@@ -21,7 +21,7 @@ namespace GTI.WFMS.Modules.Link.View
         private FileMngView fileMngView; //첨부파일팝업
 
 
-
+        // 뷰생성자
         public RefFileMngView(string _BIZ_ID)
         {
             InitializeComponent();
@@ -30,12 +30,24 @@ namespace GTI.WFMS.Modules.Link.View
 
 
             //초기조회
+            InitModel();
+
+        }
+
+
+
+
+        //초기조회
+        private void InitModel()
+        {
             DataTable dt = new DataTable();
 
             Hashtable param = new Hashtable();
             param.Add("sqlId", "SelectFileMapList");
 
             param.Add("BIZ_ID", BIZ_ID);
+            param.Add("GRP_TYP", "112"); //일반파일
+
 
             dt = BizUtil.SelectList(param);
             grid.ItemsSource = dt;
@@ -45,15 +57,6 @@ namespace GTI.WFMS.Modules.Link.View
 
 
 
-
-
-        //그리드행추가시 이벤트처리
-        private void AddingNewRow(object sender, System.ComponentModel.AddingNewEventArgs e)
-        {
-
-        }
-
-
         /// <summary>
         /// 헤더 All 체크
         /// </summary>
@@ -61,8 +64,6 @@ namespace GTI.WFMS.Modules.Link.View
         /// <param name="e"></param>
         private void AllChk_Checked(object sender, RoutedEventArgs e)
         {
-            //CheckEdit ce = sender as CheckEdit;
-            //bool chk = ce.IsChecked is bool;
             foreach (DataRow dr in ((DataTable)grid.ItemsSource).Rows)
             {
                 dr["CHK"] = "Y";
@@ -85,7 +86,7 @@ namespace GTI.WFMS.Modules.Link.View
             try
             {
                 // 파일첨부윈도우
-                FileMngView fileMngView = new FileMngView(null);
+                fileMngView = new FileMngView(this.BIZ_ID, null);
                 fileMngView.Owner = Window.GetWindow(this) ;
 
                 
@@ -97,20 +98,13 @@ namespace GTI.WFMS.Modules.Link.View
                     //저장버튼으로 닫힘
                     if (!FmsUtil.IsNull(FIL_SEQ))
                     {
-                        AddFilSeqRow(FIL_SEQ); //첨부파일 한건추가
+                        //AddFilSeqRow(FIL_SEQ); //첨부파일 한건추가
+                        //조회그리드형으로 변경
+                        InitModel();
                     }
                     //닫기버튼으로 닫힘
                 }
 
-
-                //팝업열기 & 위치
-                //fileMngView.IsOpen = false;
-
-                //fileMngView = new FileMngView(null);
-                //fileMngView.PlacementRectangle = new Rect(100, 100, 655, 405);
-                //fileMngView.IsOpen = true;
-
-                //fileMngView.DataContext = this;
             }
             catch (Exception ex)
             {
@@ -193,72 +187,25 @@ namespace GTI.WFMS.Modules.Link.View
                                 ((DataTable)grid.ItemsSource).Rows.RemoveAt(i);
                             }
                         }
-                        catch (Exception ex)
+                        catch (Exception )
                         {
                         }
                     }
 
                     Messages.ShowOkMsgBox();
+                    InitModel();
                 }
             }
             catch (Exception ex)
             {
                 Messages.ShowErrMsgBoxLog(ex);
+                InitModel();
+
             }
         }
 
 
-        //그리드저장
-        private void BtnReg_Click(object sender, RoutedEventArgs e)
-        {
-            if (Messages.ShowYesNoMsgBox("저장하시겠습니까?") != MessageBoxResult.Yes) return;
 
-            Hashtable param = new Hashtable();
-            /*기존 파일 삭제
-            param.Add("sqlId", "DeleteFileMng");
-            param.Add("BIZ_ID", BIZ_ID);
-            BizUtil.Update(param);
-             */
-
-            //그리드 저장
-            DataTable dt = grid.ItemsSource as DataTable;
-            foreach (DataRow row in dt.Rows)
-            {
-                param = new Hashtable();
-
-                if (row.RowState == DataRowState.Modified || row.RowState == DataRowState.Added)
-                {
-                    param.Add("sqlId", "SaveFileMap");
-                    param.Add("BIZ_ID", BIZ_ID);
-                    param.Add("FIL_SEQ", Convert.ToInt32(row["FIL_SEQ"]));
-
-                    param.Add("TIT_NAM", row["TIT_NAM"].ToString());
-                    param.Add("CRE_YMD", row["CRE_YMD"].ToString());
-                    param.Add("CRE_USR", row["CRE_USR"].ToString());
-                    param.Add("CTNT", row["CTNT"].ToString());
-                }
-                else
-                {
-                    continue;
-                }
-
-
-                //저장처리
-                try
-                {
-                    BizUtil.Update(param);
-                }
-                catch (Exception)
-                {
-                    Messages.ShowErrMsgBox("저장 처리중 오류가 발생하였습니다.");
-                    return;
-                }
-
-            }
-            //저장처리 성공
-            Messages.ShowOkMsgBox();
-
-        }
 
 
         private void Gv_InitNewRow(object sender, InitNewRowEventArgs e)
@@ -281,7 +228,7 @@ namespace GTI.WFMS.Modules.Link.View
                 FIL_SEQ = ((DataRowView)gc.CurrentItem).Row["FIL_SEQ"].ToString();
 
                 // 파일첨부윈도우
-                FileMngView fileMngView = new FileMngView(FIL_SEQ);
+                FileMngView fileMngView = new FileMngView(BIZ_ID, FIL_SEQ);
                 fileMngView.Owner = Window.GetWindow(this);
 
 
@@ -290,7 +237,8 @@ namespace GTI.WFMS.Modules.Link.View
                 {
                     FIL_SEQ = fileMngView.txtFIL_SEQ.Text;
 
-                    //AddFilSeqRow(FIL_SEQ); //첨부파일 한건추가할 필요없음
+                    //조회그리드형으로 변경
+                    InitModel();
                 }
 
 
@@ -306,6 +254,7 @@ namespace GTI.WFMS.Modules.Link.View
             catch (Exception ex)
             {
                 Messages.ShowErrMsgBox(ex.ToString());
+
             }
         }
 

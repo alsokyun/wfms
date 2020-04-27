@@ -1,6 +1,7 @@
 ﻿using DevExpress.Mvvm;
 using DevExpress.Xpf.Core;
 using DevExpress.Xpf.Grid;
+using GTI.WFMS.Models.Cmm.Model;
 using GTI.WFMS.Models.Common;
 using GTI.WFMS.Modules.Pop.View;
 using GTIFramework.Common.MessageBox;
@@ -13,6 +14,7 @@ using System.ComponentModel;
 using System.Data;
 using System.IO;
 using System.Linq;
+using System.Reflection;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
@@ -23,20 +25,13 @@ using System.Windows.Threading;
 
 namespace GTI.WFMS.Modules.Pop.ViewModel
 {
-    public class FileMngViewModel : INotifyPropertyChanged
+    public class FileMngViewModel : FileMapDtl
     {
 
-        public event PropertyChangedEventHandler PropertyChanged;
-        public virtual void RaisePropertyChanged(string propertyName)
-        {
-            if (PropertyChanged != null)
-            {
-                PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
-            }
-        }
+ 
 
         // 파일관련 전역변수 - 환경설정으로 관리해야함
-        string dir_name = @"D:\GTI\FILE";
+        string dir_name = @"" + FmsUtil.fileDir;        
 
         //파일다운로드 관련
         System.Windows.Forms.SaveFileDialog saveFileDialog;
@@ -50,10 +45,56 @@ namespace GTI.WFMS.Modules.Pop.ViewModel
         TableView gv;
         FileMngView fileMngView;
         TextBlock txtFIL_SEQ;
+        TextBlock txtBIZ_ID;
         Button btnClose;
 
 
-        // 생성자
+
+
+        #region =========  프로퍼티 ===========
+
+        /*
+         * Items - FileItems 
+         */
+        public virtual ObservableCollection<FileInfo> ItemsFile { get; set; } //파일객체
+        public virtual ObservableCollection<FileDtl> ItemsSelect { get; set; } //파일DB객체
+        public virtual ObservableCollection<FileDtl> ItemsAdd { get; set; } //파일DB객체
+
+        /*
+         바인딩 뷰모델
+        private FileMapDtl mapDtl;
+        public FileMapDtl MapDtl
+        {
+            get { return mapDtl; }
+            set
+            {
+                this.mapDtl = value;
+                RaisePropertyChanged("MapDtl");
+            }
+        }
+         */
+
+        public DelegateCommand<object> LoadedCommand { get; set; }
+        public DelegateCommand<object> DelCmd { get; set; }
+        public RelayCommand<object> SaveFileCmd { get; set; } //뷰에서 ICommand 사용하여 뷰객체 전달받음
+        public RelayCommand<object> SaveCmd { get; set; } 
+        public RelayCommand<object> RemoveCmd { get; set; }
+        public RelayCommand<object> FindFileCmd { get; set; }
+        public RelayCommand<object> DownloadCmd { get; set; }
+
+        public DelegateCommand<object> WindowMoveCommand { get; set; }
+
+      
+
+        #endregion
+
+
+
+
+
+        /// <summary>
+        /// 생성자
+        /// </summary>        
         public FileMngViewModel()
         {
             // 초기로딩처리
@@ -61,37 +102,65 @@ namespace GTI.WFMS.Modules.Pop.ViewModel
 
 
             // 파일인포리스트
-            Items = new ObservableCollection<FileInfo>();
+            ItemsFile = new ObservableCollection<FileInfo>();
+            ItemsSelect = new ObservableCollection<FileDtl>();
+            ItemsAdd = new ObservableCollection<FileDtl>();
+
+
 
             //파일저장버튼 이벤트
-            SaveCmd = new RelayCommand<object>(delegate (object obj)
+            SaveFileCmd = new RelayCommand<object>(delegate (object obj)
             {
-
                 upload_thread = new Thread(new ThreadStart(UploadFileListFX));
                 upload_thread.Start();
 
             });
 
+            //첨부내용 저장버튼 이벤트
+            SaveCmd = new RelayCommand<object>(OnSave);
+
+
+            
+
             //파일삭제버튼 이벤트
-            RemoveCmd = new RelayCommand<object>(delegate (object obj)
+            DelCmd = new DelegateCommand<object>(delegate (object obj)
             {
-                string seq = obj as string;
+                string seq = "";
+                try
+                {
+                    seq = obj.ToString();
+                }
+                catch (Exception) { }
+
+                if (FmsUtil.IsNull(seq) || "0".Equals(seq))
+                {
+                    Messages.ShowErrMsgBox("삭제할 대상이 없습니다.");
+                    return;
+                }
+
+
                 string file_name = "";
                 string del_file_path = "";
 
 
 
-                //0.첨부파일정보
+                //0.첨부파일정보가져오기
                 Hashtable param = new Hashtable();
-                param.Add("FIL_SEQ", this.FIL_SEQ);
-                param.Add("SEQ", Convert.ToInt16(seq));
-                param.Add("sqlId", "SelectFileDtl");
-                DataTable dt = BizUtil.SelectList(param);
                 try
                 {
-                    file_name = dt.Rows[0]["DWN_NAM"].ToString();
+                    param.Add("FIL_SEQ", this.FIL_SEQ);
+                    param.Add("SEQ", seq);
+                    param.Add("sqlId", "SelectFileDtl");
+                    DataTable dt = BizUtil.SelectList(param);
+                    //물리파일명 가져오기
+                    file_name = dt.Rows[0]["UPF_NAM"].ToString();
                 }
-                catch (Exception){}
+                catch (Exception ex)
+                {
+                    Messages.ShowInfoMsgBox(ex.ToString());
+                    InitModel();
+                    return;
+                }
 
 
                 //1.첨부파일상세테이블 삭제
@@ -99,17 +168,14 @@ namespace GTI.WFMS.Modules.Pop.ViewModel
                 BizUtil.Update(param);
 
 
-                //2.물리적파일 삭제
+                //2.물리적파일 삭제 
                 del_file_path = System.IO.Path.Combine(dir_name, file_name);
                 try
                 {
                     FileInfo fi = new FileInfo(del_file_path);
                     fi.Delete();
                 }
-                catch (Exception ex)
-                {
-                    Messages.ShowInfoMsgBox(ex.ToString());
-                }
+                catch (Exception) { }
 
                 //삭제성공
                 Messages.ShowOkMsgBox();
@@ -122,8 +188,19 @@ namespace GTI.WFMS.Modules.Pop.ViewModel
             //기존파일 다운로드버튼 이벤트
             DownloadCmd = new RelayCommand<object>(delegate (object obj)
             {
-                string file_name = obj as string;
-                source_file_path = System.IO.Path.Combine(dir_name, file_name);
+                FileDtl dtl = obj as FileDtl;
+                string file_name = dtl.DWN_NAM;
+                string file_name2 = dtl.UPF_NAM;
+
+                try
+                {
+                    source_file_path = System.IO.Path.Combine(dir_name, file_name2);
+                }
+                catch (Exception)
+                {
+                    Messages.ShowErrMsgBox("다운로드할 수 없습니다.");
+                    return;
+                }
 
 
                 //파일다운로드
@@ -147,7 +224,7 @@ namespace GTI.WFMS.Modules.Pop.ViewModel
 
             });
 
-            
+
             //파일찾기버튼 이벤트
             FindFileCmd = new RelayCommand<object>(delegate (object obj)
             {
@@ -158,13 +235,29 @@ namespace GTI.WFMS.Modules.Pop.ViewModel
                 if (openFileDialog.ShowDialog() == true)
                 {
                     FileInfo[] files = openFileDialog.FileNames.Select(f => new FileInfo(f)).ToArray();  //파일인포
-                    //lbFiles.Items.Add(Path.GetFileName(filename)); //파일명
+
                     foreach (FileInfo fi in files)
                     {
-                        Items.Add(fi);
+                        try
+                        {
+                            //파일객체
+                            ItemsFile.Add(fi);
+
+                            //파일db객체
+                            FileDtl dtl = new FileDtl();
+                            dtl.DWN_NAM = fi.Name;
+                            dtl.FIL_TYP = fi.Extension.Replace(".", "");
+                            dtl.FIL_SIZ = fi.Length.ToString();
+                            ItemsSelect.Add(dtl);
+                        }
+                        catch (Exception){}
+
+
                     }
                 }
             });
+
+
 
 
             //윈도우 마우스드래그
@@ -191,82 +284,131 @@ namespace GTI.WFMS.Modules.Pop.ViewModel
             });
 
 
-
         }
+
+
+
+
+
+
+
+
+
+
 
         //초기로딩 객체가져오기
         private void OnLoaded(object obj)
         {
             if (obj == null) return;
-            var values = (object[])obj;
 
             //그리드뷰인스턴스
-            fileMngView = values[0] as FileMngView;
+            fileMngView = obj as FileMngView;
             gv = fileMngView.gv;
-            
             txtFIL_SEQ = fileMngView.txtFIL_SEQ;
+            txtBIZ_ID = fileMngView.txtBIZ_ID;
             btnClose = fileMngView.btnClose;
 
+            //등록일자
+            UPD_YMD = DateTime.Today.ToString("yyyyMMdd");
 
             // 초기조회
             InitModel();
-
         }
+
+
 
         //초기모델조회
         private void InitModel()
         {
-            DataTable dt = new DataTable();
-
             Hashtable param = new Hashtable();
-            param.Add("sqlId", "SelectFileDtl");
+
+            // 0.파일첨부내역
+            param.Add("sqlId", "SelectFileMap");
+            param.Add("BIZ_ID", txtBIZ_ID.Text);
             param.Add("FIL_SEQ", txtFIL_SEQ.Text);
 
-            dt = BizUtil.SelectList(param);
+            FileMapDtl result = new FileMapDtl();
+            result = BizUtil.SelectObject(param) as FileMapDtl;
 
-            Items.Clear();
-            foreach (DataRow row in dt.Rows)
+
+            // 내역없으면 신규첨부내용
+            if (!FmsUtil.IsNull(result))
             {
-                string file_name2 = row["DWN_NAM"].ToString();
-                string file_path2 = System.IO.Path.Combine(dir_name, file_name2);
+                //결과를 뷰모델멤버로 매칭
+                Type dbmodel = result.GetType();
+                Type model = this.GetType();
 
-                FileInfo fi = new FileInfo(file_path2);
-                fi.Attributes = new FileAttributes();
-                if (fi.Exists)
+                //모델프로퍼티 순회
+                foreach (PropertyInfo prop in model.GetProperties())
                 {
-                    Items.Add(fi);
+                    string propName = prop.Name;
+                    //db프로퍼티 순회
+                    foreach (PropertyInfo dbprop in dbmodel.GetProperties())
+                    {
+                        string colName = dbprop.Name;
+                        var colValue = dbprop.GetValue(result, null);
+                        if (colName.Equals(propName))
+                        {
+                            prop.SetValue(this, Convert.ChangeType(colValue, prop.PropertyType));
+                        }
+                    }
+                    Console.WriteLine(propName + " - " + prop.GetValue(this, null));
                 }
+
+
+
+                // 1.첨부파일
+                param.Clear();
+                param.Add("sqlId", "SelectFileDtl2");
+                param.Add("FIL_SEQ", txtFIL_SEQ.Text);
+
+                ItemsSelect = new ObservableCollection<FileDtl>(BizUtil.SelectListObj<FileDtl>(param));
             }
+
         }
 
 
-
-
-
-        #region =========  프로퍼티 ===========
-        public virtual ObservableCollection<FileInfo> Items { get; set; }
-        public DelegateCommand<object> LoadedCommand { get; set; }
-        public RelayCommand<object> SaveCmd { get; set; } //뷰에서 ICommand 사용하여 뷰객체 전달받음
-        public RelayCommand<object> RemoveCmd { get; set; } 
-        public RelayCommand<object> FindFileCmd { get; set; }
-        public RelayCommand<object> DownloadCmd { get; set; }
-
-        public DelegateCommand<object> WindowMoveCommand { get; set; }
-
-        private string __FIL_SEQ;
-
-
-        public string FIL_SEQ
+        /// <summary>
+        /// 첨부DB 저장처리
+        /// </summary>
+        /// <param name="obj"></param>
+        private void OnSave(object obj)
         {
-            get { return __FIL_SEQ; }
-            set
+            // 파일첨부확인 - 필수첨부이다
+            if (FmsUtil.IsNull(this.FIL_SEQ) || this.FIL_SEQ == 0)
             {
-                this.__FIL_SEQ = value;
-                RaisePropertyChanged("FIL_SEQ");
+                Messages.ShowInfoMsgBox("첨부파일을 먼저 등록(저장)하세요.");
+                return;
             }
+
+            // 필수체크 (Tag에 필수체크 표시한 EditBox, ComboBox 대상으로 수행)
+            if (!BizUtil.ValidReq(fileMngView)) return;
+
+            if (Messages.ShowYesNoMsgBox("저장하시겠습니까?") != MessageBoxResult.Yes) return;
+
+
+            try
+            {
+                this.GRP_TYP = "112"; //일반파일
+                BizUtil.Update2(this, "SaveFileMap2");
+            }
+            catch (Exception)
+            {
+                Messages.ShowErrMsgBox("저장 처리중 오류가 발생하였습니다.");
+                return;
+            }
+
+
+
+
+            //저장처리 성공
+            Messages.ShowOkMsgBox();
+            InitModel();
+
         }
 
-        #endregion
+
+
 
 
 
@@ -284,8 +426,23 @@ namespace GTI.WFMS.Modules.Pop.ViewModel
         public void DropRecord(List<FileInfo> filesData)
         {
             foreach (FileInfo fi in filesData)
-                if (!Items.Any(x => x.FullName == fi.FullName))
-                    Items.Add(fi);
+                if (!ItemsFile.Any(x => x.FullName == fi.FullName))
+                {
+                    try
+                    {
+                        //파일객체
+                        ItemsFile.Add(fi);
+
+                        //파일db객체
+                        FileDtl dtl = new FileDtl();
+                        dtl.DWN_NAM = fi.Name;
+                        dtl.FIL_TYP = fi.Extension.Replace(".", "");
+                        dtl.FIL_SIZ = fi.Length.ToString();
+                        ItemsSelect.Add(dtl);
+
+                    }
+                    catch (Exception){}
+                }
         }
 
         public void StartRecordDrag(bool allowDrag)
@@ -326,12 +483,12 @@ namespace GTI.WFMS.Modules.Pop.ViewModel
                         (fileMngView.FindName("waitindicator") as WaitIndicator).DeferedVisibility = true;
                     })));
 
-                
+
                 //업로드시작...
                 UploadFileList();
 
                 // 생성된 첨부파일아이디 반환 -> 뷰쪽으로 바인딩 -> 부모창에서 접근가능
-                this.FIL_SEQ = ret_fil_seq.ToString();
+                this.FIL_SEQ = ret_fil_seq;
 
 
                 fileMngView.Dispatcher.Invoke(DispatcherPriority.ApplicationIdle,
@@ -339,8 +496,8 @@ namespace GTI.WFMS.Modules.Pop.ViewModel
                    {
                        (fileMngView.FindName("waitindicator") as WaitIndicator).DeferedVisibility = false;
                        Messages.ShowOkMsgBox();
-                        //팝업닫기
-                        btnClose.RaiseEvent(new RoutedEventArgs(Button.ClickEvent));
+                       //팝업닫기
+                       //btnClose.RaiseEvent(new RoutedEventArgs(Button.ClickEvent));
                    })));
 
 
@@ -365,33 +522,6 @@ namespace GTI.WFMS.Modules.Pop.ViewModel
         /// <returns></returns>
         private void UploadFileList()
         {
-            
-            int _file_seq = -1;
-            List<Hashtable> FILE_DTL_LIST = new List<Hashtable>();//첨부파일상세 리스트
-
-
-
-            // 0.첨부파일 수정모드인경우, 해당파일 모두삭제
-            if (this.FIL_SEQ != null)
-            {
-                try
-                {
-                    _file_seq = Convert.ToInt16(this.FIL_SEQ);
-                }
-                catch (Exception) { }
-            }
-
-
-            Hashtable param = new Hashtable();
-            if (_file_seq > 0)
-            {
-                //파일마스터 관련파일 모두 일단 삭제
-                param.Add("sqlId", "DeleteFileSeq");
-                BizUtil.Update(param);
-
-                //실제파일삭제 구현(어려울시 파일남겨둘수도...)
-            }
-
 
 
             // 1.물리적파일 저장
@@ -399,47 +529,51 @@ namespace GTI.WFMS.Modules.Pop.ViewModel
             {
                 System.IO.Directory.CreateDirectory(dir_name);
             }
-            int seq = 0;
-            foreach (FileInfo fi in Items)
-            {
-                string file_name = fi.Name;
-                string file_path = System.IO.Path.Combine(dir_name, file_name);
-                string file_name2 = DateTime.Now.ToString("yyyyMMddHHmmssff") + (seq++).ToString() +  fi.Extension; //저장되는파일이름
-                string file_path2 = System.IO.Path.Combine(dir_name, file_name2);
 
+            /// Items는 추가된 파일객체만이다
+            foreach (FileInfo fi in ItemsFile)
+            {
+                //string file_name = fi.Name;
+                //string file_path = System.IO.Path.Combine(dir_name, file_name);
+                string file_name2 = DateTime.Now.ToString("yyyyMMddHHmmssff") + fi.Extension; //저장되는파일이름
+                string file_path2 = System.IO.Path.Combine(dir_name, file_name2);
 
                 try
                 {
-                    fi.CopyTo(file_path, true);
+                    // 1.파일드라이브에 저장
+                    fi.CopyTo(file_path2, true);
+
+
+                    // 2.저장되는 물리적파일명 db에 기록
+                    //파일db객체
+                    FileDtl dtl = new FileDtl();
+                    dtl.UPF_NAM = file_name2;
+                    dtl.DWN_NAM = fi.Name;
+                    dtl.FIL_TYP = fi.Extension.Replace(".", "");
+                    dtl.FIL_SIZ = fi.Length.ToString();
+                    ItemsAdd.Add(dtl);
                 }
                 catch (Exception ex)
                 {
-                    Messages.ShowErrMsgBox(ex.ToString());
+                    Messages.ShowErrMsgBox(ex.Message);
                 }
-
-
-                //파일상세정보 추가
-                Hashtable FILE_DTL = new Hashtable();//첨부파일상세
-                FILE_DTL.Add("SEQ", seq++);
-                FILE_DTL.Add("FIL_RST", "");//사진파일해상도
-                FILE_DTL.Add("FIL_SIZ", fi.Length / 1000);
-                FILE_DTL.Add("FIL_TYP", fi.Extension.ToString().Replace(".",""));
-                FILE_DTL.Add("UPF_NAM", file_path2);
-                FILE_DTL.Add("DWN_NAM", file_name);
-                FILE_DTL.Add("CUR_TFS", "1");//?
-                
-                FILE_DTL_LIST.Add(FILE_DTL);
 
 
             }
 
 
             // 2.첨부파일 등록
-            _file_seq = SaveFileList(_file_seq, FILE_DTL_LIST);
+            int _file_seq = 0; //신규마스터
+            try
+            {
+                _file_seq = Convert.ToInt16(this.FIL_SEQ);
+            }
+            catch (Exception) { }
 
+            // 첨부파일db 저장
+            ret_fil_seq = SaveFileList(_file_seq);
+            this.FIL_SEQ = ret_fil_seq;
 
-
-            ret_fil_seq = _file_seq;
         }
 
 
@@ -447,42 +581,39 @@ namespace GTI.WFMS.Modules.Pop.ViewModel
 
 
         /// <summary>
-        /// 첨부파일 등록
+        /// 첨부파일 DB등록
         /// </summary>
         /// <param name="file_seq"></param>
         /// <param name="fILE_DTL_LIST"></param>
-        private int SaveFileList(int file_seq, List<Hashtable> FILE_DTL_LIST)
+        private int SaveFileList(int file_seq)
         {
             Hashtable param = new Hashtable();
 
             //1.마스터신규인 경우 
-            if (file_seq < 0)
+            if (file_seq < 1)
             {
                 //마스터등록(파일마스터 채번)
                 param.Clear();
                 param.Add("sqlId", "InsertFileMst");
-                param.Add("FIL_SEQ", file_seq); 
                 file_seq = BizUtil.InsertR(param);
             }
 
 
 
             //2.디테일등록
-            foreach (Hashtable dtl in FILE_DTL_LIST)
+            foreach (FileDtl dt in ItemsAdd)
             {
-                try
-                {
-                    dtl.Add("sqlId", "InsertFileDtl");
-                }
-                catch (Exception){}
-                dtl["FIL_SEQ"] = file_seq;
+                //파일마스터키
+                dt.FIL_SEQ = file_seq;
 
-                BizUtil.InsertR(dtl);
+                BizUtil.Insert2(dt, "InsertFileDtl2");
             }
 
 
             return file_seq;
         }
+
+
 
 
 
@@ -501,7 +632,16 @@ namespace GTI.WFMS.Modules.Pop.ViewModel
                     })));
 
                 //다운로드시작...
-                System.IO.File.Copy(source_file_path, target_file_path, true);
+                try
+                {
+                    System.IO.File.Copy(source_file_path, target_file_path, true);
+                }
+                catch (Exception)
+                {
+                    (fileMngView.FindName("waitindicator") as WaitIndicator).DeferedVisibility = false;
+                    Messages.ShowErrMsgBox("파일을 다운로드할 수 없습니다.");
+                    return;
+                }
 
                 fileMngView.Dispatcher.Invoke(DispatcherPriority.ApplicationIdle,
                    new Action((delegate ()

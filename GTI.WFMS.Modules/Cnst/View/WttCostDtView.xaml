@@ -7,18 +7,21 @@
              mc:Ignorable="d" 
              d:DesignHeight="300" d:DesignWidth="900"
              
+             xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
              xmlns:vm="clr-namespace:GTI.WFMS.Modules.Cnst.ViewModel"
-             xmlns:cm="clr-namespace:GTIFramework.Common.Utils.Converters;assembly=GTIFramework"
              xmlns:cv="clr-namespace:GTI.WFMS.Models.Common;assembly=GTI.WFMS.Models"
+             x:Name="wttCostDtView"
              >
 
     <UserControl.Resources>
         <cv:RownumConverter x:Key="rownumConverter" />
         <cv:ToggleConverter x:Key="toggleConverter" />
-        <cv:Date3StrConverter x:Key="date2StrConverter" />
+        <cv:Date3StrConverter x:Key="date3StrConverter" />
     </UserControl.Resources>
 
-
+    <UserControl.DataContext>
+        <vm:WttCostDtViewModel/>
+    </UserControl.DataContext>
 
 
 
@@ -30,14 +33,16 @@
         </Grid.RowDefinitions>
 
 
-        <StackPanel Grid.Row="0" Orientation="Horizontal" HorizontalAlignment="Right" Margin="0 0 5 3">
-            <Button x:Name="btnAdd" Style="{DynamicResource ResourceKey=GrdAddButton}" Click="BtnAdd_Click"  />
-            <Button x:Name="btnDel" Style="{DynamicResource ResourceKey=GrdDelButton}" Click="BtnDel_Click"  />
-            <Button x:Name="btnReg" Style="{DynamicResource ResourceKey=GrdRegButton}" Click="BtnReg_Click"  />
+        <StackPanel Grid.Row="0" Orientation="Horizontal" HorizontalAlignment="Right" Margin="0 0 5 0">
+            <!--히든키-->
+            <dxe:TextEdit x:Name="txtCNT_NUM" EditValue="{Binding CNT_NUM, UpdateSourceTrigger=PropertyChanged}" Visibility="Collapsed"/>
+            <Button x:Name="btnAdd" Style="{DynamicResource ResourceKey=GrdAddButton}" Command="{Binding AddCommand}" />
+            <Button x:Name="btnDel" Style="{DynamicResource ResourceKey=GrdDelButton}" Command="{Binding DelCommand}" />
+            <Button x:Name="btnReg" Style="{DynamicResource ResourceKey=GrdRegButton}" Command="{Binding SaveCommand }"  />
         </StackPanel>
 
 
-        <dxg:GridControl Grid.Row="1" x:Name="grid" VerticalAlignment="Stretch" HorizontalAlignment="Stretch"  >
+        <dxg:GridControl Grid.Row="1" x:Name="grid" ItemsSource="{Binding GrdLst}" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" >
 
             <dxg:GridControl.View>
                 <dxg:TableView x:Name="gv"
@@ -48,8 +53,6 @@
                                 ShowIndicator="False" 
                                 ShowGroupPanel="False" 
                                 AllowBandMultiRow="False" 
-
-                               InitNewRow="Gv_InitNewRow"
                     />
             </dxg:GridControl.View>
 
@@ -63,7 +66,6 @@
                 </dxg:GridColumn.HeaderTemplate>
                 <dxg:GridColumn.CellTemplate>
                     <DataTemplate>
-                        <!--<dxe:CheckEdit EditValue="{Binding RowData.Row.CHK,TargetNullValue=false}" NullValue="false" IsThreeState="False"  EditMode="InplaceActive"/>-->
                         <dxe:CheckEdit EditValue="{Binding RowData.Row.CHK, Mode=TwoWay, Converter={StaticResource toggleConverter}}" HorizontalAlignment="Center" />
                     </DataTemplate>
                 </dxg:GridColumn.CellTemplate>
@@ -71,9 +73,9 @@
             <dxg:GridColumn Header="지급구분" Width="4*" FieldName="PTY_CDE" HorizontalHeaderContentAlignment="Center"  AllowEditing="True">
                 <dxg:GridColumn.CellTemplate>
                     <DataTemplate>
-                        <dxe:ComboBoxEdit EditValue="{Binding RowData.Row.PTY_CDE, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" ValueMember="DTL_CD" DisplayMember="NM"
+                        <dxe:ComboBoxEdit EditValue="{Binding RowData.Row.PTY_CDE, Mode=TwoWay}" ValueMember="DTL_CD" DisplayMember="NM"
                                             Loaded="PTY_CDE_Loaded"  
-                                    Style="{DynamicResource ResourceKey=GrdComboBox}" >
+                                    Style="{DynamicResource ResourceKey=GridComboBox}" >
                             <dxe:ComboBoxEdit.ItemContainerStyle>
                                 <Style TargetType="{x:Type dxe:ComboBoxEditItem}">
                                     <Setter Property="Foreground" Value="#2279b5"/>
@@ -86,16 +88,16 @@
             <dxg:GridColumn Header="지급일자" Width="3*" FieldName="PAY_YMD" HorizontalHeaderContentAlignment="Center" AllowEditing="True">
                 <dxg:GridColumn.CellTemplate>
                     <DataTemplate>
-                        <dxe:DateEdit Style="{DynamicResource ResourceKey=GrdDateEdit}" 
-                            EditValue="{Binding RowData.Row.PAY_YMD, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, Converter={StaticResource date2StrConverter}}"   />
+                        <dxe:DateEdit Style="{DynamicResource ResourceKey=GridDateEdit}" 
+                            EditValue="{Binding RowData.Row.PAY_YMD, Mode=TwoWay,  Converter={StaticResource date3StrConverter}}"   />
                     </DataTemplate>
                 </dxg:GridColumn.CellTemplate>
             </dxg:GridColumn>
             <dxg:GridColumn Header="지급금액" Width="4*" FieldName="PAY_AMT" HorizontalHeaderContentAlignment="Center"  AllowEditing="True">
                 <dxg:GridColumn.CellTemplate>
                     <DataTemplate>
-                        <dxe:TextEdit  Style="{DynamicResource ResourceKey=GrdNumberEdit}"
-                            EditValue="{Binding  RowData.Row.PAY_AMT, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged }" />
+                        <dxe:TextEdit  Style="{DynamicResource ResourceKey=GridNumberEdit}" MaskType="Numeric" MaskUseAsDisplayFormat="True" 
+                            EditValue="{Binding  RowData.Row.PAY_AMT, Mode=TwoWay }" />
                     </DataTemplate>
                 </dxg:GridColumn.CellTemplate>
             </dxg:GridColumn>
@@ -106,5 +108,11 @@
 
     </Grid>
 
+    <!--뷰와 연결된 뷰모델로 Loaded 이벤트전파-->
+    <i:Interaction.Triggers>
+        <i:EventTrigger EventName="Loaded">
+            <i:InvokeCommandAction Command="{Binding LoadedCommand}" CommandParameter="{Binding ElementName=wttCostDtView}"/>
+        </i:EventTrigger>
+    </i:Interaction.Triggers>
 
 </UserControl>

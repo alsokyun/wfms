@@ -7,16 +7,16 @@
       /* SelectWtlPipeList 상수관로 목록*/
 
       WITH C AS (
-        SELECT COUNT(1) AS ROWCNT
-        FROM INFOFMS.WTL_PIPE_LM A
+      SELECT COUNT(1) AS ROWCNT
+      FROM INFOFMS.WTL_PIPE_LM A
         LEFT JOIN INFOFMS.V_FTR_CDE F ON A.FTR_CDE = F.FTR_CDE
-        LEFT JOIN INFOFMS.BML_HADM_AS H ON A.HJD_CDE = H.HJD_CDE
-        LEFT JOIN INFOUSER.CD_DTL_INFO C ON C.MST_CD = 'MNG_CDE' AND C.DTL_CD = A.MNG_CDE
-        LEFT JOIN INFOUSER.CD_DTL_INFO C2 ON C2.MST_CD = 'JHT_CDE' AND C2.DTL_CD = A.MNG_CDE
-        LEFT JOIN INFOUSER.CD_DTL_INFO C3 ON C3.MST_CD = 'MOP_CDE' AND C3.DTL_CD = A.MNG_CDE
-
-        WHERE 1=1
-        <isNotEmpty prepend="AND" property="MNG_CDE">
+        LEFT JOIN INFOFMS.CMT_ADAR_MA H ON A.HJD_CDE = H.HJD_CDE
+        LEFT JOIN INFOUSER.CD_DTL_INFO C ON C.MST_CD = (SELECT MST_CD FROM INFOUSER.CD_MST_INFO WHERE ETC = 'MNG_CDE') AND C.DTL_CD = A.MNG_CDE
+        LEFT JOIN INFOUSER.CD_DTL_INFO C2 ON C2.MST_CD = (SELECT MST_CD FROM INFOUSER.CD_MST_INFO WHERE ETC = 'JHT_CDE') AND C2.DTL_CD = A.JHT_CDE
+        LEFT JOIN INFOUSER.CD_DTL_INFO C3 ON C3.MST_CD = '250102' AND C3.DTL_CD = A.MOP_CDE
+      
+      WHERE 1=1
+      <isNotEmpty prepend="AND" property="MNG_CDE">
           A.MNG_CDE like #MNG_CDE# || '%'
         </isNotEmpty>
 
@@ -79,7 +79,7 @@
       , CASE WHEN ST_ISVALID(A.GEOM) = 1 THEN 'Y' ELSE 'N' END AS IS_GEOMETRY
       FROM INFOFMS.WTL_PIPE_LM A
       LEFT JOIN INFOFMS.V_FTR_CDE F ON A.FTR_CDE = F.FTR_CDE
-      LEFT JOIN INFOFMS.BML_HADM_AS H ON A.HJD_CDE = H.HJD_CDE
+      LEFT JOIN INFOFMS.CMT_ADAR_MA H ON A.HJD_CDE = H.HJD_CDE
       LEFT JOIN INFOUSER.CD_DTL_INFO C ON C.MST_CD = (SELECT MST_CD FROM INFOUSER.CD_MST_INFO WHERE ETC = 'MNG_CDE') AND C.DTL_CD = A.MNG_CDE
       LEFT JOIN INFOUSER.CD_DTL_INFO C2 ON C2.MST_CD = (SELECT MST_CD FROM INFOUSER.CD_MST_INFO WHERE ETC = 'JHT_CDE') AND C2.DTL_CD = A.JHT_CDE
       LEFT JOIN INFOUSER.CD_DTL_INFO C3 ON C3.MST_CD = '250102' AND C3.DTL_CD = A.MOP_CDE
@@ -142,7 +142,7 @@
       , A.HJD_CDE,	H.HJD_NAM
       , A.SHT_NUM
       , A.MNG_CDE	,C.NM AS MNG_NAM
-      , decode(length(nvl(IST_YMD, '')), 8, to_char(to_date(IST_YMD, 'yyyyMMdd'), 'yyyy-MM-dd'), '') AS IST_YMD
+      , A.IST_YMD
       , A.SAA_CDE	,C2.NM AS SAA_NAM
       , A.MOP_CDE	,C3.NM AS MOP_NAM
       , A.JHT_CDE	,C4.NM AS JHT_NAM
@@ -175,7 +175,7 @@
       , A.HJD_CDE,	H.HJD_NAM
       , A.SHT_NUM
       , A.MNG_CDE	,C.NM AS MNG_NAM
-      , decode(length(nvl(IST_YMD, '')), 8, to_char(to_date(IST_YMD, 'yyyyMMdd'), 'yyyy-MM-dd'), '') AS IST_YMD
+      , A.IST_YMD
       , A.SAA_CDE	,C2.NM AS SAA_NAM
       , A.MOP_CDE	,C3.NM AS MOP_NAM
       , A.JHT_CDE	,C4.NM AS JHT_NAM
@@ -203,11 +203,16 @@
     <!--상수관로 상세저장-->
     <update id="saveWtlPipeDtl" parameterClass="GTI.WFMS.Models.Pipe.Model.PipeDtl">
       /* 상수관로 상세저장 */
-      UPDATE WTL_PIPE_LM
+      MERGE INTO INFOFMS.WTL_PIPE_LM
+      USING DUAL ON (FTR_CDE = #FTR_CDE# AND FTR_IDN = #FTR_IDN#)
+
+      WHEN MATCHED THEN
+
+      UPDATE
       SET HJD_CDE=#HJD_CDE#
       , SHT_NUM=#SHT_NUM#
       , MNG_CDE=#MNG_CDE#
-      , IST_YMD=decode(length(#IST_YMD#), 10, to_char(to_date(#IST_YMD#, 'yyyy-MM-dd'), 'yyyyMMdd'), '')
+      , IST_YMD=#IST_YMD#
       , SAA_CDE=#SAA_CDE#
       , JHT_CDE=#JHT_CDE#
       , MOP_CDE=#MOP_CDE#
@@ -218,8 +223,43 @@
       , PIP_LBL=#PIP_LBL#
       , PIP_DIP=#PIP_DIP#
       , PIP_LEN=#PIP_LEN#
-      WHERE 	FTR_CDE = #FTR_CDE#
-      AND		FTR_IDN = #FTR_IDN#
+
+      WHEN NOT MATCHED THEN
+      INSERT
+      ( FTR_CDE
+      , FTR_IDN
+      , HJD_CDE
+      , SHT_NUM
+      , MNG_CDE
+      , IST_YMD
+      , SAA_CDE
+      , MOP_CDE
+      , JHT_CDE
+      , LOW_DEP
+      , HGH_DEP
+      , CNT_NUM
+      , SYS_CHK
+      , PIP_LBL
+      , PIP_DIP
+      , PIP_LEN )
+
+      VALUES (#FTR_CDE#
+      , #FTR_IDN#
+      , #HJD_CDE#
+      , #SHT_NUM#
+      , #MNG_CDE#
+      , #IST_YMD#
+      , #SAA_CDE#
+      , #MOP_CDE#
+      , #JHT_CDE#
+      , #LOW_DEP#
+      , #HGH_DEP#
+      , #CNT_NUM#
+      , #SYS_CHK#
+      , #PIP_LBL#
+      , #PIP_DIP#
+      , #PIP_LEN# )
+
     </update>
 
     
@@ -234,8 +274,9 @@
 
     <!--상수관로 관리번호 채번-->
     <select id ="SelectWtlPipeFTR_IDN" parameterClass="Hashtable" resultClass ="GTI.WFMS.Models.Pipe.Model.PipeDtl">
-      SELECT NVL(MAX(FTR_IDN),0)+1 AS FTR_IDN FROM INFOFMS.WTL_PIPE_LM WHERE 1=1
-      AND FTR_CDE = #FTR_CDE#
+      SELECT NVL(MAX(FTR_IDN),0)+1 AS FTR_IDN FROM INFOFMS.WTL_PIPE_LM 
+       WHERE 1=1
+         AND FTR_CDE = #FTR_CDE#
     </select>
 
       <!--상수관로 상세추가-->
@@ -257,13 +298,13 @@
       , PIP_LBL
       , PIP_DIP
       , PIP_LEN )
-      
+
       VALUES (#FTR_CDE#
       , #FTR_IDN#
       , #HJD_CDE#
       , #SHT_NUM#
       , #MNG_CDE#
-      , decode(length(#IST_YMD#), 10, to_char(to_date(#IST_YMD#, 'yyyy-MM-dd'), 'yyyyMMdd'), '')
+      , #IST_YMD#
       , #SAA_CDE#
       , #MOP_CDE#
       , #JHT_CDE#

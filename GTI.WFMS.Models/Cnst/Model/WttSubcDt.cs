@@ -1,4 +1,5 @@
 ﻿using GTI.WFMS.Models.Cmm.Model;
+using System.Collections.ObjectModel;
 using System.ComponentModel;
 
 namespace GTI.WFMS.Modules.Cnst.Model
@@ -14,14 +15,38 @@ namespace GTI.WFMS.Modules.Cnst.Model
             if (PropertyChanged != null)
             {
                 PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
+
+                //컬럼변경시 체크박스 
+                if (propertyName != "CHK")
+                {
+                    this.CHK = "Y";
+                }
             }
         }
-
-
-
+                
         /// <summary>
         /// 프로퍼티 부분
         /// </summary>
+        private string __CHK;
+        public string CHK
+        {
+            get { return __CHK; }
+            set
+            {
+                this.__CHK = value;
+                OnPropertyChanged("CHK");
+            }
+        }
+        private int __RNO;
+        public int RNO
+        {
+            get { return __RNO; }
+            set
+            {
+                this.__RNO = value;
+                OnPropertyChanged("RNO");
+            }
+        }
         private string __CNT_NUM;
         public string CNT_NUM
         {

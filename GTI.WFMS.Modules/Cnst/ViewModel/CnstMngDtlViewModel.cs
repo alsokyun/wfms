@@ -1,7 +1,11 @@
-﻿using DevExpress.Xpf.Editors;
+﻿using DevExpress.DataAccess.ObjectBinding;
+using DevExpress.Xpf.Editors;
+using DevExpress.XtraReports.UI;
 using GTI.WFMS.Models.Common;
 using GTI.WFMS.Modules.Cnst.Model;
+using GTI.WFMS.Modules.Cnst.Report;
 using GTI.WFMS.Modules.Cnst.View;
+using GTI.WFMS.Modules.Pipe.ViewModel;
 using GTIFramework.Common.Log;
 using GTIFramework.Common.MessageBox;
 using Prism.Commands;
@@ -19,9 +23,12 @@ using System.Windows.Controls;
 
 namespace GTI.WFMS.Modules.Cnst.ViewModel
 {
-    class CnstMngDtlViewModel : CnstDtl
+    public class CnstMngDtlViewModel : CnstDtl
     {
-
+        public List<WttCostDt> Tab01List { get; set; }
+        public List<WttChngDt> Tab02List { get; set; }
+        public List<WttSubcDt> Tab03List { get; set; }
+        public List<WttFlawDt> Tab04List { get; set; }
 
         #region ==========  Properties 정의 ==========
         /// <summary>
@@ -29,6 +36,7 @@ namespace GTI.WFMS.Modules.Cnst.ViewModel
         /// </summary>
         public DelegateCommand<object> LoadedCommand { get; set; }
         public DelegateCommand<object> SaveCommand { get; set; }
+        public DelegateCommand<object> PrintCommand { get; set; }
         public DelegateCommand<object> DeleteCommand { get; set; }
         public DelegateCommand<object> BackCommand { get; set; }
 
@@ -44,24 +52,19 @@ namespace GTI.WFMS.Modules.Cnst.ViewModel
         Button btnDelete;
         Button btnSave;
         
-        #endregion
-
-
-
+        #endregion                    
 
         /// 생성자
         public CnstMngDtlViewModel()
         {
             this.LoadedCommand = new DelegateCommand<object>(OnLoaded);
             this.SaveCommand = new DelegateCommand<object>(OnSave);
+            this.PrintCommand = new DelegateCommand<object>(OnPrint);
             this.DeleteCommand = new DelegateCommand<object>(OnDelete);
             this.BackCommand = new DelegateCommand<object>(OnBack);
             
         }
-
-
-
-
+                    
 
         #region ==========  이벤트 핸들러 ==========
 
@@ -75,9 +78,8 @@ namespace GTI.WFMS.Modules.Cnst.ViewModel
 
             // 0.화면객체인스턴스화
             if (obj == null) return;
-            var values = (object[])obj;
 
-            cnstMngDtlView = values[0] as CnstMngDtlView;
+            cnstMngDtlView = obj as CnstMngDtlView;
             cbCTT_CDE = cnstMngDtlView.cbCTT_CDE;
             cbCNT_CDE = cnstMngDtlView.cbCNT_CDE;
             btnBack = cnstMngDtlView.btnBack;
@@ -96,12 +98,18 @@ namespace GTI.WFMS.Modules.Cnst.ViewModel
 
 
             // 4.초기조회
-            //DataTable dt = new DataTable();
+            InitModel();
+        }
+
+
+        // 초기조회
+        public void InitModel()
+        {
             Hashtable param = new Hashtable();
             param.Add("sqlId", "SelectWttConsMaDtl");
             param.Add("CNT_NUM", this.CNT_NUM);
 
-          
+
             CnstDtl result = new CnstDtl();
             result = BizUtil.SelectObject(param) as CnstDtl;
 
@@ -126,11 +134,10 @@ namespace GTI.WFMS.Modules.Cnst.ViewModel
                         prop.SetValue(this, Convert.ChangeType(colValue, prop.PropertyType));
                     }
                 }
-               Console.WriteLine(propName + " - " + prop.GetValue(this,null));
+                //Console.WriteLine(propName + " - " + prop.GetValue(this,null));
             }
 
         }
-
 
 
         /// <summary>
@@ -150,13 +157,49 @@ namespace GTI.WFMS.Modules.Cnst.ViewModel
             {
                 BizUtil.Update2(this, "updateCnstMngDtl");
             }
-            catch (Exception e)
+            catch (Exception )
             {
                 Messages.ShowErrMsgBox("저장 처리중 오류가 발생하였습니다.");
                 return;
             }
-            Messages.ShowOkMsgBox();
 
+            Messages.ShowOkMsgBox();
+            InitModel();
+        }
+
+        /// <summary>
+        /// 인쇄작업
+        /// </summary>
+        /// <param name="obj"></param>
+        private void OnPrint(object obj)
+        {
+            // 필수체크 (Tag에 필수체크 표시한 EditBox, ComboBox 대상으로 수행)
+            //if (!BizUtil.ValidReq(fireFacDtlView)) return;
+
+            //if (Messages.ShowYesNoMsgBox("인쇄하시겠습니까?") != MessageBoxResult.Yes) return;
+
+            try
+            {
+
+                //0.Datasource 생성
+                CnstMngDtlViewMdl mdl = new CnstMngDtlViewMdl(this.CNT_NUM);
+                //1.Report 호출
+                
+                CnstMngReport report = new CnstMngReport();
+                ObjectDataSource ods = new ObjectDataSource();
+                ods.Name = "objectDataSource1";
+                ods.DataSource = mdl;
+
+                report.DataSource = ods;
+                report.ShowPreviewDialog();
+                
+
+            }
+            catch (Exception)
+            {
+                Messages.ShowErrMsgBox("인쇄 처리중 오류가 발생하였습니다.");
+                return;
+            }
         }
 
         /// <summary>
@@ -227,7 +270,7 @@ namespace GTI.WFMS.Modules.Cnst.ViewModel
             {
                 BizUtil.Update2(this, "deleteCnstMngDtl");
             }
-            catch (Exception e)
+            catch (Exception )
             {
                 Messages.ShowErrMsgBox("삭제 처리중 오류가 발생하였습니다.");
                 return;
@@ -268,10 +311,10 @@ namespace GTI.WFMS.Modules.Cnst.ViewModel
             try
             {
                 // cbCTT_CDE 계약구분
-                BizUtil.SetCmbCode(cbCTT_CDE, "CTT_CDE", true);
+                BizUtil.SetCmbCode(cbCTT_CDE, "250038", "[선택하세요]");
 
                 // cbCNT_CDE 공사구분
-                BizUtil.SetCmbCode(cbCNT_CDE, "CNT_CDE", true);
+                BizUtil.SetCmbCode(cbCNT_CDE, "250039", "[선택하세요]");
             }
             catch (Exception ex)
             {

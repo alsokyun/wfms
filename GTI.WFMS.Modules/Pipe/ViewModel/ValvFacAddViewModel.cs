@@ -8,7 +8,6 @@ using Prism.Commands;
 using System;
 using System.Collections;
 using System.Data;
-using System.Reflection;
 using System.Windows;
 using System.Windows.Controls;
 
@@ -32,16 +31,16 @@ namespace GTI.WFMS.Modules.Pipe.ViewModel
 
         #region ==========  Member 정의 ==========
         ValvFacAddView valvFacAddView;
-        ComboBoxEdit cbFTR_CDE; DataTable dtFTR_CDE = new DataTable();		//지형지물
-        ComboBoxEdit cbHJD_CDE; DataTable dtHJD_CDE = new DataTable();		//행정동
-        ComboBoxEdit cbMNG_CDE; DataTable dtMNG_CDE = new DataTable();		//관리기관
-        ComboBoxEdit cbVAL_MOF; DataTable dtVAL_MOF = new DataTable();		//형식
-        ComboBoxEdit cbVAL_MOP; DataTable dtVAL_MOP = new DataTable();		//관재질
-        ComboBoxEdit cbSAE_CDE; DataTable dtSAE_CDE = new DataTable();		//제수변회전방향
-        ComboBoxEdit cbMTH_CDE; DataTable dtMTH_CDE = new DataTable();		//제수변구동방법
-        ComboBoxEdit cbVAL_FOR; DataTable dtVAL_FOR = new DataTable();		//시설물형태
-        ComboBoxEdit cbCST_CDE; DataTable dtCST_CDE = new DataTable();		//이상상태
-        ComboBoxEdit cbOFF_CDE; DataTable dtOFF_CDE = new DataTable();		//개폐여부
+        ComboBoxEdit cbFTR_CDE; //지형지물
+        ComboBoxEdit cbHJD_CDE; //행정동
+        ComboBoxEdit cbMNG_CDE; //관리기관
+        ComboBoxEdit cbVAL_MOF; //형식
+        ComboBoxEdit cbVAL_MOP; //관재질
+        ComboBoxEdit cbSAE_CDE; //제수변회전방향
+        ComboBoxEdit cbMTH_CDE; //제수변구동방법
+        ComboBoxEdit cbVAL_FOR; //시설물형태
+        ComboBoxEdit cbCST_CDE; //이상상태
+        ComboBoxEdit cbOFF_CDE; //개폐여부
 
         Button btnBack;
         Button btnSave;
@@ -113,6 +112,10 @@ namespace GTI.WFMS.Modules.Pipe.ViewModel
                 this.FTR_CDE = "SA200";
 
                 this.IST_YMD = Convert.ToDateTime(DateTime.Today).ToString("yyyy-MM-dd");
+
+                //공통팝업창 사이즈 원복
+                FmsUtil.popWinView.Height = 440;
+
             }
             catch (Exception e)
             {
@@ -140,7 +143,7 @@ namespace GTI.WFMS.Modules.Pipe.ViewModel
             {
                 BizUtil.Update2(this, "insertValvFacDtl");
             }
-            catch (Exception e)
+            catch (Exception )
             {
                 Messages.ShowErrMsgBox("저장 처리중 오류가 발생하였습니다.");
                 return;
@@ -175,35 +178,35 @@ namespace GTI.WFMS.Modules.Pipe.ViewModel
             try
             {
                 // cbFTR_CDE 지형지물
-                BizUtil.SetCombo(cbFTR_CDE, "Select_FTR_LIST", "FTR_CDE", "FTR_NAM", false);
+                BizUtil.SetCombo(cbFTR_CDE, "Select_FTR_LIST", "FTR_CDE", "FTR_NAM");
 
                 // cbHJD_CDE 행정동
-                BizUtil.SetCombo(cbHJD_CDE, "Select_ADAR_LIST", "HJD_CDE", "HJD_NAM", true);
+                BizUtil.SetCombo(cbHJD_CDE, "Select_ADAR_LIST", "HJD_CDE", "HJD_NAM", "[선택하세요]");
 
                 // cbMNG_CDE 관리기관
-                BizUtil.SetCmbCode(cbMNG_CDE, "MNG_CDE", true);
+                BizUtil.SetCmbCode(cbMNG_CDE, "250101", "[선택하세요]");
 
 
                 // cbVAL_MOF 형식
-                BizUtil.SetCmbCode(cbVAL_MOF, "MOF_CDE", true, "250016");
+                BizUtil.SetCmbCode(cbVAL_MOF, "250016", "[선택하세요]");
 
                 // cbVAL_MOP 관재질
-                BizUtil.SetCmbCode(cbVAL_MOP, "MOP_CDE", true, "250015");
+                BizUtil.SetCmbCode(cbVAL_MOP, "250015", "[선택하세요]");
 
                 // cbSAE_CDE    제수변회전방향
-                BizUtil.SetCmbCode(cbSAE_CDE, "SAE_CDE", true);
+                BizUtil.SetCmbCode(cbSAE_CDE, "250027", "[선택하세요]");
 
                 // cbMTH_CDE    제수변구동방법
-                BizUtil.SetCmbCode(cbMTH_CDE, "MTH_CDE", true);
+                BizUtil.SetCmbCode(cbMTH_CDE, "250065", "[선택하세요]");
 
                 // cbVAL_FOR    시설물형태(=구조물형태)
-                BizUtil.SetCmbCode(cbVAL_FOR, "FOR_CDE", true);
+                BizUtil.SetCmbCode(cbVAL_FOR, "250007", "[선택하세요]");
 
                 // cbCST_CDE    이상상태
-                BizUtil.SetCmbCode(cbCST_CDE, "CST_CDE", true);
+                BizUtil.SetCmbCode(cbCST_CDE, "250062", "[선택하세요]");
 
                 // cbOFF_CDE    개폐여부
-                BizUtil.SetCmbCode(cbOFF_CDE, "OFF_CDE", true);
+                BizUtil.SetCmbCode(cbOFF_CDE, "250036", "[선택하세요]");
 
             }
             catch (Exception ex)

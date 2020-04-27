@@ -36,28 +36,35 @@ namespace GTI.WFMS.Models.Cmm.Dao
                 ret = DBManager.QueryForTable(sqlId, conditions);
                 result.Add("dt", ret);
             }
-            catch (Exception e) { }
+            catch (Exception e) { Console.WriteLine(e.Message);}
             try
             {
                 string sqlId = conditions["sqlId2"].ToString();
                 ret = DBManager.QueryForTable(sqlId, conditions);
                 result.Add("dt2", ret);
             }
-            catch (Exception e) { }
+            catch (Exception e) { Console.WriteLine(e.Message); }
+            try
+            {
+                string sqlId = conditions["sqlId3"].ToString();
+                ret = DBManager.QueryForTable(sqlId, conditions);
+                result.Add("dt3", ret);
+            }
+            catch (Exception e) { Console.WriteLine(e.Message); }
             try
             {
                 string sqlId = conditions["sqlId4"].ToString();
                 ret = DBManager.QueryForTable(sqlId, conditions);
                 result.Add("dt4", ret);
             }
-            catch (Exception e) { }
+            catch (Exception e) { Console.WriteLine(e.Message);}
             try
             {
                 string sqlId = conditions["sqlId5"].ToString();
                 ret = DBManager.QueryForTable(sqlId, conditions);
                 result.Add("dt5", ret);
             }
-            catch (Exception e) { }
+            catch (Exception e) { Console.WriteLine(e.Message);}
 
             return result;
         }
@@ -110,6 +117,15 @@ namespace GTI.WFMS.Models.Cmm.Dao
         internal void Update2(object obj, string sqlId)
         {
             DBManager.QueryForUpdate(sqlId, obj);
+        }
+
+        /// <summary>
+        /// 데이터 인서트 단건 Object
+        /// </summary>
+        /// <param name="obj"></param>
+        internal void Insert2(object obj, string sqlId)
+        {
+            DBManager.QueryForInsert(sqlId, obj);
         }
     }
 }

@@ -49,7 +49,7 @@ namespace GTI.WFMS.Modules.Cnst.View
         // 등록 팝업
         private void BtnAdd_Click(object sender, RoutedEventArgs e)
         {
-            //NavigationService.Navigate(new WtlPipeAddView());
+            NavigationService.Navigate(new CnstMngAddView());
         }
     }
 }

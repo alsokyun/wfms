@@ -17,7 +17,7 @@
 
         <!-- 조건2. 관리번호 -->
         <isNotEmpty prepend="AND" property="FTR_IDN">
-          A.FTR_IDN = #FTR_IDN#
+          A.FTR_IDN like #FTR_IDN# || '%'
         </isNotEmpty>
 
         <!-- 조건3. 행정읍면동 -->
@@ -98,7 +98,7 @@
 
       <!-- 조건2. 관리번호 -->
       <isNotEmpty prepend="AND" property="FTR_IDN">
-        A.FTR_IDN = #FTR_IDN#
+        A.FTR_IDN like #FTR_IDN# || '%'
       </isNotEmpty>
 
       <!-- 조건3. 행정읍면동 -->
@@ -166,7 +166,7 @@
             , A.SHT_NUM
             , A.MNG_CDE
             , (SELECT NM FROM INFOUSER.CD_DTL_INFO WHERE MST_CD = '250101' AND DTL_CD = A.MNG_CDE ) AS MNG_NAM
-            , decode(length(A.IST_YMD), 8, to_char(to_date(A.IST_YMD, 'yyyyMMdd'), 'yyyy-MM-dd'), '') AS IST_YMD
+            , A.IST_YMD
             , A.VAL_MOF
             , (SELECT NM FROM INFOUSER.CD_DTL_INFO WHERE MST_CD = '250035' AND DTL_CD = A.VAL_MOF ) AS MOF_NAM
             , A.STP_MOP
@@ -210,7 +210,7 @@
       , #HJD_CDE#
       , #SHT_NUM#
       , #MNG_CDE#
-      , decode(length(#IST_YMD#), 10, to_char(to_date(#IST_YMD#, 'yyyy-MM-dd'), 'yyyyMMdd'), '')
+      , #IST_YMD#
       , #VAL_MOF#
       , #STP_MOP#
       , #STD_DIP#
@@ -226,21 +226,77 @@
     <update id="updateStndPiDtl" parameterClass="GTI.WFMS.Models.Pipe.Model.StndPiDtl">
       /* 스텐드파이프 상세 수정 */
       UPDATE INFOFMS.WTL_STPI_PS
-      SET FTR_IDN = #FTR_IDN#
-        , HJD_CDE = #HJD_CDE#
-        , SHT_NUM = #SHT_NUM#
-        , MNG_CDE = #MNG_CDE#
-        , IST_YMD = decode(length(#IST_YMD#), 10, to_char(to_date(#IST_YMD#, 'yyyy-MM-dd'), 'yyyyMMdd'), '')
-        , VAL_MOF = #VAL_MOF#
-        , STP_MOP = #STP_MOP#
-        , STD_DIP = #STD_DIP#
-        , STP_ALT = #STP_ALT#
-        , PRD_NAM = #PRD_NAM#
-        , CNT_NUM = #CNT_NUM#
-        , SYS_CHK = #SYS_CHK#
-        , ANG_DIR = #ANG_DIR#
+      SET HJD_CDE = #HJD_CDE#
+      , SHT_NUM = #SHT_NUM#
+      , MNG_CDE = #MNG_CDE#
+      , IST_YMD = #IST_YMD#
+      , VAL_MOF = #VAL_MOF#
+      , STP_MOP = #STP_MOP#
+      , STD_DIP = #STD_DIP#
+      , STP_ALT = #STP_ALT#
+      , PRD_NAM = #PRD_NAM#
+      , CNT_NUM = #CNT_NUM#
+      , SYS_CHK = #SYS_CHK#
+      , ANG_DIR = #ANG_DIR#
       WHERE FTR_CDE = #FTR_CDE#
       AND	FTR_IDN = #FTR_IDN#
+    </update>
+
+    <update id="SaveStndPiDtl" parameterClass="GTI.WFMS.Models.Pipe.Model.StndPiDtl">
+      MERGE INTO INFOFMS.WTL_STPI_PS
+      USING DUAL ON (FTR_CDE = #FTR_CDE# AND	FTR_IDN = #FTR_IDN#)
+
+      WHEN MATCHED THEN
+      UPDATE
+      SET
+      HJD_CDE = #HJD_CDE#
+      , SHT_NUM = #SHT_NUM#
+      , MNG_CDE = #MNG_CDE#
+      , IST_YMD = #IST_YMD#
+      , VAL_MOF = #VAL_MOF#
+      , STP_MOP = #STP_MOP#
+      , STD_DIP = #STD_DIP#
+      , STP_ALT = #STP_ALT#
+      , PRD_NAM = #PRD_NAM#
+      , CNT_NUM = #CNT_NUM#
+      , SYS_CHK = #SYS_CHK#
+      , ANG_DIR = #ANG_DIR#
+
+      WHEN NOT MATCHED THEN
+      INSERT
+      ( FTR_CDE
+      , FTR_IDN
+      , HJD_CDE
+      , SHT_NUM
+      , MNG_CDE
+      , IST_YMD
+      , VAL_MOF
+      , STP_MOP
+      , STD_DIP
+      , STP_ALT
+      , PRD_NAM
+      , CNT_NUM
+      , SYS_CHK
+      , ANG_DIR
+
+      )
+      VALUES
+      ( #FTR_CDE#
+      , #FTR_IDN#
+      , #HJD_CDE#
+      , #SHT_NUM#
+      , #MNG_CDE#
+      , #IST_YMD#
+      , #VAL_MOF#
+      , #STP_MOP#
+      , #STD_DIP#
+      , #STP_ALT#
+      , #PRD_NAM#
+      , #CNT_NUM#
+      , #SYS_CHK#
+      , #ANG_DIR#
+      )
+
     </update>
 
     <!--스텐드파이프 상세삭제-->

@@ -77,42 +77,7 @@ namespace GTI.WFMS.Models.Common
         }
 
 
-
-        /// <summary>
-        /// 공통코드 콤보 데이터
-        /// </summary>
-        /// <param name="MST_CD"></param>
-        /// <param name="NV 널항목추가"></param>
-        public static DataTable GetCmbCode(string ETC, bool NV, string MST_CD)
-        {
-            Hashtable conditions = new Hashtable();
-            DataTable dt = new DataTable(MST_CD);
-
-
-            conditions.Add("MST_CD", MST_CD);
-            conditions.Add("ETC", ETC);
-            dt = cmmDao.Select_CODE_LIST(conditions);
-
-            /* 전체추가 */
-            if (NV)
-            {
-                DataRow dr = dt.NewRow();
-                dr["DTL_CD"] = " ";
-                dr["NM"] = "";
-                dt.Rows.InsertAt(dr, 0);
-            }
-
-            return dt;
-        }
-        public static DataTable GetCmbCode(string ETC)
-        {
-            return GetCmbCode(ETC, false, null);
-        }
-        public static DataTable GetCmbCode(string ETC, bool ALL)
-        {
-            return GetCmbCode(ETC, ALL, null);
-        }
-
+        
         #endregion
 
 
@@ -154,10 +119,20 @@ namespace GTI.WFMS.Models.Common
         /// 데이터 업데이트 - Object
         /// </summary>
         /// <param name="obj"></param>
-        public static void Update2(CmmDtl  obj, string sqlId)
+        public static void Update2(CmmDtl obj, string sqlId)
         {
             obj.ID = Logs.strLogin_ID;
             dao.Update2(obj, sqlId);
+        }
+
+        /// <summary>
+        /// 데이터 인서트 - Object
+        /// </summary>
+        /// <param name="obj"></param>
+        public static void Insert2(CmmDtl obj, string sqlId)
+        {
+            obj.ID = Logs.strLogin_ID;
+            dao.Insert2(obj, sqlId);
         }
 
 
@@ -176,13 +151,13 @@ namespace GTI.WFMS.Models.Common
         public static bool ValidReq(DependencyObject obj)
         {
             //필수값체크
-            foreach (TextEdit cb in FmsUtil.FindVisualChildren<TextEdit>(obj))
+            foreach (TextEdit te in FmsUtil.FindVisualChildren<TextEdit>(obj))
             {
-                if (!FmsUtil.IsNull(cb.Tag))
+                if (!FmsUtil.IsNull(te.Tag))
                 {
-                    if (FmsUtil.IsNull(cb.Text))
+                    if (FmsUtil.IsNull(te.Text))
                     {
-                        Messages.ShowInfoMsgBox(string.Format("{0}은 필수입력 항목입니다.", cb.Tag.ToString()));
+                        Messages.ShowInfoMsgBox(string.Format("{0}은 필수입력 항목입니다.", te.Tag.ToString()));
                         return false;
                     }
                 }
@@ -201,12 +176,36 @@ namespace GTI.WFMS.Models.Common
             return true;
         }
 
+
+
+        /// <summary>
+        /// 날짜 선후관계체크
+        /// </summary>
+        /// <param name="obj"></param>
+        public static bool ValidDateBtw(object from, object to)
+        {
+            try
+            {
+                if (Convert.ToInt32(from) == 0 || Convert.ToInt32(to) == 0)     return true;
+
+                if (Convert.ToInt32(from) > Convert.ToInt32(to))
+                {
+                    return false;
+                }
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e.Message);
+            }
+
+            return true;
+        }
         #endregion
 
 
 
 
-        #region =========== 객체생성 함수 =========== 
+        #region =========== 코드데이터 공통함수 =========== 
 
         /// <summary>
         /// 공통코드 콤보 데이터바인딩
@@ -214,40 +213,36 @@ namespace GTI.WFMS.Models.Common
         /// <param name="cmb"></param>
         /// <param name="MST_CD"></param>
         /// <param name="ALL 전체항목추가"></param>
-        public static void SetCmbCode(ComboBoxEdit cmb, string ETC, bool ALL, string MST_CD)
+        public static void SetCmbCode(ComboBoxEdit cmb, string MST_CD, string ALL)
         {
             Hashtable conditions = new Hashtable();
             DataTable dt = new DataTable(MST_CD);
 
 
             conditions.Add("MST_CD", MST_CD);
-            conditions.Add("ETC", ETC);
             dt = cmmDao.Select_CODE_LIST(conditions);
 
             /* 전체추가 */
-            if (ALL)
+            if (!FmsUtil.IsNull(ALL))
             {
                 DataRow dr = dt.NewRow();
-                dr["DTL_CD"] = " ";
-                dr["NM"] = "전체";
+                dr["DTL_CD"] = "";
+                dr["NM"] = ALL;
                 dt.Rows.InsertAt(dr, 0);
+
+                cmb.NullText = ALL;//널값은 NullText로 나옴
             }
 
             // combo Cd/Nm 필드매핑
             cmb.DisplayMember = "NM";
             cmb.ValueMember = "DTL_CD";
-
             cmb.ItemsSource = dt;
-            cmb.SelectedIndex = 0;
         }
-        public static void SetCmbCode(ComboBoxEdit cmb, string ETC)
+        public static void SetCmbCode(ComboBoxEdit cmb, string MST_CD)
         {
-            SetCmbCode(cmb, ETC, false, null);
+            SetCmbCode(cmb, MST_CD, null);
         }
-        public static void SetCmbCode(ComboBoxEdit cmb, string ETC, bool ALL)
-        {
-            SetCmbCode(cmb, ETC, ALL, null);
-        }
+
 
 
         /// <summary>
@@ -277,6 +272,45 @@ namespace GTI.WFMS.Models.Common
 
 
         /// <summary>
+        /// 공통코드 콤보 데이터
+        /// </summary>
+        /// <param name="MST_CD"></param>
+        /// <param name="NV 널항목추가"></param>
+        public static DataTable GetCmbCode(string ETC, bool NV, string MST_CD)
+        {
+            Hashtable conditions = new Hashtable();
+            DataTable dt = new DataTable(MST_CD);
+
+
+            conditions.Add("MST_CD", MST_CD);
+            conditions.Add("ETC", ETC);
+            dt = cmmDao.Select_CODE_LIST(conditions);
+
+            /* 전체추가 */
+            if (NV)
+            {
+                DataRow dr = dt.NewRow();
+                dr["DTL_CD"] = " ";
+                dr["NM"] = "";
+                dt.Rows.InsertAt(dr, 0);
+            }
+
+            return dt;
+        }
+        public static DataTable GetCmbCode(string ETC)
+        {
+            return GetCmbCode(ETC, false, null);
+        }
+        public static DataTable GetCmbCode(string ETC, bool ALL)
+        {
+            return GetCmbCode(ETC, ALL, null);
+        }
+
+
+
+
+
+        /// <summary>
         /// 일반콤보 데이터바이딩
         /// </summary>
         /// <param name="cmb"></param>
@@ -284,7 +318,7 @@ namespace GTI.WFMS.Models.Common
         /// <param name="ValueMember"></param>
         /// <param name="DisplayMember"></param>
         /// <param name="ALL 전체항목추가"></param>
-        public static void SetCombo(ComboBoxEdit cmb, string sqlId, string ValueMember, string DisplayMember, bool ALL)
+        public static void SetCombo(ComboBoxEdit cmb, string sqlId, string ValueMember, string DisplayMember, string ALL)
         {
             Hashtable conditions = new Hashtable();
             DataTable dt = new DataTable();
@@ -294,25 +328,26 @@ namespace GTI.WFMS.Models.Common
             dt = dao.SelectLIST(conditions);
 
             /* 전체추가 */
-            if (ALL)
+            if (!FmsUtil.IsNull(ALL))
             {
                 DataRow dr = dt.NewRow();
-                dr[ValueMember] = " ";
-                dr[DisplayMember] = "전체";
+                dr[ValueMember] = "";
+                dr[DisplayMember] = ALL;
                 dt.Rows.InsertAt(dr, 0);
+
+                cmb.NullText = ALL;//널값은 NullText로 나옴
             }
 
             // combo객체 Cd/Nm 필드매핑
             cmb.DisplayMember = DisplayMember;
             cmb.ValueMember = ValueMember;
-
             cmb.ItemsSource = dt;
-            cmb.SelectedIndex = 0;
         }
         public static void SetCombo(ComboBoxEdit cmb, string sqlId, string ValueMember, string DisplayMember)
         {
-            SetCombo(cmb, sqlId, ValueMember, DisplayMember, false);
+            SetCombo(cmb, sqlId, ValueMember, DisplayMember, null);
         }
+
 
 
         /// <summary>
@@ -340,7 +375,45 @@ namespace GTI.WFMS.Models.Common
         }
 
 
+        /// <summary>
+        /// 공통코드 콤보 데이터
+        /// </summary>
+        /// <param name="MST_CD"></param>
+        /// <param name="NV 널항목추가"></param>
+        public static DataTable GetCombo(Hashtable param, bool ALL)
+        {
+            string ValueMember = param["ValueMember"].ToString();
+            string DisplayMember = param["DisplayMember"].ToString();
+
+            DataTable dt = new DataTable();
+            dt = dao.SelectLIST(param);
+
+            /* 전체추가 */
+            if (ALL)
+            {
+                DataRow dr = dt.NewRow();
+                dr[ValueMember] = " ";
+                dr[DisplayMember] = "전체";
+                dt.Rows.InsertAt(dr, 0);
+            }
+
+            return dt;
+        }
+        public static DataTable GetCombo(Hashtable param)
+        {
+            return GetCombo(param, false);
+        }
+
         #endregion
+
+
+
+
+
+
+
+
+
 
 
 
@@ -353,7 +426,7 @@ namespace GTI.WFMS.Models.Common
         /// <summary>
         /// Gets the data folder where locally provisioned data is stored.
         /// </summary>
-        internal static string GetDataFolder()
+        public static string GetDataFolder()
         {
             string appDataFolder = Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData);
             string sampleDataFolder = Path.Combine(appDataFolder, "WFMSData");
