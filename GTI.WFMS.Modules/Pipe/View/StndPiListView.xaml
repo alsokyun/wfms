@@ -296,14 +296,14 @@
                 </dxg:GridColumn.EditSettings>
             </dxg:GridColumn>
 
-            <dxg:GridColumn Header="구경" Width="50" FieldName="STD_DIP" HorizontalHeaderContentAlignment="Center">
+            <dxg:GridColumn Header="구경" Width="80" FieldName="STD_DIP" HorizontalHeaderContentAlignment="Center">
                 <dxg:GridColumn.EditSettings>
-                    <dxe:TextEditSettings HorizontalContentAlignment="Right" MaskType="Numeric" Mask="n0" MaskUseAsDisplayFormat="True" />
+                    <dxe:TextEditSettings HorizontalContentAlignment="Right" MaskType="Numeric" Mask="n2" MaskUseAsDisplayFormat="True" />
                 </dxg:GridColumn.EditSettings>
             </dxg:GridColumn>
-            <dxg:GridColumn Header="표고" Width="70" FieldName="STP_ALT" HorizontalHeaderContentAlignment="Center">
+            <dxg:GridColumn Header="표고" Width="80" FieldName="STP_ALT" HorizontalHeaderContentAlignment="Center">
                 <dxg:GridColumn.EditSettings>
-                    <dxe:TextEditSettings HorizontalContentAlignment="Right" MaskType="Numeric" Mask="n0" MaskUseAsDisplayFormat="True" />
+                    <dxe:TextEditSettings HorizontalContentAlignment="Right" MaskType="Numeric" Mask="n2" MaskUseAsDisplayFormat="True" />
                 </dxg:GridColumn.EditSettings>
             </dxg:GridColumn>
 

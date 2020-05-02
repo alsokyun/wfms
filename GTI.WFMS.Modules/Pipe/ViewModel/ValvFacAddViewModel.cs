@@ -109,7 +109,7 @@ namespace GTI.WFMS.Modules.Pipe.ViewModel
 
                 //채번결과 매칭
                 this.FTR_IDN = result.FTR_IDN;
-                this.FTR_CDE = "SA200";
+                //this.FTR_CDE = "SA200";
 
                 this.IST_YMD = Convert.ToDateTime(DateTime.Today).ToString("yyyy-MM-dd");
 
@@ -178,7 +178,7 @@ namespace GTI.WFMS.Modules.Pipe.ViewModel
             try
             {
                 // cbFTR_CDE 지형지물
-                BizUtil.SetCombo(cbFTR_CDE, "Select_FTR_LIST", "FTR_CDE", "FTR_NAM");
+                BizUtil.SetCombo(cbFTR_CDE, "Select_FTR_LIST", "FTR_CDE", "FTR_NAM", null, row => row.Field<string>("FTR_CDE").Contains("SA2"));
 
                 // cbHJD_CDE 행정동
                 BizUtil.SetCombo(cbHJD_CDE, "Select_ADAR_LIST", "HJD_CDE", "HJD_NAM", "[선택하세요]");

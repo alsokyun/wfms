@@ -44,7 +44,7 @@
         </Grid.RowDefinitions>
 
         <!--툴바-->
-        <host:WindowsFormsHost Grid.Row="0" Name="toolbarHost" HorizontalAlignment="Left" />
+        <host:WindowsFormsHost Grid.Row="0" Name="toolbarHost" HorizontalAlignment="Left" Width="700"/>
         
         <StackPanel HorizontalAlignment="Right" Grid.Column="1" Orientation="Horizontal" Margin="0 0 12 0">
             <Button Content="Reset" Style="{DynamicResource TxtButton}" 

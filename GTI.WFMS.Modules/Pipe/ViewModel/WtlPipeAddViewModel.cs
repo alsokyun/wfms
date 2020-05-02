@@ -119,7 +119,8 @@ namespace GTI.WFMS.Modules.Pipe.ViewModel
         /// <param name="obj"></param>
         private void OnSave(object obj)
         {
-            //0.Validation 체크
+            // 필수체크 (Tag에 필수체크 표시한 EditBox, ComboBox 대상으로 수행)
+            if (!BizUtil.ValidReq(wtlPipeAddView)) return;
 
 
             if (Messages.ShowYesNoMsgBox("저장하시겠습니까?") != MessageBoxResult.Yes) return;

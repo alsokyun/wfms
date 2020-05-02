@@ -318,14 +318,15 @@ namespace GTI.WFMS.Models.Common
         /// <param name="ValueMember"></param>
         /// <param name="DisplayMember"></param>
         /// <param name="ALL 전체항목추가"></param>
-        public static void SetCombo(ComboBoxEdit cmb, string sqlId, string ValueMember, string DisplayMember, string ALL)
+        public static void SetCombo(ComboBoxEdit cmb, string sqlId, string ValueMember, string DisplayMember, string ALL, Func<DataRow, bool> filter)
         {
             Hashtable conditions = new Hashtable();
             DataTable dt = new DataTable();
 
 
             conditions.Add("sqlId", sqlId);
-            dt = dao.SelectLIST(conditions);
+            dt = dao.SelectLIST(conditions).AsEnumerable().Where(filter).CopyToDataTable(); //필터식적용
+            
 
             /* 전체추가 */
             if (!FmsUtil.IsNull(ALL))
@@ -343,6 +344,12 @@ namespace GTI.WFMS.Models.Common
             cmb.ValueMember = ValueMember;
             cmb.ItemsSource = dt;
         }
+        //필터없는형태
+        public static void SetCombo(ComboBoxEdit cmb, string sqlId, string ValueMember, string DisplayMember, string ALL)
+        {
+            SetCombo(cmb, sqlId, ValueMember, DisplayMember, ALL, Row => true);
+        }
+        //전체여부없는형태
         public static void SetCombo(ComboBoxEdit cmb, string sqlId, string ValueMember, string DisplayMember)
         {
             SetCombo(cmb, sqlId, ValueMember, DisplayMember, null);

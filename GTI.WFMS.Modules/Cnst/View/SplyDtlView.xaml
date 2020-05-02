@@ -191,7 +191,7 @@
                           x:Name="txtRCV_NUM" EditValue="{Binding RCV_NUM}"/>
             <Label Grid.Row="2" Grid.Column="2" Content="설계수수료" Style="{DynamicResource ResourceKey=GridLabel}" />
             <dxe:TextEdit Grid.Row="2" Grid.Column="3" Style="{DynamicResource ResourceKey=GridNumberEdit}"  
-                          x:Name="txtDFE_AMT" EditValue="{Binding DFE_AMT}"/>
+                          x:Name="txtDFE_AMT" EditValue="{Binding DFE_AMT}" Mask="n0"/>
 
         </Grid>
 

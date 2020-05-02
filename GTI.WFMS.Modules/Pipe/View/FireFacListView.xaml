@@ -289,13 +289,13 @@
 
             <dxg:GridColumn Header="소화전구경" Width="70" FieldName="FIR_DIP" HorizontalHeaderContentAlignment="Center">
                 <dxg:GridColumn.EditSettings>
-                    <dxe:TextEditSettings HorizontalContentAlignment="Right" MaskType="Numeric" Mask="n0" MaskUseAsDisplayFormat="True" />
+                    <dxe:TextEditSettings HorizontalContentAlignment="Right" MaskType="Numeric" Mask="n2" MaskUseAsDisplayFormat="True" />
                 </dxg:GridColumn.EditSettings>
             </dxg:GridColumn>
 
             <dxg:GridColumn Header="급수탑높이(m)" Width="70" FieldName="SUP_HIT" HorizontalHeaderContentAlignment="Center">
                 <dxg:GridColumn.EditSettings>
-                    <dxe:TextEditSettings HorizontalContentAlignment="Right" MaskType="Numeric" Mask="n0" MaskUseAsDisplayFormat="True" />
+                    <dxe:TextEditSettings HorizontalContentAlignment="Right" MaskType="Numeric" Mask="n2" MaskUseAsDisplayFormat="True" />
                 </dxg:GridColumn.EditSettings>
             </dxg:GridColumn>
 

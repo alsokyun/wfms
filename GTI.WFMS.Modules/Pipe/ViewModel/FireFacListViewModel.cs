@@ -283,6 +283,11 @@ namespace GTI.WFMS.Modules.Pipe.ViewModel
                     conditions.Add("IST_YMD_TO", dtIST_YMD_TO.EditValue == null ? null : Convert.ToDateTime(dtIST_YMD_TO.EditValue).ToString("yyyyMMdd"));
                 }
                 catch (Exception ) { }
+                if (!BizUtil.ValidDateBtw(conditions["IST_YMD_FROM"], conditions["IST_YMD_TO"]))
+                {
+                    Messages.ShowInfoMsgBox("From/To 일자를 확인하세요");
+                    return;
+                }
 
                 conditions.Add("firstIndex", 0);
                 conditions.Add("lastIndex", 1000);
@@ -378,7 +383,12 @@ namespace GTI.WFMS.Modules.Pipe.ViewModel
                     conditions.Add("IST_YMD_TO", dtIST_YMD_TO.EditValue == null ? null : Convert.ToDateTime(dtIST_YMD_TO.EditValue).ToString("yyyyMMdd"));
                 }
                 catch (Exception ) { }
-                
+                if (!BizUtil.ValidDateBtw(conditions["IST_YMD_FROM"], conditions["IST_YMD_TO"]))
+                {
+                    Messages.ShowInfoMsgBox("From/To 일자를 확인하세요");
+                    return;
+                }
+
                 conditions.Add("page", 0);
                 conditions.Add("rows", 1000000);
 

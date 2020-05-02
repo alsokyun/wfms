@@ -190,7 +190,7 @@
             </dxg:GridColumn>
             <dxg:GridColumn Header="내구연한" Width="80" FieldName="LMT_YEAR" HorizontalHeaderContentAlignment="Center">
                 <dxg:GridColumn.EditSettings>
-                    <dxe:TextEditSettings HorizontalContentAlignment="Right" MaskType="Numeric" MaskUseAsDisplayFormat="True"/>
+                    <dxe:TextEditSettings HorizontalContentAlignment="Right" MaskType="Numeric" Mask="n0" MaskUseAsDisplayFormat="True"/>
                 </dxg:GridColumn.EditSettings>
             </dxg:GridColumn>
             <dxg:GridColumn Header="설치연도" Width="80" FieldName="CRE_YY" HorizontalHeaderContentAlignment="Center">

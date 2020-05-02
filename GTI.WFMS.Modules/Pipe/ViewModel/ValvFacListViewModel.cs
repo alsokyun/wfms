@@ -113,11 +113,11 @@ namespace GTI.WFMS.Modules.Pipe.ViewModel
 
 
         ValvFacListView valvFacListView;
-        ComboBoxEdit cbMNG_CDE; DataTable dtMNG_CDE = new DataTable();
-        ComboBoxEdit cbHJD_CDE; DataTable dtHJD_CDE = new DataTable();
-        ComboBoxEdit cbVAL_MOP; DataTable dtVAL_MOP = new DataTable();
-        ComboBoxEdit cbVAL_MOF; DataTable dtVAL_MOF = new DataTable();
-        ComboBoxEdit cbVAL_FOR; DataTable dtVAL_FOR = new DataTable();
+        ComboBoxEdit cbMNG_CDE; 
+        ComboBoxEdit cbHJD_CDE; 
+        ComboBoxEdit cbVAL_MOP; 
+        ComboBoxEdit cbVAL_MOF; 
+        ComboBoxEdit cbVAL_FOR; 
 
         TextEdit txtFTR_IDN;
         TextEdit txtCNT_NUM;
@@ -271,6 +271,7 @@ namespace GTI.WFMS.Modules.Pipe.ViewModel
                 conditions.Add("HJD_CDE", cbHJD_CDE.EditValue);
                 conditions.Add("VAL_MOF", cbVAL_MOF.EditValue);
                 conditions.Add("VAL_MOP", cbVAL_MOP.EditValue);
+                conditions.Add("VAL_FOR", cbVAL_FOR.EditValue);
                 conditions.Add("FTR_CDE", valvFacListView.cbFTR_CDE.EditValue);
 
                 conditions.Add("FTR_IDN", FmsUtil.Trim(txtFTR_IDN.EditValue));
@@ -284,6 +285,12 @@ namespace GTI.WFMS.Modules.Pipe.ViewModel
                     conditions.Add("IST_YMD_TO", dtIST_YMD_TO.EditValue == null ? null : Convert.ToDateTime(dtIST_YMD_TO.EditValue).ToString("yyyyMMdd"));
                 }
                 catch (Exception ) { }
+                if (!BizUtil.ValidDateBtw(conditions["IST_YMD_FROM"], conditions["IST_YMD_TO"]))
+                {
+                    Messages.ShowInfoMsgBox("From/To 일자를 확인하세요");
+                    return;
+                }
+
 
                 conditions.Add("firstIndex", 0);
                 conditions.Add("lastIndex", 1000);
@@ -355,6 +362,9 @@ namespace GTI.WFMS.Modules.Pipe.ViewModel
             dtIST_YMD_FROM.EditValue = null;
             dtIST_YMD_TO.EditValue = null;
 
+            valvFacListView.cbFTR_CDE.SelectedIndex = 0;
+            cbVAL_FOR.SelectedIndex = 0;
+
         }
 
         /// <summary>
@@ -372,6 +382,7 @@ namespace GTI.WFMS.Modules.Pipe.ViewModel
                 conditions.Add("HJD_CDE", cbHJD_CDE.EditValue);
                 conditions.Add("VAL_MOF", cbVAL_MOF.EditValue);
                 conditions.Add("VAL_MOP", cbVAL_MOP.EditValue);
+                conditions.Add("VAL_FOR", cbVAL_FOR.EditValue);
                 conditions.Add("FTR_CDE", valvFacListView.cbFTR_CDE.EditValue);
 
                 conditions.Add("FTR_IDN", FmsUtil.Trim(txtFTR_IDN.EditValue));
@@ -385,7 +396,13 @@ namespace GTI.WFMS.Modules.Pipe.ViewModel
                     conditions.Add("IST_YMD_TO", dtIST_YMD_TO.EditValue == null ? null : Convert.ToDateTime(dtIST_YMD_TO.EditValue).ToString("yyyyMMdd"));
                 }
                 catch (Exception ) { }
-                
+                if (!BizUtil.ValidDateBtw(conditions["IST_YMD_FROM"], conditions["IST_YMD_TO"]))
+                {
+                    Messages.ShowInfoMsgBox("From/To 일자를 확인하세요");
+                    return;
+                }
+
+
                 conditions.Add("page", 0);
                 conditions.Add("rows", 1000000);
 
@@ -516,14 +533,23 @@ namespace GTI.WFMS.Modules.Pipe.ViewModel
                 // cbVAL_FOR    10.시설물형태
                 BizUtil.SetCmbCode(cbVAL_FOR, "250007", "[전체]");
 
-                // cbFTR_CDE 지형지물
-                BizUtil.SetCombo(valvFacListView.cbFTR_CDE, "Select_FTR_LIST", "FTR_CDE", "FTR_NAM", "[전체]");
+
+                // cbFTR_CDE 지형지물 - 변류시설만
+                Func<DataRow, bool> filter = Row => Row.Field<string>("FTR_CDE").Contains("SA2");
+                BizUtil.SetCombo(valvFacListView.cbFTR_CDE, "Select_FTR_LIST", "FTR_CDE", "FTR_NAM", "[전체]", filter);
+                //BizUtil.SetCombo(valvFacListView.cbFTR_CDE, "Select_FTR_LIST", "FTR_CDE", "FTR_NAM", "[전체]", Row => Row.Field<string>("FTR_CDE").Contains("SA2"));
+
 
             }
             catch (Exception ex)
             {
                 Messages.ShowErrMsgBoxLog(ex);
             }
+        }
+
+        private bool cond(DataRow arg)
+        {
+            throw new NotImplementedException();
         }
 
 

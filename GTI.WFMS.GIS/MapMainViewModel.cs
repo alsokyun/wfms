@@ -24,6 +24,7 @@ using Microsoft.Win32;
 using System.Windows.Media.Imaging;
 using GTI.WFMS.GIS.Pop.View;
 using Esri.ArcGISRuntime;
+using Esri.ArcGISRuntime.ArcGISServices;
 
 namespace GTI.WFMS.GIS
 {
@@ -443,7 +444,6 @@ namespace GTI.WFMS.GIS
         }
 
 
-        
 
 
 
@@ -459,6 +459,17 @@ namespace GTI.WFMS.GIS
 
 
 
+        private readonly string _templateUri = "https://stamen-tiles-a.a.ssl.fastly.net/watercolor/{level}/{col}/{row}.jpg";
+        private readonly string _templateUri1 = "http://a.tile.opencyclemap.org/cycle/{level}/{col}/{row}.png";
+        private readonly string _templateUri2 = "http://175.121.89.164:8080/eMap/eMap/L{level}/{col}/{row}.png";
+        private readonly string _templateUri3 = "file://I:\\kor\\L{level}\\{col}\\{row}.png";
+        private readonly List<string> _tiledLayerSubdomains = new List<string> { "a", "b", "c", "d" };
+        private readonly List<string> _tiledLayerSubdomains2 = new List<string> { "175.121.89.164:8080" , "175.121.89.164:8080" , "175.121.89.164:8080" , "175.121.89.164:8080" };
+        private readonly string _attribution = "Map tiles by <a href=\"http://stamen.com/\">Stamen Design</a>," +
+                                               "under <a href=\"http://creativecommons.org/licenses/by/3.0\">CC BY 3.0</a>." +
+                                               "Data by <a href=\"http://openstreetmap.org/\">OpenStreetMap</a>," +
+                                               "under <a href=\"http://creativecommons.org/licenses/by-sa/3.0\">CC BY SA</a>.";
+        WebTiledLayer myBaseLayer;
 
         #region ============= 내부함수 ============= 
 
@@ -476,6 +487,16 @@ namespace GTI.WFMS.GIS
             ArcGISTiledLayer tileLayer = new ArcGISTiledLayer(tileCache);
             this._map.Basemap = new Basemap(tileLayer);
 
+            //WebTileLayer
+            myBaseLayer = new WebTiledLayer(_templateUri1);
+            //myBaseLayer = new WebTiledLayer(_templateUri2);
+            //myBaseLayer = new WebTiledLayer(_templateUri2, myBaseLayer.TileInfo, myBaseLayer.FullExtent);
+
+            Basemap layerBasemap = new Basemap(myBaseLayer);
+            //myBaseLayer.Attribution = _attribution;
+            //this._map.Basemap = layerBasemap;
+
+
 
             //울산행정구역표시
             ///ShowShapeLayer(mapView, "BML_GADM_AS", true );
@@ -489,6 +510,9 @@ namespace GTI.WFMS.GIS
             _sketchOverlay = new GraphicsOverlay();
             mapView.GraphicsOverlays.Add(_sketchOverlay);
         }
+
+
+    
 
 
 

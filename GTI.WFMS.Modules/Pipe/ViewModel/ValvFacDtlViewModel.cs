@@ -39,14 +39,15 @@ namespace GTI.WFMS.Modules.Pipe.ViewModel
         #region ==========  Member 정의 ==========
         ValvFacDtlView valvFacDtlView;
       
-        ComboBoxEdit cbMNG_CDE; DataTable dtMNG_CDE = new DataTable();		//관리기관
-        ComboBoxEdit cbVAL_MOF; DataTable dtVAL_MOF = new DataTable();		//형식
-        ComboBoxEdit cbVAL_MOP; DataTable dtVAL_MOP = new DataTable();		//관재질
-        ComboBoxEdit cbSAE_CDE; DataTable dtSAE_CDE = new DataTable();		//제수변회전방향
-        ComboBoxEdit cbMTH_CDE; DataTable dtMTH_CDE = new DataTable();		//제수변구동방법
-        ComboBoxEdit cbVAL_FOR; DataTable dtVAL_FOR = new DataTable();		//시설물형태
-        ComboBoxEdit cbCST_CDE; DataTable dtCST_CDE = new DataTable();		//이상상태
-        ComboBoxEdit cbOFF_CDE; DataTable dtOFF_CDE = new DataTable();		//개폐여부
+        ComboBoxEdit cbMNG_CDE; //관리기관
+        ComboBoxEdit cbVAL_MOF; //형식
+        ComboBoxEdit cbVAL_MOP; //관재질
+        ComboBoxEdit cbSAE_CDE; //제수변회전방향
+        ComboBoxEdit cbMTH_CDE; //제수변구동방법
+        ComboBoxEdit cbVAL_FOR; //시설물형태
+        ComboBoxEdit cbCST_CDE; //이상상태
+        ComboBoxEdit cbOFF_CDE; //개폐여부
+        ComboBoxEdit cbHJD_CDE; //행정동
 
         Button btnBack;
         Button btnDelete;
@@ -84,7 +85,7 @@ namespace GTI.WFMS.Modules.Pipe.ViewModel
 
                 valvFacDtlView = values[0] as ValvFacDtlView;
                 //cbFTR_CDE = valvFacDtlView.cbFTR_CDE;   //지형지물
-                //cbHJD_CDE = valvFacDtlView.cbHJD_CDE;   //행정동
+                cbHJD_CDE = valvFacDtlView.cbHJD_CDE;   //행정동
                 cbMNG_CDE = valvFacDtlView.cbMNG_CDE;   //관리기관
                 cbVAL_MOF = valvFacDtlView.cbVAL_MOF;   //형식
                 cbVAL_MOP = valvFacDtlView.cbVAL_MOP;   //관재질
@@ -291,7 +292,7 @@ namespace GTI.WFMS.Modules.Pipe.ViewModel
                 //BizUtil.SetCombo(cbFTR_CDE, "Select_FTR_LIST", "FTR_CDE", "FTR_NAM", false);
 
                 // cbHJD_CDE 행정동
-                // BizUtil.SetCombo(cbHJD_CDE, "Select_ADAR_LIST", "HJD_CDE", "HJD_NAM", "[선택하세요]");
+                BizUtil.SetCombo(cbHJD_CDE, "Select_ADAR_LIST", "HJD_CDE", "HJD_NAM", "[선택하세요]");
 
                 // cbMNG_CDE 관리기관
                 BizUtil.SetCmbCode(cbMNG_CDE, "250101", "[선택하세요]");

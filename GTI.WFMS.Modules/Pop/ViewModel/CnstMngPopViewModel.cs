@@ -220,6 +220,17 @@ namespace GTI.WFMS.Modules.Pop.ViewModel
                     conditions.Add("FNS_YMD_TO", dtFNS_YMD_TO.EditValue == null ? null : Convert.ToDateTime(dtFNS_YMD_TO.EditValue).ToString("yyyyMMdd"));
                 }
                 catch (Exception ) { }
+                if (!BizUtil.ValidDateBtw(conditions["BEG_YMD_FROM"], conditions["BEG_YMD_TO"]))
+                {
+                    Messages.ShowInfoMsgBox("From/To 일자를 확인하세요");
+                    return;
+                }
+                if (!BizUtil.ValidDateBtw(conditions["FNS_YMD_FROM"], conditions["FNS_YMD_TO"]))
+                {
+                    Messages.ShowInfoMsgBox("From/To 일자를 확인하세요");
+                    return;
+                }
+
                 conditions.Add("CTT_CDE", cbCTT_CDE.EditValue);
                 conditions.Add("CNT_LOC", txtCNT_LOC.Text.Trim());
 
