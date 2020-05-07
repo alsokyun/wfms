@@ -184,7 +184,6 @@
             <Border  Grid.Row="1" Grid.Column="2"  BorderBrush="{DynamicResource TileCOLOR4Brush}" BorderThickness="1"/>
 
             <dxg:GridControl Grid.Row="1" Grid.Column="2" x:Name="grid" VerticalAlignment="Stretch" HorizontalAlignment="Stretch"
-                         MouseDoubleClick="Grid_MouseDoubleClick"
                          ItemsSource="{Binding ElementName=DataPagerSource, Path=ActualSource}" >
 
                 <i:Interaction.Triggers>
@@ -219,6 +218,7 @@
                                 IsColumnMenuEnabled="False" 
                                 AllowMoveColumnToDropArea="False" 
                                 ScrollViewer.VerticalScrollBarVisibility="Hidden"
+                                RowDoubleClick="TableView_RowDoubleClick"
                                 >
                     </dxg:TableView>
                 </dxg:GridControl.View>

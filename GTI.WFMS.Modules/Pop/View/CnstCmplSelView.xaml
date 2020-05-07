@@ -179,7 +179,6 @@
 
 
             <dxg:GridControl Grid.Row="1" Grid.Column="2" x:Name="grid" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" ShowBorder="True" Margin="5 0 5 0"
-                    MouseDoubleClick="Grid_MouseDoubleClick" 
                     ItemsSource="{Binding ElementName=DataPagerSource, Path=ActualSource}" >
 
                 <dxg:GridControl.View>
@@ -202,6 +201,7 @@
                         HorizontalScrollbarVisibility="Auto"
                         VerticalScrollbarVisibility="Disabled"
                         AutoWidth="False"
+                        RowDoubleClick="TableView_RowDoubleClick"
                         >
                     </dxg:TableView>
                 </dxg:GridControl.View>

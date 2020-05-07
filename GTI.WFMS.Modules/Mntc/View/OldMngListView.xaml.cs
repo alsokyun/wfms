@@ -24,32 +24,25 @@ namespace GTI.WFMS.Modules.Mntc.View
 
 
         //선택된 항목으로 내역팝업
-        private void Grid_MouseDoubleClick(object sender, MouseButtonEventArgs e)
+        private void TableView_RowDoubleClick(object sender, RowDoubleClickEventArgs e)
         {
-            string G2_ID = "";
-
-            GridControl gc = sender as GridControl;
-
+            TableView tv = sender as TableView;
             try
             {
-                G2_ID = ((DataRowView)gc.CurrentItem).Row["G2_ID"].ToString();
+                string G2_ID = tv.Grid.GetCellValue(e.HitInfo.RowHandle, "G2_ID").ToString();
 
                 Window pop = new OldDtlView(G2_ID);
-                if ( pop.ShowDialog() is bool)
+                if (pop.ShowDialog() is bool)
                 {
                     //재조회
                     btnSearch.RaiseEvent(new RoutedEventArgs(Button.ClickEvent));
                 }
-
             }
             catch (Exception ex)
             {
-                Console.Write(ex.ToString());
-                return; 
+                Console.WriteLine(ex.Message);
             }
-
         }
-
 
 
     }

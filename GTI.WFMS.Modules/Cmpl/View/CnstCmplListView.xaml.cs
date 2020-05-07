@@ -22,31 +22,7 @@ namespace GTI.WFMS.Modules.Cmpl.View
         }
 
 
-        //선택된 항목으로 페이지이동
-        private void Grid_MouseDoubleClick(object sender, MouseButtonEventArgs e)
-        {
-            string WSER_SEQ = "";
-
-            GridControl gc = sender as GridControl;
-
-            try
-            {
-                WSER_SEQ = ((DataRowView)gc.CurrentItem).Row["WSER_SEQ"].ToString();
-
-                CnstCmplDtlView view = new CnstCmplDtlView(WSER_SEQ);
-                if (view.ShowDialog() is bool)
-                {
-                    //재조회
-                    btnSearch.RaiseEvent(new RoutedEventArgs(Button.ClickEvent));
-                }
-            }
-            catch (Exception ex)
-            {
-                Console.Write(ex.ToString());
-                return; //throw;
-            }
-            
-        }
+        
 
         // 등록 팝업
         private void BtnAdd_Click(object sender, RoutedEventArgs e)
@@ -57,6 +33,27 @@ namespace GTI.WFMS.Modules.Cmpl.View
                 //재조회
                 btnSearch.RaiseEvent(new RoutedEventArgs(Button.ClickEvent));
             }
+        }
+
+        private void TableView_RowDoubleClick(object sender, RowDoubleClickEventArgs e)
+        {
+            TableView tv = sender as TableView;
+            try
+            {
+                string WSER_SEQ = tv.Grid.GetCellValue(e.HitInfo.RowHandle, "WSER_SEQ").ToString();
+                CnstCmplDtlView view = new CnstCmplDtlView(WSER_SEQ);
+                if (view.ShowDialog() is bool)
+                {
+                    //재조회
+                    btnSearch.RaiseEvent(new RoutedEventArgs(Button.ClickEvent));
+                }
+
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+            }
+
         }
     }
 }

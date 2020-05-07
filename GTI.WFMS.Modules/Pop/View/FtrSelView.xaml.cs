@@ -36,16 +36,16 @@ namespace GTI.WFMS.Modules.Pop.View
         }
 
         //그리드 더블클릭
-        private void Grid_MouseDoubleClick(object sender, MouseButtonEventArgs e)
+        private void TableView_RowDoubleClick(object sender, RowDoubleClickEventArgs e)
         {
-            GridControl gc = sender as GridControl;
+            TableView tv = sender as TableView;
 
             try
             {
-                txtFTR_CDE.Text = ((DataRowView)gc.CurrentItem).Row["FTR_CDE"].ToString();
-                txtFTR_NAM.Text = ((DataRowView)gc.CurrentItem).Row["FTR_NAM"].ToString();
-                txtHJD_NAM.Text = ((DataRowView)gc.CurrentItem).Row["HJD_NAM"].ToString();
-                txtFTR_IDN.Text = ((DataRowView)gc.CurrentItem).Row["FTR_IDN"].ToString();
+                txtFTR_CDE.Text = tv.Grid.GetCellValue(e.HitInfo.RowHandle, "FTR_CDE").ToString();
+                txtFTR_NAM.Text = tv.Grid.GetCellValue(e.HitInfo.RowHandle, "FTR_NAM").ToString();
+                txtHJD_NAM.Text = tv.Grid.GetCellValue(e.HitInfo.RowHandle, "HJD_NAM").ToString();
+                txtFTR_IDN.Text = tv.Grid.GetCellValue(e.HitInfo.RowHandle, "FTR_IDN").ToString();
 
                 //팝업호출지점으로 리턴
                 DialogResult = true;

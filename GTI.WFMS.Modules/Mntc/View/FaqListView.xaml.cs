@@ -23,15 +23,12 @@ namespace GTI.WFMS.Modules.Mntc.View
 
 
         //선택된 항목으로 페이지이동
-        private void Grid_MouseDoubleClick(object sender, MouseButtonEventArgs e)
+        private void TableView_RowDoubleClick(object sender, RowDoubleClickEventArgs e)
         {
-            string SEQ = "";
-
-            GridControl gc = sender as GridControl;
-
+            TableView tv = sender as TableView;
             try
             {
-                SEQ = ((DataRowView)gc.CurrentItem).Row["SEQ"].ToString();
+                string SEQ = tv.Grid.GetCellValue(e.HitInfo.RowHandle, "SEQ").ToString();
 
                 ///페이지이동 - 뷰생성자로 파라미터키 전달 
                 ///=> 뷰모델과바인딩된 객체값을 변경해서 뷰모델로 최종적으로 파라미터 전달
@@ -39,16 +36,18 @@ namespace GTI.WFMS.Modules.Mntc.View
             }
             catch (Exception ex)
             {
-                Console.Write(ex.ToString());
-                return; //throw;
+                Console.WriteLine(ex.Message);
             }
-            
+
         }
+
+      
 
         // 등록 팝업
         private void BtnAdd_Click(object sender, RoutedEventArgs e)
         {
             NavigationService.Navigate(new FaqAddView());
         }
+
     }
 }

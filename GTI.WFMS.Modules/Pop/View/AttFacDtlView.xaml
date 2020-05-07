@@ -111,7 +111,7 @@
                 <TextBlock Grid.Row="0" Grid.Column="3" x:Name="txtATTA_SEQ" Text="{Binding ATTA_SEQ, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Visibility="Collapsed"/>
 
                 <Label Grid.Row="1" Grid.Column="0" Content="세부시설번호" Style="{DynamicResource ResourceKey=GridLabelReq}"/>
-                <dxe:TextEdit Grid.Row="1" Grid.Column="1" Style="{DynamicResource ResourceKey=GridTextEdit}" Tag="세부시설번호"
+                <dxe:TextEdit Grid.Row="1" Grid.Column="1" Style="{DynamicResource ResourceKey=GridTextEdit}" Tag="세부시설번호" 
                           x:Name="txtATT_IDN" EditValue="{Binding ATT_IDN, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
 
                 <Label Grid.Row="1" Grid.Column="2" Content="설치년도" Style="{DynamicResource ResourceKey=GridLabel}"/>
@@ -123,10 +123,8 @@
                           x:Name="txtATT_NAM" EditValue="{Binding ATT_NAM,Mode=TwoWay}"/>
 
                 <Label Grid.Row="3" Grid.Column="0" Content="시설개요" Style="{DynamicResource ResourceKey=GridLabel}"/>
-                <dxe:TextEdit Grid.Row="3" Grid.Column="1" Grid.ColumnSpan="3" Style="{DynamicResource ResourceKey=GridTextEdit}"  
-                          x:Name="txtATT_DES" EditValue="{Binding ATT_DES,Mode=TwoWay}" Height="90"
-                            VerticalContentAlignment="Top" AcceptsReturn="True" AcceptsTab="True" TextWrapping="WrapWithOverflow"
-                              />
+                <RichTextBox Grid.Row="3" Grid.Column="1" Grid.ColumnSpan="3" Style="{DynamicResource GridRichTextBox}" Margin="10 5 10 5"
+                         x:Name="txtATT_DES" />
 
             </Grid>
 

@@ -11,6 +11,7 @@ using System.Data;
 using System.Reflection;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Documents;
 
 namespace GTI.WFMS.Modules.Pop.ViewModel
 {
@@ -122,6 +123,22 @@ namespace GTI.WFMS.Modules.Pop.ViewModel
             }
 
 
+            //다큐먼트는 따로 처리
+            Paragraph p = new Paragraph();
+            try
+            {
+                p.Inlines.Add(this.ATT_DES.Trim());
+                attFacDtlView.txtATT_DES.Document.Blocks.Clear();
+                attFacDtlView.txtATT_DES.Document.Blocks.Add(p);
+            }
+            catch (Exception) { }
+
+
+            //5.신규/수정구분처리
+            if (ATTA_SEQ < 0)
+            {
+                attFacDtlView.txtFTR_NAM.Text = BizUtil.GetCodeNm("Select_FTR_LIST2", FTR_CDE);
+            }
 
         }
 
@@ -140,8 +157,11 @@ namespace GTI.WFMS.Modules.Pop.ViewModel
 
             if (Messages.ShowYesNoMsgBox("저장하시겠습니까?") != MessageBoxResult.Yes) return;
 
+
             try
             {
+                //다큐먼트는 따로 처리
+                this.ATT_DES = new TextRange(attFacDtlView.txtATT_DES.Document.ContentStart, attFacDtlView.txtATT_DES.Document.ContentEnd).Text;
                 BizUtil.Update2(this, "SaveWttAttaDt");
             }
             catch (Exception )

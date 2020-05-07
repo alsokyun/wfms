@@ -141,8 +141,8 @@
       , R.FTR_CDE, R.FTR_IDN, R.SEQ
       , VN.FTR_NAM
       , R.RPR_YMD
-      , R.RPR_CAT_CDE, C.CD_NM RPR_CAT_NM
-      , R.RPR_CUZ_CDE, C2.CD_NM RPR_CUZ_NM
+      , R.RPR_CAT_CDE, C.NM RPR_CAT_NM
+      , R.RPR_CUZ_CDE, C2.NM RPR_CUZ_NM
       , R.RPR_USR_NM, R.RPR_CTNT
       , V.HJD_CDE, H.HJD_NAM
       , R.FIL_SEQ

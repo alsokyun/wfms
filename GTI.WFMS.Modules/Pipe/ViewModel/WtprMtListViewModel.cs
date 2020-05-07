@@ -271,7 +271,7 @@ namespace GTI.WFMS.Modules.Pipe.ViewModel
                 Hashtable conditions = new Hashtable();
                 conditions.Add("MNG_CDE", cbMNG_CDE.EditValue);
                 conditions.Add("HJD_CDE", cbHJD_CDE.EditValue);
-                conditions.Add("SOM_CDE", cbPGA_CDE.EditValue);
+                conditions.Add("PGA_CDE", cbPGA_CDE.EditValue);
                 conditions.Add("MOF_CDE", cbMOF_CDE.EditValue);
 
                 conditions.Add("FTR_IDN", FmsUtil.Trim(txtFTR_IDN.EditValue));
@@ -374,7 +374,7 @@ namespace GTI.WFMS.Modules.Pipe.ViewModel
                 Hashtable conditions = new Hashtable();
                 conditions.Add("MNG_CDE", cbMNG_CDE.EditValue);
                 conditions.Add("HJD_CDE", cbHJD_CDE.EditValue);
-                conditions.Add("SOM_CDE", cbPGA_CDE.EditValue);
+                conditions.Add("PGA_CDE", cbPGA_CDE.EditValue);
                 conditions.Add("MOF_CDE", cbMOF_CDE.EditValue);
 
                 conditions.Add("FTR_IDN", FmsUtil.Trim(txtFTR_IDN.EditValue));

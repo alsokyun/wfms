@@ -269,15 +269,13 @@ namespace GTI.WFMS.Modules.Link.View
 
 
         //선택한 첨부파일에 대한 파일창열기
-        //선택된 항목으로 페이지이동
-        private void Grid_MouseDoubleClick(object sender, MouseButtonEventArgs e)
+        private void Gv_RowDoubleClick(object sender, RowDoubleClickEventArgs e)
         {
-            string FIL_SEQ = "";
-            GridControl gc = sender as GridControl;
+            TableView tv = sender as TableView;
+            string FIL_SEQ = tv.Grid.GetCellValue(e.HitInfo.RowHandle, "FIL_SEQ").ToString();
 
             try
             {
-                FIL_SEQ = ((DataRowView)gc.CurrentItem).Row["FIL_SEQ"].ToString();
 
                 // 파일첨부윈도우
                 FilePhotoView filePhotoView = new FilePhotoView(BIZ_ID, FIL_SEQ);

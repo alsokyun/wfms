@@ -22,13 +22,14 @@ namespace GTI.WFMS.Modules.Pop.View
 
 
         //선택된 항목으로 페이지이동
-        private void Grid_MouseDoubleClick(object sender, MouseButtonEventArgs e)
+        private void TableView_RowDoubleClick(object sender, RowDoubleClickEventArgs e)
         {
-            GridControl gc = sender as GridControl;
+            TableView tv = sender as TableView;
 
             try
             {
-                txbRCV_NUM.Text = ((DataRowView)gc.CurrentItem).Row["RCV_NUM"].ToString();
+                string RCV_NUM = tv.Grid.GetCellValue(e.HitInfo.RowHandle, "RCV_NUM").ToString();
+                txbRCV_NUM.Text = RCV_NUM;
 
                 //팝업호출지점으로 리턴
                 DialogResult = true;
@@ -38,8 +39,8 @@ namespace GTI.WFMS.Modules.Pop.View
             {
                 throw ex;
             }
-
         }
+
 
         //닫기
         private void BtnClose_Click(object sender, RoutedEventArgs e)

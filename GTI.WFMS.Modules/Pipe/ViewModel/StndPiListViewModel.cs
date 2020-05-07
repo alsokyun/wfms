@@ -271,14 +271,14 @@ namespace GTI.WFMS.Modules.Pipe.ViewModel
                 Hashtable conditions = new Hashtable();
                 conditions.Add("MNG_CDE", cbMNG_CDE.EditValue);
                 conditions.Add("HJD_CDE", cbHJD_CDE.EditValue);
-                conditions.Add("SOM_CDE", cbSTP_MOP.EditValue);
-                conditions.Add("MOF_CDE", cbVAL_MOF.EditValue);
+                conditions.Add("STP_MOP", cbSTP_MOP.EditValue);
+                conditions.Add("VAL_MOF", cbVAL_MOF.EditValue);
 
                 conditions.Add("FTR_IDN", FmsUtil.Trim(txtFTR_IDN.EditValue));
                 conditions.Add("CNT_NUM", txtCNT_NUM.Text.Trim());
                 conditions.Add("SHT_NUM", txtSHT_NUM.Text.Trim());
-                conditions.Add("FLO_DIP", txtSTD_DIP.Text.Trim());
-                conditions.Add("PRD_NAM", txtSTP_ALT.Text.Trim());
+                conditions.Add("STD_DIP", txtSTD_DIP.Text.Trim());
+                conditions.Add("STP_ALT", txtSTP_ALT.Text.Trim());
 
 
                 try
@@ -373,14 +373,14 @@ namespace GTI.WFMS.Modules.Pipe.ViewModel
                 Hashtable conditions = new Hashtable();
                 conditions.Add("MNG_CDE", cbMNG_CDE.EditValue);
                 conditions.Add("HJD_CDE", cbHJD_CDE.EditValue);
-                conditions.Add("SOM_CDE", cbSTP_MOP.EditValue);
-                conditions.Add("MOF_CDE", cbVAL_MOF.EditValue);
+                conditions.Add("STP_MOP", cbSTP_MOP.EditValue);
+                conditions.Add("VAL_MOF", cbVAL_MOF.EditValue);
 
                 conditions.Add("FTR_IDN", FmsUtil.Trim(txtFTR_IDN.EditValue));
                 conditions.Add("CNT_NUM", txtCNT_NUM.Text.Trim());
                 conditions.Add("SHT_NUM", txtSHT_NUM.Text.Trim());
-                conditions.Add("FLO_DIP", txtSTD_DIP.Text.Trim());
-                conditions.Add("PRD_NAM", txtSTP_ALT.Text.Trim());
+                conditions.Add("STD_DIP", txtSTD_DIP.Text.Trim());
+                conditions.Add("STP_ALT", txtSTP_ALT.Text.Trim());
 
                 try
                 {

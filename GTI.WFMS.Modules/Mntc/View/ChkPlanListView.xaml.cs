@@ -130,15 +130,12 @@ namespace GTI.WFMS.Modules.Mntc.View
 
 
         // 점검일정 상세팝업
-        private void Grid_MouseDoubleClick(object sender, System.Windows.Input.MouseButtonEventArgs e)
+        private void Gv_RowDoubleClick(object sender, RowDoubleClickEventArgs e)
         {
-            string SCL_NUM = "";
-
-            GridControl gc = sender as GridControl;
-
+            TableView tv = sender as TableView;
             try
             {
-                SCL_NUM = ((ChscMaDtl)gc.CurrentItem).SCL_NUM.ToString();
+                string SCL_NUM = tv.Grid.GetCellValue(e.HitInfo.RowHandle, "SCL_NUM").ToString();
 
                 //1.점검일정 팝업호출
                 ChkSchDtlView chkSchDtlView = new ChkSchDtlView(SCL_NUM);
@@ -147,14 +144,14 @@ namespace GTI.WFMS.Modules.Mntc.View
                     //팝업종료 후 재조회
                     SearchAction();
                 }
-
             }
             catch (Exception ex)
             {
-                Console.Write(ex.ToString());
-                return;
+                Console.WriteLine(ex.Message);
             }
+
         }
+        
 
      
 
@@ -200,8 +197,9 @@ namespace GTI.WFMS.Modules.Mntc.View
 
 
 
+
         #endregion
 
-
+ 
     }
 }
