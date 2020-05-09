@@ -208,7 +208,7 @@
         <Border  Grid.Row="1" Grid.Column="2"  BorderBrush="{DynamicResource TileCOLOR4Brush}" BorderThickness="1"/>
 
         <dxg:GridControl Grid.Row="1" Grid.Column="2" x:Name="grid" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" ShowBorder="True" Margin="5 0 5 0"
-                            MouseDoubleClick="Grid_MouseDoubleClick"
+                            
                             ItemsSource="{Binding ElementName=DataPagerSource, Path=ActualSource}" >
 
             
@@ -232,6 +232,7 @@
                                 IsColumnMenuEnabled="False" 
                                 AllowMoveColumnToDropArea="False" 
                                 ScrollViewer.VerticalScrollBarVisibility="Hidden"
+                                RowDoubleClick="TableView_RowDoubleClick"
                                 >
                 </dxg:TableView>
             </dxg:GridControl.View>
@@ -289,7 +290,7 @@
                 </dxg:GridColumn.EditSettings>
             </dxg:GridColumn>
 
-            <dxg:GridColumn Header="가압장명" Width="100" FieldName="PRS_NAM" HorizontalHeaderContentAlignment="Center">
+            <dxg:GridColumn Header="가압장명" Width="130" FieldName="PRS_NAM" HorizontalHeaderContentAlignment="Center">
                 <dxg:GridColumn.EditSettings>
                     <dxe:TextEditSettings HorizontalContentAlignment="Left"/>
                 </dxg:GridColumn.EditSettings>
@@ -301,7 +302,7 @@
                 </dxg:GridColumn.EditSettings>
             </dxg:GridColumn>
 
-            <dxg:GridColumn Header="가압구역" Width="50" FieldName="PRS_ARE" HorizontalHeaderContentAlignment="Center">
+            <dxg:GridColumn Header="가압구역" Width="130" FieldName="PRS_ARE" HorizontalHeaderContentAlignment="Center">
                 <dxg:GridColumn.EditSettings>
                     <dxe:TextEditSettings HorizontalContentAlignment="Left"/>
                 </dxg:GridColumn.EditSettings>
@@ -309,7 +310,7 @@
 
             <dxg:GridColumn Header="가압능력" Width="100" FieldName="PRS_VOL" HorizontalHeaderContentAlignment="Center">
                 <dxg:GridColumn.EditSettings>
-                    <dxe:TextEditSettings HorizontalContentAlignment="Right" MaskType="Numeric" Mask="n0" MaskUseAsDisplayFormat="True" />
+                    <dxe:TextEditSettings HorizontalContentAlignment="Right" MaskType="Numeric" Mask="n3" MaskUseAsDisplayFormat="True" />
                 </dxg:GridColumn.EditSettings>
             </dxg:GridColumn>
 

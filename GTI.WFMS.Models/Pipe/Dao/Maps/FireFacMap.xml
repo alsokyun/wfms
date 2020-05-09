@@ -45,10 +45,16 @@
           A.IST_YMD <![CDATA[<=]]> #IST_YMD_TO#
         </isNotEmpty>
 
-        <!-- 조건8. 소화전구경 -->
+        <!-- 조건8. 형식 -->
         <isNotEmpty prepend="AND" property="MOF_CDE">
           A.MOF_CDE = #MOF_CDE#
         </isNotEmpty>
+      
+        <!-- 조건8. 소화전구경 -->
+        <isNotEmpty prepend="AND" property="FIR_DIP">
+          A.FIR_DIP = #FIR_DIP#
+        </isNotEmpty>
+
 
         <!-- 조건9. 급수탑높이 -->
         <isNotEmpty prepend="AND" property="SUP_HIT">
@@ -126,9 +132,14 @@
           A.IST_YMD <![CDATA[<=]]> #IST_YMD_TO#
         </isNotEmpty>
 
-        <!-- 조건8. 소화전구경 -->
+        <!-- 조건8. 형식 -->
         <isNotEmpty prepend="AND" property="MOF_CDE">
           A.MOF_CDE = #MOF_CDE#
+        </isNotEmpty>
+
+      <!-- 조건8. 소화전구경 -->
+        <isNotEmpty prepend="AND" property="FIR_DIP">
+          A.FIR_DIP = #FIR_DIP#
         </isNotEmpty>
 
         <!-- 조건9. 급수탑높이 -->

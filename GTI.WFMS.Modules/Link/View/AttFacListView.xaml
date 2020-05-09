@@ -33,7 +33,7 @@
 
 
         <dxg:GridControl Grid.Row="1" x:Name="grid" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" 
-                         MouseDoubleClick="Grid_MouseDoubleClick" >
+                          >
 
             <dxg:GridControl.View>
                 <dxg:TableView x:Name="gv"
@@ -46,6 +46,7 @@
                                 AllowBandMultiRow="False" 
 
                                InitNewRow="Gv_InitNewRow"
+                               RowDoubleClick="Gv_RowDoubleClick"
                     />
             </dxg:GridControl.View>
 
@@ -72,7 +73,7 @@
             </dxg:GridColumn>
             <dxg:GridColumn Header="시설개요" Width="10*" FieldName="ATT_DES" HorizontalHeaderContentAlignment="Center">
                 <dxg:GridColumn.EditSettings>
-                    <dxe:TextEditSettings HorizontalContentAlignment="Center"/>
+                    <dxe:TextEditSettings HorizontalContentAlignment="Left"/>
                 </dxg:GridColumn.EditSettings>
             </dxg:GridColumn>
 

@@ -208,7 +208,7 @@
         <Border  Grid.Row="1" Grid.Column="2"  BorderBrush="{DynamicResource TileCOLOR4Brush}" BorderThickness="1"/>
 
         <dxg:GridControl Grid.Row="1" Grid.Column="2" x:Name="grid" VerticalAlignment="Stretch" HorizontalAlignment="Stretch"  ShowBorder="True" Margin="5 0 5 0"
-                            MouseDoubleClick="Grid_MouseDoubleClick"
+                            
                             ItemsSource="{Binding ElementName=DataPagerSource, Path=ActualSource}" >
 
             <dxg:GridControl.View>
@@ -231,6 +231,7 @@
                                 IsColumnMenuEnabled="False" 
                                 AllowMoveColumnToDropArea="False" 
                                 ScrollViewer.VerticalScrollBarVisibility="Hidden"
+                                RowDoubleClick="TableView_RowDoubleClick"
                                 >
                 </dxg:TableView>
             </dxg:GridControl.View>
@@ -303,7 +304,7 @@
 
             <dxg:GridColumn Header="구경" Width="70" FieldName="VAL_DIP" HorizontalHeaderContentAlignment="Center">
                 <dxg:GridColumn.EditSettings>
-                    <dxe:TextEditSettings HorizontalContentAlignment="Right" MaskType="Numeric" Mask="n0" MaskUseAsDisplayFormat="True" />
+                    <dxe:TextEditSettings HorizontalContentAlignment="Right" MaskType="Numeric" Mask="n3" MaskUseAsDisplayFormat="True" />
                 </dxg:GridColumn.EditSettings>
             </dxg:GridColumn>
 

@@ -359,6 +359,28 @@
       WHERE 1=1
     </select>
 
+
+    <!-- 급수전계량기 목록 -->
+    <select id="selectHydtMetrSubList" parameterClass="Hashtable" resultClass="GTI.WFMS.Models.Acmf.Model.HydtMetrDtl">
+      SELECT
+      A.FTR_CDE
+      , A.FTR_IDN
+      , A.HJD_CDE, H.HJD_NAM
+      , A.SHT_NUM
+      , A.IST_YMD
+      , A.HOM_NUM
+      , A.HOM_NAM
+      , A.HOM_CDE, H2.HJD_NAM AS HOM_CDE_NAM
+      , A.PIP_CDE
+      , A.PIP_IDN
+      FROM WTL_META_PS A
+      LEFT JOIN INFOFMS.CMT_ADAR_MA H ON  H.HJD_CDE = A.HJD_CDE
+      LEFT JOIN INFOFMS.CMT_ADAR_MA H2 ON  H2.HJD_CDE = A.HOM_CDE
+      WHERE      1=1
+      AND A.PIP_CDE=#FTR_CDE#
+      AND A.PIP_IDN=#FTR_IDN#
+    </select>
+    
   </statements>
   
 </sqlMap>

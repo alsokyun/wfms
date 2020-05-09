@@ -22,19 +22,25 @@ namespace GTI.WFMS.Modules.Cmpl.View
         }
 
 
-        //선택된 항목으로 페이지이동
-        private void Grid_MouseDoubleClick(object sender, MouseButtonEventArgs e)
+
+        // 등록 팝업
+        private void BtnAdd_Click(object sender, RoutedEventArgs e)
         {
-            string FTR_CDE = "";
-            string FTR_IDN = "";
+            LekSiteAddView view = new LekSiteAddView();
+            if (view.ShowDialog() is bool)
+            {
+                //재조회
+                btnSearch.RaiseEvent(new RoutedEventArgs(Button.ClickEvent));
+            }
+        }
 
-            GridControl gc = sender as GridControl;
-
+        private void TableView_RowDoubleClick(object sender, RowDoubleClickEventArgs e)
+        {
+            TableView tv = sender as TableView;
             try
             {
-                FTR_CDE = ((DataRowView)gc.CurrentItem).Row["FTR_CDE"].ToString();
-                FTR_IDN = ((DataRowView)gc.CurrentItem).Row["FTR_IDN"].ToString();
-                
+                string FTR_CDE = tv.Grid.GetCellValue(e.HitInfo.RowHandle, "FTR_CDE").ToString();
+                string FTR_IDN = tv.Grid.GetCellValue(e.HitInfo.RowHandle, "FTR_IDN").ToString();
 
                 LekSiteDtlView view = new LekSiteDtlView(FTR_CDE, FTR_IDN);
                 if (view.ShowDialog() is bool)
@@ -45,20 +51,7 @@ namespace GTI.WFMS.Modules.Cmpl.View
             }
             catch (Exception ex)
             {
-                Console.Write(ex.ToString());
-                return; //throw;
-            }
-            
-        }
-
-        // 등록 팝업
-        private void BtnAdd_Click(object sender, RoutedEventArgs e)
-        {
-            LekSiteAddView view = new LekSiteAddView();
-            if (view.ShowDialog() is bool)
-            {
-                //재조회
-                btnSearch.RaiseEvent(new RoutedEventArgs(Button.ClickEvent));
+                Console.WriteLine(ex.Message);
             }
         }
     }

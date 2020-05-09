@@ -77,7 +77,8 @@ namespace GTI.WFMS.Modules.Acmf.View
             tabSubMenu.Items.Add(tab03);
 
             DXTabItem tab04 = new DXTabItem();
-            tab04.Header = "계량기교체이력";
+            tab04.Header = "급수전계량기";
+            tab04.Content = new HydtMetrSubListView("SA001", FTR_IDN);
             tabSubMenu.Items.Add(tab04);
 
         }

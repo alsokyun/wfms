@@ -227,6 +227,11 @@ namespace GTI.WFMS.Modules.Mntc.ViewModel
                     conditions.Add("END_YMD", dtEND_YMD.EditValue == null ? null : Convert.ToDateTime(dtEND_YMD.EditValue).ToString("yyyyMMdd"));
                 }
                 catch (Exception) { }
+                if (!BizUtil.ValidDateBtw(conditions["STA_YMD"], conditions["END_YMD"]))
+                {
+                    Messages.ShowInfoMsgBox("From/To 일자를 확인하세요");
+                    return;
+                }
 
                 conditions.Add("firstIndex", 0);
                 conditions.Add("lastIndex", 1000);
@@ -309,6 +314,11 @@ namespace GTI.WFMS.Modules.Mntc.ViewModel
                     conditions.Add("END_YMD", dtEND_YMD.EditValue == null ? null : Convert.ToDateTime(dtEND_YMD.EditValue).ToString("yyyyMMdd"));
                 }
                 catch (Exception) { }
+                if (!BizUtil.ValidDateBtw(conditions["STA_YMD"], conditions["END_YMD"]))
+                {
+                    Messages.ShowInfoMsgBox("From/To 일자를 확인하세요");
+                    return;
+                }
 
                 conditions.Add("page", 0);
                 conditions.Add("rows", 1000000);

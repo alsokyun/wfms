@@ -96,8 +96,8 @@
             <dxg:GridColumn Header="지급금액" Width="4*" FieldName="PAY_AMT" HorizontalHeaderContentAlignment="Center"  AllowEditing="True">
                 <dxg:GridColumn.CellTemplate>
                     <DataTemplate>
-                        <dxe:TextEdit  Style="{DynamicResource ResourceKey=GridNumberEdit}" MaskType="Numeric" MaskUseAsDisplayFormat="True" 
-                            EditValue="{Binding  RowData.Row.PAY_AMT, Mode=TwoWay }" />
+                        <dxe:TextEdit  Style="{DynamicResource ResourceKey=GridNumberEdit}" MaskUseAsDisplayFormat="True" 
+                            EditValue="{Binding  RowData.Row.PAY_AMT, Mode=TwoWay }" Mask="n0"/>
                     </DataTemplate>
                 </dxg:GridColumn.CellTemplate>
             </dxg:GridColumn>

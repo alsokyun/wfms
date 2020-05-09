@@ -69,6 +69,7 @@ namespace GTI.WFMS.Modules.Fclt.View
 
             DXTabItem tab04 = new DXTabItem();
             tab04.Header = "부속시설 세부현황";
+            tab04.Content = new AttFacListView(FTR_CDE, FTR_IDN);
             tabSubMenu.Items.Add(tab04);
 
         }

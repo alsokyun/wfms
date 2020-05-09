@@ -97,17 +97,16 @@ namespace GTI.WFMS.Modules.Link.View
 
 
 
-        //선택한 첨부파일에 대한 파일창열기
-        //선택된 항목으로 페이지이동
-        private void Grid_MouseDoubleClick(object sender, MouseButtonEventArgs e)
-        {
-            string ATTA_SEQ = "";
-            GridControl gc = sender as GridControl;
+        
 
+        private void Gv_RowDoubleClick(object sender, RowDoubleClickEventArgs e)
+        {
+            TableView tv = sender as TableView;
             try
             {
-                ATTA_SEQ = ((DataRowView)gc.CurrentItem).Row["ATTA_SEQ"].ToString();
-
+                string ATTA_SEQ = tv.Grid.GetCellValue(e.HitInfo.RowHandle, "ATTA_SEQ").ToString();
+                string FTR_CDE = tv.Grid.GetCellValue(e.HitInfo.RowHandle, "FTR_CDE").ToString();
+                string FTR_IDN = tv.Grid.GetCellValue(e.HitInfo.RowHandle, "FTR_IDN").ToString();
                 // 부속세부시설윈도우
                 AttFacDtlView attFacDtlView = new AttFacDtlView(FTR_CDE, Convert.ToInt32(FTR_IDN), Convert.ToInt32(ATTA_SEQ));
                 attFacDtlView.Owner = Window.GetWindow(this);
@@ -122,9 +121,9 @@ namespace GTI.WFMS.Modules.Link.View
             }
             catch (Exception ex)
             {
-                Messages.ShowErrMsgBox(ex.ToString());
+                Console.WriteLine(ex.Message);
             }
-        }
 
+        }
     }
 }

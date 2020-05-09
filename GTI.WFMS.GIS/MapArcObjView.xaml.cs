@@ -66,6 +66,7 @@ namespace GTI.WFMS.GIS
             toolbarControl.AddItem("esriControls.ControlsMapNavigationToolbar");
             toolbarControl.AddItem("esriControls.ControlsMapIdentifyTool");
             toolbarControl.AddItem("esriControls.ControlsMapMeasureTool");
+            toolbarControl.AddItem("esriControls.ControlsMapZoomToolControl");
             toolbarControl.AddItem("esriControls.ControlsMapGoToCommand");
             
 

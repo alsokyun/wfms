@@ -23,16 +23,20 @@ namespace GTI.WFMS.Modules.Cnst.View
         }
 
 
-        //선택된 항목으로 페이지이동
-        private void Grid_MouseDoubleClick(object sender, MouseButtonEventArgs e)
+     
+
+        // 등록 팝업
+        private void BtnAdd_Click(object sender, RoutedEventArgs e)
         {
-            string CNT_NUM = "";
+            NavigationService.Navigate(new CnstMngAddView());
+        }
 
-            GridControl gc = sender as GridControl;
-
+        private void TableView_RowDoubleClick(object sender, RowDoubleClickEventArgs e)
+        {
+            TableView tv = sender as TableView;
             try
             {
-                CNT_NUM = ((DataRowView)gc.CurrentItem).Row["CNT_NUM"].ToString();
+                string CNT_NUM = tv.Grid.GetCellValue(e.HitInfo.RowHandle, "CNT_NUM").ToString();
 
                 ///페이지이동 - 뷰생성자로 파라미터키 전달 
                 ///=> 뷰모델과바인딩된 객체값을 변경해서 뷰모델로 최종적으로 파라미터 전달
@@ -40,16 +44,8 @@ namespace GTI.WFMS.Modules.Cnst.View
             }
             catch (Exception ex)
             {
-                Messages.ShowErrMsgBox(ex.ToString());
-                //return; //throw;
+                Console.WriteLine(ex.Message);
             }
-            
-        }
-
-        // 등록 팝업
-        private void BtnAdd_Click(object sender, RoutedEventArgs e)
-        {
-            NavigationService.Navigate(new CnstMngAddView());
         }
     }
 }

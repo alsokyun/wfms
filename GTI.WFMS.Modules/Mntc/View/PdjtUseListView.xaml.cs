@@ -24,32 +24,26 @@ namespace GTI.WFMS.Modules.Mntc.View
 
 
         //선택된 항목으로 내역팝업
-        private void Grid_MouseDoubleClick(object sender, MouseButtonEventArgs e)
+        private void TableView_RowDoubleClick(object sender, RowDoubleClickEventArgs e)
         {
-            string PDH_NUM = "";
-
-            GridControl gc = sender as GridControl;
-
+            TableView tv = sender as TableView;
             try
             {
-                PDH_NUM = ((DataRowView)gc.CurrentItem).Row["PDH_NUM"].ToString();
+                string PDH_NUM = tv.Grid.GetCellValue(e.HitInfo.RowHandle, "PDH_NUM").ToString();
 
                 Window pop = new PdjtUseDtlView(PDH_NUM);
-                if ( pop.ShowDialog() is bool)
+                if (pop.ShowDialog() is bool)
                 {
                     //재조회
                 }
-
             }
             catch (Exception ex)
             {
-                Console.Write(ex.ToString());
-                return; 
+                Console.WriteLine(ex.Message);
             }
 
         }
-
-
+        
 
     }
 }

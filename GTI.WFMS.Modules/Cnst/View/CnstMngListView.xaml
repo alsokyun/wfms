@@ -118,7 +118,7 @@
             </dxe:TextEdit>
 
             <Label Grid.Row="3" Grid.Column="0" Content="계약금액[이상]" Style="{DynamicResource ResourceKey=GridLabel}"/>
-            <dxe:TextEdit Grid.Row="3" Grid.Column="2" x:Name="txtTCT_AMT_FROM" Style="{DynamicResource ResourceKey=SearchNumberEdit}"  HorizontalAlignment="Center" >
+            <dxe:TextEdit Grid.Row="3" Grid.Column="2" x:Name="txtTCT_AMT_FROM" Style="{DynamicResource ResourceKey=SearchNumberEdit}"  HorizontalAlignment="Center" Mask="n0">
                 <dxe:TextEdit.InputBindings>
                     <KeyBinding Key="Enter" Command="{Binding SearchCommand}">
                     </KeyBinding>
@@ -126,7 +126,7 @@
             </dxe:TextEdit>
 
             <Label Grid.Row="4" Grid.Column="0" Content="계약금액[이하]" Style="{DynamicResource ResourceKey=GridLabel}"/>
-            <dxe:TextEdit Grid.Row="4" Grid.Column="2" x:Name="txtTCT_AMT_TO" Style="{DynamicResource ResourceKey=SearchNumberEdit}"  HorizontalAlignment="Center" >
+            <dxe:TextEdit Grid.Row="4" Grid.Column="2" x:Name="txtTCT_AMT_TO" Style="{DynamicResource ResourceKey=SearchNumberEdit}"  HorizontalAlignment="Center" Mask="n0">
                 <dxe:TextEdit.InputBindings>
                     <KeyBinding Key="Enter" Command="{Binding SearchCommand}">
                     </KeyBinding>
@@ -197,7 +197,7 @@
         <Border  Grid.Row="1" Grid.Column="2"  BorderBrush="{DynamicResource TileCOLOR4Brush}" BorderThickness="1"/>
 
         <dxg:GridControl Grid.Row="1" Grid.Column="2" x:Name="grid" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" ShowBorder="True" Margin="5 0 5 0"
-                         MouseDoubleClick="Grid_MouseDoubleClick"
+                         
                          ItemsSource="{Binding ElementName=DataPagerSource, Path=ActualSource}" >
 
            
@@ -221,7 +221,7 @@
                                 HorizontalScrollbarVisibility="Auto"
                                 VerticalScrollbarVisibility="Disabled"
                                 AutoWidth="False"
-                               
+                                RowDoubleClick="TableView_RowDoubleClick"
                                 >
                 </dxg:TableView>
             </dxg:GridControl.View>

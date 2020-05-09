@@ -35,7 +35,7 @@
 
 
         <dxg:GridControl Grid.Row="1" x:Name="grid" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" 
-                         MouseDoubleClick="Grid_MouseDoubleClick" >
+                         >
 
             <dxg:GridControl.View>
                 <dxg:TableView x:Name="gv"
@@ -48,6 +48,7 @@
                                 AllowBandMultiRow="False" 
 
                                InitNewRow="Gv_InitNewRow"
+                               RowDoubleClick="Gv_RowDoubleClick"
                     />
             </dxg:GridControl.View>
 

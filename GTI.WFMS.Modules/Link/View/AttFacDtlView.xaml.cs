@@ -2,7 +2,7 @@
 using System.Windows;
 using System.Windows.Input;
 
-namespace GTI.WFMS.Modules.Pop.View
+namespace GTI.WFMS.Modules.Link.View
 {
     /// <summary>
     /// AttFacDtlView.xaml에 대한 상호 작용 논리

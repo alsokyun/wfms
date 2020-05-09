@@ -1464,7 +1464,7 @@
         <Setter Property="Margin" Value="10,0,10,0"/>
         <Setter Property="ShowBorder" Value="False"/>
         <Setter Property="MaskType" Value="Numeric"/>
-        <Setter Property="Mask" Value="n0"/>
+        <Setter Property="Mask" Value="n3"/>
         <Setter Property="MaskUseAsDisplayFormat" Value="True"/>
         <Setter Property="EditTemplate">
             <Setter.Value>
@@ -1497,7 +1497,7 @@
         <Setter Property="VerticalAlignment" Value="Center"/>
         <Setter Property="VerticalContentAlignment" Value="Center"/>
         <Setter Property="MaskType" Value="Numeric"/>
-        <Setter Property="Mask" Value="n0"/>
+        <Setter Property="Mask" Value="n3"/>
         <Setter Property="MaskUseAsDisplayFormat" Value="True"/>
         <Setter Property="EditTemplate">
             <Setter.Value>

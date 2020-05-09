@@ -26,13 +26,14 @@ namespace GTI.WFMS.Modules.Pop.View
             txtRET_CNT_NAM.Text = CNT_NUM;
         }
 
-        private void Grid_MouseDoubleClick(object sender, MouseButtonEventArgs e)
+        private void TableView_RowDoubleClick(object sender, RowDoubleClickEventArgs e)
         {
-            GridControl gc = sender as GridControl;
+            TableView tv = sender as TableView;
 
             try
             {
-                txtRET_CNT_NAM.Text = ((DataRowView)gc.CurrentItem).Row["CNT_NUM"].ToString();
+                string _CNT_NUM = tv.Grid.GetCellValue(e.HitInfo.RowHandle, "CNT_NUM").ToString();
+                txtRET_CNT_NAM.Text = _CNT_NUM;
                 DialogResult = true;
                 Close();
             }
@@ -42,11 +43,14 @@ namespace GTI.WFMS.Modules.Pop.View
             }
         }
 
+
+
         private void BtnClose_Click(object sender, RoutedEventArgs e)
         {
             //팝업호출지점으로 리턴
             DialogResult = true;
             Close();
         }
+
     }
 }

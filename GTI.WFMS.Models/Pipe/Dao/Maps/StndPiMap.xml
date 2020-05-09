@@ -56,7 +56,7 @@
         </isNotEmpty>
 
         <!-- 조건10. 구경 -->
-        <isNotEmpty prepend="AND" property="STP_ALT">
+        <isNotEmpty prepend="AND" property="STD_DIP">
           A.STD_DIP = #STD_DIP#
         </isNotEmpty>
 
@@ -137,7 +137,7 @@
       </isNotEmpty>
 
       <!-- 조건10. 구경 -->
-      <isNotEmpty prepend="AND" property="STP_ALT">
+      <isNotEmpty prepend="AND" property="STD_DIP">
         A.STD_DIP = #STD_DIP#
       </isNotEmpty>
 

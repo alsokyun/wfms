@@ -55,8 +55,8 @@
 		              ,d.CNT
 		              ,d.CNT2
 		          FROM (SELECT DTL_CD AS APL_CDE
-		                     , CD_NM AS APL_CDE_NAM
-		                  FROM CD_DTL_INFO
+		                     , NM AS APL_CDE_NAM
+		                  FROM INFOUSER.CD_DTL_INFO
 		                 WHERE 1=1
 		                     AND MST_CD = 'APL_CDE' /*민원구분*/
 		                     AND DEL_YN = 'N'		                  
