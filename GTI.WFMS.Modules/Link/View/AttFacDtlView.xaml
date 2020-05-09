@@ -1,14 +1,14 @@
 ﻿<Window xmlns:dxe="http://schemas.devexpress.com/winfx/2008/xaml/editors"  
-        x:Class="GTI.WFMS.Modules.Pop.View.AttFacDtlView"
+        x:Class="GTI.WFMS.Modules.Link.View.AttFacDtlView"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         mc:Ignorable="d"
-        Title="InfoFMS" Height="380" Width="600"
+        Title="InfoFMS" Height="320" Width="600"
         
         xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
-        xmlns:vm="clr-namespace:GTI.WFMS.Modules.Pop.ViewModel"
+        xmlns:vm="clr-namespace:GTI.WFMS.Modules.Link.ViewModel"
         xmlns:cm="clr-namespace:GTIFramework.Common.Utils.Converters;assembly=GTIFramework"
         
         WindowStyle="None" WindowStartupLocation="CenterScreen"

@@ -1,5 +1,5 @@
 ﻿<UserControl xmlns:dxe="http://schemas.devexpress.com/winfx/2008/xaml/editors"  xmlns:dxg="http://schemas.devexpress.com/winfx/2008/xaml/grid"  
-             x:Class="GTI.WFMS.Modules.Link.View.ChscResSubListView"
+             x:Class="GTI.WFMS.Modules.Link.View.HydtMetrSubListView"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
@@ -40,38 +40,36 @@
                     </DataTemplate>
                 </dxg:GridColumn.CellTemplate>
             </dxg:GridColumn>
-            <dxg:GridColumn Header="지형지물" Width="5*" FieldName="FTR_NAM" HorizontalHeaderContentAlignment="Center">
+            <dxg:GridColumn Header="관리번호" Width="3*" FieldName="FTR_IDN" HorizontalHeaderContentAlignment="Center">
                 <dxg:GridColumn.EditSettings>
                     <dxe:TextEditSettings HorizontalContentAlignment="Center"/>
                 </dxg:GridColumn.EditSettings>
             </dxg:GridColumn>
-            <dxg:GridColumn Header="보수일자" Width="3*" FieldName="RPR_YMD" HorizontalHeaderContentAlignment="Center">
+            <dxg:GridColumn Header="행정동" Width="3*" FieldName="HJD_NAM" HorizontalHeaderContentAlignment="Center">
+                <dxg:GridColumn.EditSettings>
+                    <dxe:TextEditSettings HorizontalContentAlignment="Center"/>
+                </dxg:GridColumn.EditSettings>
+            </dxg:GridColumn>
+            <dxg:GridColumn Header="설치일자" Width="3*" FieldName="IST_YMD" HorizontalHeaderContentAlignment="Center">
                 <dxg:GridColumn.EditSettings>
                     <dxe:TextEditSettings HorizontalContentAlignment="Center" DisplayTextConverter="{StaticResource ResourceKey=date3StrConverter}" />
                 </dxg:GridColumn.EditSettings>
             </dxg:GridColumn>
-            <dxg:GridColumn Header="보수구분" Width="4*" FieldName="RPR_CAT_NAM" HorizontalHeaderContentAlignment="Center">
+            <dxg:GridColumn Header="수용가번호" Width="3*" FieldName="HOM_NUM" HorizontalHeaderContentAlignment="Center">
                 <dxg:GridColumn.EditSettings>
                     <dxe:TextEditSettings HorizontalContentAlignment="Center"/>
                 </dxg:GridColumn.EditSettings>
             </dxg:GridColumn>
-            <dxg:GridColumn Header="보수사유" Width="4*" FieldName="RPR_CUZ_NAM" HorizontalHeaderContentAlignment="Center">
+            <dxg:GridColumn Header="수용가성명" Width="3*" FieldName="HOM_NAM" HorizontalHeaderContentAlignment="Center">
                 <dxg:GridColumn.EditSettings>
                     <dxe:TextEditSettings HorizontalContentAlignment="Center"/>
                 </dxg:GridColumn.EditSettings>
             </dxg:GridColumn>
-            <dxg:GridColumn Header="시공자" Width="3*" FieldName="RPR_USR_NM" HorizontalHeaderContentAlignment="Center">
+            <dxg:GridColumn Header="수용가행정동" Width="3*" FieldName="HOM_CDE_NAM" HorizontalHeaderContentAlignment="Center">
                 <dxg:GridColumn.EditSettings>
                     <dxe:TextEditSettings HorizontalContentAlignment="Center"/>
                 </dxg:GridColumn.EditSettings>
             </dxg:GridColumn>
-            <dxg:GridColumn Header="보수내용" Width="8*" FieldName="RPR_CTNT" HorizontalHeaderContentAlignment="Center">
-                <dxg:GridColumn.EditSettings>
-                    <dxe:TextEditSettings HorizontalContentAlignment="Left"/>
-                </dxg:GridColumn.EditSettings>
-            </dxg:GridColumn>
-
-
 
         </dxg:GridControl>
 

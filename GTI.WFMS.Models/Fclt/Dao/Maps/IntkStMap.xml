@@ -56,8 +56,8 @@
         </isNotEmpty>
 
         <!-- 조건10. 수계명 -->
-        <isNotEmpty prepend="AND" property="RIV_NAM">
-          A.RIV_NAM LIKE '%' || #RIV_NAM# || '%'
+        <isNotEmpty prepend="AND" property="WSS_NAM">
+          A.WSS_NAM LIKE '%' || #WSS_NAM# || '%'
         </isNotEmpty>
 
         <!-- 조건11. 도수방법 -->
@@ -141,8 +141,8 @@
         </isNotEmpty>
 
         <!-- 조건10. 수계명 -->
-        <isNotEmpty prepend="AND" property="RIV_NAM">
-          A.RIV_NAM LIKE '%' || #RIV_NAM# || '%'
+        <isNotEmpty prepend="AND" property="WSS_NAM">
+          A.WSS_NAM LIKE '%' || #WSS_NAM# || '%'
         </isNotEmpty>
 
         <!-- 조건11. 도수방법 -->

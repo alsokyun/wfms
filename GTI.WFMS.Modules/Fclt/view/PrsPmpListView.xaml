@@ -290,7 +290,7 @@
                 </dxg:GridColumn.EditSettings>
             </dxg:GridColumn>
 
-            <dxg:GridColumn Header="가압장명" Width="100" FieldName="PRS_NAM" HorizontalHeaderContentAlignment="Center">
+            <dxg:GridColumn Header="가압장명" Width="130" FieldName="PRS_NAM" HorizontalHeaderContentAlignment="Center">
                 <dxg:GridColumn.EditSettings>
                     <dxe:TextEditSettings HorizontalContentAlignment="Left"/>
                 </dxg:GridColumn.EditSettings>
@@ -302,7 +302,7 @@
                 </dxg:GridColumn.EditSettings>
             </dxg:GridColumn>
 
-            <dxg:GridColumn Header="가압구역" Width="50" FieldName="PRS_ARE" HorizontalHeaderContentAlignment="Center">
+            <dxg:GridColumn Header="가압구역" Width="130" FieldName="PRS_ARE" HorizontalHeaderContentAlignment="Center">
                 <dxg:GridColumn.EditSettings>
                     <dxe:TextEditSettings HorizontalContentAlignment="Left"/>
                 </dxg:GridColumn.EditSettings>

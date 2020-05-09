@@ -45,17 +45,22 @@
           A.FNS_YMD <![CDATA[<=]]> #FNS_YMD_TO#
         </isNotEmpty>
 
-        <!-- 조건8. 가압장명 -->
-        <isNotEmpty prepend="AND" property="PRS_NAM">
-          A.PRS_NAM = #PRS_NAM#
-        </isNotEmpty>
+      <!-- 조건8. 가압장명 -->
+      <isNotEmpty prepend="AND" property="PRS_NAM">
+        A.PRS_NAM LIKE '%'|| #PRS_NAM# || '%'
+      </isNotEmpty>
 
-        <!-- 조건9. 관리방법 -->
+      <!-- 조건9. 관리방법 -->
         <isNotEmpty prepend="AND" property="SAG_CDE">
           A.SAG_CDE = #SAG_CDE#
         </isNotEmpty>
 
-        <!-- 조건10. 가압구역 -->
+
+      <!-- 조건10. 가압구역 -->
+      <isNotEmpty prepend="AND" property="PRS_ARE">
+        A.PRS_ARE LIKE '%' || #PRS_ARE# || '%'
+      </isNotEmpty>
+
         <isNotEmpty prepend="AND" property="PRS_SAH">
           A.PRS_SAH LIKE '%'||#PRS_SAH#||'%'
         </isNotEmpty>
@@ -128,7 +133,7 @@
 
         <!-- 조건8. 가압장명 -->
         <isNotEmpty prepend="AND" property="PRS_NAM">
-          A.PRS_NAM = #PRS_NAM#
+          A.PRS_NAM LIKE '%'|| #PRS_NAM# || '%'
         </isNotEmpty>
 
         <!-- 조건9. 관리방법 -->
@@ -136,8 +141,12 @@
           A.SAG_CDE = #SAG_CDE#
         </isNotEmpty>
 
-        <!-- 조건10. 가압구역 -->
-        <isNotEmpty prepend="AND" property="PRS_SAH">
+      <!-- 조건10. 가압구역 -->
+      <isNotEmpty prepend="AND" property="PRS_ARE">
+        A.PRS_ARE LIKE '%' || #PRS_ARE# || '%'
+      </isNotEmpty>
+
+      <isNotEmpty prepend="AND" property="PRS_SAH">
           A.PRS_SAH LIKE '%'||#PRS_SAH#||'%'
         </isNotEmpty>
 

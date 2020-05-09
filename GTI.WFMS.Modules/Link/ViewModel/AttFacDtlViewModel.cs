@@ -1,7 +1,7 @@
 ﻿using DevExpress.Xpf.Editors;
 using GTI.WFMS.Models.Common;
 using GTI.WFMS.Models.Fctl.Model;
-using GTI.WFMS.Modules.Pop.View;
+using GTI.WFMS.Modules.Link.View;
 using GTIFramework.Common.Log;
 using GTIFramework.Common.MessageBox;
 using Prism.Commands;
@@ -13,7 +13,7 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Documents;
 
-namespace GTI.WFMS.Modules.Pop.ViewModel
+namespace GTI.WFMS.Modules.Link.ViewModel
 {
     public class AttFacDtlViewModel : WttAttaDt
     {

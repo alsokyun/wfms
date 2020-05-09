@@ -320,6 +320,14 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
+    <Page Include="Link\View\AttFacDtlView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Link\View\HydtMetrSubListView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
     <Page Include="Link\View\ChscResSubListView.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -521,10 +529,6 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Include="Pipe\View\WtsMnhoListView.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="Pop\View\AttFacDtlView.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
@@ -826,6 +830,13 @@
     <Compile Include="Fclt\view\WtrSourListView.xaml.cs">
       <DependentUpon>WtrSourListView.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Link\ViewModel\AttFacDtlViewModel.cs" />
+    <Compile Include="Link\View\AttFacDtlView.xaml.cs">
+      <DependentUpon>AttFacDtlView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Link\View\HydtMetrSubListView.xaml.cs">
+      <DependentUpon>HydtMetrSubListView.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Link\View\ChscResSubListView.xaml.cs">
       <DependentUpon>ChscResSubListView.xaml</DependentUpon>
     </Compile>
@@ -1065,11 +1076,7 @@
     <Compile Include="Pop\ViewModel\FilePhotoViewModel.cs" />
     <Compile Include="Pop\ViewModel\FilePopViewModel.cs" />
     <Compile Include="Pop\ViewModel\FileMngViewModel.cs" />
-    <Compile Include="Pop\ViewModel\AttFacDtlViewModel.cs" />
     <Compile Include="Pop\ViewModel\FtrSelViewModel.cs" />
-    <Compile Include="Pop\View\AttFacDtlView.xaml.cs">
-      <DependentUpon>AttFacDtlView.xaml</DependentUpon>
-    </Compile>
     <Compile Include="Pop\View\FilePhotoView.xaml.cs">
       <DependentUpon>FilePhotoView.xaml</DependentUpon>
     </Compile>
@@ -1160,9 +1167,7 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Licenses.licx" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Link\ViewModel\" />
-  </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
     <WCFMetadata Include="Connected Services\" />
   </ItemGroup>
