@@ -182,7 +182,7 @@ namespace GTI.WFMS.Modules.Pipe.ViewModel
                 BizUtil.SetCmbCode(cbGAG_CDE, "250061", "[선택하세요]");
 
                 // cbMOF_CDE 유형
-                BizUtil.SetCmbCode(cbMOF_CDE, "250035", "[선택하세요]");
+                BizUtil.SetCmbCode(cbMOF_CDE, "250004", "[선택하세요]");
 
             }
             catch (Exception ex)

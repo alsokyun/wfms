@@ -101,7 +101,7 @@ namespace GTI.WFMS.Modules.Acmf.ViewModel
 
                 //채번결과 매칭
                 this.FTR_IDN = result.FTR_IDN;
-                this.FTR_CDE = "SA113";
+                this.FTR_CDE = "SA122";//급수전계량기
 
                 this.IST_YMD = Convert.ToDateTime(DateTime.Today).ToString("yyyy-MM-dd");
             
@@ -181,7 +181,7 @@ namespace GTI.WFMS.Modules.Acmf.ViewModel
                 BizUtil.SetCmbCode(cbSBI_CDE, "250020", "[선택하세요]");
 
                 // cbMOF_CDE 형식
-                BizUtil.SetCmbCode(cbMOF_CDE, "250035", "[선택하세요]");
+                BizUtil.SetCmbCode(cbMOF_CDE, "250004", "[선택하세요]");
 
             }
             catch (Exception ex)

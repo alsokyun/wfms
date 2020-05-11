@@ -519,7 +519,7 @@ namespace GTI.WFMS.Modules.Pipe.ViewModel
                 BizUtil.SetCmbCode(cbSTP_MOP, "250102", "[전체]");
 
                 // cbSTP_MOP    8.형식
-                BizUtil.SetCmbCode(cbVAL_MOF, "250035", "[전체]");
+                BizUtil.SetCmbCode(cbVAL_MOF, "250016", "[전체]");
 
             }
             catch (Exception ex)

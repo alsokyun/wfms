@@ -510,7 +510,7 @@ namespace GTI.WFMS.Modules.Pipe.ViewModel
                 BizUtil.SetCombo(cbHJD_CDE, "Select_ADAR_LIST", "HJD_CDE", "HJD_NAM", "[전체]");
 
                 // cbMOF_CDE    7.형식
-                BizUtil.SetCmbCode(cbMOF_CDE, "250035", "[전체]");
+                BizUtil.SetCmbCode(cbMOF_CDE, "250019", "[전체]");
             }
             catch (Exception ex)
             {
