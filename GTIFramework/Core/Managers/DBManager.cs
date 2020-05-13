@@ -374,11 +374,14 @@ namespace GTIFramework.Core.Managers
                     foreach (DataColumn col in dataTable.Columns) col.ReadOnly = false;
                 }
 
-                CloseAll(Process.GetCurrentProcess().Id.ToString());
             }
             catch (Exception e)
             {
                 throw e;
+            }
+            finally
+            {
+                CloseAll(Process.GetCurrentProcess().Id.ToString());
             }
 
             return dataTable;

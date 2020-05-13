@@ -152,7 +152,6 @@ namespace GTI.WFMS.Modules.Acmf.ViewModel
             SearchCommand = new DelegateCommand<object>(SearchAction);
             ResetCommand = new DelegateCommand<object>(ResetAction);
 
-            btnCmd = new DelegateCommand<object>(btnMethod);
             ExcelCmd = new DelegateCommand<object>(ExcelDownAction);
             // 시설물 지도상 위치찾아가기
             cellPosCmd = new DelegateCommand<object>(async delegate (object obj) {
@@ -281,6 +280,7 @@ namespace GTI.WFMS.Modules.Acmf.ViewModel
                 {
                     conditions.Add("FNS_YMD_FROM", dtFNS_YMD_FROM.EditValue == null ? null : Convert.ToDateTime(dtFNS_YMD_FROM.EditValue).ToString("yyyyMMdd"));
                     conditions.Add("FNS_YMD_TO", dtFNS_YMD_TO.EditValue == null ? null : Convert.ToDateTime(dtFNS_YMD_TO.EditValue).ToString("yyyyMMdd"));
+                    conditions.Add("PMS_YMD", dtPMS_YMD.EditValue == null ? null : Convert.ToDateTime(dtPMS_YMD.EditValue).ToString("yyyyMMdd"));
                 }
                 catch (Exception ) { }
                 if (!BizUtil.ValidDateBtw(conditions["FNS_YMD_FROM"], conditions["FNS_YMD_TO"]))
@@ -351,6 +351,7 @@ namespace GTI.WFMS.Modules.Acmf.ViewModel
             
             dtFNS_YMD_FROM.EditValue = null;
             dtFNS_YMD_TO.EditValue = null;
+            dtPMS_YMD.EditValue = null;
 
         }
 
@@ -379,7 +380,7 @@ namespace GTI.WFMS.Modules.Acmf.ViewModel
                 {
                     conditions.Add("FNS_YMD_FROM", dtFNS_YMD_FROM.EditValue == null ? null : Convert.ToDateTime(dtFNS_YMD_FROM.EditValue).ToString("yyyyMMdd"));
                     conditions.Add("FNS_YMD_TO", dtFNS_YMD_TO.EditValue == null ? null : Convert.ToDateTime(dtFNS_YMD_TO.EditValue).ToString("yyyyMMdd"));
-                    conditions.Add("PMS_YMD", dtFNS_YMD_TO.EditValue == null ? null : Convert.ToDateTime(dtPMS_YMD.EditValue).ToString("yyyyMMdd"));
+                    conditions.Add("PMS_YMD", dtPMS_YMD.EditValue == null ? null : Convert.ToDateTime(dtPMS_YMD.EditValue).ToString("yyyyMMdd"));
                 }
                 catch (Exception ) { }
                 if (!BizUtil.ValidDateBtw(conditions["FNS_YMD_FROM"], conditions["FNS_YMD_TO"]))
@@ -551,104 +552,7 @@ namespace GTI.WFMS.Modules.Acmf.ViewModel
 
 
 
-        /// <summary>
-        /// SQL DataRow -> 모델클래스 생성기
-        /// </summary>
-        /// <param name="obj"></param>
-        private void btnMethod(object obj)
-        {
-
-
-            string name_space = "GTI.WFMS.Modules.Acmf.Model";
-            string class_name = "WtrTrkDtl";
-
-            Hashtable param = new Hashtable();
-            param.Add("sqlId", "SelectWtrTrkList");
-            param.Add("FTR_CDE", "SA120");
-            param.Add("FTR_IDN", "1");
-            DataTable dt = BizUtil.SelectList(param);
-            DataRow dr = dt.Rows[0];
-
-            String sb = "";
-            sb += "namespace " + name_space + "\r\n";
-            sb += "{ " + "\r\n";
-            sb += " public class " + class_name + ": CmmDtl, INotifyPropertyChanged" + "\r\n";
-            sb += " { " + "\r\n";
-            sb += "     /// <summary>" + "\r\n";
-            sb += "     /// 인터페이스 구현부분" + "\r\n";
-            sb += "     /// </summary>" + "\r\n";
-            sb += "     public event PropertyChangedEventHandler PropertyChanged;" + "\r\n";
-            sb += "     protected void OnPropertyChanged(string propertyName)" + "\r\n";
-            sb += "         { " + "\r\n";
-            sb += "             if (PropertyChanged != null)" + "\r\n";
-            sb += "             { " + "\r\n";
-            sb += "                 PropertyChanged(this, new PropertyChangedEventArgs(propertyName));" + "\r\n";
-            sb += "             } " + "\r\n";
-            sb += "         } " + "\r\n";
-
-            sb += "\r\n";
-            sb += "\r\n";
-            sb += "\r\n";
-
-            sb += "     /// <summary>" + "\r\n";
-            sb += "     /// 프로퍼티 부분" + "\r\n";
-            sb += "     /// </summary>" + "\r\n";
-            foreach (DataColumn col in dt.Columns)
-            {
-                string value = dr[col].ToString();
-
-                //type 결정
-                string type_name = "string";
-                if (col.ColumnName.Contains("_AMT") || col.ColumnName.Contains("_DIP") || col.ColumnName.Contains("_DIR") )
-                {
-                    type_name = "decimal";
-                }
-                else
-                {
-                    switch (dr[col].GetType().Name.ToLower())
-                    {
-                        case "string":
-                            type_name = "string";
-                            break;
-                        case "int":
-                            type_name = "int";
-                            break;
-                        case "decimal":
-                            type_name = "decimal";
-                            break;
-                        case "double":
-                            type_name = "double";
-                            break;
-                        default:
-                            break;
-                    }
-                }
-
-
-                sb += "     private " + type_name + " __" + col + ";" + "\r\n";
-                sb += "     public " + type_name + " " + col + "\r\n";
-                sb += "     { " + "\r\n";
-                sb += "         get { return __" + col + "; }" + "\r\n";
-                sb += "         set " + "\r\n";
-                sb += "         { " + "\r\n";
-                sb += "         this.__" + col + " = value;" + "\r\n";
-                sb += "         OnPropertyChanged(\"" + col + "\"); " + "\r\n";
-                sb += "         } " + "\r\n";
-                sb += "     } " + "\r\n";
-            }
-
-            sb += " } " + "\r\n";
-            sb += "} " + "\r\n";
-
-
-            Console.WriteLine("=========class string===========");
-            Console.Write(sb);
-            Console.WriteLine("=========class string===========");
-
-
-            MessageBox.Show("모델생성 -> Console 확인");
-
-        }
+      
         #endregion
 
     }

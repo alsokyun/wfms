@@ -181,6 +181,7 @@
     <Compile Include="Acmf\Model\WtrTrkDtl.cs" />
     <Compile Include="Acmf\Model\SupDutDtl.cs" />
     <Compile Include="Acmf\Model\HydtMetrDtl.cs" />
+    <Compile Include="Acmf\Model\WttMetaHt.cs" />
     <Compile Include="Adm\Dao\AdmDao.cs" />
     <Compile Include="Cmm\Dao\CommonDao.cs" />
     <Compile Include="Cmm\Dao\CmmDao.cs" />

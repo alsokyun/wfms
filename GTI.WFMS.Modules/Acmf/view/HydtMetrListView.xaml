@@ -150,11 +150,11 @@
             </dxe:TextEdit>
 
             <Label Grid.Row="8" Grid.Column="0" Content="수용행정동" Style="{DynamicResource ResourceKey=GridLabel}"/>
-            <dxe:ComboBoxEdit Grid.Row="8" Grid.Column="2" x:Name="cbHOM_CDE" Style="{DynamicResource ResourceKey=SearchComboBox}" 
+            <dxe:ComboBoxEdit Grid.Row="8" Grid.Column="2" x:Name="cbHOM_HJD" Style="{DynamicResource ResourceKey=SearchComboBox}" 
                                 HorizontalAlignment="Center" />
 
             <Label Grid.Row="9" Grid.Column="0" Content="형식" Style="{DynamicResource ResourceKey=GridLabel}"/>
-            <dxe:ComboBoxEdit Grid.Row="9" Grid.Column="2" x:Name="cbMOF_CDE" Style="{DynamicResource ResourceKey=SearchComboBox}" 
+            <dxe:ComboBoxEdit Grid.Row="9" Grid.Column="2" x:Name="cbMET_MOF" Style="{DynamicResource ResourceKey=SearchComboBox}" 
                                 HorizontalAlignment="Center" />
 
 
@@ -271,7 +271,7 @@
                 </dxg:GridColumn.EditSettings>
             </dxg:GridColumn>
 
-            <dxg:GridColumn Header="수용가번호" Width="100" FieldName="HOM_NUM" HorizontalHeaderContentAlignment="Center">
+            <dxg:GridColumn Header="수용가번호" Width="70" FieldName="HOM_NUM" HorizontalHeaderContentAlignment="Center">
                 <dxg:GridColumn.EditSettings>
                     <dxe:TextEditSettings HorizontalContentAlignment="Center"/>
                 </dxg:GridColumn.EditSettings>
@@ -283,9 +283,9 @@
                 </dxg:GridColumn.EditSettings>
             </dxg:GridColumn>
 
-            <dxg:GridColumn Header="수용행정동" Width="50" FieldName="HOM_CDE_NAM" HorizontalHeaderContentAlignment="Center">
+            <dxg:GridColumn Header="수용행정동" Width="100" FieldName="HOM_HJD_NAM" HorizontalHeaderContentAlignment="Center">
                 <dxg:GridColumn.EditSettings>
-                    <dxe:TextEditSettings HorizontalContentAlignment="Left"/>
+                    <dxe:TextEditSettings HorizontalContentAlignment="Center"/>
                 </dxg:GridColumn.EditSettings>
             </dxg:GridColumn>
 

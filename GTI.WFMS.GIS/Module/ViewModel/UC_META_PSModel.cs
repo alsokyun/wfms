@@ -276,14 +276,14 @@ namespace GTI.WFMS.GIS.Module.ViewModel
                 // cbMNG_CDE 관리기관
                 BizUtil.SetCmbCode(uC_META_PS.cbMNG_CDE, "250101", "[선택하세요]");
 
-                // cbHOM_CDE 수용가행정동
-                BizUtil.SetCombo(uC_META_PS.cbHOM_CDE, "Select_ADAR_LIST", "HJD_CDE", "HJD_NAM", "[선택하세요]");
+                // cbHOM_HJD 수용가행정동
+                BizUtil.SetCombo(uC_META_PS.cbHOM_HJD, "Select_ADAR_LIST", "HJD_CDE", "HJD_NAM", "[선택하세요]");
 
                 // cbSBI_CDE 업종
                 BizUtil.SetCmbCode(uC_META_PS.cbSBI_CDE, "250020", "[선택하세요]");
 
-                // cbMOF_CDE 형식
-                BizUtil.SetCmbCode(uC_META_PS.cbMOF_CDE, "250035", "[선택하세요]");
+                // cbMET_MOF 형식
+                BizUtil.SetCmbCode(uC_META_PS.cbMET_MOF, "250035", "[선택하세요]");
             }
             catch (Exception ex)
             {

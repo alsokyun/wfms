@@ -113,8 +113,8 @@ namespace GTI.WFMS.Modules.Acmf.ViewModel
 
         HydtMetrListView hydtMetrListView;
         ComboBoxEdit cbHJD_CDE; DataTable dtHJD_CDE = new DataTable();
-        ComboBoxEdit cbHOM_CDE; DataTable dsHOM_CDE = new DataTable();
-        ComboBoxEdit cbMOF_CDE; DataTable dsMOF_CDE = new DataTable();
+        ComboBoxEdit cbHOM_HJD; DataTable dsHOM_HJD = new DataTable();
+        ComboBoxEdit cbMET_MOF; DataTable dsMET_MOF = new DataTable();
 
         TextEdit txtFTR_IDN;
         TextEdit txtCNT_NUM;
@@ -152,7 +152,6 @@ namespace GTI.WFMS.Modules.Acmf.ViewModel
             SearchCommand = new DelegateCommand<object>(SearchAction);
             ResetCommand = new DelegateCommand<object>(ResetAction);
 
-            btnCmd = new DelegateCommand<object>(btnMethod);
             ExcelCmd = new DelegateCommand<object>(ExcelDownAction);
 
             // 시설물 지도상 위치찾아가기
@@ -221,8 +220,8 @@ namespace GTI.WFMS.Modules.Acmf.ViewModel
             hydtMetrListView = values[0] as HydtMetrListView;
 
             cbHJD_CDE = hydtMetrListView.cbHJD_CDE;      //1.행정동
-            cbHOM_CDE = hydtMetrListView.cbHOM_CDE;      //8.수용행정동
-            cbMOF_CDE = hydtMetrListView.cbMOF_CDE;      //9.형식
+            cbHOM_HJD = hydtMetrListView.cbHOM_HJD;      //8.수용행정동
+            cbMET_MOF = hydtMetrListView.cbMET_MOF;      //9.형식
 
             txtFTR_IDN = hydtMetrListView.txtFTR_IDN;    //0.관리번호           
             txtCNT_NUM = hydtMetrListView.txtCNT_NUM;    //2.공사번호
@@ -266,8 +265,8 @@ namespace GTI.WFMS.Modules.Acmf.ViewModel
 
                 Hashtable conditions = new Hashtable();
                 conditions.Add("HJD_CDE", cbHJD_CDE.EditValue);
-                conditions.Add("HOM_CDE", cbHOM_CDE.EditValue);
-                conditions.Add("MOF_CDE", cbMOF_CDE.EditValue);
+                conditions.Add("HOM_HJD", cbHOM_HJD.EditValue);
+                conditions.Add("MET_MOF", cbMET_MOF.EditValue);
 
                 conditions.Add("FTR_IDN", FmsUtil.Trim(txtFTR_IDN.EditValue));
                 conditions.Add("CNT_NUM", txtCNT_NUM.Text.Trim());
@@ -288,8 +287,6 @@ namespace GTI.WFMS.Modules.Acmf.ViewModel
                     return;
                 }
 
-                conditions.Add("firstIndex", 0);
-                conditions.Add("lastIndex", 1000);
 
                 conditions.Add("sqlId", "SelectHydtMetrList");
     
@@ -340,8 +337,9 @@ namespace GTI.WFMS.Modules.Acmf.ViewModel
         private void ResetAction(object obj)
         {
             cbHJD_CDE.SelectedIndex = 0;
-            cbHOM_CDE.SelectedIndex = 0;
-            cbHOM_CDE.SelectedIndex = 0;           
+            cbHOM_HJD.SelectedIndex = 0;
+            cbHOM_HJD.SelectedIndex = 0;
+            cbMET_MOF.SelectedIndex = 0;           
 
             txtFTR_IDN.Text = "";
             txtCNT_NUM.Text = "";
@@ -366,8 +364,8 @@ namespace GTI.WFMS.Modules.Acmf.ViewModel
                 /// 데이터조회
                 Hashtable conditions = new Hashtable();
                 conditions.Add("HJD_CDE", cbHJD_CDE.EditValue);
-                conditions.Add("HOM_CDE", cbHOM_CDE.EditValue);
-                conditions.Add("MOF_CDE", cbMOF_CDE.EditValue);
+                conditions.Add("HOM_HJD", cbHOM_HJD.EditValue);
+                conditions.Add("MET_MOF", cbMET_MOF.EditValue);
 
                 conditions.Add("FTR_IDN", FmsUtil.Trim(txtFTR_IDN.EditValue));
                 conditions.Add("CNT_NUM", txtCNT_NUM.Text.Trim());
@@ -486,8 +484,8 @@ namespace GTI.WFMS.Modules.Acmf.ViewModel
             try
             {
                 cbHJD_CDE = hydtMetrListView.cbHJD_CDE;      //1.행정동
-                cbHOM_CDE = hydtMetrListView.cbHOM_CDE;      //8.수용행정동
-                cbMOF_CDE = hydtMetrListView.cbMOF_CDE;      //9.형식
+                cbHOM_HJD = hydtMetrListView.cbHOM_HJD;      //8.수용행정동
+                cbMET_MOF = hydtMetrListView.cbMET_MOF;      //9.형식
 
                 txtFTR_IDN = hydtMetrListView.txtFTR_IDN;    //0.관리번호           
                 txtCNT_NUM = hydtMetrListView.txtCNT_NUM;    //2.공사번호
@@ -504,10 +502,10 @@ namespace GTI.WFMS.Modules.Acmf.ViewModel
                 BizUtil.SetCombo(cbHJD_CDE, "Select_ADAR_LIST", "HJD_CDE", "HJD_NAM", "[전체]");
 
                 // cbHJD_CDE    8.행정동
-                BizUtil.SetCombo(cbHOM_CDE, "Select_ADAR_LIST", "HJD_CDE", "HJD_NAM", "[전체]");
+                BizUtil.SetCombo(cbHOM_HJD, "Select_ADAR_LIST", "HJD_CDE", "HJD_NAM", "[전체]");
 
-                // cbMOF_CDE    9.형식
-                BizUtil.SetCmbCode(cbMOF_CDE, "250004", "[전체]");
+                // cbMET_MOF    9.형식
+                BizUtil.SetCmbCode(cbMET_MOF, "250004", "[전체]");
 
             }
             catch (Exception ex)
@@ -550,104 +548,6 @@ namespace GTI.WFMS.Modules.Acmf.ViewModel
 
 
 
-        /// <summary>
-        /// SQL DataRow -> 모델클래스 생성기
-        /// </summary>
-        /// <param name="obj"></param>
-        private void btnMethod(object obj)
-        {
-
-
-            string name_space = "GTI.WFMS.Modules.Acmf.Model";
-            string class_name = "ValvFacDtl";
-
-            Hashtable param = new Hashtable();
-            param.Add("sqlId", "SelectHydtMetrList");
-            param.Add("FTR_CDE", "SA122");
-            param.Add("FTR_IDN", "1");
-            DataTable dt = BizUtil.SelectList(param);
-            DataRow dr = dt.Rows[0];
-
-            String sb = "";
-            sb += "namespace " + name_space + "\r\n";
-            sb += "{ " + "\r\n";
-            sb += " public class " + class_name + ": CmmDtl, INotifyPropertyChanged" + "\r\n";
-            sb += " { " + "\r\n";
-            sb += "     /// <summary>" + "\r\n";
-            sb += "     /// 인터페이스 구현부분" + "\r\n";
-            sb += "     /// </summary>" + "\r\n";
-            sb += "     public event PropertyChangedEventHandler PropertyChanged;" + "\r\n";
-            sb += "     protected void OnPropertyChanged(string propertyName)" + "\r\n";
-            sb += "         { " + "\r\n";
-            sb += "             if (PropertyChanged != null)" + "\r\n";
-            sb += "             { " + "\r\n";
-            sb += "                 PropertyChanged(this, new PropertyChangedEventArgs(propertyName));" + "\r\n";
-            sb += "             } " + "\r\n";
-            sb += "         } " + "\r\n";
-
-            sb += "\r\n";
-            sb += "\r\n";
-            sb += "\r\n";
-
-            sb += "     /// <summary>" + "\r\n";
-            sb += "     /// 프로퍼티 부분" + "\r\n";
-            sb += "     /// </summary>" + "\r\n";
-            foreach (DataColumn col in dt.Columns)
-            {
-                string value = dr[col].ToString();
-
-                //type 결정
-                string type_name = "string";
-                if (col.ColumnName.Contains("_AMT") || col.ColumnName.Contains("_DIP") || col.ColumnName.Contains("_DIR") )
-                {
-                    type_name = "decimal";
-                }
-                else
-                {
-                    switch (dr[col].GetType().Name.ToLower())
-                    {
-                        case "string":
-                            type_name = "string";
-                            break;
-                        case "int":
-                            type_name = "int";
-                            break;
-                        case "decimal":
-                            type_name = "decimal";
-                            break;
-                        case "double":
-                            type_name = "double";
-                            break;
-                        default:
-                            break;
-                    }
-                }
-
-
-                sb += "     private " + type_name + " __" + col + ";" + "\r\n";
-                sb += "     public " + type_name + " " + col + "\r\n";
-                sb += "     { " + "\r\n";
-                sb += "         get { return __" + col + "; }" + "\r\n";
-                sb += "         set " + "\r\n";
-                sb += "         { " + "\r\n";
-                sb += "         this.__" + col + " = value;" + "\r\n";
-                sb += "         OnPropertyChanged(\"" + col + "\"); " + "\r\n";
-                sb += "         } " + "\r\n";
-                sb += "     } " + "\r\n";
-            }
-
-            sb += " } " + "\r\n";
-            sb += "} " + "\r\n";
-
-
-            Console.WriteLine("=========class string===========");
-            Console.Write(sb);
-            Console.WriteLine("=========class string===========");
-
-
-            MessageBox.Show("모델생성 -> Console 확인");
-
-        }
         #endregion
 
     }

@@ -40,9 +40,9 @@ namespace GTI.WFMS.Modules.Acmf.ViewModel
       
         //ComboBoxEdit cbFTR_CDE; DataTable dtFTR_CDE = new DataTable();	//지형지물
         ComboBoxEdit cbHJD_CDE; DataTable dtHJD_CDE = new DataTable();	    //행정동
-        ComboBoxEdit cbHOM_CDE; DataTable dtHOM_CDE = new DataTable();      //수용가행정동
+        ComboBoxEdit cbHOM_HJD; DataTable dtHOM_HJD = new DataTable();      //수용가행정동
         ComboBoxEdit cbSBI_CDE; DataTable dtSBI_CDE = new DataTable();      //업종
-        ComboBoxEdit cbMOF_CDE; DataTable dtMOF_CDE = new DataTable();      //형식
+        ComboBoxEdit cbMET_MOF; DataTable dtMET_MOF = new DataTable();      //형식
 
         Button btnBack;
         Button btnDelete;
@@ -81,9 +81,9 @@ namespace GTI.WFMS.Modules.Acmf.ViewModel
                 hydtMetrDtlView = values[0] as HydtMetrDtlView;
                 //cbFTR_CDE = hydtMetrDtlView.cbFTR_CDE;     //지형지물
                 cbHJD_CDE = hydtMetrDtlView.cbHJD_CDE;      //행정동
-                cbHOM_CDE = hydtMetrDtlView.cbHOM_CDE;       //수용가행정동
+                cbHOM_HJD = hydtMetrDtlView.cbHOM_HJD;       //수용가행정동
                 cbSBI_CDE = hydtMetrDtlView.cbSBI_CDE;       //업종
-                cbMOF_CDE = hydtMetrDtlView.cbMOF_CDE;       //형식
+                cbMET_MOF = hydtMetrDtlView.cbMET_MOF;       //형식
 
                 btnBack = hydtMetrDtlView.btnBack;
                 btnDelete = hydtMetrDtlView.btnDelete;
@@ -296,14 +296,14 @@ namespace GTI.WFMS.Modules.Acmf.ViewModel
                 // cbHJD_CDE 행정동
                 BizUtil.SetCombo(cbHJD_CDE, "Select_ADAR_LIST", "HJD_CDE", "HJD_NAM", "[선택하세요]");
 
-                // cbHOM_CDE 수용가행정동
-                BizUtil.SetCombo(cbHOM_CDE, "Select_ADAR_LIST", "HJD_CDE", "HJD_NAM", "[선택하세요]");
+                // cbHOM_HJD 수용가행정동
+                BizUtil.SetCombo(cbHOM_HJD, "Select_ADAR_LIST", "HJD_CDE", "HJD_NAM", "[선택하세요]");
 
                 // cbSBI_CDE 업종
                 BizUtil.SetCmbCode(cbSBI_CDE, "250020", "[선택하세요]");
 
-                // cbMOF_CDE 형식
-                BizUtil.SetCmbCode(cbMOF_CDE, "250004", "[선택하세요]");
+                // cbMET_MOF 형식
+                BizUtil.SetCmbCode(cbMET_MOF, "250004", "[선택하세요]");
             }
             catch (Exception ex)
             {

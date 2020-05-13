@@ -320,7 +320,15 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
+    <Page Include="Link\View\MetrChgDtlView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
     <Page Include="Link\View\AttFacDtlView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Link\View\MetrChgListView.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
@@ -830,9 +838,16 @@
     <Compile Include="Fclt\view\WtrSourListView.xaml.cs">
       <DependentUpon>WtrSourListView.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Link\ViewModel\MetrChgDtlViewModel.cs" />
     <Compile Include="Link\ViewModel\AttFacDtlViewModel.cs" />
+    <Compile Include="Link\View\MetrChgDtlView.xaml.cs">
+      <DependentUpon>MetrChgDtlView.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Link\View\AttFacDtlView.xaml.cs">
       <DependentUpon>AttFacDtlView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Link\View\MetrChgListView.xaml.cs">
+      <DependentUpon>MetrChgListView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Link\View\HydtMetrSubListView.xaml.cs">
       <DependentUpon>HydtMetrSubListView.xaml</DependentUpon>

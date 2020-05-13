@@ -127,24 +127,14 @@ namespace GTI.WFMS.Models.Acmf.Model
                 OnPropertyChanged("HOM_NAM");
             }
         }
-        private string __HOM_CDE;
-        public string HOM_CDE
+        private string __HOM_HJD_NAM;
+        public string HOM_HJD_NAM
         {
-            get { return __HOM_CDE; }
+            get { return __HOM_HJD_NAM; }
             set
             {
-                this.__HOM_CDE = value;
-                OnPropertyChanged("HOM_CDE");
-            }
-        }
-        private string __HOM_CDE_NAM;
-        public string HOM_CDE_NAM
-        {
-            get { return __HOM_CDE_NAM; }
-            set
-            {
-                this.__HOM_CDE_NAM = value;
-                OnPropertyChanged("HOM_CDE_NAM");
+                this.__HOM_HJD_NAM = value;
+                OnPropertyChanged("HOM_HJD_NAM");
             }
         }
         private string __HOM_ADR;
@@ -195,16 +185,6 @@ namespace GTI.WFMS.Models.Acmf.Model
             {
                 this.__MET_DIP = value;
                 OnPropertyChanged("MET_DIP");
-            }
-        }
-        private string __MOF_CDE;
-        public string MOF_CDE
-        {
-            get { return __MOF_CDE; }
-            set
-            {
-                this.__MOF_CDE = value;
-                OnPropertyChanged("MOF_CDE");
             }
         }
         private string __MOF_NAM;

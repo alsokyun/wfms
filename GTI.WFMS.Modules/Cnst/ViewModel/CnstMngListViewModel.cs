@@ -148,7 +148,6 @@ namespace GTI.WFMS.Modules.Cnst.ViewModel
             ResetCommand = new DelegateCommand<object>(ResetAction);
 
             ExcelCmd = new DelegateCommand<object>(ExcelDownAction);
-            btnCmd = new DelegateCommand<object>(btnMethod);
 
 
             // 조회데이터 초기화
@@ -526,104 +525,7 @@ namespace GTI.WFMS.Modules.Cnst.ViewModel
 
 
 
-        /// <summary>
-        /// SQL DataRow -> 모델클래스 생성기
-        /// </summary>
-        /// <param name="obj"></param>
-        private void btnMethod(object obj)
-        {
-
-
-            string name_space = "GTI.WFMS.Modules.Cnst.Model";
-            string class_name = "WttSubcDt";
-            
-            Hashtable param = new Hashtable();
-            param.Add("sqlId", "SelectWttSubcDtList");
-            param.Add("CNT_NUM", "SA20171002");
-            DataTable dt = BizUtil.SelectList(param);
-            DataRow dr = dt.Rows[0];
-
-            String sb = "";
-            sb += "namespace " + name_space + "\r\n";
-            sb += "{ " + "\r\n";
-            sb += " public class " + class_name + ": CmmDtl, INotifyPropertyChanged" + "\r\n";
-            sb += " { " + "\r\n";
-            sb += "     /// <summary>" + "\r\n";
-            sb += "     /// 인터페이스 구현부분" + "\r\n";
-            sb += "     /// </summary>" + "\r\n";
-            sb += "     public event PropertyChangedEventHandler PropertyChanged;" + "\r\n";
-            sb += "     protected void OnPropertyChanged(string propertyName)" + "\r\n";
-            sb += "         { " + "\r\n";
-            sb += "             if (PropertyChanged != null)" + "\r\n";
-            sb += "             { " + "\r\n";
-            sb += "                 PropertyChanged(this, new PropertyChangedEventArgs(propertyName));" + "\r\n";           
-            sb += "             } " + "\r\n";
-            sb += "         } " + "\r\n";
-
-            sb += "\r\n";
-            sb += "\r\n";
-            sb += "\r\n";
-
-            sb += "     /// <summary>" + "\r\n";
-            sb += "     /// 프로퍼티 부분" + "\r\n";
-            sb += "     /// </summary>" + "\r\n";
-            foreach (DataColumn col in dt.Columns)
-            {
-                string value = dr[col].ToString();
-
-                //type 결정
-                string type_name = "string";
-
-                if (col.ColumnName.Contains("_AMT"))
-                {
-                    type_name = "decimal";
-                }
-                else
-                {
-                    switch (dr[col].GetType().Name.ToLower())
-                    {
-                        case "string":
-                            type_name = "string";
-                            break;
-                        case "int":
-                            type_name = "int";
-                            break;
-                        case "decimal":
-                            type_name = "decimal";
-                            break;
-                        case "double":
-                            type_name = "double";
-                            break;
-                        default:
-                            break;
-                    }
-                }
-
-
-                sb += "     private " + type_name + " __" + col + ";" + "\r\n";
-                sb += "     public " + type_name + " " + col + "\r\n";
-                sb += "     { " + "\r\n";
-                sb += "         get { return __" + col + "; }" + "\r\n";
-                sb += "         set " + "\r\n";
-                sb += "         { " + "\r\n";
-                sb += "         this.__" + col + " = value;" + "\r\n";
-                sb += "         OnPropertyChanged(\"" + col + "\"); " + "\r\n";
-                sb += "         } " + "\r\n";
-                sb += "     } " + "\r\n";
-            }
-
-            sb += " } " + "\r\n";
-            sb += "} " + "\r\n";
-
-
-            Console.WriteLine("=========class string===========");
-            Console.Write(sb);
-            Console.WriteLine("=========class string===========");
-
-
-            MessageBox.Show("모델생성 -> Console 확인");
-
-        }
+       
         #endregion
 
     }

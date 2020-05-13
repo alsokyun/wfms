@@ -130,7 +130,7 @@
 
                 <Label Grid.Row="8" Grid.Column="0" Content="수용가행정동" Style="{DynamicResource ResourceKey=GridLabel}"/>
                 <dxe:ComboBoxEdit Grid.Row="8" Grid.Column="1" Style="{DynamicResource ResourceKey=GridComboBox}" 
-                              x:Name="cbHOM_CDE" EditValue="{Binding FctDtl.HOM_CDE}" />
+                              x:Name="cbHOM_HJD" EditValue="{Binding FctDtl.HOM_HJD}" />
 
                 <Label Grid.Row="9" Grid.Column="0" Content="수용가주소" Style="{DynamicResource ResourceKey=GridLabel}"/>
                 <dxe:TextEdit Grid.Row="9" Grid.Column="1" Style="{DynamicResource ResourceKey=GridTextEdit}"   
@@ -154,7 +154,7 @@
 
                 <Label Grid.Row="14" Grid.Column="0" Content="형식" Style="{DynamicResource ResourceKey=GridLabel}"/>
                 <dxe:ComboBoxEdit Grid.Row="14" Grid.Column="1" Style="{DynamicResource ResourceKey=GridComboBox}" 
-                              x:Name="cbMOF_CDE" EditValue="{Binding FctDtl.MOF_CDE}" />
+                              x:Name="cbMET_MOF" EditValue="{Binding FctDtl.MET_MOF}" />
 
                 <Label Grid.Row="15" Grid.Column="0" Content="계량기제작회사" Style="{DynamicResource ResourceKey=GridLabel}"/>
                 <dxe:TextEdit Grid.Row="15" Grid.Column="1" Style="{DynamicResource ResourceKey=GridNumberEdit}"   

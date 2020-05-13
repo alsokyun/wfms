@@ -225,44 +225,44 @@
     <select id="selectLinkWttMetaHtList" resultClass="GTI.WFMS.Models.Cmm.Model.LinkWttMetaHt">
       SELECT ROWNUM AS RNO, M.*
       FROM ( SELECT A.CHG_NUM
-                  , A.FTR_CDE
-                  , A.FTR_IDN
-                  , case when length(A.CHG_YMD) = 8 then substr(A.CHG_YMD,1,4) || '-' || substr(A.CHG_YMD,5,2) || '-' || substr(A.CHG_YMD,7,2) else '' end  as CHG_YMD
-                  , A.GCW_CDE
-                  , (SELECT NM FROM INFOUSER.CD_DTL_INFO WHERE MST_CD = '250041' AND DTL_CD = GCW_CDE) AS GCW_NAM
-                  , A.CRS_CDE
-                  , A.OME_NUM
-                  , A.OME_DIP
-                  , A.OME_CNT
-                  , A.OME_NAM
-                  , A.CHG_NAM
-                  , A.HJD_CDE
-                  , A.BJD_CDE
-                  , A.HOM_NAM
-                  , A.HOM_ADR
-                  , A.OME_TYP
-                  , A.OME_COL
-                  , A.OME_SEL
-                  , A.OME_VAL
-                  , A.IME_NAM
-                  , A.IME_DIP
-                  , A.IME_MOF
-                  , A.IME_TYP
-                  , A.IME_COL
-                  , A.IME_SEL
-                  , A.IME_VAL
-                  , A.IME_CNT
-                  , A.IME_NUM
-                  , A.ATT_USR
-                  , A.ATT_TIM
-                  , A.OME_MOF
-                  , (SELECT NM FROM INFOUSER.CD_DTL_INFO WHERE MST_CD = '250004' AND DTL_CD = GCW_CDE) AS OME_MOF_NAM
-                  , A.META_SEQ
-              FROM INFOFMS.WTT_META_HT A
-             WHERE 1=1
-               AND A.FTR_CDE=#ftrCde#
-               AND A.FTR_IDN=#ftrIdn#
-             ORDER BY A.CHG_NUM DESC
+      , A.FTR_CDE
+      , A.FTR_IDN
+      , case when length(A.CHG_YMD) = 8 then substr(A.CHG_YMD,1,4) || '-' || substr(A.CHG_YMD,5,2) || '-' || substr(A.CHG_YMD,7,2) else '' end  as CHG_YMD
+      , A.GCW_CDE
+      , (SELECT NM FROM INFOUSER.CD_DTL_INFO WHERE MST_CD = '250041' AND DTL_CD = GCW_CDE) AS GCW_NAM
+      , A.CRS_CDE
+      , A.OME_NUM
+      , A.OME_DIP
+      , A.OME_CNT
+      , A.OME_NAM
+      , A.CHG_NAM
+      , A.HJD_CDE
+      , A.BJD_CDE
+      , A.HOM_NAM
+      , A.HOM_ADR
+      , A.OME_TYP
+      , A.OME_COL
+      , A.OME_SEL
+      , A.OME_VAL
+      , A.IME_NAM
+      , A.IME_DIP
+      , A.IME_MOF
+      , A.IME_TYP
+      , A.IME_COL
+      , A.IME_SEL
+      , A.IME_VAL
+      , A.IME_CNT
+      , A.IME_NUM
+      , A.ATT_USR
+      , A.ATT_TIM
+      , A.OME_MOF
+      , (SELECT NM FROM INFOUSER.CD_DTL_INFO WHERE MST_CD = '250004' AND DTL_CD = OME_MOF) AS OME_MOF_NAM
+      , A.META_SEQ
+      FROM INFOFMS.WTT_META_HT A
+      WHERE 1=1
+      AND A.FTR_CDE=#ftrCde#
+      AND A.FTR_IDN=#ftrIdn#
+      ORDER BY A.CHG_NUM DESC
       ) M
     </select>
 

@@ -77,6 +77,7 @@ namespace GTI.WFMS.Modules.Acmf.View
             tabSubMenu.Items.Add(tab03);
 
             DXTabItem tab04 = new DXTabItem();
+            tab04.Content = new MetrChgListView(FTR_CDE,FTR_IDN);
             tab04.Header = "계량기교체이력";
             tabSubMenu.Items.Add(tab04);
 

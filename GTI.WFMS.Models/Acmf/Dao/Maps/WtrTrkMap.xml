@@ -42,7 +42,7 @@
       
         <!-- 조건7. 허가일자[이하] -->
         <isNotEmpty prepend="AND" property="PMS_YMD">
-          A.PMS_YMD <![CDATA[<=]]> #PMS_YMD#
+          A.PMS_YMD <![CDATA[=]]> #PMS_YMD#
         </isNotEmpty>
 
         <!-- 조건8. 저수조명 -->
@@ -128,7 +128,7 @@
 
           <!-- 조건7. 허가일자[이하] -->
           <isNotEmpty prepend="AND" property="PMS_YMD">
-            A.PMS_YMD <![CDATA[<=]]> #PMS_YMD#
+            A.PMS_YMD <![CDATA[=]]> #PMS_YMD#
           </isNotEmpty>
 
           <!-- 조건8. 저수조명 -->
