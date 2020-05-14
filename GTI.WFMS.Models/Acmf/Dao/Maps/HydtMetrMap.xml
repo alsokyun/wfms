@@ -398,7 +398,7 @@
 
     </select>
 
-    <!-- 계량기 교체이력 목록 -->
+    <!-- 계량기 교체이력 채번 -->
     <select id="selectMETA_SEQ" parameterClass="Hashtable" resultClass="GTI.WFMS.Models.Acmf.Model.WttMetaHt">
       SELECT
       nvl(max(META_SEQ),0)+1 as META_SEQ

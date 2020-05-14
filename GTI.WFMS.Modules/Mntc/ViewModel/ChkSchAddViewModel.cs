@@ -110,6 +110,12 @@ namespace GTI.WFMS.Modules.Mntc.ViewModel
                 // 필수체크 (Tag에 필수체크 표시한 EditBox, ComboBox 대상으로 수행)
                 if (!BizUtil.ValidReq(chkSchAddView)) return;
 
+                //날짜체크
+                if(!BizUtil.ValidDateBtw(Dtl.STA_YMD, Dtl.END_YMD))
+                {
+                    Messages.ShowInfoMsgBox("From/To 일자를 확인하세요");
+                    return;
+                }
 
                 if (Messages.ShowYesNoMsgBox("저장하시겠습니까?") != MessageBoxResult.Yes) return;
 

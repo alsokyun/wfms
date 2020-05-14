@@ -356,6 +356,55 @@
       WHERE 1=1
     </select>
 
+  
+  	<!-- 저수조 청소이력	 -->
+	  <select id="selectWttRsrvHt"  resultClass="GTI.WFMS.Models.Acmf.Model.WttRsrvHtDtl">
+		SELECT
+				FTR_CDE
+				, FTR_IDN
+				, SEQ
+				, CLN_NUM
+				, CLN_YMD
+				, CLN_EXP
+				, CLN_NAM
+		FROM INFOFMS.WTT_RSRV_HT
+		WHERE 1=1
+			AND FTR_CDE=#FTR_CDE# 
+			AND FTR_IDN=#FTR_IDN#
+      <isNotEmpty property="SEQ">
+        AND SEQ = #SEQ#
+      </isNotEmpty>
+				ORDER BY CLN_NUM DESC
+	</select>	
+    
+    <!-- 청소이력 채번 -->
+    <select id="selectCLN_SEQ" parameterClass="Hashtable" resultClass="GTI.WFMS.Models.Acmf.Model.WttRsrvHtDtl">
+      SELECT
+      nvl(max(SEQ),0)+1 as SEQ
+      FROM INFOFMS.WTT_RSRV_HT
+    </select>
+
+    <!--저수조 청소이력추가-->
+    <update id="insertWttRsrvHt" parameterClass="GTI.WFMS.Models.Acmf.Model.WttRsrvHtDtl">
+      INSERT INTO INFOFMS.WTT_RSRV_HT
+        (FTR_CDE
+				, FTR_IDN
+				, SEQ
+				, CLN_NUM
+				, CLN_YMD
+				, CLN_EXP
+				, CLN_NAM)
+      VALUES
+        ( #FTR_CDE#
+		    , #FTR_IDN#
+		    , #SEQ#    
+		    , #CLN_NUM#
+		    , #CLN_YMD#
+		    , #CLN_EXP#
+		    , #CLN_NAM#)
+    </update>
+  
+
   </statements>
   
 </sqlMap>

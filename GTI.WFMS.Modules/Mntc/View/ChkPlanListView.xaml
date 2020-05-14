@@ -27,8 +27,8 @@
         <Grid Grid.Column="0" Margin="0 0 0 10">
             <Grid.RowDefinitions>
                 <RowDefinition Height="40" />
-                <RowDefinition Height="280" />
                 <RowDefinition Height="*" />
+                <RowDefinition Height="40" />
             </Grid.RowDefinitions>
 
 
@@ -93,12 +93,10 @@
 
 
 
-            <Grid Grid.Row="2">
-                <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Bottom">
-                    <Button Style="{DynamicResource ResourceKey=InitButton}" Click="Button_Click_1"/>
-                    <Button Style="{DynamicResource ResourceKey=SearchButton}" Click="Button_Click"/>
-                </StackPanel>
-            </Grid>
+            <StackPanel Grid.Row="2" Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Top" >
+                <Button Style="{DynamicResource ResourceKey=InitButton}" Margin="10 0 0 0" Click="Button_Click_1"/>
+                <Button Style="{DynamicResource ResourceKey=SearchButton}" Margin="5 0 10 0" Click="Button_Click"/>
+            </StackPanel>
 
         </Grid>
 
@@ -118,7 +116,7 @@
 
 
             <StackPanel Grid.Row="0" Orientation="Horizontal" HorizontalAlignment="Right" Margin="0 0 10 0">
-                <Button x:Name="btnAdd" Style="{DynamicResource ResourceKey=GrdAddButton}" Click="BtnAdd_Click"  />
+                <Button x:Name="btnAdd" Style="{DynamicResource ResourceKey=AddButton}" Click="BtnAdd_Click"  />
                 <!--<Button x:Name="btnDel" Style="{DynamicResource ResourceKey=GrdDelButton}" Click="BtnDel_Click"  />-->
             </StackPanel>
 
@@ -145,7 +143,7 @@
                         </DataTemplate>
                     </dxg:GridColumn.CellTemplate>
                 </dxg:GridColumn>-->
-                <dxg:GridColumn Header="구분" Width="3*" FieldName="SCL_NM" HorizontalHeaderContentAlignment="Center"  AllowEditing="True">
+                <dxg:GridColumn Header="점검구분" Width="3*" FieldName="SCL_NM" HorizontalHeaderContentAlignment="Center"  AllowEditing="True">
                     <dxg:GridColumn.EditSettings>
                         <dxe:TextEditSettings HorizontalContentAlignment="Center" />
                     </dxg:GridColumn.EditSettings>
@@ -165,7 +163,7 @@
                         <dxe:TextEditSettings HorizontalContentAlignment="Center" DisplayTextConverter="{StaticResource ResourceKey=date3StrConverter}" />
                     </dxg:GridColumn.EditSettings>
                 </dxg:GridColumn>
-                <dxg:GridColumn Header="점검그룹(자)" Width="5*" FieldName="CKM_PEO" HorizontalHeaderContentAlignment="Center" AllowEditing="True">
+                <dxg:GridColumn Header="점검그룹(자)" Width="5*" FieldName="CKM_GRP_NM" HorizontalHeaderContentAlignment="Center" AllowEditing="True">
                     <dxg:GridColumn.EditSettings>
                         <dxe:TextEditSettings HorizontalContentAlignment="Left" />
                     </dxg:GridColumn.EditSettings>

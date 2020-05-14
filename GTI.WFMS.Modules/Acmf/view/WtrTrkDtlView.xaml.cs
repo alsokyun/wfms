@@ -75,6 +75,7 @@ namespace GTI.WFMS.Modules.Acmf.View
 
             DXTabItem tab04 = new DXTabItem();
             tab04.Header = "청소이력";
+            tab04.Content = new WtrTrkHtListView(FTR_CDE, FTR_IDN);
             tabSubMenu.Items.Add(tab04);
 
         }

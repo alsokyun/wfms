@@ -111,8 +111,6 @@ namespace GTI.WFMS.Modules.Mntc.ViewModel
         TextEdit txtPDT_NAM;
         TextEdit txtPDT_MDL_STD;
         ComboBoxEdit cbPDT_CAT_CDE; DataTable dtPDT_CAT_CDE = new DataTable();
-        DateEdit dtSTA_YMD;
-        DateEdit dtEND_YMD;
 
         GridControl grid;
 
@@ -186,10 +184,6 @@ namespace GTI.WFMS.Modules.Mntc.ViewModel
             txtPDT_NAM = pdjtUseListView.txtPDT_NAM;
             txtPDT_MDL_STD = pdjtUseListView.txtPDT_MDL_STD;
             cbPDT_CAT_CDE = pdjtUseListView.cbPDT_CAT_CDE;
-            dtSTA_YMD = pdjtUseListView.dtSTA_YMD;
-            dtEND_YMD = pdjtUseListView.dtEND_YMD;
-            dtSTA_YMD.DisplayFormatString = "yyyy-MM-dd";
-            dtEND_YMD.DisplayFormatString = "yyyy-MM-dd";
 
             grid = pdjtUseListView.grid;
 
@@ -221,20 +215,7 @@ namespace GTI.WFMS.Modules.Mntc.ViewModel
                 conditions.Add("PDT_NAM", txtPDT_NAM.Text.Trim());
                 conditions.Add("PDT_MDL_STD", txtPDT_MDL_STD.Text.Trim());
                 conditions.Add("PDT_CAT_CDE", cbPDT_CAT_CDE.EditValue);
-                try
-                {
-                    conditions.Add("STA_YMD", dtSTA_YMD.EditValue == null ? null : Convert.ToDateTime(dtSTA_YMD.EditValue).ToString("yyyyMMdd"));
-                    conditions.Add("END_YMD", dtEND_YMD.EditValue == null ? null : Convert.ToDateTime(dtEND_YMD.EditValue).ToString("yyyyMMdd"));
-                }
-                catch (Exception) { }
-                if (!BizUtil.ValidDateBtw(conditions["STA_YMD"], conditions["END_YMD"]))
-                {
-                    Messages.ShowInfoMsgBox("From/To 일자를 확인하세요");
-                    return;
-                }
 
-                conditions.Add("firstIndex", 0);
-                conditions.Add("lastIndex", 1000);
 
                 conditions.Add("sqlId", "SelectPdjtMaUseHtList");
 
@@ -290,8 +271,6 @@ namespace GTI.WFMS.Modules.Mntc.ViewModel
             txtPDT_NAM.Text = "";
             txtPDT_MDL_STD.Text = "";
             cbPDT_CAT_CDE.SelectedIndex = 0;
-            dtSTA_YMD.EditValue = null;
-            dtEND_YMD.EditValue = null;
         }
 
         /// <summary>
@@ -308,17 +287,6 @@ namespace GTI.WFMS.Modules.Mntc.ViewModel
                 conditions.Add("PDT_NAM", txtPDT_NAM.Text.Trim());
                 conditions.Add("PDT_MDL_STD", txtPDT_MDL_STD.Text.Trim());
                 conditions.Add("PDT_CAT_CDE", cbPDT_CAT_CDE.EditValue);
-                try
-                {
-                    conditions.Add("STA_YMD", dtSTA_YMD.EditValue == null ? null : Convert.ToDateTime(dtSTA_YMD.EditValue).ToString("yyyyMMdd"));
-                    conditions.Add("END_YMD", dtEND_YMD.EditValue == null ? null : Convert.ToDateTime(dtEND_YMD.EditValue).ToString("yyyyMMdd"));
-                }
-                catch (Exception) { }
-                if (!BizUtil.ValidDateBtw(conditions["STA_YMD"], conditions["END_YMD"]))
-                {
-                    Messages.ShowInfoMsgBox("From/To 일자를 확인하세요");
-                    return;
-                }
 
                 conditions.Add("page", 0);
                 conditions.Add("rows", 1000000);
@@ -350,7 +318,7 @@ namespace GTI.WFMS.Modules.Mntc.ViewModel
                 saveFileDialog.Title = "저장경로를 지정하세요.";
 
                 //초기 파일명 지정
-                saveFileDialog.FileName = DateTime.Now.ToString("yyyyMMdd") + "_" + "예비품/소모품사용현황.xlsx";
+                saveFileDialog.FileName = DateTime.Now.ToString("yyyyMMdd") + "_" + "예비품,소모품 사용현황.xlsx";
 
                 saveFileDialog.OverwritePrompt = true;
                 saveFileDialog.Filter = "Excel|*.xlsx";
@@ -390,7 +358,7 @@ namespace GTI.WFMS.Modules.Mntc.ViewModel
 
                 //엑셀 유틸 호출
                 //ExcelUtil.ExcelTabulation(strFileName, strExcelFormPath, startPointXY, strSearchCondition, dtExceltTableData);
-                ExcelUtil.ExcelGrid(strExcelFormPath, strFileName, "예비품/소모품사용현황", dtExceltTableData, tablePointXY, grid, true);
+                ExcelUtil.ExcelGrid(strExcelFormPath, strFileName, "예비품,소모품 사용현황", dtExceltTableData, tablePointXY, grid, true);
 
                 pdjtUseListView.Dispatcher.Invoke(DispatcherPriority.ApplicationIdle,
                    new Action((delegate ()

@@ -6,7 +6,9 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         mc:Ignorable="d"
         d:DesignHeight="585" d:DesignWidth="1100"
+        xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
         
+        xmlns:vm="clr-namespace:GTI.WFMS.Modules.Mntc.ViewModel"
         xmlns:cv="clr-namespace:GTI.WFMS.Models.Common;assembly=GTI.WFMS.Models"
         x:Name="pdjtMngListView"
         >
@@ -16,6 +18,10 @@
         <cv:ToggleConverter x:Key="toggleConverter" />
         <cv:RownumConverter x:Key="rownumConverter" />
     </UserControl.Resources>
+
+    <UserControl.DataContext>
+        <vm:PdjtMngListViewModel/>
+    </UserControl.DataContext>
 
     <Grid  Background="{DynamicResource TileCOLOR4Brush}" >
         <Grid.ColumnDefinitions >
@@ -87,8 +93,20 @@
 
             <Grid Grid.Row="2">
                 <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Bottom">
-                    <Button Style="{DynamicResource ResourceKey=InitButton}" Click="Button_Click_1"/>
-                    <Button Style="{DynamicResource ResourceKey=SearchButton}" Click="Button_Click"/>
+                    <Button Style="{DynamicResource ResourceKey=InitButton}" Margin="10 0 0 0" >
+                        <i:Interaction.Triggers>
+                            <i:EventTrigger EventName="Click">
+                                <i:InvokeCommandAction Command="{Binding ResetCommand}"/>
+                            </i:EventTrigger>
+                        </i:Interaction.Triggers>
+                    </Button>
+                    <Button Style="{DynamicResource ResourceKey=SearchButton}" Margin="5 0 10 0" >
+                        <i:Interaction.Triggers>
+                            <i:EventTrigger EventName="Click">
+                                <i:InvokeCommandAction Command="{Binding SearchCommand}"/>
+                            </i:EventTrigger>
+                        </i:Interaction.Triggers>
+                    </Button>
                 </StackPanel>
             </Grid>
 
@@ -110,13 +128,37 @@
 
 
             <StackPanel Grid.Row="0" Orientation="Horizontal" HorizontalAlignment="Right" Margin="0 0 5 0">
-                <Button x:Name="btnIn" Content="입고등록" Click="BtnIn_Click" Style="{DynamicResource InStrButton}" />
-                <Button x:Name="btnAdd" Style="{DynamicResource ResourceKey=GrdAddButton}" Click="BtnAdd_Click"  />
-                <Button x:Name="btnDel" Style="{DynamicResource ResourceKey=GrdDelButton}" Click="BtnDel_Click"  />
-                <Button x:Name="btnReg" Style="{DynamicResource ResourceKey=GrdRegButton}" Click="BtnReg_Click"  />
+                <Button x:Name="btnIn" Content="입고등록" Style="{DynamicResource InStrButton}" >
+                    <i:Interaction.Triggers>
+                        <i:EventTrigger EventName="Click">
+                            <i:InvokeCommandAction Command="{Binding EnterCommand}"/>
+                        </i:EventTrigger>
+                    </i:Interaction.Triggers>
+                </Button>
+                <Button x:Name="btnAdd" Style="{DynamicResource ResourceKey=AddButton}" >
+                    <i:Interaction.Triggers>
+                        <i:EventTrigger EventName="Click">
+                            <i:InvokeCommandAction Command="{Binding AddCommand}"/>
+                        </i:EventTrigger>
+                    </i:Interaction.Triggers>
+                </Button>
+                <Button x:Name="btnDel" Style="{DynamicResource ResourceKey=DelButton}" >
+                    <i:Interaction.Triggers>
+                        <i:EventTrigger EventName="Click">
+                            <i:InvokeCommandAction Command="{Binding DelCommand}"/>
+                        </i:EventTrigger>
+                    </i:Interaction.Triggers>
+                </Button>
+                <Button x:Name="btnReg" Style="{DynamicResource ResourceKey=SaveButton}" >
+                    <i:Interaction.Triggers>
+                        <i:EventTrigger EventName="Click">
+                            <i:InvokeCommandAction Command="{Binding SaveCommand }"/>
+                        </i:EventTrigger>
+                    </i:Interaction.Triggers>
+                </Button>
             </StackPanel>
 
-            <dxg:GridControl Grid.Row="1" x:Name="grid" VerticalAlignment="Stretch" HorizontalAlignment="Stretch"  >
+            <dxg:GridControl Grid.Row="1" x:Name="grid" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" ItemsSource="{Binding GrdLst}" >
 
                 <dxg:GridControl.View>
                     <dxg:TableView x:Name="gv"
@@ -131,15 +173,6 @@
                     />
                 </dxg:GridControl.View>
 
-                <!--
-                    <dxg:GridColumn Header="" Width="1*" HorizontalHeaderContentAlignment="Center"  AllowEditing="True">
-                        <dxg:GridColumn.CellTemplate>
-                            <DataTemplate>
-                                <TextBlock Text="{Binding RowData.RowHandle.Value, Converter={StaticResource rownumConverter}}" VerticalAlignment="Center" HorizontalAlignment="Center" />
-                            </DataTemplate>
-                        </dxg:GridColumn.CellTemplate>
-                    </dxg:GridColumn>
-                    -->
                 <dxg:GridColumn Header="" Width="1*" HorizontalHeaderContentAlignment="Center"  AllowEditing="True">
                     <dxg:GridColumn.HeaderTemplate>
                         <DataTemplate>
@@ -200,13 +233,6 @@
                         </DataTemplate>
                     </dxg:GridColumn.CellTemplate>
                 </dxg:GridColumn>
-                <dxg:GridColumn Header="사용여부" Width="2*" FieldName="USE_YN" HorizontalHeaderContentAlignment="Center"  AllowEditing="True">
-                    <dxg:GridColumn.CellTemplate>
-                        <DataTemplate>
-                            <dxe:CheckEdit EditValue="{Binding RowData.Row.USE_YN, Mode=TwoWay, Converter={StaticResource toggleConverter}}" HorizontalAlignment="Center" />
-                        </DataTemplate>
-                    </dxg:GridColumn.CellTemplate>
-                </dxg:GridColumn>
                 <!--히든컬럼-->
                 <dxg:GridColumn FieldName="PDH_NUM" Visible="False">
                     <dxg:GridColumn.EditSettings>
@@ -228,5 +254,11 @@
     </Grid>
 
 
+    <!--뷰와 연결된 뷰모델로 Loaded 이벤트전파-->
+    <i:Interaction.Triggers>
+        <i:EventTrigger EventName="Loaded">
+            <i:InvokeCommandAction Command="{Binding LoadedCommand}" CommandParameter="{Binding ElementName=pdjtMngListView}" />
+        </i:EventTrigger>
+    </i:Interaction.Triggers>
 
 </UserControl>

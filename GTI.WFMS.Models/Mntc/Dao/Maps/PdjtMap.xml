@@ -3,7 +3,7 @@
   <statements>
 
     <!--예비품/소모품 목록-->
-    <select id="SelectPdjtMaMngList" parameterClass="Hashtable" resultClass="Hashtable">
+    <select id="SelectPdjtMaMngList" parameterClass="Hashtable" resultClass="GTI.WFMS.Models.Mntc.Model.PdjtMaDtl">
       SELECT A.PDH_NUM
       , A.PDT_CAT_CDE
       , A.PDT_NAM
@@ -46,7 +46,7 @@
 
 
     <!--소모품저장-->
-    <update id="SavePdjtMa" parameterClass="Hashtable">
+    <update id="SavePdjtMa" parameterClass="GTI.WFMS.Models.Mntc.Model.PdjtMaDtl">
       MERGE INTO FMS_PDJT_MA USING DUAL
       ON (PDH_NUM = #PDH_NUM#)
       
@@ -98,7 +98,7 @@
       , #PDT_CAT_CDE#
       , #PDT_NAM#
       , #PDE_NAM#
-      , #PDT_MDLStd#
+      , #PDT_MDL_STD#
       , #PDT_MNF#
       , #PDT_MDL#
       , #PDT_UNT#
@@ -172,7 +172,7 @@
 
       SELECT C.ROWCNT, X.*  FROM (
 
-      SELECT ROW_NUMBER() OVER( ORDER BY PDH_NUM ) AS RN
+      SELECT ROW_NUMBER() OVER( ORDER BY PDT_CAT_CDE, PDE_NAM, PDH_NUM ) AS RN
       ,PDH_NUM
       ,PDT_NAM
       ,PDT_MDL_STD
@@ -341,7 +341,7 @@
       <isNotEmpty prepend="AND" property="TAG_ID">
         upper(B.TAG_ID) LIKE '%' || upper(#TAG_ID#) || '%'
       </isNotEmpty>
-							 ORDER BY M.ATTA_SEQ ,M.FTR_CDE ,M.FTR_IDN							   
+							 ORDER BY M.FTR_IDN, M.ATTA_SEQ ,M.FTR_CDE ,M.FTR_IDN							   
     </select>
 
 
@@ -424,11 +424,11 @@
 									M.FTR_IDN LIKE '%' || #FTR_IDN# || '%'
 								</isNotEmpty>
 								<isNotEmpty prepend="AND" property="PRS_NAM">
-									A.PRS_NAM LIKE '%' || #PRS_NAM# || '%'
+									upper(A.PRS_NAM) LIKE '%' || upper(#PRS_NAM#) || '%'
 								</isNotEmpty>										
 								<isNotEmpty prepend="AND" property="ATT_NAM">
-									M.ATT_NAM LIKE '%' || #ATT_NAM# || '%'
-								</isNotEmpty>
+									upper(M.ATT_NAM) LIKE '%' || upper(#ATT_NAM#) || '%'
+								</isNotEmpty>	
 
       GROUP BY M.ATTA_SEQ
       , M.FTR_CDE
@@ -447,7 +447,7 @@
 
       SELECT C.ROWCNT, X.*  FROM (
 
-      SELECT ROW_NUMBER() OVER( ORDER BY M.G2_ID DESC  , M.CHK_RESULT_YMD DESC ) AS RN
+      SELECT ROW_NUMBER() OVER( ORDER BY M.FTR_IDN, M.ATT_NAM, M.G2_ID DESC  , M.CHK_RESULT_YMD DESC ) AS RN
       , M.G2_ID
       , M.FTR_CDE
       , M.FTR_IDN
@@ -500,10 +500,10 @@
 									M.FTR_IDN LIKE '%' || #FTR_IDN# || '%'
 								</isNotEmpty>
 								<isNotEmpty prepend="AND" property="PRS_NAM">
-									A.PRS_NAM LIKE '%' || #PRS_NAM# || '%'
+									upper(A.PRS_NAM) LIKE '%' || upper(#PRS_NAM#) || '%'
 								</isNotEmpty>										
 								<isNotEmpty prepend="AND" property="ATT_NAM">
-									M.ATT_NAM LIKE '%' || #ATT_NAM# || '%'
+									upper(M.ATT_NAM) LIKE '%' || upper(#ATT_NAM#) || '%'
 								</isNotEmpty>	
 						
 							 GROUP BY M.ATTA_SEQ  

@@ -320,11 +320,19 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
+    <Page Include="Link\View\WtrTrkHtDtlView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
     <Page Include="Link\View\MetrChgDtlView.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
     <Page Include="Link\View\AttFacDtlView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Link\View\WtrTrkHtListView.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
@@ -838,13 +846,20 @@
     <Compile Include="Fclt\view\WtrSourListView.xaml.cs">
       <DependentUpon>WtrSourListView.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Link\ViewModel\WtrTrkHtDtlViewModel.cs" />
     <Compile Include="Link\ViewModel\MetrChgDtlViewModel.cs" />
     <Compile Include="Link\ViewModel\AttFacDtlViewModel.cs" />
+    <Compile Include="Link\View\WtrTrkHtDtlView.xaml.cs">
+      <DependentUpon>WtrTrkHtDtlView.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Link\View\MetrChgDtlView.xaml.cs">
       <DependentUpon>MetrChgDtlView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Link\View\AttFacDtlView.xaml.cs">
       <DependentUpon>AttFacDtlView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Link\View\WtrTrkHtListView.xaml.cs">
+      <DependentUpon>WtrTrkHtListView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Link\View\MetrChgListView.xaml.cs">
       <DependentUpon>MetrChgListView.xaml</DependentUpon>
@@ -863,6 +878,7 @@
     </Compile>
     <Compile Include="Mntc\ViewModel\FaqDocViewModel.cs" />
     <Compile Include="Mntc\ViewModel\FaqAddViewModel.cs" />
+    <Compile Include="Mntc\ViewModel\PdjtMngListViewModel.cs" />
     <Compile Include="Mntc\View\FaqDocView.xaml.cs">
       <DependentUpon>FaqDocView.xaml</DependentUpon>
     </Compile>

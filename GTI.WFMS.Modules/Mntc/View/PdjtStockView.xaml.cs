@@ -65,12 +65,19 @@ namespace GTI.WFMS.Modules.Mntc.View
         private void BtnAdd_Click(object sender, RoutedEventArgs e)
         {
             gv.AddNewRow();
+            int idx = 0;
+            try
+            {
+                idx = ((DataTable)grid.ItemsSource).Rows.Count-1;
+            }
+            catch (Exception) { }
+
+            //grid.SetCellValue(idx,"CHK", "Y");
         }
 
         //행삭제
         private void BtnDel_Click(object sender, RoutedEventArgs e)
         {
-            //gv.DeleteRow(gv.FocusedRowHandle);
 
             //데이터 직접삭제처리
             try
@@ -133,6 +140,24 @@ namespace GTI.WFMS.Modules.Mntc.View
         //그리드저장
         private void BtnReg_Click(object sender, RoutedEventArgs e)
         {
+            bool isChecked = false;
+            foreach (DataRow dr in ((DataTable)grid.ItemsSource).Rows)
+            {
+                //체크여부
+                if ("Y".Equals(dr["CHK"]))
+                {
+                    isChecked = true;
+                    break;
+                }
+
+            }
+            if (!isChecked)
+            {
+                Messages.ShowInfoMsgBox("선택된 항목이 없습니다.");
+                return;
+            }
+
+
             if (Messages.ShowYesNoMsgBox("저장하시겠습니까?") != MessageBoxResult.Yes) return;
 
             Hashtable param = new Hashtable();
@@ -141,6 +166,8 @@ namespace GTI.WFMS.Modules.Mntc.View
             DataTable dt = grid.ItemsSource as DataTable;
             foreach (DataRow row in dt.Rows)
             {
+                if (!"Y".Equals(row["CHK"])) continue; //체크한데이터만 저장
+
                 param = new Hashtable();
 
                 if (row.RowState == DataRowState.Modified || row.RowState == DataRowState.Added)

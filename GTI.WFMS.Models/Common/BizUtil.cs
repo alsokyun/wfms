@@ -276,14 +276,13 @@ namespace GTI.WFMS.Models.Common
         /// </summary>
         /// <param name="MST_CD"></param>
         /// <param name="NV 널항목추가"></param>
-        public static DataTable GetCmbCode(string ETC, bool NV, string MST_CD)
+        public static DataTable GetCmbCode(string MST_CD, bool NV )
         {
             Hashtable conditions = new Hashtable();
             DataTable dt = new DataTable(MST_CD);
 
 
             conditions.Add("MST_CD", MST_CD);
-            conditions.Add("ETC", ETC);
             dt = cmmDao.Select_CODE_LIST(conditions);
 
             /* 전체추가 */
@@ -297,13 +296,9 @@ namespace GTI.WFMS.Models.Common
 
             return dt;
         }
-        public static DataTable GetCmbCode(string ETC)
+        public static DataTable GetCmbCode(string MST_CD)
         {
-            return GetCmbCode(ETC, false, null);
-        }
-        public static DataTable GetCmbCode(string ETC, bool ALL)
-        {
-            return GetCmbCode(ETC, ALL, null);
+            return GetCmbCode(MST_CD, false);
         }
 
 

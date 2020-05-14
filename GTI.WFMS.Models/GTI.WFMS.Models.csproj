@@ -182,6 +182,7 @@
     <Compile Include="Acmf\Model\SupDutDtl.cs" />
     <Compile Include="Acmf\Model\HydtMetrDtl.cs" />
     <Compile Include="Acmf\Model\WttMetaHt.cs" />
+    <Compile Include="Acmf\Model\WttRsrvHtDtl.cs" />
     <Compile Include="Adm\Dao\AdmDao.cs" />
     <Compile Include="Cmm\Dao\CommonDao.cs" />
     <Compile Include="Cmm\Dao\CmmDao.cs" />
@@ -220,6 +221,7 @@
     <Compile Include="Mntc\Model\ChscMaDtl.cs" />
     <Compile Include="Cmm\Model\LinkFmsChscFtrRes.cs" />
     <Compile Include="Mntc\Model\FaqDtl.cs" />
+    <Compile Include="Mntc\Model\PdjtMaDtl.cs" />
     <Compile Include="Mntc\Model\ResSrc.cs" />
     <Compile Include="Pipe\Dao\PipeDao.cs" />
     <Compile Include="Pipe\Model\FireFacDtl.cs" />

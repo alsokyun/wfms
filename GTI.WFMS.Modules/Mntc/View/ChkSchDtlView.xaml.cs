@@ -56,12 +56,12 @@ namespace GTI.WFMS.Modules.Mntc.View
         private void RPR_CAT_CDE_Loaded(object sender, RoutedEventArgs e)
         {
             ComboBoxEdit obj = sender as ComboBoxEdit;
-            obj.ItemsSource = BizUtil.GetCmbCode("RPR_CAT_CDE", true);
+            obj.ItemsSource = BizUtil.GetCmbCode("250103", true);
         }
         private void RPR_CUZ_CDE_Loaded(object sender, RoutedEventArgs e)
         {
             ComboBoxEdit obj = sender as ComboBoxEdit;
-            obj.ItemsSource = BizUtil.GetCmbCode("RPR_CUZ_CDE", true);
+            obj.ItemsSource = BizUtil.GetCmbCode("250104", true);
         }
 
 

@@ -100,20 +100,18 @@
         </Grid>
 
         <!--하단버튼-->
-        <StackPanel Grid.Row="2" Grid.Column="0" Orientation="Horizontal" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="5 0 10 0">
-            <Button x:Name="btnReset" Style="{DynamicResource ResourceKey=InitButton}">
+        <StackPanel Grid.Row="2" Grid.Column="0" Orientation="Horizontal" VerticalAlignment="Center" HorizontalAlignment="Center">
+            <Button x:Name="btnReset" Style="{DynamicResource ResourceKey=InitButton}" Margin="10 0 0 0">
                 <i:Interaction.Triggers>
                     <i:EventTrigger EventName="Click">
-                        <i:InvokeCommandAction Command="{Binding ResetCommand}">
-                        </i:InvokeCommandAction>
+                        <i:InvokeCommandAction Command="{Binding ResetCommand}"/>
                     </i:EventTrigger>
                 </i:Interaction.Triggers>
             </Button>
-            <Button x:Name="btnSearch" Style="{DynamicResource ResourceKey=SearchButton}">
+            <Button x:Name="btnSearch" Style="{DynamicResource ResourceKey=SearchButton}" Margin="5 0 10 0">
                 <i:Interaction.Triggers>
                     <i:EventTrigger EventName="Click">
-                        <i:InvokeCommandAction Command="{Binding SearchCommand}">
-                        </i:InvokeCommandAction>
+                        <i:InvokeCommandAction Command="{Binding SearchCommand}"/>
                     </i:EventTrigger>
                 </i:Interaction.Triggers>
             </Button>
@@ -199,7 +197,12 @@
                     <dxe:TextEditSettings HorizontalContentAlignment="Right"/>
                 </dxg:GridColumn.EditSettings>
             </dxg:GridColumn>
-            <dxg:GridColumn Header="최근점검일자" Width="120" FieldName="CHK_RESULT_YMD" HorizontalHeaderContentAlignment="Center">
+            <dxg:GridColumn Header="단위" Width="70" FieldName="CHK_PRD_NAM" HorizontalHeaderContentAlignment="Center">
+                <dxg:GridColumn.EditSettings>
+                    <dxe:TextEditSettings HorizontalContentAlignment="Center"/>
+                </dxg:GridColumn.EditSettings>
+            </dxg:GridColumn>
+            <dxg:GridColumn Header="최근점검일자" Width="100" FieldName="CHK_RESULT_YMD" HorizontalHeaderContentAlignment="Center">
                 <dxg:GridColumn.EditSettings>
                     <dxe:TextEditSettings HorizontalContentAlignment="Center" DisplayTextConverter="{StaticResource ResourceKey=date3StrConverter}"/>
                 </dxg:GridColumn.EditSettings>

@@ -31,7 +31,7 @@ namespace GTI.WFMS.Modules.Cnst.View
         private void PTY_CDE_Loaded(object sender, RoutedEventArgs e)
         {
             ComboBoxEdit obj = sender as ComboBoxEdit;
-            obj.ItemsSource = BizUtil.GetCmbCode("PTY_CDE", false);
+            obj.ItemsSource = BizUtil.GetCmbCode("250066", false);
         }
 
         

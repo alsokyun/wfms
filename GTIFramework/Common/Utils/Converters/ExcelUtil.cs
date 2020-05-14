@@ -1828,7 +1828,7 @@ namespace GTIFramework.Common.Utils.Converters
                     {
                         //컬럼의 타입가져오기
                         if (col_name.Contains("_AMT") || col_name.Contains("_DIP") || col_name.Contains("_SAF") || col_name.Contains("_DIR") || col_name.Contains("_VOL")
-                            || col_name.Contains("_SAF") || col_name.Contains("_HIT") || col_name.Contains("_ARA") || col_name.Contains("_WAL") )
+                            || col_name.Contains("_SAF") || col_name.Contains("_HIT") || col_name.Contains("_ARA") || col_name.Contains("_WAL") || col_name.Contains("_CNT"))
                         {
                             ws.Cells[row_idx, col_idx].HorizontalAlignment = Microsoft.Office.Interop.Excel.XlHAlign.xlHAlignRight;
                             ws.Cells[row_idx, col_idx].NumberFormat = "#,##0";

@@ -505,12 +505,12 @@ namespace GTI.WFMS.Modules.Cnst.ViewModel
         {
 
 
-            string name_space = "GTI.WFMS.Models.Cmpl.Model";
-            string class_name = "WserDtl";
+            string name_space = "GTI.WFMS.Models.Mntc.Model";
+            string class_name = "PdjtMaDtl";
             
             Hashtable param = new Hashtable();
-            param.Add("sqlId", "SelectWttWserMa");
-            param.Add("WSER_SEQ", 13);
+            param.Add("sqlId", "SelectPdjtMaMngList");
+            param.Add("PDH_NUM", 4);
             
             DataTable dt = BizUtil.SelectList(param);
             DataRow dr = dt.Rows[0];

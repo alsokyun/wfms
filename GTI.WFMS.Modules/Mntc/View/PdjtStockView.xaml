@@ -99,7 +99,7 @@
                     </dxg:GridColumn.HeaderTemplate>
                     <dxg:GridColumn.CellTemplate>
                         <DataTemplate>
-                            <dxe:CheckEdit EditValue="{Binding RowData.Row.CHK, Mode=TwoWay, Converter={StaticResource toggleConverter}}" HorizontalAlignment="Center" />
+                            <dxe:CheckEdit EditValue="{Binding RowData.Row.CHK, Converter={StaticResource toggleConverter}}" HorizontalAlignment="Center" />
                         </DataTemplate>
                     </dxg:GridColumn.CellTemplate>
                 </dxg:GridColumn>
@@ -108,15 +108,15 @@
                     <dxg:GridColumn.CellTemplate>
                         <DataTemplate>
                             <dxe:DateEdit Style="{DynamicResource ResourceKey=GridDateEdit}" 
-                            EditValue="{Binding RowData.Row.IN_YMD, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged , Converter={StaticResource date3StrConverter}}"   />
+                            EditValue="{Binding RowData.Row.IN_YMD, UpdateSourceTrigger=PropertyChanged , Converter={StaticResource date3StrConverter}}"   />
                         </DataTemplate>
                     </dxg:GridColumn.CellTemplate>
                 </dxg:GridColumn>
                 <dxg:GridColumn Header="입고수량" Width="100" FieldName="IN_AMT" HorizontalHeaderContentAlignment="Center"  AllowEditing="True">
                     <dxg:GridColumn.CellTemplate>
                         <DataTemplate>
-                            <dxe:TextEdit  Style="{DynamicResource ResourceKey=GridNumberEdit}" MaskType="Numeric" MaskUseAsDisplayFormat="True" 
-                            EditValue="{Binding  RowData.Row.IN_AMT, Mode=TwoWay }" />
+                            <dxe:TextEdit  Style="{DynamicResource ResourceKey=GridNumberEdit}" 
+                            EditValue="{Binding  RowData.Row.IN_AMT, UpdateSourceTrigger=PropertyChanged}" />
                         </DataTemplate>
                     </dxg:GridColumn.CellTemplate>
                 </dxg:GridColumn>
@@ -125,7 +125,7 @@
                     <dxg:GridColumn.CellTemplate>
                         <DataTemplate>
                             <dxe:TextEdit  Style="{DynamicResource ResourceKey=GridTextEdit}" 
-                            EditValue="{Binding  RowData.Row.IN_ETC, Mode=TwoWay }" />
+                            EditValue="{Binding  RowData.Row.IN_ETC, UpdateSourceTrigger=PropertyChanged}" />
                         </DataTemplate>
                     </dxg:GridColumn.CellTemplate>
                 </dxg:GridColumn>
