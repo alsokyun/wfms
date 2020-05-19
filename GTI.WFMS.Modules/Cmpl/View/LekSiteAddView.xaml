@@ -61,7 +61,7 @@
         </StackPanel>
 
         <StackPanel Grid.Row="1" Orientation="Horizontal" HorizontalAlignment="Right" Margin="0 0 10 0">
-            <Button x:Name="btnSave" Style="{DynamicResource ResourceKey=GrdRegButton}" Command="{Binding SaveCommand}" />
+            <Button x:Name="btnSave" Style="{DynamicResource ResourceKey=SaveButton}" Command="{Binding SaveCommand}" />
         </StackPanel>
 
         <Grid Grid.Row="2" Margin="10 0 10 10" >
@@ -145,7 +145,7 @@
             <TextBlock x:Name="txtFTR_CDE" Text="{Binding Dtl.FTR_CDE}" Visibility="Collapsed"/> 
             <Label Grid.Row="0" Grid.Column="2" Content="지형지물" Style="{DynamicResource ResourceKey=GridLabelReq}" />
             <dxe:ComboBoxEdit Grid.Row="0" Grid.Column="3" Style="{DynamicResource ResourceKey=GridComboBox}" Tag="지형지물"
-                              x:Name="cbFTR_CDE" EditValue="{Binding Dtl.FTR_CDE, UpdateSourceTrigger=PropertyChanged}"  />
+                              x:Name="cbFTR_CDE" EditValue="{Binding Dtl.FTR_CDE, UpdateSourceTrigger=PropertyChanged}"  IsEnabled="False"/>
             <Label Grid.Row="0" Grid.Column="4" Content="행정동" Style="{DynamicResource ResourceKey=GridLabelReq}"  />
             <dxe:ComboBoxEdit Grid.Row="0" Grid.Column="5" Style="{DynamicResource ResourceKey=GridComboBox}" Tag="행정동"
                               x:Name="cbHJD_CDE" EditValue="{Binding Dtl.HJD_CDE}"  />

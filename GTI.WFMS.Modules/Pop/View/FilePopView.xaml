@@ -177,8 +177,8 @@
 
         <Grid Grid.Row="3" >
             <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Margin="0 5 10 5">
-                <Button Content="파일선택" Command="{Binding FindFileCmd}" Style="{StaticResource popBtn}" Background="{DynamicResource TileCOLOR4Brush}"></Button>
-                <Button Content="저장" Command="{Binding SaveCmd}" Style="{StaticResource popBtn}" Background="{DynamicResource TileCOLOR4Brush}">
+                <Button Content="파일선택" Command="{Binding FindFileCmd}" Style="{DynamicResource TxtButton}" Background="{DynamicResource TileCOLOR4Brush}"></Button>
+                <Button Content="저장" Command="{Binding SaveCmd}" Style="{DynamicResource TxtButton}" Background="{DynamicResource TileCOLOR4Brush}">
                 </Button>
             </StackPanel>
         </Grid>

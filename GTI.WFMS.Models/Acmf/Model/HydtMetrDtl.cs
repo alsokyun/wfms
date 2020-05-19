@@ -227,8 +227,8 @@ namespace GTI.WFMS.Models.Acmf.Model
                 OnPropertyChanged("PIP_NAM");
             }
         }
-        private decimal __PIP_IDN;
-        public decimal PIP_IDN
+        private decimal ? __PIP_IDN;
+        public decimal? PIP_IDN
         {
             get { return __PIP_IDN; }
             set

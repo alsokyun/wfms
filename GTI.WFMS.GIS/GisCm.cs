@@ -159,9 +159,11 @@ namespace GTI.WFMS.GIS
             //상수관로
             ISimpleLineSymbol lineSymbolSA001 = new SimpleLineSymbol();
             lineSymbolSA001.Color = new RgbColor() { Red = 0, Green = 102, Blue = 255 };
+            lineSymbolSA001.Width = 1.3;
             //급수관로
             ISimpleLineSymbol lineSymbolSA002 = new SimpleLineSymbol();
             lineSymbolSA002.Color = new RgbColor() { Red = 0, Green = 204, Blue = 153 };
+            lineSymbolSA002.Width = 0.7;
             //울산행정구역
             //ISimpleLineSymbol lineSymbolEA305 = new SimpleLineSymbol();
             //lineSymbolEA305.Color = new RgbColor() { Red = 255, Green = 0, Blue = 0 };

@@ -766,7 +766,7 @@
 
       SELECT C.ROWCNT, X.*  FROM (
 
-      SELECT ROW_NUMBER() OVER( ORDER BY NVL(M.CHK_RESULT_YMD,'0000') DESC	 ) AS RN
+      SELECT ROW_NUMBER() OVER( ORDER BY M.PRS_NAM, M.ATT_NAM, NVL(M.CHK_RESULT_YMD,'0000') DESC	 ) AS RN
       ,M.G2_ID
       , M.FTR_CDE
       , M.FTR_IDN
@@ -839,6 +839,21 @@
       LEFT JOIN INFOUSER.CD_DTL_INFO CD2
       ON (CD2.MST_CD = '250111' AND CD2.DTL_CD = M.IMP_CDE)
       WHERE 1=1
+
+      <!-- 조건1. 관리번호 -->
+      <isNotEmpty prepend="AND" property="FTR_IDN">
+        M.FTR_IDN LIKE '%' || #FTR_IDN# || '%'
+      </isNotEmpty>
+
+      <!-- 조건2. 가압장명 -->
+      <isNotEmpty prepend="AND" property="PRS_NAM">
+        A.PRS_NAM LIKE '%' || #PRS_NAM# || '%'
+      </isNotEmpty>
+
+      <!-- 조건3. 세부시설명 -->
+      <isNotEmpty prepend="AND" property="ATT_NAM">
+        M.ATT_NAM LIKE '%' || #ATT_NAM# || '%'
+      </isNotEmpty>
 
 
       GROUP BY M.ATTA_SEQ

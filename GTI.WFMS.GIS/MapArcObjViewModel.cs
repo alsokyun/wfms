@@ -400,9 +400,9 @@ namespace GTI.WFMS.GIS
 
                 
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-                MessageBox.Show("레이어가 존재하지 않습니다.");
+                MessageBox.Show("레이어가 존재하지 않습니다." + ex.Message);
             }
         }
 

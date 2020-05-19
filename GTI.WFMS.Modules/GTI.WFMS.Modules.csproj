@@ -368,6 +368,10 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
+    <Page Include="Pop\View\SplyMngPopView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
     <Page Include="Pop\View\CnstMngPopView.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -886,8 +890,12 @@
       <DependentUpon>FaqAddView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Pop\ViewModel\CnstCmplSelViewModel.cs" />
+    <Compile Include="Pop\ViewModel\SplyMngPopViewModel.cs" />
     <Compile Include="Pop\View\CnstCmplSelView.xaml.cs">
       <DependentUpon>CnstCmplSelView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Pop\View\SplyMngPopView.xaml.cs">
+      <DependentUpon>SplyMngPopView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Pop\View\CnstMngPopView.xaml.cs">
       <DependentUpon>CnstMngPopView.xaml</DependentUpon>
@@ -1203,6 +1211,7 @@
     <WCFMetadata Include="Connected Services\" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Cmpl\View\2020020620052218.jpg" />
     <Content Include="Pop\View\2020020620052218.jpg" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

@@ -197,9 +197,9 @@ namespace GTI.WFMS.Modules.Mntc.ViewModel
                 sql += " ,REPL = :REPL ";
                 sql += " ,TTL = :TTL ";
                 sql += " ,FAQ_CAT_CDE= :FAQ_CAT_CDE";
-                sql += " ,EDT_ID = :EDT_ID";
-                sql += " ,FTR_CDE = :FTR_CDE";
                 sql += " ,FAQ_CUZ_CDE= :FAQ_CUZ_CDE";
+                sql += " ,FTR_CDE = :FTR_CDE";
+                sql += " ,EDT_ID = :EDT_ID";
                 sql += " WHERE SEQ = :SEQ ;";
 
                 Hashtable param = new Hashtable();
@@ -207,11 +207,12 @@ namespace GTI.WFMS.Modules.Mntc.ViewModel
                 param.Add("QUESTION", this.QUESTION);
                 param.Add("REPL", this.REPL);
                 param.Add("TTL", this.TTL);
-                param.Add("FAQ_CAT_CDE", cbFAQ_CAT_CDE.EditValue);
+                param.Add("FAQ_CAT_CDE", this.FAQ_CAT_CDE);
                 param.Add("EDT_ID", Logs.strLogin_ID);
-                param.Add("FTR_CDE", cbFTR_CDE.EditValue);
-                param.Add("FAQ_CUZ_CDE", cbFAQ_CUZ_CDE.EditValue);
-                DBUtil.Update(param);
+                param.Add("FTR_CDE", this.FTR_CDE);
+                param.Add("FAQ_CUZ_CDE", this.FAQ_CUZ_CDE);
+                param.Add("SEQ", this.SEQ);
+                DBUtil.UpdateFAQ(param);
 
 
             }

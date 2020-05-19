@@ -155,7 +155,7 @@ namespace GTI.WFMS.Models.Common
             {
                 if (!FmsUtil.IsNull(te.Tag))
                 {
-                    if (FmsUtil.IsNull(te.Text))
+                    if (FmsUtil.IsNull(te.EditValue))
                     {
                         Messages.ShowInfoMsgBox(string.Format("{0}은 필수입력 항목입니다.", te.Tag.ToString()));
                         return false;

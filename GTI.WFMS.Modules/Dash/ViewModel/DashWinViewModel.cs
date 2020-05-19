@@ -52,6 +52,8 @@ namespace GTI.WFMS.Modules.Dash.ViewModel
                 // 0.화면객체인스턴스화
                 if (obj == null) return;
 
+                dashWinView = obj as DashWinView;
+
                 InitModel(obj);
 
             }
@@ -78,7 +80,6 @@ namespace GTI.WFMS.Modules.Dash.ViewModel
                 String sMenuFleNm = "";
                 int nCt = 0;
 
-                dashWinView = obj as DashWinView;                                                
                 
                 param.Add("sqlId", "SelectDashMenuList");
                 param.Add("pYm", sYm);
@@ -259,6 +260,10 @@ namespace GTI.WFMS.Modules.Dash.ViewModel
 
             //저장처리 성공
             Messages.ShowOkMsgBox();
+
+            //div닫기
+            bMenuShowHiden = false;
+            OnMenuShowHiden(null);
 
             //재조회
             InitModel(obj);

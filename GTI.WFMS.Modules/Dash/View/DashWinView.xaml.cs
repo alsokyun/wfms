@@ -23,9 +23,9 @@ namespace GTI.WFMS.Modules.Dash.View
             InitializeComponent();
 
             // 테마일괄적용...
-            //ThemeApply.Themeapply(this);
+            ThemeApply.Themeapply(this);
 
-            
+
 
         }
 

@@ -168,6 +168,9 @@ namespace GTI.WFMS.GIS
 
                 //비트맵초기화(시설물상세DIV 아이콘)
                 BitImg = new BitmapImage();
+
+                //ShowShapeLayer(mapView, "BML_GADM_AS", true);
+
             });
 
 
@@ -267,7 +270,9 @@ namespace GTI.WFMS.GIS
 
 
                 // 울산행정구역 표시
-                ShowLocalServerLayer(mapView, "BML_GADM_AS", true ) ;
+                ShowLocalServerLayer(mapView, "BML_GADM_AS", true);
+                //ShowShapeLayer(mapView, "BML_GADM_AS", true);
+
             });
 
             //시설물팝업에서 시설물메뉴화면 호출작업

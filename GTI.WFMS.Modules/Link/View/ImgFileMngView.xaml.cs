@@ -26,6 +26,7 @@ namespace GTI.WFMS.Modules.Link.View
         private string BIZ_ID;
         private string FIL_SEQ;
 
+
         //초기조회
         private DataTable dt = new DataTable();
 
@@ -190,6 +191,7 @@ namespace GTI.WFMS.Modules.Link.View
                     layoutControl.MaximizedElement = layoutControl.MaximizedElement == this ? null : this;
                 }
             }
+
         }
         protected override void OnSizeChanged(SizeChangedEventArgs e)
         {

@@ -248,7 +248,7 @@
             <Label Grid.Row="0" Grid.Column="4" Content="배수관구경" Style="{DynamicResource ResourceKey=GridLabel}"/>
             <dxe:TextEdit Grid.Row="0" Grid.Column="5" Style="{DynamicResource ResourceKey=GridNumberEdit}"   
                           x:Name="txtPIP_DIP"  EditValue="{Binding PIP_DIP}"/>
-            <Label Grid.Row="0" Grid.Column="6" Content="급수관높이(m)" Style="{DynamicResource ResourceKey=GridLabel}"/>
+            <Label Grid.Row="0" Grid.Column="6" Content="급수탑높이(m)" Style="{DynamicResource ResourceKey=GridLabel}"/>
             <dxe:TextEdit Grid.Row="0" Grid.Column="7" Style="{DynamicResource ResourceKey=GridNumberEdit}"   
                           x:Name="cbSUP_HIT"  EditValue="{Binding SUP_HIT}"/>
 

@@ -122,7 +122,7 @@
             <Label Grid.Row="3" Grid.Column="0" Content="답변" Style="{DynamicResource ResourceKey=GridLabel}" />
             <!--<TextBox x:Name="tbRtf" Text="{Binding QUESTION}" Grid.Row="3" Grid.Column="1" Grid.ColumnSpan="3" 
                         TextWrapping="Wrap" AcceptsReturn="True" AcceptsTab="True" />-->
-            <dxre:RichEditControl Grid.Row="3" Grid.Column="1" Grid.ColumnSpan="3" Height="Auto" Width="Auto" Margin="10  5 10 5"  ReadOnly="True"
+            <dxre:RichEditControl Grid.Row="3" Grid.Column="1" Grid.ColumnSpan="3" Height="Auto" Width="Auto" Margin="10  5 10 5"  ReadOnly="True" 
                             ActiveViewType="Simple"
                             x:Name="richREPL" Content="{Binding REPL, Converter={StaticResource rtfToContentConverter}, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" 
                                   />

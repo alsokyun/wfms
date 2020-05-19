@@ -298,8 +298,8 @@ namespace GTI.WFMS.Models.Pipe.Model
                 OnPropertyChanged("PIP_NAM");
             }
         }
-        private decimal __PIP_IDN;
-        public decimal PIP_IDN
+        private decimal? __PIP_IDN;
+        public decimal? PIP_IDN
         {
             get { return __PIP_IDN; }
             set
@@ -378,8 +378,8 @@ namespace GTI.WFMS.Models.Pipe.Model
                 OnPropertyChanged("SYS_CHK_NAM");
             }
         }
-        private decimal __ANG_DIR;
-        public decimal ANG_DIR
+        private decimal ? __ANG_DIR;
+        public decimal?  ANG_DIR
         {
             get { return __ANG_DIR; }
             set

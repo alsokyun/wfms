@@ -100,8 +100,8 @@
         </Grid>
 
         <!--하단버튼-->
-        <StackPanel Grid.Row="2" Grid.Column="0" Orientation="Horizontal" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="5 0 10 0">
-            <Button x:Name="btnReset" Style="{DynamicResource ResourceKey=InitButton}">
+        <StackPanel Grid.Row="2" Grid.Column="0" Orientation="Horizontal" VerticalAlignment="Center" HorizontalAlignment="Center" >
+            <Button x:Name="btnReset" Style="{DynamicResource ResourceKey=InitButton}" Margin="10 0 0 0">
                 <i:Interaction.Triggers>
                     <i:EventTrigger EventName="Click">
                         <i:InvokeCommandAction Command="{Binding ResetCommand}">
@@ -109,7 +109,7 @@
                     </i:EventTrigger>
                 </i:Interaction.Triggers>
             </Button>
-            <Button x:Name="btnSearch" Style="{DynamicResource ResourceKey=SearchButton}">
+            <Button x:Name="btnSearch" Style="{DynamicResource ResourceKey=SearchButton}" Margin="5 0 10 0">
                 <i:Interaction.Triggers>
                     <i:EventTrigger EventName="Click">
                         <i:InvokeCommandAction Command="{Binding SearchCommand}">
@@ -182,6 +182,11 @@
             <dxg:GridColumn Header="가압장명" Width="150" FieldName="PRS_NAM" HorizontalHeaderContentAlignment="Center">
                 <dxg:GridColumn.EditSettings>
                     <dxe:TextEditSettings HorizontalContentAlignment="Center"/>
+                </dxg:GridColumn.EditSettings>
+            </dxg:GridColumn>
+            <dxg:GridColumn Header="세부시설명" Width="150" FieldName="ATT_NAM" HorizontalHeaderContentAlignment="Center">
+                <dxg:GridColumn.EditSettings>
+                    <dxe:TextEditSettings HorizontalContentAlignment="Left"/>
                 </dxg:GridColumn.EditSettings>
             </dxg:GridColumn>
             <dxg:GridColumn Header="주요도" Width="80" FieldName="IMP_NAM" HorizontalHeaderContentAlignment="Center">

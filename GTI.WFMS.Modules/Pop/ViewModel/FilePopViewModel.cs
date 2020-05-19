@@ -225,7 +225,7 @@ namespace GTI.WFMS.Modules.Pop.ViewModel
             {
                 OpenFileDialog openFileDialog = new OpenFileDialog();
                 openFileDialog.Multiselect = true;
-                openFileDialog.Filter = "All files (*.*)|*.*";
+                openFileDialog.Filter = "Image Files |*.jpg;*.jpeg;*.png;*.gif;*.bmp;*.tif;*.tiff;";
                 openFileDialog.InitialDirectory = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
                 if (openFileDialog.ShowDialog() == true)
                 {

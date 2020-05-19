@@ -61,7 +61,7 @@
         </StackPanel>
 
         <StackPanel Grid.Row="1" Orientation="Horizontal" HorizontalAlignment="Right" Margin="0 0 10 0">
-            <Button x:Name="btnSave" Style="{DynamicResource ResourceKey=GrdRegButton}" Command="{Binding SaveCommand}" />
+            <Button x:Name="btnSave" Style="{DynamicResource ResourceKey=SaveButton}" Command="{Binding SaveCommand}" />
         </StackPanel>
 
         <Grid Grid.Row="2" Margin="10 0 10 10" >
@@ -150,8 +150,9 @@
             <dxe:TextEdit Grid.Row="0" Grid.Column="5" Style="{DynamicResource ResourceKey=GridTextEdit}" Tag="민원인TEL" 
                           EditValue="{Binding Dtl.APM_TEL}" />
             <Label Grid.Row="0" Grid.Column="6" Content="공사번호" Style="{DynamicResource ResourceKey=GridLabelReq}"  />
-            <dxe:TextEdit Grid.Row="0" Grid.Column="7" Style="{DynamicResource ResourceKey=GridTextEdit}" Tag="공사번호" 
-                          EditValue="{Binding Dtl.CNT_NUM}" />
+            <dxe:TextEdit Grid.Row="0" Grid.Column="7" Style="{DynamicResource ResourceKey=GridTextEdit}" 
+                          x:Name="txtCNT_NUM" EditValue="{Binding Dtl.CNT_NUM}" Height="28" />
+            <Button Grid.Row="0" Grid.Column="7"  x:Name="btnSel" Style="{DynamicResource ResourceKey=GdAddButton}" HorizontalAlignment="Right" Margin="0 0 10 0" Click="BtnSel_Click"/>
 
             <Label Grid.Row="1" Grid.Column="0" Content="민원구분" Style="{DynamicResource ResourceKey=GridLabel}"  />
             <dxe:ComboBoxEdit Grid.Row="1" Grid.Column="1" Style="{DynamicResource ResourceKey=GridComboBox}" 

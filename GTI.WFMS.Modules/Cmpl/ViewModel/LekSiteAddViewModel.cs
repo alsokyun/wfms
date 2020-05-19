@@ -95,6 +95,13 @@ namespace GTI.WFMS.Modules.Cmpl.ViewModel
                 //3.권한처리
                 permissionApply();
 
+                //4.채번 
+                Hashtable param = new Hashtable();
+                param.Add("sqlId", "SelectLeakNewIdn");
+                LeakDtl dtl = BizUtil.SelectObject(param) as LeakDtl;
+                Dtl.FTR_IDN = dtl.FTR_IDN;
+                Dtl.FTR_CDE = "SA300"; //누수지점
+
             });
 
             //저장
