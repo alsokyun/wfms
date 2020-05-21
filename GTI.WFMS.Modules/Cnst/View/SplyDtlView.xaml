@@ -88,6 +88,14 @@
             </StackPanel>
         </StackPanel>
         <StackPanel Grid.Row="0" Orientation="Horizontal" HorizontalAlignment="Right" Margin="10 0 10 0">
+            <Button x:Name="btnPrint" Style="{DynamicResource ResourceKey=PrintButton}"  >
+                <i:Interaction.Triggers>
+                    <i:EventTrigger EventName="Click">
+                        <i:InvokeCommandAction Command="{Binding PrintCommand}">
+                        </i:InvokeCommandAction>
+                    </i:EventTrigger>
+                </i:Interaction.Triggers>
+            </Button>
             <Button x:Name="btnDelete" Style="{DynamicResource ResourceKey=DelButton}"  >
                 <i:Interaction.Triggers>
                     <i:EventTrigger EventName="Click">

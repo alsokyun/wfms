@@ -13,6 +13,7 @@
             xmlns:cv="clr-namespace:GTI.WFMS.Models.Common;assembly=GTI.WFMS.Models"
             mc:Ignorable="d" 
             d:DesignHeight="200" d:DesignWidth="450"
+            Title="첨부파일"
         
             xmlns:dxg="http://schemas.devexpress.com/winfx/2008/xaml/grid"
             xmlns:dxe="http://schemas.devexpress.com/winfx/2008/xaml/editors"

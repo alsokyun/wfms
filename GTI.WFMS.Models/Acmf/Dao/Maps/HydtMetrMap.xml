@@ -174,6 +174,7 @@
                       , (SELECT NM FROM INFOUSER.CD_DTL_INFO WHERE MST_CD = '250020' AND DTL_CD = A.SBI_CDE ) AS SBI_NAM
                       , A.MET_DIP
                       , A.MET_MOF
+                      , (SELECT NM FROM INFOUSER.CD_DTL_INFO WHERE MST_CD = '250004' AND DTL_CD = A.MET_MOF ) AS MOF_NAM
                       , A.PRD_NUM
                       , A.PIP_CDE
                       , A.PIP_IDN

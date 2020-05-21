@@ -491,6 +491,7 @@ namespace GTI.WFMS.Main
                                     FmsUtil.popWinView = new PopWinView(dr[0]["MNU_PATH"].ToString());
                                     Label lbTitle = FmsUtil.popWinView.FindName("lbTitle") as Label;//화면타이틀
                                     lbTitle.Content = dr[0]["MNU_NM"].ToString();
+                                    FmsUtil.popWinView.Title = dr[0]["MNU_NM"].ToString();
 
                                     //팝업결과리턴
                                     if (FmsUtil.popWinView.ShowDialog() is bool)

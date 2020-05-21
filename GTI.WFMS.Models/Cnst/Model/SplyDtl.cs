@@ -67,8 +67,8 @@ namespace GTI.WFMS.Modules.Cnst.Model
                 OnPropertyChanged("FNS_YMD");
             }
         }
-        private decimal __GVR_AMT;
-        public decimal GVR_AMT
+        private decimal ?  __GVR_AMT;
+        public decimal ? GVR_AMT
         {
             get { return __GVR_AMT; }
             set
@@ -77,8 +77,8 @@ namespace GTI.WFMS.Modules.Cnst.Model
                 OnPropertyChanged("GVR_AMT");
             }
         }
-        private decimal __PRV_AMT;
-        public decimal PRV_AMT
+        private decimal ?  __PRV_AMT;
+        public decimal ? PRV_AMT
         {
             get { return __PRV_AMT; }
             set
@@ -87,8 +87,8 @@ namespace GTI.WFMS.Modules.Cnst.Model
                 OnPropertyChanged("PRV_AMT");
             }
         }
-        private decimal __TAX_AMT;
-        public decimal TAX_AMT
+        private decimal ?  __TAX_AMT;
+        public decimal ? TAX_AMT
         {
             get { return __TAX_AMT; }
             set
@@ -97,8 +97,8 @@ namespace GTI.WFMS.Modules.Cnst.Model
                 OnPropertyChanged("TAX_AMT");
             }
         }
-        private decimal __ROR_AMT;
-        public decimal ROR_AMT
+        private decimal ?  __ROR_AMT;
+        public decimal ? ROR_AMT
         {
             get { return __ROR_AMT; }
             set
@@ -107,8 +107,8 @@ namespace GTI.WFMS.Modules.Cnst.Model
                 OnPropertyChanged("ROR_AMT");
             }
         }
-        private decimal __DEF_AMT;
-        public decimal DEF_AMT
+        private decimal ?  __DEF_AMT;
+        public decimal ? DEF_AMT
         {
             get { return __DEF_AMT; }
             set
@@ -117,8 +117,8 @@ namespace GTI.WFMS.Modules.Cnst.Model
                 OnPropertyChanged("DEF_AMT");
             }
         }
-        private decimal __GFE_AMT;
-        public decimal GFE_AMT
+        private decimal ?  __GFE_AMT;
+        public decimal ? GFE_AMT
         {
             get { return __GFE_AMT; }
             set
@@ -127,8 +127,8 @@ namespace GTI.WFMS.Modules.Cnst.Model
                 OnPropertyChanged("GFE_AMT");
             }
         }
-        private decimal __FFE_AMT;
-        public decimal FFE_AMT
+        private decimal ?  __FFE_AMT;
+        public decimal ? FFE_AMT
         {
             get { return __FFE_AMT; }
             set
@@ -137,8 +137,8 @@ namespace GTI.WFMS.Modules.Cnst.Model
                 OnPropertyChanged("FFE_AMT");
             }
         }
-        private decimal __DIV_AMT;
-        public decimal DIV_AMT
+        private decimal ?  __DIV_AMT;
+        public decimal ? DIV_AMT
         {
             get { return __DIV_AMT; }
             set
@@ -147,8 +147,8 @@ namespace GTI.WFMS.Modules.Cnst.Model
                 OnPropertyChanged("DIV_AMT");
             }
         }
-        private decimal __ETC_AMT;
-        public decimal ETC_AMT
+        private decimal ?  __ETC_AMT;
+        public decimal ? ETC_AMT
         {
             get { return __ETC_AMT; }
             set
@@ -157,8 +157,8 @@ namespace GTI.WFMS.Modules.Cnst.Model
                 OnPropertyChanged("ETC_AMT");
             }
         }
-        private decimal __TOT_AMT;
-        public decimal TOT_AMT
+        private decimal ?  __TOT_AMT;
+        public decimal ? TOT_AMT
         {
             get { return __TOT_AMT; }
             set
@@ -217,8 +217,8 @@ namespace GTI.WFMS.Modules.Cnst.Model
                 OnPropertyChanged("RCV_NUM");
             }
         }
-        private decimal __DFE_AMT;
-        public decimal DFE_AMT
+        private decimal ?  __DFE_AMT;
+        public decimal ? DFE_AMT
         {
             get { return __DFE_AMT; }
             set
@@ -249,6 +249,16 @@ namespace GTI.WFMS.Modules.Cnst.Model
             }
         }
 
+        private string __HJD_NAM;
+        public string HJD_NAM
+        {
+            get { return __HJD_NAM; }
+            set
+            {
+                this.__HJD_NAM = value;
+                OnPropertyChanged("HJD_NAM");
+            }
+        }
 
     }
 

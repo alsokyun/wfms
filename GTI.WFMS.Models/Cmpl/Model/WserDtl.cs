@@ -32,8 +32,8 @@ namespace GTI.WFMS.Models.Cmpl.Model
                 OnPropertyChanged("RCV_NUM");
             }
         }
-        private decimal __WSER_SEQ;
-        public decimal WSER_SEQ
+        private decimal ?  __WSER_SEQ;
+        public decimal ? WSER_SEQ
         {
             get { return __WSER_SEQ; }
             set
@@ -145,7 +145,7 @@ namespace GTI.WFMS.Models.Cmpl.Model
         private string __PRO_CDE;
         public string PRO_CDE
         {
-            get { return __PRO_CDE ?? ""; }
+            get { return __PRO_CDE ??  ""; }
             set
             {
                 this.__PRO_CDE = value;

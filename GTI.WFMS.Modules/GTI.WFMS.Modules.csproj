@@ -677,7 +677,14 @@
     <Compile Include="Cnst\Report\CnstMngReport.Designer.cs">
       <DependentUpon>CnstMngReport.cs</DependentUpon>
     </Compile>
+    <Compile Include="Cnst\Report\SplyMngReport.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Cnst\Report\SplyMngReport.Designer.cs">
+      <DependentUpon>SplyMngReport.cs</DependentUpon>
+    </Compile>
     <Compile Include="Cnst\ViewModel\CnstMngAddViewModel.cs" />
+    <Compile Include="Cnst\ViewModel\SplyDtlViewMdl.cs" />
     <Compile Include="Cnst\ViewModel\SplyAddViewModel.cs" />
     <Compile Include="Cnst\ViewModel\SplyMngListViewModel.cs" />
     <Compile Include="Cnst\ViewModel\CnstMngListViewModel.cs" />
@@ -1167,6 +1174,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Cnst\Report\CnstMngReport.resx">
       <DependentUpon>CnstMngReport.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Cnst\Report\SplyMngReport.resx">
+      <DependentUpon>SplyMngReport.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Fclt\Report\FiltPltReport.resx">
       <DependentUpon>FiltPltReport.cs</DependentUpon>

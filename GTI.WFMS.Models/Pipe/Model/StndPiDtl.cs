@@ -159,8 +159,8 @@ namespace GTI.WFMS.Models.Pipe.Model
             }
         }
 
-        private decimal __STD_DIP;
-        public decimal STD_DIP
+        private decimal ?  __STD_DIP;
+        public decimal ? STD_DIP
         {
             get { return __STD_DIP; }
             set
@@ -169,8 +169,8 @@ namespace GTI.WFMS.Models.Pipe.Model
                 OnPropertyChanged("STD_DIP");
             }
         }
-        private decimal __STP_ALT;
-        public decimal STP_ALT
+        private decimal ?  __STP_ALT;
+        public decimal ? STP_ALT
         {
             get { return __STP_ALT; }
             set
@@ -219,8 +219,8 @@ namespace GTI.WFMS.Models.Pipe.Model
                 OnPropertyChanged("SYS_CHK_NAM");
             }
         }
-        private decimal __ANG_DIR;
-        public decimal ANG_DIR
+        private decimal ?  __ANG_DIR;
+        public decimal ? ANG_DIR
         {
             get { return __ANG_DIR; }
             set

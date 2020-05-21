@@ -26,8 +26,8 @@ namespace GTI.WFMS.Models.Cmm.Model
         /// <summary>
         /// 프로퍼티 부분
         /// </summary>
-        private decimal __SEQ;
-        public decimal SEQ
+        private decimal ?  __SEQ;
+        public decimal ? SEQ
         {
             get { return __SEQ; }
             set
@@ -36,8 +36,8 @@ namespace GTI.WFMS.Models.Cmm.Model
                 OnPropertyChanged("SEQ");
             }
         }
-        private decimal __FIL_SEQ;
-        public decimal FIL_SEQ
+        private decimal ?  __FIL_SEQ;
+        public decimal ? FIL_SEQ
         {
             get { return __FIL_SEQ; }
             set

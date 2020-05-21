@@ -101,7 +101,7 @@ namespace GTIFramework.Common.Log
         public static void DBdefault()
         {
             // also : 초기설정값 변경하기위해 임시처리
-            //Properties.Settings.Default.Reset();
+            Properties.Settings.Default.Reset();
 
             DefaultConfig.strIP = Properties.Settings.Default.strIP;
             DefaultConfig.strPort = Properties.Settings.Default.strPort;

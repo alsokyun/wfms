@@ -27,8 +27,8 @@ namespace GTI.WFMS.Models.Mntc.Model
         /// <summary>
         /// 프로퍼티 부분
         /// </summary>
-        private decimal __PDH_NUM;
-        public decimal PDH_NUM
+        private decimal ?  __PDH_NUM;
+        public decimal ? PDH_NUM
         {
             get { return __PDH_NUM; }
             set
@@ -167,8 +167,8 @@ namespace GTI.WFMS.Models.Mntc.Model
                 OnPropertyChanged("CHK");
             }
         }
-        private decimal __CNT;
-        public decimal CNT
+        private decimal ?  __CNT;
+        public decimal ? CNT
         {
             get { return __CNT; }
             set

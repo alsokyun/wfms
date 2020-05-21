@@ -8,6 +8,8 @@
         xmlns:local="clr-namespace:GTI.WFMS.Modules.Pop.View"
         mc:Ignorable="d" 
         d:DesignHeight="585" d:DesignWidth="1100"
+        Title="급수공사선택"
+        
       
         xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
         xmlns:vm="clr-namespace:GTI.WFMS.Modules.Pop.ViewModel"

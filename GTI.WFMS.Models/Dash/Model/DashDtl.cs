@@ -31,8 +31,8 @@ namespace GTI.WFMS.Models.Dash.Model
                 OnPropertyChanged("NAM");
             }
         }       
-        private decimal __DATA_VAL;
-        public decimal DATA_VAL
+        private decimal ?  __DATA_VAL;
+        public decimal ? DATA_VAL
         {
             get { return __DATA_VAL; }
             set
@@ -41,8 +41,8 @@ namespace GTI.WFMS.Models.Dash.Model
                 OnPropertyChanged("DATA_VAL");
             }
         }
-        private decimal __DATA_VAL2;
-        public decimal DATA_VAL2
+        private decimal ?  __DATA_VAL2;
+        public decimal ? DATA_VAL2
         {
             get { return __DATA_VAL2; }
             set

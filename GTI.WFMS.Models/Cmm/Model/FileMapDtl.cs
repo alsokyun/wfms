@@ -36,8 +36,8 @@ namespace GTI.WFMS.Models.Cmm.Model
                 RaisePropertyChanged("BIZ_ID");
             }
         }
-        private decimal __FIL_SEQ;
-        public decimal FIL_SEQ
+        private decimal ?  __FIL_SEQ;
+        public decimal ? FIL_SEQ
         {
             get { return __FIL_SEQ; }
             set

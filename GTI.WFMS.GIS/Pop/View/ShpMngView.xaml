@@ -6,6 +6,7 @@
        
             mc:Ignorable="d" 
             d:DesignHeight="200" d:DesignWidth="450"
+            Title="Shape 파일관리"
         
             xmlns:vm="clr-namespace:GTI.WFMS.GIS.Pop.ViewModel"
             xmlns:cv="clr-namespace:GTI.WFMS.Models.Common;assembly=GTI.WFMS.Models"

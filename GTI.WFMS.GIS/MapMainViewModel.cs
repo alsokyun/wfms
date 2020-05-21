@@ -467,7 +467,8 @@ namespace GTI.WFMS.GIS
         private readonly string _templateUri = "https://stamen-tiles-a.a.ssl.fastly.net/watercolor/{level}/{col}/{row}.jpg";
         private readonly string _templateUri1 = "http://a.tile.opencyclemap.org/cycle/{level}/{col}/{row}.png";
         private readonly string _templateUri2 = "http://175.121.89.164:8080/eMap/eMap/L{level}/{col}/{row}.png";
-        private readonly string _templateUri3 = "file://I:\\kor\\L{level}\\{col}\\{row}.png";
+        //private readonly string _templateUri3 = "file:///I:\\kor\\{level}\\{col}\\{row}.png";
+        private readonly string _templateUri3 = "http://192.168.0.99:8088/map/{level}/{col}/{row}.png";
         private readonly List<string> _tiledLayerSubdomains = new List<string> { "a", "b", "c", "d" };
         private readonly List<string> _tiledLayerSubdomains2 = new List<string> { "175.121.89.164:8080" , "175.121.89.164:8080" , "175.121.89.164:8080" , "175.121.89.164:8080" };
         private readonly string _attribution = "Map tiles by <a href=\"http://stamen.com/\">Stamen Design</a>," +
@@ -490,16 +491,18 @@ namespace GTI.WFMS.GIS
             //≈∏¿œ∏ 
             TileCache tileCache = new TileCache(BizUtil.GetDataFolder("tile", "korea.tpk"));
             ArcGISTiledLayer tileLayer = new ArcGISTiledLayer(tileCache);
-            this._map.Basemap = new Basemap(tileLayer);
+            //this._map.Basemap = new Basemap(tileLayer);
 
             //WebTileLayer
-            myBaseLayer = new WebTiledLayer(_templateUri1);
+            myBaseLayer = new WebTiledLayer(_templateUri3);
+            Console.WriteLine(myBaseLayer.TemplateUri);
+            
             //myBaseLayer = new WebTiledLayer(_templateUri2);
             //myBaseLayer = new WebTiledLayer(_templateUri2, myBaseLayer.TileInfo, myBaseLayer.FullExtent);
 
             Basemap layerBasemap = new Basemap(myBaseLayer);
             //myBaseLayer.Attribution = _attribution;
-            //this._map.Basemap = layerBasemap;
+            this._map.Basemap = layerBasemap;
 
 
 

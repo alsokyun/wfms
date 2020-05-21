@@ -28,8 +28,8 @@ namespace GTI.WFMS.Modules.Mntc.Model
         /// 프로퍼티 부분
         /// </summary>
         /// 
-        private decimal __SEQ;
-        public decimal SEQ
+        private decimal ?  __SEQ;
+        public decimal ? SEQ
         {
             get { return __SEQ; }
             set
@@ -100,8 +100,8 @@ namespace GTI.WFMS.Modules.Mntc.Model
                 OnPropertyChanged("EDT_ID");
             }
         }
-        private decimal __READ_CNT;
-        public decimal READ_CNT
+        private decimal ?  __READ_CNT;
+        public decimal ? READ_CNT
         {
             get { return __READ_CNT; }
             set

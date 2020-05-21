@@ -1,6 +1,9 @@
-﻿using DevExpress.Xpf.Editors;
+﻿using DevExpress.DataAccess.ObjectBinding;
+using DevExpress.Xpf.Editors;
+using DevExpress.XtraReports.UI;
 using GTI.WFMS.Models.Common;
 using GTI.WFMS.Modules.Cnst.Model;
+using GTI.WFMS.Modules.Cnst.Report;
 using GTI.WFMS.Modules.Cnst.View;
 using GTIFramework.Common.Log;
 using GTIFramework.Common.MessageBox;
@@ -28,6 +31,7 @@ namespace GTI.WFMS.Modules.Cnst.ViewModel
         public DelegateCommand<object> DeleteCommand { get; set; }
         public DelegateCommand<object> BackCommand { get; set; }
         public DelegateCommand<object> DupCommand { get; set; }
+        public DelegateCommand<object> PrintCommand { get; set; }
 
 
         #endregion
@@ -53,6 +57,7 @@ namespace GTI.WFMS.Modules.Cnst.ViewModel
             this.SaveCommand = new DelegateCommand<object>(OnSave);
             this.DeleteCommand = new DelegateCommand<object>(OnDelete);
             this.BackCommand = new DelegateCommand<object>(OnBack);
+            this.PrintCommand = new DelegateCommand<object>(OnPrint);
 
 
             //입력항목 변경되면 중복버튼 복원
@@ -258,7 +263,40 @@ namespace GTI.WFMS.Modules.Cnst.ViewModel
             btnBack.RaiseEvent(new RoutedEventArgs(Button.ClickEvent));
         }
 
+        /// <summary>
+        /// 인쇄작업
+        /// </summary>
+        /// <param name="obj"></param>
+        private void OnPrint(object obj)
+        {
+            // 필수체크 (Tag에 필수체크 표시한 EditBox, ComboBox 대상으로 수행)
+            //if (!BizUtil.ValidReq(fireFacDtlView)) return;
 
+            //if (Messages.ShowYesNoMsgBox("인쇄하시겠습니까?") != MessageBoxResult.Yes) return;
+
+            try
+            {
+
+                //0.Datasource 생성
+                SplyDtlViewMdl mdl = new SplyDtlViewMdl(this.CNT_NUM);
+                //1.Report 호출
+
+                SplyMngReport report = new SplyMngReport();
+                ObjectDataSource ods = new ObjectDataSource();
+                ods.Name = "objectDataSource1";
+                ods.DataSource = mdl;
+
+                report.DataSource = ods;
+                report.ShowPreviewDialog();
+
+
+            }
+            catch (Exception)
+            {
+                Messages.ShowErrMsgBox("인쇄 처리중 오류가 발생하였습니다.");
+                return;
+            }
+        }
         #endregion
 
 

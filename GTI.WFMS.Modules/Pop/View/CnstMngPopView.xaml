@@ -8,6 +8,7 @@
         xmlns:local="clr-namespace:GTI.WFMS.Modules.Pop.View"
         mc:Ignorable="d" 
         d:DesignHeight="585" d:DesignWidth="1100"
+        Title="상수공사 선택"
       
         xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
         xmlns:ei="http://schemas.microsoft.com/expression/2010/interactions"

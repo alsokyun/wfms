@@ -155,8 +155,8 @@ namespace GTI.WFMS.Models.Fclt.Model
                 OnPropertyChanged("WSS_NAM");
             }
         }
-        private decimal __AGA_VOL;
-        public decimal AGA_VOL
+        private decimal ?  __AGA_VOL;
+        public decimal ? AGA_VOL
         {
             get { return __AGA_VOL; }
             set
@@ -165,8 +165,8 @@ namespace GTI.WFMS.Models.Fclt.Model
                 OnPropertyChanged("AGA_VOL");
             }
         }
-        private decimal __HGA_VOL;
-        public decimal HGA_VOL
+        private decimal ?  __HGA_VOL;
+        public decimal ? HGA_VOL
         {
             get { return __HGA_VOL; }
             set
@@ -175,8 +175,8 @@ namespace GTI.WFMS.Models.Fclt.Model
                 OnPropertyChanged("HGA_VOL");
             }
         }
-        private decimal __PMP_CNT;
-        public decimal PMP_CNT
+        private decimal ?  __PMP_CNT;
+        public decimal ? PMP_CNT
         {
             get { return __PMP_CNT; }
             set
@@ -185,8 +185,8 @@ namespace GTI.WFMS.Models.Fclt.Model
                 OnPropertyChanged("PMP_CNT");
             }
         }
-        private decimal __GAI_ARA;
-        public decimal GAI_ARA
+        private decimal ?  __GAI_ARA;
+        public decimal ? GAI_ARA
         {
             get { return __GAI_ARA; }
             set

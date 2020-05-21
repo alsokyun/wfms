@@ -6,6 +6,7 @@
        
             mc:Ignorable="d" 
             d:DesignHeight="500" d:DesignWidth="1000"
+            Title="시설물편집"
         
             xmlns:esri="http://schemas.esri.com/arcgis/runtime/2013"
             xmlns:cv="clr-namespace:GTI.WFMS.Models.Common;assembly=GTI.WFMS.Models"

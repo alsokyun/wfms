@@ -260,8 +260,8 @@
       , A.META_SEQ
       FROM INFOFMS.WTT_META_HT A
       WHERE 1=1
-      AND A.FTR_CDE=#ftrCde#
-      AND A.FTR_IDN=#ftrIdn#
+      AND A.FTR_CDE=#FTR_CDE#
+      AND A.FTR_IDN=#FTR_IDN#
       ORDER BY A.CHG_NUM DESC
       ) M
     </select>
@@ -279,8 +279,8 @@
                   , A.CLN_NAM
               FROM INFOFMS.WTT_RSRV_HT
              WHERE 1=1
-               AND A.FTR_CDE=#ftrCde#
-               AND A.FTR_IDN=#ftrIdn#
+               AND A.FTR_CDE=#FTR_CDE#
+               AND A.FTR_IDN=#FTR_IDN#
              ORDER BY A.CLN_NUM DESC
       ) M
     </select>

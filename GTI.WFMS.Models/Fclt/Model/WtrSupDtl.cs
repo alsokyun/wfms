@@ -157,8 +157,8 @@ namespace GTI.WFMS.Models.Fclt.Model
                 OnPropertyChanged("SAG_NAM");
             }
         }
-        private decimal __SRV_VOL;
-        public decimal SRV_VOL
+        private decimal ?  __SRV_VOL;
+        public decimal ? SRV_VOL
         {
             get { return __SRV_VOL; }
             set
@@ -167,8 +167,8 @@ namespace GTI.WFMS.Models.Fclt.Model
                 OnPropertyChanged("SRV_VOL");
             }
         }
-        private decimal __HGH_WAL;
-        public decimal HGH_WAL
+        private decimal ?  __HGH_WAL;
+        public decimal ? HGH_WAL
         {
             get { return __HGH_WAL; }
             set
@@ -177,8 +177,8 @@ namespace GTI.WFMS.Models.Fclt.Model
                 OnPropertyChanged("HGH_WAL");
             }
         }
-        private decimal __LOW_WAL;
-        public decimal LOW_WAL
+        private decimal ?  __LOW_WAL;
+        public decimal ? LOW_WAL
         {
             get { return __LOW_WAL; }
             set
@@ -187,8 +187,8 @@ namespace GTI.WFMS.Models.Fclt.Model
                 OnPropertyChanged("LOW_WAL");
             }
         }
-        private decimal __ISR_VOL;
-        public decimal ISR_VOL
+        private decimal ?  __ISR_VOL;
+        public decimal ? ISR_VOL
         {
             get { return __ISR_VOL; }
             set
@@ -208,8 +208,8 @@ namespace GTI.WFMS.Models.Fclt.Model
             }
         }
 
-        private decimal __SUP_POP;
-        public decimal SUP_POP
+        private decimal ?  __SUP_POP;
+        public decimal ? SUP_POP
         {
             get { return __SUP_POP; }
             set
@@ -268,8 +268,8 @@ namespace GTI.WFMS.Models.Fclt.Model
                 OnPropertyChanged("SYS_CHK_NAM");
             }
         }
-        private decimal __SRV_ARA;
-        public decimal SRV_ARA
+        private decimal ?  __SRV_ARA;
+        public decimal ? SRV_ARA
         {
             get { return __SRV_ARA; }
             set

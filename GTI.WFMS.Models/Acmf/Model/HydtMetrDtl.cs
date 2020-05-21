@@ -147,8 +147,8 @@ namespace GTI.WFMS.Models.Acmf.Model
                 OnPropertyChanged("HOM_ADR");
             }
         }
-        private decimal __HOM_CNT;
-        public decimal HOM_CNT
+        private decimal ?  __HOM_CNT;
+        public decimal ? HOM_CNT
         {
             get { return __HOM_CNT; }
             set
@@ -177,8 +177,8 @@ namespace GTI.WFMS.Models.Acmf.Model
                 OnPropertyChanged("SBI_NAM");
             }
         }
-        private decimal __MET_DIP;
-        public decimal MET_DIP
+        private decimal ?  __MET_DIP;
+        public decimal ? MET_DIP
         {
             get { return __MET_DIP; }
             set
@@ -227,8 +227,8 @@ namespace GTI.WFMS.Models.Acmf.Model
                 OnPropertyChanged("PIP_NAM");
             }
         }
-        private decimal ? __PIP_IDN;
-        public decimal? PIP_IDN
+        private decimal ?  __PIP_IDN;
+        public decimal?  PIP_IDN
         {
             get { return __PIP_IDN; }
             set

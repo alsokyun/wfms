@@ -866,6 +866,7 @@
       SELECT
       A.CNT_NUM
       , A.HJD_CDE
+      , ( SELECT HJD_NAM FROM CMT_ADAR_MA WHERE HJD_CDE = A.HJD_CDE ) AS HJD_NAM
       , A.BEG_YMD
       , A.FNS_YMD
       , A.GVR_AMT

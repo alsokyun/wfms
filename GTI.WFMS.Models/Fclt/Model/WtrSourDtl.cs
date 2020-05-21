@@ -157,8 +157,8 @@ namespace GTI.WFMS.Models.Fclt.Model
                 OnPropertyChanged("IRV_NAM");
             }
         }
-        private decimal __RSV_VOL;
-        public decimal RSV_VOL
+        private decimal ?  __RSV_VOL;
+        public decimal ? RSV_VOL
         {
             get { return __RSV_VOL; }
             set
@@ -167,8 +167,8 @@ namespace GTI.WFMS.Models.Fclt.Model
                 OnPropertyChanged("RSV_VOL");
             }
         }
-        private decimal __RSV_ARA;
-        public decimal RSV_ARA
+        private decimal ?  __RSV_ARA;
+        public decimal ? RSV_ARA
         {
             get { return __RSV_ARA; }
             set
@@ -177,8 +177,8 @@ namespace GTI.WFMS.Models.Fclt.Model
                 OnPropertyChanged("RSV_ARA");
             }
         }
-        private decimal __FUL_ARA;
-        public decimal FUL_ARA
+        private decimal ?  __FUL_ARA;
+        public decimal ? FUL_ARA
         {
             get { return __FUL_ARA; }
             set
@@ -187,8 +187,8 @@ namespace GTI.WFMS.Models.Fclt.Model
                 OnPropertyChanged("FUL_ARA");
             }
         }
-        private decimal __THR_WAL;
-        public decimal THR_WAL
+        private decimal ?  __THR_WAL;
+        public decimal ? THR_WAL
         {
             get { return __THR_WAL; }
             set
@@ -197,8 +197,8 @@ namespace GTI.WFMS.Models.Fclt.Model
                 OnPropertyChanged("THR_WAL");
             }
         }
-        private decimal __HTH_WAL;
-        public decimal HTH_WAL
+        private decimal ?  __HTH_WAL;
+        public decimal ? HTH_WAL
         {
             get { return __HTH_WAL; }
             set
@@ -207,8 +207,8 @@ namespace GTI.WFMS.Models.Fclt.Model
                 OnPropertyChanged("HTH_WAL");
             }
         }
-        private decimal __AVG_WAL;
-        public decimal AVG_WAL
+        private decimal ?  __AVG_WAL;
+        public decimal ? AVG_WAL
         {
             get { return __AVG_WAL; }
             set
@@ -217,8 +217,8 @@ namespace GTI.WFMS.Models.Fclt.Model
                 OnPropertyChanged("AVG_WAL");
             }
         }
-        private decimal __DRA_WAL;
-        public decimal DRA_WAL
+        private decimal ?  __DRA_WAL;
+        public decimal ? DRA_WAL
         {
             get { return __DRA_WAL; }
             set
@@ -227,8 +227,8 @@ namespace GTI.WFMS.Models.Fclt.Model
                 OnPropertyChanged("DRA_WAL");
             }
         }
-        private decimal __HDR_WAL;
-        public decimal HDR_WAL
+        private decimal ?  __HDR_WAL;
+        public decimal ? HDR_WAL
         {
             get { return __HDR_WAL; }
             set
@@ -237,8 +237,8 @@ namespace GTI.WFMS.Models.Fclt.Model
                 OnPropertyChanged("HDR_WAL");
             }
         }
-        private decimal __KEE_WAL;
-        public decimal KEE_WAL
+        private decimal ?  __KEE_WAL;
+        public decimal ? KEE_WAL
         {
             get { return __KEE_WAL; }
             set
@@ -247,8 +247,8 @@ namespace GTI.WFMS.Models.Fclt.Model
                 OnPropertyChanged("KEE_WAL");
             }
         }
-        private decimal __GUA_ARA;
-        public decimal GUA_ARA
+        private decimal ?  __GUA_ARA;
+        public decimal ? GUA_ARA
         {
             get { return __GUA_ARA; }
             set
@@ -257,8 +257,8 @@ namespace GTI.WFMS.Models.Fclt.Model
                 OnPropertyChanged("GUA_ARA");
             }
         }
-        private decimal __GUA_POP;
-        public decimal GUA_POP
+        private decimal ?  __GUA_POP;
+        public decimal ? GUA_POP
         {
             get { return __GUA_POP; }
             set

@@ -35,8 +35,8 @@ namespace GTI.WFMS.Models.Mntc.Model
         public virtual bool AllDay { get; set; }
         public virtual string RecurrenceInfo { get; set; }
         public virtual string ReminderInfo { get; set; }
-        private int? resourceId;
-        public virtual int? ResourceId
+        private int?  resourceId;
+        public virtual int?  ResourceId
         {
             get { return 1; }
             set { this.resourceId = value; }
@@ -110,8 +110,8 @@ namespace GTI.WFMS.Models.Mntc.Model
         /// <summary>
         /// 프로퍼티 부분
         /// </summary>
-        private decimal __SCL_NUM;
-        public decimal SCL_NUM
+        private decimal ?  __SCL_NUM;
+        public decimal ? SCL_NUM
         {
             get { return __SCL_NUM; }
             set

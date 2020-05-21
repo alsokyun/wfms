@@ -10,6 +10,8 @@
         xmlns:dxe="http://schemas.devexpress.com/winfx/2008/xaml/editors"
         xmlns:cm="clr-namespace:GTIFramework.Common.Utils.Converters;assembly=GTIFramework"
         xmlns:gridani="http://schemas.devexpress.com/winfx/2008/xaml/docking"
+        Title="상황판"
+
         mc:Ignorable="d"
         d:DesignHeight="500" d:DesignWidth="1000"
         x:Name="dashWinView" KeyDown="DashWinView_KeyDown"         

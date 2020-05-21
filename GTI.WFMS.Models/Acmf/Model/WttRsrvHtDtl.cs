@@ -37,8 +37,8 @@ namespace GTI.WFMS.Models.Acmf.Model
                 OnPropertyChanged("FTR_CDE");
             }
         }
-        private decimal __FTR_IDN;
-        public decimal FTR_IDN
+        private decimal ?  __FTR_IDN;
+        public decimal ? FTR_IDN
         {
             get { return __FTR_IDN; }
             set
@@ -47,8 +47,8 @@ namespace GTI.WFMS.Models.Acmf.Model
                 OnPropertyChanged("FTR_IDN");
             }
         }
-        private decimal __SEQ;
-        public decimal SEQ
+        private decimal ?  __SEQ;
+        public decimal ? SEQ
         {
             get { return __SEQ; }
             set
@@ -57,8 +57,8 @@ namespace GTI.WFMS.Models.Acmf.Model
                 OnPropertyChanged("SEQ");
             }
         }
-        private decimal __CLN_NUM;
-        public decimal CLN_NUM
+        private decimal ?  __CLN_NUM;
+        public decimal ? CLN_NUM
         {
             get { return __CLN_NUM; }
             set
