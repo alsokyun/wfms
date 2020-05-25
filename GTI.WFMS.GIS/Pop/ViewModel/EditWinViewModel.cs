@@ -168,7 +168,7 @@ namespace GTI.WFMS.GIS.Pop.ViewModel
 
                 // 2.화면 및 콤보초기화
                 cbFTR_CDE = editWinView.cbFTR_CDE;
-                BizUtil.SetCombo(cbFTR_CDE, "Select_FTR_LIST", "FTR_CDE", "FTR_NAM", "[선택하세요]");
+                BizUtil.SetCombo(cbFTR_CDE, "Select_FTR_LIST", "FTR_CDE", "FTR_NAM", "선택");
                 cbFTR_CDE.EditValueChanged += cbFTR_CDEHandler; //콤보변경핸들러
 
                 //비트맵초기화(시설물상세DIV 아이콘)

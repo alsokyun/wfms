@@ -267,8 +267,8 @@
             <dxe:TextEdit Grid.Row="2" Grid.Column="1" Style="{DynamicResource ResourceKey=GridTextEdit}"   
                           x:Name="txtSUP_ARE" EditValue="{Binding SUP_ARE}"/>
             <Label Grid.Row="2" Grid.Column="2" Content="급수인구" Style="{DynamicResource ResourceKey=GridLabel}"/>
-            <dxe:TextEdit Grid.Row="2" Grid.Column="3" Style="{DynamicResource ResourceKey=GridNumberEdit}"   
-                          x:Name="txtSUP_POP" EditValue="{Binding SUP_POP}" Mask="n0"/>
+            <dxe:TextEdit Grid.Row="2" Grid.Column="3" Style="{DynamicResource ResourceKey=GridIntEdit}"   
+                          x:Name="txtSUP_POP" EditValue="{Binding SUP_POP}" />
             <Label Grid.Row="2" Grid.Column="4" Content="배수지제어방법" Style="{DynamicResource ResourceKey=GridLabel}"/>
             <dxe:ComboBoxEdit Grid.Row="2" Grid.Column="5" Style="{DynamicResource ResourceKey=GridComboBox}" 
                               x:Name="cbSCW_CDE" EditValue="{Binding SCW_CDE}" />

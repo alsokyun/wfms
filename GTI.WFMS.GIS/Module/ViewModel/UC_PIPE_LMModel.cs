@@ -266,15 +266,15 @@ namespace GTI.WFMS.GIS.Module.ViewModel
             try
             {
                 // cbHJD_CDE 행정동
-                BizUtil.SetCombo(uC_PIPE_LM.cbHJD_CDE, "Select_ADAR_LIST", "HJD_CDE", "HJD_NAM", "[선택하세요]");
+                BizUtil.SetCombo(uC_PIPE_LM.cbHJD_CDE, "Select_ADAR_LIST", "HJD_CDE", "HJD_NAM", "선택");
                 // cbMNG_CDE 관리기관
-                BizUtil.SetCmbCode(uC_PIPE_LM.cbMNG_CDE, "250101", "[선택하세요]");
+                BizUtil.SetCmbCode(uC_PIPE_LM.cbMNG_CDE, "250101", "선택");
                 // cbMOP_CDE
-                BizUtil.SetCmbCode(uC_PIPE_LM.cbMOP_CDE, "250102", "[선택하세요]");
+                BizUtil.SetCmbCode(uC_PIPE_LM.cbMOP_CDE, "250102", "선택");
                 // cbJHT_CDE
-                BizUtil.SetCmbCode(uC_PIPE_LM.cbJHT_CDE, "250026", "[선택하세요]");
+                BizUtil.SetCmbCode(uC_PIPE_LM.cbJHT_CDE, "250026", "선택");
                 // cbSAA_CDE
-                BizUtil.SetCmbCode(uC_PIPE_LM.cbSAA_CDE, "250018", "[선택하세요]");
+                BizUtil.SetCmbCode(uC_PIPE_LM.cbSAA_CDE, "250018", "선택");
             }
             catch (Exception ex)
             {

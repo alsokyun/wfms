@@ -210,8 +210,8 @@ namespace GTI.WFMS.Models.Cmm.Model
                 OnPropertyChanged("OME_NAM");
             }
         }
-        private int __OME_DIP;
-        public int OME_DIP
+        private decimal? __OME_DIP;
+        public decimal? OME_DIP
         {
             get { return __OME_DIP; }
             set
@@ -280,8 +280,8 @@ namespace GTI.WFMS.Models.Cmm.Model
                 OnPropertyChanged("OME_VAL");
             }
         }
-        private int __OME_CNT;
-        public int OME_CNT
+        private int? __OME_CNT;
+        public int? OME_CNT
         {
             get { return __OME_CNT; }
             set
@@ -300,8 +300,8 @@ namespace GTI.WFMS.Models.Cmm.Model
                 OnPropertyChanged("IME_NAM");
             }
         }
-        private int __IME_DIP;
-        public int IME_DIP
+        private decimal? __IME_DIP;
+        public decimal? IME_DIP
         {
             get { return __IME_DIP; }
             set

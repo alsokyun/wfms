@@ -121,7 +121,7 @@ namespace GTI.WFMS.Modules.Pipe.ViewModel
                         var colValue = dbprop.GetValue(result, null);
                         if (colName.Equals(propName))
                         {
-                            prop.SetValue(this, Convert.ChangeType(colValue, prop.PropertyType));
+                            try { prop.SetValue(this, colValue); } catch (Exception) { }
                         }
                     }
                     Console.WriteLine(propName + " - " + prop.GetValue(this, null));
@@ -282,16 +282,16 @@ namespace GTI.WFMS.Modules.Pipe.ViewModel
                 //BizUtil.SetCombo(cbFTR_CDE, "Select_FTR_LIST", "FTR_CDE", "FTR_NAM", false);
 
                 // cbHJD_CDE 행정동
-                BizUtil.SetCombo(cbHJD_CDE, "Select_ADAR_LIST", "HJD_CDE", "HJD_NAM", "[선택하세요]");
+                BizUtil.SetCombo(cbHJD_CDE, "Select_ADAR_LIST", "HJD_CDE", "HJD_NAM", "선택");
 
                 // cbMNG_CDE 관리기관
-                BizUtil.SetCmbCode(cbMNG_CDE, "250101", "[선택하세요]");
+                BizUtil.SetCmbCode(cbMNG_CDE, "250101", "선택");
 
                 // cbPGA_CDE 수압계종류
-                BizUtil.SetCmbCode(cbPGA_CDE, "250057", "[선택하세요]");
+                BizUtil.SetCmbCode(cbPGA_CDE, "250057", "선택");
 
                 // cbMOF_CDE 형식
-                BizUtil.SetCmbCode(cbMOF_CDE, "250004", "[선택하세요]");
+                BizUtil.SetCmbCode(cbMOF_CDE, "250004", "선택");
 
             }
             catch (Exception ex)

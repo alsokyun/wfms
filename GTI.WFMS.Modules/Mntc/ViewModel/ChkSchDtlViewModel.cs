@@ -112,14 +112,7 @@ namespace GTI.WFMS.Modules.Mntc.ViewModel
                         var colValue = dbprop.GetValue(result, null);
                         if (colName.Equals(propName))
                         {
-                            try
-                            {
-                                prop.SetValue(this, Convert.ChangeType(colValue, prop.PropertyType));
-                            }
-                            catch (Exception)
-                            {
-                                //형변환오류는 세팅하지 않는다..
-                            }
+                            try { prop.SetValue(this, colValue); } catch (Exception) { }
                         }
                     }
                     Console.WriteLine(propName + " - " + prop.GetValue(this, null));
@@ -138,7 +131,7 @@ namespace GTI.WFMS.Modules.Mntc.ViewModel
                 try
                 {
                     //다큐먼트 별로로 세팅
-                    this.CHK_CTNT = new TextRange(chkSchDtlView.richBox.Document.ContentStart, chkSchDtlView.richBox.Document.ContentEnd).Text;
+                    this.CHK_CTNT = new TextRange(chkSchDtlView.richBox.Document.ContentStart, chkSchDtlView.richBox.Document.ContentEnd).Text.Trim();
                     BizUtil.Update2(this, "SaveChscMaDtl");
                 }
                 catch (Exception )
@@ -232,9 +225,9 @@ namespace GTI.WFMS.Modules.Mntc.ViewModel
             try
             {
                 //관리기관
-                BizUtil.SetCmbCode(cbMNG_CDE, "250101", "[선택하세요]");
+                BizUtil.SetCmbCode(cbMNG_CDE, "250101", "선택");
                 //점검구분
-                BizUtil.SetCmbCode(cbSCL_CDE, "250105", "[선택하세요]");
+                BizUtil.SetCmbCode(cbSCL_CDE, "250105", "선택");
                 
 
             }

@@ -27,8 +27,8 @@ namespace GTI.WFMS.Models.Acmf.Model
         /// <summary>
         /// 프로퍼티 부분
         /// </summary>
-        private decimal __CHG_NUM;
-        public decimal CHG_NUM
+        private decimal? __CHG_NUM;
+        public decimal? CHG_NUM
         {
             get { return __CHG_NUM; }
             set
@@ -57,8 +57,8 @@ namespace GTI.WFMS.Models.Acmf.Model
                 OnPropertyChanged("FTR_IDN");
             }
         }
-        private decimal __META_SEQ;
-        public decimal META_SEQ
+        private decimal? __META_SEQ;
+        public decimal? META_SEQ
         {
             get { return __META_SEQ; }
             set
@@ -107,8 +107,8 @@ namespace GTI.WFMS.Models.Acmf.Model
                 OnPropertyChanged("OME_NUM");
             }
         }
-        private decimal __OME_DIP;
-        public decimal OME_DIP
+        private decimal? __OME_DIP;
+        public decimal? OME_DIP
         {
             get { return __OME_DIP; }
             set
@@ -117,8 +117,8 @@ namespace GTI.WFMS.Models.Acmf.Model
                 OnPropertyChanged("OME_DIP");
             }
         }
-        private decimal __OME_CNT;
-        public decimal OME_CNT
+        private int? __OME_CNT;
+        public int? OME_CNT
         {
             get { return __OME_CNT; }
             set

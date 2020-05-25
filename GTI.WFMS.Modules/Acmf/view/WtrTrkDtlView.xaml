@@ -289,7 +289,7 @@
             <dxe:TextEdit Grid.Row="2" Grid.Column="3" Style="{DynamicResource ResourceKey=GridNumberEdit}"   
                           x:Name="txtTBL_ARA" EditValue="{Binding TBL_ARA}"/>
             <Label Grid.Row="2" Grid.Column="4" Content="세대수" Style="{DynamicResource ResourceKey=GridLabel}"/>
-            <dxe:TextEdit Grid.Row="2" Grid.Column="5" Style="{DynamicResource ResourceKey=GridNumberEdit}"   
+            <dxe:TextEdit Grid.Row="2" Grid.Column="5" Style="{DynamicResource ResourceKey=GridIntEdit}"   
                           x:Name="txtFAM_CNT" EditValue="{Binding FAM_CNT}"/>
             <Label Grid.Row="2" Grid.Column="6" Content="건물주소" Style="{DynamicResource ResourceKey=GridLabel}"/>
             <dxe:TextEdit Grid.Row="2" Grid.Column="7" Style="{DynamicResource ResourceKey=GridTextEdit}"   

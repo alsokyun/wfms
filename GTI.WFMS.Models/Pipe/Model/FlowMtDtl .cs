@@ -157,8 +157,8 @@ namespace GTI.WFMS.Models.Pipe.Model
                 OnPropertyChanged("MOF_NAM");
             }
         }
-        private decimal __FLO_DIP;
-        public decimal FLO_DIP
+        private decimal? __FLO_DIP;
+        public decimal? FLO_DIP
         {
             get { return __FLO_DIP; }
             set
@@ -217,8 +217,8 @@ namespace GTI.WFMS.Models.Pipe.Model
                 OnPropertyChanged("SYS_CHK_NAM");
             }
         }
-        private decimal __ANG_DIR;
-        public decimal ANG_DIR
+        private decimal? __ANG_DIR;
+        public decimal? ANG_DIR
         {
             get { return __ANG_DIR; }
             set

@@ -269,13 +269,13 @@ namespace GTI.WFMS.GIS.Module.ViewModel
             try
             {
                 // cbHJD_CDE 행정동
-                BizUtil.SetCombo(uC_HEAD_PS.cbHJD_CDE, "Select_ADAR_LIST", "HJD_CDE", "HJD_NAM", "[선택하세요]");
+                BizUtil.SetCombo(uC_HEAD_PS.cbHJD_CDE, "Select_ADAR_LIST", "HJD_CDE", "HJD_NAM", "선택");
 
                 // cbMNG_CDE 관리기관
-                BizUtil.SetCmbCode(uC_HEAD_PS.cbMNG_CDE, "250101", "[선택하세요]");
+                BizUtil.SetCmbCode(uC_HEAD_PS.cbMNG_CDE, "250101", "선택");
 
                 // cbWSR_CDE 수원구분
-                BizUtil.SetCmbCode(uC_HEAD_PS.cbWSR_CDE, "250058", "[선택하세요]");
+                BizUtil.SetCmbCode(uC_HEAD_PS.cbWSR_CDE, "250058", "선택");
 
             }
             catch (Exception ex)

@@ -47,8 +47,8 @@ namespace GTI.WFMS.Models.Acmf.Model
                 OnPropertyChanged("FTR_IDN");
             }
         }
-        private decimal ?  __SEQ;
-        public decimal ? SEQ
+        private int ?  __SEQ;
+        public int ? SEQ
         {
             get { return __SEQ; }
             set

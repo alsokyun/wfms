@@ -116,8 +116,8 @@ namespace GTI.WFMS.Modules.Cmpl.ViewModel
                 try
                 {
                     //다큐먼트는 따로 처리
-                    this.Dtl.REP_EXP = new TextRange(lekSiteAddView.richREP_EXP.Document.ContentStart, lekSiteAddView.richREP_EXP.Document.ContentEnd).Text;
-                    this.Dtl.LEK_EXP = new TextRange(lekSiteAddView.richLEK_EXP.Document.ContentStart, lekSiteAddView.richLEK_EXP.Document.ContentEnd).Text;
+                    this.Dtl.REP_EXP = new TextRange(lekSiteAddView.richREP_EXP.Document.ContentStart, lekSiteAddView.richREP_EXP.Document.ContentEnd).Text.Trim();
+                    this.Dtl.LEK_EXP = new TextRange(lekSiteAddView.richLEK_EXP.Document.ContentStart, lekSiteAddView.richLEK_EXP.Document.ContentEnd).Text.Trim();
                     BizUtil.Update2(this.Dtl, "SaveWtlLeakDtl");
                 }
                 catch (Exception ex)
@@ -155,15 +155,15 @@ namespace GTI.WFMS.Modules.Cmpl.ViewModel
             try
             {
                 //행정구역
-                BizUtil.SetCombo(lekSiteAddView.cbHJD_CDE, "Select_ADAR_LIST", "HJD_CDE", "HJD_NAM", "[선택하세요]");
+                BizUtil.SetCombo(lekSiteAddView.cbHJD_CDE, "Select_ADAR_LIST", "HJD_CDE", "HJD_NAM", "선택");
                 //지형지물
                 BizUtil.SetCombo(lekSiteAddView.cbFTR_CDE, "Select_FTR_LIST", "FTR_CDE", "FTR_NAM");
                 //누수원인
-                BizUtil.SetCmbCode(lekSiteAddView.cbLRS_CDE, "250044", "[선택하세요]");
+                BizUtil.SetCmbCode(lekSiteAddView.cbLRS_CDE, "250044", "선택");
                 //누수상태
-                BizUtil.SetCmbCode(lekSiteAddView.cbLEP_CDE, "250043", "[선택하세요]");
+                BizUtil.SetCmbCode(lekSiteAddView.cbLEP_CDE, "250043", "선택");
                 //관재질
-                BizUtil.SetCmbCode(lekSiteAddView.cbMOP_CDE, "250102", "[선택하세요]");
+                BizUtil.SetCmbCode(lekSiteAddView.cbMOP_CDE, "250102", "선택");
 
             }
             catch (Exception ex)

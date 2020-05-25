@@ -123,8 +123,8 @@ namespace GTI.WFMS.Modules.Cnst.Model
             }
         }
         
-        private int __PAY_AMT;
-        public int PAY_AMT
+        private int? __PAY_AMT;
+        public int? PAY_AMT
         {
             get { return __PAY_AMT; }
             set

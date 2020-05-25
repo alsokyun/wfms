@@ -53,7 +53,7 @@ namespace GTI.WFMS.Modules.Cnst.ViewModel
                         var colValue = dbprop.GetValue(result, null);
                         if (colName.Equals(propName))
                         {
-                            prop.SetValue(this, Convert.ChangeType(colValue, prop.PropertyType));
+                            try { prop.SetValue(this, colValue); } catch (Exception) { }
                         }
                     }
                     Console.WriteLine(propName + " - " + prop.GetValue(this, null));

@@ -171,8 +171,8 @@ namespace GTI.WFMS.Models.Cmm.Model
                 OnPropertyChanged("MOP_NAM");
             }
         }
-        private int __PIP_DIP;
-        public int PIP_DIP
+        private decimal? __PIP_DIP;
+        public decimal? PIP_DIP
         {
             get { return __PIP_DIP; }
             set

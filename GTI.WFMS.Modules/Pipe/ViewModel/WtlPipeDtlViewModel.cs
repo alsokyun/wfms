@@ -163,7 +163,7 @@ namespace GTI.WFMS.Modules.Pipe.ViewModel
                     var colValue = dbprop.GetValue(result, null);
                     if (colName.Equals(propName))
                     {
-                        prop.SetValue(this, Convert.ChangeType(colValue, prop.PropertyType));
+                        try { prop.SetValue(this, colValue); } catch (Exception) { }
                     }
                 }
                 Console.WriteLine(propName + " - " + prop.GetValue(this, null));
@@ -334,19 +334,19 @@ namespace GTI.WFMS.Modules.Pipe.ViewModel
             try
             {
                 // cbMNG_CDE
-                BizUtil.SetCmbCode(cbMNG_CDE, "250101", "[선택하세요]");
+                BizUtil.SetCmbCode(cbMNG_CDE, "250101", "선택");
 
                 // cbHJD_CDE 행정동
-                BizUtil.SetCombo(cbHJD_CDE, "Select_ADAR_LIST", "HJD_CDE", "HJD_NAM", "[선택하세요]");
+                BizUtil.SetCombo(cbHJD_CDE, "Select_ADAR_LIST", "HJD_CDE", "HJD_NAM", "선택");
 
                 // cbMOP_CDE
-                BizUtil.SetCmbCode(cbMOP_CDE, "250102", "[선택하세요]");
+                BizUtil.SetCmbCode(cbMOP_CDE, "250102", "선택");
 
                 // cbJHT_CDE
-                BizUtil.SetCmbCode(cbJHT_CDE, "250026", "[선택하세요]");
+                BizUtil.SetCmbCode(cbJHT_CDE, "250026", "선택");
 
                 // cbSAA_CDE
-                BizUtil.SetCmbCode(cbSAA_CDE, "250018", "[선택하세요]");
+                BizUtil.SetCmbCode(cbSAA_CDE, "250018", "선택");
                 
             }
             catch (Exception ex)

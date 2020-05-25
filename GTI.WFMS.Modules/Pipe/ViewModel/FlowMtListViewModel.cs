@@ -294,12 +294,10 @@ namespace GTI.WFMS.Modules.Pipe.ViewModel
                 catch (Exception ) { }
                 if (!BizUtil.ValidDateBtw(conditions["IST_YMD_FROM"], conditions["IST_YMD_TO"]))
                 {
-                    Messages.ShowInfoMsgBox("From/To 일자를 확인하세요");
+                    Messages.ShowInfoMsgBox("설치일자 범위를 확인하세요");
                     return;
                 }
-
-                conditions.Add("firstIndex", 0);
-                conditions.Add("lastIndex", 1000);
+                
 
                 conditions.Add("sqlId", "SelectFlowMtList");
     
@@ -395,7 +393,7 @@ namespace GTI.WFMS.Modules.Pipe.ViewModel
                 catch (Exception ) { }
                 if (!BizUtil.ValidDateBtw(conditions["IST_YMD_FROM"], conditions["IST_YMD_TO"]))
                 {
-                    Messages.ShowInfoMsgBox("From/To 일자를 확인하세요");
+                    Messages.ShowInfoMsgBox("설치일자 범위를 확인하세요");
                     return;
                 }
 
@@ -515,16 +513,16 @@ namespace GTI.WFMS.Modules.Pipe.ViewModel
                 dtIST_YMD_TO.DisplayFormatString = "yyyy-MM-dd";
 
                 // cbMNG_CDE    0.관리기관
-                BizUtil.SetCmbCode(cbMNG_CDE, "250101", "[전체]");
+                BizUtil.SetCmbCode(cbMNG_CDE, "250101", "전체");
 
                 // cbHJD_CDE    2.행정동
-                BizUtil.SetCombo(cbHJD_CDE, "Select_ADAR_LIST", "HJD_CDE", "HJD_NAM", "[전체]");
+                BizUtil.SetCombo(cbHJD_CDE, "Select_ADAR_LIST", "HJD_CDE", "HJD_NAM", "전체");
 
                 // cbGAG_CDE    7.유량계종류
-                BizUtil.SetCmbCode(cbGAG_CDE, "250061", "[전체]");
+                BizUtil.SetCmbCode(cbGAG_CDE, "250061", "전체");
 
                 // cbGAG_CDE    8.형식
-                BizUtil.SetCmbCode(cbMOF_CDE, "250035", "[전체]");
+                BizUtil.SetCmbCode(cbMOF_CDE, "250035", "전체");
 
             }
             catch (Exception ex)

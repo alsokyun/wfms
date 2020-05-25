@@ -256,7 +256,7 @@
             <dxe:TextEdit Grid.Row="1" Grid.Column="1" Style="{DynamicResource ResourceKey=GridNumberEdit}"   
                           x:Name="txtHGA_VOL" EditValue="{Binding HGA_VOL}"/>
             <Label Grid.Row="1" Grid.Column="2" Content="펌프대수" Style="{DynamicResource ResourceKey=GridLabel}"/>
-            <dxe:TextEdit Grid.Row="1" Grid.Column="3" Style="{DynamicResource ResourceKey=GridNumberEdit}"   
+            <dxe:TextEdit Grid.Row="1" Grid.Column="3" Style="{DynamicResource ResourceKey=GridIntEdit}"   
                           x:Name="txtPMP_CNT" EditValue="{Binding PMP_CNT}"/>
             <Label Grid.Row="1" Grid.Column="4" Content="부지면적(㎡)" Style="{DynamicResource ResourceKey=GridLabel}"/>
             <dxe:TextEdit Grid.Row="1" Grid.Column="5" Style="{DynamicResource ResourceKey=GridNumberEdit}"   

@@ -121,7 +121,7 @@ namespace GTI.WFMS.Modules.Acmf.ViewModel
                         var colValue = dbprop.GetValue(result, null);
                         if (colName.Equals(propName))
                         {
-                            prop.SetValue(this, Convert.ChangeType(colValue, prop.PropertyType));
+                            try { prop.SetValue(this, colValue); } catch (Exception) { }
                         }
                     }
                     Console.WriteLine(propName + " - " + prop.GetValue(this, null));
@@ -294,16 +294,16 @@ namespace GTI.WFMS.Modules.Acmf.ViewModel
                 //BizUtil.SetCombo(cbFTR_CDE, "Select_FTR_LIST", "FTR_CDE", "FTR_NAM", false);
 
                 // cbHJD_CDE 행정동
-                BizUtil.SetCombo(cbHJD_CDE, "Select_ADAR_LIST", "HJD_CDE", "HJD_NAM", "[선택하세요]");
+                BizUtil.SetCombo(cbHJD_CDE, "Select_ADAR_LIST", "HJD_CDE", "HJD_NAM", "선택");
 
                 // cbHOM_HJD 수용가행정동
-                BizUtil.SetCombo(cbHOM_HJD, "Select_ADAR_LIST", "HJD_CDE", "HJD_NAM", "[선택하세요]");
+                BizUtil.SetCombo(cbHOM_HJD, "Select_ADAR_LIST", "HJD_CDE", "HJD_NAM", "선택");
 
                 // cbSBI_CDE 업종
-                BizUtil.SetCmbCode(cbSBI_CDE, "250020", "[선택하세요]");
+                BizUtil.SetCmbCode(cbSBI_CDE, "250020", "선택");
 
                 // cbMET_MOF 형식
-                BizUtil.SetCmbCode(cbMET_MOF, "250004", "[선택하세요]");
+                BizUtil.SetCmbCode(cbMET_MOF, "250004", "선택");
             }
             catch (Exception ex)
             {

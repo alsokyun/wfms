@@ -173,16 +173,16 @@ namespace GTI.WFMS.Modules.Pipe.ViewModel
                 //BizUtil.SetCombo(cbFTR_CDE, "Select_FTR_LIST", "FTR_CDE", "FTR_NAM", false);
 
                 // cbHJD_CDE 행정동
-                BizUtil.SetCombo(cbHJD_CDE, "Select_ADAR_LIST", "HJD_CDE", "HJD_NAM", "[선택하세요]");
+                BizUtil.SetCombo(cbHJD_CDE, "Select_ADAR_LIST", "HJD_CDE", "HJD_NAM", "선택");
 
                 // cbMNG_CDE 관리기관
-                BizUtil.SetCmbCode(cbMNG_CDE, "250101", "[선택하세요]");
+                BizUtil.SetCmbCode(cbMNG_CDE, "250101", "선택");
                 
                 // cbGAG_CDE 유량계종류
-                BizUtil.SetCmbCode(cbGAG_CDE, "250061", "[선택하세요]");
+                BizUtil.SetCmbCode(cbGAG_CDE, "250061", "선택");
 
                 // cbMOF_CDE 유형
-                BizUtil.SetCmbCode(cbMOF_CDE, "250004", "[선택하세요]");
+                BizUtil.SetCmbCode(cbMOF_CDE, "250004", "선택");
 
             }
             catch (Exception ex)

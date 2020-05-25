@@ -115,7 +115,7 @@ namespace GTI.WFMS.Modules.Link.ViewModel
                         var colValue = dbprop.GetValue(result, null);
                         if (colName.Equals(propName))
                         {
-                            prop.SetValue(this, Convert.ChangeType(colValue, prop.PropertyType));
+                            try { prop.SetValue(this, colValue); } catch (Exception) { }
                         }
                     }
                    Console.WriteLine(propName + " - " + prop.GetValue(this,null));
@@ -127,11 +127,11 @@ namespace GTI.WFMS.Modules.Link.ViewModel
             Paragraph p = new Paragraph();
             try
             {
-                p.Inlines.Add(this.ATT_DES.Trim());
+                p.Inlines.Add(this.ATT_DES ?? "");
                 attFacDtlView.txtATT_DES.Document.Blocks.Clear();
                 attFacDtlView.txtATT_DES.Document.Blocks.Add(p);
             }
-            catch (Exception) { }
+            catch (Exception e) { Console.WriteLine(e.Message); }
 
 
             //5.신규/수정구분처리
@@ -161,7 +161,7 @@ namespace GTI.WFMS.Modules.Link.ViewModel
             try
             {
                 //다큐먼트는 따로 처리
-                this.ATT_DES = new TextRange(attFacDtlView.txtATT_DES.Document.ContentStart, attFacDtlView.txtATT_DES.Document.ContentEnd).Text;
+                this.ATT_DES = new TextRange(attFacDtlView.txtATT_DES.Document.ContentStart, attFacDtlView.txtATT_DES.Document.ContentEnd).Text.Trim();
                 BizUtil.Update2(this, "SaveWttAttaDt");
             }
             catch (Exception )

@@ -289,7 +289,7 @@ namespace GTI.WFMS.Modules.Pipe.ViewModel
                 catch (Exception ) { }
                 if (!BizUtil.ValidDateBtw(conditions["IST_YMD_FROM"], conditions["IST_YMD_TO"]))
                 {
-                    Messages.ShowInfoMsgBox("From/To 일자를 확인하세요");
+                    Messages.ShowInfoMsgBox("설치일자 범위를 확인하세요");
                     return;
                 }
 
@@ -376,16 +376,16 @@ namespace GTI.WFMS.Modules.Pipe.ViewModel
             try
             {
                 // cbMNG_CDE
-                BizUtil.SetCmbCode(cbMNG_CDE, "250101", "[전체]");
+                BizUtil.SetCmbCode(cbMNG_CDE, "250101", "전체");
 
                 // cbHJD_CDE 행정동
-                BizUtil.SetCombo(cbHJD_CDE, "Select_ADAR_LIST", "HJD_CDE", "HJD_NAM", "[전체]");
+                BizUtil.SetCombo(cbHJD_CDE, "Select_ADAR_LIST", "HJD_CDE", "HJD_NAM", "전체");
 
                 // cbMOP_CDE
-                BizUtil.SetCmbCode(cbMOP_CDE, "250102", "[전체]");
+                BizUtil.SetCmbCode(cbMOP_CDE, "250102", "전체");
 
                 // cbJHT_CDE
-                BizUtil.SetCmbCode(cbJHT_CDE, "250026", "[전체]");
+                BizUtil.SetCmbCode(cbJHT_CDE, "250026", "전체");
             }
             catch (Exception ex)
             {
@@ -455,7 +455,7 @@ namespace GTI.WFMS.Modules.Pipe.ViewModel
                 catch (Exception ) { }
                 if (!BizUtil.ValidDateBtw(conditions["IST_YMD_FROM"], conditions["IST_YMD_TO"]))
                 {
-                    Messages.ShowInfoMsgBox("From/To 일자를 확인하세요");
+                    Messages.ShowInfoMsgBox("설치일자 범위를 확인하세요");
                     return;
                 }
 

@@ -11,15 +11,15 @@ namespace GTI.WFMS.Modules.Link.View
     {
 
         // 생성자
-        public AttFacDtlView( string _FTR_CDE, int _FTR_IDN, int _ATTA_SEQ)
+        public AttFacDtlView( string _FTR_CDE, string _FTR_IDN, string _ATTA_SEQ)
         {
             InitializeComponent();
             ThemeApply.Themeapply(this);
 
             //뷰모델로 키값전달
-            txtFTR_CDE.Text = _FTR_CDE;
-            txtFTR_IDN.Text = _FTR_IDN.ToString();
-            txtATTA_SEQ.Text = _ATTA_SEQ.ToString();
+            txtFTR_CDE.EditValue = _FTR_CDE;
+            txtFTR_IDN.EditValue = _FTR_IDN;
+            txtATTA_SEQ.EditValue = _ATTA_SEQ;
         }
 
 

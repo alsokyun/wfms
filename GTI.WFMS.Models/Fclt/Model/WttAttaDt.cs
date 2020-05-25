@@ -30,8 +30,8 @@ namespace GTI.WFMS.Models.Fctl.Model
                 RaisePropertyChanged("RNO");
             }
         }
-        private decimal __ATT_IDN;
-        public decimal ATT_IDN
+        private int? __ATT_IDN;
+        public int? ATT_IDN
         {
             get { return __ATT_IDN; }
             set

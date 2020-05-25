@@ -207,13 +207,16 @@ namespace GTI.WFMS.Modules.Cnst.ViewModel
             param.Add("sqlId2", "SelectWttChngDtList");//설계변경내역
             param.Add("sqlId3", "SelectWttSubcDtList");//공사하도급내역
             param.Add("sqlId4", "SelectWttFlawDtList");//하자보수목록
+            param.Add("sqlId5", "SelectFileMapList");//첨부파일사진목록
             param.Add("CNT_NUM", Dtl.CNT_NUM);
+            param.Add("BIZ_ID", Dtl.CNT_NUM);
 
             Hashtable result = BizUtil.SelectLists(param);
             DataTable dt = new DataTable();
             DataTable dt2 = new DataTable();
             DataTable dt3 = new DataTable();
             DataTable dt4 = new DataTable();
+            DataTable dt5 = new DataTable();
 
             try
             {
@@ -221,7 +224,7 @@ namespace GTI.WFMS.Modules.Cnst.ViewModel
                 if (dt.Rows.Count > 0)
                 {
                     Messages.ShowErrMsgBox("공사비지급내역이 존재합니다.");
-                    return;
+                    //return;
                 }
             }
             catch (Exception) { }
@@ -231,7 +234,7 @@ namespace GTI.WFMS.Modules.Cnst.ViewModel
                 if (dt2.Rows.Count > 0)
                 {
                     Messages.ShowErrMsgBox("설계변경내역이 존재합니다.");
-                    return;
+                    //return;
                 }
             }
             catch (Exception) { }
@@ -241,17 +244,27 @@ namespace GTI.WFMS.Modules.Cnst.ViewModel
                 if (dt3.Rows.Count > 0)
                 {
                     Messages.ShowErrMsgBox("공사하도급내역이 존재합니다.");
-                    return;
+                    //return;
                 }
             }
             catch (Exception) { }
             try
             {
-                dt3 = result["dt4"] as DataTable;
+                dt4 = result["dt4"] as DataTable;
                 if (dt3.Rows.Count > 0)
                 {
                     Messages.ShowErrMsgBox("하자보수내역이 존재합니다.");
-                    return;
+                    //return;
+                }
+            }
+            catch (Exception) { }
+            try
+            {
+                dt5 = result["dt5"] as DataTable;
+                if (dt5.Rows.Count > 0)
+                {
+                    Messages.ShowErrMsgBox("첨부파일/사진 내역이 존재합니다.");
+                    //return;
                 }
             }
             catch (Exception) { }
@@ -261,6 +274,46 @@ namespace GTI.WFMS.Modules.Cnst.ViewModel
             if (Messages.ShowYesNoMsgBox("공사대장을 삭제하시겠습니까?") != MessageBoxResult.Yes) return;
             try
             {
+                //1.공사비지급내역 삭제
+                param = new Hashtable();
+                param.Add("sqlId", "DeleteWttCostDt");
+                param.Add("CNT_NUM", Dtl.CNT_NUM);
+                BizUtil.Update(param);
+
+                //2.설계변경내역 삭제
+                param = new Hashtable();
+                param.Add("sqlId", "DeleteWttChngDt");
+                param.Add("CNT_NUM", Dtl.CNT_NUM);
+                BizUtil.Update(param);
+
+                //3.공사하도급내역 삭제
+                param = new Hashtable();
+                param.Add("sqlId", "DeleteWttSubcDt");
+                param.Add("CNT_NUM", Dtl.CNT_NUM);
+                BizUtil.Update(param);
+
+                //4.하자보수내역 삭제
+                param = new Hashtable();
+                param.Add("sqlId", "DeleteWttFlawDt");
+                param.Add("CNT_NUM", Dtl.CNT_NUM);
+                BizUtil.Update(param);
+
+                //5.첨부파일,사진삭제
+                foreach (DataRow row in dt5.Rows)
+                {
+                    //a.FIL_SEQ 첨부파일삭제
+                    BizUtil.DelFileSeq(row["FIL_SEQ"]);
+
+                    //b.FILE_MAP 업무파일매핑삭제
+                    param = new Hashtable();
+                    param.Add("sqlId", "DeleteFileMap");
+                    param.Add("BIZ_ID", Dtl.CNT_NUM);
+                    param.Add("FIL_SEQ", row["FIL_SEQ"]);
+                    BizUtil.Update(param);
+                }
+
+
+                //마스터삭제
                 BizUtil.Update2(Dtl, "deleteCnstMngDtl");
             }
             catch (Exception )
@@ -275,6 +328,9 @@ namespace GTI.WFMS.Modules.Cnst.ViewModel
             BackCommand.Execute(null);
 
         }
+
+
+
 
         /// <summary>
         /// 뒤로가기처리
@@ -304,10 +360,10 @@ namespace GTI.WFMS.Modules.Cnst.ViewModel
             try
             {
                 // cbCTT_CDE 계약구분
-                BizUtil.SetCmbCode(cbCTT_CDE, "250038", "[선택하세요]");
+                BizUtil.SetCmbCode(cbCTT_CDE, "250038", "선택");
 
                 // cbCNT_CDE 공사구분
-                BizUtil.SetCmbCode(cbCNT_CDE, "250039", "[선택하세요]");
+                BizUtil.SetCmbCode(cbCNT_CDE, "250039", "선택");
             }
             catch (Exception ex)
             {

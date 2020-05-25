@@ -285,12 +285,10 @@ namespace GTI.WFMS.Modules.Acmf.ViewModel
                 catch (Exception ) { }
                 if (!BizUtil.ValidDateBtw(conditions["FNS_YMD_FROM"], conditions["FNS_YMD_TO"]))
                 {
-                    Messages.ShowInfoMsgBox("From/To 일자를 확인하세요");
+                    Messages.ShowInfoMsgBox("준공일자 범위를 확인하세요");
                     return;
                 }
-
-                conditions.Add("firstIndex", 0);
-                conditions.Add("lastIndex", 1000);
+                
 
                 conditions.Add("sqlId", "SelectWtrTrkList");
     
@@ -385,7 +383,7 @@ namespace GTI.WFMS.Modules.Acmf.ViewModel
                 catch (Exception ) { }
                 if (!BizUtil.ValidDateBtw(conditions["FNS_YMD_FROM"], conditions["FNS_YMD_TO"]))
                 {
-                    Messages.ShowInfoMsgBox("From/To 일자를 확인하세요");
+                    Messages.ShowInfoMsgBox("준공일자 범위를 확인하세요");
                     return;
                 }
 
@@ -506,10 +504,10 @@ namespace GTI.WFMS.Modules.Acmf.ViewModel
                 dtPMS_YMD.DisplayFormatString = "yyyy-MM-dd";
 
                 // cbMNG_CDE    0.관리기관
-                BizUtil.SetCmbCode(cbMNG_CDE, "250101", "[전체]");
+                BizUtil.SetCmbCode(cbMNG_CDE, "250101", "전체");
 
                 // cbHJD_CDE    2.행정동
-                BizUtil.SetCombo(cbHJD_CDE, "Select_ADAR_LIST", "HJD_CDE", "HJD_NAM", "[전체]");
+                BizUtil.SetCombo(cbHJD_CDE, "Select_ADAR_LIST", "HJD_CDE", "HJD_NAM", "전체");
 
             }
             catch (Exception ex)

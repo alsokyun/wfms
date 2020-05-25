@@ -414,7 +414,45 @@ namespace GTI.WFMS.Models.Common
 
 
 
+        #region 첨부파일관련
 
+        // 파일마스터키 FIL_SEQ에 해당하는 물리파일 삭제, 첨부테이블삭제
+        public static void DelFileSeq(object filSeq)
+        {
+            //1.물리파일삭제
+            //0.첨부 디테일파일정보가져오기
+            Hashtable param = new Hashtable();
+            param.Add("sqlId", "SelectFileDtl2");
+            param.Add("FIL_SEQ", filSeq);
+
+            List<FileDtl> lst = new List<FileDtl>(BizUtil.SelectListObj<FileDtl>(param));
+            foreach (FileDtl dtl in lst)
+            {
+                string del_file_path = System.IO.Path.Combine(FmsUtil.fileDir, dtl.UPF_NAM);
+                try
+                {
+                    FileInfo fi = new FileInfo(del_file_path);
+                    fi.Delete();
+                }
+                catch (Exception) { }
+            }
+
+
+            //2.첨부테이블삭제
+            //a.디테일
+            param = new Hashtable();
+            param.Add("sqlId", "DeleteFileSeq");
+            param.Add("FIL_SEQ", filSeq);
+            BizUtil.Update(param);
+            //b.마스터
+            param = new Hashtable();
+            param.Add("sqlId", "DeleteFileMst");
+            param.Add("FIL_SEQ", filSeq);
+            BizUtil.Update(param);
+        }
+
+
+        #endregion
 
 
 

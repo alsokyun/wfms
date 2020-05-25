@@ -208,8 +208,8 @@ namespace GTI.WFMS.Models.Fclt.Model
             }
         }
 
-        private decimal ?  __SUP_POP;
-        public decimal ? SUP_POP
+        private int ?  __SUP_POP;
+        public int ? SUP_POP
         {
             get { return __SUP_POP; }
             set

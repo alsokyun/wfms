@@ -192,9 +192,9 @@ namespace GTI.WFMS.Modules.Link.ViewModel
         {
             try
             {
-                BizUtil.SetCmbCode(cbGCW_CDE, "250041", "[선택하세요]");
+                BizUtil.SetCmbCode(cbGCW_CDE, "250041", "선택");
 
-                BizUtil.SetCmbCode(cbOME_MOF, "250004", "[선택하세요]");
+                BizUtil.SetCmbCode(cbOME_MOF, "250004", "선택");
             }
             catch (Exception ex)
             {

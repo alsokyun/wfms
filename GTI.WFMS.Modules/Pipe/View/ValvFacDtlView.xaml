@@ -287,10 +287,10 @@
 
 
             <Label Grid.Row="1" Grid.Column="0" Content="제수변총회전수" Style="{DynamicResource ResourceKey=GridLabel}"/>
-            <dxe:TextEdit Grid.Row="1" Grid.Column="1" Style="{DynamicResource ResourceKey=GridNumberEdit}"   
+            <dxe:TextEdit Grid.Row="1" Grid.Column="1" Style="{DynamicResource ResourceKey=GridIntEdit}"   
                           x:Name="txtTRO_CNT"  EditValue="{Binding Dtl.TRO_CNT}"/>
             <Label Grid.Row="1" Grid.Column="2" Content="제수변회전수" Style="{DynamicResource ResourceKey=GridLabel}"/>
-            <dxe:TextEdit Grid.Row="1" Grid.Column="3" Style="{DynamicResource ResourceKey=GridNumberEdit}"   
+            <dxe:TextEdit Grid.Row="1" Grid.Column="3" Style="{DynamicResource ResourceKey=GridIntEdit}"   
                           x:Name="txtCRO_CNT" EditValue="{Binding Dtl.CRO_CNT}"/>
             <Label Grid.Row="1" Grid.Column="4" Content="제수변구동방법" Style="{DynamicResource ResourceKey=GridLabel}"/>
             <dxe:ComboBoxEdit Grid.Row="1" Grid.Column="5" Style="{DynamicResource ResourceKey=GridComboBox}" 

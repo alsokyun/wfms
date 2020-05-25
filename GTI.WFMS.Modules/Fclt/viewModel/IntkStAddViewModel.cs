@@ -174,19 +174,19 @@ namespace GTI.WFMS.Modules.Fclt.ViewModel
                 //BizUtil.SetCombo(cbFTR_CDE, "Select_FTR_LIST", "FTR_CDE", "FTR_NAM", false);
 
                 // cbHJD_CDE 행정동
-                BizUtil.SetCombo(cbHJD_CDE, "Select_ADAR_LIST", "HJD_CDE", "HJD_NAM", "[선택하세요]");
+                BizUtil.SetCombo(cbHJD_CDE, "Select_ADAR_LIST", "HJD_CDE", "HJD_NAM", "선택");
 
                 // cbMNG_CDE 관리기관
-                BizUtil.SetCmbCode(cbMNG_CDE, "250101", "[선택하세요]");
+                BizUtil.SetCmbCode(cbMNG_CDE, "250101", "선택");
                 
                 // cbWSR_CDE 수원구분
-                BizUtil.SetCmbCode(cbWSR_CDE, "250058", "[선택하세요]");
+                BizUtil.SetCmbCode(cbWSR_CDE, "250058", "선택");
 
                 // cbWRW_CDEE 도수방법
-                BizUtil.SetCmbCode(cbWRW_CDE, "250046", "[선택하세요]");
+                BizUtil.SetCmbCode(cbWRW_CDE, "250046", "선택");
 
                 // cbWRW_CDEE 취소방법
-                BizUtil.SetCmbCode(cbWGW_CDE, "250069", "[선택하세요]");
+                BizUtil.SetCmbCode(cbWGW_CDE, "250069", "선택");
 
             }
             catch (Exception ex)

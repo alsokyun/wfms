@@ -111,6 +111,11 @@ namespace GTI.WFMS.Modules.Pop.ViewModel
             //파일저장버튼 이벤트
             SaveFileCmd = new RelayCommand<object>(delegate (object obj)
             {
+                if (ItemsFile.Count < 1)
+                {
+                    MessageBox.Show("저장할 파일이 없습니다.");
+                    return;
+                }
                 upload_thread = new Thread(new ThreadStart(UploadFileListFX));
                 upload_thread.Start();
 
@@ -349,7 +354,7 @@ namespace GTI.WFMS.Modules.Pop.ViewModel
                         var colValue = dbprop.GetValue(result, null);
                         if (colName.Equals(propName))
                         {
-                            prop.SetValue(this, Convert.ChangeType(colValue, prop.PropertyType));
+                            try { prop.SetValue(this, colValue); } catch (Exception) { }
                         }
                     }
                     Console.WriteLine(propName + " - " + prop.GetValue(this, null));
@@ -403,7 +408,8 @@ namespace GTI.WFMS.Modules.Pop.ViewModel
 
             //저장처리 성공
             Messages.ShowOkMsgBox();
-            InitModel();
+            //InitModel();
+            btnClose.RaiseEvent(new RoutedEventArgs(Button.ClickEvent));
 
         }
 

@@ -295,32 +295,32 @@ namespace GTI.WFMS.Modules.Pipe.ViewModel
                 //BizUtil.SetCombo(cbFTR_CDE, "Select_FTR_LIST", "FTR_CDE", "FTR_NAM", false);
 
                 // cbHJD_CDE 행정동
-                BizUtil.SetCombo(cbHJD_CDE, "Select_ADAR_LIST", "HJD_CDE", "HJD_NAM", "[선택하세요]");
+                BizUtil.SetCombo(cbHJD_CDE, "Select_ADAR_LIST", "HJD_CDE", "HJD_NAM", "선택");
 
                 // cbMNG_CDE 관리기관
-                BizUtil.SetCmbCode(cbMNG_CDE, "250101", "[선택하세요]");
+                BizUtil.SetCmbCode(cbMNG_CDE, "250101", "선택");
 
 
                 // cbVAL_MOF 형식
-                BizUtil.SetCmbCode(cbVAL_MOF, "250016", "[선택하세요]");
+                BizUtil.SetCmbCode(cbVAL_MOF, "250016", "선택");
 
                 // cbVAL_MOP 관재질
-                BizUtil.SetCmbCode(cbVAL_MOP, "250015", "[선택하세요]");
+                BizUtil.SetCmbCode(cbVAL_MOP, "250015", "선택");
 
                 // cbSAE_CDE    제수변회전방향
-                BizUtil.SetCmbCode(cbSAE_CDE, "250027", "[선택하세요]");
+                BizUtil.SetCmbCode(cbSAE_CDE, "250027", "선택");
 
                 // cbMTH_CDE    제수변구동방법
-                BizUtil.SetCmbCode(cbMTH_CDE, "250065", "[선택하세요]");
+                BizUtil.SetCmbCode(cbMTH_CDE, "250065", "선택");
 
                 // cbVAL_FOR    시설물형태(=구조물형태)
-                BizUtil.SetCmbCode(cbVAL_FOR, "250007", "[선택하세요]");
+                BizUtil.SetCmbCode(cbVAL_FOR, "250007", "선택");
 
                 // cbCST_CDE    이상상태
-                BizUtil.SetCmbCode(cbCST_CDE, "250062", "[선택하세요]");
+                BizUtil.SetCmbCode(cbCST_CDE, "250062", "선택");
 
                 // cbOFF_CDE    개폐여부
-                BizUtil.SetCmbCode(cbOFF_CDE, "250036", "[선택하세요]");
+                BizUtil.SetCmbCode(cbOFF_CDE, "250036", "선택");
 
             }
             catch (Exception ex)

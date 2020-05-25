@@ -220,9 +220,7 @@ namespace GTI.WFMS.Modules.Cmpl.ViewModel
                 conditions.Add("PRO_YMD_FROM", splyCmplListView.dtPRO_YMD_FROM.EditValue == null ? "" : Convert.ToDateTime(splyCmplListView.dtPRO_YMD_FROM.EditValue).ToString("yyyyMMdd"));
                 conditions.Add("PRO_YMD_TO", splyCmplListView.dtPRO_YMD_TO.EditValue == null ? "" : Convert.ToDateTime(splyCmplListView.dtPRO_YMD_TO.EditValue).ToString("yyyyMMdd"));
 
-
-                conditions.Add("firstIndex", 0);
-                conditions.Add("lastIndex", 1000);
+                
 
                 conditions.Add("sqlId", "SelectSplyCmplList");
 
@@ -409,11 +407,11 @@ namespace GTI.WFMS.Modules.Cmpl.ViewModel
         {
             try {
                 // cbHJD_CDE 행정동
-                BizUtil.SetCombo(cbHJD_CDE, "Select_ADAR_LIST", "HJD_CDE", "HJD_NAM", "[전체]");
+                BizUtil.SetCombo(cbHJD_CDE, "Select_ADAR_LIST", "HJD_CDE", "HJD_NAM", "전체");
                 // 민원구분
-                BizUtil.SetCmbCode(cbAPL_CDE, "250056", "[전체]");
+                BizUtil.SetCmbCode(cbAPL_CDE, "250056", "전체");
                 // 처리상태
-                BizUtil.SetCmbCode(cbPRO_CDE, "250050", "[전체]");
+                BizUtil.SetCmbCode(cbPRO_CDE, "250050", "전체");
             }
             catch (Exception ex)
             {

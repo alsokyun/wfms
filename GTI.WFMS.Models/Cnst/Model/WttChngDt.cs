@@ -100,8 +100,8 @@ namespace GTI.WFMS.Modules.Cnst.Model
                 OnPropertyChanged("CHG_YMD_FMT");
             }
         }
-        private int __INC_AMT;
-        public int INC_AMT
+        private int? __INC_AMT;
+        public int? INC_AMT
         {
             get { return __INC_AMT; }
             set
@@ -110,8 +110,8 @@ namespace GTI.WFMS.Modules.Cnst.Model
                 OnPropertyChanged("INC_AMT");
             }
         }
-        private int __IGV_AMT;
-        public int IGV_AMT
+        private int? __IGV_AMT;
+        public int? IGV_AMT
         {
             get { return __IGV_AMT; }
             set
@@ -120,8 +120,8 @@ namespace GTI.WFMS.Modules.Cnst.Model
                 OnPropertyChanged("IGV_AMT");
             }
         }
-        private int __CHG_AMT;
-        public int CHG_AMT
+        private int? __CHG_AMT;
+        public int? CHG_AMT
         {
             get { return __CHG_AMT; }
             set

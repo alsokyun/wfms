@@ -140,7 +140,7 @@ namespace GTI.WFMS.Modules.Mntc.ViewModel
                     var colValue = dbprop.GetValue(result, null);
                     if (colName.Equals(propName))
                     {
-                        prop.SetValue(this, Convert.ChangeType(colValue, prop.PropertyType));
+                        try { prop.SetValue(this, colValue); } catch (Exception) { }
                     }
                 }
                 //Console.WriteLine(propName + " - " + prop.GetValue(this,null));
@@ -281,10 +281,10 @@ namespace GTI.WFMS.Modules.Mntc.ViewModel
             try
             {
                 // cbFTR_CDE 시설물
-                BizUtil.SetCombo(cbFTR_CDE, "Select_FTR_LIST", "FTR_CDE", "FTR_NAM", "[선택하세요]");
+                BizUtil.SetCombo(cbFTR_CDE, "Select_FTR_LIST", "FTR_CDE", "FTR_NAM", "선택");
                 // cbFAQ_CAT_CDE 구분
-                BizUtil.SetCmbCode(cbFAQ_CAT_CDE, "250109", "[선택하세요]");
-                BizUtil.SetCmbCode(cbFAQ_CUZ_CDE, "250110", "[선택하세요]");
+                BizUtil.SetCmbCode(cbFAQ_CAT_CDE, "250109", "선택");
+                BizUtil.SetCmbCode(cbFAQ_CUZ_CDE, "250110", "선택");
             }
             catch (Exception ex)
             {

@@ -223,9 +223,7 @@ namespace GTI.WFMS.Modules.Cmpl.ViewModel
                 conditions.Add("REP_YMD_FROM", lekSiteListView.dtREP_YMD_FROM.EditValue == null ? "" : Convert.ToDateTime(lekSiteListView.dtREP_YMD_FROM.EditValue).ToString("yyyyMMdd"));
                 conditions.Add("REP_YMD_TO", lekSiteListView.dtREP_YMD_TO.EditValue == null ? "" : Convert.ToDateTime(lekSiteListView.dtREP_YMD_TO.EditValue).ToString("yyyyMMdd"));
 
-
-                conditions.Add("firstIndex", 0);
-                conditions.Add("lastIndex", 1000);
+                
 
                 conditions.Add("sqlId", "SelectWtlLeakList");
 
@@ -418,11 +416,11 @@ namespace GTI.WFMS.Modules.Cmpl.ViewModel
         {
             try {
                 // cbHJD_CDE 행정동
-                BizUtil.SetCombo(cbHJD_CDE, "Select_ADAR_LIST", "HJD_CDE", "HJD_NAM", "[전체]");
+                BizUtil.SetCombo(cbHJD_CDE, "Select_ADAR_LIST", "HJD_CDE", "HJD_NAM", "전체");
                 // 누수부위
-                BizUtil.SetCmbCode(cbLEP_CDE, "250043", "[전체]");
+                BizUtil.SetCmbCode(cbLEP_CDE, "250043", "전체");
                 // 누수원인
-                BizUtil.SetCmbCode(cbLRS_CDE, "250044", "[전체]");
+                BizUtil.SetCmbCode(cbLRS_CDE, "250044", "전체");
             }
             catch (Exception ex)
             {

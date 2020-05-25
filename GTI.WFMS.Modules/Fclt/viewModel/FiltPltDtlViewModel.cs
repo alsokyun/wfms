@@ -119,7 +119,7 @@ namespace GTI.WFMS.Modules.Fclt.ViewModel
                         var colValue = dbprop.GetValue(result, null);
                         if (colName.Equals(propName))
                         {
-                            prop.SetValue(this, Convert.ChangeType(colValue, prop.PropertyType));
+                            try { prop.SetValue(this, colValue); } catch (Exception) { }
                         }
                     }
                     Console.WriteLine(propName + " - " + prop.GetValue(this, null));
@@ -291,16 +291,16 @@ namespace GTI.WFMS.Modules.Fclt.ViewModel
                 //BizUtil.SetCombo(cbFTR_CDE, "Select_FTR_LIST", "FTR_CDE", "FTR_NAM", false);
 
                 // cbHJD_CDE 행정동
-                BizUtil.SetCombo(cbHJD_CDE, "Select_ADAR_LIST", "HJD_CDE", "HJD_NAM", "[선택하세요]");
+                BizUtil.SetCombo(cbHJD_CDE, "Select_ADAR_LIST", "HJD_CDE", "HJD_NAM", "선택");
 
                 // cbMNG_CDE 관리기관
-                BizUtil.SetCmbCode(cbMNG_CDE, "250101", "[선택하세요]");
+                BizUtil.SetCmbCode(cbMNG_CDE, "250101", "선택");
 
                 // cbWSR_CDE 수원구분
-                BizUtil.SetCmbCode(cbWSR_CDE, "250058", "[선택하세요]");
+                BizUtil.SetCmbCode(cbWSR_CDE, "250058", "선택");
 
                 // cbSAM_CDE 여과방법
-                BizUtil.SetCmbCode(cbSAM_CDE, "250021", "[선택하세요]");
+                BizUtil.SetCmbCode(cbSAM_CDE, "250021", "선택");
             }
             catch (Exception ex)
             {

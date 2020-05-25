@@ -254,30 +254,30 @@ namespace GTI.WFMS.GIS.Module.ViewModel
             try
             {
                 // cbHJD_CDE 행정동
-                BizUtil.SetCombo(uC_VALV_PS.cbHJD_CDE, "Select_ADAR_LIST", "HJD_CDE", "HJD_NAM", "[선택하세요]");
+                BizUtil.SetCombo(uC_VALV_PS.cbHJD_CDE, "Select_ADAR_LIST", "HJD_CDE", "HJD_NAM", "선택");
 
                 // cbMNG_CDE 관리기관
-                BizUtil.SetCmbCode(uC_VALV_PS.cbMNG_CDE, "250101", "[선택하세요]");
+                BizUtil.SetCmbCode(uC_VALV_PS.cbMNG_CDE, "250101", "선택");
                 // cbVAL_MOF 형식
-                BizUtil.SetCmbCode(uC_VALV_PS.cbVAL_MOF, "250016", "[선택하세요]");
+                BizUtil.SetCmbCode(uC_VALV_PS.cbVAL_MOF, "250016", "선택");
 
                 // cbVAL_MOP 관재질
-                BizUtil.SetCmbCode(uC_VALV_PS.cbVAL_MOP, "250015", "[선택하세요]");
+                BizUtil.SetCmbCode(uC_VALV_PS.cbVAL_MOP, "250015", "선택");
 
                 // cbSAE_CDE    제수변회전방향
-                BizUtil.SetCmbCode(uC_VALV_PS.cbSAE_CDE, "250027", "[선택하세요]");
+                BizUtil.SetCmbCode(uC_VALV_PS.cbSAE_CDE, "250027", "선택");
 
                 // cbMTH_CDE    제수변구동방법
-                BizUtil.SetCmbCode(uC_VALV_PS.cbMTH_CDE, "250065", "[선택하세요]");
+                BizUtil.SetCmbCode(uC_VALV_PS.cbMTH_CDE, "250065", "선택");
 
                 // cbVAL_FOR    시설물형태(=구조물형태)
-                BizUtil.SetCmbCode(uC_VALV_PS.cbVAL_FOR, "250007", "[선택하세요]");
+                BizUtil.SetCmbCode(uC_VALV_PS.cbVAL_FOR, "250007", "선택");
 
                 // cbCST_CDE    이상상태
-                BizUtil.SetCmbCode(uC_VALV_PS.cbCST_CDE, "250062", "[선택하세요]");
+                BizUtil.SetCmbCode(uC_VALV_PS.cbCST_CDE, "250062", "선택");
 
                 // cbOFF_CDE    개폐여부
-                BizUtil.SetCmbCode(uC_VALV_PS.cbOFF_CDE, "250036", "[선택하세요]");
+                BizUtil.SetCmbCode(uC_VALV_PS.cbOFF_CDE, "250036", "선택");
             }
             catch (Exception ex)
             {

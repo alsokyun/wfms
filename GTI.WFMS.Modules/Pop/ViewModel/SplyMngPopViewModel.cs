@@ -183,17 +183,15 @@ namespace GTI.WFMS.Modules.Pop.ViewModel
                 catch (Exception) { }
                 if (!BizUtil.ValidDateBtw(conditions["BEG_YMD_FROM"], conditions["BEG_YMD_TO"]))
                 {
-                    Messages.ShowInfoMsgBox("From/To 일자를 확인하세요");
+                    Messages.ShowInfoMsgBox("착공일자 범위를 확인하세요");
                     return;
                 }
                 if (!BizUtil.ValidDateBtw(conditions["FNS_YMD_FROM"], conditions["FNS_YMD_TO"]))
                 {
-                    Messages.ShowInfoMsgBox("From/To 일자를 확인하세요");
+                    Messages.ShowInfoMsgBox("준공일자 범위를 확인하세요");
                     return;
                 }
-
-                conditions.Add("firstIndex", 0);
-                conditions.Add("lastIndex", 1000);
+                
 
                 conditions.Add("sqlId", "SelectWttSplyMaList");
 
@@ -265,7 +263,7 @@ namespace GTI.WFMS.Modules.Pop.ViewModel
         {
             try {
                 // cbHJD_CDE 행정동
-                BizUtil.SetCombo(cbHJD_CDE, "Select_ADAR_LIST", "HJD_CDE", "HJD_NAM", "[전체]");
+                BizUtil.SetCombo(cbHJD_CDE, "Select_ADAR_LIST", "HJD_CDE", "HJD_NAM", "전체");
             }
             catch (Exception ex)
             {

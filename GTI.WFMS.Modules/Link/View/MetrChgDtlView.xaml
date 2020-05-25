@@ -118,7 +118,7 @@
                           x:Name="txtFTR_NAM" EditValue="{Binding Dtl.FTR_NAM}"/>
 
             <dxe:TextEdit Grid.Row="0" Grid.Column="3" x:Name="txtFTR_CDE" Style="{DynamicResource ResourceKey=GridTextEdit}" 
-                              Text="{Binding Dtl.FTR_CDE, UpdateSourceTrigger=PropertyChanged}" IsEnabled="False"/>
+                              EditValue="{Binding Dtl.FTR_CDE, UpdateSourceTrigger=PropertyChanged}" IsEnabled="False"/>
 
             <Label Grid.Row="1" Grid.Column="0" Content="변경일련번호" Style="{DynamicResource ResourceKey=GridLabelReq}"/>
             <dxe:TextEdit Grid.Row="1" Grid.Column="1" x:Name="txtMETA_SEQ" Style="{DynamicResource ResourceKey=GridTextEdit}" 
@@ -144,7 +144,7 @@
                               x:Name="cbOME_MOF" EditValue="{Binding Dtl.OME_MOF}" />
 
             <Label Grid.Row="4" Grid.Column="0" Content="철거계량기지침수" Style="{DynamicResource ResourceKey=GridLabel}"/>
-            <dxe:TextEdit Grid.Row="4" Grid.Column="1" Style="{DynamicResource ResourceKey=GridNumberEdit}" Mask="n0"
+            <dxe:TextEdit Grid.Row="4" Grid.Column="1" Style="{DynamicResource ResourceKey=GridIntEdit}" 
                           x:Name="txtOME_CNT" EditValue="{Binding Dtl.OME_CNT}"/>
             <Label Grid.Row="4" Grid.Column="2" Content="철거계량기제작회사" Style="{DynamicResource ResourceKey=GridLabel}"/>
             <dxe:TextEdit Grid.Row="4" Grid.Column="3" Style="{DynamicResource ResourceKey=GridTextEdit}"  

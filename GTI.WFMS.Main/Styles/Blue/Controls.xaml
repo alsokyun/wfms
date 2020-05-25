@@ -1454,7 +1454,7 @@
         <Setter Property="ShowBorder" Value="False"/>
         <Setter Property="MaskType" Value="Numeric"/>
         <Setter Property="MaskUseAsDisplayFormat" Value="True"/>
-        <Setter Property="Mask" Value="###,###,###,###,###,###"/>
+        <Setter Property="Mask" Value="n0"/>
         <Setter Property="AllowNullInput" Value="True"/>
         <Setter Property="EditTemplate">
             <Setter.Value>
@@ -1489,8 +1489,9 @@
         <Setter Property="Margin" Value="10,0,10,0"/>
         <Setter Property="ShowBorder" Value="False"/>
         <Setter Property="MaskType" Value="Numeric"/>
-        <Setter Property="Mask" Value="n3"/>
         <Setter Property="MaskUseAsDisplayFormat" Value="True"/>
+        <Setter Property="Mask" Value="n3"/>
+        <Setter Property="AllowNullInput" Value="True"/>
         <Setter Property="EditTemplate">
             <Setter.Value>
                 <ControlTemplate>
@@ -1528,6 +1529,7 @@
         <Setter Property="MaskType" Value="Numeric"/>
         <Setter Property="Mask" Value="n3"/>
         <Setter Property="MaskUseAsDisplayFormat" Value="True"/>
+        <Setter Property="AllowNullInput" Value="True"/>
         <Setter Property="EditTemplate">
             <Setter.Value>
                 <ControlTemplate>

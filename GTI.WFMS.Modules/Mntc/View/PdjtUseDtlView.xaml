@@ -160,7 +160,7 @@
                 </dxg:GridColumn>
                 <dxg:GridColumn Header="사용개수" Width="70" FieldName="USE_CNT" HorizontalHeaderContentAlignment="Center">
                     <dxg:GridColumn.EditSettings>
-                        <dxe:TextEditSettings HorizontalContentAlignment="Right" MaskType="Numeric" MaskUseAsDisplayFormat="True" />
+                        <dxe:TextEditSettings HorizontalContentAlignment="Right" MaskType="Numeric" Mask="n0" MaskUseAsDisplayFormat="True" />
                     </dxg:GridColumn.EditSettings>
                 </dxg:GridColumn>
 

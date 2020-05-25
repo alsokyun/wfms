@@ -116,8 +116,8 @@ namespace GTI.WFMS.Modules.Cmpl.ViewModel
                 try
                 {
                     //다큐먼트는 따로 처리
-                    this.Dtl.APL_EXP = new TextRange(splyCmplDtlView.richAPL_EXP.Document.ContentStart, splyCmplDtlView.richAPL_EXP.Document.ContentEnd).Text;
-                    this.Dtl.PRO_EXP = new TextRange(splyCmplDtlView.richPRO_EXP.Document.ContentStart, splyCmplDtlView.richPRO_EXP.Document.ContentEnd).Text;
+                    this.Dtl.APL_EXP = new TextRange(splyCmplDtlView.richAPL_EXP.Document.ContentStart, splyCmplDtlView.richAPL_EXP.Document.ContentEnd).Text.Trim();
+                    this.Dtl.PRO_EXP = new TextRange(splyCmplDtlView.richPRO_EXP.Document.ContentStart, splyCmplDtlView.richPRO_EXP.Document.ContentEnd).Text.Trim();
                     BizUtil.Update2(this.Dtl, "SaveCmplWserMa");
                 }
                 catch (Exception ex)
@@ -182,7 +182,7 @@ namespace GTI.WFMS.Modules.Cmpl.ViewModel
             Paragraph p = new Paragraph();
             try
             {
-                p.Inlines.Add(this.Dtl.APL_EXP.Trim());
+                p.Inlines.Add(this.Dtl.APL_EXP ?? "");
                 splyCmplDtlView.richAPL_EXP.Document.Blocks.Clear();
                 splyCmplDtlView.richAPL_EXP.Document.Blocks.Add(p);
             }
@@ -191,7 +191,7 @@ namespace GTI.WFMS.Modules.Cmpl.ViewModel
             p = new Paragraph();
             try
             {
-                p.Inlines.Add(this.Dtl.PRO_EXP.Trim());
+                p.Inlines.Add(this.Dtl.PRO_EXP ?? "");
                 splyCmplDtlView.richPRO_EXP.Document.Blocks.Clear();
                 splyCmplDtlView.richPRO_EXP.Document.Blocks.Add(p);
             }
@@ -210,11 +210,11 @@ namespace GTI.WFMS.Modules.Cmpl.ViewModel
             try
             {
                 //행정구역
-                BizUtil.SetCombo(splyCmplDtlView.cbAPL_HJD, "Select_ADAR_LIST", "HJD_CDE", "HJD_NAM", "[선택하세요]");
+                BizUtil.SetCombo(splyCmplDtlView.cbAPL_HJD, "Select_ADAR_LIST", "HJD_CDE", "HJD_NAM", "선택");
                 //민원구분
-                BizUtil.SetCmbCode(splyCmplDtlView.cbAPL_CDE, "250056", "[선택하세요]");
+                BizUtil.SetCmbCode(splyCmplDtlView.cbAPL_CDE, "250056", "선택");
                 //민원처리상태
-                BizUtil.SetCmbCode(splyCmplDtlView.cbPRO_CDE, "250050", "[선택하세요]");
+                BizUtil.SetCmbCode(splyCmplDtlView.cbPRO_CDE, "250050", "선택");
                 
             }
             catch (Exception ex)

@@ -18,9 +18,20 @@ using System.Windows.Controls;
 
 namespace GTI.WFMS.Modules.Cnst.ViewModel
 {
-    class SplyDtlViewModel : SplyDtl
+    class SplyDtlViewModel : INotifyPropertyChanged
     {
 
+        /// <summary>
+        /// 인터페이스 구현부분
+        /// </summary>
+        public event PropertyChangedEventHandler PropertyChanged;
+        protected void OnPropertyChanged(string propertyName)
+        {
+            if (PropertyChanged != null)
+            {
+                PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
+            }
+        }
 
         #region ==========  Properties 정의 ==========
         /// <summary>
@@ -33,6 +44,16 @@ namespace GTI.WFMS.Modules.Cnst.ViewModel
         public DelegateCommand<object> DupCommand { get; set; }
         public DelegateCommand<object> PrintCommand { get; set; }
 
+        private SplyDtl dtl = new SplyDtl();
+        public SplyDtl Dtl
+        {
+            get { return dtl; }
+            set
+            {
+                dtl = value;
+                OnPropertyChanged("Dtl");
+            }
+        }
 
         #endregion
 
@@ -61,7 +82,7 @@ namespace GTI.WFMS.Modules.Cnst.ViewModel
 
 
             //입력항목 변경되면 중복버튼 복원
-            this.DUP = "체크";
+            Dtl.DUP = "체크";
             PropertyChanged += delegate(object sender, PropertyChangedEventArgs args) {
                 try
                 {
@@ -76,7 +97,7 @@ namespace GTI.WFMS.Modules.Cnst.ViewModel
 
                 Hashtable param = new Hashtable();
                 param.Add("sqlId", "SelectWttSplyMaDup");
-                param.Add("CNT_NUM", this.CNT_NUM);
+                param.Add("CNT_NUM", Dtl.CNT_NUM);
                 DataTable dt = BizUtil.SelectList(param);
                 if (dt.Rows.Count > 1)
                 {
@@ -130,31 +151,30 @@ namespace GTI.WFMS.Modules.Cnst.ViewModel
             //DataTable dt = new DataTable();
             Hashtable param = new Hashtable();
             param.Add("sqlId", "SelectWttSplyMaDtl");
-            param.Add("CNT_NUM", this.CNT_NUM);
+            param.Add("CNT_NUM", Dtl.CNT_NUM);
 
-            SplyDtl result = new SplyDtl();
-            result = BizUtil.SelectObject(param) as SplyDtl;
+            Dtl = BizUtil.SelectObject(param) as SplyDtl;
 
-            //결과를 뷰모델멤버로 매칭
-            Type dbmodel = result.GetType();
-            Type model = this.GetType();
+            ////결과를 뷰모델멤버로 매칭
+            //Type dbmodel = result.GetType();
+            //Type model = this.GetType();
 
-            //모델프로퍼티 순회
-            foreach (PropertyInfo prop in model.GetProperties())
-            {
-                string propName = prop.Name;
-                //db프로퍼티 순회
-                foreach (PropertyInfo dbprop in dbmodel.GetProperties())
-                {
-                    string colName = dbprop.Name;
-                    var colValue = dbprop.GetValue(result, null);
-                    if (colName.Equals(propName))
-                    {
-                        prop.SetValue(this, Convert.ChangeType(colValue, prop.PropertyType));
-                    }
-                }
-               //Console.WriteLine(propName + " - " + prop.GetValue(this,null));
-            }
+            ////모델프로퍼티 순회
+            //foreach (PropertyInfo prop in model.GetProperties())
+            //{
+            //    string propName = prop.Name;
+            //    //db프로퍼티 순회
+            //    foreach (PropertyInfo dbprop in dbmodel.GetProperties())
+            //    {
+            //        string colName = dbprop.Name;
+            //        var colValue = dbprop.GetValue(result, null);
+            //        if (colName.Equals(propName))
+            //        {
+            //            try { prop.SetValue(this, colValue); } catch (Exception) { }
+            //        }
+            //    }
+            //   //Console.WriteLine(propName + " - " + prop.GetValue(this,null));
+            //}
 
         }
 
@@ -184,7 +204,7 @@ namespace GTI.WFMS.Modules.Cnst.ViewModel
 
             try
             {
-                BizUtil.Update2(this, "updateSplyDtl");
+                BizUtil.Update2(Dtl, "updateSplyDtl");
             }
             catch (Exception ex)
             {
@@ -205,7 +225,7 @@ namespace GTI.WFMS.Modules.Cnst.ViewModel
             Hashtable param = new Hashtable();
             param.Add("sqlId", "SelectFileMapList");
             param.Add("sqlId2", "SelectFileMapList");
-            param.Add("CNT_NUM", this.CNT_NUM);
+            param.Add("CNT_NUM", Dtl.CNT_NUM);
 
             Hashtable result = BizUtil.SelectLists(param);
             DataTable dt = new DataTable();
@@ -238,7 +258,7 @@ namespace GTI.WFMS.Modules.Cnst.ViewModel
             if (Messages.ShowYesNoMsgBox("급수전대장을 삭제하시겠습니까?") != MessageBoxResult.Yes) return;
             try
             {
-                BizUtil.Update2(this, "deleteSplyDtl");
+                BizUtil.Update2(Dtl, "deleteSplyDtl");
             }
             catch (Exception )
             {
@@ -278,7 +298,7 @@ namespace GTI.WFMS.Modules.Cnst.ViewModel
             {
 
                 //0.Datasource 생성
-                SplyDtlViewMdl mdl = new SplyDtlViewMdl(this.CNT_NUM);
+                SplyDtlViewMdl mdl = new SplyDtlViewMdl(Dtl.CNT_NUM);
                 //1.Report 호출
 
                 SplyMngReport report = new SplyMngReport();
@@ -314,7 +334,7 @@ namespace GTI.WFMS.Modules.Cnst.ViewModel
             try
             {
                 // cbHJD_CDE 행정동
-                BizUtil.SetCombo(cbHJD_CDE, "Select_ADAR_LIST", "HJD_CDE", "HJD_NAM", "[선택하세요]");
+                BizUtil.SetCombo(cbHJD_CDE, "Select_ADAR_LIST", "HJD_CDE", "HJD_NAM", "선택");
             }
             catch (Exception ex)
             {

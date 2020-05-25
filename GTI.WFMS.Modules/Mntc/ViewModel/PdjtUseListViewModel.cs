@@ -391,7 +391,7 @@ namespace GTI.WFMS.Modules.Mntc.ViewModel
         {
             try {
                 // cbPDT_CAT_CDE 소모품구분
-                BizUtil.SetCmbCode(cbPDT_CAT_CDE, "250106", "[전체]");
+                BizUtil.SetCmbCode(cbPDT_CAT_CDE, "250106", "전체");
             }
             catch (Exception ex)
             {

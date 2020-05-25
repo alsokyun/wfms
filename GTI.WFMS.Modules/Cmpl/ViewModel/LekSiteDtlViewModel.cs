@@ -118,8 +118,8 @@ namespace GTI.WFMS.Modules.Cmpl.ViewModel
                 try
                 {
                     //다큐먼트는 따로 처리
-                    this.Dtl.REP_EXP = new TextRange(lekSiteDtlView.richREP_EXP.Document.ContentStart, lekSiteDtlView.richREP_EXP.Document.ContentEnd).Text;
-                    this.Dtl.LEK_EXP = new TextRange(lekSiteDtlView.richLEK_EXP.Document.ContentStart, lekSiteDtlView.richLEK_EXP.Document.ContentEnd).Text;
+                    this.Dtl.REP_EXP = new TextRange(lekSiteDtlView.richREP_EXP.Document.ContentStart, lekSiteDtlView.richREP_EXP.Document.ContentEnd).Text.Trim();
+                    this.Dtl.LEK_EXP = new TextRange(lekSiteDtlView.richLEK_EXP.Document.ContentStart, lekSiteDtlView.richLEK_EXP.Document.ContentEnd).Text.Trim();
                     BizUtil.Update2(this.Dtl, "SaveWtlLeakDtl");
                 }
                 catch (Exception ex)
@@ -195,7 +195,7 @@ namespace GTI.WFMS.Modules.Cmpl.ViewModel
             Paragraph p = new Paragraph();
             try
             {
-                p.Inlines.Add(this.Dtl.REP_EXP.Trim());
+                p.Inlines.Add(this.Dtl.REP_EXP ?? "");
                 lekSiteDtlView.richREP_EXP.Document.Blocks.Clear();
                 lekSiteDtlView.richREP_EXP.Document.Blocks.Add(p);
             }
@@ -204,7 +204,7 @@ namespace GTI.WFMS.Modules.Cmpl.ViewModel
             p = new Paragraph();
             try
             {
-                p.Inlines.Add(this.Dtl.LEK_EXP.Trim());
+                p.Inlines.Add(this.Dtl.LEK_EXP ?? "");
                 lekSiteDtlView.richLEK_EXP.Document.Blocks.Clear();
                 lekSiteDtlView.richLEK_EXP.Document.Blocks.Add(p);
             }
@@ -224,13 +224,13 @@ namespace GTI.WFMS.Modules.Cmpl.ViewModel
             try
             {
                 //행정구역
-                BizUtil.SetCombo(lekSiteDtlView.cbHJD_CDE, "Select_ADAR_LIST", "HJD_CDE", "HJD_NAM", "[선택하세요]");
+                BizUtil.SetCombo(lekSiteDtlView.cbHJD_CDE, "Select_ADAR_LIST", "HJD_CDE", "HJD_NAM", "선택");
                 //누수원인
-                BizUtil.SetCmbCode(lekSiteDtlView.cbLRS_CDE, "250044", "[선택하세요]");
+                BizUtil.SetCmbCode(lekSiteDtlView.cbLRS_CDE, "250044", "선택");
                 //누수상태
-                BizUtil.SetCmbCode(lekSiteDtlView.cbLEP_CDE, "250043", "[선택하세요]");
+                BizUtil.SetCmbCode(lekSiteDtlView.cbLEP_CDE, "250043", "선택");
                 //관재질
-                BizUtil.SetCmbCode(lekSiteDtlView.cbMOP_CDE, "250102", "[선택하세요]");
+                BizUtil.SetCmbCode(lekSiteDtlView.cbMOP_CDE, "250102", "선택");
 
             }
             catch (Exception ex)

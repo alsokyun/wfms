@@ -14,6 +14,8 @@ namespace GTI.WFMS.Models.Main.Dao
 {
     class MainDao
     {
+        DBManager dBManager = new DBManager();
+
         /// <summary>
         /// DataBase 연결 테스트
         /// </summary>
@@ -21,7 +23,7 @@ namespace GTI.WFMS.Models.Main.Dao
         /// <returns></returns>
         public DataTable Select_SYSDATE(Hashtable conditions)
         {
-            return DBManager.QueryForTable("Select_SYSDATE", conditions);
+            return dBManager.QueryForTable("Select_SYSDATE", conditions);
         }
 
         /// <summary>
@@ -31,32 +33,32 @@ namespace GTI.WFMS.Models.Main.Dao
         /// <returns></returns>
         public DataTable Select_SYSDATE2(Hashtable conditions)
         {
-            return DBManager.QueryForTable("Select_SYSDATE2", conditions);
+            return dBManager.QueryForTable("Select_SYSDATE2", conditions);
         }
 
         internal DataTable Select_MNU_LIST(Hashtable conditions)
         {
-            return DBManager.QueryForTable("Select_MNU_LIST", conditions);
+            return dBManager.QueryForTable("Select_MNU_LIST", conditions);
         }
 
         internal DataTable SelectBaseSiteInfo(Hashtable conditions)
         {
-            return DBManager.QueryForTable("SelectBaseSiteInfo", conditions);
+            return dBManager.QueryForTable("SelectBaseSiteInfo", conditions);
         }
 
         internal DataTable SelectDBInfo(Hashtable conditions)
         {
-            return DBManager.QueryForTable("SelectDBInfo", conditions);
+            return dBManager.QueryForTable("SelectDBInfo", conditions);
         }
 
         internal DataTable LoginCheck(Hashtable htconditions)
         {
-            return DBManager.QueryForTable("LoginCheck", htconditions);
+            return dBManager.QueryForTable("LoginCheck", htconditions);
         }
 
         internal DataTable Select_LoginUser_Permission(Hashtable htconditions)
         {
-            return DBManager.QueryForTable("Select_LoginUser_Permission", htconditions);
+            return dBManager.QueryForTable("Select_LoginUser_Permission", htconditions);
         }
     }
 }
