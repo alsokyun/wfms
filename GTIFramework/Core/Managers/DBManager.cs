@@ -417,7 +417,7 @@ namespace GTIFramework.Core.Managers
 
                 ISqlMapper mapper = (ISqlMapper)maps[datasourceCode + GetProcessID()];
 
-                //WriteLog(datasourceCode, mapper, statementName, parameterObject);
+                WriteLog(datasourceCode, mapper, statementName, parameterObject);
 
                 dataTable = new DataTable(statementName);
 

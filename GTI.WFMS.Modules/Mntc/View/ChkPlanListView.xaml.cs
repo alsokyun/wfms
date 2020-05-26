@@ -160,27 +160,6 @@ namespace GTI.WFMS.Modules.Mntc.View
 
 
 
-        /// <summary>
-        /// 헤더 All 체크
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void AllChk_Checked(object sender, RoutedEventArgs e)
-        {
-            //CheckEdit ce = sender as CheckEdit;
-            //bool chk = ce.IsChecked is bool;
-            foreach (DataRow dr in ((DataTable)grid.ItemsSource).Rows)
-            {
-                dr["CHK"] = "Y";
-            }
-        }
-        private void AllChk_Unchecked(object sender, RoutedEventArgs e)
-        {
-            foreach (DataRow dr in ((DataTable)grid.ItemsSource).Rows)
-            {
-                dr["CHK"] = "N";
-            }
-        }
 
 
 

@@ -52,14 +52,12 @@ namespace GTI.WFMS.Modules.Link.ViewModel
 
         #region ==========  Member 정의 ==========
         private WttMetaHt dtl = new WttMetaHt();
-        string FTR_CDE;
-        int FTR_IDN;
-        int META_SEQ;
 
         MetrChgDtlView metrChgDtlView;
         ComboBoxEdit cbGCW_CDE; 
         ComboBoxEdit cbOME_MOF; 
         Button btnSave;
+        Button btnDel;
         Button btnClose;
         #endregion
 
@@ -71,6 +69,7 @@ namespace GTI.WFMS.Modules.Link.ViewModel
         {
             this.LoadedCommand = new DelegateCommand<object>(OnLoaded);
             this.SaveCommand = new DelegateCommand<object>(OnSave);
+            this.DeleteCommand = new DelegateCommand<object>(OnDelete);
 
         }
 
@@ -96,11 +95,9 @@ namespace GTI.WFMS.Modules.Link.ViewModel
             cbOME_MOF = metrChgDtlView.cbOME_MOF;
             
             btnSave = metrChgDtlView.btnSave;
+            btnDel = metrChgDtlView.btnDel;
             btnClose = metrChgDtlView.btnClose;
 
-            FTR_CDE = metrChgDtlView.txtFTR_CDE.Text;
-            FTR_IDN = Convert.ToInt32(metrChgDtlView.txtFTR_IDN.EditValue);
-            META_SEQ = Convert.ToInt32(metrChgDtlView.txtMETA_SEQ.EditValue);
 
             //2.화면데이터객체 초기화
             InitDataBinding();
@@ -126,6 +123,11 @@ namespace GTI.WFMS.Modules.Link.ViewModel
 
                 //채번결과 매칭
                 Dtl.META_SEQ = res.META_SEQ;
+
+                metrChgDtlView.btnDel.Visibility = Visibility.Collapsed;
+
+                //시설물명 가져오기
+                Dtl.FTR_NAM = BizUtil.GetCodeNm("Select_FTR_LIST2", Dtl.FTR_CDE);
             }
             else
             {
@@ -137,7 +139,7 @@ namespace GTI.WFMS.Modules.Link.ViewModel
 
                 Dtl = BizUtil.SelectObject(param) as WttMetaHt;
 
-                metrChgDtlView.btnSave.Visibility = Visibility.Collapsed;
+                metrChgDtlView.btnDel.Visibility = Visibility.Visible;
             }
 
 
@@ -160,7 +162,7 @@ namespace GTI.WFMS.Modules.Link.ViewModel
 
             try
             {
-                BizUtil.Update2(Dtl, "InsertWttMetaHt");
+                BizUtil.Update2(Dtl, "SaveWttMetaHt");
             }
             catch (Exception)
             {
@@ -173,6 +175,32 @@ namespace GTI.WFMS.Modules.Link.ViewModel
             //화면닫기
             btnClose.RaiseEvent(new RoutedEventArgs(Button.ClickEvent));
 
+        }
+
+
+        /// <summary>
+        /// 삭제작업
+        /// </summary>
+        /// <param name="obj"></param>
+        private void OnDelete(object obj)
+        {
+
+            if (Messages.ShowYesNoMsgBox("삭제하시겠습니까?") != MessageBoxResult.Yes) return;
+
+            try
+            {
+                BizUtil.Update2(Dtl, "DeleteWttMetaHt");
+            }
+            catch (Exception)
+            {
+                Messages.ShowErrMsgBox("저장 처리중 오류가 발생하였습니다.");
+                return;
+            }
+
+
+            Messages.ShowOkMsgBox();
+            //화면닫기
+            btnClose.RaiseEvent(new RoutedEventArgs(Button.ClickEvent));
         }
 
 
@@ -216,7 +244,8 @@ namespace GTI.WFMS.Modules.Link.ViewModel
                     case "W":
                         break;
                     case "R":
-                        btnSave.Visibility = Visibility.Collapsed;
+                        //btnSave.Visibility = Visibility.Collapsed;
+                        //btnDel.Visibility = Visibility.Collapsed;
                         break;
                     case "N":
                         break;

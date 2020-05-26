@@ -890,6 +890,7 @@
     <Compile Include="Mntc\ViewModel\FaqDocViewModel.cs" />
     <Compile Include="Mntc\ViewModel\FaqAddViewModel.cs" />
     <Compile Include="Mntc\ViewModel\PdjtMngListViewModel.cs" />
+    <Compile Include="Mntc\ViewModel\PdjtStockViewModel.cs" />
     <Compile Include="Mntc\View\FaqDocView.xaml.cs">
       <DependentUpon>FaqDocView.xaml</DependentUpon>
     </Compile>

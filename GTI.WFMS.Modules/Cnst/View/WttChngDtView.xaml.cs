@@ -1,5 +1,6 @@
 ﻿using GTI.WFMS.Modules.Cnst.Model;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Windows;
 using System.Windows.Controls;
 
@@ -33,14 +34,14 @@ namespace GTI.WFMS.Modules.Cnst.View
         {
             //CheckEdit ce = sender as CheckEdit;
             //bool chk = ce.IsChecked is bool;
-            foreach (WttChngDt dr in ((List<WttChngDt>)grid.ItemsSource))
+            foreach (WttChngDt dr in ((ObservableCollection<WttChngDt>)grid.ItemsSource))
             {
                 dr.CHK = "Y";
             }
         }
         private void AllChk_Unchecked(object sender, RoutedEventArgs e)
         {
-            foreach (WttChngDt dr in ((List<WttChngDt>)grid.ItemsSource))
+            foreach (WttChngDt dr in ((ObservableCollection<WttChngDt>)grid.ItemsSource))
             {
                 dr.CHK = "Y";
             }

@@ -56,11 +56,17 @@
             </StackPanel>
         </StackPanel>
         <StackPanel Grid.Row="1" Orientation="Horizontal" HorizontalAlignment="Right" Margin="10 0 10 0">
+            <Button x:Name="btnDel" Style="{DynamicResource ResourceKey=DelButton}"  >
+                <i:Interaction.Triggers>
+                    <i:EventTrigger EventName="Click">
+                        <i:InvokeCommandAction Command="{Binding DeleteCommand}"/>
+                    </i:EventTrigger>
+                </i:Interaction.Triggers>
+            </Button>
             <Button x:Name="btnSave" Style="{DynamicResource ResourceKey=SaveButton}"  >
                 <i:Interaction.Triggers>
                     <i:EventTrigger EventName="Click">
-                        <i:InvokeCommandAction Command="{Binding SaveCommand}">
-                        </i:InvokeCommandAction>
+                        <i:InvokeCommandAction Command="{Binding SaveCommand}"/>
                     </i:EventTrigger>
                 </i:Interaction.Triggers>
             </Button>
@@ -118,7 +124,7 @@
                           x:Name="txtFTR_NAM" EditValue="{Binding Dtl.FTR_NAM}"/>
 
             <dxe:TextEdit Grid.Row="0" Grid.Column="3" x:Name="txtFTR_CDE" Style="{DynamicResource ResourceKey=GridTextEdit}" 
-                              EditValue="{Binding Dtl.FTR_CDE, UpdateSourceTrigger=PropertyChanged}" IsEnabled="False"/>
+                              EditValue="{Binding Dtl.FTR_CDE, UpdateSourceTrigger=PropertyChanged}" Visibility="Collapsed"/>
 
             <Label Grid.Row="1" Grid.Column="0" Content="변경일련번호" Style="{DynamicResource ResourceKey=GridLabelReq}"/>
             <dxe:TextEdit Grid.Row="1" Grid.Column="1" x:Name="txtMETA_SEQ" Style="{DynamicResource ResourceKey=GridTextEdit}" 

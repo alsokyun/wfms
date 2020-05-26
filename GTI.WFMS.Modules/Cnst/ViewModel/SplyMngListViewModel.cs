@@ -504,11 +504,12 @@ namespace GTI.WFMS.Modules.Cnst.ViewModel
 
 
             string name_space = "GTI.WFMS.Models.Mntc.Model";
-            string class_name = "PdjtMaDtl";
+            string class_name = "PdjtInDtl";
             
             Hashtable param = new Hashtable();
-            param.Add("sqlId", "SelectPdjtMaMngList");
-            param.Add("PDH_NUM", 4);
+            param.Add("sqlId", "SelectPdjtInHtPopList");
+            param.Add("PDH_NUM", 6);
+            param.Add("IN_NUM", 1);
             
             DataTable dt = BizUtil.SelectList(param);
             DataRow dr = dt.Rows[0];
@@ -543,9 +544,13 @@ namespace GTI.WFMS.Modules.Cnst.ViewModel
 
                 //type 결정
                 string type_name = "string";
-                if (col.ColumnName.Contains("_AMT") || col.ColumnName.Contains("_DIP") || col.ColumnName.Contains("_DIR") || col.ColumnName.Contains("_CNT"))
+                if (col.ColumnName.Contains("_DIP") || col.ColumnName.Contains("_DIR") )
                 {
-                    type_name = "decimal";
+                    type_name = "decimal?";
+                }
+                else if (col.ColumnName.Contains("_AMT") || col.ColumnName.Contains("_CNT"))
+                {
+                    type_name = "int?";
                 }
                 else
                 {

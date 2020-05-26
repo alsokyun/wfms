@@ -8,9 +8,11 @@
             mc:Ignorable="d" 
             d:DesignHeight="200" d:DesignWidth="450"
         
+            xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
             xmlns:cv="clr-namespace:GTI.WFMS.Models.Common;assembly=GTI.WFMS.Models"
             xmlns:dxg="http://schemas.devexpress.com/winfx/2008/xaml/grid"
             xmlns:dxe="http://schemas.devexpress.com/winfx/2008/xaml/editors"
+            xmlns:vm="clr-namespace:GTI.WFMS.Modules.Mntc.ViewModel"
                
             x:Name="pdjtStockView"
             KeyDown="PdjtStockView_KeyDown"
@@ -25,9 +27,12 @@
             <cv:RownumConverter x:Key="rownumConverter" />
             <cv:ToggleConverter x:Key="toggleConverter" />
             <cv:Date3StrConverter x:Key="date3StrConverter" />
-            
         </ResourceDictionary>
     </Window.Resources>
+
+    <Window.DataContext>
+        <vm:PdjtStockViewModel/>
+    </Window.DataContext>
 
 
 
@@ -60,13 +65,15 @@
 
 
             <StackPanel Grid.Row="0" Orientation="Horizontal" HorizontalAlignment="Right" Margin="0 0 5 0">
-                <Button x:Name="btnAdd" Style="{DynamicResource ResourceKey=GrdAddButton}" Click="BtnAdd_Click"  />
-                <Button x:Name="btnDel" Style="{DynamicResource ResourceKey=GrdDelButton}" Click="BtnDel_Click"  />
-                <Button x:Name="btnReg" Style="{DynamicResource ResourceKey=GrdRegButton}" Click="BtnReg_Click"  />
+                <Button x:Name="btnAdd" Style="{DynamicResource ResourceKey=GrdAddButton}" Command="{Binding AddCommand}" />
+                <Button x:Name="btnDel" Style="{DynamicResource ResourceKey=GrdDelButton}" Command="{Binding DelCommand}"/>
+                <Button x:Name="btnReg" Style="{DynamicResource ResourceKey=GrdRegButton}" Command="{Binding SaveCommand }"/>
+                <TextBox x:Name="txtPDH_NUM" Text="{Binding PDH_NUM, UpdateSourceTrigger=PropertyChanged}" Visibility="Collapsed"/> <!--히든변수-->
             </StackPanel>
 
 
-            <dxg:GridControl Grid.Row="1" x:Name="grid" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" ShowBorder="True" >
+            <dxg:GridControl Grid.Row="1" x:Name="grid" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" ShowBorder="True" 
+                            ItemsSource="{Binding GrdLst, UpdateSourceTrigger=PropertyChanged}" >
 
                 <dxg:GridControl.View>
                     <dxg:TableView x:Name="gv"
@@ -109,15 +116,15 @@
                     <dxg:GridColumn.CellTemplate>
                         <DataTemplate>
                             <dxe:DateEdit Style="{DynamicResource ResourceKey=GridDateEdit}" 
-                            EditValue="{Binding RowData.Row.IN_YMD, UpdateSourceTrigger=PropertyChanged , Converter={StaticResource date3StrConverter}}"   />
+                            EditValue="{Binding RowData.Row.IN_YMD , Converter={StaticResource date3StrConverter}}"   />
                         </DataTemplate>
                     </dxg:GridColumn.CellTemplate>
                 </dxg:GridColumn>
                 <dxg:GridColumn Header="입고수량" Width="100" FieldName="IN_AMT" HorizontalHeaderContentAlignment="Center"  AllowEditing="True">
                     <dxg:GridColumn.CellTemplate>
                         <DataTemplate>
-                            <dxe:TextEdit  Style="{DynamicResource ResourceKey=GridNumberEdit}" 
-                            EditValue="{Binding  RowData.Row.IN_AMT, UpdateSourceTrigger=PropertyChanged}" />
+                            <dxe:TextEdit  Style="{DynamicResource ResourceKey=GridIntEdit}" 
+                            EditValue="{Binding  RowData.Row.IN_AMT}" />
                         </DataTemplate>
                     </dxg:GridColumn.CellTemplate>
                 </dxg:GridColumn>
@@ -126,7 +133,7 @@
                     <dxg:GridColumn.CellTemplate>
                         <DataTemplate>
                             <dxe:TextEdit  Style="{DynamicResource ResourceKey=GridTextEdit}" 
-                            EditValue="{Binding  RowData.Row.IN_ETC, UpdateSourceTrigger=PropertyChanged}" />
+                            EditValue="{Binding  RowData.Row.IN_ETC}" />
                         </DataTemplate>
                     </dxg:GridColumn.CellTemplate>
                 </dxg:GridColumn>
@@ -152,6 +159,12 @@
     </Grid>
 
 
+    <!--뷰와 연결된 뷰모델로 Loaded 이벤트전파-->
+    <i:Interaction.Triggers>
+        <i:EventTrigger EventName="Loaded">
+            <i:InvokeCommandAction Command="{Binding LoadedCommand}" CommandParameter="{Binding ElementName=pdjtStockView}" />
+        </i:EventTrigger>
+    </i:Interaction.Triggers>
 
 
 </Window>

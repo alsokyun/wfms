@@ -50,10 +50,10 @@
       </isNotEmpty>
 
       <isNotEmpty prepend="AND" property="TIT_NAM">
-        A.TIT_NAM LIKE '%' || #TIT_NAM# || '%'
+        upper(A.TIT_NAM ) LIKE '%' || upper(#TIT_NAM# ) || '%'
       </isNotEmpty>
       <isNotEmpty prepend="AND" property="CKM_PEO">
-        A.CKM_PEO LIKE '%' || #CKM_PEO# || '%'
+        upper(A.CKM_PEO ) LIKE '%' || upper(#CKM_PEO# ) || '%'
       </isNotEmpty>
 
       <isNotEmpty prepend="AND" property="STA_YMD">
@@ -327,7 +327,7 @@
 
 
       <isNotEmpty prepend="AND" property="TTL">
-        A.TTL LIKE '%' || #TTL# || '%'
+        upper(A.TTL ) LIKE '%' || upper(#TTL# ) || '%'
       </isNotEmpty>
       <isNotEmpty prepend="AND" property="FAQ_CAT_CDE">
         A.FAQ_CAT_CDE LIKE #FAQ_CAT_CDE#
@@ -339,7 +339,7 @@
         A.FTR_CDE LIKE #FTR_CDE#
       </isNotEmpty>
       <isNotEmpty prepend="AND" property="QUESTION">
-        A.QUESTION LIKE '%' || #QUESTION# || '%'
+        upper(A.QUESTION ) LIKE '%' || upper(#QUESTION# ) || '%'
       </isNotEmpty>
 
       )
@@ -377,7 +377,7 @@
 
 
       <isNotEmpty prepend="AND" property="TTL">
-        A.TTL LIKE '%' || #TTL# || '%'
+        upper(A.TTL ) LIKE '%' || upper(#TTL#)  || '%'
       </isNotEmpty>
       <isNotEmpty prepend="AND" property="FAQ_CAT_CDE">
         A.FAQ_CAT_CDE LIKE #FAQ_CAT_CDE#
@@ -389,7 +389,7 @@
         A.FTR_CDE LIKE #FTR_CDE#
       </isNotEmpty>
       <isNotEmpty prepend="AND" property="QUESTION">
-        A.QUESTION LIKE '%' || #QUESTION# || '%'
+        upper(A.QUESTION ) LIKE '%' || upper(#QUESTION# ) || '%'
       </isNotEmpty>
       
       

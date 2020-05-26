@@ -47,7 +47,7 @@
 
       <!-- 조건8. 가압장명 -->
       <isNotEmpty prepend="AND" property="PRS_NAM">
-        A.PRS_NAM LIKE '%'|| #PRS_NAM# || '%'
+        upper(A.PRS_NAM ) LIKE '%'|| upper(#PRS_NAM# ) || '%'
       </isNotEmpty>
 
       <!-- 조건9. 관리방법 -->
@@ -58,11 +58,11 @@
 
       <!-- 조건10. 가압구역 -->
       <isNotEmpty prepend="AND" property="PRS_ARE">
-        A.PRS_ARE LIKE '%' || #PRS_ARE# || '%'
+        upper(A.PRS_ARE ) LIKE '%' || upper(#PRS_ARE# ) || '%'
       </isNotEmpty>
 
         <isNotEmpty prepend="AND" property="PRS_SAH">
-          A.PRS_SAH LIKE '%'||#PRS_SAH#||'%'
+          upper(A.PRS_SAH ) LIKE '%'|| upper(#PRS_SAH#) ||'%'
         </isNotEmpty>
 
         <!-- 조건11. 가압능력 -->
@@ -133,7 +133,7 @@
 
         <!-- 조건8. 가압장명 -->
         <isNotEmpty prepend="AND" property="PRS_NAM">
-          A.PRS_NAM LIKE '%'|| #PRS_NAM# || '%'
+          upper(A.PRS_NAM ) LIKE '%'|| upper(#PRS_NAM# ) || '%'
         </isNotEmpty>
 
         <!-- 조건9. 관리방법 -->
@@ -143,12 +143,12 @@
 
       <!-- 조건10. 가압구역 -->
       <isNotEmpty prepend="AND" property="PRS_ARE">
-        A.PRS_ARE LIKE '%' || #PRS_ARE# || '%'
+        upper(A.PRS_ARE ) LIKE '%' || upper(#PRS_ARE# ) || '%'
       </isNotEmpty>
 
       <isNotEmpty prepend="AND" property="PRS_SAH">
-          A.PRS_SAH LIKE '%'||#PRS_SAH#||'%'
-        </isNotEmpty>
+        upper(A.PRS_SAH ) LIKE '%'|| upper(#PRS_SAH#) ||'%'
+      </isNotEmpty>
 
         <!-- 조건11. 가압능력 -->
         <isNotEmpty prepend="AND" property="PRS_VOL">

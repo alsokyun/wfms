@@ -133,12 +133,33 @@ namespace GTI.WFMS.Modules.Link.ViewModel
             }
             catch (Exception e) { Console.WriteLine(e.Message); }
 
+            //버튼처리
+            btnDelete.Visibility = Visibility.Visible;
+
+
 
             //5.신규/수정구분처리
             if (ATTA_SEQ < 0)
             {
+                //채번
+                param = new Hashtable();
+                param.Add("FTR_CDE", FTR_CDE);
+                param.Add("FTR_IDN", FTR_IDN);
+                param.Add("sqlId", "selectATTA_SEQ");
+
+                WttAttaDt res = new WttAttaDt();
+                res = BizUtil.SelectObject(param) as WttAttaDt;
+
+                //채번결과 매칭
+                ATTA_SEQ = res.ATTA_SEQ;
+
+                //시설물명  가져오기
                 attFacDtlView.txtFTR_NAM.Text = BizUtil.GetCodeNm("Select_FTR_LIST2", FTR_CDE);
+
+                //버튼처리
+                btnDelete.Visibility = Visibility.Hidden;
             }
+
 
         }
 

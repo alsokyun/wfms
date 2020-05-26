@@ -1,8 +1,7 @@
 ﻿using DevExpress.Mvvm;
-using DevExpress.Xpf.Core;
 using GTI.WFMS.Models.Common;
-using GTI.WFMS.Modules.Cnst.Model;
-using GTI.WFMS.Modules.Cnst.View;
+using GTI.WFMS.Models.Mntc.Model;
+using GTI.WFMS.Modules.Mntc.View;
 using GTIFramework.Common.MessageBox;
 using System;
 using System.Collections;
@@ -10,12 +9,11 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Windows;
-using System.Windows.Controls;
 
-namespace GTI.WFMS.Modules.Cnst.ViewModel
+namespace GTI.WFMS.Modules.Mntc.ViewModel
 {
 
-    public class WttSubcDtViewModel : INotifyPropertyChanged
+    public class PdjtStockViewModel : INotifyPropertyChanged
     {
         /// <summary>
         /// 인터페이스 구현부분
@@ -32,18 +30,18 @@ namespace GTI.WFMS.Modules.Cnst.ViewModel
 
 
 
-        public WttSubcDtView wttSubcDtView;
+        public PdjtStockView pdjtStockView;
 
 
         #region ============ 프로퍼티부분 ===============
         public DelegateCommand<object> LoadedCommand { get; set; }
         public DelegateCommand<object> SaveCommand { get; set; }
-        public DelegateCommand<object> DeleteCommand { get; set; }
+        public DelegateCommand<object> DelCommand { get; set; }
         public DelegateCommand<object> AddCommand { get; set; }
 
 
-        ObservableCollection<WttSubcDt> __GrdLst;
-        public ObservableCollection<WttSubcDt> GrdLst
+        ObservableCollection<PdjtInDtl> __GrdLst;
+        public ObservableCollection<PdjtInDtl> GrdLst
         {
             get { return __GrdLst; }
             set
@@ -53,27 +51,27 @@ namespace GTI.WFMS.Modules.Cnst.ViewModel
                 OnPropertyChanged("GrdLst");
             }
         }
-        private string __CNT_NUM;
-        public string CNT_NUM
+        private string __PDH_NUM;
+        public string PDH_NUM
         {
-            get { return __CNT_NUM; }
+            get { return __PDH_NUM; }
             set
             {
-                this.__CNT_NUM = value;
-                OnPropertyChanged("CNT_NUM");
+                this.__PDH_NUM = value;
+                OnPropertyChanged("PDH_NUM");
             }
         }
 
         #endregion
         
-        public WttSubcDtViewModel()
+        public PdjtStockViewModel()
         {
             this.LoadedCommand = new DelegateCommand<object>(OnLoaded);
             this.SaveCommand = new DelegateCommand<object>(OnSave);
-            this.DeleteCommand = new DelegateCommand<object>(OnDelete);
+            this.DelCommand = new DelegateCommand<object>(OnDelete);
             //행추가
             this.AddCommand = new DelegateCommand<object>(delegate(object obj) {
-                WttSubcDt addrow = new WttSubcDt();
+                PdjtInDtl addrow = new PdjtInDtl();
                 GrdLst.Add(addrow);
                 addrow.CHK = "Y";
             });
@@ -89,7 +87,7 @@ namespace GTI.WFMS.Modules.Cnst.ViewModel
         {
             // 0.화면객체인스턴스화
             if (obj == null) return;
-            wttSubcDtView = obj as WttSubcDtView;
+            pdjtStockView = obj as PdjtStockView;
 
             //초기조회
             initModel();
@@ -106,29 +104,16 @@ namespace GTI.WFMS.Modules.Cnst.ViewModel
 
                 //초기조회
                 Hashtable param = new Hashtable();
-                param.Add("sqlId", "SelectWttSubcDtList2");
-                param.Add("CNT_NUM", this.CNT_NUM);
+                param.Add("sqlId", "SelectPdjtInHtPopList");
+                param.Add("PDH_NUM", PDH_NUM);
 
-                GrdLst = new ObservableCollection<WttSubcDt>(BizUtil.SelectListObj<WttSubcDt>(param));
+                GrdLst = new ObservableCollection < PdjtInDtl >(BizUtil.SelectListObj<PdjtInDtl>(param));
 
             }
             catch (Exception e)
             {
                 Console.WriteLine(e);
             }
-        }
-
-        //상위화면조회
-        private void parentInitModel()
-        {
-            CnstMngDtlView cnstMngDtlView = (((wttSubcDtView.Parent as DXTabItem).Parent as DXTabControl).Parent as Grid).Parent as CnstMngDtlView;
-            cnstMngDtlView.refresh();
-            //cnstMngDtlView.InvalidateVisual();
-
-
-            //CnstMngDtlViewModel vm =
-            //((((wttSubcDtView.Parent as DXTabItem).Parent as DXTabControl).Parent as Grid).Parent as CnstMngDtlView).DataContext as CnstMngDtlViewModel;
-            //vm.InitModel();
         }
 
         /// <summary>
@@ -140,7 +125,7 @@ namespace GTI.WFMS.Modules.Cnst.ViewModel
             try
             {
                 bool isChecked = false;
-                foreach (WttSubcDt row in GrdLst)
+                foreach (PdjtInDtl row in GrdLst)
                 {
                     if ("Y".Equals(row.CHK))
                     {
@@ -156,7 +141,7 @@ namespace GTI.WFMS.Modules.Cnst.ViewModel
                 
                 if (Messages.ShowYesNoMsgBox("선택 항목을 삭제 하시겠습니까?") == MessageBoxResult.Yes)
                 {
-                    foreach (WttSubcDt row in GrdLst)
+                    foreach (PdjtInDtl row in GrdLst)
                     {
                         Hashtable param = new Hashtable();
                         try
@@ -164,10 +149,10 @@ namespace GTI.WFMS.Modules.Cnst.ViewModel
                             if ("Y".Equals(row.CHK))
                             {
                                 param.Clear();
-                                param.Add("sqlId", "DeleteWttSubcDt");
-                                param.Add("CNT_NUM", CNT_NUM);
+                                param.Add("sqlId", "DeletePdjtInHtPop");
+                                param.Add("PDH_NUM", row.PDH_NUM);
 
-                                if (row.SUBC_SEQ == 0)
+                                if (row.IN_NUM == 0)
                                 {
                                     //그리드행만 삭제
                                     GrdLst.RemoveAt(GrdLst.IndexOf(row));
@@ -176,7 +161,7 @@ namespace GTI.WFMS.Modules.Cnst.ViewModel
                                 else
                                 {
                                     //데이터삭제
-                                    param.Add("SUBC_SEQ", Convert.ToInt32(row.SUBC_SEQ));
+                                    param.Add("IN_NUM", row.IN_NUM);
                                     BizUtil.Update(param);
                                 }
                             }
@@ -191,8 +176,7 @@ namespace GTI.WFMS.Modules.Cnst.ViewModel
                     Messages.ShowOkMsgBox();
 
                     //재조회
-                    //initModel();
-                    parentInitModel();
+                    initModel();
                 }
             }
             catch (Exception ex)
@@ -208,7 +192,7 @@ namespace GTI.WFMS.Modules.Cnst.ViewModel
         private void OnSave(object obj)
         {
             bool isChecked = false;
-            foreach (WttSubcDt row in GrdLst)
+            foreach (PdjtInDtl row in GrdLst)
             {
                 if ("Y".Equals(row.CHK))
                 {
@@ -227,23 +211,20 @@ namespace GTI.WFMS.Modules.Cnst.ViewModel
             Hashtable param = new Hashtable();
 
             //그리드 저장
-            foreach (WttSubcDt row in GrdLst)
+            foreach (PdjtInDtl row in GrdLst)
             {
                 if (row.CHK != "Y")     continue;
 
-                param = new Hashtable();
-                param.Add("sqlId", "SaveWttSubcDt");
-                param.Add("CNT_NUM", CNT_NUM);
-                param.Add("SUBC_SEQ", Convert.ToInt32(row.SUBC_SEQ));
+                if (FmsUtil.IsNull(row.IN_YMD))
+                {
+                    MessageBox.Show("입고일자는 필수입니다.");
+                    return;
+                }
 
-                param.Add("SUB_NAM", row.SUB_NAM);  //하도급자
-                param.Add("PSB_NAM", row.PSB_NAM);  //하도급 대표자                
-                param.Add("SUB_TEL", row.SUB_TEL);  //하도급 전화번호
-                param.Add("SUB_ADR", row.SUB_ADR);  //하도급 주소
-
+                row.PDH_NUM = Convert.ToInt32(PDH_NUM) ;
                 try
                 {
-                    BizUtil.Update(param);
+                    BizUtil.Update2(row, "SavePdjtInHtPop");
                 }
                 catch (Exception)
                 {
@@ -256,8 +237,7 @@ namespace GTI.WFMS.Modules.Cnst.ViewModel
             Messages.ShowOkMsgBox();
 
             //재조회
-            //initModel();
-            parentInitModel();
+            initModel();
 
 
         }

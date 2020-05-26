@@ -47,7 +47,7 @@
 
         <!-- 조건8. 수원지종류 -->
         <isNotEmpty prepend="AND" property="HEA_NAM">
-          A.HEA_NAM LIKE '%' || #HEA_NAM# || '%'
+          upper(A.HEA_NAM ) LIKE '%' || upper(#HEA_NAM# ) || '%'
         </isNotEmpty>
 
         <!-- 조건9. 수원구분 -->
@@ -57,7 +57,7 @@
 
         <!-- 조건10. 하천명 -->
         <isNotEmpty prepend="AND" property="IRV_NAM">
-          A.IRV_NAM LIKE '%' || #IRV_NAM# || '%'
+          upper(A.IRV_NAM ) LIKE '%' || upper(#IRV_NAM# ) || '%'
         </isNotEmpty>
 
         <!-- 조건11. 유효저수량 -->
@@ -135,7 +135,7 @@
 
         <!-- 조건8. 수원지종류 -->
         <isNotEmpty prepend="AND" property="HEA_NAM">
-          A.HEA_NAM LIKE '%' || #HEA_NAM# || '%'
+          upper(A.HEA_NAM ) LIKE '%' || upper(#HEA_NAM# ) || '%'
         </isNotEmpty>
 
         <!-- 조건9. 수원구분 -->
@@ -145,7 +145,7 @@
 
         <!-- 조건10. 하천명 -->
         <isNotEmpty prepend="AND" property="IRV_NAM">
-          A.IRV_NAM LIKE '%' || #IRV_NAM# || '%'
+          upper(A.IRV_NAM ) LIKE '%' || upper(#IRV_NAM# ) || '%'
         </isNotEmpty>
 
         <!-- 조건11. 유효저수량 -->

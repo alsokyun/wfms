@@ -29,11 +29,11 @@
         </isNotEmpty>
 
         <isNotEmpty prepend="AND" property="CNT_NUM">
-          A.CNT_NUM like #CNT_NUM#  || '%'
+          upper(A.CNT_NUM ) like '%' || upper(#CNT_NUM# )  || '%'
         </isNotEmpty>
 
         <isNotEmpty prepend="AND" property="SHT_NUM">
-          A.SHT_NUM like #SHT_NUM#  || '%'
+          upper(A.SHT_NUM) like '%' || upper(#SHT_NUM#)  || '%'
         </isNotEmpty>
 
         <isNotEmpty prepend="AND" property="IST_YMD_FROM">
@@ -98,11 +98,11 @@
       </isNotEmpty>
 
       <isNotEmpty prepend="AND" property="CNT_NUM">
-        A.CNT_NUM like #CNT_NUM#  || '%'
+        upper(A.CNT_NUM ) like '%' || upper(#CNT_NUM# )  || '%'
       </isNotEmpty>
 
       <isNotEmpty prepend="AND" property="SHT_NUM">
-        A.SHT_NUM like #SHT_NUM#  || '%'
+        upper(A.SHT_NUM) like '%' || upper(#SHT_NUM#)  || '%'
       </isNotEmpty>
 
       <isNotEmpty prepend="AND" property="IST_YMD_FROM">
@@ -156,7 +156,7 @@
       , A.PIP_LEN
       FROM INFOFMS.WTL_PIPE_LM A
       LEFT JOIN INFOFMS.V_FTR_CDE F ON A.FTR_CDE = F.FTR_CDE
-      LEFT JOIN INFOUSER.CD_DTL_INFO C ON C.DTL_CD LIKE 'MNG%' AND C.DTL_CD = A.MNG_CDE
+      LEFT JOIN INFOUSER.CD_DTL_INFO C ON C.MST_CD LIKE '250101' AND C.DTL_CD = A.MNG_CDE
       LEFT JOIN INFOFMS.CMT_ADAR_MA H ON H.HJD_CDE = A.HJD_CDE
       LEFT JOIN INFOUSER.CD_DTL_INFO C2 ON C2.DTL_CD LIKE 'SAA%' AND C2.DTL_CD = A.SAA_CDE
       LEFT JOIN INFOUSER.CD_DTL_INFO C3 ON C3.DTL_CD LIKE 'MOP%' AND C3.MST_CD = '250102' AND C3.DTL_CD = A.MOP_CDE
@@ -189,7 +189,7 @@
       , A.PIP_LEN
       FROM INFOFMS.WTL_PIPE_LM A
       LEFT JOIN INFOFMS.V_FTR_CDE F ON A.FTR_CDE = F.FTR_CDE
-      LEFT JOIN INFOUSER.CD_DTL_INFO C ON C.DTL_CD LIKE 'MNG%' AND C.DTL_CD = A.MNG_CDE
+      LEFT JOIN INFOUSER.CD_DTL_INFO C ON C.MST_CD LIKE '250101' AND C.DTL_CD = A.MNG_CDE
       LEFT JOIN INFOFMS.CMT_ADAR_MA H ON H.HJD_CDE = A.HJD_CDE
       LEFT JOIN INFOUSER.CD_DTL_INFO C2 ON C2.DTL_CD LIKE 'SAA%' AND C2.DTL_CD = A.SAA_CDE
       LEFT JOIN INFOUSER.CD_DTL_INFO C3 ON C3.DTL_CD LIKE 'MOP%' AND C3.MST_CD = '250102' AND C3.DTL_CD = A.MOP_CDE

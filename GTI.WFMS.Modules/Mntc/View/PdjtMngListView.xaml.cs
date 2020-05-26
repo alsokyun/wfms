@@ -1,6 +1,9 @@
 ﻿using DevExpress.Xpf.Editors;
 using GTI.WFMS.Models.Common;
+using GTI.WFMS.Models.Mntc.Model;
 using GTIFramework.Common.Utils.ViewEffect;
+using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Data;
 using System.Windows;
 using System.Windows.Controls;
@@ -49,16 +52,16 @@ namespace GTI.WFMS.Modules.Mntc.View
         {
             //CheckEdit ce = sender as CheckEdit;
             //bool chk = ce.IsChecked is bool;
-            foreach (DataRow dr in ((DataTable)grid.ItemsSource).Rows)
+            foreach (PdjtMaDtl dr in (ObservableCollection<PdjtMaDtl>)grid.ItemsSource)
             {
-                dr["CHK"] = "Y";
+                dr.CHK = "Y";
             }
         }
         private void AllChk_Unchecked(object sender, RoutedEventArgs e)
         {
-            foreach (DataRow dr in ((DataTable)grid.ItemsSource).Rows)
+            foreach (PdjtMaDtl dr in (ObservableCollection<PdjtMaDtl>)grid.ItemsSource)
             {
-                dr["CHK"] = "N";
+                dr.CHK = "N";
             }
         }
 

@@ -108,11 +108,10 @@
                           x:Name="txtFTR_NAM" EditValue="{Binding FTR_NAM}"/>
                 <!--키값-->
                 <dxe:TextEdit Grid.Row="0" Grid.Column="3" x:Name="txtFTR_CDE" EditValue="{Binding FTR_CDE,  UpdateSourceTrigger=PropertyChanged}" Visibility="Collapsed"/>
-                <dxe:TextEdit Grid.Row="0" Grid.Column="3" x:Name="txtATTA_SEQ" EditValue="{Binding ATTA_SEQ,  UpdateSourceTrigger=PropertyChanged}" Visibility="Collapsed"/>
-
+                
                 <Label Grid.Row="1" Grid.Column="0" Content="세부시설번호" Style="{DynamicResource ResourceKey=GridLabelReq}"/>
                 <dxe:TextEdit Grid.Row="1" Grid.Column="1" Style="{DynamicResource ResourceKey=GridIntEdit}" Tag="세부시설번호" 
-                          x:Name="txtATT_IDN" EditValue="{Binding ATT_IDN, UpdateSourceTrigger=PropertyChanged}"/>
+                          x:Name="txtATTA_SEQ" EditValue="{Binding ATTA_SEQ, UpdateSourceTrigger=PropertyChanged}" IsEnabled="False" />
 
                 <Label Grid.Row="1" Grid.Column="2" Content="설치년도" Style="{DynamicResource ResourceKey=GridLabel}"/>
                 <dxe:ComboBoxEdit Grid.Row="1" Grid.Column="3" Style="{DynamicResource ResourceKey=GridComboBox}" 

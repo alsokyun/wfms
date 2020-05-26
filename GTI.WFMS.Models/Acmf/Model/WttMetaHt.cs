@@ -47,6 +47,17 @@ namespace GTI.WFMS.Models.Acmf.Model
                 OnPropertyChanged("FTR_CDE");
             }
         }
+        private string __FTR_NAM;
+        public string FTR_NAM
+        {
+            get { return __FTR_NAM; }
+            set
+            {
+                this.__FTR_NAM = value;
+                OnPropertyChanged("FTR_NAM");
+            }
+        }
+
         private int __FTR_IDN;
         public int FTR_IDN
         {

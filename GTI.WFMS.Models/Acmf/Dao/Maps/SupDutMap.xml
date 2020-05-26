@@ -57,7 +57,7 @@
 
         <!-- 조건10. 관라벨 -->
         <isNotEmpty prepend="AND" property="PIP_LBL">
-          A.PIP_LBL LIKE '%' ||#PIP_LBL#|| '%'
+          upper(A.PIP_LBL ) LIKE '%' || upper(#PIP_LBL#) || '%'
         </isNotEmpty>
 
         <!-- 조건11. 구경 -->
@@ -140,7 +140,7 @@
 
           <!-- 조건10. 관라벨 -->
           <isNotEmpty prepend="AND" property="PIP_LBL">
-            A.PIP_LBL LIKE '%' ||#PIP_LBL#|| '%'
+            upper(A.PIP_LBL ) LIKE '%' || upper(#PIP_LBL#) || '%'
           </isNotEmpty>
 
           <!-- 조건11. 구경 -->

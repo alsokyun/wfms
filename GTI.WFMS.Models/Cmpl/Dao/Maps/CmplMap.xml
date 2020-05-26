@@ -16,7 +16,7 @@
       WHERE 1=1
 
       <isNotEmpty prepend="AND" property="RCV_NUM">
-        RCV_NUM like '%' || #RCV_NUM# || '%'
+        upper(RCV_NUM) like '%' || upper(#RCV_NUM# ) || '%'
       </isNotEmpty>
       <isNotEmpty prepend="AND" property="APL_HJD">
         APL_HJD = #APL_HJD#
@@ -72,7 +72,7 @@
       WHERE 1=1
 
       <isNotEmpty prepend="AND" property="RCV_NUM">
-        RCV_NUM like '%' || #RCV_NUM# || '%'
+        upper(RCV_NUM ) like '%' || upper(#RCV_NUM#) || '%'
       </isNotEmpty>
       <isNotEmpty prepend="AND" property="APL_HJD">
         APL_HJD = #APL_HJD#
@@ -267,7 +267,7 @@
       WHERE 1=1
 
       <isNotEmpty prepend="AND" property="RCV_NUM">
-        A.RCV_NUM LIKE '%' ||  #RCV_NUM# || '%'
+        upper(A.RCV_NUM ) LIKE '%' ||  upper(#RCV_NUM# ) || '%'
       </isNotEmpty>
       <isNotEmpty prepend="AND" property="APL_HJD">
         A.APL_HJD = #APL_HJD#
@@ -323,7 +323,7 @@
       WHERE 1=1
 
       <isNotEmpty prepend="AND" property="RCV_NUM">
-        A.RCV_NUM LIKE '%' ||  #RCV_NUM# || '%'
+        upper(A.RCV_NUM ) LIKE '%' ||  upper(#RCV_NUM# ) || '%'
       </isNotEmpty>
       <isNotEmpty prepend="AND" property="APL_HJD">
         A.APL_HJD = #APL_HJD#

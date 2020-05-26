@@ -350,8 +350,8 @@
 
     <!--수정 버튼 (이미지)-->
     <Style TargetType="Button" x:Key="ModiButton">
-        <Setter Property="Width" Value="92"/>
-        <Setter Property="Height" Value="34"/>
+        <Setter Property="Width" Value="74"/>
+        <Setter Property="Height" Value="28"/>
         <Setter Property="Margin" Value="5,0,0,0"/>
         <Setter Property="Template">
             <Setter.Value>

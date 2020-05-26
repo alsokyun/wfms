@@ -221,6 +221,7 @@
     <Compile Include="Mntc\Model\ChscMaDtl.cs" />
     <Compile Include="Cmm\Model\LinkFmsChscFtrRes.cs" />
     <Compile Include="Mntc\Model\FaqDtl.cs" />
+    <Compile Include="Mntc\Model\PdjtInDtl.cs" />
     <Compile Include="Mntc\Model\PdjtMaDtl.cs" />
     <Compile Include="Mntc\Model\ResSrc.cs" />
     <Compile Include="Pipe\Dao\PipeDao.cs" />

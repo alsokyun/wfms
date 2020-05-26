@@ -100,7 +100,15 @@
             ) M
     </select>
 
-    
+
+    <!-- 부속시설 세부 채번 -->
+    <select id="selectATTA_SEQ" parameterClass="Hashtable" resultClass="GTI.WFMS.Models.Fctl.Model.WttAttaDt">
+      SELECT
+      nvl(max(ATTA_SEQ),0)+1 as ATTA_SEQ
+      FROM WTT_ATTA_DT
+    </select>
+
+
     <!-- 부속시설 저장 -->
     <update id="SaveWttAttaDt" parameterClass="GTI.WFMS.Models.Fctl.Model.WttAttaDt">
       MERGE INTO WTT_ATTA_DT
@@ -164,13 +172,13 @@
                 F.FTR_CDE = #FTR_CDE#
               </isNotEmpty>
               <isNotEmpty prepend="AND" property="FTR_NAM">
-                D.FTR_NAM LIKE '%' || #FTR_NAM# || '%'
+                upper(D.FTR_NAM ) LIKE '%' || upper(#FTR_NAM# ) || '%'
               </isNotEmpty>
               <isNotEmpty prepend="AND" property="CNT_NUM">
                 F.CNT_NUM = #CNT_NUM#
               </isNotEmpty>
               <isNotEmpty prepend="AND" property="CNT_NAM">
-                C.CNT_NAM LIKE '%' || #CNT_NAM# || '%'
+                upper(C.CNT_NAM ) LIKE '%' || upper(#CNT_NAM# ) || '%'
               </isNotEmpty>
               <isNotEmpty prepend="AND" property="HJD_CDE">
                 F.HJD_CDE = #HJD_CDE#
@@ -201,13 +209,13 @@
               F.FTR_CDE = #FTR_CDE#
             </isNotEmpty>
             <isNotEmpty prepend="AND" property="FTR_NAM">
-              D.FTR_NAM LIKE '%' || #FTR_NAM# || '%'
+              upper(D.FTR_NAM ) LIKE '%' || upper(#FTR_NAM# ) || '%'
             </isNotEmpty>
             <isNotEmpty prepend="AND" property="CNT_NUM">
               F.CNT_NUM = #CNT_NUM#
             </isNotEmpty>
             <isNotEmpty prepend="AND" property="CNT_NAM">
-              C.CNT_NAM LIKE '%' || #CNT_NAM# || '%'
+              upper(C.CNT_NAM ) LIKE '%' || upper(#CNT_NAM#)  || '%'
             </isNotEmpty>
             <isNotEmpty prepend="AND" property="HJD_CDE">
               F.HJD_CDE = #HJD_CDE#
@@ -257,7 +265,7 @@
       , A.ATT_TIM
       , A.OME_MOF
       , (SELECT NM FROM INFOUSER.CD_DTL_INFO WHERE MST_CD = '250004' AND DTL_CD = OME_MOF) AS OME_MOF_NAM
-      , A.META_SEQ
+      , A.ATTA_SEQ
       FROM INFOFMS.WTT_META_HT A
       WHERE 1=1
       AND A.FTR_CDE=#FTR_CDE#

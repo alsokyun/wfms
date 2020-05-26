@@ -69,19 +69,19 @@
                 <Label Grid.Row="0" Grid.Column="0" Content="품명" Style="{DynamicResource ResourceKey=GridLabel}"/>
                 <dxe:TextEdit Grid.Row="0" Grid.Column="1" x:Name="txtPDT_NAM" Style="{DynamicResource ResourceKey=SearchTextEdit}"  HorizontalAlignment="Center" Margin="0">
                     <dxe:TextEdit.InputBindings>
-                        <KeyBinding Key="Enter" Command="{Binding SearchCmd}"/>
+                        <KeyBinding Key="Enter" Command="{Binding SearchCommand}"/>
                     </dxe:TextEdit.InputBindings>
                 </dxe:TextEdit>
                 <Label Grid.Row="1" Grid.Column="0" Content="모델및규격" Style="{DynamicResource ResourceKey=GridLabel}"/>
                 <dxe:TextEdit Grid.Row="1" Grid.Column="1" x:Name="txtPDT_MDL_STD" Style="{DynamicResource ResourceKey=SearchTextEdit}"  HorizontalAlignment="Center" Margin="0">
                     <dxe:TextEdit.InputBindings>
-                        <KeyBinding Key="Enter" Command="{Binding SearchCmd}"/>
+                        <KeyBinding Key="Enter" Command="{Binding SearchCommand}"/>
                     </dxe:TextEdit.InputBindings>
                 </dxe:TextEdit>
                 <Label Grid.Row="2" Grid.Column="0" Content="제조사" Style="{DynamicResource ResourceKey=GridLabel}"/>
                 <dxe:TextEdit Grid.Row="2" Grid.Column="1" x:Name="txtPDT_MNF" Style="{DynamicResource ResourceKey=SearchTextEdit}"  HorizontalAlignment="Center" Margin="0">
                     <dxe:TextEdit.InputBindings>
-                        <KeyBinding Key="Enter" Command="{Binding SearchCmd}"/>
+                        <KeyBinding Key="Enter" Command="{Binding SearchCommand}"/>
                     </dxe:TextEdit.InputBindings>
                 </dxe:TextEdit>
                 <Label Grid.Row="3" Grid.Column="0" Content="구분" Style="{DynamicResource ResourceKey=GridLabel}"/>

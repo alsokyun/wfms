@@ -51,7 +51,7 @@
             </dxg:GridControl.View>
 
 
-            <dxg:GridColumn Header="시설번호" Width="2*" FieldName="ATT_IDN" HorizontalHeaderContentAlignment="Center">
+            <dxg:GridColumn Header="세부시설번호" Width="2*" FieldName="ATTA_SEQ" HorizontalHeaderContentAlignment="Center">
                 <dxg:GridColumn.EditSettings>
                     <dxe:TextEditSettings HorizontalContentAlignment="Center"/>
                 </dxg:GridColumn.EditSettings>

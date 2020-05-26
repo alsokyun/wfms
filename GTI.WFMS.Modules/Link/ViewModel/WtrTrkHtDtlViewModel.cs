@@ -52,9 +52,6 @@ namespace GTI.WFMS.Modules.Link.ViewModel
 
         #region ==========  Member 정의 ==========
         private WttRsrvHtDtl dtl = new WttRsrvHtDtl();
-        string FTR_CDE;
-        int FTR_IDN;
-        int SEQ;
 
         WtrTrkHtDtlView wtrTrkHtDtlView;
         Button btnSave;
@@ -94,9 +91,6 @@ namespace GTI.WFMS.Modules.Link.ViewModel
             btnSave = wtrTrkHtDtlView.btnSave;
             btnClose = wtrTrkHtDtlView.btnClose;
 
-            FTR_CDE = wtrTrkHtDtlView.txtFTR_CDE.Text;
-            FTR_IDN = Convert.ToInt32(wtrTrkHtDtlView.txtFTR_IDN.EditValue);
-            SEQ = Convert.ToInt32(wtrTrkHtDtlView.txtSEQ.EditValue);
 
             //2.화면데이터객체 초기화
             InitDataBinding();
@@ -122,6 +116,9 @@ namespace GTI.WFMS.Modules.Link.ViewModel
 
                 //채번결과 매칭
                 Dtl.SEQ = res.SEQ;
+
+                //시설물명가져오기
+                Dtl.FTR_NAM = BizUtil.GetCodeNm("Select_FTR_LIST2", Dtl.FTR_CDE);
             }
             else
             {

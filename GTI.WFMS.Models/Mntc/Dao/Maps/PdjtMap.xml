@@ -23,13 +23,13 @@
       WHERE 1=1
 
       <isNotEmpty prepend="AND" property="PDT_NAM">
-        PDT_NAM like '%' ||  #PDT_NAM# || '%'
+        upper(PDT_NAM ) like '%' ||  upper(#PDT_NAM# ) || '%'
       </isNotEmpty>
       <isNotEmpty prepend="AND" property="PDT_MDL_STD">
-        PDT_MDL_STD like '%' ||  #PDT_MDL_STD# || '%'
+        upper(PDT_MDL_STD ) like '%' ||  upper(#PDT_MDL_STD# ) || '%'
       </isNotEmpty>
       <isNotEmpty prepend="AND" property="PDT_MNF">
-        PDT_MNF like '%' ||  #PDT_MNF# || '%'
+        upper(PDT_MNF ) like '%' ||  upper(#PDT_MNF# ) || '%'
       </isNotEmpty>
       <isNotEmpty prepend="AND" property="PDT_CAT_CDE">
         PDT_CAT_CDE = #PDT_CAT_CDE#
@@ -149,10 +149,10 @@
       WHERE 1=1
 
       <isNotEmpty prepend="AND" property="PDT_NAM">
-        M.PDT_NAM like '%' || #PDT_NAM#  || '%'
+        upper(M.PDT_NAM ) like '%' || upper(#PDT_NAM#) || '%'
       </isNotEmpty>
       <isNotEmpty prepend="AND" property="PDT_MDL_STD">
-        M.PDT_MDL_STD like '%' || #PDT_MDL_STD#  || '%'
+        upper(M.PDT_MDL_STD ) like '%' || upper(#PDT_MDL_STD#)   || '%'
       </isNotEmpty>
       <isNotEmpty prepend="AND" property="PDT_CAT_CDE">
         M.PDT_CAT_CDE like #PDT_CAT_CDE# || '%'
@@ -212,10 +212,10 @@
       WHERE 1=1
 
       <isNotEmpty prepend="AND" property="PDT_NAM">
-        M.PDT_NAM like '%' || #PDT_NAM#  || '%'
+        upper(M.PDT_NAM ) like '%' || upper(#PDT_NAM#)   || '%'
       </isNotEmpty>
       <isNotEmpty prepend="AND" property="PDT_MDL_STD">
-        M.PDT_MDL_STD like '%' || #PDT_MDL_STD#  || '%'
+        upper(M.PDT_MDL_STD ) like '%' || upper(#PDT_MDL_STD#)   || '%'
       </isNotEmpty>
       <isNotEmpty prepend="AND" property="PDT_CAT_CDE">
         M.PDT_CAT_CDE like #PDT_CAT_CDE# || '%'
@@ -606,7 +606,7 @@
 
 
     <!--소모품입고현황 목록-->
-    <select id="SelectPdjtInHtPopList" parameterClass="Hashtable" resultClass="Hashtable">
+    <select id="SelectPdjtInHtPopList" parameterClass="Hashtable" resultClass="GTI.WFMS.Models.Mntc.Model.PdjtInDtl">
       <![CDATA[ 
 		SELECT IN_NUM
 		     , PDH_NUM
@@ -734,12 +734,12 @@
 
       <!-- 조건2. 가압장명 -->
       <isNotEmpty prepend="AND" property="PRS_NAM">
-        A.PRS_NAM LIKE '%' || #PRS_NAM# || '%'
+        upper(A.PRS_NAM ) LIKE '%' || upper(#PRS_NAM# ) || '%'
       </isNotEmpty>
 
       <!-- 조건3. 세부시설명 -->
       <isNotEmpty prepend="AND" property="ATT_NAM">
-        M.ATT_NAM LIKE '%' || #ATT_NAM# || '%'
+        upper(M.ATT_NAM ) LIKE '%' || upper(#ATT_NAM# ) || '%'
       </isNotEmpty>
 
       GROUP BY M.ATTA_SEQ
@@ -847,12 +847,12 @@
 
       <!-- 조건2. 가압장명 -->
       <isNotEmpty prepend="AND" property="PRS_NAM">
-        A.PRS_NAM LIKE '%' || #PRS_NAM# || '%'
+        upper(A.PRS_NAM ) LIKE '%' || upper(#PRS_NAM# ) || '%'
       </isNotEmpty>
 
       <!-- 조건3. 세부시설명 -->
       <isNotEmpty prepend="AND" property="ATT_NAM">
-        M.ATT_NAM LIKE '%' || #ATT_NAM# || '%'
+        upper(M.ATT_NAM ) LIKE '%' || upper(#ATT_NAM# ) || '%'
       </isNotEmpty>
 
 
