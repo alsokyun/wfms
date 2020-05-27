@@ -635,6 +635,7 @@
     <Compile Include="Acmf\view\HydtMetrListView.xaml.cs">
       <DependentUpon>HydtMetrListView.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Cmpl\View\ImageContainer.cs" />
     <Compile Include="Cmpl\ViewModel\LekSiteAddViewModel.cs" />
     <Compile Include="Cmpl\ViewModel\LekSiteDtlViewModel.cs" />
     <Compile Include="Cmpl\ViewModel\LekSiteListViewModel.cs" />

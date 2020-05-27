@@ -136,7 +136,7 @@
 
     <!--상수관로 상세-->
     <select id ="SelectWtlPipeDtl" parameterClass="Hashtable" resultClass ="Hashtable">
-      /* SelectWtlPipeList 상수관로 상세*/
+      
       SELECT A.FTR_CDE	,F.FTR_NAM
       , A.FTR_IDN
       , A.HJD_CDE,	H.HJD_NAM
@@ -169,7 +169,7 @@
         
     <!--상수관로 상세 클래스-->
     <select id ="SelectWtlPipeDtl2" parameterClass="Hashtable" resultClass ="GTI.WFMS.Models.Pipe.Model.PipeDtl">
-      /* SelectWtlPipeList 상수관로 상세 클래스*/
+      
       SELECT A.FTR_CDE	,F.FTR_NAM
       , A.FTR_IDN
       , A.HJD_CDE,	H.HJD_NAM

@@ -98,7 +98,7 @@ namespace GTI.WFMS.Models.Common
 
             try
             {
-                str = obj as string;
+                str = obj.ToString();
 
                 str = str.Trim();
             }

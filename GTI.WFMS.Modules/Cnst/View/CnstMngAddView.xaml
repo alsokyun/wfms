@@ -154,7 +154,7 @@
             </Label>
             <!--키값으로 사용 : 부모페이지로부터 뷰생성자로 전달되고, 뷰에서 변경되면 뷰모델로 전달된다.-->
             <dxe:TextEdit Grid.Row="0" Grid.Column="1" Style="{DynamicResource ResourceKey=GridTextEdit}" Tag="공사번호"    
-                          x:Name="txtCNT_NUM" EditValue="{Binding CNT_NUM, UpdateSourceTrigger=PropertyChanged}" Width="100" HorizontalAlignment="Left"/>
+                          x:Name="txtCNT_NUM"   EditValue="{Binding CNT_NUM, UpdateSourceTrigger=PropertyChanged}" Width="100" HorizontalAlignment="Left"/>
             <Button Grid.Row="0" Grid.Column="1" HorizontalAlignment="Right" Width="Auto" Height="22" Margin="0 0 10 0"
                     x:Name="btnDup" Command="{Binding DupCommand}" Content="체크" Style="{DynamicResource TxtButton}" />
 

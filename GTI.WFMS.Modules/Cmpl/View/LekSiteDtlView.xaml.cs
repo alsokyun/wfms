@@ -55,6 +55,11 @@ namespace GTI.WFMS.Modules.Cmpl.View
             this.BIZ_ID = FTR_CDE + FTR_IDN;
             this.FIL_SEQ = null;
 
+            //미리보기컨트롤 매핑
+            ImageContainer.grdImg = grdImg;
+            ImageContainer.imgView = imgView;
+            ImageContainer.bdImg = bdImg;
+
             InitModel();
 
         }
@@ -182,15 +187,28 @@ namespace GTI.WFMS.Modules.Cmpl.View
             //팝업호출지점으로 리턴
             DialogResult = true;
             Close();
-
+        }
+        //미리보기 off
+        private void BtnOff_Click(object sender, RoutedEventArgs e)
+        {
+            grdImg.Visibility = Visibility.Hidden;
+            bdImg.Visibility = Visibility.Hidden;
         }
 
-       
+
         private void LekSiteDtlView_KeyDown(object sender, KeyEventArgs e)
         {
             if (e.Key == Key.Escape)
             {
-                this.Close();
+                if (bdImg.Visibility == Visibility.Visible)
+                {
+                    grdImg.Visibility = Visibility.Hidden;
+                    bdImg.Visibility = Visibility.Hidden;
+                }
+                else
+                {
+                    this.Close();
+                }
             }
         }
 
@@ -292,70 +310,6 @@ namespace GTI.WFMS.Modules.Cmpl.View
 
 
 
-    /// <summary>
-    /// 이미지 갤러리 표현을 위한 별도의 클래스
-    /// </summary>
-    public class ImageContainer : ContentControlBase
-    {
-        protected override void OnMouseLeftButtonUp(MouseButtonEventArgs e)
-        {
-            base.OnMouseLeftButtonUp(e);
-            if (Controller.IsMouseLeftButtonDown)
-            {
-                var layoutControl = Parent as FlowLayoutControl;
-                if (layoutControl != null)
-                {
-                    Controller.IsMouseEntered = false;
-                    layoutControl.MaximizedElement = layoutControl.MaximizedElement == this ? null : this;
-                }
-            }
 
-            ////이미지 미리보기
-            //string file_name = "";
-            //try
-            //{
-            //    file_name = obj as string;
-            //}
-            //catch (Exception) { }
-
-            //if (FmsUtil.IsNull(file_name))
-            //{
-            //    Messages.ShowInfoMsgBox("이미지파일이 없습니다.");
-            //    return;
-            //}
-
-            //string file_path = System.IO.Path.Combine(@"" + FmsUtil.fileDir, file_name);
-
-            //try
-            //{
-            //    BitmapImage bi = new BitmapImage();
-            //    bi.BeginInit();
-            //    bi.UriSource = new Uri(file_path);
-            //    bi.EndInit();
-
-
-            //    imgView.Source = bi;
-            //    grdImg.Visibility = Visibility.Visible;
-            //    bdImg.Visibility = Visibility.Visible;
-            //}
-            //catch (Exception)
-            //{
-            //    Messages.ShowInfoMsgBox("이미지 정보가 없습니다.");
-            //}
-
-        }
-
-
-
-        protected override void OnSizeChanged(SizeChangedEventArgs e)
-        {
-            base.OnSizeChanged(e);
-            if (!double.IsNaN(Width) && !double.IsNaN(Height))
-                if (e.NewSize.Width != e.PreviousSize.Width)
-                    Height = double.NaN;
-                else
-                    Width = double.NaN;
-        }
-    }
 
 }

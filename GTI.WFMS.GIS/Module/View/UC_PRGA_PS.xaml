@@ -99,7 +99,7 @@
 
             <Label Grid.Row="2" Grid.Column="0" Content="공사번호" Style="{DynamicResource ResourceKey=GridLabel}"/>
             <dxe:TextEdit Grid.Row="2" Grid.Column="1" Style="{DynamicResource ResourceKey=GridTextEdit}" 
-                          x:Name="txtCNT_NUM" EditValue="{Binding FctDtl.CNT_NUM}" Width="110" HorizontalAlignment="Left"/>
+                          x:Name="txtCNT_NUM" IsEnabled="False"  EditValue="{Binding FctDtl.CNT_NUM}" Width="110" HorizontalAlignment="Left"/>
             <Button Grid.Row="2" Grid.Column="1"  x:Name="btnSel" Style="{DynamicResource ResourceKey=GdAddButton}" HorizontalAlignment="Right" Margin="0 0 10 0" Click="BtnSel_Click"/>
 
             <Label Grid.Row="3" Grid.Column="0" Content="관리기관" Style="{DynamicResource ResourceKey=GridLabel}"/>
