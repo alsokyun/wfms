@@ -3,20 +3,9 @@ using System.ComponentModel;
 
 namespace GTI.WFMS.Models.Dash.Model
 {
-    public class DashDtl : CmmDtl, INotifyPropertyChanged
+    public class DashDtl : CmmDtl
     {
-        /// <summary>                                                                
-        /// 인터페이스 구현부분                                                       
-        /// </summary>                                                                
-        public event PropertyChangedEventHandler PropertyChanged;
-        protected void OnPropertyChanged(string propertyName)
-        {
-            if (PropertyChanged != null)
-            {
-                PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
-            }
-        }
-
+        
 
         /// <summary>                                                                 
         /// 프로퍼티 부분                                                             

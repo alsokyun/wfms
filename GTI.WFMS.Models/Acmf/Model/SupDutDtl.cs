@@ -1,27 +1,10 @@
 ﻿using GTI.WFMS.Models.Cmm.Model;
-using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace GTI.WFMS.Models.Acmf.Model
 {
-    public class SupDutDtl : CmmDtl, INotifyPropertyChanged
+    public class SupDutDtl : CmmDtl
     {
-        /// <summary>                                                                
-        /// 인터페이스 구현부분                                                       
-        /// </summary>                                                                
-        public event PropertyChangedEventHandler PropertyChanged;
-        protected void OnPropertyChanged(string propertyName)
-        {
-            if (PropertyChanged != null)
-            {
-                PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
-            }
-        }
-
+      
 
 
         /// <summary>                                                                 

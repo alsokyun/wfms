@@ -3,19 +3,8 @@ using System.ComponentModel;
 
 namespace GTI.WFMS.Models.Fctl.Model
 {
-    public class WttAttaDt : CmmDtl, INotifyPropertyChanged
+    public class WttAttaDt : CmmDtl
     {
-        /// <summary>
-        /// 인터페이스 구현부분
-        /// </summary>
-        public event PropertyChangedEventHandler PropertyChanged;
-        protected void RaisePropertyChanged(string propertyName)
-        {
-            if (PropertyChanged != null)
-            {
-                PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
-            }
-        }
 
         /// <summary>
         /// 프로퍼티 부분
@@ -27,7 +16,7 @@ namespace GTI.WFMS.Models.Fctl.Model
             set
             {
                 this.__RNO = value;
-                RaisePropertyChanged("RNO");
+                OnPropertyChanged("RNO");
             }
         }
         private int? __ATT_IDN;
@@ -37,7 +26,7 @@ namespace GTI.WFMS.Models.Fctl.Model
             set
             {
                 this.__ATT_IDN = value;
-                RaisePropertyChanged("ATT_IDN");
+                OnPropertyChanged("ATT_IDN");
             }
         }
         private string __FTR_CDE;
@@ -47,7 +36,7 @@ namespace GTI.WFMS.Models.Fctl.Model
             set
             {
                 this.__FTR_CDE = value;
-                RaisePropertyChanged("FTR_CDE");
+                OnPropertyChanged("FTR_CDE");
             }
         }
         private string __FTR_NAM;
@@ -57,7 +46,7 @@ namespace GTI.WFMS.Models.Fctl.Model
             set
             {
                 this.__FTR_NAM = value;
-                RaisePropertyChanged("FTR_NAM");
+                OnPropertyChanged("FTR_NAM");
             }
         }
         private decimal __FTR_IDN;
@@ -67,7 +56,7 @@ namespace GTI.WFMS.Models.Fctl.Model
             set
             {
                 this.__FTR_IDN = value;
-                RaisePropertyChanged("FTR_IDN");
+                OnPropertyChanged("FTR_IDN");
             }
         }
         private string __ATT_NAM;
@@ -77,7 +66,7 @@ namespace GTI.WFMS.Models.Fctl.Model
             set
             {
                 this.__ATT_NAM = value;
-                RaisePropertyChanged("ATT_NAM");
+                OnPropertyChanged("ATT_NAM");
             }
         }
         private string __ATT_DES;
@@ -87,7 +76,7 @@ namespace GTI.WFMS.Models.Fctl.Model
             set
             {
                 this.__ATT_DES = value;
-                RaisePropertyChanged("ATT_DES");
+                OnPropertyChanged("ATT_DES");
             }
         }
         private decimal __ATTA_SEQ;
@@ -97,7 +86,7 @@ namespace GTI.WFMS.Models.Fctl.Model
             set
             {
                 this.__ATTA_SEQ = value;
-                RaisePropertyChanged("ATTA_SEQ");
+                OnPropertyChanged("ATTA_SEQ");
             }
         }
         private string __CRE_YY;
@@ -107,7 +96,7 @@ namespace GTI.WFMS.Models.Fctl.Model
             set
             {
                 this.__CRE_YY = value;
-                RaisePropertyChanged("CRE_YY");
+                OnPropertyChanged("CRE_YY");
             }
         }
     }

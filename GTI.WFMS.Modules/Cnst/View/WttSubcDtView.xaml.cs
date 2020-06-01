@@ -1,24 +1,9 @@
-﻿using DevExpress.Xpf.Editors;
-using DevExpress.Xpf.Grid;
-using GTI.WFMS.Models.Common;
-using GTI.WFMS.Modules.Cnst.Model;
-using GTIFramework.Common.MessageBox;
+﻿using GTI.WFMS.Modules.Cnst.Model;
 using System;
-using System.Collections;
-using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Data;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 
 namespace GTI.WFMS.Modules.Cnst.View
 {
@@ -50,16 +35,16 @@ namespace GTI.WFMS.Modules.Cnst.View
         {
             //CheckEdit ce = sender as CheckEdit;
             //bool chk = ce.IsChecked is bool;
-            foreach (WttSubcDt row in ((List<WttSubcDt>)grid.ItemsSource))
+            foreach (WttSubcDt row in (ObservableCollection<WttSubcDt>)grid.ItemsSource)
             {
-                row.CHK = "True";
+                row.CHK = "Y";
             }
         }
         private void AllChk_Unchecked(object sender, RoutedEventArgs e)
         {
-            foreach (WttSubcDt row in ((List<WttSubcDt>)grid.ItemsSource))
+            foreach (WttSubcDt row in (ObservableCollection<WttSubcDt>)grid.ItemsSource)
             {
-                row.CHK = null;
+                row.CHK = "N";
             }
         }
 

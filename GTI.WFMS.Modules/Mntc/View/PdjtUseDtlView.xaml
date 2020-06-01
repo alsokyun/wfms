@@ -23,6 +23,7 @@
     <Window.Resources>
         <ResourceDictionary>
             <cv:RownumConverter x:Key="rownumConverter" />
+            <cv:Date3StrConverter x:Key="date3StrConverter"/>
         </ResourceDictionary>
     </Window.Resources>
 
@@ -155,7 +156,7 @@
                 </dxg:GridColumn>
                 <dxg:GridColumn Header="사용일자" Width="200" FieldName="USE_YMD" HorizontalHeaderContentAlignment="Center">
                     <dxg:GridColumn.EditSettings>
-                        <dxe:TextEditSettings HorizontalContentAlignment="Center"/>
+                        <dxe:TextEditSettings HorizontalContentAlignment="Center" DisplayTextConverter="{StaticResource date3StrConverter}" />
                     </dxg:GridColumn.EditSettings>
                 </dxg:GridColumn>
                 <dxg:GridColumn Header="사용개수" Width="70" FieldName="USE_CNT" HorizontalHeaderContentAlignment="Center">

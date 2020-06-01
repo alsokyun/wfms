@@ -13,14 +13,14 @@ namespace GTI.WFMS.GIS
 
 
         // 레이어 심볼 Renderer - ArcObject 버전
-        public static ESRI.ArcGIS.Carto.UniqueValueRenderer uniqueValueRenderer;
+        public static ESRI.ArcGIS.Carto.UniqueValueRenderer uniqueValueRendererObj;
 
         // 레이어 심볼 Renderer 구성 초기화 - ArcObject
-        public static void InitUniqueValueRenderer()
+        public static void InitUniqueValueRendererObj()
         {
-            uniqueValueRenderer = new UniqueValueRenderer();
-            uniqueValueRenderer.FieldCount = 1;
-            uniqueValueRenderer.set_Field(0, "FTR_CDE");
+            uniqueValueRendererObj = new UniqueValueRenderer();
+            uniqueValueRendererObj.FieldCount = 1;
+            uniqueValueRendererObj.set_Field(0, "FTR_CDE");
 
 
             /* PictureMarkerSymbol 정의 */
@@ -189,51 +189,51 @@ namespace GTI.WFMS.GIS
 
 
             /* uniqueValue 에따른 심볼적용 */
-            uniqueValueRenderer.AddValue("SA003", "Name", pictureSymbolSA003 as ISymbol);
-            uniqueValueRenderer.set_Symbol("SA003", pictureSymbolSA003 as ISymbol);
-            uniqueValueRenderer.AddValue("SA100", "Name", pictureSymbolSA100 as ISymbol);
-            uniqueValueRenderer.set_Symbol("SA100", pictureSymbolSA100 as ISymbol);
-            uniqueValueRenderer.AddValue("SA110", "Name", pictureSymbolSA110 as ISymbol);
-            uniqueValueRenderer.set_Symbol("SA110", pictureSymbolSA110 as ISymbol);
-            uniqueValueRenderer.AddValue("SA112", "Name", pictureSymbolSA112 as ISymbol);
-            uniqueValueRenderer.set_Symbol("SA112", pictureSymbolSA112 as ISymbol);
-            uniqueValueRenderer.AddValue("SA114", "Name", pictureSymbolSA114 as ISymbol);
-            uniqueValueRenderer.set_Symbol("SA114", pictureSymbolSA114 as ISymbol);
-            uniqueValueRenderer.AddValue("SA117", "Name", pictureSymbolSA117 as ISymbol);
-            uniqueValueRenderer.set_Symbol("SA117", pictureSymbolSA117 as ISymbol);
-            uniqueValueRenderer.AddValue("SA118", "Name", pictureSymbolSA118 as ISymbol);
-            uniqueValueRenderer.set_Symbol("SA118", pictureSymbolSA118 as ISymbol);
-            uniqueValueRenderer.AddValue("SA119", "Name", pictureSymbolSA119 as ISymbol);
-            uniqueValueRenderer.set_Symbol("SA119", pictureSymbolSA119 as ISymbol);
-            uniqueValueRenderer.AddValue("SA120", "Name", pictureSymbolSA120 as ISymbol);
-            uniqueValueRenderer.set_Symbol("SA120", pictureSymbolSA120 as ISymbol);
-            uniqueValueRenderer.AddValue("SA121", "Name", pictureSymbolSA121 as ISymbol);
-            uniqueValueRenderer.set_Symbol("SA121", pictureSymbolSA121 as ISymbol);
-            uniqueValueRenderer.AddValue("SA122", "Name", pictureSymbolSA122 as ISymbol);
-            uniqueValueRenderer.set_Symbol("SA122", pictureSymbolSA122 as ISymbol);
-            uniqueValueRenderer.AddValue("SA200", "Name", pictureSymbolSA200 as ISymbol);
-            uniqueValueRenderer.set_Symbol("SA200", pictureSymbolSA200 as ISymbol);
-            uniqueValueRenderer.AddValue("SA201", "Name", pictureSymbolSA201 as ISymbol);
-            uniqueValueRenderer.set_Symbol("SA201", pictureSymbolSA201 as ISymbol);
-            uniqueValueRenderer.AddValue("SA202", "Name", pictureSymbolSA202 as ISymbol);
-            uniqueValueRenderer.set_Symbol("SA202", pictureSymbolSA202 as ISymbol);
-            uniqueValueRenderer.AddValue("SA203", "Name", pictureSymbolSA203 as ISymbol);
-            uniqueValueRenderer.set_Symbol("SA203", pictureSymbolSA203 as ISymbol);
-            uniqueValueRenderer.AddValue("SA204", "Name", pictureSymbolSA204 as ISymbol);
-            uniqueValueRenderer.set_Symbol("SA204", pictureSymbolSA204 as ISymbol);
-            uniqueValueRenderer.AddValue("SA205", "Name", pictureSymbolSA205 as ISymbol);
-            uniqueValueRenderer.set_Symbol("SA205", pictureSymbolSA205 as ISymbol);
+            uniqueValueRendererObj.AddValue("SA003", "Name", pictureSymbolSA003 as ISymbol);
+            uniqueValueRendererObj.set_Symbol("SA003", pictureSymbolSA003 as ISymbol);
+            uniqueValueRendererObj.AddValue("SA100", "Name", pictureSymbolSA100 as ISymbol);
+            uniqueValueRendererObj.set_Symbol("SA100", pictureSymbolSA100 as ISymbol);
+            uniqueValueRendererObj.AddValue("SA110", "Name", pictureSymbolSA110 as ISymbol);
+            uniqueValueRendererObj.set_Symbol("SA110", pictureSymbolSA110 as ISymbol);
+            uniqueValueRendererObj.AddValue("SA112", "Name", pictureSymbolSA112 as ISymbol);
+            uniqueValueRendererObj.set_Symbol("SA112", pictureSymbolSA112 as ISymbol);
+            uniqueValueRendererObj.AddValue("SA114", "Name", pictureSymbolSA114 as ISymbol);
+            uniqueValueRendererObj.set_Symbol("SA114", pictureSymbolSA114 as ISymbol);
+            uniqueValueRendererObj.AddValue("SA117", "Name", pictureSymbolSA117 as ISymbol);
+            uniqueValueRendererObj.set_Symbol("SA117", pictureSymbolSA117 as ISymbol);
+            uniqueValueRendererObj.AddValue("SA118", "Name", pictureSymbolSA118 as ISymbol);
+            uniqueValueRendererObj.set_Symbol("SA118", pictureSymbolSA118 as ISymbol);
+            uniqueValueRendererObj.AddValue("SA119", "Name", pictureSymbolSA119 as ISymbol);
+            uniqueValueRendererObj.set_Symbol("SA119", pictureSymbolSA119 as ISymbol);
+            uniqueValueRendererObj.AddValue("SA120", "Name", pictureSymbolSA120 as ISymbol);
+            uniqueValueRendererObj.set_Symbol("SA120", pictureSymbolSA120 as ISymbol);
+            uniqueValueRendererObj.AddValue("SA121", "Name", pictureSymbolSA121 as ISymbol);
+            uniqueValueRendererObj.set_Symbol("SA121", pictureSymbolSA121 as ISymbol);
+            uniqueValueRendererObj.AddValue("SA122", "Name", pictureSymbolSA122 as ISymbol);
+            uniqueValueRendererObj.set_Symbol("SA122", pictureSymbolSA122 as ISymbol);
+            uniqueValueRendererObj.AddValue("SA200", "Name", pictureSymbolSA200 as ISymbol);
+            uniqueValueRendererObj.set_Symbol("SA200", pictureSymbolSA200 as ISymbol);
+            uniqueValueRendererObj.AddValue("SA201", "Name", pictureSymbolSA201 as ISymbol);
+            uniqueValueRendererObj.set_Symbol("SA201", pictureSymbolSA201 as ISymbol);
+            uniqueValueRendererObj.AddValue("SA202", "Name", pictureSymbolSA202 as ISymbol);
+            uniqueValueRendererObj.set_Symbol("SA202", pictureSymbolSA202 as ISymbol);
+            uniqueValueRendererObj.AddValue("SA203", "Name", pictureSymbolSA203 as ISymbol);
+            uniqueValueRendererObj.set_Symbol("SA203", pictureSymbolSA203 as ISymbol);
+            uniqueValueRendererObj.AddValue("SA204", "Name", pictureSymbolSA204 as ISymbol);
+            uniqueValueRendererObj.set_Symbol("SA204", pictureSymbolSA204 as ISymbol);
+            uniqueValueRendererObj.AddValue("SA205", "Name", pictureSymbolSA205 as ISymbol);
+            uniqueValueRendererObj.set_Symbol("SA205", pictureSymbolSA205 as ISymbol);
 
-            uniqueValueRenderer.AddValue("SA001", "Name", lineSymbolSA001 as ISymbol);
-            uniqueValueRenderer.set_Symbol("SA001", lineSymbolSA001 as ISymbol);
-            uniqueValueRenderer.AddValue("SA002", "Name", lineSymbolSA002 as ISymbol);
-            uniqueValueRenderer.set_Symbol("SA002", lineSymbolSA002 as ISymbol);
+            uniqueValueRendererObj.AddValue("SA001", "Name", lineSymbolSA001 as ISymbol);
+            uniqueValueRendererObj.set_Symbol("SA001", lineSymbolSA001 as ISymbol);
+            uniqueValueRendererObj.AddValue("SA002", "Name", lineSymbolSA002 as ISymbol);
+            uniqueValueRendererObj.set_Symbol("SA002", lineSymbolSA002 as ISymbol);
 
-            uniqueValueRenderer.AddValue("EA305", "Name", fillSymbolEA305 as ISymbol);
-            uniqueValueRenderer.set_Symbol("EA305", fillSymbolEA305 as ISymbol);
+            uniqueValueRendererObj.AddValue("EA305", "Name", fillSymbolEA305 as ISymbol);
+            uniqueValueRendererObj.set_Symbol("EA305", fillSymbolEA305 as ISymbol);
 
-            uniqueValueRenderer.AddValue("SA113", "Name", fillSymbolSA113 as ISymbol);
-            uniqueValueRenderer.set_Symbol("SA113", fillSymbolSA113 as ISymbol);
+            uniqueValueRendererObj.AddValue("SA113", "Name", fillSymbolSA113 as ISymbol);
+            uniqueValueRendererObj.set_Symbol("SA113", fillSymbolSA113 as ISymbol);
 
         }
 
@@ -334,6 +334,8 @@ namespace GTI.WFMS.GIS
 
 
 
+        
+        
 
     }
 }

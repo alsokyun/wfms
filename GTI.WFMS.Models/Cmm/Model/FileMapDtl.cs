@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace GTI.WFMS.Models.Cmm.Model
 {
-    public class FileMapDtl : CmmDtl, INotifyPropertyChanged
+    public class FileMapDtl : CmmDtl
     {
         /// <summary>
         /// 인터페이스 구현부분

@@ -177,30 +177,30 @@ namespace GTI.WFMS.Modules.Link.View
 
     }
 
-    public class ImageContainer : ContentControlBase
-    {
-        protected override void OnMouseLeftButtonUp(MouseButtonEventArgs e)
-        {
-            base.OnMouseLeftButtonUp(e);
-            if (Controller.IsMouseLeftButtonDown)
-            {
-                var layoutControl = Parent as FlowLayoutControl;
-                if (layoutControl != null)
-                {
-                    Controller.IsMouseEntered = false;
-                    layoutControl.MaximizedElement = layoutControl.MaximizedElement == this ? null : this;
-                }
-            }
+    //public class ImageContainer : ContentControlBase
+    //{
+    //    protected override void OnMouseLeftButtonUp(MouseButtonEventArgs e)
+    //    {
+    //        base.OnMouseLeftButtonUp(e);
+    //        if (Controller.IsMouseLeftButtonDown)
+    //        {
+    //            var layoutControl = Parent as FlowLayoutControl;
+    //            if (layoutControl != null)
+    //            {
+    //                Controller.IsMouseEntered = false;
+    //                layoutControl.MaximizedElement = layoutControl.MaximizedElement == this ? null : this;
+    //            }
+    //        }
 
-        }
-        protected override void OnSizeChanged(SizeChangedEventArgs e)
-        {
-            base.OnSizeChanged(e);
-            if (!double.IsNaN(Width) && !double.IsNaN(Height))
-                if (e.NewSize.Width != e.PreviousSize.Width)
-                    Height = double.NaN;
-                else
-                    Width = double.NaN;
-        }
-    }
+    //    }
+    //    protected override void OnSizeChanged(SizeChangedEventArgs e)
+    //    {
+    //        base.OnSizeChanged(e);
+    //        if (!double.IsNaN(Width) && !double.IsNaN(Height))
+    //            if (e.NewSize.Width != e.PreviousSize.Width)
+    //                Height = double.NaN;
+    //            else
+    //                Width = double.NaN;
+    //    }
+    //}
 }

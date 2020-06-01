@@ -116,7 +116,7 @@ namespace GTI.WFMS.GIS
                 mapControl.Refresh();
 
                 //심볼초기화
-                GisCm.InitUniqueValueRenderer();
+                GisCm.InitUniqueValueRendererObj();
             }
         }
     }

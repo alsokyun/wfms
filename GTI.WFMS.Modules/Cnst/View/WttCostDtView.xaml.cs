@@ -54,7 +54,7 @@ namespace GTI.WFMS.Modules.Cnst.View
         {
             foreach (WttCostDt dr in ((ObservableCollection<WttCostDt>)grid.ItemsSource))
             {
-                dr.CHK = "Y";
+                dr.CHK = "N";
             }
         }
 

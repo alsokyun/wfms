@@ -3,20 +3,9 @@ using System.ComponentModel;
 
 namespace GTI.WFMS.Models.Cmpl.Model
 {
-    public class LeakDtl : CmmDtl, INotifyPropertyChanged
+    public class LeakDtl : CmmDtl
     {
-        /// <summary>
-        /// 인터페이스 구현부분
-        /// </summary>
-        public event PropertyChangedEventHandler PropertyChanged;
-        protected void OnPropertyChanged(string propertyName)
-        {
-            if (PropertyChanged != null)
-            {
-                PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
-            }
-        }
-
+       
 
 
         /// <summary>

@@ -1,4 +1,6 @@
-﻿<Window xmlns:dxg="http://schemas.devexpress.com/winfx/2008/xaml/grid"  xmlns:dx="http://schemas.devexpress.com/winfx/2008/xaml/core"  xmlns:dxe="http://schemas.devexpress.com/winfx/2008/xaml/editors"  
+﻿<Window xmlns:dxg="http://schemas.devexpress.com/winfx/2008/xaml/grid"  
+        xmlns:dx="http://schemas.devexpress.com/winfx/2008/xaml/core"  
+        xmlns:dxe="http://schemas.devexpress.com/winfx/2008/xaml/editors"  
         x:Class="GTI.WFMS.Modules.Mntc.View.ChkSchDtlView"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
@@ -9,19 +11,19 @@
         
         xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
         xmlns:vm="clr-namespace:GTI.WFMS.Modules.Mntc.ViewModel"
-        xmlns:cm="clr-namespace:GTIFramework.Common.Utils.Converters;assembly=GTIFramework"
         xmlns:dxci="http://schemas.devexpress.com/winfx/2008/xaml/core/internal"
         xmlns:cv="clr-namespace:GTI.WFMS.Models.Common;assembly=GTI.WFMS.Models"
-        xmlns:dxmvvm="http://schemas.devexpress.com/winfx/2008/xaml/mvvm" 
         
         WindowStyle="None" WindowStartupLocation="CenterScreen"
         Style="{DynamicResource PopupWindow}"
         x:Name="chkSchDtlView"
-        DataContext="{dxmvvm:ViewModelSource vm:ChkSchDtlViewModel}"
         KeyDown="ChkSchDtlView_KeyDown"
         >
 
-
+    <Window.DataContext>
+        <vm:ChkSchDtlViewModel/>
+    </Window.DataContext>
+    
     <Window.Resources>
         <cv:ToggleConverter x:Key="toggleConverter" />
         <cv:Date3StrConverter x:Key="date3StrConverter" />
@@ -61,9 +63,8 @@
         </DataTemplate>
     </Window.Resources>
 
-
-
-    <Grid >
+    <Grid>
+        <Grid >
         <Grid.RowDefinitions>
             <RowDefinition Height="40"/>
             <RowDefinition Height="*"/>
@@ -161,35 +162,35 @@
 
                 <Label Grid.Row="0" Grid.Column="0" Content="관리기관" Style="{DynamicResource ResourceKey=GridLabelReq}"/>
                 <dxe:ComboBoxEdit Grid.Row="0" Grid.Column="1" Style="{DynamicResource ResourceKey=GridComboBox}" Tag="관리기관"  
-                              x:Name="cbMNG_CDE" EditValue="{Binding MNG_CDE}" />
+                              x:Name="cbMNG_CDE" EditValue="{Binding Dtl.MNG_CDE}" />
                 <!--키정보-히든-->
-                <dxe:TextEdit Grid.Row="0" Grid.Column="1" x:Name="txtSCL_NUM" EditValue="{Binding SCL_NUM, UpdateSourceTrigger=PropertyChanged}" Visibility="Collapsed"/>
+                <dxe:TextEdit Grid.Row="0" Grid.Column="1" x:Name="txtSCL_NUM" EditValue="{Binding Dtl.SCL_NUM, UpdateSourceTrigger=PropertyChanged}" Visibility="Collapsed"/>
 
 
                 <Label Grid.Row="0" Grid.Column="2" Content="점검구분" Style="{DynamicResource ResourceKey=GridLabelReq}"/>
                 <dxe:ComboBoxEdit Grid.Row="0" Grid.Column="3" Style="{DynamicResource ResourceKey=GridComboBox}" Tag="점검구분"  
-                              x:Name="cbSCL_CDE" EditValue="{Binding SCL_CDE}" />
+                              x:Name="cbSCL_CDE" EditValue="{Binding Dtl.SCL_CDE}" />
                 <Label Grid.Row="0" Grid.Column="4" Content="점검명" Style="{DynamicResource ResourceKey=GridLabelReq}" />
                 <dxe:TextEdit Grid.Row="0" Grid.Column="5" Grid.ColumnSpan="3" Style="{DynamicResource ResourceKey=GridTextEdit}"  Tag="점검제목"   
-                          x:Name="txtTIT_NAM" EditValue="{Binding TIT_NAM}"/>
+                          x:Name="txtTIT_NAM" EditValue="{Binding Dtl.TIT_NAM}"/>
 
                 <Label Grid.Row="1" Grid.Column="0" Content="점검시작일자" Style="{DynamicResource ResourceKey=GridLabel}" />
-                <dxe:TextEdit Grid.Row="1" Grid.Column="1" Style="{DynamicResource ResourceKey=GridTextEdit}"  
-                          EditValue="{Binding STA_YMD, Converter={StaticResource date3StrConverter}}"/>
+                <dxe:DateEdit Grid.Row="1" Grid.Column="1" Style="{DynamicResource ResourceKey=GridDateEdit}" Tag="점검시작일자" 
+                          EditValue="{Binding Dtl.STA_YMD, Mode=TwoWay, Converter={StaticResource date3StrConverter}}" />
                 <Label Grid.Row="1" Grid.Column="2" Content="점검종료일자" Style="{DynamicResource ResourceKey=GridLabel}" />
-                <dxe:TextEdit Grid.Row="1" Grid.Column="3" Style="{DynamicResource ResourceKey=GridTextEdit}" 
-                          EditValue="{Binding END_YMD, Converter={StaticResource date3StrConverter}}"/>
+                <dxe:DateEdit Grid.Row="1" Grid.Column="3" Style="{DynamicResource ResourceKey=GridDateEdit}"  Tag="점검종료일자" 
+                          EditValue="{Binding Dtl.END_YMD, Mode=TwoWay, Converter={StaticResource date3StrConverter}}" />
                 <Label Grid.Row="1" Grid.Column="4" Content="점검그룹" Style="{DynamicResource ResourceKey=GridLabelReq}"/>
                 <dxe:TextEdit Grid.Row="1" Grid.Column="5" Grid.ColumnSpan="3" Style="{DynamicResource ResourceKey=GridTextEdit}"  Tag="점검그룹"   
-                          x:Name="txtCKM_GRP_NAM" EditValue="{Binding CKM_GRP_NM}"/>
+                          x:Name="txtCKM_GRP_NAM" EditValue="{Binding Dtl.CKM_GRP_NM}"/>
 
 
                 <Label Grid.Row="2" Grid.Column="0" Content="점검승인상태" Style="{DynamicResource ResourceKey=GridLabel}" />
                 <dxe:TextEdit Grid.Row="2" Grid.Column="1" Style="{DynamicResource ResourceKey=GridTextEdit}" IsEnabled="False" 
-                          EditValue="{Binding SCL_STAT_NM}"/>
+                          EditValue="{Binding Dtl.SCL_STAT_NM}"/>
                 <Label Grid.Row="2" Grid.Column="2" Content="점검승인일자" Style="{DynamicResource ResourceKey=GridLabel}" />
                 <dxe:TextEdit Grid.Row="2" Grid.Column="3" Style="{DynamicResource ResourceKey=GridTextEdit}" IsEnabled="False" 
-                          EditValue="{Binding CHK_APR_YMD, Converter={StaticResource date3StrConverter}}"/>
+                          EditValue="{Binding Dtl.CHK_APR_YMD}"/>
                 <Label Grid.Row="2" Grid.Column="4" Grid.RowSpan="2" Content="점검내용" Style="{DynamicResource ResourceKey=GridLabel}" />
                 <RichTextBox Grid.Row="2" Grid.Column="5" Grid.ColumnSpan="3" Grid.RowSpan="2" 
                             Style="{DynamicResource GridRichTextBox}" Margin="10 8 10 8"
@@ -197,10 +198,10 @@
 
                 <Label Grid.Row="3" Grid.Column="0" Content="점검승인자" Style="{DynamicResource ResourceKey=GridLabel}" />
                 <dxe:TextEdit Grid.Row="3" Grid.Column="1" Style="{DynamicResource ResourceKey=GridTextEdit}" IsEnabled="False" 
-                          EditValue="{Binding CHK_APR_USR}"/>
+                          EditValue="{Binding Dtl.CHK_APR_USR}"/>
                 <Label Grid.Row="3" Grid.Column="2" Content="점검완료일자" Style="{DynamicResource ResourceKey=GridLabel}"/>
                 <dxe:TextEdit Grid.Row="3" Grid.Column="3" Style="{DynamicResource ResourceKey=GridTextEdit}" IsEnabled="False" 
-                          EditValue="{Binding CHK_CMP_YMD, Converter={StaticResource date3StrConverter}}"/>
+                          EditValue="{Binding Dtl.CHK_CMP_YMD, Converter={StaticResource date3StrConverter}}"/>
 
 
 
@@ -224,16 +225,17 @@
                 </StackPanel>
 
                 <StackPanel Grid.Row="0" Orientation="Horizontal" HorizontalAlignment="Right" Margin="0 0 5 0">
-                    <Button x:Name="btnAdd" Content="추가" Style="{DynamicResource ResourceKey=GrdAddButton}" Click="BtnAdd_Click"  />
-                    <Button x:Name="btnDel" Content="삭제" Style="{DynamicResource ResourceKey=GrdDelButton}" Click="BtnDel_Click"  />
-                    <Button x:Name="btnReg" Content="저장" Style="{DynamicResource ResourceKey=GrdRegButton}" Click="BtnReg_Click"  />
+                    <Button x:Name="btnAdd" Content="추가" Style="{DynamicResource ResourceKey=GrdAddButton}"  Click="btnAdd_Click"/>
+                    <Button x:Name="btnDel" Content="삭제" Style="{DynamicResource ResourceKey=GrdDelButton}"  Click="btnDel_Click"/>
+                    <Button x:Name="btnReg" Content="저장" Style="{DynamicResource ResourceKey=GrdRegButton}"  Click="btnReg_Click"/>
                 </StackPanel>
 
 
 
 
                 <dxg:GridControl Grid.Row="1" x:Name="grid" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" ShowBorder="True" 
-                                 CurrentItemChanged="Grid_CurrentItemChanged"
+                                 SelectedItemChanged="Grid_CurrentItemChanged" 
+                                 ItemsSource="{Binding GrdLst, UpdateSourceTrigger=PropertyChanged}"
                                  >
 
                     <dxg:GridControl.View>
@@ -250,7 +252,8 @@
                                 VerticalScrollbarVisibility="Disabled"
                                 ScrollViewer.VerticalScrollBarVisibility="Hidden"
                                 AutoWidth="False"
-                    />
+                                
+                                />
                     </dxg:GridControl.View>
 
 
@@ -420,6 +423,19 @@
     </Grid>
 
 
+        <Grid Background="Gray" x:Name="grdImg" Visibility="Hidden" Opacity="0.5" >
+        </Grid>
+        <Border x:Name="bdImg" BorderThickness="4" BorderBrush="DodgerBlue"  HorizontalAlignment="Center" VerticalAlignment="Center" Visibility="Hidden" >
+            <Grid>
+                <Image x:Name="imgView" Height="370"  
+                       Stretch="Uniform"
+                       RenderTransformOrigin="0.5,0.5"/>
+                <Button Style="{DynamicResource XSignCloseButton}" Margin="0,10,10,0" 
+                x:Name="btnOff" Click="BtnOff_Click" />
+            </Grid>
+        </Border>
+
+    </Grid>
 
 
 

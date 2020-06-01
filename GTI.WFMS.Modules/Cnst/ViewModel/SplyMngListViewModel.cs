@@ -504,12 +504,15 @@ namespace GTI.WFMS.Modules.Cnst.ViewModel
 
 
             string name_space = "GTI.WFMS.Models.Mntc.Model";
-            string class_name = "PdjtInDtl";
+            string class_name = "PdjtHtDtl";
             
             Hashtable param = new Hashtable();
-            param.Add("sqlId", "SelectPdjtInHtPopList");
-            param.Add("PDH_NUM", 6);
-            param.Add("IN_NUM", 1);
+            param.Add("sqlId", "SelectPdhUseList");
+            param.Add("SCL_NUM", 19);
+            param.Add("FTR_CDE", "SA121");
+            param.Add("FTR_IDN", 80);
+            param.Add("SEQ", 1);
+            param.Add("PDT_CAT_CDE", "PDT002");
             
             DataTable dt = BizUtil.SelectList(param);
             DataRow dr = dt.Rows[0];
@@ -517,7 +520,7 @@ namespace GTI.WFMS.Modules.Cnst.ViewModel
             String sb = "";
             sb += "namespace " + name_space + "\r\n";
             sb += "{ " + "\r\n";
-            sb += " public class " + class_name + ": CmmDtl, INotifyPropertyChanged" + "\r\n";
+            sb += " public class " + class_name + ": CmmDtl" + "\r\n";
             sb += " { " + "\r\n";
             sb += "     /// <summary>" + "\r\n";
             sb += "     /// 인터페이스 구현부분" + "\r\n";

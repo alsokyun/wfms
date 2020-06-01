@@ -1,27 +1,9 @@
 ﻿using GTI.WFMS.Models.Cmm.Model;
-using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace GTI.WFMS.Modules.Cnst.Model
 {
-    public class SplyDtl : CmmDtl, INotifyPropertyChanged
+    public class SplyDtl : CmmDtl
     {
-        /// <summary>
-        /// 인터페이스 구현부분
-        /// </summary>
-        public event PropertyChangedEventHandler PropertyChanged;
-        protected void OnPropertyChanged(string propertyName)
-        {
-            if (PropertyChanged != null)
-            {
-                PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
-            }
-        }
-
 
 
         /// <summary>

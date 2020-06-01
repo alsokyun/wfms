@@ -150,7 +150,7 @@
                 </dxg:GridColumn>
                 <dxg:GridColumn Header="사이즈" Width="100" FieldName="FIL_SIZ" HorizontalHeaderContentAlignment="Center">
                     <dxg:GridColumn.EditSettings>
-                        <dxe:TextEditSettings HorizontalContentAlignment="Right"/>
+                        <dxe:TextEditSettings HorizontalContentAlignment="Right" MaskUseAsDisplayFormat="True" MaskType="Numeric" Mask="n0"/>
                     </dxg:GridColumn.EditSettings>
                 </dxg:GridColumn>
                 <dxg:GridColumn Header="다운로드" Width="70" FieldName="" HorizontalHeaderContentAlignment="Center">

@@ -27,7 +27,8 @@ namespace GTIFramework.Common.MessageBox
         /// </summary>
         public static void ShowOkMsgBox()
         {
-            DXMessageBox.Show(Messages.strOkMsg, "확인", MessageBoxButton.OK, MessageBoxImage.Information);
+            //DXMessageBox.Show(Messages.strOkMsg, "확인", MessageBoxButton.OK, MessageBoxImage.Information);
+            System.Windows.MessageBox.Show(Messages.strOkMsg, "확인", MessageBoxButton.OK);
         }
 
         /// <summary>
@@ -37,7 +38,8 @@ namespace GTIFramework.Common.MessageBox
         /// <returns></returns>
         public static MessageBoxResult ShowYesNoMsgBox(string srt)
         {
-            return DXMessageBox.Show(srt, "확인", MessageBoxButton.YesNo, MessageBoxImage.Question);
+            //return DXMessageBox.Show(srt, "확인", MessageBoxButton.YesNo, MessageBoxImage.Question);
+            return System.Windows.MessageBox.Show(srt, "확인", MessageBoxButton.YesNo);
         }
 
 
@@ -46,7 +48,8 @@ namespace GTIFramework.Common.MessageBox
         /// </summary>
         public static void ShowErrMsgBox()
         {
-            DXMessageBox.Show(Messages.strErrMsg, "오류", MessageBoxButton.OK, MessageBoxImage.Error);
+            //DXMessageBox.Show(Messages.strErrMsg, "오류", MessageBoxButton.OK, MessageBoxImage.Error);
+            System.Windows.MessageBox.Show(Messages.strErrMsg,"오류", MessageBoxButton.OK);
         }
 
         /// <summary>
@@ -54,7 +57,8 @@ namespace GTIFramework.Common.MessageBox
         /// </summary>
         public static void ShowErrMsgBox(String str)
         {
-            DXMessageBox.Show(str, "오류", MessageBoxButton.OK, MessageBoxImage.Error);
+            //DXMessageBox.Show(str, "오류", MessageBoxButton.OK, MessageBoxImage.Error);
+            System.Windows.MessageBox.Show(str, "오류", MessageBoxButton.OK);
         }
 
         /// <summary>
@@ -62,7 +66,8 @@ namespace GTIFramework.Common.MessageBox
         /// </summary>
         public static void ShowInfoMsgBox(String str)
         {
-            DXMessageBox.Show(str, "확인", MessageBoxButton.OK, MessageBoxImage.Information);
+            //DXMessageBox.Show(str, "확인", MessageBoxButton.OK, MessageBoxImage.Information);
+            System.Windows.MessageBox.Show(str, "확인", MessageBoxButton.OK);
         }
 
         /// <summary>
@@ -77,16 +82,19 @@ namespace GTIFramework.Common.MessageBox
 
                 if (e.Message.Contains("파일은 다른 프로세스에서 사용 중이므로 프로세스에서 액세스할 수 없습니다."))
                 {
-                    DXMessageBox.Show("해당 파일이 사용중 입니다.", "오류", MessageBoxButton.OK, MessageBoxImage.Error);
+                    //DXMessageBox.Show("해당 파일이 사용중 입니다.", "오류", MessageBoxButton.OK, MessageBoxImage.Error);
+                    System.Windows.MessageBox.Show("해당 파일이 사용중 입니다.", "오류", MessageBoxButton.OK);
                 }
                 if (e.Message.Contains("TNS") || e.Message.Contains("oracle provider"))
                 {
-                    DXMessageBox.Show("DB서버와 연결이 끊어졌습니다. \n네트워크를 확인 후 프로그램을 다시 실행해 주세요.", "오류", MessageBoxButton.OK, MessageBoxImage.Warning);
+                    //DXMessageBox.Show("DB서버와 연결이 끊어졌습니다. \n네트워크를 확인 후 프로그램을 다시 실행해 주세요.", "오류", MessageBoxButton.OK, MessageBoxImage.Warning);
+                    System.Windows.MessageBox.Show("DB서버와 연결이 끊어졌습니다. \n네트워크를 확인 후 프로그램을 다시 실행해 주세요.", "오류", MessageBoxButton.OK);
                     //Environment.Exit(0);
                 }
                 else
                 {
-                    DXMessageBox.Show(Messages.strErrMsg, "오류", MessageBoxButton.OK, MessageBoxImage.Error);
+                    //DXMessageBox.Show(Messages.strErrMsg, "오류", MessageBoxButton.OK, MessageBoxImage.Error);
+                    System.Windows.MessageBox.Show(Messages.strErrMsg, "오류", MessageBoxButton.OK);
                 }
             }
             catch (Exception ex)
@@ -103,7 +111,8 @@ namespace GTIFramework.Common.MessageBox
         public static void ShowErrMsgBoxLog(Exception e, string str)
         {
             Logs.ErrLogging(e);
-            DXMessageBox.Show(str, "오류", MessageBoxButton.OK, MessageBoxImage.Error);
+            //DXMessageBox.Show(str, "오류", MessageBoxButton.OK, MessageBoxImage.Error);
+            System.Windows.MessageBox.Show(str, "오류", MessageBoxButton.OK);
         }
 
         /// <summary>

@@ -7,7 +7,7 @@ using System.Globalization;
 
 namespace GTI.WFMS.Models.Mntc.Model
 {
-    public class ChscMaDtl : CmmDtl, INotifyPropertyChanged
+    public class ChscMaDtl : CmmDtl
     {
         /// <summary>
         /// 인터페이스 구현부분

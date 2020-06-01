@@ -237,7 +237,7 @@ namespace GTI.WFMS.GIS
                 case "SA901": layerNm = "WTL_PIPE_LX"; break;
                 case "SA902": layerNm = "WTL_SPLY_LX"; break;
                 case "SA903": layerNm = "WTL_PIPE_LY"; break;
-                    
+
 
 
                 default:
@@ -246,14 +246,6 @@ namespace GTI.WFMS.GIS
 
             return layerNm;
         }
-
-
-
-
-
-
-
-
 
     }
 }

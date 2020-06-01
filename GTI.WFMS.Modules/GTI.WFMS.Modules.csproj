@@ -892,12 +892,14 @@
     <Compile Include="Mntc\ViewModel\FaqAddViewModel.cs" />
     <Compile Include="Mntc\ViewModel\PdjtMngListViewModel.cs" />
     <Compile Include="Mntc\ViewModel\PdjtStockViewModel.cs" />
+    <Compile Include="Mntc\ViewModel\PdjtHtViewModel.cs" />
     <Compile Include="Mntc\View\FaqDocView.xaml.cs">
       <DependentUpon>FaqDocView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Mntc\View\FaqAddView.xaml.cs">
       <DependentUpon>FaqAddView.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Link\View\ImageContainer.cs" />
     <Compile Include="Pop\ViewModel\CnstCmplSelViewModel.cs" />
     <Compile Include="Pop\ViewModel\SplyMngPopViewModel.cs" />
     <Compile Include="Pop\View\CnstCmplSelView.xaml.cs">

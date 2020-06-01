@@ -259,9 +259,26 @@ namespace GTI.WFMS.Modules.Mntc.ViewModel
                 return;
             }
 
+            //필수체크
+            foreach (PdjtMaDtl row in GrdLst)
+            {
+                if (row.CHK != "Y") continue;
+
+                if (FmsUtil.IsNull(row.PDT_CAT_CDE))
+                {
+                    Messages.ShowErrMsgBox("구분은 필수입력입니다.");
+                    return;
+                }
+                if (FmsUtil.IsNull(row.PDT_NAM))
+                {
+                    Messages.ShowErrMsgBox("품명은 필수입력입니다.");
+                    return;
+                }
+            }
+
+
             if (Messages.ShowYesNoMsgBox("저장하시겠습니까?") != MessageBoxResult.Yes) return;
 
-            Hashtable param = new Hashtable();
 
             //그리드 저장
             foreach (PdjtMaDtl row in GrdLst)

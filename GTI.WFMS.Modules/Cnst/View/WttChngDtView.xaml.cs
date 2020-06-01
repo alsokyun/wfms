@@ -43,7 +43,7 @@ namespace GTI.WFMS.Modules.Cnst.View
         {
             foreach (WttChngDt dr in ((ObservableCollection<WttChngDt>)grid.ItemsSource))
             {
-                dr.CHK = "Y";
+                dr.CHK = "N";
             }
         }
 

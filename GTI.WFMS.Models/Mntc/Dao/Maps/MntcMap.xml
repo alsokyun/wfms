@@ -136,7 +136,7 @@
 
 
     <!-- 점검결과리스트-->
-    <select id="SelectChscResultList"  resultClass="Hashtable">
+    <select id="SelectChscResultList"  resultClass="GTI.WFMS.Models.Mntc.Model.ChscResultDtl">
       SELECT R.SCL_NUM
       , R.FTR_CDE, R.FTR_IDN, R.SEQ
       , VN.FTR_NAM
@@ -162,7 +162,7 @@
 
 
     <!-- 점검결과 상세 리스트 저장 -->
-    <update id="SaveChscResult" parameterClass="Hashtable">
+    <update id="SaveChscResult" parameterClass="GTI.WFMS.Models.Mntc.Model.ChscResultDtl">
       MERGE INTO FMS_CHSC_FTR_RES
       USING DUAL ON ( SCL_NUM=#SCL_NUM# AND FTR_CDE=#FTR_CDE# AND FTR_IDN=#FTR_IDN# AND SEQ = #SEQ# )
 
@@ -216,7 +216,7 @@
     
 
     <!-- 소모품 사용내역 리스트 -->
-    <select id="SelectPdhUseList"  resultClass="Hashtable">
+    <select id="SelectPdhUseList"  resultClass="GTI.WFMS.Models.Mntc.Model.PdjtHtDtl">
       SELECT H.PDH_HT_NUM, H.PDH_NUM, H.FTR_CDE, H.FTR_IDN, H.SCL_NUM, H.SEQ
       , H.PDH_CNT, H.PDH_AMT
       , P.PDT_NAM
@@ -235,7 +235,7 @@
     </select>
 
     <!-- 소모품내역 삭제 -->
-    <update id="DeletePdjtHt" parameterClass="Hashtable">
+    <update id="DeletePdjtHt" parameterClass="GTI.WFMS.Models.Mntc.Model.PdjtHtDtl">
       DELETE FROM FMS_PDJT_HT
       WHERE 1=1
       AND SCL_NUM=#SCL_NUM#
@@ -247,7 +247,7 @@
 
 
     <!-- 소모품/오일 저장 -->
-    <update id="SavePdjtHt" parameterClass="Hashtable">
+    <update id="SavePdjtHt" parameterClass="GTI.WFMS.Models.Mntc.Model.PdjtHtDtl">
       MERGE INTO FMS_PDJT_HT
       USING DUAL ON ( PDH_HT_NUM = #PDH_HT_NUM# AND PDH_NUM = #PDH_NUM#  AND SCL_NUM=#SCL_NUM# AND FTR_CDE=#FTR_CDE# AND FTR_IDN=#FTR_IDN# AND SEQ = #SEQ#)
 
@@ -279,7 +279,8 @@
       FROM FMS_PDJT_MA
       WHERE 1=1
       AND PDT_CAT_CDE = #PDT_CAT_CDE#
-      AND USE_YN != 'N'
+      <!--AND USE_YN != 'N'-->
+      ORDER BY PDH_NUM DESC
     </select>
 
 

@@ -175,7 +175,7 @@ namespace GTI.WFMS.GIS
                 initLayers();
 
                 //2.UniqueRenderer 초기화
-                GisCm.InitUniqueValueRenderer();
+                GisCm.InitUniqueValueRendererObj();
 
                 //3.울산행정구역표시
                 ShowShapeLayer("BML_GADM_AS", true );
@@ -366,7 +366,7 @@ namespace GTI.WFMS.GIS
                         else
                         {
                             //레이어의 UniqueValueRenderer 적용
-                            pGFL.Renderer = GisCm.uniqueValueRenderer as IFeatureRenderer;
+                            pGFL.Renderer = GisCm.uniqueValueRendererObj as IFeatureRenderer;
                         }
                     }
 

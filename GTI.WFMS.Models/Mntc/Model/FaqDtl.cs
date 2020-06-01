@@ -1,29 +1,10 @@
 ﻿using GTI.WFMS.Models.Cmm.Model;
-using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace GTI.WFMS.Modules.Mntc.Model
 {
-    public class FaqDtl : CmmDtl, INotifyPropertyChanged 
+    public class FaqDtl : CmmDtl 
     {
-        /// <summary>
-        /// 인터페이스 구현부분
-        /// </summary>
-        public event PropertyChangedEventHandler PropertyChanged;
-        protected void OnPropertyChanged(string propertyName)
-        {
-            if (PropertyChanged != null)
-            {
-                PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
-            }
-        }
-
-
-
+      
         /// <summary>
         /// 프로퍼티 부분
         /// </summary>

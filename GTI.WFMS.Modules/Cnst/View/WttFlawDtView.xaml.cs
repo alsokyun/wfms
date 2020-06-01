@@ -36,14 +36,14 @@ namespace GTI.WFMS.Modules.Cnst.View
             //bool chk = ce.IsChecked is bool;
             foreach (WttFlawDt row in ((ObservableCollection<WttFlawDt>)grid.ItemsSource))
             {
-                row.CHK = "True";
+                row.CHK = "Y";
             }
         }
         private void AllChk_Unchecked(object sender, RoutedEventArgs e)
         {
             foreach (WttFlawDt row in ((ObservableCollection<WttFlawDt>)grid.ItemsSource))
             {
-                row.CHK = null;
+                row.CHK = "N";
             }
         }
 

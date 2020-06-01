@@ -2,19 +2,9 @@
 
 namespace GTI.WFMS.Models.Cmm.Model
 {
-    public class LinkWttMetaHt : CmmDtl, INotifyPropertyChanged
+    public class LinkWttMetaHt : CmmDtl
     {
-        /// <summary>                                                                
-        /// 인터페이스 구현부분                                                       
-        /// </summary>                                                                
-        public event PropertyChangedEventHandler PropertyChanged;
-        protected void OnPropertyChanged(string propertyName)
-        {
-            if (PropertyChanged != null)
-            {
-                PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
-            }
-        }
+      
         
 
         /// <summary>                                                                 

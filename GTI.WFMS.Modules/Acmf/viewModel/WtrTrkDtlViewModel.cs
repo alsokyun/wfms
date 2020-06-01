@@ -247,7 +247,7 @@ namespace GTI.WFMS.Modules.Acmf.ViewModel
 
 
             // 1.삭제처리
-            if (Messages.ShowYesNoMsgBox("변로를 삭제하시겠습니까?") != MessageBoxResult.Yes) return;
+            if (Messages.ShowYesNoMsgBox("저수조를 삭제하시겠습니까?") != MessageBoxResult.Yes) return;
             try
             {
                 BizUtil.Update2(this, "deleteWtrTrkDtl");

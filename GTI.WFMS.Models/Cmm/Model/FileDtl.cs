@@ -1,27 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace GTI.WFMS.Models.Cmm.Model
+﻿namespace GTI.WFMS.Models.Cmm.Model
 {
-    public class FileDtl : CmmDtl, INotifyPropertyChanged
+    public class FileDtl : CmmDtl
     {
-        /// <summary>
-        /// 인터페이스 구현부분
-        /// </summary>
-        public event PropertyChangedEventHandler PropertyChanged;
-        protected void OnPropertyChanged(string propertyName)
-        {
-            if (PropertyChanged != null)
-            {
-                PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
-            }
-        }
-
-
+       
 
         /// <summary>
         /// 프로퍼티 부분
