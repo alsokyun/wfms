@@ -164,7 +164,7 @@ namespace GTI.WFMS.GIS.Pop.ViewModel
                 // 1.지도초기화
                 InitMap();
                 //렌더러초기생성작업
-                GisCmm.InitUniqueValueRenderer();
+                CmmRun.InitUniqueValueRenderer();
 
                 // 2.화면 및 콤보초기화
                 cbFTR_CDE = editWinView.cbFTR_CDE;
@@ -245,12 +245,12 @@ namespace GTI.WFMS.GIS.Pop.ViewModel
                         finally
                         {
                             //1.렌더러 재구성
-                            GisCmm.InitUniqueValueRenderer();
+                            CmmRun.InitUniqueValueRenderer();
 
                             //2.레이어의 렌더러 재세팅
                             foreach (string sel in _selectedLayerNms)
                             {
-                                layers[sel].Renderer = GisCmm.uniqueValueRenderer.Clone();
+                                layers[sel].Renderer = CmmRun.uniqueValueRenderer.Clone();
                                 layers[sel].RetryLoadAsync();
                             }
 
@@ -493,8 +493,8 @@ namespace GTI.WFMS.GIS.Pop.ViewModel
             if (!FmsUtil.IsNull(ftr_cde))
             {
                 //선택된 레이어 기록
-                _selectedLayerNm = GisCmm.GetLayerNm(ftr_cde);
-                _selectedLayerNms.Add(GisCmm.GetLayerNm(ftr_cde));
+                _selectedLayerNm = CmmRun.GetLayerNm(ftr_cde);
+                _selectedLayerNms.Add(CmmRun.GetLayerNm(ftr_cde));
             }
 
             // 2.선택된 레이어의 시설물 페이지로  초기화
@@ -816,7 +816,7 @@ namespace GTI.WFMS.GIS.Pop.ViewModel
             string ftr_idn = editWinView.txtFTR_IDN.Text;
 
             //레이어표시 - FTR_IDN 조건 필터링
-            ShowShapeLayerFilter(mapView, GisCmm.GetLayerNm(FTR_CDE), true, ftr_idn);
+            ShowShapeLayerFilter(mapView, CmmRun.GetLayerNm(FTR_CDE), true, ftr_idn);
 
             //조회된 피처 자동선택
             SelectFct(FTR_CDE,  ftr_idn, layers[_selectedLayerNm]);

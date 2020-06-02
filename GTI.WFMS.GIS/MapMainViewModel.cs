@@ -163,7 +163,7 @@ namespace GTI.WFMS.GIS
                 //시설물레이어DIV 초기화작업
                 InitDivLayer();
 
-                GisCmm.InitUniqueValueRenderer();//렌더러초기생성작업
+                CmmRun.InitUniqueValueRenderer();//렌더러초기생성작업
 
 
                 //비트맵초기화(시설물상세DIV 아이콘)
@@ -341,7 +341,7 @@ namespace GTI.WFMS.GIS
             string layerNm = "";
             try
             {
-                layerNm = GisCmm.GetLayerNm(FTR_CDE);
+                layerNm = CmmRun.GetLayerNm(FTR_CDE);
                 if ("".Equals(layerNm))
                 {
                     MessageBox.Show("잘못된 레이어입니다.");
@@ -359,7 +359,7 @@ namespace GTI.WFMS.GIS
             ///ShowShapeLayer(mapView, GisCmm.GetLayerNm(FTR_CDE), true);
 
             //1.해당레이어 가져오기
-            FeatureLayer layer = layers[GisCmm.GetLayerNm(FTR_CDE)];
+            FeatureLayer layer = layers[CmmRun.GetLayerNm(FTR_CDE)];
 
 
 

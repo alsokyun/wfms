@@ -129,7 +129,10 @@
     <Reference Include="WindowsFormsIntegration" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="GisCm.cs" />
+    <Compile Include="CmmObjHs.cs" />
+    <Compile Include="CmmObj.cs" />
+    <Compile Include="CmmRunHs.cs" />
+    <Compile Include="CmmRun.cs" />
     <Compile Include="GisCmm.cs" />
     <Compile Include="LocalServerModel.cs" />
     <Compile Include="MapArcObjView.xaml.cs">

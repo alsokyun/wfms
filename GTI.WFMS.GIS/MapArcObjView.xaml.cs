@@ -52,7 +52,7 @@ namespace GTI.WFMS.GIS
 
         private void LoadMap()
         {
-            GisCmm.InitUniqueValueRenderer();//렌더러초기생성작업
+            CmmRun.InitUniqueValueRenderer();//렌더러초기생성작업
 
 
             //Buddy up controls
@@ -116,7 +116,7 @@ namespace GTI.WFMS.GIS
                 mapControl.Refresh();
 
                 //심볼초기화
-                GisCm.InitUniqueValueRendererObj();
+                CmmObj.InitUniqueValueRendererObj();
             }
         }
     }

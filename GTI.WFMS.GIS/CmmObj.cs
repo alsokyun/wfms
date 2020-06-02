@@ -1,14 +1,57 @@
 ﻿using ESRI.ArcGIS.Carto;
 using ESRI.ArcGIS.Display;
 using GTI.WFMS.Models.Common;
+using System.Collections.Generic;
 
 namespace GTI.WFMS.GIS
 {
     /// <summary>
-    /// GIS 전역변수 - ArcObject 버전
+    /// GIS 전역함수변수 - ArcObject 버전
     /// </summary>
-    public class GisCm
+    public class CmmObj
     {
+
+        public static Dictionary<string, FeatureLayer> layers;
+        public static void initLayers()
+        {
+            layers = new Dictionary<string, FeatureLayer>()
+            {
+                {"WTL_FLOW_PS",  new FeatureLayer()},
+                {"WTL_FIRE_PS^SA118",  new FeatureLayer()},
+                {"WTL_FIRE_PS^SA119",  new FeatureLayer()},
+                {"WTL_GAIN_PS",  new FeatureLayer()},
+                {"WTL_HEAD_PS",  new FeatureLayer()},
+                {"WTL_LEAK_PS",  new FeatureLayer()},
+                {"WTL_MANH_PS",  new FeatureLayer()},
+                {"WTL_META_PS",  new FeatureLayer()},
+                {"WTL_PRES_PS",  new FeatureLayer()},
+                {"WTL_PRGA_PS",  new FeatureLayer()},
+                {"WTL_RSRV_PS",  new FeatureLayer()},
+                {"WTL_SERV_PS",  new FeatureLayer()},
+                {"WTL_STPI_PS",  new FeatureLayer()},
+                {"WTL_VALV_PS^SA200",  new FeatureLayer()},
+                {"WTL_VALV_PS^SA201",  new FeatureLayer()},
+                {"WTL_VALV_PS^SA202",  new FeatureLayer()},
+                {"WTL_VALV_PS^SA203",  new FeatureLayer()},
+                {"WTL_VALV_PS^SA204",  new FeatureLayer()},
+                {"WTL_VALV_PS^SA205",  new FeatureLayer()},
+                {"WTL_VALV_PS^SA206",  new FeatureLayer()},
+
+
+                {"BML_GADM_AS",  new FeatureLayer()},
+                {"WTL_PURI_AS",  new FeatureLayer()},
+
+                {"WTL_PIPE_LM",  new FeatureLayer()},
+                {"WTL_SPLY_LS",  new FeatureLayer()},
+                {"WTL_PIPE_LX",  new FeatureLayer()},
+                {"WTL_SPLY_LX",  new FeatureLayer()},
+                {"WTL_PIPE_LY",  new FeatureLayer()},
+            };
+
+        }
+
+
+
 
 
 

@@ -50,44 +50,7 @@ namespace GTI.WFMS.GIS
         
 
 
-        public Dictionary<string, FeatureLayer> layers;
-        public void initLayers()
-        {
-            layers = new Dictionary<string, FeatureLayer>()
-            {
-                {"WTL_FLOW_PS",  new FeatureLayer()},
-                {"WTL_FIRE_PS^SA118",  new FeatureLayer()},
-                {"WTL_FIRE_PS^SA119",  new FeatureLayer()},
-                {"WTL_GAIN_PS",  new FeatureLayer()},
-                {"WTL_HEAD_PS",  new FeatureLayer()},
-                {"WTL_LEAK_PS",  new FeatureLayer()},
-                {"WTL_MANH_PS",  new FeatureLayer()},
-                {"WTL_META_PS",  new FeatureLayer()},
-                {"WTL_PRES_PS",  new FeatureLayer()},
-                {"WTL_PRGA_PS",  new FeatureLayer()},
-                {"WTL_RSRV_PS",  new FeatureLayer()},
-                {"WTL_SERV_PS",  new FeatureLayer()},
-                {"WTL_STPI_PS",  new FeatureLayer()},
-                {"WTL_VALV_PS^SA200",  new FeatureLayer()},
-                {"WTL_VALV_PS^SA201",  new FeatureLayer()},
-                {"WTL_VALV_PS^SA202",  new FeatureLayer()},
-                {"WTL_VALV_PS^SA203",  new FeatureLayer()},
-                {"WTL_VALV_PS^SA204",  new FeatureLayer()},
-                {"WTL_VALV_PS^SA205",  new FeatureLayer()},
-                {"WTL_VALV_PS^SA206",  new FeatureLayer()},
 
-
-                {"BML_GADM_AS",  new FeatureLayer()},
-                {"WTL_PURI_AS",  new FeatureLayer()},
-
-                {"WTL_PIPE_LM",  new FeatureLayer()},
-                {"WTL_SPLY_LS",  new FeatureLayer()},
-                {"WTL_PIPE_LX",  new FeatureLayer()},
-                {"WTL_SPLY_LX",  new FeatureLayer()},
-                {"WTL_PIPE_LY",  new FeatureLayer()},
-            };
-
-        }
 
 
 
@@ -172,10 +135,10 @@ namespace GTI.WFMS.GIS
                 initMap();
 
                 //1.레이어초기화
-                initLayers();
+                CmmObj.initLayers();
 
                 //2.UniqueRenderer 초기화
-                GisCm.InitUniqueValueRendererObj();
+                CmmObj.InitUniqueValueRendererObj();
 
                 //3.울산행정구역표시
                 ShowShapeLayer("BML_GADM_AS", true );
@@ -271,7 +234,7 @@ namespace GTI.WFMS.GIS
             initMap();
 
             //2.레이어초기화
-            initLayers();
+            CmmObj.initLayers();
 
             //3.레이어스택 초기화
             sts.Clear();
@@ -302,7 +265,7 @@ namespace GTI.WFMS.GIS
         /// <param name="_mapView"></param>
         /// <param name="layer"></param>
         /// <param name="chk"></param>
-        public void ShowShapeLayer(string _layerNm, bool chk)
+        public FeatureLayer ShowShapeLayer(string _layerNm, bool chk)
         {
             try
             {
@@ -326,10 +289,10 @@ namespace GTI.WFMS.GIS
                 // 1.레이어 ON
                 if (chk)
                 {
-                    if (layers[_layerNm].Name != "")
+                    if (CmmObj.layers[_layerNm].Name != "")
                     {
                         //레이어로딩 상태이면 맵에 추가만 해줌
-                        mapControl.AddLayer(layers[_layerNm]);
+                        mapControl.AddLayer(CmmObj.layers[_layerNm]);
                         sts.Push(_layerNm);//레이어인덱스 가져오기위해 똑같이 스택에 저장해놓음
                     }
                     else
@@ -337,13 +300,13 @@ namespace GTI.WFMS.GIS
                         mapControl.AddShapeFile(BizUtil.GetDataFolder("shape"), shapeNm + ".shp");
 
                         //레이어객체 저장
-                        layers[_layerNm] = mapControl.get_Layer(0) as FeatureLayer; //스택형이므로 인덱스는 0 
-                        layers[_layerNm].Name = GisCm.getLayerKorNm(_layerNm);
+                        CmmObj.layers[_layerNm] = mapControl.get_Layer(0) as FeatureLayer; //스택형이므로 인덱스는 0 
+                        CmmObj.layers[_layerNm].Name = CmmObj.getLayerKorNm(_layerNm);
                         sts.Push(_layerNm);//레이어인덱스 가져오기위해 똑같이 스택에 저장해놓음
 
 
                         /* Renderer 적용 */
-                        IGeoFeatureLayer pGFL  = layers[_layerNm] as IGeoFeatureLayer;
+                        IGeoFeatureLayer pGFL  = CmmObj.layers[_layerNm] as IGeoFeatureLayer;
 
                         if ("BML_GADM_AS".Equals(_layerNm)) //울산행정구역
                         {
@@ -366,7 +329,7 @@ namespace GTI.WFMS.GIS
                         else
                         {
                             //레이어의 UniqueValueRenderer 적용
-                            pGFL.Renderer = GisCm.uniqueValueRendererObj as IFeatureRenderer;
+                            pGFL.Renderer = CmmObj.uniqueValueRendererObj as IFeatureRenderer;
                         }
                     }
 
@@ -375,17 +338,18 @@ namespace GTI.WFMS.GIS
                     if (!FmsUtil.IsNull(filterExp))
                     {
                         //레이어필터링
-                        IFeatureLayerDefinition flayer = layers[_layerNm] as IFeatureLayerDefinition;
+                        IFeatureLayerDefinition flayer = CmmObj.layers[_layerNm] as IFeatureLayerDefinition;
                         flayer.DefinitionExpression = filterExp;
 
                     }
 
                     //mapControl.Extent = layers[_layerNm].AreaOfInterest;
+                    return CmmObj.layers[_layerNm];
                 }
                 // 2.레이어 OFF
                 else
                 {
-                    if (layers[_layerNm].Name != "")
+                    if (CmmObj.layers[_layerNm].Name != "")
                     {
                         mapControl.DeleteLayer(sts.GetStackIdx(_layerNm));
                         sts.Remove(sts.GetIdx(_layerNm));
@@ -394,6 +358,7 @@ namespace GTI.WFMS.GIS
                     {
                         //로딩되지 않은상태 아무것도 안함
                     }
+                    return null;
                 }
 
 
@@ -403,6 +368,7 @@ namespace GTI.WFMS.GIS
             catch (Exception ex)
             {
                 MessageBox.Show("레이어가 존재하지 않습니다." + ex.Message);
+                return null;
             }
         }
 
@@ -422,7 +388,7 @@ namespace GTI.WFMS.GIS
             string layerNm = "";
             try
             {
-                layerNm = GisCmm.GetLayerNm(FTR_CDE);
+                layerNm = CmmRun.GetLayerNm(FTR_CDE);
                 if ("".Equals(layerNm))
                 {
                     MessageBox.Show("잘못된 레이어입니다.");
@@ -439,10 +405,10 @@ namespace GTI.WFMS.GIS
             resetAction(null);
 
             //0.해당레이어표시 - 내부에서자동으로 로딩여부 체크함
-            ShowShapeLayer(GisCmm.GetLayerNm(FTR_CDE), true);
-
+            FeatureLayer layer = ShowShapeLayer(CmmRun.GetLayerNm(FTR_CDE), true);
+            
             //1.해당레이어 가져오기
-            FeatureLayer layer = layers[GisCmm.GetLayerNm(FTR_CDE)];
+            //FeatureLayer layer = CmmObj.layers[CmmRun.GetLayerNm(FTR_CDE)];
 
 
 
@@ -454,40 +420,72 @@ namespace GTI.WFMS.GIS
             IFeatureSelection fsel = layer as IFeatureSelection;
             fsel.SelectFeatures(qfltr, esriSelectionResultEnum.esriSelectionResultAdd, true);
 
-            //2.피처객체 필터링 - 타겟으로 지도중심이동
-            IFeatureCursor cursor = layer.Search(qfltr, false);
-            IFeature feature = cursor.NextFeature(); 
 
-            ESRI.ArcGIS.Geometry.IPoint point;
+            
+            //2.피처객체 필터링
+            IFeatureCursor cursor = layer.Search(qfltr, true);
+            IFeature feature = cursor.NextFeature();
 
-            if (FTR_CDE == "SA001" || FTR_CDE == "SA002") //상수관로,급수관로
+            //if (FTR_CDE == "SA001" || FTR_CDE == "SA002") //상수관로,급수관로
+            //{
+            //    ESRI.ArcGIS.Geometry.IPolyline line = (ESRI.ArcGIS.Geometry.IPolyline)feature.ShapeCopy;
+            //    point = line.FromPoint;
+            //}
+            //else if(FTR_CDE == "SA113") //정수장
+            //{
+            //    ESRI.ArcGIS.Geometry.IPolygon polygon = (ESRI.ArcGIS.Geometry.IPolygon)feature.ShapeCopy;
+            //    point = polygon.FromPoint;
+            //}
+            //else //나머지 포이트 시설물
+            //{
+            //    point = (ESRI.ArcGIS.Geometry.IPoint)feature.ShapeCopy;
+            //}
+
+
+            //3. - 타겟으로 지도중심이동
+            ESRI.ArcGIS.Geometry.IPoint point = mapControl.ToMapPoint(Convert.ToInt32(GisCmm._ulsanCoords.X) , Convert.ToInt32(GisCmm._ulsanCoords.Y));
+
+            IEnumFeature pFsel = (IEnumFeature)mapControl.Map.FeatureSelection;
+            pFsel.Reset(); // make sure it starts from the first feature
+            IFeature pFeat = pFsel.Next();
+            do
             {
-                ESRI.ArcGIS.Geometry.IPolyline line = (ESRI.ArcGIS.Geometry.IPolyline)feature.ShapeCopy;
-                point = line.FromPoint;
-            }
-            else if(FTR_CDE == "SA113") //정수장
-            {
-                ESRI.ArcGIS.Geometry.IPolygon polygon = (ESRI.ArcGIS.Geometry.IPolygon)feature.ShapeCopy;
-                point = polygon.FromPoint;
-            }
-            else //나머지 포이트 시설물
-            {
-                point = (ESRI.ArcGIS.Geometry.IPoint)feature.ShapeCopy;
-            }
+                ESRI.ArcGIS.Geometry.IGeometry pGeom = pFeat.ShapeCopy;
+                if (pGeom.GeometryType == ESRI.ArcGIS.Geometry.esriGeometryType.esriGeometryPoint)
+                {
+                    point = (ESRI.ArcGIS.Geometry.IPoint)pGeom;
+                    double x, y;
+                    point.QueryCoords(out x, out y); // use the coordinates from here
+                }
+                else if (pGeom.GeometryType == ESRI.ArcGIS.Geometry.esriGeometryType.esriGeometryPolyline)
+                {
+                    ESRI.ArcGIS.Geometry.IPolyline line = (ESRI.ArcGIS.Geometry.IPolyline)pGeom;
+                    point = line.FromPoint;
+                }
+                else if (pGeom.GeometryType == ESRI.ArcGIS.Geometry.esriGeometryType.esriGeometryPolygon)
+                {
+                    ESRI.ArcGIS.Geometry.IPolygon polygon = (ESRI.ArcGIS.Geometry.IPolygon)pGeom;
+                    point = polygon.FromPoint;
+                }
+
+                pFeat = pFsel.Next();
+            } while (pFeat != null);
+
 
 
             var envelope = mapControl.ActiveView.Extent;
             envelope.CenterAt(point);
-
             mapControl.Extent = envelope;
             mapControl.Refresh();
 
+            mapControl.MapScale = 9028;
+            /*
+            */
             //int x = Convert.ToInt32(point.X);
             //int y = Convert.ToInt32(point.Y);
             //mapControl.ToMapPoint(x, y);
             //mapControl.ActiveView.ScreenDisplay.UpdateWindow();
 
-            mapControl.MapScale = 100000;
         }
 
 
