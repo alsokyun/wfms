@@ -205,7 +205,7 @@ namespace GTI.WFMS.Modules.Link.ViewModel
         {
 
             // 1.삭제처리
-            if (Messages.ShowYesNoMsgBox("부속세부시설현황을 삭제하시겠습니까?") != MessageBoxResult.Yes) return;
+            if (Messages.ShowYesNoMsgBox("세부부속시설 현황을 삭제하시겠습니까?") != MessageBoxResult.Yes) return;
             try
             {
                 BizUtil.Update2(this, "DeleteWttAttaDt");

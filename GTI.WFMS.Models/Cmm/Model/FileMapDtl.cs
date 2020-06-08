@@ -9,17 +9,6 @@ namespace GTI.WFMS.Models.Cmm.Model
 {
     public class FileMapDtl : CmmDtl
     {
-        /// <summary>
-        /// 인터페이스 구현부분
-        /// </summary>
-        public event PropertyChangedEventHandler PropertyChanged;
-        protected void RaisePropertyChanged(string propertyName)
-        {
-            if (PropertyChanged != null)
-            {
-                PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
-            }
-        }
 
 
 
@@ -33,7 +22,7 @@ namespace GTI.WFMS.Models.Cmm.Model
             set
             {
                 this.__BIZ_ID = value;
-                RaisePropertyChanged("BIZ_ID");
+                OnPropertyChanged("BIZ_ID");
             }
         }
         private decimal ?  __FIL_SEQ;
@@ -43,7 +32,7 @@ namespace GTI.WFMS.Models.Cmm.Model
             set
             {
                 this.__FIL_SEQ = value;
-                RaisePropertyChanged("FIL_SEQ");
+                OnPropertyChanged("FIL_SEQ");
             }
         }
         private string __TIT_NAM;
@@ -53,7 +42,7 @@ namespace GTI.WFMS.Models.Cmm.Model
             set
             {
                 this.__TIT_NAM = value;
-                RaisePropertyChanged("TIT_NAM");
+                OnPropertyChanged("TIT_NAM");
             }
         }
         private string __GRP_TYP;
@@ -63,7 +52,7 @@ namespace GTI.WFMS.Models.Cmm.Model
             set
             {
                 this.__GRP_TYP = value;
-                RaisePropertyChanged("GRP_TYP");
+                OnPropertyChanged("GRP_TYP");
             }
         }
         private string __CRE_USR;
@@ -73,7 +62,7 @@ namespace GTI.WFMS.Models.Cmm.Model
             set
             {
                 this.__CRE_USR = value;
-                RaisePropertyChanged("CRE_USR");
+                OnPropertyChanged("CRE_USR");
             }
         }
         private string __CRE_YMD;
@@ -83,7 +72,7 @@ namespace GTI.WFMS.Models.Cmm.Model
             set
             {
                 this.__CRE_YMD = value;
-                RaisePropertyChanged("CRE_YMD");
+                OnPropertyChanged("CRE_YMD");
             }
         }
         private string __UPD_USR;
@@ -93,7 +82,7 @@ namespace GTI.WFMS.Models.Cmm.Model
             set
             {
                 this.__UPD_USR = value;
-                RaisePropertyChanged("UPD_USR");
+                OnPropertyChanged("UPD_USR");
             }
         }
         private string __UPD_YMD;
@@ -103,7 +92,7 @@ namespace GTI.WFMS.Models.Cmm.Model
             set
             {
                 this.__UPD_YMD = value;
-                RaisePropertyChanged("UPD_YMD");
+                OnPropertyChanged("UPD_YMD");
             }
         }
         private string __CTNT;
@@ -113,7 +102,7 @@ namespace GTI.WFMS.Models.Cmm.Model
             set
             {
                 this.__CTNT = value;
-                RaisePropertyChanged("CTNT");
+                OnPropertyChanged("CTNT");
             }
         }
     }

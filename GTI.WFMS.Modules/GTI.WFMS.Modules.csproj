@@ -148,6 +148,14 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
+    <Page Include="Blk\View\Blk01ListView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Blk\View\Blk01DtlView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
     <Page Include="Cmpl\View\LekSiteAddView.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -361,6 +369,10 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Include="Mntc\View\FaqAddView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Mntc\View\FaqDetaillView.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
@@ -635,6 +647,14 @@
     <Compile Include="Acmf\view\HydtMetrListView.xaml.cs">
       <DependentUpon>HydtMetrListView.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Blk\ViewModel\Blk01ListViewModel.cs" />
+    <Compile Include="Blk\ViewModel\Blk01DtlViewModel.cs" />
+    <Compile Include="Blk\View\Blk01ListView.xaml.cs">
+      <DependentUpon>Blk01ListView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Blk\View\Blk01DtlView.xaml.cs">
+      <DependentUpon>Blk01DtlView.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Cmpl\View\ImageContainer.cs" />
     <Compile Include="Cmpl\ViewModel\LekSiteAddViewModel.cs" />
     <Compile Include="Cmpl\ViewModel\LekSiteDtlViewModel.cs" />
@@ -890,6 +910,7 @@
     </Compile>
     <Compile Include="Mntc\ViewModel\FaqDocViewModel.cs" />
     <Compile Include="Mntc\ViewModel\FaqAddViewModel.cs" />
+    <Compile Include="Mntc\ViewModel\FaqDetaillViewModel.cs" />
     <Compile Include="Mntc\ViewModel\PdjtMngListViewModel.cs" />
     <Compile Include="Mntc\ViewModel\PdjtStockViewModel.cs" />
     <Compile Include="Mntc\ViewModel\PdjtHtViewModel.cs" />
@@ -900,6 +921,9 @@
       <DependentUpon>FaqAddView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Link\View\ImageContainer.cs" />
+    <Compile Include="Mntc\View\FaqDetaillView.xaml.cs">
+      <DependentUpon>FaqDetaillView.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Pop\ViewModel\CnstCmplSelViewModel.cs" />
     <Compile Include="Pop\ViewModel\SplyMngPopViewModel.cs" />
     <Compile Include="Pop\View\CnstCmplSelView.xaml.cs">

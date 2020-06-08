@@ -1,0 +1,131 @@
+﻿<Window xmlns:dxe="http://schemas.devexpress.com/winfx/2008/xaml/editors"
+        x:Class="GTI.WFMS.Main.View.Popup.PopupUserInfoMng"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:dxg="http://schemas.devexpress.com/winfx/2008/xaml/grid"
+        mc:Ignorable="d"
+        Title="사용자 정보"
+        Height="523" Width="404" WindowStyle="None" ResizeMode="NoResize" WindowStartupLocation="CenterScreen" Style="{DynamicResource PopupWindow}">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="2"/>
+            <RowDefinition Height="45"/>
+            <RowDefinition Height="10"/>
+            <RowDefinition Height="40"/>
+            <RowDefinition Height="40"/>
+            <RowDefinition Height="40"/>
+            <RowDefinition Height="40"/>
+            <RowDefinition Height="40"/>
+            <RowDefinition Height="40"/>
+            <RowDefinition Height="40"/>
+            <RowDefinition Height="40"/>
+            <RowDefinition Height="40"/>
+            <RowDefinition Height="40"/>
+            <RowDefinition Height="10"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="10"/>
+            <RowDefinition Height="2"/>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="2"/>
+            <ColumnDefinition Width="10"/>
+            <ColumnDefinition Width="160"/>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="10"/>
+            <ColumnDefinition Width="2"/>
+        </Grid.ColumnDefinitions>
+
+        <!--헤더 백그라운드 border-->
+        <Border x:Name="bdTitle" Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="5" Background="{DynamicResource PopupCOLOR1Brush}"/>
+
+        <!--폼 아웃라인 border-->
+        <Border Grid.Column="0" Grid.ColumnSpan="7" Background="{DynamicResource PopupCOLOR1Brush}"/>
+        <Border Grid.Row="16" Grid.Column="0" Grid.ColumnSpan="7" Background="{DynamicResource PopupCOLOR1Brush}"/>
+        <Border Grid.RowSpan="16" Background="{DynamicResource PopupCOLOR1Brush}"/>
+        <Border Grid.Column="6" Grid.RowSpan="16" Background="{DynamicResource PopupCOLOR1Brush}"/>
+
+        <!--사용자 정보 바깥선-->
+        <Border Grid.Row="4" Grid.Column="2" Grid.RowSpan="9" Grid.ColumnSpan="2" BorderThickness="1" BorderBrush="{DynamicResource PopupCOLOR2Brush}"/>
+
+        <!--내부 구분선-->
+        <Border Grid.Row="4" Grid.Column="2" Grid.RowSpan="9" BorderThickness="0,0,1,0" BorderBrush="{DynamicResource PopupCOLOR2Brush}"/>
+
+        <Border Grid.Row="5" Grid.Column="2" Grid.ColumnSpan="2" BorderThickness="0,1,0,1" BorderBrush="{DynamicResource PopupCOLOR2Brush}"/>
+        <Border Grid.Row="7" Grid.Column="2" Grid.ColumnSpan="2" BorderThickness="0,1,0,1" BorderBrush="{DynamicResource PopupCOLOR2Brush}"/>
+        <Border Grid.Row="9" Grid.Column="2" Grid.ColumnSpan="2" BorderThickness="0,1,0,1" BorderBrush="{DynamicResource PopupCOLOR2Brush}"/>
+        <Border Grid.Row="11" Grid.Column="2" Grid.ColumnSpan="2" BorderThickness="0,1,0,0" BorderBrush="{DynamicResource PopupCOLOR2Brush}"/>
+        <Border Grid.Row="12" Grid.Column="2" Grid.ColumnSpan="2" BorderThickness="0,1,0,0" BorderBrush="{DynamicResource PopupCOLOR2Brush}"/>
+
+        <!--라벨 백그라운드-->
+        <Border Grid.Row="4" Grid.Column="2" Background="{DynamicResource PopupCOLOR3Brush}" Margin="1,1,1,0"/>
+        <Border Grid.Row="5" Grid.Column="2" Background="{DynamicResource PopupCOLOR3Brush}" Margin="1,1,1,1"/>
+        <Border Grid.Row="7" Grid.Column="2" Background="{DynamicResource PopupCOLOR3Brush}" Margin="1,1,1,1"/>
+        <Border Grid.Row="8" Grid.Column="2" Background="{DynamicResource PopupCOLOR3Brush}" Margin="1,0,1,0"/>
+        <Border Grid.Row="6" Grid.Column="2" Background="{DynamicResource PopupCOLOR3Brush}" Margin="1,0,1,0"/>
+        <Border Grid.Row="9" Grid.Column="2" Background="{DynamicResource PopupCOLOR3Brush}" Margin="1,1,1,1"/>
+        <Border Grid.Row="10" Grid.Column="2" Background="{DynamicResource PopupCOLOR3Brush}" Margin="1,0,1,0"/>
+        <Border Grid.Row="11" Grid.Column="2" Background="{DynamicResource PopupCOLOR3Brush}" Margin="1,1,1,0"/>
+        <Border Grid.Row="12" Grid.Column="2" Background="{DynamicResource PopupCOLOR3Brush}" Margin="1,1,1,1"/>
+
+
+        <Label Grid.Row="1" Grid.Column="2" Grid.ColumnSpan="2" Content="사용자 정보 관리" FontSize="18" FontWeight="Bold" Foreground="White" HorizontalAlignment="Left" VerticalAlignment="Center"/>
+
+        <Button x:Name="btnXSignClose" Grid.Row="1" Grid.Column="2" Grid.ColumnSpan="3" Style="{DynamicResource XSignCloseButton}" Width="15" Height="15" Margin="0,10,10,0"/>
+        <StackPanel Grid.Row="3" Grid.Column="2" Orientation="Horizontal">
+            <Image Style="{DynamicResource TitleCircle}"/>
+            <Label Content="사용자 정보" Style="{DynamicResource ResourceKey=CircleTitleLabel}"/>
+        </StackPanel>
+
+
+        <Label Grid.Row="4" Grid.Column="2" Content="아이디" Style="{DynamicResource PopupLabel}"/>
+        <dxe:TextEdit x:Name="txtID" Grid.Row="4" Grid.Column="3" IsEnabled="False" Text="{Binding null}" Style="{DynamicResource GridTextEdit}" Width="180"/>
+
+        <Label Grid.Row="5" Grid.Column="2" Content="이름" Style="{DynamicResource PopupLabel}"/>
+        <dxe:TextEdit x:Name="txtNM" Grid.Row="5" Grid.Column="3" Text="{Binding null}" MaxLength="8" Style="{DynamicResource GridTextEdit}" Width="180"/>
+        <Label Grid.Row="6" Grid.Column="2" Content="현재 비밀번호" Style="{DynamicResource PopupLabel}"/>
+        <dxe:PasswordBoxEdit x:Name="pwdCurrent" Grid.Row="6" Grid.Column="3" Text="{Binding null}" MaxLength="64" Style="{DynamicResource GirdPasswordBox}" Width="180"/>
+        <Label Grid.Row="7" Grid.Column="2" Content="변경 비밀번호" Style="{DynamicResource PopupLabel}"/>
+        <dxe:PasswordBoxEdit x:Name="pwdChange" Grid.Row="7" Grid.Column="3" Text="{Binding null}" MaxLength="64" Style="{DynamicResource GirdPasswordBox}" Width="180"/>
+        <Label Grid.Row="8" Grid.Column="2" Content="변경 비밀번호 확인" Style="{DynamicResource PopupLabel}"/>
+        <dxe:PasswordBoxEdit x:Name="pwdChangeChk" Grid.Row="8" Grid.Column="3" Text="{Binding null}" MaxLength="64" Style="{DynamicResource GirdPasswordBox}" Width="180"/>
+        <Label Grid.Row="9" Grid.Column="2" Content="부서" Style="{DynamicResource PopupLabel}"/>
+        <dxg:LookUpEdit Name="lookUpEditDept" Grid.Row="9" Grid.Column="3" DisplayMember="DEPT_NM" ValueMember="DEPT_CD" Style="{DynamicResource InputLookUp}" PopupHeight="200" PopupMinHeight="200" Width="180">
+            <dxg:LookUpEdit.PopupContentTemplate>
+                <ControlTemplate>
+                    <dxg:GridControl x:Name="PART_GridControl" AutoGenerateColumns="AddNew">
+                        <dxg:GridControl.Columns>
+                            <dxg:GridColumn FieldName="DEPT_NM" />
+                            <dxg:GridColumn FieldName="DEPT_CD" Visible="False"/>
+                            <dxg:GridColumn FieldName="UPPER_CD" Visible="False"/>
+                            <dxg:GridColumn FieldName="DEPT_STEP" Visible="False"/>
+                            <dxg:GridColumn FieldName="ORD" Visible="False"/>
+                        </dxg:GridControl.Columns>
+                        <dxg:GridControl.View>
+                            <dxg:TreeListView Name="treeListView1" AutoWidth="True" ShowColumnHeaders="False" ShowVerticalLines="False" ShowHorizontalLines="False" ShowIndicator="False"
+                                  KeyFieldName="DEPT_CD" ParentFieldName="UPPER_CD"  AutoExpandAllNodes="True" RowMinHeight="20"
+                                  TreeDerivationMode="Selfreference"/>
+                        </dxg:GridControl.View>
+                    </dxg:GridControl>
+                </ControlTemplate>
+            </dxg:LookUpEdit.PopupContentTemplate>
+        </dxg:LookUpEdit>
+
+        <Label Grid.Row="10" Grid.Column="2" Content="직급" Style="{DynamicResource PopupLabel}"/>
+        <dxe:ComboBoxEdit x:Name="cbGrade" Grid.Row="10" Grid.Column="3" Text="{Binding null}" DisplayMember="DTL_NM" ValueMember="DTL_CD" Style="{DynamicResource GridComboBox}" Width="180"/>
+        <Label Grid.Row="11" Grid.Column="2" Content="연락처" Style="{DynamicResource PopupLabel}"/>
+        <dxe:TextEdit x:Name="txtPhone" Grid.Row="11" Grid.Column="3" Text="{Binding null}" MaxLength="16" Style="{DynamicResource GridTextEdit}" Width="180"/>
+        <Label Grid.Row="12" Grid.Column="2" Content="테마" Style="{DynamicResource PopupLabel}"/>
+        <StackPanel Grid.Row="12" Grid.Column="3" Orientation="Horizontal" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="10,0,0,0">
+            <RadioButton x:Name="radioblue" Content="블루" Foreground="{DynamicResource Default_Chart_ColorBrush1}" GroupName="grptheme"/>
+            <RadioButton x:Name="radionavy" Content="네이비" Foreground="{DynamicResource Default_Chart_ColorBrush1}" Margin="10,0,0,0" GroupName="grptheme"/>
+        </StackPanel>
+
+        <StackPanel Grid.Row="14" Grid.Column="3" Orientation="Horizontal" HorizontalAlignment="Right" VerticalAlignment="Center">
+            <Button x:Name="btnSave" Style="{DynamicResource PopupSaveButton}"/>
+            <Button x:Name="btnClose" Style="{DynamicResource PopupCloseButton}"/>
+        </StackPanel>
+    </Grid>
+</Window>
+

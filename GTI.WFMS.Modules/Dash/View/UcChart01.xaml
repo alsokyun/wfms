@@ -82,7 +82,7 @@
                         <!-- 범례 설정 - 체크Box로 표현   
                             <dxc:Legend HorizontalPosition="Center" VerticalPosition="BottomOutside" MarkerMode="CheckBox" Orientation="Horizontal" Visibility="Visible" ItemVisibilityMode="Default" />
                             -->
-                        <dxc:Legend HorizontalPosition="Center" VerticalPosition="Top" MarkerMode="CheckBox" Orientation="Horizontal" Visibility="Visible" ItemVisibilityMode="Default" Margin="0,0,0,15"/>
+                        <dxc:Legend HorizontalPosition="Center" VerticalPosition="BottomOutside" MarkerMode="CheckBox" Orientation="Horizontal" Visibility="Visible" ItemVisibilityMode="Default" Margin="0,-20,10,-10"/>
                     </dxc:ChartControl.Legends>
                     <dxc:ChartControl.Diagram>
                         <!--

@@ -21,7 +21,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 
-namespace GTI.WNMS.Main.View.Pop
+namespace GTI.WFMS.Main.View.Pop
 {
     /// <summary>
     /// PopupQuickMenuMng.xaml에 대한 상호 작용 논리

@@ -7,7 +7,7 @@ using GTI.WFMS.Models.Main.Work;
 using GTI.WFMS.Modules.Dash.View;
 using GTI.WFMS.Modules.Main;
 using GTI.WFMS.Modules.Main.View;
-using GTI.WNMS.Main.View.Pop;
+using GTI.WFMS.Main.View.Pop;
 using GTIFramework.Common.Log;
 using GTIFramework.Common.MessageBox;
 using GTIFramework.Common.Utils.ViewEffect;
@@ -25,6 +25,7 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Animation;
 using System.Windows.Media.Imaging;
+using GTI.WFMS.Main.View.Popup;
 
 namespace GTI.WFMS.Main
 {
@@ -124,9 +125,13 @@ namespace GTI.WFMS.Main
             QuickShowHidenCommand = new DelegateCommand<object>(QuickShowHidenAction);
             QuickMngCommand = new DelegateCommand<object>(QuickMngAction);
 
-
+            //사용자정보
             UserInfoMngCommand = new RelayCommand<object>(delegate (object obj) {
-
+                PopupUserInfoMng popupUserInfoMng = new PopupUserInfoMng(mainwin);
+                if (popupUserInfoMng.ShowDialog() is bool)
+                {
+                    //재조회
+                }
             });
             //상황판
             InterestBlkCommand = new RelayCommand<object>(delegate (object obj) {

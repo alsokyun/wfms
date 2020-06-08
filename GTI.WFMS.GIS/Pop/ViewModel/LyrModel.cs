@@ -9,6 +9,7 @@ using GTIFramework.Common.MessageBox;
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Threading.Tasks;
 using System.Windows;
 
 namespace GTI.WFMS.GIS.Pop.ViewModel
@@ -84,6 +85,26 @@ namespace GTI.WFMS.GIS.Pop.ViewModel
 
 
         #region =========== shape 레이어 구성부분 ==============
+        public async Task<ShapefileFeatureTable> InitLayerTable(string _layerNm)
+        {
+            string shapeNm = "";
+            try
+            {
+                string[] ary = _layerNm.Split('^');
+                shapeNm = ary[0]; //레이어테이블명
+
+
+                string shapefilePath = Path.Combine(BizUtil.GetDataFolder("shape", shapeNm + ".shp"));
+                ShapefileFeatureTable layerTable = await ShapefileFeatureTable.OpenAsync(shapefilePath);
+                return layerTable;
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+                return null;
+            }
+        }
+
 
         /// <summary>
         /// Shape 레이어 보이기/끄기 - Shape버전

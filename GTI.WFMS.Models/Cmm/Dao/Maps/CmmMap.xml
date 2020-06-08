@@ -111,5 +111,33 @@
       ORDER BY FTR_CDE
     </select>
 
+    
+    <!--시설물 포인트 위치저장-->
+    <update id="updatePoint" parameterClass="Hashtable" remapResults="true">
+      UPDATE $TABLE_NM$
+      SET GEOM = ST_POINTFROMTEXT(#WKT_POINT#)
+      WHERE 1=1
+      AND FTR_CDE = #FTR_CDE#
+      AND FTR_IDN = #FTR_IDN#
+    </update>
+    
+    <!--시설물 라인 위치저장-->
+    <update id="updatePolyline" parameterClass="Hashtable" remapResults="true">
+      UPDATE $TABLE_NM$
+      SET GEOM = ST_LINEFROMTEXT(#WKT_LINE #)
+      WHERE 1=1
+      AND FTR_CDE = #FTR_CDE#
+      AND FTR_IDN = #FTR_IDN#
+    </update>
+    
+    <!--시설물 폴리곤 위치저장-->
+    <update id="updatePolygon" parameterClass="Hashtable" remapResults="true">
+      UPDATE $TABLE_NM$
+      SET GEOM = ST_MPOLYFROMTEXT(#WKT_POLYGON#)
+      WHERE 1=1
+      AND FTR_CDE = #FTR_CDE#
+      AND FTR_IDN = #FTR_IDN#
+    </update>
+    
   </statements>
 </sqlMap>

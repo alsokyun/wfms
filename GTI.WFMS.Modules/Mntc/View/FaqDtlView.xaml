@@ -83,8 +83,8 @@
             <Grid.RowDefinitions>
                 <RowDefinition Height="40" />
                 <RowDefinition Height="40" />
-                <RowDefinition Height="200" />
-                <RowDefinition Height="200" />
+                <RowDefinition Height="220" />
+                <RowDefinition Height="220" />
             </Grid.RowDefinitions>
 
 
@@ -127,19 +127,14 @@
                               x:Name="cbFTR_CDE" EditValue="{Binding FTR_CDE}" />
 
             <Label Grid.Row="2" Grid.Column="0" Content="내용" Style="{DynamicResource ResourceKey=GridLabel}" />
-            <dxre:RichEditControl Grid.Row="2" Grid.Column="1" Grid.ColumnSpan="3" Height="Auto" Width="Auto" Margin="10 5 10 5" 
-                            ActiveViewType="Simple"
-                            x:Name="richQUESTION" 
-                            Content="{Binding QUESTION, Converter={StaticResource rtfToContentConverter}, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" 
-                                  />
+            <RichTextBox Grid.Row="2" Grid.Column="1" Grid.ColumnSpan="3" Style="{DynamicResource GridRichTextBox}" Margin="10 5 10 5"
+                         x:Name="richQUESTION" />
             
             <Label Grid.Row="3" Grid.Column="0" Content="답변" Style="{DynamicResource ResourceKey=GridLabel}" />
             <!--<TextBox x:Name="tbRtf" Text="{Binding QUESTION}" Grid.Row="3" Grid.Column="1" Grid.ColumnSpan="3" 
                         TextWrapping="Wrap" AcceptsReturn="True" AcceptsTab="True" />-->
-            <dxre:RichEditControl Grid.Row="3" Grid.Column="1" Grid.ColumnSpan="3" Height="Auto" Width="Auto" Margin="10  5 10 5" 
-                            ActiveViewType="Simple"
-                            x:Name="richREPL" Content="{Binding REPL, Converter={StaticResource rtfToContentConverter}, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" 
-                                  />
+            <RichTextBox Grid.Row="3" Grid.Column="1" Grid.ColumnSpan="3" Style="{DynamicResource GridRichTextBox}" Margin="10 5 10 5"
+                         x:Name="richREPL" />
 
 
         </Grid>

@@ -231,6 +231,7 @@ namespace GTI.WFMS.Modules.Cnst.ViewModel
             DataTable dt = new DataTable();
             DataTable dt2 = new DataTable();
 
+            /*
             try
             {
                 dt = result["dt"] as DataTable;
@@ -246,12 +247,12 @@ namespace GTI.WFMS.Modules.Cnst.ViewModel
                 dt2 = result["dt2"] as DataTable;
                 if (dt2.Rows.Count > 0)
                 {
-                    Messages.ShowErrMsgBox("파일첨부내역이 존재합니다.");
+                    Messages.ShowInfoMsgBox("파일첨부내역이 존재합니다.");
                     return;
                 }
             }
             catch (Exception) { }
-
+            */
 
 
             // 1.삭제처리

@@ -149,6 +149,14 @@ namespace GTI.WFMS.GIS.Module.ViewModel
                 FctDtl.FTR_CDE = this.FTR_CDE;
                 FctDtl.FTR_IDN = Convert.ToInt32(this.FTR_IDN); //신규위치 및 기존위치 정보만 있을수 있으므로 shape의 관리번호를 기준으로한다.
                 BizUtil.Update2(FctDtl, "SaveIntkStDtl");
+
+                //2.위치정보 - 위치편집한 경우만
+                if (!FmsUtil.IsNull(GisCmm.WKT_POINT))
+                {
+                    GisCmm.SavePoint(FctDtl.FTR_CDE, FctDtl.FTR_IDN.ToString(), "WTL_GAIN_PS");
+                    GisCmm.WKT_POINT = "";
+                }
+
             }
             catch (Exception e)
             {
@@ -187,7 +195,7 @@ namespace GTI.WFMS.GIS.Module.ViewModel
                 dt = result["dt"] as DataTable;
                 if (dt.Rows.Count > 0)
                 {
-                    Messages.ShowErrMsgBox("유지보수내역이 존재합니다.");
+                    Messages.ShowInfoMsgBox("유지보수내역이 존재합니다.");
                     return;
                 }
             }
@@ -197,7 +205,7 @@ namespace GTI.WFMS.GIS.Module.ViewModel
                 dt2 = result["dt2"] as DataTable;
                 if (dt2.Rows.Count > 0)
                 {
-                    Messages.ShowErrMsgBox("파일첨부내역이 존재합니다.");
+                    Messages.ShowInfoMsgBox("파일첨부내역이 존재합니다.");
                     return;
                 }
             }
@@ -207,7 +215,7 @@ namespace GTI.WFMS.GIS.Module.ViewModel
                 dt3 = result["dt3"] as DataTable;
                 if (dt3.Rows.Count > 0)
                 {
-                    Messages.ShowErrMsgBox("누수지점내역이 존재합니다.");
+                    Messages.ShowInfoMsgBox("누수지점내역이 존재합니다.");
                     return;
                 }
             }

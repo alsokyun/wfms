@@ -117,10 +117,62 @@
       )
       GROUP BY USER_ID, SYS_CD, MNU_CD, MNU_NM, MNU_DESC,MNU_PATH, MNU_IMG, UPPER_CD, MNU_STEP, ORD
     </select>
-    
 
 
 
+
+    <!--사용자 정보 수정-->
+    <update id ="Update_SYS_USER_INFO" parameterClass="Hashtable" resultClass ="Hashtable">
+      UPDATE infouser.SYS_USER_INFO
+      SET DEPT_CD = #DEPT_CD#
+      ,USER_NM = #USER_NM#
+      ,USER_TEL = #USER_TEL#
+      <isNotNull property="USER_PWD">
+        ,USER_PWD = #USER_PWD#
+      </isNotNull>
+      ,POS_CD = #POS_CD#
+      ,ETC = #ETC#
+      ,USE_YN = #USE_YN#
+      ,EDT_ID = #EDT_ID#
+      ,EDT_DT = SYSDATE
+      WHERE USER_ID = #USER_ID#
+    </update>
+
+    <!--부서관리 테이블 조회-->
+    <select id ="Select_SITE_DEPT_INFO" parameterClass="Hashtable" resultClass ="Hashtable">
+      SELECT DEPT_CD, DEPT_NM, UPPER_CD, DEPT_STEP, ORD
+      FROM infouser.SITE_DEPT_INFO
+      WHERE DEL_YN = 'N'
+      ORDER BY DEPT_STEP ASC, ORD ASC
+    </select>
+
+    <!--사용자정보관리-->
+    <select id ="Select_Log_User_Info" parameterClass="Hashtable" resultClass ="Hashtable">
+      SELECT USER_ID
+      ,DEPT_CD
+      ,USER_NM
+      ,USER_TEL
+      ,USER_PWD
+      ,POS_CD
+      ,ETC
+      FROM infouser.SYS_USER_INFO
+      WHERE USER_ID = #USER_ID#
+      AND USE_YN = 'Y'
+      AND DEL_YN = 'N'
+    </select>
+
+    <!--코드 리스트 조회-->
+    <select id ="Select_CD_DTL_INFO_List" parameterClass="Hashtable" resultClass ="Hashtable">
+      SELECT MST.MST_CD, MST.NM MST_NM, MST.ETC MST_ETC, DTL.DTL_CD, DTL.NM DTL_NM, DTL.ETC DTL_ETC
+      FROM infouser.CD_MST_INFO MST
+      ,CD_DTL_INFO DTL
+      WHERE MST.MST_CD = #MST_CD#
+      AND MST.DEL_YN = 'N'
+      AND MST.USE_YN = 'Y'
+      AND DTL.MST_CD = MST.MST_CD
+      AND DTL.DEL_YN = MST.DEL_YN
+      AND DTL.USE_YN = MST.USE_YN
+    </select>
 
   </statements>
 </sqlMap>

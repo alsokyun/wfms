@@ -49,6 +49,7 @@ namespace GTI.WFMS.GIS.Pop.ViewModel
         EditWinView editWinView;
         ComboBoxEdit cbFTR_CDE;
         string NEW_FTR_IDN = "";//신규추가채번된 시설물의 관리번호 
+
         #endregion
 
 
@@ -1033,7 +1034,10 @@ namespace GTI.WFMS.GIS.Pop.ViewModel
         private async void AddFeatureToLayer(Geometry geometry)
         {
             FeatureTable layerTable = layers[_selectedLayerNm].FeatureTable;
-
+            if (layerTable is null)
+            {
+                layerTable = await InitLayerTable(_selectedLayerNm); 
+            }
 
             //피처추가
             Feature _addedFeature = layerTable.CreateFeature();
@@ -1052,6 +1056,33 @@ namespace GTI.WFMS.GIS.Pop.ViewModel
                 //관리번호 타입이 정수이여서 에러나면 다시 시도
                 _addedFeature.SetAttributeValue("FTR_IDN", Convert.ToInt32(NEW_FTR_IDN));
                 await layerTable.AddFeatureAsync(_addedFeature);
+            }
+
+            //위치정보 WKT 만들기
+            if (geometry is Polyline)
+            {
+                Polyline line = geometry as Polyline;
+                GisCmm.WKT_LINE += "LINESTRING(";
+                foreach (var p in line.Parts[0].Points)
+                {
+                    GisCmm.WKT_LINE += (p.X + " " + p.Y + ",");
+                }
+                GisCmm.WKT_LINE = GisCmm.WKT_LINE.Substring(0,GisCmm.WKT_LINE.Length-1) + ")";
+            }
+            else if (geometry is Polygon)
+            {
+                Polygon gon = geometry as Polygon;
+                GisCmm.WKT_POLYGON += "MULTIPOLYGON(((";
+                foreach (var p in gon.Parts[0].Points)
+                {
+                    GisCmm.WKT_POLYGON += (p.X + " " + p.Y + ",");
+                }
+                GisCmm.WKT_POLYGON = GisCmm.WKT_POLYGON.Substring(0, GisCmm.WKT_POLYGON.Length - 1) + ")))";
+            }
+            else if (geometry is MapPoint )
+            {
+                MapPoint point = geometry as MapPoint;
+                GisCmm.WKT_POINT = "POINT("+ point.X + " " + point.Y + ")";
             }
             
             

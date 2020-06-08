@@ -78,6 +78,10 @@
     <Reference Include="WindowsBase" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Blk\Dao\Maps\BlkMap.xml">
+      <SubType>Designer</SubType>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Content Include="Acmf\Dao\Maps\WtrTrkMap.xml">
       <SubType>Designer</SubType>
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
@@ -185,6 +189,7 @@
     <Compile Include="Acmf\Model\WttMetaHt.cs" />
     <Compile Include="Acmf\Model\WttRsrvHtDtl.cs" />
     <Compile Include="Adm\Dao\AdmDao.cs" />
+    <Compile Include="Blk\Model\BlkDtl.cs" />
     <Compile Include="Cmm\Dao\CommonDao.cs" />
     <Compile Include="Cmm\Dao\CmmDao.cs" />
     <Compile Include="Cmm\Model\CmmDtl.cs" />
@@ -255,6 +260,7 @@
     </None>
     <None Include="DBConfig\TIBEROConfig.config">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <SubType>Designer</SubType>
     </None>
     <None Include="packages.config" />
   </ItemGroup>

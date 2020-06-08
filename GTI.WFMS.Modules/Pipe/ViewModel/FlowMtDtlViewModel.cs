@@ -218,7 +218,7 @@ namespace GTI.WFMS.Modules.Pipe.ViewModel
                 dt = result["dt"] as DataTable;
                 if (dt.Rows.Count > 0)
                 {
-                    Messages.ShowErrMsgBox("유지보수내역이 존재합니다.");
+                    Messages.ShowInfoMsgBox("유지보수내역이 존재합니다.");
                     return;
                 }
             }
@@ -228,7 +228,7 @@ namespace GTI.WFMS.Modules.Pipe.ViewModel
                 dt2 = result["dt2"] as DataTable;
                 if (dt2.Rows.Count > 0)
                 {
-                    Messages.ShowErrMsgBox("파일첨부내역이 존재합니다.");
+                    Messages.ShowInfoMsgBox("파일첨부내역이 존재합니다.");
                     return;
                 }
             }

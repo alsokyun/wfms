@@ -21,6 +21,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Documents;
 
 namespace GTI.WFMS.Modules.Mntc.ViewModel
 {
@@ -51,7 +52,6 @@ namespace GTI.WFMS.Modules.Mntc.ViewModel
         Button btnBack;
         Button btnDelete;
         Button btnSave;
-        RichEditControl richQUESTION;
 
         #endregion
 
@@ -89,7 +89,6 @@ namespace GTI.WFMS.Modules.Mntc.ViewModel
             btnBack = faqDtlView.btnBack;
             btnDelete = faqDtlView.btnDelete;
             btnSave = faqDtlView.btnSave;
-            richQUESTION = faqDtlView.richQUESTION;
 
             //2.화면데이터객체 초기화
             InitDataBinding();
@@ -147,26 +146,24 @@ namespace GTI.WFMS.Modules.Mntc.ViewModel
             }
 
 
-            // CLOB 데이터는 OleDbConnection으로 따로 조회
+            // 다큐먼트는 따로 조회
+            Paragraph p = new Paragraph();
             try
             {
-                string sql = "";
-                sql += " SELECT QUESTION, REPL FROM FAQ  WHERE SEQ = :SEQ ;";
-
-                param = new Hashtable();
-                param.Add("sql", sql);
-                param.Add("SEQ", this.SEQ);
-
-                DataTable dt = DBUtil.Select(param);
-
-                this.QUESTION = dt.Rows[0]["QUESTION"].ToString();
-                this.REPL = dt.Rows[0]["REPL"].ToString();
+                p.Inlines.Add(this.QUESTION ?? "");
+                faqDtlView.richQUESTION.Document.Blocks.Clear();
+                faqDtlView.richQUESTION.Document.Blocks.Add(p);
             }
-            catch (Exception ex)
+            catch (Exception) { }
+
+            p = new Paragraph();
+            try
             {
-                Console.WriteLine(ex.Message);
+                p.Inlines.Add(this.REPL ?? "");
+                faqDtlView.richREPL.Document.Blocks.Clear();
+                faqDtlView.richREPL.Document.Blocks.Add(p);
             }
-
+            catch (Exception) { }
         }
 
 
@@ -185,43 +182,21 @@ namespace GTI.WFMS.Modules.Mntc.ViewModel
 
             if (Messages.ShowYesNoMsgBox("저장하시겠습니까?") != MessageBoxResult.Yes) return;
 
+
             try
             {
-                //this.QUESTION = richQUESTION.RtfText;
-                //BizUtil.Update2(this, "SaveFaqDtl");
-
-
-                string sql = "";
-                sql += " UPDATE FAQ SET ";
-                sql += " QUESTION = :QUESTION ";
-                sql += " ,REPL = :REPL ";
-                sql += " ,TTL = :TTL ";
-                sql += " ,FAQ_CAT_CDE= :FAQ_CAT_CDE";
-                sql += " ,FAQ_CUZ_CDE= :FAQ_CUZ_CDE";
-                sql += " ,FTR_CDE = :FTR_CDE";
-                sql += " ,EDT_ID = :EDT_ID";
-                sql += " WHERE SEQ = :SEQ ;";
-
-                Hashtable param = new Hashtable();
-                param.Add("sql", sql);
-                param.Add("QUESTION", this.QUESTION);
-                param.Add("REPL", this.REPL);
-                param.Add("TTL", this.TTL);
-                param.Add("FAQ_CAT_CDE", this.FAQ_CAT_CDE);
-                param.Add("EDT_ID", Logs.strLogin_ID);
-                param.Add("FTR_CDE", this.FTR_CDE);
-                param.Add("FAQ_CUZ_CDE", this.FAQ_CUZ_CDE);
-                param.Add("SEQ", this.SEQ);
-                DBUtil.UpdateFAQ(param);
-
-
+                //다큐먼트는 따로 처리
+                this.QUESTION = new TextRange(faqDtlView.richQUESTION.Document.ContentStart, faqDtlView.richQUESTION.Document.ContentEnd).Text.Trim();
+                this.REPL = new TextRange(faqDtlView.richREPL.Document.ContentStart, faqDtlView.richREPL.Document.ContentEnd).Text.Trim();
+                BizUtil.Update2(this, "SaveFaqDtl");
             }
             catch (Exception ex)
             {
                 Messages.ShowErrMsgBox("저장 처리중 오류가 발생하였습니다." + ex.Message);
                 InitModel();
-                return;
             }
+
+
 
             Messages.ShowOkMsgBox();
             InitModel();

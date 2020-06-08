@@ -218,6 +218,7 @@ namespace GTI.WFMS.Modules.Cnst.ViewModel
             DataTable dt4 = new DataTable();
             DataTable dt5 = new DataTable();
 
+            /*
             try
             {
                 dt = result["dt"] as DataTable;
@@ -268,6 +269,7 @@ namespace GTI.WFMS.Modules.Cnst.ViewModel
                 }
             }
             catch (Exception) { }
+            */
 
 
             // 1.삭제처리

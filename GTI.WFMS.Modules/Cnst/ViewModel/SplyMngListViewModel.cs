@@ -503,16 +503,13 @@ namespace GTI.WFMS.Modules.Cnst.ViewModel
         {
 
 
-            string name_space = "GTI.WFMS.Models.Mntc.Model";
-            string class_name = "PdjtHtDtl";
+            string name_space = "GTI.WFMS.Models.Blk.Model";
+            string class_name = "BlkDtl";
             
             Hashtable param = new Hashtable();
-            param.Add("sqlId", "SelectPdhUseList");
-            param.Add("SCL_NUM", 19);
-            param.Add("FTR_CDE", "SA121");
-            param.Add("FTR_IDN", 80);
-            param.Add("SEQ", 1);
-            param.Add("PDT_CAT_CDE", "PDT002");
+            param.Add("sqlId", "SelectBlkDtl");
+            param.Add("FTR_CDE", "BZ001");
+            param.Add("FTR_IDN", 1);
             
             DataTable dt = BizUtil.SelectList(param);
             DataRow dr = dt.Rows[0];
@@ -522,17 +519,17 @@ namespace GTI.WFMS.Modules.Cnst.ViewModel
             sb += "{ " + "\r\n";
             sb += " public class " + class_name + ": CmmDtl" + "\r\n";
             sb += " { " + "\r\n";
-            sb += "     /// <summary>" + "\r\n";
-            sb += "     /// 인터페이스 구현부분" + "\r\n";
-            sb += "     /// </summary>" + "\r\n";
-            sb += "     public event PropertyChangedEventHandler PropertyChanged;" + "\r\n";
-            sb += "     protected void OnPropertyChanged(string propertyName)" + "\r\n";
-            sb += "         { " + "\r\n";
-            sb += "             if (PropertyChanged != null)" + "\r\n";
-            sb += "             { " + "\r\n";
-            sb += "                 PropertyChanged(this, new PropertyChangedEventArgs(propertyName));" + "\r\n";           
-            sb += "             } " + "\r\n";
-            sb += "         } " + "\r\n";
+            //sb += "     /// <summary>" + "\r\n";
+            //sb += "     /// 인터페이스 구현부분" + "\r\n";
+            //sb += "     /// </summary>" + "\r\n";
+            //sb += "     public event PropertyChangedEventHandler PropertyChanged;" + "\r\n";
+            //sb += "     protected void OnPropertyChanged(string propertyName)" + "\r\n";
+            //sb += "         { " + "\r\n";
+            //sb += "             if (PropertyChanged != null)" + "\r\n";
+            //sb += "             { " + "\r\n";
+            //sb += "                 PropertyChanged(this, new PropertyChangedEventArgs(propertyName));" + "\r\n";           
+            //sb += "             } " + "\r\n";
+            //sb += "         } " + "\r\n";
 
             sb += "\r\n";
             sb += "\r\n";
@@ -551,7 +548,7 @@ namespace GTI.WFMS.Modules.Cnst.ViewModel
                 {
                     type_name = "decimal?";
                 }
-                else if (col.ColumnName.Contains("_AMT") || col.ColumnName.Contains("_CNT"))
+                else if (col.ColumnName.Contains("_AMT") || col.ColumnName.Contains("_CNT") || col.ColumnName.Contains("_QTY"))
                 {
                     type_name = "int?";
                 }

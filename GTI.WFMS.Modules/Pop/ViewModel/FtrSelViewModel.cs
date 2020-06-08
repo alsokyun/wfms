@@ -227,7 +227,7 @@ namespace GTI.WFMS.Modules.Pop.ViewModel
 
 
             //4.초기조회
-            SearchAction(null);
+            //SearchAction(null);
         }
 
 

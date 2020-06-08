@@ -21,6 +21,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Documents;
 
 namespace GTI.WFMS.Modules.Mntc.ViewModel
 {
@@ -137,25 +138,24 @@ namespace GTI.WFMS.Modules.Mntc.ViewModel
             }
 
 
-            // CLOB 데이터는 OleDbConnection으로 따로 조회
+            // 다큐먼트는 따로 조회
+            Paragraph p = new Paragraph();
             try
             {
-                string sql = "";
-                sql += " SELECT QUESTION, REPL FROM FAQ  WHERE SEQ = :SEQ ;";
-
-                param = new Hashtable();
-                param.Add("sql", sql);
-                param.Add("SEQ", this.SEQ);
-
-                DataTable dt = DBUtil.Select(param);
-
-                this.QUESTION = dt.Rows[0]["QUESTION"].ToString();
-                this.REPL = dt.Rows[0]["REPL"].ToString();
+                p.Inlines.Add(this.QUESTION ?? "");
+                faqDocView.richQUESTION.Document.Blocks.Clear();
+                faqDocView.richQUESTION.Document.Blocks.Add(p);
             }
-            catch (Exception ex)
+            catch (Exception) { }
+
+            p = new Paragraph();
+            try
             {
-                Console.WriteLine(ex.Message);
+                p.Inlines.Add(this.REPL ?? "");
+                faqDocView.richREPL.Document.Blocks.Clear();
+                faqDocView.richREPL.Document.Blocks.Add(p);
             }
+            catch (Exception) { }
 
         }
 
