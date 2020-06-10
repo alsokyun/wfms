@@ -507,7 +507,7 @@ namespace GTI.WFMS.Modules.Cnst.ViewModel
             string class_name = "BlkDtl";
             
             Hashtable param = new Hashtable();
-            param.Add("sqlId", "SelectBlkDtl");
+            param.Add("sqlId", "SelectBlk01Dtl");
             param.Add("FTR_CDE", "BZ001");
             param.Add("FTR_IDN", 1);
             

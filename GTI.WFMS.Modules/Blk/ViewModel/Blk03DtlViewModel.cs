@@ -13,12 +13,15 @@ using DevExpress.XtraReports.UI;
 using GTI.WFMS.Modules.Blk.View;
 using GTI.WFMS.Models.Blk.Model;
 using System.ComponentModel;
+using System.Collections.Generic;
+using GTI.WFMS.Models.Cmm.Model;
+using System.Collections.ObjectModel;
+using System.Reflection;
 
 namespace GTI.WFMS.Modules.Blk.ViewModel
 {
-    public class Blk01DtlViewModel : INotifyPropertyChanged
+    public class Blk03DtlViewModel : INotifyPropertyChanged
     {
-
         /// <summary>
         /// 인터페이스 구현부분
         /// </summary>
@@ -30,6 +33,7 @@ namespace GTI.WFMS.Modules.Blk.ViewModel
                 PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
             }
         }
+
 
 
         #region ==========  Properties 정의 ==========
@@ -52,15 +56,30 @@ namespace GTI.WFMS.Modules.Blk.ViewModel
                 OnPropertyChanged("Dtl");
             }
         }
+        private List<FctDtl> itemLst = new List<FctDtl>();
+        public List<FctDtl> ItemLst
+        {
+            get { return itemLst; }
+            set
+            {
+                itemLst = value;
+                OnPropertyChanged("ItemLst");
+            }
+        }
+        
+
+
 
 
         #endregion
 
 
         #region ==========  Member 정의 ==========
-        Blk01DtlView blk01DtlView;
+        Blk03DtlView blk03DtlView;
 
-        ComboBoxEdit cbMNG_CDE; 
+        ComboBoxEdit cbMNG_CDE;
+        static ComboBoxEdit cbUPPER_FTR_CDE;
+        ComboBoxEdit cbUPPER_FTR_IDN;
 
         Button btnBack;
         Button btnDelete;
@@ -72,14 +91,14 @@ namespace GTI.WFMS.Modules.Blk.ViewModel
 
 
         /// 생성자
-        public Blk01DtlViewModel()
+        public Blk03DtlViewModel()
         {
             LoadedCommand = new DelegateCommand<object>(OnLoaded);
             SaveCommand = new DelegateCommand<object>(OnSave);
             PrintCommand = new DelegateCommand<object>(OnPrint);
             DeleteCommand = new DelegateCommand<object>(OnDelete);
             BackCommand = new DelegateCommand<object>(OnBack);
-            
+
         }
         
         #region ==========  이벤트 핸들러 ==========
@@ -95,12 +114,14 @@ namespace GTI.WFMS.Modules.Blk.ViewModel
                 // 0.화면객체인스턴스화
                 if (obj == null) return;
 
-                blk01DtlView = obj as Blk01DtlView;
-                cbMNG_CDE = blk01DtlView.cbMNG_CDE;       //관리기관
+                blk03DtlView = obj as Blk03DtlView;
+                cbMNG_CDE = blk03DtlView.cbMNG_CDE;       //관리기관
+                cbUPPER_FTR_CDE = blk03DtlView.cbUPPER_FTR_CDE;       //상위블록
+                cbUPPER_FTR_IDN = blk03DtlView.cbUPPER_FTR_IDN;
 
-                btnBack = blk01DtlView.btnBack;
-                btnDelete = blk01DtlView.btnDelete;
-                btnSave = blk01DtlView.btnSave;
+                btnBack = blk03DtlView.btnBack;
+                btnDelete = blk03DtlView.btnDelete;
+                btnSave = blk03DtlView.btnSave;
                 
                 //2.화면데이터객체 초기화
                 InitDataBinding();
@@ -112,18 +133,33 @@ namespace GTI.WFMS.Modules.Blk.ViewModel
                 // 4.초기조회
                 //DataTable dt = new DataTable();
                 Hashtable param = new Hashtable();
-                param.Add("sqlId", "SelectBlk01Dtl");
+                param.Add("sqlId", "SelectBlk03Dtl");
                 param.Add("FTR_CDE", Dtl.FTR_CDE);
                 param.Add("FTR_IDN", Dtl.FTR_IDN);
 
                 Dtl = BizUtil.SelectObject(param) as BlkDtl;
-                               
+
+
+                // cbUPPER_FTR_IDN 상위블록
+                BizUtil.SetFTR_IDN(Dtl.UPPER_FTR_CDE, cbUPPER_FTR_IDN);
+
+                // 콤보변경이벤트설정
+                cbUPPER_FTR_CDE.SelectedIndexChanged += OnUpFtrCdeChanged;
+
+
+
             }
             catch (Exception e)
             {
                 Console.WriteLine(e);
             }
 
+        }
+
+        //블록코드 변경시 이벤트핸들러
+        private void OnUpFtrCdeChanged(object sender, RoutedEventArgs e)
+        {
+            BizUtil.SetFTR_IDN(Dtl.UPPER_FTR_CDE, cbUPPER_FTR_IDN);
         }
 
 
@@ -136,14 +172,14 @@ namespace GTI.WFMS.Modules.Blk.ViewModel
         {
 
             // 필수체크 (Tag에 필수체크 표시한 EditBox, ComboBox 대상으로 수행)
-            if (!BizUtil.ValidReq(blk01DtlView)) return;
+            if (!BizUtil.ValidReq(blk03DtlView)) return;
 
 
             if (Messages.ShowYesNoMsgBox("저장하시겠습니까?") != MessageBoxResult.Yes) return;
 
             try
             {
-                BizUtil.Update2(Dtl, "updateBlk01Dtl");
+                BizUtil.Update2(Dtl, "updateBlk03Dtl");
             }
             catch (Exception ex)
             {
@@ -168,7 +204,7 @@ namespace GTI.WFMS.Modules.Blk.ViewModel
             try
             {
                 //0.Datasource 생성
-                //Blk01DtlViewMdl mdl = new Blk01DtlViewMdl(Dtl.FTR_CDE, Dtl.FTR_IDN);
+                //Blk03DtlViewMdl mdl = new Blk03DtlViewMdl(Dtl.FTR_CDE, Dtl.FTR_IDN);
                 //1.Report 호출
                 //WtrTrkReport report = new WtrTrkReport();
                 ObjectDataSource ods = new ObjectDataSource();
@@ -221,7 +257,7 @@ namespace GTI.WFMS.Modules.Blk.ViewModel
             if (Messages.ShowYesNoMsgBox("블록을 삭제하시겠습니까?") != MessageBoxResult.Yes) return;
             try
             {
-                BizUtil.Update2(Dtl, "deleteBlk01Dtl");
+                BizUtil.Update2(Dtl, "deleteBlk03Dtl");
             }
             catch (Exception e)
             {
@@ -261,6 +297,21 @@ namespace GTI.WFMS.Modules.Blk.ViewModel
             {
                 // cbMNG_CDE 관리기관
                 BizUtil.SetCmbCode(cbMNG_CDE, "250101", "선택");
+
+                // cbUPPER_FTR_CDE 상위블록코드
+                //Func<DataRow, bool> filter = Row => (Row.Field<string>("FTR_CDE").Contains("BZ001") || Row.Field<string>("FTR_CDE").Contains("BZ002"));//대블록,중블록
+                //BizUtil.SetCombo(cbUPPER_FTR_CDE, "Select_FTR_LIST", "FTR_CDE", "FTR_NAM", null, filter);
+
+
+                cbUPPER_FTR_CDE.DisplayMember = "FTR_NAM";
+                cbUPPER_FTR_CDE.ValueMember = "FTR_CDE";
+                Hashtable param = new Hashtable();
+                param.Add("sqlId", "Select_FTR_LIST3");
+                param.Add("FTR_CDE", "BZ");
+                List<FctDtl> lst = BizUtil.SelectListObj<FctDtl>(param) as List<FctDtl>;
+
+                ItemLst = lst.FindAll(f => !f.FTR_CDE.Contains("BZ003"));
+
             }
             catch (Exception ex)
             {
@@ -296,6 +347,26 @@ namespace GTI.WFMS.Modules.Blk.ViewModel
             }
 
         }
+
+
+
+
+        //블럭관리번호 콤보생성
+        public static void SetFTR_IDN(string uPPER_FTR_CDE)
+        {
+            if (FmsUtil.IsNull(uPPER_FTR_CDE)) return;//상위코드없으면 콤보채우지 않는다
+
+            Hashtable param = new Hashtable();
+            param.Add("sqlId", "SelectUpBlk");
+            param.Add("FTR_CDE", uPPER_FTR_CDE);
+            List<BlkDtl> lst = (List<BlkDtl>)BizUtil.SelectListObj<BlkDtl>(param);
+
+            cbUPPER_FTR_CDE.DisplayMember = "BLK_NM";
+            cbUPPER_FTR_CDE.ValueMember = "FTR_IDN";
+            cbUPPER_FTR_CDE.ItemsSource = lst;
+        }
+
+
 
         #endregion
 

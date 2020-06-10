@@ -7,11 +7,11 @@ using System.Windows.Controls;
 namespace GTI.WFMS.Modules.Blk.View
 {
     /// <summary>
-    /// Blk01ListView.xaml에 대한 상호 작용 논리
+    /// Blk03ListView.xaml에 대한 상호 작용 논리
     /// </summary>
-    public partial class Blk01ListView : Page
+    public partial class Blk03ListView : Page
     {
-        public Blk01ListView()
+        public Blk03ListView()
         {
             InitializeComponent();
 
@@ -23,7 +23,7 @@ namespace GTI.WFMS.Modules.Blk.View
         // 등록 팝업
         private void BtnAdd_Click(object sender, RoutedEventArgs e)
         {            
-            NavigationService.Navigate(new Blk01AddView());
+            NavigationService.Navigate(new Blk03AddView());
         }
 
         //선택된 항목으로 페이지이동
@@ -43,11 +43,11 @@ namespace GTI.WFMS.Modules.Blk.View
                 }
                 else if ("BZ002".Equals(FTR_CDE))
                 {
-                    //NavigationService.Navigate(new Blk02DtlView(FTR_CDE, FTR_IDN));
+                    NavigationService.Navigate(new Blk02DtlView(FTR_CDE, FTR_IDN));
                 }
                 if ("BZ003".Equals(FTR_CDE))
                 {
-                    //NavigationService.Navigate(new Blk03DtlView(FTR_CDE, FTR_IDN));
+                    NavigationService.Navigate(new Blk03DtlView(FTR_CDE, FTR_IDN));
                 }
             }
             catch (Exception ex)

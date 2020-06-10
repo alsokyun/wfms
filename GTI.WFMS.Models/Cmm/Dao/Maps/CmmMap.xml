@@ -106,12 +106,23 @@
       FROM V_FTR_CDE
       WHERE 1=1
       <isNotEmpty prepend="AND" property="CODE">
-        FTR_CDE = #CODE#
+        FTR_CDE like #CODE# || '%'
       </isNotEmpty>
       ORDER BY FTR_CDE
     </select>
 
-    
+
+    <!--시설물코드 List -->
+    <select id ="Select_FTR_LIST3" parameterClass="Hashtable" resultClass ="GTI.WFMS.Models.Cmm.Model.FctDtl">
+      SELECT FTR_CDE, FTR_NAM
+      FROM V_FTR_CDE
+      WHERE 1=1
+      <isNotEmpty prepend="AND" property="FTR_CDE">
+        FTR_CDE like #FTR_CDE# || '%'
+      </isNotEmpty>
+      ORDER BY FTR_CDE
+    </select>
+
     <!--시설물 포인트 위치저장-->
     <update id="updatePoint" parameterClass="Hashtable" remapResults="true">
       UPDATE $TABLE_NM$

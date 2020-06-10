@@ -13,10 +13,11 @@ using DevExpress.XtraReports.UI;
 using GTI.WFMS.Modules.Blk.View;
 using GTI.WFMS.Models.Blk.Model;
 using System.ComponentModel;
+using System.Collections.Generic;
 
 namespace GTI.WFMS.Modules.Blk.ViewModel
 {
-    public class Blk01DtlViewModel : INotifyPropertyChanged
+    public class Blk02AddViewModel : INotifyPropertyChanged
     {
 
         /// <summary>
@@ -28,6 +29,11 @@ namespace GTI.WFMS.Modules.Blk.ViewModel
             if (PropertyChanged != null)
             {
                 PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
+
+                if (propertyName == "UPPER_FTR_CDE")
+                {
+                    BizUtil.SetFTR_IDN(Dtl.UPPER_FTR_CDE, cbUPPER_FTR_IDN);
+                }
             }
         }
 
@@ -38,8 +44,6 @@ namespace GTI.WFMS.Modules.Blk.ViewModel
         /// </summary>
         public DelegateCommand<object> LoadedCommand { get; set; }
         public DelegateCommand<object> SaveCommand { get; set; }
-        public DelegateCommand<object> PrintCommand { get; set; }
-        public DelegateCommand<object> DeleteCommand { get; set; }
         public DelegateCommand<object> BackCommand { get; set; }
 
         private BlkDtl dtl = new BlkDtl ();
@@ -58,12 +62,14 @@ namespace GTI.WFMS.Modules.Blk.ViewModel
 
 
         #region ==========  Member 정의 ==========
-        Blk01DtlView blk01DtlView;
+        Blk02AddView blk02AddView;
 
-        ComboBoxEdit cbMNG_CDE; 
+        ComboBoxEdit cbMNG_CDE;
+        ComboBoxEdit cbFTR_CDE;
+        ComboBoxEdit cbUPPER_FTR_CDE;
+        ComboBoxEdit cbUPPER_FTR_IDN;
 
         Button btnBack;
-        Button btnDelete;
         Button btnSave;
         
         #endregion
@@ -72,12 +78,10 @@ namespace GTI.WFMS.Modules.Blk.ViewModel
 
 
         /// 생성자
-        public Blk01DtlViewModel()
+        public Blk02AddViewModel()
         {
             LoadedCommand = new DelegateCommand<object>(OnLoaded);
             SaveCommand = new DelegateCommand<object>(OnSave);
-            PrintCommand = new DelegateCommand<object>(OnPrint);
-            DeleteCommand = new DelegateCommand<object>(OnDelete);
             BackCommand = new DelegateCommand<object>(OnBack);
             
         }
@@ -95,12 +99,14 @@ namespace GTI.WFMS.Modules.Blk.ViewModel
                 // 0.화면객체인스턴스화
                 if (obj == null) return;
 
-                blk01DtlView = obj as Blk01DtlView;
-                cbMNG_CDE = blk01DtlView.cbMNG_CDE;       //관리기관
+                blk02AddView = obj as Blk02AddView;
+                cbMNG_CDE = blk02AddView.cbMNG_CDE;       //관리기관
+                cbUPPER_FTR_CDE = blk02AddView.cbUPPER_FTR_CDE;       //상위블록
+                cbFTR_CDE = blk02AddView.cbFTR_CDE;       //지형지물
+                cbUPPER_FTR_IDN = blk02AddView.cbUPPER_FTR_IDN;       
 
-                btnBack = blk01DtlView.btnBack;
-                btnDelete = blk01DtlView.btnDelete;
-                btnSave = blk01DtlView.btnSave;
+                btnBack = blk02AddView.btnBack;
+                btnSave = blk02AddView.btnSave;
                 
                 //2.화면데이터객체 초기화
                 InitDataBinding();
@@ -108,16 +114,16 @@ namespace GTI.WFMS.Modules.Blk.ViewModel
 
                 //3.권한처리
                 permissionApply();
-              
-                // 4.초기조회
-                //DataTable dt = new DataTable();
-                Hashtable param = new Hashtable();
-                param.Add("sqlId", "SelectBlk01Dtl");
-                param.Add("FTR_CDE", Dtl.FTR_CDE);
-                param.Add("FTR_IDN", Dtl.FTR_IDN);
 
-                Dtl = BizUtil.SelectObject(param) as BlkDtl;
-                               
+                // 4.초기조회 - 신규관리번호 채번 - Merge문 사용해서 채번안함
+
+
+                //채번결과 매칭
+                //this.FTR_IDN = result.FTR_IDN;
+                Dtl.FTR_CDE = "BZ002"; //중블록
+
+                //공통팝업창 사이즈 변경 4
+                FmsUtil.popWinView.Height = 280;
             }
             catch (Exception e)
             {
@@ -136,14 +142,14 @@ namespace GTI.WFMS.Modules.Blk.ViewModel
         {
 
             // 필수체크 (Tag에 필수체크 표시한 EditBox, ComboBox 대상으로 수행)
-            if (!BizUtil.ValidReq(blk01DtlView)) return;
+            if (!BizUtil.ValidReq(blk02AddView)) return;
 
 
             if (Messages.ShowYesNoMsgBox("저장하시겠습니까?") != MessageBoxResult.Yes) return;
 
             try
             {
-                BizUtil.Update2(Dtl, "updateBlk01Dtl");
+                BizUtil.Update2(Dtl, "updateBlk02Dtl");
             }
             catch (Exception ex)
             {
@@ -151,90 +157,9 @@ namespace GTI.WFMS.Modules.Blk.ViewModel
                 return;
             }
             Messages.ShowOkMsgBox();
-
+            BackCommand.Execute(null); //닫기
         }
 
-        /// <summary>
-        /// 인쇄작업
-        /// </summary>
-        /// <param name="obj"></param>
-        private void OnPrint(object obj)
-        {
-            // 필수체크 (Tag에 필수체크 표시한 EditBox, ComboBox 대상으로 수행)
-            //if (!BizUtil.ValidReq(fireFacDtlView)) return;
-
-            //if (Messages.ShowYesNoMsgBox("인쇄하시겠습니까?") != MessageBoxResult.Yes) return;
-
-            try
-            {
-                //0.Datasource 생성
-                //Blk01DtlViewMdl mdl = new Blk01DtlViewMdl(Dtl.FTR_CDE, Dtl.FTR_IDN);
-                //1.Report 호출
-                //WtrTrkReport report = new WtrTrkReport();
-                ObjectDataSource ods = new ObjectDataSource();
-                ods.Name = "objectDataSource1";
-                //ods.DataSource = mdl;
-
-                //report.DataSource = ods;
-                //report.ShowPreviewDialog();
-
-            }
-            catch (Exception)
-            {
-                Messages.ShowErrMsgBox("인쇄 처리중 오류가 발생하였습니다.");
-                return;
-            }
-        }
-
-        /// <summary>
-        /// 삭제처리
-        /// </summary>
-        /// <param name="obj"></param>
-        private void OnDelete(object obj)
-        {
-            //0.삭제전 체크
-            Hashtable param = new Hashtable();
-            param.Add("sqlId", "SelectFileMapList");
-
-            param.Add("FTR_CDE", Dtl.FTR_CDE);
-            param.Add("FTR_IDN", Dtl.FTR_IDN);
-            param.Add("BIZ_ID", string.Concat(Dtl.FTR_CDE , Dtl.FTR_IDN) );
-
-            Hashtable result = BizUtil.SelectLists(param);
-            DataTable dt  = new DataTable();
-
-            //try
-            //{
-            //    dt = result["dt"] as DataTable;
-            //    if (dt.Rows.Count > 0)
-            //    {
-            //        Messages.ShowInfoMsgBox("파일첨부내역이 존재합니다.");
-            //        return;
-            //    }
-            //}
-            //catch (Exception) { }
-
-
-
-
-            // 1.삭제처리
-            if (Messages.ShowYesNoMsgBox("블록을 삭제하시겠습니까?") != MessageBoxResult.Yes) return;
-            try
-            {
-                BizUtil.Update2(Dtl, "deleteBlk01Dtl");
-            }
-            catch (Exception e)
-            {
-                Messages.ShowErrMsgBox("삭제 처리중 오류가 발생하였습니다." + e.Message);
-                return;
-            }
-            Messages.ShowOkMsgBox();
-
-
-
-            BackCommand.Execute(null);
-
-        }
 
         /// <summary>
         /// 뒤로가기처리
@@ -261,6 +186,16 @@ namespace GTI.WFMS.Modules.Blk.ViewModel
             {
                 // cbMNG_CDE 관리기관
                 BizUtil.SetCmbCode(cbMNG_CDE, "250101", "선택");
+
+                // cbFTR_CDE 지형지물
+                BizUtil.SetCombo(cbFTR_CDE, "Select_FTR_LIST", "FTR_CDE", "FTR_NAM");
+
+                // cbUPPER_FTR_CDE 상위블록코드
+                Func<DataRow, bool> filter = Row => (Row.Field<string>("FTR_CDE").Contains("BZ001"));//대블록
+                BizUtil.SetCombo(cbUPPER_FTR_CDE, "Select_FTR_LIST", "FTR_CDE", "FTR_NAM", null, filter);
+
+                // cbUPPER_FTR_IDN 상위블록
+                BizUtil.SetFTR_IDN(Dtl.UPPER_FTR_CDE, cbUPPER_FTR_IDN);
             }
             catch (Exception ex)
             {
@@ -282,7 +217,6 @@ namespace GTI.WFMS.Modules.Blk.ViewModel
                     case "W":
                         break;
                     case "R":
-                        btnDelete.Visibility = Visibility.Collapsed;
                         btnSave.Visibility = Visibility.Collapsed;
                         break;
                     case "N":

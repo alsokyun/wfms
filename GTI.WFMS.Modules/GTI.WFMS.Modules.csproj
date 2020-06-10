@@ -148,6 +148,34 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
+    <Page Include="Blk\View\Blk03AddView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Blk\View\Blk02AddView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Blk\View\Blk01AddView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Blk\View\Blk03DtlView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Blk\View\Blk02DtlView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Blk\View\Blk03ListView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Blk\View\Blk02ListView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
     <Page Include="Blk\View\Blk01ListView.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -647,8 +675,36 @@
     <Compile Include="Acmf\view\HydtMetrListView.xaml.cs">
       <DependentUpon>HydtMetrListView.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Blk\ViewModel\Blk03AddViewModel.cs" />
+    <Compile Include="Blk\ViewModel\Blk02AddViewModel.cs" />
+    <Compile Include="Blk\ViewModel\Blk01AddViewModel.cs" />
+    <Compile Include="Blk\ViewModel\Blk03DtlViewModel.cs" />
+    <Compile Include="Blk\ViewModel\Blk02DtlViewModel.cs" />
+    <Compile Include="Blk\ViewModel\Blk03ListViewModel.cs" />
+    <Compile Include="Blk\ViewModel\Blk02ListViewModel.cs" />
     <Compile Include="Blk\ViewModel\Blk01ListViewModel.cs" />
     <Compile Include="Blk\ViewModel\Blk01DtlViewModel.cs" />
+    <Compile Include="Blk\View\Blk03AddView.xaml.cs">
+      <DependentUpon>Blk03AddView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Blk\View\Blk02AddView.xaml.cs">
+      <DependentUpon>Blk02AddView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Blk\View\Blk01AddView.xaml.cs">
+      <DependentUpon>Blk01AddView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Blk\View\Blk03DtlView.xaml.cs">
+      <DependentUpon>Blk03DtlView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Blk\View\Blk02DtlView.xaml.cs">
+      <DependentUpon>Blk02DtlView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Blk\View\Blk03ListView.xaml.cs">
+      <DependentUpon>Blk03ListView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Blk\View\Blk02ListView.xaml.cs">
+      <DependentUpon>Blk02ListView.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Blk\View\Blk01ListView.xaml.cs">
       <DependentUpon>Blk01ListView.xaml</DependentUpon>
     </Compile>

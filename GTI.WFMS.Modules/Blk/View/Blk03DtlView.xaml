@@ -1,6 +1,6 @@
 ﻿<Page xmlns:dxe="http://schemas.devexpress.com/winfx/2008/xaml/editors"  
       xmlns:dx="http://schemas.devexpress.com/winfx/2008/xaml/core"  
-            x:Class="GTI.WFMS.Modules.Blk.View.Blk01DtlView"
+            x:Class="GTI.WFMS.Modules.Blk.View.Blk03DtlView"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
@@ -11,14 +11,14 @@
             xmlns:dxci="http://schemas.devexpress.com/winfx/2008/xaml/core/internal"
             xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
             xmlns:vm="clr-namespace:GTI.WFMS.Modules.Blk.ViewModel"
-            x:Name="blk01DtlView"
+            x:Name="blk03DtlView"
             xmlns:cv="clr-namespace:GTI.WFMS.Models.Common;assembly=GTI.WFMS.Models"     
       >
 
     <!--뷰모델연결처리
     -->
     <Page.DataContext>
-        <vm:Blk01DtlViewModel/>
+        <vm:Blk03DtlViewModel/>
     </Page.DataContext>
 
     <!--페이지내 리소스정의-->
@@ -171,7 +171,7 @@
 
             <Label Grid.Row="0" Grid.Column="4" Content="블록명" Style="{DynamicResource ResourceKey=GridLabelReq}" />
             <dxe:TextEdit Grid.Row="0" Grid.Column="5" Style="{DynamicResource ResourceKey=GridTextEdit}"  
-                          x:Name="txtBLK_NM" EditValue="{Binding Dtl.BLK_NM}" Tag="블럭명" />
+                          x:Name="txtBLK_NM" EditValue="{Binding Dtl.BLK_NM}" Tag="블럭명"  />
 
             <Label Grid.Row="0" Grid.Column="6" Content="급수계통명" Style="{DynamicResource ResourceKey=GridLabel}" />
             <dxe:TextEdit Grid.Row="0" Grid.Column="7" Style="{DynamicResource ResourceKey=GridTextEdit}"  
@@ -198,6 +198,13 @@
                                   CheckedStateContent="유" UncheckedStateContent="무" ContentPlacement="Inside" 
                                   x:Name="tgSYS_CHK" IsChecked="{Binding Dtl.SYS_CHK, Converter={StaticResource toggleConverter}}" />
 
+            <Label Grid.Row="2" Grid.Column="2" Content="상위블록" Style="{DynamicResource ResourceKey=GridLabel}"/>
+            <dxe:ComboBoxEdit Grid.Row="2" Grid.Column="3" Style="{DynamicResource ResourceKey=GridComboBox}" ItemsSource="{Binding ItemLst, UpdateSourceTrigger=PropertyChanged}"
+                              x:Name="cbUPPER_FTR_CDE" EditValue="{Binding Dtl.UPPER_FTR_CDE, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+
+            <Label Grid.Row="2" Grid.Column="4" Content="상위블록관리번호" Style="{DynamicResource ResourceKey=GridLabel}"/>
+            <dxe:ComboBoxEdit Grid.Row="2" Grid.Column="5" Style="{DynamicResource ResourceKey=GridComboBox}" 
+                              x:Name="cbUPPER_FTR_IDN" EditValue="{Binding Dtl.UPPER_FTR_IDN, UpdateSourceTrigger=PropertyChanged}"   />
         </Grid>
 
 
@@ -254,7 +261,7 @@
     <!--뷰와 연결된 뷰모델로 Loaded 이벤트전파-->
     <i:Interaction.Triggers>
         <i:EventTrigger EventName="Loaded">
-            <i:InvokeCommandAction Command="{Binding LoadedCommand}" CommandParameter="{Binding ElementName=blk01DtlView}" />
+            <i:InvokeCommandAction Command="{Binding LoadedCommand}" CommandParameter="{Binding ElementName=blk03DtlView}" />
         </i:EventTrigger>
     </i:Interaction.Triggers>
 

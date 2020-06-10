@@ -1,4 +1,5 @@
 ﻿using DevExpress.Xpf.Editors;
+using GTI.WFMS.Models.Blk.Model;
 using GTI.WFMS.Models.Cmm.Dao;
 using GTI.WFMS.Models.Cmm.Model;
 using GTIFramework.Common.Log;
@@ -320,8 +321,16 @@ namespace GTI.WFMS.Models.Common
 
 
             conditions.Add("sqlId", sqlId);
-            dt = dao.SelectLIST(conditions).AsEnumerable().Where(filter).CopyToDataTable(); //필터식적용
-            
+            DataTable _dt = new DataTable();
+            _dt = dao.SelectLIST(conditions);
+
+            //필터식적용
+            //foreach (DataRow row in _dt.AsEnumerable().Where(filter))
+            //{
+            //    dt.ImportRow(row);
+            //}
+            dt = _dt.AsEnumerable().Where(filter).CopyToDataTable();
+
 
             /* 전체추가 */
             if (!FmsUtil.IsNull(ALL))
@@ -338,6 +347,12 @@ namespace GTI.WFMS.Models.Common
             cmb.DisplayMember = DisplayMember;
             cmb.ValueMember = ValueMember;
             cmb.ItemsSource = dt;
+
+            try
+            {
+                cmb.SelectedIndex = 0;
+            }
+            catch (Exception){}
         }
         //필터없는형태
         public static void SetCombo(ComboBoxEdit cmb, string sqlId, string ValueMember, string DisplayMember, string ALL)
@@ -496,6 +511,25 @@ namespace GTI.WFMS.Models.Common
         {
             return Path.Combine(GetDataFolder(itemId), Path.Combine(pathParts));
         }
+
+
+
+        //블럭관리번호 콤보생성
+        public static void SetFTR_IDN(string uPPER_FTR_CDE, ComboBoxEdit cmb)
+        {
+            if (FmsUtil.IsNull(uPPER_FTR_CDE)) return;//상위코드없으면 콤보채우지 않는다
+
+            Hashtable param = new Hashtable();
+            param.Add("sqlId", "SelectUpBlk");
+            param.Add("FTR_CDE", uPPER_FTR_CDE);
+            List<BlkDtl> lst = (List<BlkDtl>)BizUtil.SelectListObj<BlkDtl>(param);
+
+            cmb.DisplayMember = "BLK_NM";
+            cmb.ValueMember = "FTR_IDN";
+            cmb.ItemsSource = lst;
+        }
+
+
 
 
 

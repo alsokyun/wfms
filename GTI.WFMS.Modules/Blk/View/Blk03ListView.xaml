@@ -1,4 +1,4 @@
-﻿<Page x:Class="GTI.WFMS.Modules.Blk.View.Blk01ListView"
+﻿<Page x:Class="GTI.WFMS.Modules.Blk.View.Blk03ListView"
         xmlns:dxe="http://schemas.devexpress.com/winfx/2008/xaml/editors"  
         xmlns:dxg="http://schemas.devexpress.com/winfx/2008/xaml/grid"  
         xmlns:dx="http://schemas.devexpress.com/winfx/2008/xaml/core"
@@ -13,12 +13,12 @@
         xmlns:vm="clr-namespace:GTI.WFMS.Modules.Blk.ViewModel"
         xmlns:cv="clr-namespace:GTI.WFMS.Models.Common;assembly=GTI.WFMS.Models"     
         xmlns:common="clr-namespace:GTI.WFMS.Models.Common;assembly=GTI.WFMS.Models"
-        x:Name="blk01ListView" >
+        x:Name="blk03ListView" >
 
     <!--뷰모델연결처리
     -->
     <Page.DataContext>
-        <vm:Blk01ListViewModel/>
+        <vm:Blk03ListViewModel/>
     </Page.DataContext>
 
     <Page.Resources>
@@ -228,7 +228,7 @@
     <!--뷰와 연결된 뷰모델로 Loaded 이벤트전파-->
     <i:Interaction.Triggers>
         <i:EventTrigger EventName="Loaded">
-            <i:InvokeCommandAction Command="{Binding LoadedCommand}" CommandParameter="{Binding ElementName=blk01ListView}" />
+            <i:InvokeCommandAction Command="{Binding LoadedCommand}" CommandParameter="{Binding ElementName=blk03ListView}" />
         </i:EventTrigger>
     </i:Interaction.Triggers>
 

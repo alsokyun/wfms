@@ -21,7 +21,7 @@ using GTI.WFMS.GIS;
 
 namespace GTI.WFMS.Modules.Blk.ViewModel
 {
-    class Blk01ListViewModel : INotifyPropertyChanged
+    class Blk03ListViewModel : INotifyPropertyChanged
     {
 
         #region ==========  페이징관련 INotifyPropertyChanged  ==========
@@ -109,7 +109,7 @@ namespace GTI.WFMS.Modules.Blk.ViewModel
         DataTable dtresult = new DataTable(); //조회결과 데이터
 
 
-        Blk01ListView blk01ListView;
+        Blk03ListView blk03ListView;
         ComboBoxEdit cbMNG_CDE; 
 
 
@@ -132,7 +132,7 @@ namespace GTI.WFMS.Modules.Blk.ViewModel
         /// <summary>
         /// 생성자
         /// </summary>
-        public Blk01ListViewModel()
+        public Blk03ListViewModel()
         {
 
             LoadedCommand = new DelegateCommand<object>(OnLoaded);
@@ -202,10 +202,10 @@ namespace GTI.WFMS.Modules.Blk.ViewModel
             if (obj == null) return;
 
             //1. 화면객체 인스턴스
-            blk01ListView = obj as Blk01ListView;
+            blk03ListView = obj as Blk03ListView;
 
-            cbMNG_CDE = blk01ListView.cbMNG_CDE;      //관리기관
-            grid = blk01ListView.grid;
+            cbMNG_CDE = blk03ListView.cbMNG_CDE;      //관리기관
+            grid = blk03ListView.grid;
 
 
             //2.화면데이터객체 초기화
@@ -232,11 +232,11 @@ namespace GTI.WFMS.Modules.Blk.ViewModel
 
                 Hashtable conditions = new Hashtable();
                 conditions.Add("MNG_CDE", cbMNG_CDE.EditValue);
-                conditions.Add("FTR_IDN", blk01ListView.txtFTR_IDN.Text);
-                conditions.Add("BLK_NM", blk01ListView.txtBLK_NM.Text.Trim());
+                conditions.Add("FTR_IDN", blk03ListView.txtFTR_IDN.Text);
+                conditions.Add("BLK_NM", blk03ListView.txtBLK_NM.Text.Trim());
                 
 
-                conditions.Add("sqlId", "SelectBlk01List");
+                conditions.Add("sqlId", "SelectBlk03List");
     
                 /*
                     조회후 페이징소스 업데이트
@@ -285,8 +285,8 @@ namespace GTI.WFMS.Modules.Blk.ViewModel
         private void ResetAction(object obj)
         {
             cbMNG_CDE.SelectedIndex = 0;
-            blk01ListView.txtFTR_IDN.Text = "";
-            blk01ListView.txtBLK_NM.Text = "";          
+            blk03ListView.txtFTR_IDN.Text = "";
+            blk03ListView.txtBLK_NM.Text = "";          
         }
 
         /// <summary>
@@ -301,14 +301,14 @@ namespace GTI.WFMS.Modules.Blk.ViewModel
                 /// 데이터조회
                 Hashtable conditions = new Hashtable();
                 conditions.Add("MNG_CDE", cbMNG_CDE.EditValue);
-                conditions.Add("FTR_IDN", blk01ListView.txtFTR_IDN.Text.Trim());
-                conditions.Add("BLK_NM", blk01ListView.txtBLK_NM.Text.Trim());
+                conditions.Add("FTR_IDN", blk03ListView.txtFTR_IDN.Text.Trim());
+                conditions.Add("BLK_NM", blk03ListView.txtBLK_NM.Text.Trim());
                 
 
                 conditions.Add("page", 0);
                 conditions.Add("rows", 1000000);
 
-                conditions.Add("sqlId", "SelectBlk01List");
+                conditions.Add("sqlId", "SelectBlk03List");
 
                 exceldt = BizUtil.SelectList(conditions);
 
@@ -357,10 +357,10 @@ namespace GTI.WFMS.Modules.Blk.ViewModel
         {
             try
             {
-                blk01ListView.Dispatcher.Invoke(DispatcherPriority.ApplicationIdle,
+                blk03ListView.Dispatcher.Invoke(DispatcherPriority.ApplicationIdle,
                 new Action((delegate ()
                 {
-                    (blk01ListView.FindName("waitindicator") as WaitIndicator).DeferedVisibility = true;
+                    (blk03ListView.FindName("waitindicator") as WaitIndicator).DeferedVisibility = true;
                 })));
                 
                 //엑셀 표 데이터
@@ -371,19 +371,19 @@ namespace GTI.WFMS.Modules.Blk.ViewModel
                 //ExcelUtil.ExcelTabulation(strFileName, strExcelFormPath, startPointXY, strSearchCondition, dtExceltTableData);
                 ExcelUtil.ExcelGrid(strExcelFormPath, strFileName, "대블록목록", dtExceltTableData, tablePointXY, grid, true);
 
-                blk01ListView.Dispatcher.Invoke(DispatcherPriority.ApplicationIdle,
+                blk03ListView.Dispatcher.Invoke(DispatcherPriority.ApplicationIdle,
                    new Action((delegate ()
                    {
-                       (blk01ListView.FindName("waitindicator") as WaitIndicator).DeferedVisibility = false;
+                       (blk03ListView.FindName("waitindicator") as WaitIndicator).DeferedVisibility = false;
                        Messages.ShowInfoMsgBox("엑셀 다운로드가 완료되었습니다.");
                    })));
             }
             catch (Exception ex)
             {
-                blk01ListView.Dispatcher.Invoke(DispatcherPriority.ApplicationIdle,
+                blk03ListView.Dispatcher.Invoke(DispatcherPriority.ApplicationIdle,
                     new Action((delegate ()
                     {
-                        (blk01ListView.FindName("waitindicator") as WaitIndicator).DeferedVisibility = false;
+                        (blk03ListView.FindName("waitindicator") as WaitIndicator).DeferedVisibility = false;
                         Messages.ShowErrMsgBoxLog(ex);
                     })));
             }
@@ -402,7 +402,7 @@ namespace GTI.WFMS.Modules.Blk.ViewModel
         {
             try
             {
-                cbMNG_CDE = blk01ListView.cbMNG_CDE;      //0.관리기관
+                cbMNG_CDE = blk03ListView.cbMNG_CDE;      //0.관리기관
 
                 // cbMNG_CDE    0.관리기관
                 BizUtil.SetCmbCode(cbMNG_CDE, "250101", "전체");

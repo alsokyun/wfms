@@ -29,8 +29,8 @@ namespace GTI.WFMS.Models.Blk.Model
             }
         }
 
-        private int __FTR_IDN;
-        public int FTR_IDN
+        private int? __FTR_IDN;
+        public int? FTR_IDN
         {
             get { return __FTR_IDN; }
             set
@@ -139,5 +139,31 @@ namespace GTI.WFMS.Models.Blk.Model
                 OnPropertyChanged("SYS_CHK_NAM");
             }
         }
+
+        /// <summary>
+        /// 프로퍼티 부분
+        /// </summary>
+        private string __UPPER_FTR_CDE;
+        public string UPPER_FTR_CDE
+        {
+            get { return __UPPER_FTR_CDE; }
+            set
+            {
+                this.__UPPER_FTR_CDE = value;
+                OnPropertyChanged("UPPER_FTR_CDE");
+                }
+        }
+
+        private int? __UPPER_FTR_IDN;
+        public int? UPPER_FTR_IDN
+        {
+            get { return __UPPER_FTR_IDN; }
+            set
+            {
+                this.__UPPER_FTR_IDN = value;
+                OnPropertyChanged("UPPER_FTR_IDN");
+            }
+        }
+
     }
 }
