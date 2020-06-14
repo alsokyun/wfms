@@ -75,6 +75,7 @@
     <select id ="Select_ADAR_LIST" parameterClass="Hashtable" resultClass ="Hashtable">
       SELECT 	HJD_CDE, HJD_NAM, HJD_EXP
       FROM 	INFOFMS.CMT_ADAR_MA
+      WHERE NVL(USE_YN,'*') != 'N'
       ORDER BY HJD_CDE
     </select>
 
@@ -83,6 +84,7 @@
       SELECT 	HJD_CDE, HJD_NAM AS NAME, HJD_EXP
       FROM 	INFOFMS.CMT_ADAR_MA
       WHERE HJD_CDE = #CODE#
+      AND NVL(USE_YN,'*') != 'N'
       ORDER BY HJD_CDE
     </select>
 

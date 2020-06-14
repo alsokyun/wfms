@@ -68,15 +68,14 @@ namespace GTI.WFMS.GIS
             toolbarControl.AddItem("esriControls.ControlsMapMeasureTool");
             toolbarControl.AddItem("esriControls.ControlsMapZoomToolControl");
             toolbarControl.AddItem("esriControls.ControlsMapGoToCommand");
-            
 
+            
 
             //set controls' properties
             toolbarControl.BackColor = Color.FromArgb(245, 245, 220);
 
             //wire up events
             mapControl.OnMouseMove += new IMapControlEvents2_Ax_OnMouseMoveEventHandler(mapControl_OnMouseMove);
-
 
 
 

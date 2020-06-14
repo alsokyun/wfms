@@ -37,12 +37,13 @@ namespace GTI.WFMS.Modules.Acmf.ViewModel
 
         #region ==========  Member 정의 ==========
         SupDutDtlView supDutDtlView;
-      
-        //ComboBoxEdit cbFTR_CDE; DataTable dtFTR_CDE = new DataTable();	//지형지물
-        ComboBoxEdit cbHJD_CDE; DataTable dtHJD_CDE = new DataTable();	    //행정동
-        ComboBoxEdit cbMNG_CDE; DataTable dtMNG_CDE = new DataTable();		//관리기관
-        ComboBoxEdit cbSAA_CDE; DataTable dtSAA_CDE = new DataTable();      //관용도
-        ComboBoxEdit cbJHT_CDE; DataTable dtJHT_CDE = new DataTable();      //접합종류
+
+        //ComboBoxEdit cbFTR_CDE; //지형지물
+        ComboBoxEdit cbHJD_CDE; //행정동
+        ComboBoxEdit cbMNG_CDE; //관리기관
+        ComboBoxEdit cbSAA_CDE; //관용도
+        ComboBoxEdit cbJHT_CDE; //접합종류
+        ComboBoxEdit cbMOP_CDE; //접합종류
 
         Button btnBack;
         Button btnDelete;
@@ -84,6 +85,7 @@ namespace GTI.WFMS.Modules.Acmf.ViewModel
                 cbMNG_CDE = supDutDtlView.cbMNG_CDE;       //관리기관
                 cbSAA_CDE = supDutDtlView.cbSAA_CDE;       //관용도
                 cbJHT_CDE = supDutDtlView.cbJHT_CDE;       //접합종류
+                cbMOP_CDE = supDutDtlView.cbMOP_CDE;       //접합종류
 
                 btnBack = supDutDtlView.btnBack;
                 btnDelete = supDutDtlView.btnDelete;
@@ -304,6 +306,9 @@ namespace GTI.WFMS.Modules.Acmf.ViewModel
 
                 // cbJHT_CDE 접합종류
                 BizUtil.SetCmbCode(cbJHT_CDE, "250026", "선택");
+
+                // cbMOP_CDE
+                BizUtil.SetCmbCode(cbMOP_CDE, "250102", "선택");
             }
             catch (Exception ex)
             {

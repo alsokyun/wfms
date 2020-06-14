@@ -40,6 +40,9 @@ namespace GTI.WFMS.GIS
 
                 {"BML_GADM_AS",  new FeatureLayer()},
                 {"WTL_PURI_AS",  new FeatureLayer()},
+                {"WTL_BZ001",  new FeatureLayer()},
+                {"WTL_BZ002",  new FeatureLayer()},
+                {"WTL_BZ003",  new FeatureLayer()},
 
                 {"WTL_PIPE_LM",  new FeatureLayer()},
                 {"WTL_SPLY_LS",  new FeatureLayer()},
@@ -202,11 +205,11 @@ namespace GTI.WFMS.GIS
             //상수관로
             ISimpleLineSymbol lineSymbolSA001 = new SimpleLineSymbol();
             lineSymbolSA001.Color = new RgbColor() { Red = 0, Green = 102, Blue = 255 };
-            lineSymbolSA001.Width = 1.3;
+            lineSymbolSA001.Width = 1.5;
             //급수관로
             ISimpleLineSymbol lineSymbolSA002 = new SimpleLineSymbol();
             lineSymbolSA002.Color = new RgbColor() { Red = 0, Green = 204, Blue = 153 };
-            lineSymbolSA002.Width = 0.7;
+            lineSymbolSA002.Width = 1.3;
             //울산행정구역
             //ISimpleLineSymbol lineSymbolEA305 = new SimpleLineSymbol();
             //lineSymbolEA305.Color = new RgbColor() { Red = 255, Green = 0, Blue = 0 };
@@ -220,6 +223,30 @@ namespace GTI.WFMS.GIS
             ISimpleFillSymbol fillSymbolSA113 = new SimpleFillSymbol();
             fillSymbolSA113.Color = new RgbColor() { Red = 51, Green = 153, Blue = 255 };
             fillSymbolSA113.Outline = pSLS;  //외각선은 라인심볼로 지정
+
+            //라인심볼
+            pSLS = new SimpleLineSymbol();
+            pSLS.Color = new RgbColor() { Red = 51, Green = 0, Blue = 204 };
+            //대블록
+            ISimpleFillSymbol fillSymbolBZ001 = new SimpleFillSymbol();
+            fillSymbolBZ001.Color = new RgbColor() { Red = 153, Green = 51, Blue = 255, Transparency=50 };
+            fillSymbolBZ001.Outline = pSLS;  //외각선은 라인심볼로 지정
+            
+            //라인심볼
+            pSLS = new SimpleLineSymbol();
+            pSLS.Color = new RgbColor() { Red = 0, Green = 204, Blue = 51};
+            //중블록
+            ISimpleFillSymbol fillSymbolBZ002 = new SimpleFillSymbol();
+            fillSymbolBZ002.Color = new RgbColor() { Red = 51, Green = 255, Blue = 153, Transparency=50 };
+            fillSymbolBZ002.Outline = pSLS;  //외각선은 라인심볼로 지정
+            
+            //라인심볼
+            pSLS = new SimpleLineSymbol();
+            pSLS.Color = new RgbColor() { Red = 0, Green = 51, Blue = 204 };
+            //소블록
+            ISimpleFillSymbol fillSymbolBZ003 = new SimpleFillSymbol();
+            fillSymbolBZ003.Color = new RgbColor() { Red = 51, Green = 153, Blue = 255, Transparency=50 };
+            fillSymbolBZ003.Outline = pSLS;  //외각선은 라인심볼로 지정
 
             //라인심볼
             pSLS = new SimpleLineSymbol();
@@ -277,6 +304,12 @@ namespace GTI.WFMS.GIS
 
             uniqueValueRendererObj.AddValue("SA113", "Name", fillSymbolSA113 as ISymbol);
             uniqueValueRendererObj.set_Symbol("SA113", fillSymbolSA113 as ISymbol);
+            uniqueValueRendererObj.AddValue("BZ001", "Name", fillSymbolBZ001 as ISymbol);
+            uniqueValueRendererObj.set_Symbol("BZ001", fillSymbolBZ001 as ISymbol);
+            uniqueValueRendererObj.AddValue("BZ002", "Name", fillSymbolBZ002 as ISymbol);
+            uniqueValueRendererObj.set_Symbol("BZ002", fillSymbolBZ002 as ISymbol);
+            uniqueValueRendererObj.AddValue("BZ003", "Name", fillSymbolBZ003 as ISymbol);
+            uniqueValueRendererObj.set_Symbol("BZ003", fillSymbolBZ003 as ISymbol);
 
         }
 
@@ -368,6 +401,15 @@ namespace GTI.WFMS.GIS
                 case "WTL_PIPE_LY":
                     korNm = "예천파이프";
                     break;
+                case "WTL_BZ001":
+                    korNm = "대블록";
+                    break;
+                case "WTL_BZ002":
+                    korNm = "중블록";
+                    break;
+                case "WTL_BZ003":
+                    korNm = "소블록";
+                    break;
                 default:
                     break;
             }
@@ -377,8 +419,8 @@ namespace GTI.WFMS.GIS
 
 
 
-        
-        
+
+
 
     }
 }

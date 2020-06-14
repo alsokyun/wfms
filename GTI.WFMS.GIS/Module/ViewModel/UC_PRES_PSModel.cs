@@ -1,5 +1,6 @@
 ﻿using DevExpress.Xpf.Editors;
 using GTI.WFMS.GIS.Module.View;
+using GTI.WFMS.GIS.Pop.ViewModel;
 using GTI.WFMS.Models.Common;
 using GTI.WFMS.Models.Fclt.Model;
 using GTI.WFMS.Models.Pipe.Model;
@@ -77,7 +78,7 @@ namespace GTI.WFMS.GIS.Module.ViewModel
 
 
         #region ==========  Member 정의 ==========
-        UC_PRES_PS uC_PRGA_PS;
+        UC_PRES_PS uC_PRES_PS;
         Button btnSave;
 
 
@@ -107,9 +108,9 @@ namespace GTI.WFMS.GIS.Module.ViewModel
                 // 0.화면객체인스턴스화
                 if (obj == null) return;
 
-                uC_PRGA_PS = obj as UC_PRES_PS;
+                uC_PRES_PS = obj as UC_PRES_PS;
 
-                btnSave = uC_PRGA_PS.btnSave;
+                btnSave = uC_PRES_PS.btnSave;
 
                 //2.화면데이터객체 초기화
                 InitDataBinding();
@@ -140,7 +141,7 @@ namespace GTI.WFMS.GIS.Module.ViewModel
         {
 
             // 필수체크 (Tag에 필수체크 표시한 EditBox, ComboBox 대상으로 수행)
-            if (!BizUtil.ValidReq(uC_PRGA_PS)) return;
+            if (!BizUtil.ValidReq(uC_PRES_PS)) return;
 
 
             if (Messages.ShowYesNoMsgBox("저장하시겠습니까?") != MessageBoxResult.Yes) return;
@@ -234,9 +235,14 @@ namespace GTI.WFMS.GIS.Module.ViewModel
                 Messages.ShowErrMsgBox("삭제 처리중 오류가 발생하였습니다.");
                 return;
             }
-            Messages.ShowOkMsgBox();
+            // 2.위치정보 삭제처리
+            ContentControl cctl = uC_PRES_PS.Parent as ContentControl;
+            EditWinViewModel editWinViewModel = ((((cctl.Parent as Grid).Parent as Grid).Parent as Grid).Parent as Window).DataContext as EditWinViewModel;
+            editWinViewModel.OnDelCmd(null);
 
-            InitModel();
+
+            //Messages.ShowOkMsgBox();
+            //InitModel();
 
         }
         #endregion
@@ -259,9 +265,9 @@ namespace GTI.WFMS.GIS.Module.ViewModel
             else
             {
                 //신규등록이면 상세화면표시
-                if (!"Y".Equals(uC_PRGA_PS.btnDel.Tag))
+                if (!"Y".Equals(uC_PRES_PS.btnDel.Tag))
                 {
-                    uC_PRGA_PS.grid.Visibility = Visibility.Hidden; //DB데이터가 없으면 빈페이지표시
+                    uC_PRES_PS.grid.Visibility = Visibility.Hidden; //DB데이터가 없으면 빈페이지표시
                 }
             }
         }
@@ -275,13 +281,13 @@ namespace GTI.WFMS.GIS.Module.ViewModel
             try
             {
                 // cbHJD_CDE 행정동
-                BizUtil.SetCombo(uC_PRGA_PS.cbHJD_CDE, "Select_ADAR_LIST", "HJD_CDE", "HJD_NAM", "선택");
+                BizUtil.SetCombo(uC_PRES_PS.cbHJD_CDE, "Select_ADAR_LIST", "HJD_CDE", "HJD_NAM", "선택");
 
                 // cbMNG_CDE 관리기관
-                BizUtil.SetCmbCode(uC_PRGA_PS.cbMNG_CDE, "250101", "선택");
+                BizUtil.SetCmbCode(uC_PRES_PS.cbMNG_CDE, "250101", "선택");
 
                 // cbSAG_CDE 관리방법
-                BizUtil.SetCmbCode(uC_PRGA_PS.cbSAG_CDE, "250005", "선택");
+                BizUtil.SetCmbCode(uC_PRES_PS.cbSAG_CDE, "250005", "선택");
             }
             catch (Exception ex)
             {

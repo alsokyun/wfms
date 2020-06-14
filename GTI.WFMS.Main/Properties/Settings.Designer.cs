@@ -73,7 +73,7 @@ namespace GTI.WFMS.Main.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("D:\\GTI\\FILE")]
+        [global::System.Configuration.DefaultSettingValueAttribute("C:\\GTI\\FILE")]
         public string fileDir {
             get {
                 return ((string)(this["fileDir"]));

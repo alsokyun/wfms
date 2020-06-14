@@ -219,11 +219,18 @@ namespace GTI.WFMS.GIS
         public void initMap()
         {
             //배경지도는 mxd파일로부터
-            string mxdfilePath = Path.Combine(BizUtil.GetDataFolder("tile", "also.mxd"));
+            //string mxdfilePath = Path.Combine(BizUtil.GetDataFolder("tile", "also.mxd"));
+            string mxdfilePath = @"C:\GTI\also.mxd";
             mapControl.LoadMxFile(mxdfilePath);
 
-        }
+            mapControl.OnExtentUpdated += OnExtentUpdatedHandlelr;
 
+        }
+        //영역변경이벤트 처리 
+        private void OnExtentUpdatedHandlelr(object sender, IMapControlEvents2_OnExtentUpdatedEvent e)
+        {
+            //throw new NotImplementedException();
+        }
 
         private void resetAction(object obj)
         {
@@ -388,7 +395,7 @@ namespace GTI.WFMS.GIS
             string layerNm = "";
             try
             {
-                layerNm = CmmRun.GetLayerNm(FTR_CDE);
+                layerNm = GisCmm.GetLayerNm(FTR_CDE);
                 if ("".Equals(layerNm))
                 {
                     MessageBox.Show("잘못된 레이어입니다.");
@@ -405,10 +412,10 @@ namespace GTI.WFMS.GIS
             resetAction(null);
 
             //0.해당레이어표시 - 내부에서자동으로 로딩여부 체크함
-            FeatureLayer layer = ShowShapeLayer(CmmRun.GetLayerNm(FTR_CDE), true);
+            FeatureLayer layer = ShowShapeLayer(GisCmm.GetLayerNm(FTR_CDE), true);
             
             //1.해당레이어 가져오기
-            //FeatureLayer layer = CmmObj.layers[CmmRun.GetLayerNm(FTR_CDE)];
+            //FeatureLayer layer = CmmObj.layers[GisCmm.GetLayerNm(FTR_CDE)];
 
 
 

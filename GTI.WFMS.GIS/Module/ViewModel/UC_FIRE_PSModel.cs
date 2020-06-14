@@ -1,5 +1,6 @@
 ﻿using DevExpress.Xpf.Editors;
 using GTI.WFMS.GIS.Module.View;
+using GTI.WFMS.GIS.Pop.ViewModel;
 using GTI.WFMS.Models.Common;
 using GTI.WFMS.Models.Pipe.Model;
 using GTIFramework.Common.Log;
@@ -223,8 +224,14 @@ namespace GTI.WFMS.GIS.Module.ViewModel
                 Messages.ShowErrMsgBox("삭제 처리중 오류가 발생하였습니다.");
                 return;
             }
-            Messages.ShowOkMsgBox();
-            InitModel();
+            // 2.위치정보 삭제처리
+            ContentControl cctl = uC_FIRE_PS.Parent as ContentControl;
+            EditWinViewModel editWinViewModel = ((((cctl.Parent as Grid).Parent as Grid).Parent as Grid).Parent as Window).DataContext as EditWinViewModel;
+            editWinViewModel.OnDelCmd(null);
+
+
+            //Messages.ShowOkMsgBox();
+            //InitModel();
 
         }
 

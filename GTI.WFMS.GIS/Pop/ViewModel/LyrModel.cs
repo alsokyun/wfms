@@ -72,6 +72,10 @@ namespace GTI.WFMS.GIS.Pop.ViewModel
 
             {"WTL_PIPE_LM",  new FeatureLayer()},
             {"WTL_SPLY_LS",  new FeatureLayer()},
+
+            { "WTL_BZ001",  new FeatureLayer()},
+            { "WTL_BZ002",  new FeatureLayer()},
+            { "WTL_BZ003",  new FeatureLayer()},
         };
 
 

@@ -2103,7 +2103,7 @@
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type Button}">
                     <Grid >
-                        <Border x:Name="border" CornerRadius="2" BorderThickness="1" Background="#115F96" Padding="7 0 7 0">
+                        <Border x:Name="border" CornerRadius="2" BorderThickness="1" Background="#115F96" Padding="7 0 7 0" Height="25">
                             <ContentPresenter HorizontalAlignment="Center"
                                           VerticalAlignment="Center" 
                                           TextElement.FontWeight="Bold">

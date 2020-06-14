@@ -341,7 +341,7 @@ namespace GTI.WFMS.GIS
             string layerNm = "";
             try
             {
-                layerNm = CmmRun.GetLayerNm(FTR_CDE);
+                layerNm = GisCmm.GetLayerNm(FTR_CDE);
                 if ("".Equals(layerNm))
                 {
                     MessageBox.Show("잘못된 레이어입니다.");
@@ -359,7 +359,7 @@ namespace GTI.WFMS.GIS
             ///ShowShapeLayer(mapView, GisCmm.GetLayerNm(FTR_CDE), true);
 
             //1.해당레이어 가져오기
-            FeatureLayer layer = layers[CmmRun.GetLayerNm(FTR_CDE)];
+            FeatureLayer layer = layers[GisCmm.GetLayerNm(FTR_CDE)];
 
 
 

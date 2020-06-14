@@ -1,7 +1,8 @@
 ﻿using DevExpress.Xpf.Editors;
 using GTI.WFMS.GIS.Module.View;
-using GTI.WFMS.GIS.Pop.View;
 using GTI.WFMS.GIS.Pop.ViewModel;
+using GTI.WFMS.Models.Blk.Model;
+using GTI.WFMS.Models.Cmm.Model;
 using GTI.WFMS.Models.Common;
 using GTI.WFMS.Models.Fclt.Model;
 using GTI.WFMS.Models.Pipe.Model;
@@ -9,6 +10,7 @@ using GTIFramework.Common.Log;
 using GTIFramework.Common.MessageBox;
 using System;
 using System.Collections;
+using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Windows;
@@ -16,7 +18,7 @@ using System.Windows.Controls;
 
 namespace GTI.WFMS.GIS.Module.ViewModel
 {
-    public class UC_HEAD_PSModel : INotifyPropertyChanged
+    public class UC_BLKS_ASModel : INotifyPropertyChanged
     {
 
         public event PropertyChangedEventHandler PropertyChanged;
@@ -63,8 +65,8 @@ namespace GTI.WFMS.GIS.Module.ViewModel
         }
 
 
-        private WtrSourDtl fctDtl = new WtrSourDtl();
-        public WtrSourDtl FctDtl
+        private BlkDtl fctDtl = new BlkDtl();
+        public BlkDtl FctDtl
         {
             get{ return fctDtl;}
             set
@@ -73,12 +75,22 @@ namespace GTI.WFMS.GIS.Module.ViewModel
                 OnPropertyChanged("FctDtl");
             }
         }
+        private List<FctDtl> itemLst = new List<FctDtl>();
+        public List<FctDtl> ItemLst
+        {
+            get { return itemLst; }
+            set
+            {
+                itemLst = value;
+                OnPropertyChanged("ItemLst");
+            }
+        }
 
         #endregion
 
 
         #region ==========  Member 정의 ==========
-        UC_HEAD_PS uC_HEAD_PS;
+        UC_BLKS_AS uC_BLKS_AS;
         Button btnSave;
 
 
@@ -88,7 +100,7 @@ namespace GTI.WFMS.GIS.Module.ViewModel
 
 
         /// 생성자
-        public UC_HEAD_PSModel()
+        public UC_BLKS_ASModel()
         {
             this.LoadedCommand = new RelayCommand<object>(OnLoaded);
             this.SaveCommand = new RelayCommand<object>(OnSave);          
@@ -108,9 +120,9 @@ namespace GTI.WFMS.GIS.Module.ViewModel
                 // 0.화면객체인스턴스화
                 if (obj == null) return;
 
-                uC_HEAD_PS = obj as UC_HEAD_PS;
+                uC_BLKS_AS = obj as UC_BLKS_AS;
 
-                btnSave = uC_HEAD_PS.btnSave;
+                btnSave = uC_BLKS_AS.btnSave;
                 
                 //2.화면데이터객체 초기화
                 InitDataBinding();
@@ -121,7 +133,14 @@ namespace GTI.WFMS.GIS.Module.ViewModel
 
                 // 4.초기조회
                 InitModel();
-                               
+
+                // cbUPPER_FTR_IDN 상위블록
+                BizUtil.SetFTR_IDN(FctDtl.UPPER_FTR_CDE, uC_BLKS_AS.cbUPPER_FTR_IDN);
+
+                // 콤보변경이벤트설정
+                uC_BLKS_AS.cbUPPER_FTR_CDE.SelectedIndexChanged += OnUpFtrCdeChanged;
+
+
             }
             catch (Exception e)
             {
@@ -131,7 +150,12 @@ namespace GTI.WFMS.GIS.Module.ViewModel
         }
 
 
-        
+        //블록코드 변경시 이벤트핸들러
+        private void OnUpFtrCdeChanged(object sender, RoutedEventArgs e)
+        {
+            BizUtil.SetFTR_IDN(FctDtl.UPPER_FTR_CDE, uC_BLKS_AS.cbUPPER_FTR_IDN);
+        }
+
 
         /// <summary>
         /// 저장작업
@@ -141,22 +165,23 @@ namespace GTI.WFMS.GIS.Module.ViewModel
         {
 
             // 필수체크 (Tag에 필수체크 표시한 EditBox, ComboBox 대상으로 수행)
-            if (!BizUtil.ValidReq(uC_HEAD_PS)) return;
+            if (!BizUtil.ValidReq(uC_BLKS_AS)) return;
 
 
             if (Messages.ShowYesNoMsgBox("저장하시겠습니까?") != MessageBoxResult.Yes) return;
 
             try
             {
+                //1.시설물정보
                 FctDtl.FTR_CDE = this.FTR_CDE;
                 FctDtl.FTR_IDN = Convert.ToInt32(this.FTR_IDN); //신규위치 및 기존위치 정보만 있을수 있으므로 shape의 관리번호를 기준으로한다.
-                BizUtil.Update2(FctDtl, "SaveWtrSourDtl");
+                BizUtil.Update2(FctDtl, "updateBlk03Dtl");
 
                 //2.위치정보 - 위치편집한 경우만
-                if (!FmsUtil.IsNull(GisCmm.WKT_POINT))
+                if (!FmsUtil.IsNull(GisCmm.WKT_POLYGON))
                 {
-                    GisCmm.SavePoint(FctDtl.FTR_CDE, FctDtl.FTR_IDN.ToString(), "WTL_HEAD_PS");
-                    GisCmm.WKT_POINT = "";
+                    GisCmm.SavePolygon(FctDtl.FTR_CDE, FctDtl.FTR_IDN.ToString(), "WTL_PURI_AS");
+                    GisCmm.WKT_POLYGON = "";
                 }
 
             }
@@ -170,17 +195,16 @@ namespace GTI.WFMS.GIS.Module.ViewModel
             InitModel();
         }
 
+
         /// <summary>
         /// 삭제처리
         /// </summary>
         /// <param name="obj"></param>
-        public void OnDelete(object obj)
+        private void OnDelete(object obj)
         {
             //0.삭제전 체크
             Hashtable param = new Hashtable();
-            param.Add("sqlId", "selectChscResSubList");
-            param.Add("sqlId2", "SelectFileMapList");
-            param.Add("sqlId3", "selectWtlLeakSubList");
+            param.Add("sqlId", "SelectFileMapList");
 
             param.Add("FTR_CDE", this.FTR_CDE);
             param.Add("FTR_IDN", this.FTR_IDN);
@@ -188,57 +212,33 @@ namespace GTI.WFMS.GIS.Module.ViewModel
 
             Hashtable result = BizUtil.SelectLists(param);
             DataTable dt = new DataTable();
-            DataTable dt2 = new DataTable();
-            DataTable dt3 = new DataTable();
 
             try
             {
                 dt = result["dt"] as DataTable;
                 if (dt.Rows.Count > 0)
                 {
-                    Messages.ShowInfoMsgBox("유지보수내역이 존재합니다.");
-                    return;
-                }
-            }
-            catch (Exception) { }
-            try
-            {
-                dt2 = result["dt2"] as DataTable;
-                if (dt2.Rows.Count > 0)
-                {
                     Messages.ShowInfoMsgBox("파일첨부내역이 존재합니다.");
                     return;
                 }
             }
             catch (Exception) { }
-            try
-            {
-                dt3 = result["dt3"] as DataTable;
-                if (dt3.Rows.Count > 0)
-                {
-                    Messages.ShowInfoMsgBox("누수지점내역이 존재합니다.");
-                    return;
-                }
-            }
-            catch (Exception) { }
-
+            
 
 
             // 1.삭제처리
-            if (Messages.ShowYesNoMsgBox("수원지를 삭제하시겠습니까?") != MessageBoxResult.Yes) return;
+            if (Messages.ShowYesNoMsgBox("소블록을 삭제하시겠습니까?") != MessageBoxResult.Yes) return;
             try
             {
-                BizUtil.Update2(this.FctDtl, "deleteWtrSourDtl");
-
+                BizUtil.Update2(this.FctDtl, "deleteBlk03Dtl");
             }
             catch (Exception)
             {
                 Messages.ShowErrMsgBox("삭제 처리중 오류가 발생하였습니다.");
                 return;
             }
-
             // 2.위치정보 삭제처리
-            ContentControl cctl = uC_HEAD_PS.Parent as ContentControl;
+            ContentControl cctl = uC_BLKS_AS.Parent as ContentControl;
             EditWinViewModel editWinViewModel = ((((cctl.Parent as Grid).Parent as Grid).Parent as Grid).Parent as Window).DataContext as EditWinViewModel;
             editWinViewModel.OnDelCmd(null);
 
@@ -248,7 +248,6 @@ namespace GTI.WFMS.GIS.Module.ViewModel
 
         }
 
-
         #endregion
 
         #region ============= 메소드정의 ================
@@ -257,11 +256,11 @@ namespace GTI.WFMS.GIS.Module.ViewModel
         private void InitModel()
         {
             Hashtable param = new Hashtable();
-            param.Add("sqlId", "SelectWtrSourDtl");
+            param.Add("sqlId", "SelectBlk03Dtl");
             param.Add("FTR_CDE", this.FTR_CDE);
             param.Add("FTR_IDN", this.FTR_IDN);
 
-            WtrSourDtl result = BizUtil.SelectObject(param) as WtrSourDtl;
+            BlkDtl result = BizUtil.SelectObject(param) as BlkDtl;
             if (result != null)
             {
                 this.FctDtl = result;
@@ -269,9 +268,9 @@ namespace GTI.WFMS.GIS.Module.ViewModel
             else
             {
                 //신규등록이면 상세화면표시
-                if (!"Y".Equals(uC_HEAD_PS.btnDel.Tag))
+                if (!"Y".Equals(uC_BLKS_AS.btnDel.Tag))
                 {
-                    uC_HEAD_PS.grid.Visibility = Visibility.Hidden; //DB데이터가 없으면 빈페이지표시
+                    uC_BLKS_AS.grid.Visibility = Visibility.Hidden; //DB데이터가 없으면 빈페이지표시
                 }
             }
         }
@@ -284,14 +283,17 @@ namespace GTI.WFMS.GIS.Module.ViewModel
         {
             try
             {
-                // cbHJD_CDE 행정동
-                BizUtil.SetCombo(uC_HEAD_PS.cbHJD_CDE, "Select_ADAR_LIST", "HJD_CDE", "HJD_NAM", "선택");
-
                 // cbMNG_CDE 관리기관
-                BizUtil.SetCmbCode(uC_HEAD_PS.cbMNG_CDE, "250101", "선택");
+                BizUtil.SetCmbCode(uC_BLKS_AS.cbMNG_CDE, "250101", "선택");
 
-                // cbWSR_CDE 수원구분
-                BizUtil.SetCmbCode(uC_HEAD_PS.cbWSR_CDE, "250058", "선택");
+                uC_BLKS_AS.cbUPPER_FTR_CDE.DisplayMember = "FTR_NAM";
+                uC_BLKS_AS.cbUPPER_FTR_CDE.ValueMember = "FTR_CDE";
+                Hashtable param = new Hashtable();
+                param.Add("sqlId", "Select_FTR_LIST3");
+                param.Add("FTR_CDE", "BZ");
+                List<FctDtl> lst = BizUtil.SelectListObj<FctDtl>(param) as List<FctDtl>;
+
+                ItemLst = lst.FindAll(f => !f.FTR_CDE.Contains("BZ003"));
 
             }
             catch (Exception ex)

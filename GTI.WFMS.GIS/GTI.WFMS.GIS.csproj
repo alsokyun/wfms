@@ -140,6 +140,7 @@
     </Compile>
     <Compile Include="MapArcObjViewModel.cs" />
     <Compile Include="Module\ViewModel\UC_FIRE_PSModel.cs" />
+    <Compile Include="Module\ViewModel\UC_BLKS_ASModel.cs" />
     <Compile Include="Module\ViewModel\UC_VALV_PSModel.cs" />
     <Compile Include="Module\ViewModel\UC_RSRV_PSModel.cs" />
     <Compile Include="Module\ViewModel\UC_META_PSModel.cs" />
@@ -155,6 +156,9 @@
     <Compile Include="Module\ViewModel\UC_PIPE_LMModel.cs" />
     <Compile Include="Module\View\UC_FIRE_PS.xaml.cs">
       <DependentUpon>UC_FIRE_PS.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Module\View\UC_BLKS_AS.xaml.cs">
+      <DependentUpon>UC_BLKS_AS.xaml</DependentUpon>
     </Compile>
     <Compile Include="Module\View\UC_VALV_PS.xaml.cs">
       <DependentUpon>UC_VALV_PS.xaml</DependentUpon>
@@ -237,6 +241,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Module\View\UC_FIRE_PS.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Module\View\UC_BLKS_AS.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>

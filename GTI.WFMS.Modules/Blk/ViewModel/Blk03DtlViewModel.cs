@@ -78,7 +78,7 @@ namespace GTI.WFMS.Modules.Blk.ViewModel
         Blk03DtlView blk03DtlView;
 
         ComboBoxEdit cbMNG_CDE;
-        static ComboBoxEdit cbUPPER_FTR_CDE;
+        ComboBoxEdit cbUPPER_FTR_CDE;
         ComboBoxEdit cbUPPER_FTR_IDN;
 
         Button btnBack;
@@ -351,20 +351,6 @@ namespace GTI.WFMS.Modules.Blk.ViewModel
 
 
 
-        //블럭관리번호 콤보생성
-        public static void SetFTR_IDN(string uPPER_FTR_CDE)
-        {
-            if (FmsUtil.IsNull(uPPER_FTR_CDE)) return;//상위코드없으면 콤보채우지 않는다
-
-            Hashtable param = new Hashtable();
-            param.Add("sqlId", "SelectUpBlk");
-            param.Add("FTR_CDE", uPPER_FTR_CDE);
-            List<BlkDtl> lst = (List<BlkDtl>)BizUtil.SelectListObj<BlkDtl>(param);
-
-            cbUPPER_FTR_CDE.DisplayMember = "BLK_NM";
-            cbUPPER_FTR_CDE.ValueMember = "FTR_IDN";
-            cbUPPER_FTR_CDE.ItemsSource = lst;
-        }
 
 
 
