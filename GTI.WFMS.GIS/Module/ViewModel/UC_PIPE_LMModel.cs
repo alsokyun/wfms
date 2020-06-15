@@ -265,7 +265,7 @@ namespace GTI.WFMS.GIS.Module.ViewModel
             else
             {
                 //신규등록이면 상세화면표시
-                if (!"Y".Equals(uC_PIPE_LM.btnDel.Tag))
+                if ("Y".Equals(uC_PIPE_LM.btnDel.Tag))
                 {
                     uC_PIPE_LM.grid.Visibility = Visibility.Hidden; //DB데이터가 없으면 빈페이지표시
                 }

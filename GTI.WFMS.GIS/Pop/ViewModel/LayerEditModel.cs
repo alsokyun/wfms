@@ -17,10 +17,10 @@ namespace GTI.WFMS.GIS.Pop.ViewModel
     /// <summary>
     /// MapViewModel 에서 레이어관련 항목 및 처리
     /// </summary>
-    public class LyrModel
+    public class LayerEditModel
     {
         //생성자
-        public LyrModel()
+        public LayerEditModel()
         {
             // ArcGIS LocalServer start..
             //Initialize_LocalServer();
@@ -137,11 +137,11 @@ namespace GTI.WFMS.GIS.Pop.ViewModel
                 {
                     if (FmsUtil.IsNull(filterExp))
                     {
-                        filterExp += "FTR_IDN = " + _FTR_IDN;
+                        filterExp += "FTR_IDN LIKE '%' || " + _FTR_IDN + " ||  '%'";
                     }
                     else
                     {
-                        filterExp += " AND FTR_IDN = " + _FTR_IDN;
+                        filterExp += " AND FTR_IDN LIKE '%' ||  " + _FTR_IDN + " ||  '%'";
                     }
                 }
 

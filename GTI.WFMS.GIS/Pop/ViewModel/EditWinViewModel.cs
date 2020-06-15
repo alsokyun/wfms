@@ -29,7 +29,7 @@ namespace GTI.WFMS.GIS.Pop.ViewModel
     /// <summary>
     /// Provides map data to an application
     /// </summary>
-    public class EditWinViewModel : LyrModel, INotifyPropertyChanged
+    public class EditWinViewModel : LayerEditModel, INotifyPropertyChanged
     {
 
 
@@ -881,7 +881,7 @@ namespace GTI.WFMS.GIS.Pop.ViewModel
             queryParams.WhereClause = " FTR_CDE = '" + _FTR_CDE + "' ORDER BY FTR_IDN DESC";
             if (!FmsUtil.IsNull(_FTR_IDN))
             {
-                queryParams.WhereClause = " FTR_CDE = '" + _FTR_CDE + "' AND FTR_IDN = " + _FTR_IDN;
+                queryParams.WhereClause = " FTR_CDE = '" + _FTR_CDE + "' AND FTR_IDN like '%' ||  " + _FTR_IDN + " || '%'";
             }
 
 

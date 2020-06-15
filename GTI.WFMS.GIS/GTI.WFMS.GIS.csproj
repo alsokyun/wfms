@@ -203,7 +203,7 @@
       <DependentUpon>FTR_POP.xaml</DependentUpon>
     </Compile>
     <Compile Include="Pop\ViewModel\EditWinViewModel.cs" />
-    <Compile Include="Pop\ViewModel\LyrModel.cs" />
+    <Compile Include="Pop\ViewModel\LayerEditModel.cs" />
     <Compile Include="Pop\ViewModel\ShpMngViewModel.cs" />
     <Compile Include="Pop\View\CnstMngPopView.xaml.cs">
       <DependentUpon>CnstMngPopView.xaml</DependentUpon>

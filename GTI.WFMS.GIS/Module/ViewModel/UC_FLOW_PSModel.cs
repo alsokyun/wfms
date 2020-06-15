@@ -254,10 +254,10 @@ namespace GTI.WFMS.GIS.Module.ViewModel
             }
             else
             {
-                //신규등록이면 상세화면표시
-                if (!"Y".Equals(uC_FLOW_PS.btnDel.Tag))
+                //신규등록이면 상세화면표시 - 모든경우 신규등록으로 간주
+                if ("Y".Equals(uC_FLOW_PS.btnDel.Tag))
                 {
-                    uC_FLOW_PS.grid.Visibility = Visibility.Hidden; //DB데이터가 없으면 빈페이지표시
+                    uC_FLOW_PS.grid.Visibility = Visibility.Visible; 
                 }
             }
         }
