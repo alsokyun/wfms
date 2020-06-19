@@ -137,9 +137,8 @@
     <!--시설물 라인 위치저장-->
     <update id="updatePolyline" parameterClass="Hashtable" remapResults="true">
       UPDATE $TABLE_NM$
-      SET GEOM = ST_LINEFROMTEXT(#WKT_LINE #)
-      WHERE 1=1
-      AND FTR_CDE = #FTR_CDE#
+      SET GEOM = ST_LINEFROMTEXT(#WKT_LINE#)
+      WHERE FTR_CDE = #FTR_CDE#
       AND FTR_IDN = #FTR_IDN#
     </update>
     

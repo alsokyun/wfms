@@ -73,7 +73,7 @@
         <Border Grid.Row="1" BorderThickness="0 0 0 1" BorderBrush="{DynamicResource MainLMENUUnderBrush1}"/>
 
         <StackPanel Grid.Row="1" Orientation="Horizontal" HorizontalAlignment="Right"  >
-            <Button x:Name="btnAdd" Style="{DynamicResource ResourceKey=AddButton}"  Margin="0 0 10 0" Command="{Binding AddCmd}" />
+            <Button x:Name="btnAdd" Style="{DynamicResource ResourceKey=RegButton}"  Margin="0 0 10 0" Command="{Binding AddCmd}" />
 
             <Button x:Name="btnSearch" Style="{DynamicResource ResourceKey=SearchButton}"  Margin="0 0 10 0">
                 <i:Interaction.Triggers>

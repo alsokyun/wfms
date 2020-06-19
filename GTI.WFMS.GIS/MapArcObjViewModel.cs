@@ -19,6 +19,7 @@ using ESRI.ArcGIS.Geodatabase;
 using ESRI.ArcGIS.Display;
 using System.Collections.ObjectModel;
 using GTI.WFMS.GIS.Pop.View;
+using System.Threading.Tasks;
 
 namespace GTI.WFMS.GIS
 {
@@ -106,8 +107,20 @@ namespace GTI.WFMS.GIS
                 OnPropertyChanged("BitImg");
             }
         }
+        //체크박스 데이터
+        private bool chkSA117;
+        public bool ChkSA117
+        {
+            get { return chkSA117; }
+            set
+            {
+                this.chkSA117 = value;
+                OnPropertyChanged("ChkSA117");
+            }
 
-        #endregion
+        }
+
+#endregion
 
 
 
@@ -116,7 +129,7 @@ namespace GTI.WFMS.GIS
         #region ========== 생성자 ==========
 
         public MapArcObjViewModel()
-        {
+                {
 
             loadedCmd = new RelayCommand<object>(delegate (object obj)
             {
@@ -140,7 +153,7 @@ namespace GTI.WFMS.GIS
                 //2.UniqueRenderer 초기화
                 CmmObj.InitUniqueValueRendererObj();
 
-                //3.울산행정구역표시
+                //3.행정구역경계표시
                 ShowShapeLayer("BML_GADM_AS", true );
 
 
@@ -160,7 +173,9 @@ namespace GTI.WFMS.GIS
                 CheckBox chkbox = doc.Template.FindName("chkLayer", doc) as CheckBox;
                 bool chk = (bool)chkbox.IsChecked;
 
-                ShowShapeLayer( doc.Tag.ToString(), chk);
+
+                //ShowShapeLayer( doc.Tag.ToString(), chk);
+                ShowShapeLayer(doc.Tag.ToString(), chk);
 
 
                 //선택된 레이어저장
@@ -223,6 +238,7 @@ namespace GTI.WFMS.GIS
             string mxdfilePath = @"C:\GTI\also.mxd";
             mapControl.LoadMxFile(mxdfilePath);
 
+            
             mapControl.OnExtentUpdated += OnExtentUpdatedHandlelr;
 
         }
@@ -246,7 +262,7 @@ namespace GTI.WFMS.GIS
             //3.레이어스택 초기화
             sts.Clear();
 
-            //4.울산행정구역표시
+            //4.행정구역표시
             ShowShapeLayer("BML_GADM_AS", true );
 
 
@@ -389,7 +405,7 @@ namespace GTI.WFMS.GIS
         /// <param name="FTR_CDE"></param>
         /// <param name="FTR_IDN"></param>
         /// <returns></returns>
-        public void findFtr(string FTR_CDE, string FTR_IDN)
+        public async void findFtr(string FTR_CDE, string FTR_IDN)
         {
 
             string layerNm = "";
@@ -412,11 +428,15 @@ namespace GTI.WFMS.GIS
             resetAction(null);
 
             //0.해당레이어표시 - 내부에서자동으로 로딩여부 체크함
-            FeatureLayer layer = ShowShapeLayer(GisCmm.GetLayerNm(FTR_CDE), true);
-            
+            //FeatureLayer layer = ShowShapeLayer(GisCmm.GetLayerNm(FTR_CDE), true);
+
+            //체크박스UI를 클릭시키는 방식으로 변경
+            FeatureLayer layer = await ClickLayer(FTR_CDE);
+
+
+
             //1.해당레이어 가져오기
             //FeatureLayer layer = CmmObj.layers[GisCmm.GetLayerNm(FTR_CDE)];
-
 
 
 
@@ -433,50 +453,52 @@ namespace GTI.WFMS.GIS
             IFeatureCursor cursor = layer.Search(qfltr, true);
             IFeature feature = cursor.NextFeature();
 
-            //if (FTR_CDE == "SA001" || FTR_CDE == "SA002") //상수관로,급수관로
-            //{
-            //    ESRI.ArcGIS.Geometry.IPolyline line = (ESRI.ArcGIS.Geometry.IPolyline)feature.ShapeCopy;
-            //    point = line.FromPoint;
-            //}
-            //else if(FTR_CDE == "SA113") //정수장
-            //{
-            //    ESRI.ArcGIS.Geometry.IPolygon polygon = (ESRI.ArcGIS.Geometry.IPolygon)feature.ShapeCopy;
-            //    point = polygon.FromPoint;
-            //}
-            //else //나머지 포이트 시설물
-            //{
-            //    point = (ESRI.ArcGIS.Geometry.IPoint)feature.ShapeCopy;
-            //}
+            ESRI.ArcGIS.Geometry.IPoint point = mapControl.ToMapPoint(Convert.ToInt32(GisCmm._hsCoords.X), Convert.ToInt32(GisCmm._hsCoords.Y));
+
+
+            if (FTR_CDE == "SA001" || FTR_CDE == "SA002") //상수관로,급수관로
+            {
+                ESRI.ArcGIS.Geometry.IPolyline line = (ESRI.ArcGIS.Geometry.IPolyline)feature.ShapeCopy;
+                point = line.FromPoint;
+            }
+            else if (FTR_CDE == "SA113" || FTR_CDE == "BZ001" || FTR_CDE == "BZ002" || FTR_CDE == "BZ003") //정수장, 블록
+            {
+                ESRI.ArcGIS.Geometry.IPolygon polygon = (ESRI.ArcGIS.Geometry.IPolygon)feature.ShapeCopy;
+                point = polygon.FromPoint;
+            }
+            else //나머지 포이트 시설물
+            {
+                point = (ESRI.ArcGIS.Geometry.IPoint)feature.ShapeCopy;
+            }
 
 
             //3. - 타겟으로 지도중심이동
-            ESRI.ArcGIS.Geometry.IPoint point = mapControl.ToMapPoint(Convert.ToInt32(GisCmm._ulsanCoords.X) , Convert.ToInt32(GisCmm._ulsanCoords.Y));
 
-            IEnumFeature pFsel = (IEnumFeature)mapControl.Map.FeatureSelection;
-            pFsel.Reset(); // make sure it starts from the first feature
-            IFeature pFeat = pFsel.Next();
-            do
-            {
-                ESRI.ArcGIS.Geometry.IGeometry pGeom = pFeat.ShapeCopy;
-                if (pGeom.GeometryType == ESRI.ArcGIS.Geometry.esriGeometryType.esriGeometryPoint)
-                {
-                    point = (ESRI.ArcGIS.Geometry.IPoint)pGeom;
-                    double x, y;
-                    point.QueryCoords(out x, out y); // use the coordinates from here
-                }
-                else if (pGeom.GeometryType == ESRI.ArcGIS.Geometry.esriGeometryType.esriGeometryPolyline)
-                {
-                    ESRI.ArcGIS.Geometry.IPolyline line = (ESRI.ArcGIS.Geometry.IPolyline)pGeom;
-                    point = line.FromPoint;
-                }
-                else if (pGeom.GeometryType == ESRI.ArcGIS.Geometry.esriGeometryType.esriGeometryPolygon)
-                {
-                    ESRI.ArcGIS.Geometry.IPolygon polygon = (ESRI.ArcGIS.Geometry.IPolygon)pGeom;
-                    point = polygon.FromPoint;
-                }
+            //IEnumFeature pFsel = (IEnumFeature)mapControl.Map.FeatureSelection;
+            //pFsel.Reset(); // make sure it starts from the first feature
+            //IFeature pFeat = pFsel.Next();
+            //do
+            //{
+            //    ESRI.ArcGIS.Geometry.IGeometry pGeom = pFeat.ShapeCopy;
+            //    if (pGeom.GeometryType == ESRI.ArcGIS.Geometry.esriGeometryType.esriGeometryPoint)
+            //    {
+            //        point = (ESRI.ArcGIS.Geometry.IPoint)pGeom;
+            //        double x, y;
+            //        point.QueryCoords(out x, out y); // use the coordinates from here
+            //    }
+            //    else if (pGeom.GeometryType == ESRI.ArcGIS.Geometry.esriGeometryType.esriGeometryPolyline)
+            //    {
+            //        ESRI.ArcGIS.Geometry.IPolyline line = (ESRI.ArcGIS.Geometry.IPolyline)pGeom;
+            //        point = line.FromPoint;
+            //    }
+            //    else if (pGeom.GeometryType == ESRI.ArcGIS.Geometry.esriGeometryType.esriGeometryPolygon)
+            //    {
+            //        ESRI.ArcGIS.Geometry.IPolygon polygon = (ESRI.ArcGIS.Geometry.IPolygon)pGeom;
+            //        point = polygon.FromPoint;
+            //    }
 
-                pFeat = pFsel.Next();
-            } while (pFeat != null);
+            //    pFeat = pFsel.Next();
+            //} while (pFeat != null);
 
 
 
@@ -493,6 +515,27 @@ namespace GTI.WFMS.GIS
             //mapControl.ToMapPoint(x, y);
             //mapControl.ActiveView.ScreenDisplay.UpdateWindow();
 
+        }
+
+        //강제로 체크박스레이어 클릭
+        private async Task<FeatureLayer> ClickLayer(string FTR_CDE)
+        {
+            foreach (Button btn in FmsUtil.FindVisualChildren<Button>(mapArcObjView))
+            {
+                try
+                {
+                    if (btn.Tag.ToString() == GisCmm.GetLayerNm(FTR_CDE))
+                    {
+                        CheckBox chkbox = btn.Template.FindName("chkLayer", btn) as CheckBox;
+                        chkbox.IsChecked = true;
+                        btn.RaiseEvent(new RoutedEventArgs(Button.ClickEvent));//강제클릭
+                        break;
+                    }
+                }
+                catch (Exception) { }
+            }
+            await Task.Delay(1000);
+            return CmmObj.layers[GisCmm.GetLayerNm(FTR_CDE)];
         }
 
 

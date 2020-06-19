@@ -14,6 +14,7 @@ namespace GTI.WFMS.GIS
 
         // Coordinates for Ulsan
         public static MapPoint _ulsanCoords = new MapPoint(14389882.070911, 4239809.084922, SpatialReferences.WebMercator); //3857
+        public static MapPoint _hsCoords = new MapPoint(14246315, 4507081, SpatialReferences.WebMercator); //3857
         //private MapPoint _londonCoords = new MapPoint(-13881.7678417696, 6710726.57374296, SpatialReferences.WebMercator);
         //private MapPoint _ulsanCoords = new MapPoint(394216.933974, 223474.303376, SpatialReferences.WebMercator); //5181
 
@@ -50,7 +51,7 @@ namespace GTI.WFMS.GIS
             param.Add("TABLE_NM", TABLE_NM);
             param.Add("FTR_CDE", FTR_CDE);
             param.Add("FTR_IDN", FTR_IDN);
-            param.Add("WKT_LINE ", WKT_LINE);
+            param.Add("WKT_LINE", WKT_LINE);
             BizUtil.Update(param);
         }
         //포인트 폴리곤 DB저장
@@ -104,9 +105,9 @@ namespace GTI.WFMS.GIS
                 case "SA902": layerNm = "WTL_SPLY_LX"; break;
                 case "SA903": layerNm = "WTL_PIPE_LY"; break;
 
-                case "BZ001": layerNm = "WTL_BZ001"; break;
-                case "BZ002": layerNm = "WTL_BZ002"; break;
-                case "BZ003": layerNm = "WTL_BZ003"; break;
+                case "BZ001": layerNm = "WTL_LBLK_AS"; break;
+                case "BZ002": layerNm = "WTL_MBLK_AS"; break;
+                case "BZ003": layerNm = "WTL_SBLK_AS"; break;
 
 
                 default:

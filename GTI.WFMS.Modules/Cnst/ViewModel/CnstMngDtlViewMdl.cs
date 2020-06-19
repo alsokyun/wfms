@@ -1,21 +1,9 @@
-﻿using DevExpress.Xpf.Editors;
-using GTI.WFMS.Models.Cmm.Model;
-using GTI.WFMS.Models.Common;
+﻿using GTI.WFMS.Models.Common;
 using GTI.WFMS.Modules.Cnst.Model;
-using GTIFramework.Common.Log;
-using GTIFramework.Common.MessageBox;
-using Prism.Commands;
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Linq;
 using System.Reflection;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows;
-using System.Windows.Controls;
 
 namespace GTI.WFMS.Modules.Cnst.ViewModel
 {

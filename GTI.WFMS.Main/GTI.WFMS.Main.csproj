@@ -634,6 +634,12 @@
     <Resource Include="Resources\Blue\Images\MNUImage\MNU_L_07.png" />
     <Resource Include="Resources\Blue\Images\Image\btn_modi.png" />
     <Resource Include="Resources\Blue\Images\Image\btn_modi_on.png" />
+    <Resource Include="Resources\Navy\Images\MNUImage\MNU_L_09.png" />
+    <Resource Include="Resources\Blue\Images\MNUImage\MNU_L_09.png" />
+    <Resource Include="Resources\Navy\Images\Image\btn_reg.png" />
+    <Resource Include="Resources\Navy\Images\Image\btn_reg_on.png" />
+    <Resource Include="Resources\Blue\Images\Image\btn_reg.png" />
+    <Resource Include="Resources\Blue\Images\Image\btn_reg_on.png" />
     <Content Include="Styles\Fonts\malgun.ttf">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>

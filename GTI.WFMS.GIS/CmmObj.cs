@@ -40,9 +40,9 @@ namespace GTI.WFMS.GIS
 
                 {"BML_GADM_AS",  new FeatureLayer()},
                 {"WTL_PURI_AS",  new FeatureLayer()},
-                {"WTL_BZ001",  new FeatureLayer()},
-                {"WTL_BZ002",  new FeatureLayer()},
-                {"WTL_BZ003",  new FeatureLayer()},
+                {"WTL_LBLK_AS",  new FeatureLayer()},
+                {"WTL_MBLK_AS",  new FeatureLayer()},
+                {"WTL_SBLK_AS",  new FeatureLayer()},
 
                 {"WTL_PIPE_LM",  new FeatureLayer()},
                 {"WTL_SPLY_LS",  new FeatureLayer()},
@@ -401,13 +401,13 @@ namespace GTI.WFMS.GIS
                 case "WTL_PIPE_LY":
                     korNm = "예천파이프";
                     break;
-                case "WTL_BZ001":
+                case "WTL_LBLK_AS":
                     korNm = "대블록";
                     break;
-                case "WTL_BZ002":
+                case "WTL_MBLK_AS":
                     korNm = "중블록";
                     break;
-                case "WTL_BZ003":
+                case "WTL_SBLK_AS":
                     korNm = "소블록";
                     break;
                 default:

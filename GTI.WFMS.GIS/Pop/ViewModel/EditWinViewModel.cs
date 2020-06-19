@@ -23,6 +23,7 @@ using System.Collections;
 using System.Data;
 using DevExpress.Xpf.Editors;
 using GTI.WFMS.GIS.Module.View;
+using Esri.ArcGISRuntime;
 
 namespace GTI.WFMS.GIS.Pop.ViewModel
 {
@@ -153,6 +154,10 @@ namespace GTI.WFMS.GIS.Pop.ViewModel
 
         public EditWinViewModel()
         {
+            //string licenseKey = "runtimelite,1000,rud1244207246,none,9TJC7XLS1MJPF5KHT033"; //그린텍
+            string licenseKey = "runtimelite,1000,rud9177830334,none,A3E60RFLTFM5NERL1040"; //kyun0828 free 
+
+            //ArcGISRuntimeEnvironment.SetLicense(licenseKey);
 
 
 
@@ -286,13 +291,13 @@ namespace GTI.WFMS.GIS.Pop.ViewModel
                 //Polygon 피처인 경우 - SketchEditor 를 GraphicOverlay에 생성한다
                 //라인피처인 경우 - SketchEditor 를 GraphicOverlay에 생성한다
                 if (_selectedLayerNm.Equals("WTL_PIPE_LM") || _selectedLayerNm.Equals("WTL_SPLY_LS") || _selectedLayerNm.Equals("WTL_PURI_AS")
-                    || _selectedLayerNm.Equals("WTL_BZ001") || _selectedLayerNm.Equals("WTL_BZ002") || _selectedLayerNm.Equals("WTL_BZ003"))
+                    || _selectedLayerNm.Equals("WTL_LBLK_AS") || _selectedLayerNm.Equals("WTL_MBLK_AS") || _selectedLayerNm.Equals("WTL_SBLK_AS"))
                 {
                     try
                     {
                         SketchCreationMode creationMode = SketchCreationMode.Polyline;
                         Symbol symbol;
-                        if (_selectedLayerNm.Equals("WTL_PURI_AS") || _selectedLayerNm.Equals("WTL_BZ001") || _selectedLayerNm.Equals("WTL_BZ002") || _selectedLayerNm.Equals("WTL_BZ003"))
+                        if (_selectedLayerNm.Equals("WTL_PURI_AS") || _selectedLayerNm.Equals("WTL_LBLK_AS") || _selectedLayerNm.Equals("WTL_MBLK_AS") || _selectedLayerNm.Equals("WTL_SBLK_AS"))
                         {
                             creationMode = SketchCreationMode.Polygon;
                             symbol = new SimpleFillSymbol() { Color = System.Drawing.Color.SkyBlue, Style = SimpleFillSymbolStyle.Solid };
@@ -451,7 +456,7 @@ namespace GTI.WFMS.GIS.Pop.ViewModel
         private async void InitMap()
         {
             //지도위치 및 스케일 초기화
-            await mapView.SetViewpointCenterAsync(GisCmm._ulsanCoords, GisCmm._ulsanScale2);
+            await mapView.SetViewpointCenterAsync(GisCmm._hsCoords, GisCmm._ulsanScale2);
 
             //Base맵 초기화
             Console.WriteLine("this._map.SpatialReference - " + this._map.SpatialReference);
@@ -907,17 +912,20 @@ namespace GTI.WFMS.GIS.Pop.ViewModel
 
 
 
-                // Loop over each feature from the query result.
-                //foreach (Feature feature in features)
-                //{
-                //    //첫번째피쳐 선택처리
-                //    ShowFctPage(feature);
-                //    break;
-                //}
-
                 if (features.Count == 1)
                 {
-                    ShowFctPage(features[0]); //
+                    //한건인 경우 선택처리
+                    ShowFctPage(features[0]); 
+                }
+                else
+                {
+                    //피쳐영역 Extent 위치이동
+                    foreach (Feature feature in features)
+                    {
+                        envBuilder.UnionOf(feature.Geometry.Extent); //복수의 피처영역 합치기
+                    }
+                    // Zoom to the extent of the selected feature(s).
+                    await mapView.SetViewpointGeometryAsync(envBuilder.ToGeometry(), 50);
                 }
             }
         }
@@ -1112,6 +1120,13 @@ namespace GTI.WFMS.GIS.Pop.ViewModel
                 {
                     GisCmm.WKT_POLYGON += (p.X + " " + p.Y + ",");
                 }
+                //첫포인트로 폴리곤 마무리
+                foreach (var p in gon.Parts[0].Points)
+                {
+                    GisCmm.WKT_POLYGON += (p.X + " " + p.Y + ",");
+                    break;
+                }
+
                 GisCmm.WKT_POLYGON = GisCmm.WKT_POLYGON.Substring(0, GisCmm.WKT_POLYGON.Length - 1) + ")))";
             }
             else if (geometry is MapPoint )

@@ -180,7 +180,7 @@ namespace GTI.WFMS.GIS.Module.ViewModel
                 //2.위치정보 - 위치편집한 경우만
                 if (!FmsUtil.IsNull(GisCmm.WKT_POLYGON))
                 {
-                    GisCmm.SavePolygon(FctDtl.FTR_CDE, FctDtl.FTR_IDN.ToString(), "WTL_PURI_AS");
+                    GisCmm.SavePolygon(FctDtl.FTR_CDE, FctDtl.FTR_IDN.ToString(), "WTL_SBLK_AS");
                     GisCmm.WKT_POLYGON = "";
                 }
 
@@ -270,7 +270,7 @@ namespace GTI.WFMS.GIS.Module.ViewModel
                 //신규등록이면 상세화면표시
                 if ("Y".Equals(uC_BLKS_AS.btnDel.Tag))
                 {
-                    uC_BLKS_AS.grid.Visibility = Visibility.Hidden; //DB데이터가 없으면 빈페이지표시
+                    uC_BLKS_AS.grid.Visibility = Visibility.Visible; //DB데이터가 없으면 빈페이지표시
                 }
             }
         }

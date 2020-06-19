@@ -1,8 +1,11 @@
 ﻿using ESRI.ArcGIS.Carto;
 using ESRI.ArcGIS.Controls;
+using ESRI.ArcGIS.esriSystem;
+using ESRI.ArcGIS.Framework;
 using ESRI.ArcGIS.Geodatabase;
 using GTI.WFMS.GIS.Pop.View;
 using GTI.WFMS.Models.Common;
+using System;
 using System.Drawing;
 using System.IO;
 using System.Windows;
@@ -69,7 +72,9 @@ namespace GTI.WFMS.GIS
             toolbarControl.AddItem("esriControls.ControlsMapZoomToolControl");
             toolbarControl.AddItem("esriControls.ControlsMapGoToCommand");
 
+            //Pan모드 선택처리
             
+            //FindCommandAndExecute((IApplication)mapControl.Parent, "esriControls.ControlsMapPanTool");
 
             //set controls' properties
             toolbarControl.BackColor = Color.FromArgb(245, 245, 220);
@@ -92,6 +97,21 @@ namespace GTI.WFMS.GIS
             //레이어명 적용
             //tocControl.Update();
         }
+
+
+        //Pan모드 선택처리
+        public void FindCommandAndExecute(IApplication application)
+        {
+            ESRI.ArcGIS.Framework.ICommandBars commandBars = application.Document.CommandBars;
+            ESRI.ArcGIS.esriSystem.UID uid = new ESRI.ArcGIS.esriSystem.UID();
+            uid.Value = "esriControls.ControlsMapPanTool"; 
+            ESRI.ArcGIS.Framework.ICommandItem commandItem = commandBars.Find(uid, false, false);
+
+            if (commandItem != null)
+                commandItem.Execute();
+        }
+
+
 
 
 

@@ -7,7 +7,7 @@
 
       WITH C AS (
       SELECT COUNT(1) AS ROWCNT
-      FROM WTL_BZ001 A
+      FROM WTL_LBLK_AS A
         LEFT JOIN INFOUSER.CD_DTL_INFO C ON C.MST_CD = '250101' AND A.MNG_CDE = C.DTL_CD
         LEFT JOIN V_FTR_CDE F ON A.FTR_CDE = F.FTR_CDE
       WHERE 1=1
@@ -39,7 +39,7 @@
       , A.EDT_DT
       , A.SYS_CHK
       , CASE WHEN ST_ISVALID(A.GEOM) = 1 THEN 'Y' ELSE 'N' END AS IS_GEOMETRY
-      FROM INFOFMS.WTL_BZ001 A
+      FROM INFOFMS.WTL_LBLK_AS A
       LEFT JOIN INFOUSER.CD_DTL_INFO C ON C.MST_CD = '250101' AND A.MNG_CDE = C.DTL_CD
       LEFT JOIN V_FTR_CDE F ON A.FTR_CDE = F.FTR_CDE
       WHERE 1=1
@@ -77,7 +77,7 @@
       , A.EDT_DT
       , A.SYS_CHK
       , decode(A.SYS_CHK,'1','유','무') as SYS_CHK_NAM
-      FROM INFOFMS.WTL_BZ001 A
+      FROM INFOFMS.WTL_LBLK_AS A
       LEFT JOIN INFOUSER.CD_DTL_INFO C ON C.MST_CD = '250101' AND A.MNG_CDE = C.DTL_CD
       LEFT JOIN V_FTR_CDE F ON A.FTR_CDE = F.FTR_CDE
       WHERE 1=1
@@ -88,7 +88,7 @@
    
     <!--대블럭수정-->
     <update id="updateBlk01Dtl" parameterClass="GTI.WFMS.Models.Blk.Model.BlkDtl">
-      MERGE INTO INFOFMS.WTL_BZ001
+      MERGE INTO INFOFMS.WTL_LBLK_AS
       USING DUAL ON (FTR_CDE = #FTR_CDE# AND	FTR_IDN = #FTR_IDN#)
 
       WHEN MATCHED THEN
@@ -120,7 +120,7 @@
       VALUES
       (
       #FTR_CDE#
-      , (SELECT NVL(MAX(FTR_IDN),0)+1 AS FTR_IDN FROM INFOFMS.WTL_BZ001)
+      , (SELECT NVL(MAX(FTR_IDN),0)+1 AS FTR_IDN FROM INFOFMS.WTL_LBLK_AS)
       , #MNG_CDE#
       , #BLK_NM#
       , #WSUPP_LINE_NM#
@@ -135,7 +135,7 @@
     <!--블록 상세삭제-->
     <update id="deleteBlk01Dtl" parameterClass="Hashtable">
       /* 블록 상세 삭제 */
-      DELETE INFOFMS.WTL_BZ001
+      DELETE INFOFMS.WTL_LBLK_AS
       WHERE FTR_CDE = #FTR_CDE#
       AND FTR_IDN = #FTR_IDN#
     </update>
@@ -143,7 +143,7 @@
     <!--블록 관리번호 채번-->
     <select id ="SelectBlk01FTR_IDN" parameterClass="Hashtable" resultClass ="GTI.WFMS.Models.Blk.Model.BlkDtl">
       /* 블록 관리번호 채번 */
-      SELECT NVL(MAX(FTR_IDN),0)+1 AS FTR_IDN FROM INFOFMS.WTL_BZ001
+      SELECT NVL(MAX(FTR_IDN),0)+1 AS FTR_IDN FROM INFOFMS.WTL_LBLK_AS
       WHERE 1=1
     </select>
 
@@ -155,7 +155,7 @@
 
       WITH C AS (
       SELECT COUNT(1) AS ROWCNT
-      FROM WTL_BZ002 A
+      FROM WTL_MBLK_AS A
         LEFT JOIN INFOUSER.CD_DTL_INFO C ON C.MST_CD = '250101' AND A.MNG_CDE = C.DTL_CD
         LEFT JOIN V_FTR_CDE F ON A.FTR_CDE = F.FTR_CDE
       WHERE 1=1
@@ -187,7 +187,7 @@
       , A.EDT_DT
       , A.SYS_CHK
       , CASE WHEN ST_ISVALID(A.GEOM) = 1 THEN 'Y' ELSE 'N' END AS IS_GEOMETRY
-      FROM INFOFMS.WTL_BZ002 A
+      FROM INFOFMS.WTL_MBLK_AS A
       LEFT JOIN INFOUSER.CD_DTL_INFO C ON C.MST_CD = '250101' AND A.MNG_CDE = C.DTL_CD
       LEFT JOIN V_FTR_CDE F ON A.FTR_CDE = F.FTR_CDE
       WHERE 1=1
@@ -227,7 +227,7 @@
       , decode(A.SYS_CHK,'1','유','무') as SYS_CHK_NAM
       , A.UPPER_FTR_IDN
       , A.UPPER_FTR_CDE
-      FROM INFOFMS.WTL_BZ002 A
+      FROM INFOFMS.WTL_MBLK_AS A
       LEFT JOIN INFOUSER.CD_DTL_INFO C ON C.MST_CD = '250101' AND A.MNG_CDE = C.DTL_CD
       LEFT JOIN V_FTR_CDE F ON A.FTR_CDE = F.FTR_CDE
       WHERE 1=1
@@ -238,7 +238,7 @@
    
     <!--중블럭수정-->
     <update id="updateBlk02Dtl" parameterClass="GTI.WFMS.Models.Blk.Model.BlkDtl">
-      MERGE INTO INFOFMS.WTL_BZ002
+      MERGE INTO INFOFMS.WTL_MBLK_AS
       USING DUAL ON (FTR_CDE = #FTR_CDE# AND	FTR_IDN = #FTR_IDN#)
 
       WHEN MATCHED THEN
@@ -274,7 +274,7 @@
       VALUES
       (
       #FTR_CDE#
-      , (SELECT NVL(MAX(FTR_IDN),0)+1 AS FTR_IDN FROM INFOFMS.WTL_BZ002)
+      , (SELECT NVL(MAX(FTR_IDN),0)+1 AS FTR_IDN FROM INFOFMS.WTL_MBLK_AS)
       , #MNG_CDE#
       , #BLK_NM#
       , #WSUPP_LINE_NM#
@@ -291,7 +291,7 @@
     <!--블록 상세삭제-->
     <update id="deleteBlk02Dtl" parameterClass="Hashtable">
       /* 블록 상세 삭제 */
-      DELETE INFOFMS.WTL_BZ002
+      DELETE INFOFMS.WTL_MBLK_AS
       WHERE FTR_CDE = #FTR_CDE#
       AND FTR_IDN = #FTR_IDN#
     </update>
@@ -299,7 +299,7 @@
     <!--블록 관리번호 채번-->
     <select id ="SelectBlk02FTR_IDN" parameterClass="Hashtable" resultClass ="GTI.WFMS.Models.Blk.Model.BlkDtl">
       /* 블록 관리번호 채번 */
-      SELECT NVL(MAX(FTR_IDN),0)+1 AS FTR_IDN FROM INFOFMS.WTL_BZ002
+      SELECT NVL(MAX(FTR_IDN),0)+1 AS FTR_IDN FROM INFOFMS.WTL_MBLK_AS
       WHERE 1=1
     </select>
 
@@ -310,7 +310,7 @@
 
       WITH C AS (
       SELECT COUNT(1) AS ROWCNT
-      FROM WTL_BZ003 A
+      FROM WTL_SBLK_AS A
         LEFT JOIN INFOUSER.CD_DTL_INFO C ON C.MST_CD = '250101' AND A.MNG_CDE = C.DTL_CD
         LEFT JOIN V_FTR_CDE F ON A.FTR_CDE = F.FTR_CDE
       WHERE 1=1
@@ -342,7 +342,7 @@
       , A.EDT_DT
       , A.SYS_CHK
       , CASE WHEN ST_ISVALID(A.GEOM) = 1 THEN 'Y' ELSE 'N' END AS IS_GEOMETRY
-      FROM INFOFMS.WTL_BZ003 A
+      FROM INFOFMS.WTL_SBLK_AS A
       LEFT JOIN INFOUSER.CD_DTL_INFO C ON C.MST_CD = '250101' AND A.MNG_CDE = C.DTL_CD
       LEFT JOIN V_FTR_CDE F ON A.FTR_CDE = F.FTR_CDE
       WHERE 1=1
@@ -382,7 +382,7 @@
       , decode(A.SYS_CHK,'1','유','무') as SYS_CHK_NAM
       , A.UPPER_FTR_IDN
       , A.UPPER_FTR_CDE
-      FROM INFOFMS.WTL_BZ003 A
+      FROM INFOFMS.WTL_SBLK_AS A
       LEFT JOIN INFOUSER.CD_DTL_INFO C ON C.MST_CD = '250101' AND A.MNG_CDE = C.DTL_CD
       LEFT JOIN V_FTR_CDE F ON A.FTR_CDE = F.FTR_CDE
       WHERE 1=1
@@ -393,7 +393,7 @@
    
     <!--소블럭수정-->
     <update id="updateBlk03Dtl" parameterClass="GTI.WFMS.Models.Blk.Model.BlkDtl">
-      MERGE INTO INFOFMS.WTL_BZ003
+      MERGE INTO INFOFMS.WTL_SBLK_AS
       USING DUAL ON (FTR_CDE = #FTR_CDE# AND	FTR_IDN = #FTR_IDN#)
 
       WHEN MATCHED THEN
@@ -429,7 +429,7 @@
       VALUES
       (
       #FTR_CDE#
-      , (SELECT NVL(MAX(FTR_IDN),0)+1 AS FTR_IDN FROM INFOFMS.WTL_BZ003)
+      , (SELECT NVL(MAX(FTR_IDN),0)+1 AS FTR_IDN FROM INFOFMS.WTL_SBLK_AS)
       , #MNG_CDE#
       , #BLK_NM#
       , #WSUPP_LINE_NM#
@@ -446,7 +446,7 @@
     <!--블록 상세삭제-->
     <update id="deleteBlk03Dtl" parameterClass="Hashtable">
       /* 블록 상세 삭제 */
-      DELETE INFOFMS.WTL_BZ003
+      DELETE INFOFMS.WTL_SBLK_AS
       WHERE FTR_CDE = #FTR_CDE#
       AND FTR_IDN = #FTR_IDN#
     </update>
@@ -454,7 +454,7 @@
     <!--블록 관리번호 채번-->
     <select id ="SelectBlk03FTR_IDN" parameterClass="Hashtable" resultClass ="GTI.WFMS.Models.Blk.Model.BlkDtl">
       /* 블록 관리번호 채번 */
-      SELECT NVL(MAX(FTR_IDN),0)+1 AS FTR_IDN FROM INFOFMS.WTL_BZ003
+      SELECT NVL(MAX(FTR_IDN),0)+1 AS FTR_IDN FROM INFOFMS.WTL_SBLK_AS
       WHERE 1=1
     </select>
 
@@ -463,10 +463,10 @@
       SELECT * FROM (
 
       SELECT FTR_IDN, BLK_NM AS BLK_NM , FTR_CDE
-      FROM INFOFMS.WTL_BZ001
+      FROM INFOFMS.WTL_LBLK_AS
       UNION ALL
       SELECT FTR_IDN, BLK_NM AS BLK_NM , FTR_CDE
-      FROM INFOFMS.WTL_BZ002
+      FROM INFOFMS.WTL_MBLK_AS
       WHERE 1=1
       ) X
       WHERE 1=1
