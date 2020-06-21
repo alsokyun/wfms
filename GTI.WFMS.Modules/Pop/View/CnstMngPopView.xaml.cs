@@ -52,5 +52,27 @@ namespace GTI.WFMS.Modules.Pop.View
             Close();
         }
 
+        private void View_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.Key == Key.Escape)
+            {
+                this.Close();
+            }
+        }
+
+        private void Grid_PreviewMouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        {
+            if (Mouse.LeftButton == MouseButtonState.Pressed)
+            {
+                if (this.WindowState == WindowState.Maximized)
+                {
+                    this.Top = Mouse.GetPosition(this).Y - System.Windows.Forms.Cursor.Position.Y - 6;
+                    this.Left = System.Windows.Forms.Cursor.Position.X - Mouse.GetPosition(this).X + 20;
+
+                    this.WindowState = WindowState.Normal;
+                }
+                this.DragMove();
+            }
+        }
     }
 }

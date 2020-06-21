@@ -102,6 +102,9 @@ namespace GTI.WFMS.Modules.Cmpl.ViewModel
                 Dtl.FTR_IDN = dtl.FTR_IDN;
                 Dtl.FTR_CDE = "SA300"; //누수지점
 
+                //시설물명  가져오기
+                lekSiteAddView.txtFTR_NAM.Text = BizUtil.GetCodeNm("Select_FTR_LIST2", Dtl.FTR_CDE);
+
             });
 
             //저장
@@ -156,8 +159,6 @@ namespace GTI.WFMS.Modules.Cmpl.ViewModel
             {
                 //행정구역
                 BizUtil.SetCombo(lekSiteAddView.cbHJD_CDE, "Select_ADAR_LIST", "HJD_CDE", "HJD_NAM", "선택");
-                //지형지물
-                BizUtil.SetCombo(lekSiteAddView.cbFTR_CDE, "Select_FTR_LIST", "FTR_CDE", "FTR_NAM");
                 //누수원인
                 BizUtil.SetCmbCode(lekSiteAddView.cbLRS_CDE, "250044", "선택");
                 //누수상태

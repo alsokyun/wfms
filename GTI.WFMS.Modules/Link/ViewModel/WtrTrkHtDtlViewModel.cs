@@ -66,6 +66,7 @@ namespace GTI.WFMS.Modules.Link.ViewModel
         {
             this.LoadedCommand = new DelegateCommand<object>(OnLoaded);
             this.SaveCommand = new DelegateCommand<object>(OnSave);
+            this.DeleteCommand = new DelegateCommand<object>(OnDelete);
 
         }
 
@@ -119,6 +120,8 @@ namespace GTI.WFMS.Modules.Link.ViewModel
 
                 //시설물명가져오기
                 Dtl.FTR_NAM = BizUtil.GetCodeNm("Select_FTR_LIST2", Dtl.FTR_CDE);
+
+                wtrTrkHtDtlView.btnDel.Visibility = Visibility.Collapsed;
             }
             else
             {
@@ -130,7 +133,7 @@ namespace GTI.WFMS.Modules.Link.ViewModel
 
                 Dtl = BizUtil.SelectObject(param) as WttRsrvHtDtl;
 
-                wtrTrkHtDtlView.btnSave.Visibility = Visibility.Collapsed;
+                wtrTrkHtDtlView.btnDel.Visibility = Visibility.Visible;
             }
 
 
@@ -166,6 +169,29 @@ namespace GTI.WFMS.Modules.Link.ViewModel
             //화면닫기
             btnClose.RaiseEvent(new RoutedEventArgs(Button.ClickEvent));
 
+        }
+
+        /// <summary>
+        /// 삭제
+        /// </summary>
+        /// <param name="obj"></param>
+        private void OnDelete(object obj)
+        {
+            if (Messages.ShowYesNoMsgBox("삭제하시겠습니까?") != MessageBoxResult.Yes) return;
+
+            try
+            {
+                BizUtil.Update2(Dtl, "deleteWttRsrvHt");
+            }
+            catch (Exception)
+            {
+                Messages.ShowErrMsgBox("삭제 처리중 오류가 발생하였습니다.");
+                return;
+            }
+
+            Messages.ShowOkMsgBox();
+            //화면닫기
+            btnClose.RaiseEvent(new RoutedEventArgs(Button.ClickEvent));
         }
 
 

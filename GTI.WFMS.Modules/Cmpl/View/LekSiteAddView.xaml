@@ -145,8 +145,8 @@
             <!--히든 키-->
             <TextBlock x:Name="txtFTR_CDE" Text="{Binding Dtl.FTR_CDE}" Visibility="Collapsed"/> 
             <Label Grid.Row="0" Grid.Column="2" Content="지형지물" Style="{DynamicResource ResourceKey=GridLabelReq}" />
-            <dxe:ComboBoxEdit Grid.Row="0" Grid.Column="3" Style="{DynamicResource ResourceKey=GridComboBox}" Tag="지형지물"
-                              x:Name="cbFTR_CDE" EditValue="{Binding Dtl.FTR_CDE, UpdateSourceTrigger=PropertyChanged}"  IsEnabled="False"/>
+            <dxe:TextEdit Grid.Row="0" Grid.Column="3" Style="{DynamicResource ResourceKey=GridTextEdit}"  IsEnabled="False" 
+                          x:Name="txtFTR_NAM" EditValue="{Binding FTR_NAM}"/>
             <Label Grid.Row="0" Grid.Column="4" Content="행정동" Style="{DynamicResource ResourceKey=GridLabelReq}"  />
             <dxe:ComboBoxEdit Grid.Row="0" Grid.Column="5" Style="{DynamicResource ResourceKey=GridComboBox}" Tag="행정동"
                               x:Name="cbHJD_CDE" EditValue="{Binding Dtl.HJD_CDE}"  />

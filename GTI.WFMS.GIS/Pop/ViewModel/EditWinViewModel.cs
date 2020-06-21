@@ -204,7 +204,7 @@ namespace GTI.WFMS.GIS.Pop.ViewModel
                 //기존페이지 초기화
                 InitPage(cbFTR_CDE.EditValue.ToString(), null, null);
 
-                SearchAction(obj);
+                SearchLayer(obj);
             });
 
 
@@ -508,6 +508,10 @@ namespace GTI.WFMS.GIS.Pop.ViewModel
                 _selectedLayerNm = GisCmm.GetLayerNm(ftr_cde);
                 _selectedLayerNms.Add(GisCmm.GetLayerNm(ftr_cde));
             }
+            else
+            {
+                return;
+            }
 
             // 2.선택된 레이어의 시설물 페이지로  초기화
             InitPage(ftr_cde, null, null);
@@ -516,11 +520,11 @@ namespace GTI.WFMS.GIS.Pop.ViewModel
             if (_selectedLayerNm.Equals("WTL_PIPE_LM") || _selectedLayerNm.Equals("WTL_SPLY_LS"))
             {
                 //대용량데이터는 자동검색 제외
-                SearchAction(null); 
+                SearchLayer(null); 
             }
             else
             {
-                SearchAction(null); 
+                SearchLayer(null); 
             }
 
         }
@@ -810,6 +814,36 @@ namespace GTI.WFMS.GIS.Pop.ViewModel
                     }
                     break;
 
+                case "BZ001": //대블록
+                    if (FmsUtil.IsNull(_FTR_CDE) && FmsUtil.IsNull(_FTR_IDN))
+                    {
+                        editWinView.cctl.Content = null;
+                    }
+                    else if (FmsUtil.IsNull(_FTR_IDN))
+                    {
+                        editWinView.cctl.Content = new UC_BLKL_AS(_FTR_CDE);//신규페이지
+                        NEW_FTR_IDN = ((UC_BLKL_AS)editWinView.cctl.Content).txtFTR_IDN.EditValue.ToString();
+                    }
+                    else
+                    {
+                        editWinView.cctl.Content = new UC_BLKL_AS(_FTR_CDE, _FTR_IDN);//상세페이지
+                    }
+                    break;
+                case "BZ002": //중블록
+                    if (FmsUtil.IsNull(_FTR_CDE) && FmsUtil.IsNull(_FTR_IDN))
+                    {
+                        editWinView.cctl.Content = null;
+                    }
+                    else if (FmsUtil.IsNull(_FTR_IDN))
+                    {
+                        editWinView.cctl.Content = new UC_BLKM_AS(_FTR_CDE);//신규페이지
+                        NEW_FTR_IDN = ((UC_BLKM_AS)editWinView.cctl.Content).txtFTR_IDN.EditValue.ToString();
+                    }
+                    else
+                    {
+                        editWinView.cctl.Content = new UC_BLKM_AS(_FTR_CDE, _FTR_IDN);//상세페이지
+                    }
+                    break;
                 case "BZ003": //소블록
                     if (FmsUtil.IsNull(_FTR_CDE) && FmsUtil.IsNull(_FTR_IDN))
                     {
@@ -839,7 +873,7 @@ namespace GTI.WFMS.GIS.Pop.ViewModel
 
 
         //시설물 shape 검색
-        private void SearchAction(object obj)
+        private void SearchLayer(object obj)
         {
             string ftr_idn = editWinView.txtFTR_IDN.Text;
 

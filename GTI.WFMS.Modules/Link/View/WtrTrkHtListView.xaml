@@ -67,14 +67,14 @@
                     <dxe:TextEditSettings HorizontalContentAlignment="Center" DisplayTextConverter="{StaticResource ResourceKey=date3StrConverter}"/>
                 </dxg:GridColumn.EditSettings>
             </dxg:GridColumn>
-            <dxg:GridColumn Header="청소내용" Width="10*" FieldName="CLN_EXP" HorizontalHeaderContentAlignment="Center">
-                <dxg:GridColumn.EditSettings>
-                    <dxe:TextEditSettings HorizontalContentAlignment="Left"/>
-                </dxg:GridColumn.EditSettings>
-            </dxg:GridColumn>
             <dxg:GridColumn Header="청소업체명" Width="6*" FieldName="CLN_NAM" HorizontalHeaderContentAlignment="Center">
                 <dxg:GridColumn.EditSettings>
                     <dxe:TextEditSettings HorizontalContentAlignment="Center"/>
+                </dxg:GridColumn.EditSettings>
+            </dxg:GridColumn>
+            <dxg:GridColumn Header="청소내용" Width="10*" FieldName="CLN_EXP" HorizontalHeaderContentAlignment="Center">
+                <dxg:GridColumn.EditSettings>
+                    <dxe:TextEditSettings HorizontalContentAlignment="Left"/>
                 </dxg:GridColumn.EditSettings>
             </dxg:GridColumn>
 

@@ -145,6 +145,8 @@
       <DependentUpon>MapArcObjView.xaml</DependentUpon>
     </Compile>
     <Compile Include="MapArcObjViewModel.cs" />
+    <Compile Include="Module\ViewModel\UC_BLKL_ASModel.cs" />
+    <Compile Include="Module\ViewModel\UC_BLKM_ASModel.cs" />
     <Compile Include="Module\ViewModel\UC_FIRE_PSModel.cs" />
     <Compile Include="Module\ViewModel\UC_BLKS_ASModel.cs" />
     <Compile Include="Module\ViewModel\UC_VALV_PSModel.cs" />
@@ -160,6 +162,12 @@
     <Compile Include="Module\ViewModel\UC_MANH_PSModel.cs" />
     <Compile Include="Module\ViewModel\UC_PURI_ASModel.cs" />
     <Compile Include="Module\ViewModel\UC_PIPE_LMModel.cs" />
+    <Compile Include="Module\View\UC_BLKL_AS.xaml.cs">
+      <DependentUpon>UC_BLKL_AS.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Module\View\UC_BLKM_AS.xaml.cs">
+      <DependentUpon>UC_BLKM_AS.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Module\View\UC_FIRE_PS.xaml.cs">
       <DependentUpon>UC_FIRE_PS.xaml</DependentUpon>
     </Compile>
@@ -245,6 +253,14 @@
     <Page Include="MapArcObjView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Module\View\UC_BLKL_AS.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Module\View\UC_BLKM_AS.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
     </Page>
     <Page Include="Module\View\UC_FIRE_PS.xaml">
       <Generator>MSBuild:Compile</Generator>

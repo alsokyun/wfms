@@ -158,8 +158,8 @@ namespace GTI.WFMS.Models.Fclt.Model
                 OnPropertyChanged("HGA_VOL");
             }
         }
-        private decimal ?  __PMP_CNT;
-        public decimal ? PMP_CNT
+        private int ?  __PMP_CNT;
+        public int? PMP_CNT
         {
             get { return __PMP_CNT; }
             set

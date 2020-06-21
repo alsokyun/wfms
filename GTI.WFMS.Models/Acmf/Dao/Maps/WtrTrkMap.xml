@@ -387,24 +387,43 @@
 
     <!--저수조 청소이력추가-->
     <update id="insertWttRsrvHt" parameterClass="GTI.WFMS.Models.Acmf.Model.WttRsrvHtDtl">
-      INSERT INTO INFOFMS.WTT_RSRV_HT
-        (FTR_CDE
-				, FTR_IDN
-				, SEQ
-				, CLN_NUM
-				, CLN_YMD
-				, CLN_EXP
-				, CLN_NAM)
+      MERGE INTO INFOFMS.WTT_RSRV_HT
+      USING DUAL ON (FTR_CDE = #FTR_CDE# AND FTR_IDN = #FTR_IDN# AND SEQ = #SEQ#)
+
+      WHEN MATCHED THEN
+      UPDATE SET
+      CLN_NUM =#CLN_NUM#
+      , CLN_YMD =#CLN_YMD#
+      , CLN_EXP =#CLN_EXP#
+      , CLN_NAM =#CLN_NAM#
+
+      WHEN NOT MATCHED THEN
+      INSERT
+      (FTR_CDE
+      , FTR_IDN
+      , SEQ
+      , CLN_NUM
+      , CLN_YMD
+      , CLN_EXP
+      , CLN_NAM)
       VALUES
-        ( #FTR_CDE#
-		    , #FTR_IDN#
-		    , #SEQ#    
-		    , #CLN_NUM#
-		    , #CLN_YMD#
-		    , #CLN_EXP#
-		    , #CLN_NAM#)
+      ( #FTR_CDE#
+      , #FTR_IDN#
+      , #SEQ#
+      , #CLN_NUM#
+      , #CLN_YMD#
+      , #CLN_EXP#
+      , #CLN_NAM#)
     </update>
-  
+
+    <!--저수조청소 상세삭제-->
+    <update id="deleteWttRsrvHt" parameterClass="GTI.WFMS.Models.Acmf.Model.WttRsrvHtDtl">
+      DELETE INFOFMS.WTT_RSRV_HT
+      WHERE FTR_CDE = #FTR_CDE#
+      AND FTR_IDN = #FTR_IDN#
+      AND SEQ = #SEQ#
+    </update>
+
 
   </statements>
   

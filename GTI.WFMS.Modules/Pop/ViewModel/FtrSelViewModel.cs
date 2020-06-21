@@ -248,6 +248,7 @@ namespace GTI.WFMS.Modules.Pop.ViewModel
                 conditions.Add("FTR_NAM", FmsUtil.Trim(txtFTR_NAM.EditValue));                
                 conditions.Add("CNT_NUM", txtCNT_NUM.Text.Trim());
                 conditions.Add("CNT_NAM", txtCNT_NAM.Text.Trim());
+                //conditions.Add("USE_YB", "Y");
                 
                 conditions.Add("sqlId", "SelectFtrAllList");
 

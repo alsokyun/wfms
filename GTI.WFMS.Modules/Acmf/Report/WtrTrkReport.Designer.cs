@@ -77,7 +77,6 @@
             this.xrLabel67 = new DevExpress.XtraReports.UI.XRLabel();
             this.xrLabel68 = new DevExpress.XtraReports.UI.XRLabel();
             this.xrLabel69 = new DevExpress.XtraReports.UI.XRLabel();
-            this.xrLabel70 = new DevExpress.XtraReports.UI.XRLabel();
             this.xrLabel71 = new DevExpress.XtraReports.UI.XRLabel();
             this.xrLabel72 = new DevExpress.XtraReports.UI.XRLabel();
             this.xrLabel73 = new DevExpress.XtraReports.UI.XRLabel();
@@ -153,6 +152,7 @@
             this.xrTableCell24 = new DevExpress.XtraReports.UI.XRTableCell();
             this.xrTableCell25 = new DevExpress.XtraReports.UI.XRTableCell();
             this.xrTableCell26 = new DevExpress.XtraReports.UI.XRTableCell();
+            this.xrLabel23 = new DevExpress.XtraReports.UI.XRLabel();
             ((System.ComponentModel.ISupportInitialize)(this.objectDataSource1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.xrTable2)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.xrTable1)).BeginInit();
@@ -298,6 +298,7 @@
             // Detail
             // 
             this.Detail.Controls.AddRange(new DevExpress.XtraReports.UI.XRControl[] {
+            this.xrLabel23,
             this.xrLabel20,
             this.xrLabel21,
             this.xrLabel22,
@@ -328,7 +329,6 @@
             this.xrLabel67,
             this.xrLabel68,
             this.xrLabel69,
-            this.xrLabel70,
             this.xrLabel71,
             this.xrLabel72,
             this.xrLabel73,
@@ -780,23 +780,6 @@
             this.xrLabel69.StylePriority.UseTextAlignment = false;
             this.xrLabel69.Text = ":";
             this.xrLabel69.TextAlignment = DevExpress.XtraPrinting.TextAlignment.MiddleLeft;
-            // 
-            // xrLabel70
-            // 
-            this.xrLabel70.ExpressionBindings.AddRange(new DevExpress.XtraReports.UI.ExpressionBinding[] {
-            new DevExpress.XtraReports.UI.ExpressionBinding("BeforePrint", "Text", "[FNS_YMD]")});
-            this.xrLabel70.Font = new System.Drawing.Font("Arial", 8F);
-            this.xrLabel70.LocationFloat = new DevExpress.Utils.PointFloat(608F, 57.125F);
-            this.xrLabel70.Multiline = true;
-            this.xrLabel70.Name = "xrLabel70";
-            this.xrLabel70.Padding = new DevExpress.XtraPrinting.PaddingInfo(5, 2, 0, 0, 100F);
-            this.xrLabel70.SizeF = new System.Drawing.SizeF(147F, 23F);
-            this.xrLabel70.StylePriority.UseFont = false;
-            this.xrLabel70.StylePriority.UsePadding = false;
-            this.xrLabel70.StylePriority.UseTextAlignment = false;
-            this.xrLabel70.Text = "xrLabel15";
-            this.xrLabel70.TextAlignment = DevExpress.XtraPrinting.TextAlignment.MiddleLeft;
-            this.xrLabel70.TextFormatString = "{0:yyyy-MM-dd}";
             // 
             // xrLabel71
             // 
@@ -1811,6 +1794,23 @@
             this.xrTableCell26.TextAlignment = DevExpress.XtraPrinting.TextAlignment.MiddleLeft;
             this.xrTableCell26.Weight = 0.78732983259511369D;
             // 
+            // xrLabel23
+            // 
+            this.xrLabel23.ExpressionBindings.AddRange(new DevExpress.XtraReports.UI.ExpressionBinding[] {
+            new DevExpress.XtraReports.UI.ExpressionBinding("BeforePrint", "Text", "[FNS_YMD]")});
+            this.xrLabel23.Font = new System.Drawing.Font("Arial", 8F);
+            this.xrLabel23.LocationFloat = new DevExpress.Utils.PointFloat(608F, 57.125F);
+            this.xrLabel23.Multiline = true;
+            this.xrLabel23.Name = "xrLabel23";
+            this.xrLabel23.Padding = new DevExpress.XtraPrinting.PaddingInfo(5, 2, 0, 0, 100F);
+            this.xrLabel23.SizeF = new System.Drawing.SizeF(144F, 23F);
+            this.xrLabel23.StylePriority.UseFont = false;
+            this.xrLabel23.StylePriority.UsePadding = false;
+            this.xrLabel23.StylePriority.UseTextAlignment = false;
+            this.xrLabel23.Text = "xrLabel15";
+            this.xrLabel23.TextAlignment = DevExpress.XtraPrinting.TextAlignment.MiddleLeft;
+            this.xrLabel23.TextFormatString = "{0:yyyy-MM-dd}";
+            // 
             // WtrTrkReport
             // 
             this.Bands.AddRange(new DevExpress.XtraReports.UI.Band[] {
@@ -1921,7 +1921,6 @@
         private DevExpress.XtraReports.UI.XRLabel xrLabel67;
         private DevExpress.XtraReports.UI.XRLabel xrLabel68;
         private DevExpress.XtraReports.UI.XRLabel xrLabel69;
-        private DevExpress.XtraReports.UI.XRLabel xrLabel70;
         private DevExpress.XtraReports.UI.XRLabel xrLabel71;
         private DevExpress.XtraReports.UI.XRLabel xrLabel72;
         private DevExpress.XtraReports.UI.XRLabel xrLabel73;
@@ -1963,5 +1962,6 @@
         private DevExpress.XtraReports.UI.XRLabel xrLabel48;
         private DevExpress.XtraReports.UI.XRLabel xrLabel62;
         private DevExpress.XtraReports.UI.XRLabel xrLabel65;
+        private DevExpress.XtraReports.UI.XRLabel xrLabel23;
     }
 }

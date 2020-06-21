@@ -99,7 +99,7 @@ namespace GTI.WFMS.Modules.Fclt.ViewModel
                 this.FTR_IDN = result.FTR_IDN;
                 this.FTR_CDE = "SA110";
 
-                this.FNS_YMD = Convert.ToDateTime(DateTime.Today).ToString("yyyy-MM-dd");
+                //this.FNS_YMD = Convert.ToDateTime(DateTime.Today).ToString("yyyy-MM-dd");
             
                 //공통팝업창 사이즈 변경 4
                 FmsUtil.popWinView.Height = 400;

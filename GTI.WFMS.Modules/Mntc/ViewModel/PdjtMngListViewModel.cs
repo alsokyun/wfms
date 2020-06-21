@@ -84,7 +84,7 @@ namespace GTI.WFMS.Modules.Mntc.ViewModel
             //행추가
             this.AddCommand = new DelegateCommand<object>(delegate(object obj) {
                 PdjtMaDtl addrow = new PdjtMaDtl();
-                GrdLst.Add(addrow);
+                GrdLst.Insert(0,addrow);
                 addrow.CHK = "Y";
             });
         }

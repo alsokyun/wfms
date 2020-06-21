@@ -37,7 +37,7 @@ namespace GTI.WFMS.Main.View
         ConnectConfig userConfig = new ConnectConfig();
         string strOldDBConfig = string.Empty; //DB종류
 
-
+        bool bConnTest = false;
 
         /// <summary>
         /// 생성자
@@ -211,12 +211,12 @@ namespace GTI.WFMS.Main.View
                 if (bValichk)
                 {
                     //접속 테스트 여부 화인
-                    //if (!bConnTest)
-                    //{
-                    //    Messages.ShowInfoMsgBox("접속테스트를 확인하세요.");
-                    //    btnConnTest.Focus();
-                    //    return;
-                    //}
+                    if (!bConnTest)
+                    {
+                        Messages.ShowInfoMsgBox("접속테스트를 확인하세요.");
+                        btnConnTest.Focus();
+                        return;
+                    }
 
                     if (DXMessageBox.Show("저장하시겠습니까?", "InfoFMS", MessageBoxButton.YesNo, MessageBoxImage.Question, MessageBoxResult.Yes) == MessageBoxResult.Yes)
                     {
@@ -317,6 +317,7 @@ namespace GTI.WFMS.Main.View
                 DataTable dtSysdate = work.Select_SYSDATE(null);
                 if (dtSysdate.Rows.Count > 0)
                 {
+                    bConnTest = true;
                     Messages.ShowInfoMsgBox("접속 성공!");
                 }
                 else

@@ -154,7 +154,7 @@
             <dxe:TextEdit Grid.Row="0" Grid.Column="5" Style="{DynamicResource ResourceKey=GridTextEdit}" Tag="민원인TEL" 
                           EditValue="{Binding Dtl.APM_TEL}" />
             <Label Grid.Row="0" Grid.Column="6" Content="공사번호" Style="{DynamicResource ResourceKey=GridLabelReq}"  />
-            <dxe:TextEdit Grid.Row="0" Grid.Column="7" Style="{DynamicResource ResourceKey=GridTextEdit}" 
+            <dxe:TextEdit Grid.Row="0" Grid.Column="7" Style="{DynamicResource ResourceKey=GridTextEdit}" Tag="공사번호"
                           x:Name="txtCNT_NUM" IsEnabled="False"  EditValue="{Binding Dtl.CNT_NUM, UpdateSourceTrigger=PropertyChanged}" Height="28" />
             <Button Grid.Row="0" Grid.Column="7"  x:Name="btnSel" Style="{DynamicResource ResourceKey=GdAddButton}" HorizontalAlignment="Right" Margin="0 0 10 0" Click="BtnSel_Click"/>
 

@@ -99,6 +99,7 @@
       SELECT FTR_CDE, FTR_NAM
       FROM V_FTR_CDE
       WHERE 1=1
+        AND USE_YN = 'Y'
       ORDER BY FTR_CDE
     </select>
     

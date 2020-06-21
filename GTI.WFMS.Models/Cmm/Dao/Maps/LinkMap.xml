@@ -164,7 +164,6 @@
               LEFT JOIN CMT_ADAR_MA H ON H.HJD_CDE = F.HJD_CDE
               LEFT JOIN WTT_CONS_MA C ON C.CNT_NUM = F.CNT_NUM
               WHERE 1=1
-
               <isNotEmpty prepend="AND" property="FTR_IDN">
                 F.FTR_IDN = #FTR_IDN#
               </isNotEmpty>
@@ -183,6 +182,9 @@
               <isNotEmpty prepend="AND" property="HJD_CDE">
                 F.HJD_CDE = #HJD_CDE#
               </isNotEmpty>
+              <isNotEmpty property="USE_YN">
+                AND F.USE_YN = #USE_YN#
+              </isNotEmpty>
 
       )
 
@@ -194,6 +196,7 @@
       , F.HJD_CDE, H.HJD_NAM
       , F.CNT_NUM, C.CNT_NAM
       , F.TAB
+      , F.NAM
       , null AS CHK
 
       FROM V_FTR F
@@ -220,6 +223,10 @@
             <isNotEmpty prepend="AND" property="HJD_CDE">
               F.HJD_CDE = #HJD_CDE#
             </isNotEmpty>
+            <isNotEmpty property="USE_YN">
+              AND F.USE_YN = #USE_YN#
+            </isNotEmpty>
+
 
       ) X JOIN C ON 1=1
       WHERE RN &lt;= ($page$+1) * $rows$
@@ -285,7 +292,7 @@
                   , case when length(A.CLN_YMD) = 8 then substr(A.CLN_YMD,1,4) || '-' || substr(A.CLN_YMD,5,2) || '-' || substr(A.CLN_YMD,7,2) else '' end  as CLN_YMD
                   , A.CLN_EXP
                   , A.CLN_NAM
-              FROM INFOFMS.WTT_RSRV_HT
+              FROM INFOFMS.WTT_RSRV_HT A
              WHERE 1=1
                AND A.FTR_CDE=#FTR_CDE#
                AND A.FTR_IDN=#FTR_IDN#

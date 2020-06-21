@@ -658,7 +658,7 @@
             // xrLabel82
             // 
             this.xrLabel82.ExpressionBindings.AddRange(new DevExpress.XtraReports.UI.ExpressionBinding[] {
-            new DevExpress.XtraReports.UI.ExpressionBinding("BeforePrint", "Text", "[MOP_NAM]")});
+            new DevExpress.XtraReports.UI.ExpressionBinding("BeforePrint", "Text", "[JHT_NAM]")});
             this.xrLabel82.Font = new System.Drawing.Font("Arial", 8F);
             this.xrLabel82.LocationFloat = new DevExpress.Utils.PointFloat(341.0422F, 158.125F);
             this.xrLabel82.Multiline = true;
@@ -750,7 +750,7 @@
             // xrLabel76
             // 
             this.xrLabel76.ExpressionBindings.AddRange(new DevExpress.XtraReports.UI.ExpressionBinding[] {
-            new DevExpress.XtraReports.UI.ExpressionBinding("BeforePrint", "Text", "[JHT_NAM]")});
+            new DevExpress.XtraReports.UI.ExpressionBinding("BeforePrint", "Text", "[MOP_NAM]")});
             this.xrLabel76.Font = new System.Drawing.Font("Arial", 8F);
             this.xrLabel76.LocationFloat = new DevExpress.Utils.PointFloat(608.7084F, 158.125F);
             this.xrLabel76.Multiline = true;

@@ -21,7 +21,7 @@
                
             x:Name="ftrSelView"
             DataContext="{dxmvvm:ViewModelSource Type={x:Type vd:FtrSelViewModel}}"
-        
+            KeyDown="View_KeyDown"
         
        Style="{DynamicResource PopupWindow}" 
        WindowStyle="None"  
@@ -246,6 +246,11 @@
                 </dxg:GridColumn>
 
                 <dxg:GridColumn Header="행정동" Width="120" FieldName="HJD_NAM" HorizontalHeaderContentAlignment="Center">
+                    <dxg:GridColumn.EditSettings>
+                        <dxe:TextEditSettings HorizontalContentAlignment="Center"/>
+                    </dxg:GridColumn.EditSettings>
+                </dxg:GridColumn>
+                <dxg:GridColumn Header="시설물명" Width="150" FieldName="NAM" HorizontalHeaderContentAlignment="Center">
                     <dxg:GridColumn.EditSettings>
                         <dxe:TextEditSettings HorizontalContentAlignment="Center"/>
                     </dxg:GridColumn.EditSettings>

@@ -17,6 +17,7 @@
         xmlns:common="clr-namespace:GTI.WFMS.Models.Common;assembly=GTI.WFMS.Models"
         x:Name="cnstMngPopView"
         
+        KeyDown="View_KeyDown"
         Style="{DynamicResource PopupWindow}" 
        WindowStyle="None"  
        Width="1000" Height="600"
@@ -41,11 +42,7 @@
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
 
-        <Grid Grid.Row="0" Background="{DynamicResource PopupCOLOR1Brush}" >
-            <Grid.InputBindings>
-                <MouseBinding MouseAction="LeftClick" Command="{Binding WindowMoveCommand}" 
-                              CommandParameter="{Binding RelativeSource={RelativeSource AncestorType={x:Type Window}, Mode=FindAncestor}}"/>
-            </Grid.InputBindings>
+        <Grid Grid.Row="0" Background="{DynamicResource PopupCOLOR1Brush}" PreviewMouseLeftButtonDown="Grid_PreviewMouseLeftButtonDown" >
             <Label Content="상수공사 선택" FontSize="17" FontWeight="Bold" Foreground="White" 
                    HorizontalAlignment="Left" VerticalAlignment="Center" Padding="10 0 0 0" />
         </Grid>
@@ -55,7 +52,7 @@
 
         <Grid Grid.Row="1" Background="{DynamicResource TileCOLOR4Brush}">
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="278"/>
+            <ColumnDefinition Width="280"/>
             <ColumnDefinition Width="1"/>
             <ColumnDefinition Width="*"/>
         </Grid.ColumnDefinitions>
@@ -186,24 +183,22 @@
 
 
         <!--하단버튼-->
-        <StackPanel Grid.Row="2" Grid.Column="0" Orientation="Horizontal" VerticalAlignment="Bottom" HorizontalAlignment="Center" Margin="5 0 10 10">
-            <Button x:Name="btnReset" Style="{DynamicResource ResourceKey=InitButton}">
-                <i:Interaction.Triggers>
-                    <i:EventTrigger EventName="Click">
-                        <i:InvokeCommandAction Command="{Binding ResetCommand}">
-                        </i:InvokeCommandAction>
-                    </i:EventTrigger>
-                </i:Interaction.Triggers>
-            </Button>
-            <Button x:Name="btnSearch" Style="{DynamicResource ResourceKey=SearchButton}">
-                <i:Interaction.Triggers>
-                    <i:EventTrigger EventName="Click">
-                        <i:InvokeCommandAction Command="{Binding SearchCommand}">
-                        </i:InvokeCommandAction>
-                    </i:EventTrigger>
-                </i:Interaction.Triggers>
-            </Button>
-        </StackPanel>
+        <StackPanel Grid.Row="2" Grid.Column="0" Orientation="Horizontal"  >
+                <Button x:Name="btnReset" Style="{DynamicResource ResourceKey=InitButton}" Margin="10 0 0 0">
+                    <i:Interaction.Triggers>
+                        <i:EventTrigger EventName="Click">
+                            <i:InvokeCommandAction Command="{Binding ResetCommand}"/>
+                        </i:EventTrigger>
+                    </i:Interaction.Triggers>
+                </Button>
+                <Button x:Name="btnSearch" Style="{DynamicResource ResourceKey=SearchButton}" Margin="5 0 10 0">
+                    <i:Interaction.Triggers>
+                        <i:EventTrigger EventName="Click">
+                            <i:InvokeCommandAction Command="{Binding SearchCommand}"/>
+                        </i:EventTrigger>
+                    </i:Interaction.Triggers>
+                </Button>
+            </StackPanel>
 
 
 
@@ -273,7 +268,7 @@
 
             <dxg:GridColumn Header="설계총액" Width="100" FieldName="DSN_AMT" HorizontalHeaderContentAlignment="Center">
                 <dxg:GridColumn.EditSettings>
-                    <dxe:TextEditSettings HorizontalContentAlignment="Right" Style="{DynamicResource GrdNumberBlock}" />
+                        <dxe:TextEditSettings HorizontalContentAlignment="Right" MaskType="Numeric" Mask="n0" MaskUseAsDisplayFormat="True" />
                 </dxg:GridColumn.EditSettings>
             </dxg:GridColumn>
 
