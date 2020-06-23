@@ -79,8 +79,8 @@ namespace GTI.WFMS.Models.Fctl.Model
                 OnPropertyChanged("ATT_DES");
             }
         }
-        private decimal __ATTA_SEQ;
-        public decimal ATTA_SEQ
+        private decimal? __ATTA_SEQ;
+        public decimal? ATTA_SEQ
         {
             get { return __ATTA_SEQ; }
             set

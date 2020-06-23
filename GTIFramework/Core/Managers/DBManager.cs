@@ -447,6 +447,7 @@ namespace GTIFramework.Core.Managers
             }
             catch (Exception e)
             {
+                throw e;
             }
 
             return dataTable;

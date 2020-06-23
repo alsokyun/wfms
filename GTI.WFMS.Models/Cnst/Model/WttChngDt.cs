@@ -16,8 +16,8 @@ namespace GTI.WFMS.Modules.Cnst.Model
                 OnPropertyChanged("RNO");
             }
         }
-        private decimal __CHNG_SEQ;
-        public decimal CHNG_SEQ
+        private decimal? __CHNG_SEQ;
+        public decimal? CHNG_SEQ
         {
             get { return __CHNG_SEQ; }
             set

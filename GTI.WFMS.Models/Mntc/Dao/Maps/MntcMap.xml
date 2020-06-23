@@ -242,7 +242,9 @@
       AND FTR_CDE=#FTR_CDE#
       AND FTR_IDN=#FTR_IDN#
       AND SEQ = #SEQ#
-      AND PDH_HT_NUM = #PDH_HT_NUM#
+      <isNotEmpty property="PDH_HT_NUM">
+        AND PDH_HT_NUM = #PDH_HT_NUM#
+      </isNotEmpty>
     </update>
 
 

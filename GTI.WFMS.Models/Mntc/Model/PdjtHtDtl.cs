@@ -49,8 +49,8 @@ namespace GTI.WFMS.Models.Mntc.Model
                 OnPropertyChanged("FTR_IDN");
             }
         }
-        private decimal __SCL_NUM;
-        public decimal SCL_NUM
+        private decimal? __SCL_NUM;
+        public decimal? SCL_NUM
         {
             get { return __SCL_NUM; }
             set
@@ -59,8 +59,8 @@ namespace GTI.WFMS.Models.Mntc.Model
                 OnPropertyChanged("SCL_NUM");
             }
         }
-        private decimal __SEQ;
-        public decimal SEQ
+        private decimal? __SEQ;
+        public decimal? SEQ
         {
             get { return __SEQ; }
             set

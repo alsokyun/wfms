@@ -19,8 +19,8 @@ namespace GTI.WFMS.Models.Cmm.Model
                 OnPropertyChanged("RNO");
             }
         }
-        private decimal __SEQ;
-        public decimal SEQ
+        private decimal? __SEQ;
+        public decimal? SEQ
         {
             get { return __SEQ; }
             set

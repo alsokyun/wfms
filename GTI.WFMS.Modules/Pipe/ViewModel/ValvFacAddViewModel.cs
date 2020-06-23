@@ -109,7 +109,7 @@ namespace GTI.WFMS.Modules.Pipe.ViewModel
 
                 //채번결과 매칭
                 this.FTR_IDN = result.FTR_IDN;
-                //this.FTR_CDE = "SA200";
+                this.FTR_CDE = "SA200";
 
                 this.IST_YMD = Convert.ToDateTime(DateTime.Today).ToString("yyyy-MM-dd");
 
@@ -143,9 +143,9 @@ namespace GTI.WFMS.Modules.Pipe.ViewModel
             {
                 BizUtil.Update2(this, "insertValvFacDtl");
             }
-            catch (Exception )
+            catch (Exception ex)
             {
-                Messages.ShowErrMsgBox("저장 처리중 오류가 발생하였습니다.");
+                Messages.ShowErrMsgBox("저장 처리중 오류가 발생하였습니다." + ex.Message);
                 return;
             }
             Messages.ShowOkMsgBox();

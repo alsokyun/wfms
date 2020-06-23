@@ -200,8 +200,8 @@ namespace GTI.WFMS.Models.Cmm.Model
                 OnPropertyChanged("RPR_YN");
             }
         }
-        private int __SEQ;
-        public int SEQ
+        private int ?__SEQ;
+        public int? SEQ
         {
             get { return __SEQ; }
             set

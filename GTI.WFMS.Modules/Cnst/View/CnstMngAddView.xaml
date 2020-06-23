@@ -184,7 +184,7 @@
                           x:Name="txtDPC_AMT" EditValue="{Binding DPC_AMT}"/>
 
             <Label Grid.Row="2" Grid.Column="4" Content="설계_관급금액" Style="{DynamicResource ResourceKey=GridLabel}"/>
-            <dxe:TextEdit Grid.Row="2" Grid.Column="5" Style="{DynamicResource ResourceKey=GridNumberEdit}"   
+            <dxe:TextEdit Grid.Row="2" Grid.Column="5" Style="{DynamicResource ResourceKey=GridIntEdit}"   
                           x:Name="txtDGV_AMT" EditValue="{Binding DGV_AMT}"/>
 
             <Label Grid.Row="2" Grid.Column="6" Content="기타잡비" Style="{DynamicResource ResourceKey=GridLabel}"/>
@@ -360,7 +360,7 @@
                           x:Name="dtCTT_YMD" EditValue="{Binding CTT_YMD, Converter={StaticResource date2StrConverter}}"  />
 
                     <Label Grid.Row="0" Grid.Column="4" Content="예정금액" Style="{DynamicResource ResourceKey=GridLabel}"/>
-                    <dxe:TextEdit Grid.Row="0" Grid.Column="5" Style="{DynamicResource ResourceKey=GridNumberEdit}"   
+                    <dxe:TextEdit Grid.Row="0" Grid.Column="5" Style="{DynamicResource ResourceKey=GridIntEdit}"   
                           x:Name="txtEST_AMT"  EditValue="{Binding EST_AMT}"/>
 
                     <Label Grid.Row="0" Grid.Column="6" Content="계약방법" Style="{DynamicResource ResourceKey=GridLabel}"/>
@@ -380,7 +380,7 @@
                           x:Name="txtCPC_AMT"  EditValue="{Binding CPC_AMT}"/>
 
                     <Label Grid.Row="1" Grid.Column="6" Content="관급금액" Style="{DynamicResource ResourceKey=GridLabel}"/>
-                    <dxe:TextEdit Grid.Row="1" Grid.Column="7" Style="{DynamicResource ResourceKey=GridNumberEdit}"   
+                    <dxe:TextEdit Grid.Row="1" Grid.Column="7" Style="{DynamicResource ResourceKey=GridIntEdit}"   
                           x:Name="txtCGV_AMT"  EditValue="{Binding CGV_AMT}"/>
                 </Grid>
                 

@@ -17,8 +17,8 @@ namespace GTI.WFMS.Modules.Cnst.Model
                 OnPropertyChanged("RNO");
             }
         }
-        private decimal __FLAW_SEQ;
-        public decimal FLAW_SEQ
+        private decimal? __FLAW_SEQ;
+        public decimal? FLAW_SEQ
         {
             get { return __FLAW_SEQ; }
             set

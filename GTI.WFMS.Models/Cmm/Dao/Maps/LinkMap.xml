@@ -43,35 +43,36 @@
     <select id="selectWtlLeakSubList" resultClass="GTI.WFMS.Models.Cmm.Model.LinkWtlLeakPs">
       /* selectWtlLeakSubList - 누수지점 서브 목록 화면 */
       SELECT ROWNUM AS RNO
-           , M.*
-       FROM (SELECT A.FTR_CDE
-                  , (SELECT FTR_NAM FROM INFOFMS.V_FTR_CDE WHERE FTR_CDE = A.FTR_CDE) AS FTR_NAM
-                  , A.FTR_IDN
-                  , A.HJD_CDE
-                  , (SELECT HJD_NAM FROM INFOFMS.CMT_ADAR_MA WHERE HJD_CDE = A.HJD_CDE) AS HJD_NAM
-                  , A.SHT_NUM
-                  , A.RCV_NUM
-                  , A.LEK_YMD
-                  , A.LEK_LOC
-                  , A.PIP_CDE
-                  , A.PIP_IDN
-                  , A.LRS_CDE
-                  , A.LEP_CDE
-                  , A.REP_YMD
-                  , A.REP_EXP
-                  , A.MAT_DES
-                  , A.REP_NAM
-                  , A.SYS_CHK
-                  , A.LEK_EXP
-                  , A.MOP_CDE
-                  , A.PIP_DIP	/*관구경*/
-                FROM WTL_LEAK_PS A
-               WHERE 1=1
-                 AND A.FTR_CDE = #FTR_CDE#
-                 AND A.FTR_IDN like #FTR_IDN# 
-               ORDER BY  A.FTR_CDE DESC , A.FTR_IDN DESC
-            ) M
+      , M.*
+      FROM (SELECT A.FTR_CDE
+      , (SELECT FTR_NAM FROM INFOFMS.V_FTR_CDE WHERE FTR_CDE = A.FTR_CDE) AS FTR_NAM
+      , A.FTR_IDN
+      , A.HJD_CDE
+      , (SELECT HJD_NAM FROM INFOFMS.CMT_ADAR_MA WHERE HJD_CDE = A.HJD_CDE) AS HJD_NAM
+      , A.SHT_NUM
+      , A.RCV_NUM
+      , A.LEK_YMD
+      , A.LEK_LOC
+      , A.PIP_CDE
+      , A.PIP_IDN
+      , A.LRS_CDE
+      , A.LEP_CDE
+      , A.REP_YMD
+      , A.REP_EXP
+      , A.MAT_DES
+      , A.REP_NAM
+      , A.SYS_CHK
+      , A.LEK_EXP
+      , A.MOP_CDE
+      , A.PIP_DIP	/*관구경*/
+      FROM WTL_LEAK_PS A
+      WHERE 1=1
+      AND A.PIP_CDE = #FTR_CDE#
+      AND A.PIP_IDN = #FTR_IDN#
+      ORDER BY  A.FTR_CDE DESC , A.FTR_IDN DESC
+      ) M
     </select>
+
 
 
     <!--부속시설 세부현황 조회-->
@@ -143,12 +144,14 @@
     </update>
 
 
-    <!-- 부속시설 저장 -->
+    <!-- 부속시설 삭제 -->
     <update id="DeleteWttAttaDt" parameterClass="GTI.WFMS.Models.Fctl.Model.WttAttaDt">
       DELETE FROM WTT_ATTA_DT WHERE 1=1
       AND FTR_CDE=#FTR_CDE# 
       AND FTR_IDN=#FTR_IDN# 
-      AND ATTA_SEQ=#ATTA_SEQ#
+      <isNotEmpty property="ATTA_SEQ">
+        AND ATTA_SEQ=#ATTA_SEQ#
+      </isNotEmpty>
     </update>
 
 

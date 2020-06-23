@@ -421,7 +421,9 @@
       DELETE INFOFMS.WTT_RSRV_HT
       WHERE FTR_CDE = #FTR_CDE#
       AND FTR_IDN = #FTR_IDN#
-      AND SEQ = #SEQ#
+      <isNotEmpty property="SEQ">
+        AND SEQ = #SEQ#
+      </isNotEmpty>
     </update>
 
 

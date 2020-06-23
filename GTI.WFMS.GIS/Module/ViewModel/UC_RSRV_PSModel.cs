@@ -181,7 +181,7 @@ namespace GTI.WFMS.GIS.Module.ViewModel
             Hashtable param = new Hashtable();
             param.Add("sqlId", "selectChscResSubList");
             param.Add("sqlId2", "SelectFileMapList");
-            param.Add("sqlId3", "selectWtlLeakSubList");
+            param.Add("sqlId3", "selectWttRsrvHt");
 
             param.Add("FTR_CDE", this.FTR_CDE);
             param.Add("FTR_IDN", this.FTR_IDN);
@@ -202,13 +202,32 @@ namespace GTI.WFMS.GIS.Module.ViewModel
                 }
             }
             catch (Exception) { }
+
+
+
+            // 1.삭제처리
+            if (Messages.ShowYesNoMsgBox("저수조를 삭제하시겠습니까?") != MessageBoxResult.Yes) return;
+
+
             try
             {
                 dt2 = result["dt2"] as DataTable;
                 if (dt2.Rows.Count > 0)
                 {
-                    Messages.ShowInfoMsgBox("파일첨부내역이 존재합니다.");
-                    return;
+                    //Messages.ShowInfoMsgBox("파일첨부내역이 존재합니다.");
+                    //return;
+                    foreach (DataRow row in dt2.Rows)
+                    {
+                        //a.FIL_SEQ 첨부파일삭제
+                        BizUtil.DelFileSeq(row["FIL_SEQ"]);
+
+                        //b.FILE_MAP 업무파일매핑삭제
+                        param = new Hashtable();
+                        param.Add("sqlId", "DeleteFileMap");
+                        param.Add("BIZ_ID", FTR_CDE + FTR_IDN);
+                        param.Add("FIL_SEQ", row["FIL_SEQ"]);
+                        BizUtil.Update(param);
+                    }
                 }
             }
             catch (Exception) { }
@@ -217,16 +236,19 @@ namespace GTI.WFMS.GIS.Module.ViewModel
                 dt3 = result["dt3"] as DataTable;
                 if (dt3.Rows.Count > 0)
                 {
-                    Messages.ShowInfoMsgBox("누수지점내역이 존재합니다.");
-                    return;
+                    //Messages.ShowInfoMsgBox("청소이력이 존재합니다.");
+                    //return;
+                    WttRsrvHtDtl dtl = new WttRsrvHtDtl();
+                    dtl.FTR_CDE = FTR_CDE;
+                    dtl.FTR_IDN = Convert.ToInt32(FTR_IDN);
+                    BizUtil.Update2(dtl, "deleteWttRsrvHt");
                 }
             }
             catch (Exception) { }
 
 
 
-            // 1.삭제처리
-            if (Messages.ShowYesNoMsgBox("저수지를 삭제하시겠습니까?") != MessageBoxResult.Yes) return;
+
             try
             {
                 BizUtil.Update2(this.FctDtl, "deleteWtrTrkDtl");

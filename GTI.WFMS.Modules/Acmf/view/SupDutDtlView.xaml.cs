@@ -68,7 +68,7 @@ namespace GTI.WFMS.Modules.Acmf.View
 
             DXTabItem tab04 = new DXTabItem();
             tab04.Header = "급수전계량기";
-            tab04.Content = new HydtMetrSubListView("SA001", FTR_IDN);
+            tab04.Content = new HydtMetrSubListView(FTR_CDE, FTR_IDN);
             tabSubMenu.Items.Add(tab04);
 
         }

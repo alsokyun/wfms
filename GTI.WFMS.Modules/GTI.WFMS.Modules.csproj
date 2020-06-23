@@ -356,6 +356,10 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
+    <Page Include="Link\View\WtlLeakSubListView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
     <Page Include="Link\View\WtrTrkHtDtlView.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -934,9 +938,13 @@
     <Compile Include="Fclt\view\WtrSourListView.xaml.cs">
       <DependentUpon>WtrSourListView.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Link\ViewModel\HydtMetrSubListViewModel.cs" />
     <Compile Include="Link\ViewModel\WtrTrkHtDtlViewModel.cs" />
     <Compile Include="Link\ViewModel\MetrChgDtlViewModel.cs" />
     <Compile Include="Link\ViewModel\AttFacDtlViewModel.cs" />
+    <Compile Include="Link\View\WtlLeakSubListView.xaml.cs">
+      <DependentUpon>WtlLeakSubListView.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Link\View\WtrTrkHtDtlView.xaml.cs">
       <DependentUpon>WtrTrkHtDtlView.xaml</DependentUpon>
     </Compile>

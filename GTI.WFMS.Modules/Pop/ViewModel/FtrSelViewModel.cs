@@ -273,10 +273,11 @@ namespace GTI.WFMS.Modules.Pop.ViewModel
                         this.TotalCnt = Convert.ToInt32(dt.Rows[0]["ROWCNT"]);
                         this.ItemCnt = (int)Math.Ceiling((double)this.TotalCnt / FmsUtil.PageSize);
                     }
-                    catch (Exception )
+                    catch (Exception ex)
                     {
                         this.TotalCnt = 0;
                         this.ItemCnt = 0;
+                        Console.WriteLine(ex.Message);
                     }
 
                     this.PagedCollection.Clear();

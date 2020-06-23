@@ -20,8 +20,8 @@ namespace GTI.WFMS.Models.Cmm.Model
                 OnPropertyChanged("RNO");
             }
         }
-        private decimal __META_SEQ;
-        public decimal META_SEQ
+        private decimal? __META_SEQ;
+        public decimal? META_SEQ
         {
             get { return __META_SEQ; }
             set

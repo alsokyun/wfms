@@ -125,7 +125,7 @@ namespace GTI.WFMS.Modules.Mntc.ViewModel
                 row.SCL_NUM = Convert.ToInt16(SCL_NUM);
                 row.FTR_CDE = FTR_CDE;
                 row.FTR_IDN = Convert.ToInt16(FTR_IDN);
-                row.SEQ= Convert.ToInt16(SEQ);
+                row.SEQ = Convert.ToInt16(SEQ);
 
                 GrdLst.Add(row);
                 row.CHK = "Y";

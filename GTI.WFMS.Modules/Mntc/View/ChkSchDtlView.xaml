@@ -190,7 +190,7 @@
                           EditValue="{Binding Dtl.SCL_STAT_NM}"/>
                 <Label Grid.Row="2" Grid.Column="2" Content="점검승인일자" Style="{DynamicResource ResourceKey=GridLabel}" />
                 <dxe:TextEdit Grid.Row="2" Grid.Column="3" Style="{DynamicResource ResourceKey=GridTextEdit}" IsEnabled="False" 
-                          EditValue="{Binding Dtl.CHK_APR_YMD}"/>
+                          EditValue="{Binding Dtl.CHK_APR_YMD, Converter={StaticResource date3StrConverter}}"/>
                 <Label Grid.Row="2" Grid.Column="4" Grid.RowSpan="2" Content="점검내용" Style="{DynamicResource ResourceKey=GridLabel}" />
                 <RichTextBox Grid.Row="2" Grid.Column="5" Grid.ColumnSpan="3" Grid.RowSpan="2" 
                             Style="{DynamicResource GridRichTextBox}" Margin="10 8 10 8"
@@ -225,9 +225,9 @@
                 </StackPanel>
 
                 <StackPanel Grid.Row="0" Orientation="Horizontal" HorizontalAlignment="Right" Margin="0 0 5 0">
-                    <Button x:Name="btnAdd" Content="추가" Style="{DynamicResource ResourceKey=GrdAddButton}"  Click="btnAdd_Click"/>
-                    <Button x:Name="btnDel" Content="삭제" Style="{DynamicResource ResourceKey=GrdDelButton}"  Click="btnDel_Click"/>
-                    <Button x:Name="btnReg" Content="저장" Style="{DynamicResource ResourceKey=GrdRegButton}"  Click="btnReg_Click"/>
+                        <Button x:Name="btnAdd" Content="추가" Style="{DynamicResource ResourceKey=GrdAddButton}" Command="{Binding AddFtrSelCmd}" />
+                        <Button x:Name="btnDel" Content="삭제" Style="{DynamicResource ResourceKey=GrdDelButton}"  Command="{Binding GrdDelCmd}" />
+                        <Button x:Name="btnReg" Content="저장" Style="{DynamicResource ResourceKey=GrdRegButton}" Command="{Binding GrdSaveCmd}" />
                 </StackPanel>
 
 

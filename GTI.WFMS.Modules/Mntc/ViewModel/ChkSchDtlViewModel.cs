@@ -109,8 +109,8 @@ namespace GTI.WFMS.Modules.Mntc.ViewModel
                 btnDelete = chkSchDtlView.btnDelete;
                 btnSave = chkSchDtlView.btnSave;
                 btnClose = chkSchDtlView.btnClose;
-                
 
+                GrdLst = new ObservableCollection<ChscResultDtl>();
 
                 //2.화면데이터객체 초기화
                 InitDataBinding();
@@ -169,8 +169,39 @@ namespace GTI.WFMS.Modules.Mntc.ViewModel
                     dt = result["dt"] as DataTable;
                     if (dt.Rows.Count > 0)
                     {
-                        Messages.ShowErrMsgBox("점검시설물이 존재합니다.");
-                        return;
+                        //Messages.ShowErrMsgBox("점검시설물이 존재합니다.");
+                        //return;
+                        foreach (DataRow row in dt.Rows)
+                        {
+                            //0.점검사진삭제
+                            //a.FIL_SEQ 첨부파일삭제
+                            BizUtil.DelFileSeq(row["FIL_SEQ"]);
+
+                            //b.FILE_MAP 업무파일매핑삭제
+                            param = new Hashtable();
+                            param.Add("sqlId", "DeleteFileMap");
+                            param.Add("BIZ_ID", row["FTR_CDE"].ToString() + row["FTR_IDN"].ToString());
+                            param.Add("FIL_SEQ", row["FIL_SEQ"]);
+                            BizUtil.Update(param);
+
+                            //0.소모품삭제
+                            PdjtHtDtl dtl = new PdjtHtDtl();
+                            dtl.SCL_NUM = Convert.ToInt32(row["SCL_NUM"]) ;
+                            dtl.FTR_CDE = row["FTR_CDE"].ToString();
+                            dtl.FTR_IDN = Convert.ToInt32(row["FTR_IDN"]); 
+                            dtl.SEQ = Convert.ToInt32(row["SEQ"]);
+                            BizUtil.Update2(dtl, "DeletePdjtHt");
+
+                            //1.데이터삭제
+                            param.Clear();
+                            param.Add("SCL_NUM", row["SCL_NUM"]);
+                            param.Add("FTR_CDE", row["FTR_CDE"]);
+                            param.Add("FTR_IDN", Convert.ToInt32(row["FTR_IDN"]));
+                            param.Add("sqlId", "DeleteChscResult");
+                            param.Add("SEQ", Convert.ToInt32(row["SEQ"]));
+                            BizUtil.Update(param);
+
+                        }
                     }
                 }
                 catch (Exception) { }
@@ -281,6 +312,7 @@ namespace GTI.WFMS.Modules.Mntc.ViewModel
 
                     try
                     {
+                        row.SCL_NUM = Dtl.SCL_NUM;
                         BizUtil.Update2(row, "SaveChscResult");
                     }
                     catch (Exception)
@@ -307,7 +339,7 @@ namespace GTI.WFMS.Modules.Mntc.ViewModel
 
 
             // 행삭제 GrdDelCmd 
-            this.AddFtrSelCmd = new RelayCommand<object>(delegate (object obj) {
+            this.GrdDelCmd = new RelayCommand<object>(delegate (object obj) {
 
                 //데이터 직접삭제처리
                 try
@@ -336,13 +368,6 @@ namespace GTI.WFMS.Modules.Mntc.ViewModel
                             {
                                 if ("Y".Equals(row.CHK))
                                 {
-                                    param.Clear();
-                                    param.Add("sqlId", "DeleteChscResult");
-                                    param.Add("SCL_NUM", row.SCL_NUM);
-                                    param.Add("FTR_CDE", row.FTR_CDE);
-                                    param.Add("FTR_IDN", row.FTR_IDN);
-                                    param.Add("SEQ", row.SEQ);
-
                                     if (row.SEQ == 0)
                                     {
                                         //그리드행만 삭제
@@ -351,7 +376,32 @@ namespace GTI.WFMS.Modules.Mntc.ViewModel
                                     }
                                     else
                                     {
-                                        //데이터삭제
+                                        //0.점검사진삭제
+                                        //a.FIL_SEQ 첨부파일삭제
+                                        BizUtil.DelFileSeq(row.FIL_SEQ);
+
+                                        //b.FILE_MAP 업무파일매핑삭제
+                                        param = new Hashtable();
+                                        param.Add("sqlId", "DeleteFileMap");
+                                        param.Add("BIZ_ID", row.FTR_CDE + row.FTR_IDN);
+                                        param.Add("FIL_SEQ", row.FIL_SEQ);
+                                        BizUtil.Update(param);
+
+                                        //0.소모품삭제
+                                        PdjtHtDtl dtl = new PdjtHtDtl();
+                                        dtl.SCL_NUM = row.SCL_NUM;
+                                        dtl.FTR_CDE = row.FTR_CDE;
+                                        dtl.FTR_IDN = row.FTR_IDN;
+                                        dtl.SEQ = row.SEQ;
+                                        BizUtil.Update2(dtl, "DeletePdjtHt");
+
+                                        //1.데이터삭제
+                                        param.Clear();
+                                        param.Add("SCL_NUM", row.SCL_NUM);
+                                        param.Add("FTR_CDE", row.FTR_CDE);
+                                        param.Add("FTR_IDN", row.FTR_IDN);
+                                        param.Add("SEQ", row.SEQ);
+                                        param.Add("sqlId", "DeleteChscResult");
                                         param.Add("SEQ", Convert.ToInt32(row.SEQ));
                                         BizUtil.Update(param);
                                     }
@@ -400,26 +450,30 @@ namespace GTI.WFMS.Modules.Mntc.ViewModel
             Dtl = BizUtil.SelectObject(param) as ChscMaDtl;
 
             //점검결과 다큐먼트 수동세팅
-            chkSchDtlView.richBox.Document.Blocks.Clear();
-            Paragraph paragraph = new Paragraph();
-            paragraph.Inlines.Add(Dtl.CHK_CTNT.Trim());
-            chkSchDtlView.richBox.Document.Blocks.Add(paragraph);
+            try
+            {
+                chkSchDtlView.richBox.Document.Blocks.Clear();
+                Paragraph paragraph = new Paragraph();
+                paragraph.Inlines.Add(Dtl.CHK_CTNT.Trim());
+                chkSchDtlView.richBox.Document.Blocks.Add(paragraph);
+            }
+            catch (Exception){}
 
 
             //b.점검결과
-            //param = new Hashtable();
-            //param.Add("sqlId", "SelectChscResultList");
-            //param.Add("SCL_NUM", Dtl.SCL_NUM);
+            param = new Hashtable();
+            param.Add("sqlId", "SelectChscResultList");
+            param.Add("SCL_NUM", Dtl.SCL_NUM);
 
-            //GrdLst = new ObservableCollection<ChscResultDtl>(BizUtil.SelectListObj<ChscResultDtl>(param));
+            GrdLst = new ObservableCollection<ChscResultDtl>(BizUtil.SelectListObj<ChscResultDtl>(param));
 
-            //// 1.1 점검결과 첫행선택
-            //if (GrdLst.Count > 0)
-            //{
-            //    //SEL_FTR_CDE = GrdLst[0].FTR_CDE.ToString();
-            //    //SEL_FTR_IDN = dt.Rows[0]["FTR_IDN"].ToString();
-            //    //SEL_SEQ = dt.Rows[0]["SEQ"].ToString();
-            //}
+            // 1.1 점검결과 첫행선택
+            if (GrdLst.Count > 0)
+            {
+                //SEL_FTR_CDE = GrdLst[0].FTR_CDE.ToString();
+                //SEL_FTR_IDN = dt.Rows[0]["FTR_IDN"].ToString();
+                //SEL_SEQ = dt.Rows[0]["SEQ"].ToString();
+            }
         }
 
 
@@ -490,7 +544,9 @@ namespace GTI.WFMS.Modules.Mntc.ViewModel
             drNew.FTR_NAM = fTR_NAM;
             drNew.RPR_YMD = Convert.ToDateTime(DateTime.Today).ToString("yyyyMMdd");
 
+            drNew.CHK = "Y";
             GrdLst.Add(drNew);
+
         }
 
 

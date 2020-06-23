@@ -28,8 +28,8 @@ namespace GTI.WFMS.Modules.Cnst.Model
                 OnPropertyChanged("CNT_NUM");
             }
         }
-        private decimal __SUBC_SEQ;
-        public decimal SUBC_SEQ
+        private decimal? __SUBC_SEQ;
+        public decimal? SUBC_SEQ
         {
             get { return __SUBC_SEQ; }
             set
