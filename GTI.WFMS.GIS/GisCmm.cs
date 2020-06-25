@@ -23,6 +23,12 @@ namespace GTI.WFMS.GIS
         public static double _ulsanScale = 500000;
         public static double _ulsanScale2 = 150000;
 
+        //한반도영역
+        public static double XMin = 13850000.0;
+        public static double XMax = 14440000.0;
+        public static double YMin = 4070000.0;
+        public static double YMax = 4550000.0;
+
 
 
 

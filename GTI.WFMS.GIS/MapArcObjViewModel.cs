@@ -20,6 +20,7 @@ using ESRI.ArcGIS.Display;
 using System.Collections.ObjectModel;
 using GTI.WFMS.GIS.Pop.View;
 using System.Threading.Tasks;
+using ESRI.ArcGIS.Geometry;
 
 namespace GTI.WFMS.GIS
 {
@@ -129,7 +130,7 @@ namespace GTI.WFMS.GIS
         #region ========== 생성자 ==========
 
         public MapArcObjViewModel()
-                {
+        {
 
             loadedCmd = new RelayCommand<object>(delegate (object obj)
             {
@@ -162,6 +163,9 @@ namespace GTI.WFMS.GIS
 
                 //비트맵초기화(시설물상세DIV 아이콘)
                 BitImg = new BitmapImage();
+
+                //맵마우스클릭 이벤트설정
+                mapControl.OnMouseUp += OnMouseClick;
             });
 
 
@@ -209,6 +213,8 @@ namespace GTI.WFMS.GIS
                     //재조회
                     resetAction(null);
                 }
+
+
             });
 
             
@@ -220,7 +226,78 @@ namespace GTI.WFMS.GIS
 
 
 
+        //마우스 클릭 이벤트핸들러
+        private void OnMouseClick(object sender, IMapControlEvents2_OnMouseUpEvent e)
+        {
+            //IPoint pQueryPoint = new PointClass();
+            IPoint pQueryPoint = mapControl.ActiveView.ScreenDisplay.DisplayTransformation.ToMapPoint(e.x, e.y);
+            var x = pQueryPoint.X;
+            var y = pQueryPoint.Y;
 
+            //클릭범위보정
+            int PxTol = 6; // 6 pixels to select by
+            IPoint pNextPoint = mapControl.ActiveView.ScreenDisplay.DisplayTransformation.ToMapPoint(e.x + PxTol, e.y);
+            double pSrchDist = pNextPoint.X - pQueryPoint.X; // measure the distance between points PxTol apart
+            IGeometry buffer = (pQueryPoint as ITopologicalOperator).Buffer(99);
+            //IGeometry buffer = (pQueryPoint as ITopologicalOperator).Buffer(pSrchDist);
+
+            var XMax = buffer.Envelope.XMax;
+            var XMin = buffer.Envelope.XMin;
+            var YMax = buffer.Envelope.YMax;
+            var YMin = buffer.Envelope.YMin;
+
+
+            FeatureLayer layer = CmmObj.layers[GisCmm.GetLayerNm("SA117")];
+            
+
+            ISpatialFilter pSF = new SpatialFilter();
+            pSF.Geometry = buffer;
+            pSF.SpatialRel = esriSpatialRelEnum.esriSpatialRelIntersects;
+            //pSF.SpatialRel = esriSpatialRelEnum.esriSpatialRelOverlaps;
+            //pSF.SpatialRel = esriSpatialRelEnum.esriSpatialRelContains;
+            //pSF.SpatialRel = esriSpatialRelEnum.esriSpatialRelEnvelopeIntersects;
+            IFeatureCursor pDestCur = layer.Search(pSF, true);
+
+            IFeature pFeat = pDestCur.NextFeature();
+            while (pFeat != null)
+            {
+                // do something with pFeat
+                var ftr_cde = pFeat.Value[2];
+                var ftr_idn = pFeat.Value[0];
+
+                //1.셀렉트처리 필터링
+                IQueryFilter qfltr = new QueryFilter();
+                qfltr.WhereClause = " FTR_CDE = '" + ftr_cde + "' AND FTR_IDN = " + ftr_idn;
+                IFeatureSelection fsel = layer as IFeatureSelection;
+                fsel.Clear();
+                fsel.SelectFeatures(qfltr, esriSelectionResultEnum.esriSelectionResultAdd, true);
+                mapControl.Refresh();
+
+
+                //0.시설물팝업호출
+                FtrPopView ftrPopView = new FtrPopView(ftr_cde, ftr_idn);
+                try
+                {
+                    ftrPopView.lbTitle.Content = BizUtil.GetCodeNm("Select_FTR_LIST2", ftr_cde);
+                }
+                catch (Exception)
+                {
+                    ftrPopView.lbTitle.Content = "시설물정보";
+                }
+                if (ftrPopView.ShowDialog() is bool)
+                {
+                    //재조회
+                    fsel.Clear();
+                    mapControl.Refresh();
+                }
+
+                break;
+                //pFeat = pDestCur.NextFeature();
+            }
+
+
+
+        }
 
 
 
@@ -366,7 +443,15 @@ namespace GTI.WFMS.GIS
 
                     }
 
-                    //mapControl.Extent = layers[_layerNm].AreaOfInterest;
+                    IEnvelope area = CmmObj.layers[_layerNm].AreaOfInterest;
+
+                    //한반도영역내에 있는경우만 스케일링
+                    if ( area.XMin > GisCmm.XMin && area.XMax < GisCmm.XMax
+                            && area.YMin > GisCmm.YMin && area.YMax < GisCmm.YMax)
+                    {
+                        mapControl.Extent = area;
+                    }
+
                     return CmmObj.layers[_layerNm];
                 }
                 // 2.레이어 OFF

@@ -1014,7 +1014,6 @@
     <Compile Include="Main\PopMain.xaml.cs">
       <DependentUpon>PopMain.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Main\ViewModel\PopWinViewModel.cs" />
     <Compile Include="Main\View\PopWinView.xaml.cs">
       <DependentUpon>PopWinView.xaml</DependentUpon>
     </Compile>
@@ -1308,7 +1307,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Licenses.licx" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Folder Include="Main\ViewModel\" />
+  </ItemGroup>
   <ItemGroup>
     <WCFMetadata Include="Connected Services\" />
   </ItemGroup>

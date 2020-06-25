@@ -139,6 +139,7 @@
     <Compile Include="CmmObj.cs" />
     <Compile Include="CmmRunHs.cs" />
     <Compile Include="CmmRun.cs" />
+    <Compile Include="Ext\FmsFeature.cs" />
     <Compile Include="GisCmm.cs" />
     <Compile Include="LocalServerModel.cs" />
     <Compile Include="MapArcObjView.xaml.cs">
@@ -230,6 +231,9 @@
       <DependentUpon>UC_FLOW_PS.xaml</DependentUpon>
     </Compile>
     <Compile Include="Pop\ViewModel\CnstMngPopViewModel.cs" />
+    <Compile Include="Pop\View\FtrPopView.xaml.cs">
+      <DependentUpon>FtrPopView.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Pop\View\ShpMngView.xaml.cs">
       <DependentUpon>ShpMngView.xaml</DependentUpon>
     </Compile>
@@ -323,6 +327,10 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Include="Module\FTR_POP.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Pop\View\FtrPopView.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>

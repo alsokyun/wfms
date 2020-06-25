@@ -107,7 +107,8 @@
          , M.IN_AMT - TOT_USE_AMT AS DATA_VAL
 		  FROM (SELECT M.PDH_NUM
 		             , M.PDT_CAT_CDE
-		             , NVL(FN_GET_CD_DTL_INFO_NAME('PDT_CAT_CDE',M.PDT_CAT_CDE),M.PDT_CAT_CDE) AS MNG_CDE_NAM
+		             
+					       , (SELECT NM FROM INFOUSER.CD_DTL_INFO WHERE MST_CD = '250106' AND DTL_CD = M.PDT_CAT_CDE) AS MNG_CDE_NAM
 		             , M.PDT_NAM
 		             , NVL(SUM(A.IN_AMT),0) AS IN_AMT
 		             , NVL(SUM(CASE WHEN M.PDT_CAT_CDE = 'PDT001' THEN B.PDH_CNT /*소모품구분(소모품)*/
@@ -179,7 +180,7 @@
 		     , M.NM AS RPR_CAT_CDE_NAM		     
          , M.NM AS NAM 
 		     , SUM(CASE WHEN A.SCL_NUM IS NOT NULL THEN 1 ELSE 0 END) DATA_VAL
-		  FROM CD_DTL_INFO M 
+		  FROM infouser.CD_DTL_INFO M 
                LEFT JOIN FMS_CHSC_FTR_RES A
                  ON (M.DTL_CD = A.RPR_CAT_CDE
                      AND A.RPR_YMD LIKE NVL(#pYm#, TO_CHAR(SYSDATE,'YYYYMM')) || '%' )
@@ -222,7 +223,8 @@
          , M.TOT_USE_AMT AS DATA_VAL
 		  FROM (SELECT M.PDH_NUM
 		             , M.PDT_CAT_CDE
-		             , NVL(FN_GET_CD_DTL_INFO_NAME('PDT_CAT_CDE',M.PDT_CAT_CDE),M.PDT_CAT_CDE) AS MNG_CDE_NAM
+		             
+					       , (SELECT NM FROM INFOUSER.CD_DTL_INFO WHERE MST_CD = '250106' AND DTL_CD = M.PDT_CAT_CDE) AS MNG_CDE_NAM
 		             , M.PDT_NAM
 		             , NVL(SUM(A.IN_AMT),0) AS IN_AMT
 		             , NVL(SUM(CASE WHEN M.PDT_CAT_CDE = 'PDT001' THEN B.PDH_CNT /*소모품구분(소모품)*/
