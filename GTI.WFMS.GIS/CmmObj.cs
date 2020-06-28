@@ -1,5 +1,6 @@
 ﻿using ESRI.ArcGIS.Carto;
 using ESRI.ArcGIS.Display;
+using GTI.WFMS.GIS.Ext;
 using GTI.WFMS.Models.Common;
 using System.Collections.Generic;
 
@@ -11,44 +12,44 @@ namespace GTI.WFMS.GIS
     public class CmmObj
     {
 
-        public static Dictionary<string, FeatureLayer> layers;
+        public static Dictionary<string, FmsFeature> layers;
         public static void initLayers()
         {
-            layers = new Dictionary<string, FeatureLayer>()
+            layers = new Dictionary<string, FmsFeature>()
             {
-                {"WTL_FLOW_PS",  new FeatureLayer()},
-                {"WTL_FIRE_PS^SA118",  new FeatureLayer()},
-                {"WTL_FIRE_PS^SA119",  new FeatureLayer()},
-                {"WTL_GAIN_PS",  new FeatureLayer()},
-                {"WTL_HEAD_PS",  new FeatureLayer()},
-                {"WTL_LEAK_PS",  new FeatureLayer()},
-                {"WTL_MANH_PS",  new FeatureLayer()},
-                {"WTL_META_PS",  new FeatureLayer()},
-                {"WTL_PRES_PS",  new FeatureLayer()},
-                {"WTL_PRGA_PS",  new FeatureLayer()},
-                {"WTL_RSRV_PS",  new FeatureLayer()},
-                {"WTL_SERV_PS",  new FeatureLayer()},
-                {"WTL_STPI_PS",  new FeatureLayer()},
-                {"WTL_VALV_PS^SA200",  new FeatureLayer()},
-                {"WTL_VALV_PS^SA201",  new FeatureLayer()},
-                {"WTL_VALV_PS^SA202",  new FeatureLayer()},
-                {"WTL_VALV_PS^SA203",  new FeatureLayer()},
-                {"WTL_VALV_PS^SA204",  new FeatureLayer()},
-                {"WTL_VALV_PS^SA205",  new FeatureLayer()},
-                {"WTL_VALV_PS^SA206",  new FeatureLayer()},
+                {"WTL_FLOW_PS",  new FmsFeature()},
+                {"WTL_FIRE_PS^SA118",  new FmsFeature()},
+                {"WTL_FIRE_PS^SA119",  new FmsFeature()},
+                {"WTL_GAIN_PS",  new FmsFeature()},
+                {"WTL_HEAD_PS",  new FmsFeature()},
+                {"WTL_LEAK_PS",  new FmsFeature()},
+                {"WTL_MANH_PS",  new FmsFeature()},
+                {"WTL_META_PS",  new FmsFeature()},
+                {"WTL_PRES_PS",  new FmsFeature()},
+                {"WTL_PRGA_PS",  new FmsFeature()},
+                {"WTL_RSRV_PS",  new FmsFeature()},
+                {"WTL_SERV_PS",  new FmsFeature()},
+                {"WTL_STPI_PS",  new FmsFeature()},
+                {"WTL_VALV_PS^SA200",  new FmsFeature()},
+                {"WTL_VALV_PS^SA201",  new FmsFeature()},
+                {"WTL_VALV_PS^SA202",  new FmsFeature()},
+                {"WTL_VALV_PS^SA203",  new FmsFeature()},
+                {"WTL_VALV_PS^SA204",  new FmsFeature()},
+                {"WTL_VALV_PS^SA205",  new FmsFeature()},
+                {"WTL_VALV_PS^SA206",  new FmsFeature()},
 
 
-                {"BML_GADM_AS",  new FeatureLayer()},
-                {"WTL_PURI_AS",  new FeatureLayer()},
-                {"WTL_LBLK_AS",  new FeatureLayer()},
-                {"WTL_MBLK_AS",  new FeatureLayer()},
-                {"WTL_SBLK_AS",  new FeatureLayer()},
+                {"BML_GADM_AS",  new FmsFeature()},
+                {"WTL_PURI_AS",  new FmsFeature()},
+                {"WTL_LBLK_AS",  new FmsFeature()},
+                {"WTL_MBLK_AS",  new FmsFeature()},
+                {"WTL_SBLK_AS",  new FmsFeature()},
 
-                {"WTL_PIPE_LM",  new FeatureLayer()},
-                {"WTL_SPLY_LS",  new FeatureLayer()},
-                {"WTL_PIPE_LX",  new FeatureLayer()},
-                {"WTL_SPLY_LX",  new FeatureLayer()},
-                {"WTL_PIPE_LY",  new FeatureLayer()},
+                {"WTL_PIPE_LM",  new FmsFeature()},
+                {"WTL_SPLY_LS",  new FmsFeature()},
+                {"WTL_PIPE_LX",  new FmsFeature()},
+                {"WTL_SPLY_LX",  new FmsFeature()},
+                {"WTL_PIPE_LY",  new FmsFeature()},
             };
 
         }
@@ -210,7 +211,7 @@ namespace GTI.WFMS.GIS
             ISimpleLineSymbol lineSymbolSA002 = new SimpleLineSymbol();
             lineSymbolSA002.Color = new RgbColor() { Red = 0, Green = 204, Blue = 153 };
             lineSymbolSA002.Width = 1.3;
-            //울산행정구역
+            //행정구역
             //ISimpleLineSymbol lineSymbolEA305 = new SimpleLineSymbol();
             //lineSymbolEA305.Color = new RgbColor() { Red = 255, Green = 0, Blue = 0 };
 
@@ -229,29 +230,29 @@ namespace GTI.WFMS.GIS
             pSLS.Color = new RgbColor() { Red = 51, Green = 0, Blue = 204 };
             //대블록
             ISimpleFillSymbol fillSymbolBZ001 = new SimpleFillSymbol();
-            fillSymbolBZ001.Color = new RgbColor() { Red = 153, Green = 51, Blue = 255, Transparency=50 };
+            fillSymbolBZ001.Color = new RgbColor() { Red = 153, Green = 51, Blue = 255, Transparency = 50 };
             fillSymbolBZ001.Outline = pSLS;  //외각선은 라인심볼로 지정
-            
+
             //라인심볼
             pSLS = new SimpleLineSymbol();
-            pSLS.Color = new RgbColor() { Red = 0, Green = 204, Blue = 51};
+            pSLS.Color = new RgbColor() { Red = 0, Green = 204, Blue = 51 };
             //중블록
             ISimpleFillSymbol fillSymbolBZ002 = new SimpleFillSymbol();
-            fillSymbolBZ002.Color = new RgbColor() { Red = 51, Green = 255, Blue = 153, Transparency=50 };
+            fillSymbolBZ002.Color = new RgbColor() { Red = 51, Green = 255, Blue = 153, Transparency = 50 };
             fillSymbolBZ002.Outline = pSLS;  //외각선은 라인심볼로 지정
-            
+
             //라인심볼
             pSLS = new SimpleLineSymbol();
             pSLS.Color = new RgbColor() { Red = 0, Green = 51, Blue = 204 };
             //소블록
             ISimpleFillSymbol fillSymbolBZ003 = new SimpleFillSymbol();
-            fillSymbolBZ003.Color = new RgbColor() { Red = 51, Green = 153, Blue = 255, Transparency=50 };
+            fillSymbolBZ003.Color = new RgbColor() { Red = 51, Green = 153, Blue = 255, Transparency = 50 };
             fillSymbolBZ003.Outline = pSLS;  //외각선은 라인심볼로 지정
 
             //라인심볼
             pSLS = new SimpleLineSymbol();
             pSLS.Color = new RgbColor() { Red = 255, Green = 0, Blue = 0 };
-            //울산행정구역
+            //행정구역
             ISimpleFillSymbol fillSymbolEA305 = new SimpleFillSymbol();
             fillSymbolEA305.Color = new RgbColor() { Red = 51, Green = 153, Blue = 255 };
             fillSymbolEA305.Outline = pSLS;  //외각선은 라인심볼로 지정
@@ -389,7 +390,7 @@ namespace GTI.WFMS.GIS
                     break;
 
                 case "BML_GADM_AS":
-                    korNm = "울산행정구역";
+                    korNm = "행정구역";
                     break;
 
                 case "WTL_PIPE_LX":

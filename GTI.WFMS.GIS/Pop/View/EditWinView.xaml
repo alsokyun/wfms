@@ -26,7 +26,18 @@
         <ResourceDictionary>
             <cv:Date3StrConverter x:Key="date3StrConverter" />
             <cv:Toggle2Converter x:Key="toggleConverter" />
+
+            <ControlTemplate x:Key="dockTemplate" TargetType="Button">
+                <DockPanel >
+                    <CheckBox Name="chkLayer" Tag="{TemplateBinding ToolTip}" VerticalAlignment="Center"
+                              Background="{DynamicResource DataMngTab2Brush}" BorderBrush="{DynamicResource TileCOLOR2Brush}"/>
+                    <TextBlock Margin="5" Foreground="#ffffff" FontSize="12" Text="{TemplateBinding Content}" VerticalAlignment="Center"/>
+                </DockPanel>
+            </ControlTemplate>
+
         </ResourceDictionary>
+        
+        
     </Window.Resources>
 
     <Window.DataContext>
@@ -67,6 +78,25 @@
             <dxe:TextEdit Style="{DynamicResource ResourceKey=SearchTextEdit}" Tag="관리번호" x:Name="txtFTR_IDN" Width="130" KeyDown="TxtFTR_IDN_KeyDown"/>
             <Image Source="fms_search_line.png" Margin="10 0 5 0"/>
 
+
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Margin="30 0 0 0">
+                <Button  Tag="WTL_PIPE_LM" Content="상수관로" ToolTip="SA001.png" Template="{StaticResource ResourceKey=dockTemplate}">
+                    <i:Interaction.Triggers>
+                        <i:EventTrigger EventName="Click">
+                            <i:InvokeCommandAction Command="{Binding chkCmd}"  CommandParameter="{Binding RelativeSource={RelativeSource AncestorType={x:Type Button}}}" />
+                        </i:EventTrigger>
+                    </i:Interaction.Triggers>
+                </Button>
+                <Button  Tag="WTL_SPLY_LS" Content="급수관로" ToolTip="SA002.png" Template="{StaticResource ResourceKey=dockTemplate}">
+                    <i:Interaction.Triggers>
+                        <i:EventTrigger EventName="Click">
+                            <i:InvokeCommandAction Command="{Binding chkCmd}"  CommandParameter="{Binding RelativeSource={RelativeSource AncestorType={x:Type Button}}}" />
+                        </i:EventTrigger>
+                    </i:Interaction.Triggers>
+                </Button>
+            </StackPanel>
+            
+            
             <TextBlock x:Name="txbFTR_CDE" Visibility="Collapsed" Text="{Binding FTR_CDE, UpdateSourceTrigger=PropertyChanged}"/>
             <TextBlock x:Name="txbFTR_IDN" Visibility="Collapsed" Text="{Binding FTR_IDN, UpdateSourceTrigger=PropertyChanged}"/>
         </StackPanel>

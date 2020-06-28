@@ -21,6 +21,7 @@ using System.Collections.ObjectModel;
 using GTI.WFMS.GIS.Pop.View;
 using System.Threading.Tasks;
 using ESRI.ArcGIS.Geometry;
+using GTI.WFMS.GIS.Ext;
 
 namespace GTI.WFMS.GIS
 {
@@ -121,7 +122,7 @@ namespace GTI.WFMS.GIS
 
         }
 
-#endregion
+        #endregion
 
 
 
@@ -202,17 +203,20 @@ namespace GTI.WFMS.GIS
 
 
             //GIS초기화
-            resetCmd = new RelayCommand<object>(resetAction);
+            resetCmd = new RelayCommand<object>(async delegate(object obj) {
+
+                string stat = await resetAction(obj);
+            });
 
             //SHP파일관리창
             importCmd = new RelayCommand<object>(delegate(object obj) {
 
-                ShpMngView view = new ShpMngView();
-                if (view.ShowDialog() is bool)
-                {
-                    //재조회
-                    resetAction(null);
-                }
+                //ShpMngView view = new ShpMngView();
+                //if (view.ShowDialog() is bool)
+                //{
+                //    //재조회
+                //    resetAction(null);
+                //}
 
 
             });
@@ -247,11 +251,26 @@ namespace GTI.WFMS.GIS
             var YMin = buffer.Envelope.YMin;
 
 
-            FeatureLayer layer = CmmObj.layers[GisCmm.GetLayerNm("SA117")];
-            
+            /// 활성화된 레이어에 대해서, 해당 클릭 영역에 존재하는 피쳐팝업을 띄운다
+            //FeatureLayer layer = CmmObj.layers[GisCmm.GetLayerNm("SA117")].FL;
+            foreach (KeyValuePair<string, FmsFeature> item in CmmObj.layers)
+            {
+                if (item.Key == "BML_GADM_AS") continue; //행정구역레이어는 제외
 
+                if (item.Value.chk)
+                {
+                    findFtrByRegion(item.Value.FL, buffer);
+                }
+            }
+
+
+        }
+
+        //해당 영역에 존재하는 레이어 피처찾아서 활성화, 팝업창
+        private void findFtrByRegion(IFeatureLayer layer, IGeometry region)
+        {
             ISpatialFilter pSF = new SpatialFilter();
-            pSF.Geometry = buffer;
+            pSF.Geometry = region;
             pSF.SpatialRel = esriSpatialRelEnum.esriSpatialRelIntersects;
             //pSF.SpatialRel = esriSpatialRelEnum.esriSpatialRelOverlaps;
             //pSF.SpatialRel = esriSpatialRelEnum.esriSpatialRelContains;
@@ -275,28 +294,34 @@ namespace GTI.WFMS.GIS
 
 
                 //0.시설물팝업호출
-                FtrPopView ftrPopView = new FtrPopView(ftr_cde, ftr_idn);
+                int ftr_cde_len = 0;
                 try
                 {
-                    ftrPopView.lbTitle.Content = BizUtil.GetCodeNm("Select_FTR_LIST2", ftr_cde);
+                    ftr_cde_len = (Convert.ToString(ftr_cde) as string).Length ;
                 }
-                catch (Exception)
+                catch (Exception){}
+
+                if (ftr_cde_len == 5 && !FmsUtil.IsNull(ftr_idn)) //시설물코드,번호가 유효한경우만
                 {
-                    ftrPopView.lbTitle.Content = "시설물정보";
-                }
-                if (ftrPopView.ShowDialog() is bool)
-                {
-                    //재조회
-                    fsel.Clear();
-                    mapControl.Refresh();
+                    FtrPopView ftrPopView = new FtrPopView(ftr_cde, ftr_idn);
+                    try
+                    {
+                        ftrPopView.lbTitle.Content = BizUtil.GetCodeNm("Select_FTR_LIST2", ftr_cde);
+                    }
+                    catch (Exception)
+                    {
+                        ftrPopView.lbTitle.Content = "시설물정보";
+                    }
+                    if (ftrPopView.ShowDialog() is bool)
+                    {
+                        //재조회
+                        fsel.Clear();
+                        mapControl.Refresh();
+                    }
                 }
 
-                break;
-                //pFeat = pDestCur.NextFeature();
+                pFeat = pDestCur.NextFeature();
             }
-
-
-
         }
 
 
@@ -325,10 +350,17 @@ namespace GTI.WFMS.GIS
             //throw new NotImplementedException();
         }
 
-        private void resetAction(object obj)
+        /// <summary>
+        /// 지도맵,레이어 초기화
+        /// </summary>
+        /// <param name="obj"></param>
+        /// <returns></returns>
+        private async Task<string> resetAction(object obj)
         {
             //0.맵의레이어 클리어
             mapControl.ClearLayers();
+            mapControl.Refresh();
+
 
             //1.맵초기화
             initMap();
@@ -353,6 +385,8 @@ namespace GTI.WFMS.GIS
             {
                 cb.IsChecked = false;
             }
+            await Task.Delay(1000);
+            return "ok";
         }
 
 
@@ -382,17 +416,18 @@ namespace GTI.WFMS.GIS
                 catch (Exception) { }
 
 
-                
 
+                //0.layers 체크동기화
+                CmmObj.layers[_layerNm].chk = chk;
 
 
                 // 1.레이어 ON
                 if (chk)
                 {
-                    if (CmmObj.layers[_layerNm].Name != "")
+                    if (CmmObj.layers[_layerNm].FL.Name != "")
                     {
                         //레이어로딩 상태이면 맵에 추가만 해줌
-                        mapControl.AddLayer(CmmObj.layers[_layerNm]);
+                        mapControl.AddLayer(CmmObj.layers[_layerNm].FL);
                         sts.Push(_layerNm);//레이어인덱스 가져오기위해 똑같이 스택에 저장해놓음
                     }
                     else
@@ -400,15 +435,15 @@ namespace GTI.WFMS.GIS
                         mapControl.AddShapeFile(BizUtil.GetDataFolder("shape"), shapeNm + ".shp");
 
                         //레이어객체 저장
-                        CmmObj.layers[_layerNm] = mapControl.get_Layer(0) as FeatureLayer; //스택형이므로 인덱스는 0 
-                        CmmObj.layers[_layerNm].Name = CmmObj.getLayerKorNm(_layerNm);
+                        CmmObj.layers[_layerNm].FL = mapControl.get_Layer(0) as FeatureLayer; //스택형이므로 인덱스는 0 
+                        CmmObj.layers[_layerNm].FL.Name = CmmObj.getLayerKorNm(_layerNm);
                         sts.Push(_layerNm);//레이어인덱스 가져오기위해 똑같이 스택에 저장해놓음
 
 
                         /* Renderer 적용 */
-                        IGeoFeatureLayer pGFL  = CmmObj.layers[_layerNm] as IGeoFeatureLayer;
+                        IGeoFeatureLayer pGFL  = CmmObj.layers[_layerNm].FL as IGeoFeatureLayer;
 
-                        if ("BML_GADM_AS".Equals(_layerNm)) //울산행정구역
+                        if ("BML_GADM_AS".Equals(_layerNm)) //행정구역
                         {
                             //라인심볼
                             ISimpleLineSymbol lineSymbol = new SimpleLineSymbol();
@@ -425,6 +460,16 @@ namespace GTI.WFMS.GIS
 
                             ISimpleRenderer pSR = pGFL.Renderer as SimpleRenderer;
                             pSR.Symbol = fillSymbol as ISymbol;
+
+                            //한반도영역내에 있는경우만 스케일링
+                            IEnvelope area = CmmObj.layers[_layerNm].FL.AreaOfInterest;
+                            if (area.XMin > GisCmm.XMin && area.XMax < GisCmm.XMax
+                                    && area.YMin > GisCmm.YMin && area.YMax < GisCmm.YMax)
+                            {
+                                mapControl.Extent = area;
+                            }
+                            //초기행정구역이면 스케일조정
+                            mapControl.MapScale = 288895;
                         }
                         else
                         {
@@ -438,26 +483,20 @@ namespace GTI.WFMS.GIS
                     if (!FmsUtil.IsNull(filterExp))
                     {
                         //레이어필터링
-                        IFeatureLayerDefinition flayer = CmmObj.layers[_layerNm] as IFeatureLayerDefinition;
+                        IFeatureLayerDefinition flayer = CmmObj.layers[_layerNm].FL as IFeatureLayerDefinition;
                         flayer.DefinitionExpression = filterExp;
 
                     }
 
-                    IEnvelope area = CmmObj.layers[_layerNm].AreaOfInterest;
 
-                    //한반도영역내에 있는경우만 스케일링
-                    if ( area.XMin > GisCmm.XMin && area.XMax < GisCmm.XMax
-                            && area.YMin > GisCmm.YMin && area.YMax < GisCmm.YMax)
-                    {
-                        mapControl.Extent = area;
-                    }
 
-                    return CmmObj.layers[_layerNm];
+
+                    return CmmObj.layers[_layerNm].FL;
                 }
                 // 2.레이어 OFF
                 else
                 {
-                    if (CmmObj.layers[_layerNm].Name != "")
+                    if (CmmObj.layers[_layerNm].FL.Name != "")
                     {
                         mapControl.DeleteLayer(sts.GetStackIdx(_layerNm));
                         sts.Remove(sts.GetIdx(_layerNm));
@@ -470,8 +509,6 @@ namespace GTI.WFMS.GIS
                 }
 
 
-
-                
             }
             catch (Exception ex)
             {
@@ -510,7 +547,7 @@ namespace GTI.WFMS.GIS
             }
 
             //지도리셋
-            resetAction(null);
+            string stat = await resetAction(null);
 
             //0.해당레이어표시 - 내부에서자동으로 로딩여부 체크함
             //FeatureLayer layer = ShowShapeLayer(GisCmm.GetLayerNm(FTR_CDE), true);
@@ -527,13 +564,13 @@ namespace GTI.WFMS.GIS
 
             //1.셀렉트처리 필터링
             IQueryFilter qfltr = new QueryFilter();
-            qfltr.WhereClause = " FTR_CDE = '" + FTR_CDE + "' AND FTR_IDN = " + FTR_IDN; 
+            qfltr.WhereClause = " FTR_CDE = '" + FTR_CDE + "' AND FTR_IDN = " + FTR_IDN + " ";
 
             IFeatureSelection fsel = layer as IFeatureSelection;
             fsel.SelectFeatures(qfltr, esriSelectionResultEnum.esriSelectionResultAdd, true);
+            await Task.Delay(1000);
 
 
-            
             //2.피처객체 필터링
             IFeatureCursor cursor = layer.Search(qfltr, true);
             IFeature feature = cursor.NextFeature();
@@ -545,11 +582,12 @@ namespace GTI.WFMS.GIS
             {
                 ESRI.ArcGIS.Geometry.IPolyline line = (ESRI.ArcGIS.Geometry.IPolyline)feature.ShapeCopy;
                 point = line.FromPoint;
+                //point = mapControl.ToMapPoint(Convert.ToInt32((line.ToPoint.X + line.FromPoint.X) / 2), Convert.ToInt32((line.ToPoint.Y + line.FromPoint.Y) / 2));
             }
             else if (FTR_CDE == "SA113" || FTR_CDE == "BZ001" || FTR_CDE == "BZ002" || FTR_CDE == "BZ003") //정수장, 블록
             {
-                ESRI.ArcGIS.Geometry.IPolygon polygon = (ESRI.ArcGIS.Geometry.IPolygon)feature.ShapeCopy;
-                point = polygon.FromPoint;
+                IArea area = (ESRI.ArcGIS.Geometry.IArea)feature.ShapeCopy;
+                point = area.Centroid;
             }
             else //나머지 포이트 시설물
             {
@@ -587,18 +625,19 @@ namespace GTI.WFMS.GIS
 
 
 
-            var envelope = mapControl.ActiveView.Extent;
-            envelope.CenterAt(point);
-            mapControl.Extent = envelope;
-            mapControl.Refresh();
-
-            mapControl.MapScale = 9028;
             /*
             */
+            IEnvelope envelope = mapControl.ActiveView.Extent;
+            envelope.CenterAt(point);
+
             //int x = Convert.ToInt32(point.X);
             //int y = Convert.ToInt32(point.Y);
             //mapControl.ToMapPoint(x, y);
             //mapControl.ActiveView.ScreenDisplay.UpdateWindow();
+
+            mapControl.ActiveView.Extent = envelope;
+            mapControl.Refresh();
+            mapControl.MapScale = 36112; // 18056; // 9028;
 
         }
 
@@ -620,7 +659,7 @@ namespace GTI.WFMS.GIS
                 catch (Exception) { }
             }
             await Task.Delay(1000);
-            return CmmObj.layers[GisCmm.GetLayerNm(FTR_CDE)];
+            return CmmObj.layers[GisCmm.GetLayerNm(FTR_CDE)].FL;
         }
 
 

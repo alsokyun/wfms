@@ -476,7 +476,7 @@ namespace GTI.WFMS.GIS
         //    // Load the map from the service once ready
         //    if (e.Status == LocalServerStatus.Started)
         //    {
-        //        // 울산행정구역 표시
+        //        // 행정구역 표시
         //        //ShowLocalServerLayer(mapView, "BML_GADM_AS",  true);
         //        ShowShapeLayer(mapView, "BML_GADM_AS", true );
         //        /*

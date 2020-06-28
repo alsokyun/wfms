@@ -195,7 +195,7 @@ namespace GTI.WFMS.GIS
             UniqueValue BZ003Value = new UniqueValue("BZ003", "BZ003", BZ003Symbol, "BZ003");
 
 
-            //울산행정구역
+            //행정구역
             SimpleLineSymbol EA035Symbol = new SimpleLineSymbol(SimpleLineSymbolStyle.Dash, System.Drawing.Color.Red, 2);
             UniqueValue EA035Value = new UniqueValue("EA035", "EA035", EA035Symbol, "EA035");
 

@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         mc:Ignorable="d"
         Title="InfoFMS" 
-        Height="625" Width="315"
+        Height="620" Width="310"
         
         KeyDown="View_KeyDown"
         WindowStyle="None" WindowStartupLocation="CenterScreen"
@@ -22,7 +22,7 @@
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
             <RowDefinition Height="2"/>
-            <RowDefinition Height="40"/>
+            <RowDefinition Height="30"/>
             <RowDefinition Height="*"/>
             <RowDefinition Height="2"/>
         </Grid.RowDefinitions>
@@ -30,7 +30,7 @@
         <!--헤더 백그라운드 border-->
 
         <Grid Grid.Row="1" Grid.Column="1" Background="{DynamicResource TileCOLOR2Brush }" PreviewMouseLeftButtonDown="Grid_PreviewMouseLeftButtonDown" >
-            <Label Grid.Row="1" Grid.Column="1" Content="시설물 DB정보" FontSize="15" FontWeight="Bold" Foreground="White" 
+            <Label Grid.Row="1" Grid.Column="1" Content="시설물 DB정보" FontSize="13" FontWeight="Bold" Foreground="White" 
                HorizontalAlignment="Left" VerticalAlignment="Center" Padding="10 0 0 0"
                x:Name="lbTitle"
                />

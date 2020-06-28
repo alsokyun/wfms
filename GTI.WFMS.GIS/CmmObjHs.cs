@@ -204,7 +204,7 @@ namespace GTI.WFMS.GIS
             ISimpleLineSymbol lineSymbolSA002 = new SimpleLineSymbol();
             lineSymbolSA002.Color = new RgbColor() { Red = 0, Green = 204, Blue = 153 };
             lineSymbolSA002.Width = 1.0;
-            //울산행정구역
+            //행정구역
             //ISimpleLineSymbol lineSymbolEA305 = new SimpleLineSymbol();
             //lineSymbolEA305.Color = new RgbColor() { Red = 255, Green = 0, Blue = 0 };
 
@@ -221,7 +221,7 @@ namespace GTI.WFMS.GIS
             //라인심볼
             pSLS = new SimpleLineSymbol();
             pSLS.Color = new RgbColor() { Red = 255, Green = 0, Blue = 0 };
-            //울산행정구역
+            //행정구역
             ISimpleFillSymbol fillSymbolEA305 = new SimpleFillSymbol();
             fillSymbolEA305.Color = new RgbColor() { Red = 51, Green = 153, Blue = 255 };
             fillSymbolEA305.Outline = pSLS;  //외각선은 라인심볼로 지정
@@ -357,7 +357,7 @@ namespace GTI.WFMS.GIS
                     break;
 
                 case "BML_GADM_AS":
-                    korNm = "울산행정구역";
+                    korNm = "행정구역";
                     break;
 
                 case "WTL_PIPE_LX":

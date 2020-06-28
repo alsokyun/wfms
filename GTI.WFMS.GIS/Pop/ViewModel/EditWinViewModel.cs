@@ -7,7 +7,6 @@ using GTI.WFMS.Models.Common;
 using Esri.ArcGISRuntime.UI.Controls;
 using Esri.ArcGISRuntime.Data;
 using System.Linq;
-using System.Windows.Controls;
 using System.Collections.Generic;
 using System.Windows;
 using GTI.WFMS.Models.Cmm.Model;
@@ -19,11 +18,10 @@ using System.Threading.Tasks;
 using Microsoft.Win32;
 using System.Windows.Media.Imaging;
 using GTI.WFMS.GIS.Pop.View;
-using System.Collections;
 using System.Data;
 using DevExpress.Xpf.Editors;
 using GTI.WFMS.GIS.Module.View;
-using Esri.ArcGISRuntime;
+using System.Windows.Controls;
 
 namespace GTI.WFMS.GIS.Pop.ViewModel
 {
@@ -91,6 +89,9 @@ namespace GTI.WFMS.GIS.Pop.ViewModel
         public RelayCommand<object> DelCmd { get; set; }
         public RelayCommand<object> ChgImgCmd { get; set; }//시설물팝업에서 아이콘파일변경작업
 
+        public RelayCommand<object> chkCmd { get; set; }
+
+
 
         //시설물기본정보
         private CmmDtl fctDtl = new CmmDtl(); 
@@ -155,7 +156,7 @@ namespace GTI.WFMS.GIS.Pop.ViewModel
         public EditWinViewModel()
         {
             //string licenseKey = "runtimelite,1000,rud1244207246,none,9TJC7XLS1MJPF5KHT033"; //그린텍
-            string licenseKey = "runtimelite,1000,rud9177830334,none,A3E60RFLTFM5NERL1040"; //kyun0828 free 
+            //string licenseKey = "runtimelite,1000,rud9177830334,none,A3E60RFLTFM5NERL1040"; //kyun0828 free 
 
             //ArcGISRuntimeEnvironment.SetLicense(licenseKey);
 
@@ -170,6 +171,10 @@ namespace GTI.WFMS.GIS.Pop.ViewModel
 
                 // 1.지도초기화
                 InitMap();
+
+                //레이어초기화
+                initLayers();
+
                 //렌더러초기생성작업
                 CmmRun.InitUniqueValueRenderer();
 
@@ -180,7 +185,6 @@ namespace GTI.WFMS.GIS.Pop.ViewModel
 
                 //비트맵초기화(시설물상세DIV 아이콘)
                 BitImg = new BitmapImage();
-
 
                 mapView.SketchEditor.GeometryChanged += OnGeometryChanged;
                 mapView.SketchEditor.SelectedVertexChanged += OnSelectedVertexChanged;
@@ -407,6 +411,21 @@ namespace GTI.WFMS.GIS.Pop.ViewModel
 
 
             DelCmd = new RelayCommand<object>(OnDelCmd);
+
+
+            //레이어 ON/OFF
+            chkCmd = new RelayCommand<object>(delegate (object obj)
+            {
+                Button doc = obj as Button;
+
+                CheckBox chkbox = doc.Template.FindName("chkLayer", doc) as CheckBox;
+                bool chk = (bool)chkbox.IsChecked;
+
+                //레이어표시 - FTR_IDN 조건 필터링없음
+                ShowShapeLayerFilter(mapView, doc.Tag.ToString(), chk, null);
+            });
+
+
         }
 
         //위치삭제처리
@@ -428,7 +447,7 @@ namespace GTI.WFMS.GIS.Pop.ViewModel
             {
                 // Apply the edit to the feature table.
                 await _selectedFeature.FeatureTable.DeleteFeatureAsync(_selectedFeature);
-                _selectedFeature.Refresh();
+                //_selectedFeature.Refresh();   // Refresh하면 SHP파일이 정상적으로 저장되지않음!!!
 
                 MessageBox.Show("삭제되었습니다.");
 
@@ -492,7 +511,18 @@ namespace GTI.WFMS.GIS.Pop.ViewModel
         {
             // 0.편집화면초기화
             InitModel();
-            editWinView.txtFTR_IDN.EditValue = ""; 
+            editWinView.txtFTR_IDN.EditValue = "";
+            foreach (Button btn in FmsUtil.FindVisualChildren<Button>(editWinView))
+            {
+                try
+                {
+                    CheckBox chkbox = btn.Template.FindName("chkLayer", btn) as CheckBox;
+                    chkbox.IsChecked = false;
+                }
+                catch (Exception) { }
+            }
+
+
 
             //시설물레이어 초기화
             _selectedLayerNm = "";
@@ -1133,6 +1163,10 @@ namespace GTI.WFMS.GIS.Pop.ViewModel
                 {
                     Console.WriteLine(e.Message);
                 }
+            }
+            finally
+            {
+                _addedFeature.Refresh();
             }
 
             //위치정보 WKT 만들기

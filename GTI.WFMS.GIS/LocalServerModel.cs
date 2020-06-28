@@ -24,7 +24,7 @@ namespace GTI.WFMS.GIS
         public LocalServerModel()
         {
             // ArcGIS LocalServer start..
-            Initialize_LocalServer();
+            //Initialize_LocalServer();
         }
 
 
@@ -368,7 +368,7 @@ namespace GTI.WFMS.GIS
             // Load the map from the service once ready
             if (e.Status == LocalServerStatus.Started)
             {
-                // 울산행정구역 표시
+                // 행정구역 표시
                 ShowLocalServerLayer(mapView, "BML_GADM_AS", true );
                 /*
                         // Get the path to the first layer - the local feature service url + layer ID
