@@ -219,6 +219,7 @@
     </Compile>
     <Compile Include="Pop\ViewModel\EditWinViewModel.cs" />
     <Compile Include="Pop\ViewModel\LayerEditModel.cs" />
+    <Compile Include="Pop\ViewModel\ShpPsViewModel.cs" />
     <Compile Include="Pop\ViewModel\ShpMngViewModel.cs" />
     <Compile Include="Pop\View\CnstMngPopView.xaml.cs">
       <DependentUpon>CnstMngPopView.xaml</DependentUpon>
@@ -233,6 +234,9 @@
     <Compile Include="Pop\ViewModel\CnstMngPopViewModel.cs" />
     <Compile Include="Pop\View\FtrPopView.xaml.cs">
       <DependentUpon>FtrPopView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Pop\View\ShpPsView.xaml.cs">
+      <DependentUpon>ShpPsView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Pop\View\ShpMngView.xaml.cs">
       <DependentUpon>ShpMngView.xaml</DependentUpon>
@@ -331,6 +335,10 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Include="Pop\View\FtrPopView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Pop\View\ShpPsView.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>

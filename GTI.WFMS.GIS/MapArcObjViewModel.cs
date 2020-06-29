@@ -209,14 +209,14 @@ namespace GTI.WFMS.GIS
             });
 
             //SHP파일관리창
-            importCmd = new RelayCommand<object>(delegate(object obj) {
+            importCmd = new RelayCommand<object>(async delegate(object obj) {
 
-                //ShpMngView view = new ShpMngView();
-                //if (view.ShowDialog() is bool)
-                //{
-                //    //재조회
-                //    resetAction(null);
-                //}
+                ShpMngView view = new ShpMngView();
+                if (view.ShowDialog() is bool)
+                {
+                    //재조회
+                    string stat = await resetAction(null);
+                }
 
 
             });
