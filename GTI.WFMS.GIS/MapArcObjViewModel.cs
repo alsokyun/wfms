@@ -249,7 +249,10 @@ namespace GTI.WFMS.GIS
             var XMin = buffer.Envelope.XMin;
             var YMax = buffer.Envelope.YMax;
             var YMin = buffer.Envelope.YMin;
-
+            Console.WriteLine("XMax- " + XMax);
+            Console.WriteLine("XMin- " + XMin);
+            Console.WriteLine("YMax- " + YMax);
+            Console.WriteLine("YMin- " + YMin);
 
             /// 활성화된 레이어에 대해서, 해당 클릭 영역에 존재하는 피쳐팝업을 띄운다
             //FeatureLayer layer = CmmObj.layers[GisCmm.GetLayerNm("SA117")].FL;
@@ -271,18 +274,50 @@ namespace GTI.WFMS.GIS
         {
             ISpatialFilter pSF = new SpatialFilter();
             pSF.Geometry = region;
+            pSF.GeometryField = "Shape";
             pSF.SpatialRel = esriSpatialRelEnum.esriSpatialRelIntersects;
             //pSF.SpatialRel = esriSpatialRelEnum.esriSpatialRelOverlaps;
             //pSF.SpatialRel = esriSpatialRelEnum.esriSpatialRelContains;
             //pSF.SpatialRel = esriSpatialRelEnum.esriSpatialRelEnvelopeIntersects;
-            IFeatureCursor pDestCur = layer.Search(pSF, true);
 
+
+
+            IFeatureCursor pDestCur = layer.Search(pSF, false);
             IFeature pFeat = pDestCur.NextFeature();
             while (pFeat != null)
             {
                 // do something with pFeat
-                var ftr_cde = pFeat.Value[2];
-                var ftr_idn = pFeat.Value[0];
+                //var ftr_cde = pFeat.Value[2];
+                //var ftr_idn = pFeat.Value[0];
+                string ftr_cde = "";
+                string ftr_idn = "";
+
+                //피처의 시설물코드,관리번호 알아내기
+                for (int i=0; i< pFeat.Fields.FieldCount; i++)
+                {
+                    if ("ftr_cde".Equals(pFeat.Fields.Field[i].Name.ToLower()))
+                    {
+                        ftr_cde = pFeat.Value[i];
+                        break;
+                    }
+                }
+                for (int i=0; i< pFeat.Fields.FieldCount; i++)
+                {
+                    if ("ftr_idn".Equals(pFeat.Fields.Field[i].Name.ToLower()))
+                    {
+                        ftr_idn = Convert.ToString(pFeat.Value[i]);
+                        break;
+                    }
+                }
+
+                if (FmsUtil.IsNull(ftr_cde) || FmsUtil.IsNull(ftr_idn))
+                {
+                    MessageBox.Show("시설물정보가 없습니다.");
+                    return;
+                }
+
+
+
 
                 //1.셀렉트처리 필터링
                 IQueryFilter qfltr = new QueryFilter();
@@ -319,8 +354,8 @@ namespace GTI.WFMS.GIS
                         mapControl.Refresh();
                     }
                 }
-
-                pFeat = pDestCur.NextFeature();
+                break;
+                //pFeat = pDestCur.NextFeature(); //첫번째 걸린 시설물만 팝업띄우자
             }
         }
 
@@ -337,7 +372,7 @@ namespace GTI.WFMS.GIS
         {
             //배경지도는 mxd파일로부터
             //string mxdfilePath = Path.Combine(BizUtil.GetDataFolder("tile", "also.mxd"));
-            string mxdfilePath = @"C:\GTI\also.mxd";
+            string mxdfilePath = FmsUtil.mdxDir +  @"\also.mxd";
             mapControl.LoadMxFile(mxdfilePath);
 
             

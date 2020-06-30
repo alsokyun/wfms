@@ -239,8 +239,7 @@ namespace GTI.WFMS.GIS.Pop.ViewModel
 
             //저장된 shp파일 목록
             DirectoryInfo di = new DirectoryInfo(BizUtil.GetDataFolder("shape"));
-
-            foreach (FileInfo fi in di.GetFiles("*.shp"))
+            foreach (FileInfo fi in di.GetFiles().Where(f=> f.Extension.Contains("shp") || f.Extension.Contains("dbf") || f.Extension.Contains("prj") || f.Extension.Contains("shx")))
             {
                 try
                 {

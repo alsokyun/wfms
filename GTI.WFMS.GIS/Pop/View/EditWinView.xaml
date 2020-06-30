@@ -142,7 +142,7 @@
                 </StackPanel>
 
 
-                <ContentControl Grid.Row="1" Margin="10,8,10,2" x:Name="cctl" DataContext="{  x:Type local:EditWinViewModel }" >
+                <ContentControl Grid.Row="1" Margin="10,8,10,2" x:Name="cctl" DataContext="{  x:Type local:EditWinViewModel }" ScrollViewer.VerticalScrollBarVisibility="Auto">
                     <!--<ContentControl.DataContext>
                         <local:EditWinViewModel/>
                     </ContentControl.DataContext>-->

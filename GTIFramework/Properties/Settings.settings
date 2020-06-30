@@ -12,13 +12,13 @@
       <Value Profile="(Default)">infofms</Value>
     </Setting>
     <Setting Name="strSID" Type="System.String" Scope="User">
-      <Value Profile="(Default)">tibero</Value>
+      <Value Profile="(Default)">gtech</Value>
     </Setting>
     <Setting Name="RES_DB_INS_DEFAULT" Type="System.String" Scope="User">
-      <Value Profile="(Default)">TIBEROConfig</Value>
+      <Value Profile="(Default)">ORACLEConfig</Value>
     </Setting>
     <Setting Name="strIP" Type="System.String" Scope="User">
-      <Value Profile="(Default)">211.105.28.40</Value>
+      <Value Profile="(Default)">175.121.89.164</Value>
     </Setting>
   </Settings>
 </SettingsFile>

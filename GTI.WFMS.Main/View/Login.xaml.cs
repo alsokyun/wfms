@@ -52,7 +52,7 @@ namespace GTI.WFMS.Main.View
             //시스템코드 전역변수로 선언(Main설정값에서 가져옴)
             FmsUtil.sysCd = Properties.Settings.Default.sysCd;
             FmsUtil.fileDir = Properties.Settings.Default.fileDir;
-            FmsUtil.dbShapeDir = Properties.Settings.Default.dbShapeDir;
+            FmsUtil.mdxDir = Properties.Settings.Default.mdxDir;
             
         }
 
@@ -107,7 +107,7 @@ namespace GTI.WFMS.Main.View
                 }
 
                 //시스템 권한 체크
-                if (!dtLoginCheck.Rows[0]["SYS_CD"].ToString().Equals("1"))
+                 if (!dtLoginCheck.Rows[0]["SYS_CD"].ToString().Equals("1"))
                 {
                     Messages.ShowInfoMsgBox("해당 시스템에 권한이 없습니다.");
                     return;

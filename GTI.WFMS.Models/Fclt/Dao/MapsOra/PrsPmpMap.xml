@@ -1,0 +1,331 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<sqlMap namespace="Main" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://ibatis.apache.org/mapping">
+  <statements>
+
+    <!--가압펌프장-->
+    <select id ="SelectPrsPmpList" parameterClass="Hashtable" resultClass ="Hashtable">
+      /* PrsPmpMap.SelectPrsPmpList 가압펌프장 목록*/
+
+      WITH C AS (
+      SELECT COUNT(1) AS ROWCNT
+      FROM INFOFMS.WTL_PRES_PS A
+      WHERE 1=1
+        <!-- 조건1. 관리기관 -->
+        <isNotEmpty prepend="AND" property="MNG_CDE">
+          A.MNG_CDE = #MNG_CDE#
+        </isNotEmpty>
+
+        <!-- 조건2. 관리번호 -->
+        <isNotEmpty prepend="AND" property="FTR_IDN">
+          A.FTR_IDN like #FTR_IDN# || '%'
+        </isNotEmpty>
+
+        <!-- 조건3. 행정읍면동 -->
+        <isNotEmpty prepend="AND" property="HJD_CDE">
+          A.HJD_CDE = #HJD_CDE#
+        </isNotEmpty>
+
+        <!-- 조건4. 공사번호 -->
+        <isNotEmpty prepend="AND" property="CNT_NUM">
+          A.CNT_NUM = #CNT_NUM#
+        </isNotEmpty>
+
+        <!-- 조건5. 도엽번호 -->
+        <isNotEmpty prepend="AND" property="SHT_NUM">
+          A.SHT_NUM = #SHT_NUM#
+        </isNotEmpty>
+
+        <!-- 조건6. 준공일자[이상] -->
+        <isNotEmpty prepend="AND" property="FNS_YMD_FROM">
+          A.FNS_YMD <![CDATA[>=]]> #FNS_YMD_FROM#
+        </isNotEmpty>
+
+        <!-- 조건7. 준공일자[이하] -->
+        <isNotEmpty prepend="AND" property="FNS_YMD_TO">
+          A.FNS_YMD <![CDATA[<=]]> #FNS_YMD_TO#
+        </isNotEmpty>
+
+      <!-- 조건8. 가압장명 -->
+      <isNotEmpty prepend="AND" property="PRS_NAM">
+        upper(A.PRS_NAM ) LIKE '%'|| upper(#PRS_NAM# ) || '%'
+      </isNotEmpty>
+
+      <!-- 조건9. 관리방법 -->
+        <isNotEmpty prepend="AND" property="SAG_CDE">
+          A.SAG_CDE = #SAG_CDE#
+        </isNotEmpty>
+
+
+      <!-- 조건10. 가압구역 -->
+      <isNotEmpty prepend="AND" property="PRS_ARE">
+        upper(A.PRS_ARE ) LIKE '%' || upper(#PRS_ARE# ) || '%'
+      </isNotEmpty>
+
+        <isNotEmpty prepend="AND" property="PRS_SAH">
+          upper(A.PRS_SAH ) LIKE '%'|| upper(#PRS_SAH#) ||'%'
+        </isNotEmpty>
+
+        <!-- 조건11. 가압능력 -->
+        <isNotEmpty prepend="AND" property="PRS_VOL">
+          A.PRS_VOL = #PRS_VOL#
+        </isNotEmpty>
+      )
+
+      SELECT C.ROWCNT, X.*  FROM (
+
+       SELECT ROW_NUMBER() OVER( ORDER BY A.FTR_IDN DESC ) AS RN
+            , A.FTR_CDE
+            , (SELECT FTR_NAM FROM INFOFMS.V_FTR_CDE WHERE FTR_CDE = A.FTR_CDE) AS FTR_NAM
+            , A.FTR_IDN
+            , A.HJD_CDE
+            , (SELECT HJD_NAM FROM INFOFMS.CMT_ADAR_MA WHERE HJD_CDE = A.HJD_CDE) AS HJD_NAM
+            , A.SHT_NUM
+            , A.MNG_CDE
+            , (SELECT NM FROM INFOUSER.CD_DTL_INFO WHERE MST_CD = '250101' AND DTL_CD = A.MNG_CDE ) AS MNG_NAM
+            , A.FNS_YMD
+            , A.PRS_NAM
+            , A.PRS_ARA
+            , A.SAG_CDE
+            , (SELECT NM FROM INFOUSER.CD_DTL_INFO WHERE MST_CD = '250005' AND DTL_CD = A.SAG_CDE ) AS SAG_NAM
+            , A.PRS_ALT
+            , A.PRS_VOL
+            , A.PRS_ARE
+            , A.PRS_SAH
+            , A.CNT_NUM
+            , A.SYS_CHK
+            , CASE WHEN SDO_UTIL.VALIDATE_WKTGEOMETRY(SDO_UTIL.TO_WKTGEOMETRY(A.GEOM)) = 'TRUE' THEN 'Y' ELSE 'N' END AS IS_GEOMETRY 
+         FROM INFOFMS.WTL_PRES_PS A
+        WHERE 1=1
+      <!-- 조건1. 관리기관 -->
+        <isNotEmpty prepend="AND" property="MNG_CDE">
+          A.MNG_CDE = #MNG_CDE#
+        </isNotEmpty>
+
+        <!-- 조건2. 관리번호 -->
+        <isNotEmpty prepend="AND" property="FTR_IDN">
+          A.FTR_IDN like #FTR_IDN# || '%'
+        </isNotEmpty>
+
+        <!-- 조건3. 행정읍면동 -->
+        <isNotEmpty prepend="AND" property="HJD_CDE">
+          A.HJD_CDE = #HJD_CDE#
+        </isNotEmpty>
+
+        <!-- 조건4. 공사번호 -->
+        <isNotEmpty prepend="AND" property="CNT_NUM">
+          A.CNT_NUM = #CNT_NUM#
+        </isNotEmpty>
+
+        <!-- 조건5. 도엽번호 -->
+        <isNotEmpty prepend="AND" property="SHT_NUM">
+          A.SHT_NUM = #SHT_NUM#
+        </isNotEmpty>
+
+        <!-- 조건6. 준공일자[이상] -->
+        <isNotEmpty prepend="AND" property="FNS_YMD_FROM">
+          A.FNS_YMD <![CDATA[>=]]> #FNS_YMD_FROM#
+        </isNotEmpty>
+
+        <!-- 조건7. 준공일자[이하] -->
+        <isNotEmpty prepend="AND" property="FNS_YMD_TO">
+          A.FNS_YMD <![CDATA[<=]]> #FNS_YMD_TO#
+        </isNotEmpty>
+
+        <!-- 조건8. 가압장명 -->
+        <isNotEmpty prepend="AND" property="PRS_NAM">
+          upper(A.PRS_NAM ) LIKE '%'|| upper(#PRS_NAM# ) || '%'
+        </isNotEmpty>
+
+        <!-- 조건9. 관리방법 -->
+        <isNotEmpty prepend="AND" property="SAG_CDE">
+          A.SAG_CDE = #SAG_CDE#
+        </isNotEmpty>
+
+      <!-- 조건10. 가압구역 -->
+      <isNotEmpty prepend="AND" property="PRS_ARE">
+        upper(A.PRS_ARE ) LIKE '%' || upper(#PRS_ARE# ) || '%'
+      </isNotEmpty>
+
+      <isNotEmpty prepend="AND" property="PRS_SAH">
+        upper(A.PRS_SAH ) LIKE '%'|| upper(#PRS_SAH#) ||'%'
+      </isNotEmpty>
+
+        <!-- 조건11. 가압능력 -->
+        <isNotEmpty prepend="AND" property="PRS_VOL">
+          A.PRS_VOL = #PRS_VOL#
+        </isNotEmpty>
+
+        ORDER BY FTR_IDN DESC
+
+
+    ) X JOIN C ON 1=1
+    WHERE RN &lt;= ($page$+1) * $rows$
+      AND RN &gt;= ($page$) * $rows$ + 1
+
+    </select>
+
+    <select id="SelectPrsPmpDtl"  parameterClass="Hashtable" resultClass ="GTI.WFMS.Models.Fclt.Model.PrsPmpDtl">
+      /* PrsPmpMap.SelectPrsPmpDtl 가압펌프장 상세정보*/
+      <![CDATA[
+			 SELECT A.FTR_CDE
+            , (SELECT FTR_NAM FROM INFOFMS.V_FTR_CDE WHERE FTR_CDE = A.FTR_CDE) AS FTR_NAM
+            , A.FTR_IDN
+            , A.HJD_CDE
+            , (SELECT HJD_NAM FROM INFOFMS.CMT_ADAR_MA WHERE HJD_CDE = A.HJD_CDE) AS HJD_NAM
+            , A.SHT_NUM
+            , A.MNG_CDE
+            , (SELECT NM FROM INFOUSER.CD_DTL_INFO WHERE MST_CD = '250101' AND DTL_CD = A.MNG_CDE ) AS MNG_NAM
+            , A.FNS_YMD
+            , A.PRS_NAM
+            , A.PRS_ARA
+            , A.SAG_CDE
+            , (SELECT NM FROM INFOUSER.CD_DTL_INFO WHERE MST_CD = '250005' AND DTL_CD = A.SAG_CDE ) AS SAG_NAM
+            , A.PRS_ALT
+            , A.PRS_VOL
+            , A.PRS_ARE
+            , A.PRS_SAH
+            , A.CNT_NUM
+            , A.SYS_CHK
+          , decode(A.SYS_CHK,'1','유','무') as SYS_CHK_NAM
+       FROM INFOFMS.WTL_PRES_PS A 
+			WHERE 1=1
+        AND FTR_CDE = #FTR_CDE# 
+				AND FTR_IDN = #FTR_IDN#
+			]]>
+    </select>
+
+    <!--가압펌프장 상세추가-->
+    <update id="insertPrsPmpDtl" parameterClass="GTI.WFMS.Models.Fclt.Model.PrsPmpDtl">
+      INSERT INTO INFOFMS.WTL_PRES_PS
+      ( FTR_CDE
+      , FTR_IDN
+      , HJD_CDE
+      , SHT_NUM
+      , MNG_CDE
+      , FNS_YMD
+      , PRS_NAM
+      , PRS_ARA
+      , SAG_CDE
+      , PRS_ALT
+      , PRS_VOL
+      , PRS_ARE
+      , PRS_SAH
+      , CNT_NUM
+      , SYS_CHK
+      )
+      VALUES
+      ( #FTR_CDE#
+      , #FTR_IDN#
+      , #HJD_CDE#
+      , #SHT_NUM#
+      , #MNG_CDE#
+      , #FNS_YMD#
+      , #PRS_NAM#
+      , #PRS_ARA#
+      , #SAG_CDE#
+      , #PRS_ALT#
+      , #PRS_VOL#
+      , #PRS_ARE#
+      , #PRS_SAH#
+      , #CNT_NUM#
+      , #SYS_CHK#
+      )
+    </update>
+
+    <!--가압펌프장 상세저장-->
+    <update id="updatePrsPmpDtl" parameterClass="GTI.WFMS.Models.Fclt.Model.PrsPmpDtl">
+      /* 가압펌프장 상세 수정 */
+      UPDATE INFOFMS.WTL_PRES_PS
+      SET HJD_CDE = #HJD_CDE#
+      , SHT_NUM = #SHT_NUM#
+      , MNG_CDE = #MNG_CDE#
+      , FNS_YMD = #FNS_YMD#
+      , PRS_NAM = #PRS_NAM#
+      , PRS_ARA = #PRS_ARA#
+      , SAG_CDE = #SAG_CDE#
+      , PRS_ALT = #PRS_ALT#
+      , PRS_VOL = #PRS_VOL#
+      , PRS_ARE = #PRS_ARE#
+      , PRS_SAH = #PRS_SAH#
+      , CNT_NUM = #CNT_NUM#
+      , SYS_CHK = #SYS_CHK#
+      WHERE FTR_CDE = #FTR_CDE#
+      AND	FTR_IDN = #FTR_IDN#
+    </update>
+
+    <update id="SavePrsPmpDtl" parameterClass="GTI.WFMS.Models.Fclt.Model.PrsPmpDtl">
+      MERGE INTO INFOFMS.WTL_PRES_PS
+      USING DUAL ON (FTR_CDE = #FTR_CDE# AND	FTR_IDN = #FTR_IDN#)
+
+      WHEN MATCHED THEN
+      UPDATE
+      SET HJD_CDE = #HJD_CDE#
+      , SHT_NUM = #SHT_NUM#
+      , MNG_CDE = #MNG_CDE#
+      , FNS_YMD = #FNS_YMD#
+      , PRS_NAM = #PRS_NAM#
+      , PRS_ARA = #PRS_ARA#
+      , SAG_CDE = #SAG_CDE#
+      , PRS_ALT = #PRS_ALT#
+      , PRS_VOL = #PRS_VOL#
+      , PRS_ARE = #PRS_ARE#
+      , PRS_SAH = #PRS_SAH#
+      , CNT_NUM = #CNT_NUM#
+      , SYS_CHK = #SYS_CHK#
+
+
+      WHEN NOT MATCHED THEN
+      INSERT
+      ( FTR_CDE
+      , FTR_IDN
+      , HJD_CDE
+      , SHT_NUM
+      , MNG_CDE
+      , FNS_YMD
+      , PRS_NAM
+      , PRS_ARA
+      , SAG_CDE
+      , PRS_ALT
+      , PRS_VOL
+      , PRS_ARE
+      , PRS_SAH
+      , CNT_NUM
+      , SYS_CHK
+      )
+      VALUES
+      ( #FTR_CDE#
+      , #FTR_IDN#
+      , #HJD_CDE#
+      , #SHT_NUM#
+      , #MNG_CDE#
+      , #FNS_YMD#
+      , #PRS_NAM#
+      , #PRS_ARA#
+      , #SAG_CDE#
+      , #PRS_ALT#
+      , #PRS_VOL#
+      , #PRS_ARE#
+      , #PRS_SAH#
+      , #CNT_NUM#
+      , #SYS_CHK#
+      )
+    </update>
+
+    <!--가압펌프장 상세삭제-->
+    <update id="deletePrsPmpDtl" parameterClass="GTI.WFMS.Models.Fclt.Model.PrsPmpDtl">
+      /* 가압펌프장 상세 삭제 */
+      DELETE INFOFMS.WTL_PRES_PS
+       WHERE FTR_CDE = #FTR_CDE#
+         AND FTR_IDN = #FTR_IDN#
+    </update>
+
+    <!--가압펌프장 관리번호 채번-->
+    <select id ="SelectPrsPmpFTR_IDN" parameterClass="Hashtable" resultClass ="GTI.WFMS.Models.Fclt.Model.PrsPmpDtl">
+      /* 가압펌프장 관리번호 채번 */
+      SELECT NVL(MAX(FTR_IDN),0)+1 AS FTR_IDN FROM INFOFMS.WTL_PRES_PS
+      WHERE 1=1
+    </select>
+
+  </statements>
+  
+</sqlMap>

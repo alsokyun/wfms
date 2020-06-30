@@ -176,11 +176,11 @@
                           x:Name="txtCNT_LOC" EditValue="{Binding CNT_LOC, Converter={StaticResource s2StrConverter}}"/>
 
             <Label Grid.Row="2" Grid.Column="0" Content="설계총액" Style="{DynamicResource ResourceKey=GridLabel}"/>
-            <dxe:TextEdit Grid.Row="2" Grid.Column="1" Style="{DynamicResource ResourceKey=GridNumberEdit}"   
+            <dxe:TextEdit Grid.Row="2" Grid.Column="1" Style="{DynamicResource ResourceKey=GridIntEdit}"   
                           x:Name="txtDSN_AMT" EditValue="{Binding DSN_AMT}"/>
 
             <Label Grid.Row="2" Grid.Column="2" Content="순공사비" Style="{DynamicResource ResourceKey=GridLabel}"/>
-            <dxe:TextEdit Grid.Row="2" Grid.Column="3" Style="{DynamicResource ResourceKey=GridNumberEdit}"   
+            <dxe:TextEdit Grid.Row="2" Grid.Column="3" Style="{DynamicResource ResourceKey=GridIntEdit}"   
                           x:Name="txtDPC_AMT" EditValue="{Binding DPC_AMT}"/>
 
             <Label Grid.Row="2" Grid.Column="4" Content="설계_관급금액" Style="{DynamicResource ResourceKey=GridLabel}"/>
@@ -188,7 +188,7 @@
                           x:Name="txtDGV_AMT" EditValue="{Binding DGV_AMT}"/>
 
             <Label Grid.Row="2" Grid.Column="6" Content="기타잡비" Style="{DynamicResource ResourceKey=GridLabel}"/>
-            <dxe:TextEdit Grid.Row="2" Grid.Column="7" Style="{DynamicResource ResourceKey=GridNumberEdit}"   
+            <dxe:TextEdit Grid.Row="2" Grid.Column="7" Style="{DynamicResource ResourceKey=GridIntEdit}"   
                           x:Name="txtDET_AMT" EditValue="{Binding DET_AMT}"/>
         </Grid>
 
@@ -368,15 +368,15 @@
                               x:Name="cbCTT_CDE" EditValue="{Binding CTT_CDE}" />
 
                     <Label Grid.Row="1" Grid.Column="0" Content="계약총액" Style="{DynamicResource ResourceKey=GridLabel}"/>
-                    <dxe:TextEdit Grid.Row="1" Grid.Column="1" Style="{DynamicResource ResourceKey=GridNumberEdit}"   
+                    <dxe:TextEdit Grid.Row="1" Grid.Column="1" Style="{DynamicResource ResourceKey=GridIntEdit}"   
                           x:Name="txtTCT_AMT"  EditValue="{Binding TCT_AMT}"/>
 
                     <Label Grid.Row="1" Grid.Column="2" Content="기타잡비" Style="{DynamicResource ResourceKey=GridLabel}"/>
-                    <dxe:TextEdit Grid.Row="1" Grid.Column="3" Style="{DynamicResource ResourceKey=GridNumberEdit}"   
+                    <dxe:TextEdit Grid.Row="1" Grid.Column="3" Style="{DynamicResource ResourceKey=GridIntEdit}"   
                           x:Name="txtCET_AMT"  EditValue="{Binding CET_AMT}"/>
 
                     <Label Grid.Row="1" Grid.Column="4" Content="순공사비" Style="{DynamicResource ResourceKey=GridLabel}"/>
-                    <dxe:TextEdit Grid.Row="1" Grid.Column="5" Style="{DynamicResource ResourceKey=GridNumberEdit}"   
+                    <dxe:TextEdit Grid.Row="1" Grid.Column="5" Style="{DynamicResource ResourceKey=GridIntEdit}"   
                           x:Name="txtCPC_AMT"  EditValue="{Binding CPC_AMT}"/>
 
                     <Label Grid.Row="1" Grid.Column="6" Content="관급금액" Style="{DynamicResource ResourceKey=GridLabel}"/>
@@ -425,19 +425,19 @@
 
 
                     <Label Grid.Row="0" Grid.Column="0" Content="국비" Style="{DynamicResource ResourceKey=GridLabel}"/>
-                    <dxe:TextEdit Grid.Row="0" Grid.Column="1" Style="{DynamicResource ResourceKey=GridNumberEdit}"   
+                    <dxe:TextEdit Grid.Row="0" Grid.Column="1" Style="{DynamicResource ResourceKey=GridIntEdit}"   
                           x:Name="txtNAT_AMT"  EditValue="{Binding NAT_AMT}"/>
                     <Label Grid.Row="0" Grid.Column="2" Content="도비" Style="{DynamicResource ResourceKey=GridLabel}"/>
-                    <dxe:TextEdit Grid.Row="0" Grid.Column="3" Style="{DynamicResource ResourceKey=GridNumberEdit}"   
+                    <dxe:TextEdit Grid.Row="0" Grid.Column="3" Style="{DynamicResource ResourceKey=GridIntEdit}"   
                           x:Name="txtCOU_AMT"  EditValue="{Binding COU_AMT}"/>
                     <Label Grid.Row="0" Grid.Column="4" Content="시군비" Style="{DynamicResource ResourceKey=GridLabel}"/>
-                    <dxe:TextEdit Grid.Row="0" Grid.Column="5" Style="{DynamicResource ResourceKey=GridNumberEdit}"   
+                    <dxe:TextEdit Grid.Row="0" Grid.Column="5" Style="{DynamicResource ResourceKey=GridIntEdit}"   
                           x:Name="txtCIT_AMT"  EditValue="{Binding CIT_AMT}"/>
                     <Label Grid.Row="0" Grid.Column="6" Content="기채" Style="{DynamicResource ResourceKey=GridLabel}"/>
-                    <dxe:TextEdit Grid.Row="0" Grid.Column="7" Style="{DynamicResource ResourceKey=GridNumberEdit}"   
+                    <dxe:TextEdit Grid.Row="0" Grid.Column="7" Style="{DynamicResource ResourceKey=GridIntEdit}"   
                           x:Name="txtBND_AMT"  EditValue="{Binding BND_AMT}"/>
                     <Label Grid.Row="1" Grid.Column="0" Content="잉여금" Style="{DynamicResource ResourceKey=GridLabel}"/>
-                    <dxe:TextEdit Grid.Row="1" Grid.Column="1" Style="{DynamicResource ResourceKey=GridNumberEdit}"   
+                    <dxe:TextEdit Grid.Row="1" Grid.Column="1" Style="{DynamicResource ResourceKey=GridIntEdit}"   
                           x:Name="txtCSS_AMT"  EditValue="{Binding CSS_AMT}"/>
 
 

@@ -1,0 +1,432 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<sqlMap namespace="Main" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://ibatis.apache.org/mapping">
+  <statements>
+
+    <!--저수조-->
+    <select id ="SelectWtrTrkList" parameterClass="Hashtable" resultClass ="Hashtable">
+      /* WtrTrkMap.SelectWtrTrkList 저수조 목록*/
+
+      WITH C AS (
+      SELECT COUNT(1) AS ROWCNT
+      FROM INFOFMS.WTL_RSRV_PS A
+      WHERE 1=1 
+        <!-- 조건1. 관리기관 -->
+        <isNotEmpty prepend="AND" property="MNG_CDE">
+          A.MNG_CDE = #MNG_CDE#
+        </isNotEmpty>
+
+        <!-- 조건2. 관리번호 -->
+        <isNotEmpty prepend="AND" property="FTR_IDN">
+          A.FTR_IDN like #FTR_IDN# || '%'
+        </isNotEmpty>
+
+        <!-- 조건3. 행정읍면동 -->
+        <isNotEmpty prepend="AND" property="HJD_CDE">
+          A.HJD_CDE = #HJD_CDE#
+        </isNotEmpty>
+
+        <!-- 조건4. 도엽번호 -->
+        <isNotEmpty prepend="AND" property="SHT_NUM">
+          A.SHT_NUM = #SHT_NUM#
+        </isNotEmpty>
+
+        <!-- 조건5. 준공일자[이상] -->
+        <isNotEmpty prepend="AND" property="FNS_YMD_FROM">
+          A.FNS_YMD <![CDATA[>=]]> #FNS_YMD_FROM#
+        </isNotEmpty>
+
+        <!-- 조건6. 준공일자[이하] -->
+        <isNotEmpty prepend="AND" property="FNS_YMD_TO">
+          A.FNS_YMD <![CDATA[<=]]> #FNS_YMD_TO#
+        </isNotEmpty>
+      
+        <!-- 조건7. 허가일자[이하] -->
+        <isNotEmpty prepend="AND" property="PMS_YMD">
+          A.PMS_YMD <![CDATA[=]]> #PMS_YMD#
+        </isNotEmpty>
+
+        <!-- 조건8. 저수조명 -->
+        <isNotEmpty prepend="AND" property="RSR_NAM">
+          upper(A.RSR_NAM ) LIKE '%' || upper(#RSR_NAM# ) || '%'
+        </isNotEmpty>
+
+        <!-- 조건9. 관리자 -->
+        <isNotEmpty prepend="AND" property="MNG_NAM">
+          upper(A.MNG_NAM ) LIKE '%' || upper(#MNG_NAM# ) || '%'
+        </isNotEmpty>
+
+        <!-- 조건10. 건물주소 -->
+        <isNotEmpty prepend="AND" property="BLD_ADR">
+          upper(A.BLD_ADR ) LIKE '%' || upper(#BLD_ADR# ) || '%'
+        </isNotEmpty>
+
+        <!-- 조건11. 소유자성명 -->
+        <isNotEmpty prepend="AND" property="OWN_NAM">
+          upper(A.OWN_NAM ) LIKE '%' || upper(#OWN_NAM# ) || '%'
+        </isNotEmpty>
+      )
+
+      SELECT C.ROWCNT, X.*  FROM (
+
+       SELECT ROW_NUMBER() OVER( ORDER BY A.FTR_IDN DESC ) AS RN
+            , A.FTR_CDE
+            , (SELECT FTR_NAM FROM INFOFMS.V_FTR_CDE WHERE FTR_CDE = A.FTR_CDE) AS FTR_NAM
+            , A.FTR_IDN
+            , A.HJD_CDE
+            , (SELECT HJD_NAM FROM INFOFMS.CMT_ADAR_MA WHERE HJD_CDE = A.HJD_CDE) AS HJD_NAM
+            , A.SHT_NUM
+            , A.MNG_CDE
+            , (SELECT NM FROM INFOUSER.CD_DTL_INFO WHERE MST_CD = '250101' AND DTL_CD = A.MNG_CDE ) AS MNG_CDE_NAM
+            , A.FNS_YMD
+            , A.PMS_YMD
+            , A.BLS_CDE
+            , (SELECT NM FROM INFOUSER.CD_DTL_INFO WHERE MST_CD = '250037' AND DTL_CD = A.BLS_CDE ) AS BLS_NAM
+            , A.RSR_NAM
+            , A.OWN_NAM
+            , A.OWN_ADR
+            , A.OWN_TEL
+            , A.MNG_NAM
+            , A.MNG_ADR
+            , A.MNG_TEL
+            , A.BLD_ARA
+            , A.TBL_ARA
+            , A.FAM_CNT
+            , A.BLD_ADR
+            , A.SYS_CHK
+            , CASE WHEN SDO_UTIL.VALIDATE_WKTGEOMETRY(SDO_UTIL.TO_WKTGEOMETRY(A.GEOM)) = 'TRUE' THEN 'Y' ELSE 'N' END AS IS_GEOMETRY 
+         FROM INFOFMS.WTL_RSRV_PS A
+        WHERE 1=1
+      <!-- 조건1. 관리기관 -->
+          <isNotEmpty prepend="AND" property="MNG_CDE">
+            A.MNG_CDE = #MNG_CDE#
+          </isNotEmpty>
+
+          <!-- 조건2. 관리번호 -->
+          <isNotEmpty prepend="AND" property="FTR_IDN">
+            A.FTR_IDN like #FTR_IDN# || '%'
+          </isNotEmpty>
+
+          <!-- 조건3. 행정읍면동 -->
+          <isNotEmpty prepend="AND" property="HJD_CDE">
+            A.HJD_CDE = #HJD_CDE#
+          </isNotEmpty>
+
+          <!-- 조건4. 도엽번호 -->
+          <isNotEmpty prepend="AND" property="SHT_NUM">
+            A.SHT_NUM = #SHT_NUM#
+          </isNotEmpty>
+
+          <!-- 조건5. 준공일자[이상] -->
+          <isNotEmpty prepend="AND" property="FNS_YMD_FROM">
+            A.FNS_YMD <![CDATA[>=]]> #FNS_YMD_FROM#
+          </isNotEmpty>
+
+          <!-- 조건6. 준공일자[이하] -->
+          <isNotEmpty prepend="AND" property="FNS_YMD_TO">
+            A.FNS_YMD <![CDATA[<=]]> #FNS_YMD_TO#
+          </isNotEmpty>
+
+          <!-- 조건7. 허가일자[이하] -->
+          <isNotEmpty prepend="AND" property="PMS_YMD">
+            A.PMS_YMD <![CDATA[=]]> #PMS_YMD#
+          </isNotEmpty>
+
+          <!-- 조건8. 저수조명 -->
+          <isNotEmpty prepend="AND" property="RSR_NAM">
+            upper(A.RSR_NAM ) LIKE '%' || upper(#RSR_NAM# ) || '%'
+          </isNotEmpty>
+
+          <!-- 조건9. 관리자 -->
+          <isNotEmpty prepend="AND" property="MNG_NAM">
+            upper(A.MNG_NAM ) LIKE '%' || upper(#MNG_NAM# ) || '%'
+          </isNotEmpty>
+
+          <!-- 조건10. 건물주소 -->
+          <isNotEmpty prepend="AND" property="BLD_ADR">
+            upper(A.BLD_ADR ) LIKE '%' || upper(#BLD_ADR# ) || '%'
+          </isNotEmpty>
+
+          <!-- 조건11. 소유자성명 -->
+          <isNotEmpty prepend="AND" property="OWN_NAM">
+            upper(A.OWN_NAM ) LIKE '%' || upper(#OWN_NAM# ) || '%'
+          </isNotEmpty>
+
+        ORDER BY FTR_IDN DESC
+
+
+    ) X JOIN C ON 1=1
+    WHERE RN &lt;= ($page$+1) * $rows$
+      AND RN &gt;= ($page$) * $rows$ + 1
+
+    </select>
+
+    <select id="SelectWtrTrkDtl"  parameterClass="Hashtable" resultClass ="GTI.WFMS.Models.Acmf.Model.WtrTrkDtl">
+      /* WtrTrkMap.SelectWtrTrkDtl 저수조 상세정보*/
+      <![CDATA[
+		 	 SELECT A.FTR_CDE
+            , (SELECT FTR_NAM FROM INFOFMS.V_FTR_CDE WHERE FTR_CDE = A.FTR_CDE) AS FTR_NAM
+            , A.FTR_IDN
+            , A.HJD_CDE
+            , (SELECT HJD_NAM FROM INFOFMS.CMT_ADAR_MA WHERE HJD_CDE = A.HJD_CDE) AS HJD_NAM
+            , A.SHT_NUM
+            , A.MNG_CDE
+            , (SELECT NM FROM INFOUSER.CD_DTL_INFO WHERE MST_CD = '250101' AND DTL_CD = A.MNG_CDE ) AS MNG_CDE_NAM
+            , a.FNS_YMD
+            , a.PMS_YMD
+            , A.BLS_CDE
+            , (SELECT NM FROM INFOUSER.CD_DTL_INFO WHERE MST_CD = '250037' AND DTL_CD = A.BLS_CDE ) AS BLS_NAM
+            , A.RSR_NAM
+            , A.OWN_NAM
+            , A.OWN_ADR
+            , A.OWN_TEL
+            , A.MNG_NAM
+            , A.MNG_ADR
+            , A.MNG_TEL
+            , A.BLD_ARA
+            , A.TBL_ARA
+            , A.FAM_CNT
+            , A.BLD_ADR
+            , A.SYS_CHK
+            , decode(A.SYS_CHK,'1','유','무') as SYS_CHK_NAM
+         FROM INFOFMS.WTL_RSRV_PS A 
+			  WHERE 1=1
+          AND FTR_CDE = #FTR_CDE# 
+				  AND FTR_IDN = #FTR_IDN#
+			]]>
+    </select>
+
+    <!--저수조 상세추가-->
+    <update id="insertWtrTrkDtl" parameterClass="GTI.WFMS.Models.Acmf.Model.WtrTrkDtl">
+      INSERT INTO INFOFMS.WTL_RSRV_PS
+      (   FTR_CDE
+      , FTR_IDN
+      , HJD_CDE
+      , SHT_NUM
+      , MNG_CDE
+      , PMS_YMD
+      , FNS_YMD
+      , BLS_CDE
+      , RSR_NAM
+      , OWN_NAM
+      , OWN_ADR
+      , OWN_TEL
+      , MNG_NAM
+      , MNG_ADR
+      , MNG_TEL
+      , BLD_ARA
+      , TBL_ARA
+      , FAM_CNT
+      , BLD_ADR
+      , SYS_CHK
+      )
+      VALUES
+      (   #FTR_CDE#
+      , #FTR_IDN#
+      , #HJD_CDE#
+      , #SHT_NUM#
+      , #MNG_CDE#
+      , #PMS_YMD#
+      , #FNS_YMD#
+      , #BLS_CDE#
+      , #RSR_NAM#
+      , #OWN_NAM#
+      , #OWN_ADR#
+      , #OWN_TEL#
+      , #MNG_NAM#
+      , #MNG_ADR#
+      , #MNG_TEL#
+      , #BLD_ARA#
+      , #TBL_ARA#
+      , #FAM_CNT#
+      , #BLD_ADR#
+      , #SYS_CHK#
+      )
+    </update>
+
+    <!--저수조 상세저장-->
+    <update id="updateWtrTrkDtl" parameterClass="GTI.WFMS.Models.Acmf.Model.WtrTrkDtl">
+      /* 저수조 상세 수정 */
+      UPDATE INFOFMS.WTL_RSRV_PS
+      SET HJD_CDE = #HJD_CDE#
+      , SHT_NUM = #SHT_NUM#
+      , MNG_CDE = #MNG_CDE#
+      , PMS_YMD = #PMS_YMD#
+      , FNS_YMD = #FNS_YMD#
+      , BLS_CDE = #BLS_CDE#
+      , RSR_NAM = #RSR_NAM#
+      , OWN_NAM = #OWN_NAM#
+      , OWN_ADR = #OWN_ADR#
+      , OWN_TEL = #OWN_TEL#
+      , MNG_NAM = #MNG_NAM#
+      , MNG_ADR = #MNG_ADR#
+      , MNG_TEL = #MNG_TEL#
+      , BLD_ARA = #BLD_ARA#
+      , TBL_ARA = #TBL_ARA#
+      , FAM_CNT = #FAM_CNT#
+      , BLD_ADR = #BLD_ADR#
+      , SYS_CHK = #SYS_CHK#
+      WHERE FTR_CDE = #FTR_CDE#
+      AND	FTR_IDN = #FTR_IDN#
+    </update>
+
+    <update id="SaveWtrTrkDtl" parameterClass="GTI.WFMS.Models.Acmf.Model.WtrTrkDtl">
+      MERGE INTO INFOFMS.WTL_RSRV_PS
+      USING DUAL ON (FTR_CDE = #FTR_CDE# AND	FTR_IDN = #FTR_IDN#)
+
+      WHEN MATCHED THEN
+      UPDATE
+      SET HJD_CDE = #HJD_CDE#
+      , SHT_NUM = #SHT_NUM#
+      , MNG_CDE = #MNG_CDE#
+      , PMS_YMD = #PMS_YMD#
+      , FNS_YMD = #FNS_YMD#
+      , BLS_CDE = #BLS_CDE#
+      , RSR_NAM = #RSR_NAM#
+      , OWN_NAM = #OWN_NAM#
+      , OWN_ADR = #OWN_ADR#
+      , OWN_TEL = #OWN_TEL#
+      , MNG_NAM = #MNG_NAM#
+      , MNG_ADR = #MNG_ADR#
+      , MNG_TEL = #MNG_TEL#
+      , BLD_ARA = #BLD_ARA#
+      , TBL_ARA = #TBL_ARA#
+      , FAM_CNT = #FAM_CNT#
+      , BLD_ADR = #BLD_ADR#
+      , SYS_CHK = #SYS_CHK#
+
+      WHEN NOT MATCHED THEN
+      INSERT
+      (   FTR_CDE
+      , FTR_IDN
+      , HJD_CDE
+      , SHT_NUM
+      , MNG_CDE
+      , PMS_YMD
+      , FNS_YMD
+      , BLS_CDE
+      , RSR_NAM
+      , OWN_NAM
+      , OWN_ADR
+      , OWN_TEL
+      , MNG_NAM
+      , MNG_ADR
+      , MNG_TEL
+      , BLD_ARA
+      , TBL_ARA
+      , FAM_CNT
+      , BLD_ADR
+      , SYS_CHK
+      )
+      VALUES
+      (   #FTR_CDE#
+      , #FTR_IDN#
+      , #HJD_CDE#
+      , #SHT_NUM#
+      , #MNG_CDE#
+      , #PMS_YMD#
+      , #FNS_YMD#
+      , #BLS_CDE#
+      , #RSR_NAM#
+      , #OWN_NAM#
+      , #OWN_ADR#
+      , #OWN_TEL#
+      , #MNG_NAM#
+      , #MNG_ADR#
+      , #MNG_TEL#
+      , #BLD_ARA#
+      , #TBL_ARA#
+      , #FAM_CNT#
+      , #BLD_ADR#
+      , #SYS_CHK#
+      )
+    </update>
+
+ <!--저수조 상세삭제-->
+    <update id="deleteWtrTrkDtl" parameterClass="GTI.WFMS.Models.Acmf.Model.WtrTrkDtl">
+      /* 저수조 상세 삭제 */
+      DELETE INFOFMS.WTL_RSRV_PS
+      WHERE FTR_CDE = #FTR_CDE#
+      AND FTR_IDN = #FTR_IDN#
+    </update>
+
+    <!--저수조 관리번호 채번-->
+    <select id ="SelectWtrTrkFTR_IDN" parameterClass="Hashtable" resultClass ="GTI.WFMS.Models.Acmf.Model.WtrTrkDtl">
+      /* 저수조 관리번호 채번 */
+      SELECT NVL(MAX(FTR_IDN),0)+1 AS FTR_IDN FROM INFOFMS.WTL_RSRV_PS
+      WHERE 1=1
+    </select>
+
+  
+  	<!-- 저수조 청소이력	 -->
+	  <select id="selectWttRsrvHt"  resultClass="GTI.WFMS.Models.Acmf.Model.WttRsrvHtDtl">
+      SELECT
+      A.FTR_CDE
+      ,(SELECT FTR_NAM FROM V_FTR_CDE F WHERE F.FTR_CDE = A.FTR_CDE ) AS FTR_NAM
+      , A.FTR_IDN
+      , A.SEQ
+      , A.CLN_NUM
+      , A.CLN_YMD
+      , A.CLN_EXP
+      , A.CLN_NAM
+      FROM INFOFMS.WTT_RSRV_HT A
+      WHERE 1=1
+      AND A.FTR_CDE=#FTR_CDE#
+      AND A.FTR_IDN=#FTR_IDN#
+      <isNotEmpty property="SEQ">
+        AND A.SEQ = #SEQ#
+      </isNotEmpty>
+      ORDER BY A.CLN_NUM DESC
+    </select>	
+    
+    <!-- 청소이력 채번 -->
+    <select id="selectCLN_SEQ" parameterClass="Hashtable" resultClass="GTI.WFMS.Models.Acmf.Model.WttRsrvHtDtl">
+      SELECT
+      nvl(max(SEQ),0)+1 as SEQ
+      FROM INFOFMS.WTT_RSRV_HT
+    </select>
+
+    <!--저수조 청소이력추가-->
+    <update id="insertWttRsrvHt" parameterClass="GTI.WFMS.Models.Acmf.Model.WttRsrvHtDtl">
+      MERGE INTO INFOFMS.WTT_RSRV_HT
+      USING DUAL ON (FTR_CDE = #FTR_CDE# AND FTR_IDN = #FTR_IDN# AND SEQ = #SEQ#)
+
+      WHEN MATCHED THEN
+      UPDATE SET
+      CLN_NUM =#CLN_NUM#
+      , CLN_YMD =#CLN_YMD#
+      , CLN_EXP =#CLN_EXP#
+      , CLN_NAM =#CLN_NAM#
+
+      WHEN NOT MATCHED THEN
+      INSERT
+      (FTR_CDE
+      , FTR_IDN
+      , SEQ
+      , CLN_NUM
+      , CLN_YMD
+      , CLN_EXP
+      , CLN_NAM)
+      VALUES
+      ( #FTR_CDE#
+      , #FTR_IDN#
+      , #SEQ#
+      , #CLN_NUM#
+      , #CLN_YMD#
+      , #CLN_EXP#
+      , #CLN_NAM#)
+    </update>
+
+    <!--저수조청소 상세삭제-->
+    <update id="deleteWttRsrvHt" parameterClass="GTI.WFMS.Models.Acmf.Model.WttRsrvHtDtl">
+      DELETE INFOFMS.WTT_RSRV_HT
+      WHERE FTR_CDE = #FTR_CDE#
+      AND FTR_IDN = #FTR_IDN#
+      <isNotEmpty property="SEQ">
+        AND SEQ = #SEQ#
+      </isNotEmpty>
+    </update>
+
+
+  </statements>
+  
+</sqlMap>

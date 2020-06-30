@@ -61,7 +61,7 @@
       , A.PRO_CDE, C2.NM AS PRO_NAM
       , A.PRO_EXP
       , A.PRO_YMD
-      , A.PRO_NAM
+      
       , A.CNT_NUM
       , NULL AS CHK
       FROM WTT_WSER_MA A
@@ -313,7 +313,7 @@
       , A.PRO_CDE, C2.NM AS PRO_NAM
       , A.PRO_EXP
       , A.PRO_YMD
-      , A.PRO_NAM
+      
       , A.CNT_NUM
       FROM WTT_WSER_MA A
       LEFT JOIN INFOUSER.CD_DTL_INFO C ON C.DTL_CD = A.APL_CDE AND C.MST_CD = '250056'

@@ -111,7 +111,7 @@
     </Reference>
     <Reference Include="Oracle.DataAccess, Version=4.112.1.2, Culture=neutral, PublicKeyToken=89b483f429c47342, processorArchitecture=x86">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\99.DOC\00.lib\oracle\Oracle.DataAccess.dll</HintPath>
+      <HintPath>DLL\Oracle.DataAccess.dll</HintPath>
     </Reference>
     <Reference Include="PresentationCore" />
     <Reference Include="PresentationFramework" />
