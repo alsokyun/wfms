@@ -66,6 +66,7 @@ namespace GTI.WFMS.Modules.Pipe.View
             tabSubMenu.Items.Add(tab03);
 
             DXTabItem tab04 = new DXTabItem();
+            tab04.Content = new WtlLeakSubListView(FTR_CDE, FTR_IDN);
             tab04.Header = "누수지점 및 복구내역";
             tabSubMenu.Items.Add(tab04);
 

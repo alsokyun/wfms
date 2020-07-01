@@ -9,8 +9,8 @@
       WITH C AS (
       SELECT COUNT(1) AS ROWCNT
       FROM WTT_CONS_MA A
-      LEFT JOIN INFOUSER.CD_DTL_INFO C ON C.MST_CD = (SELECT MST_CD FROM INFOUSER.CD_MST_INFO WHERE ETC = 'CNT_CDE') AND C.DTL_CD = A.CNT_CDE
-      LEFT JOIN INFOUSER.CD_DTL_INFO C2 ON C2.MST_CD = (SELECT MST_CD FROM INFOUSER.CD_MST_INFO WHERE ETC = 'CTT_CDE') AND C2.DTL_CD = A.CTT_CDE
+      LEFT JOIN INFOUSER.CD_DTL_INFO C ON C.MST_CD = '250039' AND C.DTL_CD = A.CNT_CDE
+      LEFT JOIN INFOUSER.CD_DTL_INFO C2 ON C2.MST_CD = '250038' AND C2.DTL_CD = A.CTT_CDE
 
       WHERE 1=1
       <isNotEmpty prepend="AND" property="CNT_CDE">
@@ -18,11 +18,11 @@
       </isNotEmpty>
 
       <isNotEmpty prepend="AND" property="CNT_NUM">
-        A.CNT_NUM like '%' || #CNT_NUM#  || '%'
+        upper(A.CNT_NUM ) like '%' || upper(#CNT_NUM#) || '%'
       </isNotEmpty>
 
       <isNotEmpty prepend="AND" property="CNT_NAM">
-        A.CNT_NAM like '%' || #CNT_NAM#  || '%'
+        upper(A.CNT_NAM ) like '%' || upper(#CNT_NAM#)   || '%'
       </isNotEmpty>
 
       <isNotEmpty prepend="AND" property="TCT_AMT_FROM">
@@ -54,7 +54,7 @@
       </isNotEmpty>
 
       <isNotEmpty prepend="AND" property="CNT_LOC">
-        A.CNT_LOC like '%' || #CNT_LOC#  || '%'
+        upper(A.CNT_LOC ) like '%' || upper(#CNT_LOC#)   || '%'
       </isNotEmpty>
 
       )
@@ -104,8 +104,8 @@
       , A.ATT_USR
       , A.ATT_TIM
       FROM WTT_CONS_MA A
-      LEFT JOIN INFOUSER.CD_DTL_INFO C ON C.MST_CD = (SELECT MST_CD FROM INFOUSER.CD_MST_INFO WHERE ETC = 'CNT_CDE') AND C.DTL_CD = A.CNT_CDE
-      LEFT JOIN INFOUSER.CD_DTL_INFO C2 ON C2.MST_CD = (SELECT MST_CD FROM INFOUSER.CD_MST_INFO WHERE ETC = 'CTT_CDE') AND C2.DTL_CD = A.CTT_CDE
+      LEFT JOIN INFOUSER.CD_DTL_INFO C ON C.MST_CD = '250039' AND C.DTL_CD = A.CNT_CDE
+      LEFT JOIN INFOUSER.CD_DTL_INFO C2 ON C2.MST_CD = '250038' AND C2.DTL_CD = A.CTT_CDE
 
       WHERE 1=1
       <isNotEmpty prepend="AND" property="CNT_CDE">
@@ -113,11 +113,11 @@
       </isNotEmpty>
 
       <isNotEmpty prepend="AND" property="CNT_NUM">
-        A.CNT_NUM like '%' || #CNT_NUM#  || '%'
+        upper(A.CNT_NUM ) like '%' || upper(#CNT_NUM#)   || '%'
       </isNotEmpty>
 
       <isNotEmpty prepend="AND" property="CNT_NAM">
-        A.CNT_NAM like '%' || #CNT_NAM#  || '%'
+        upper(A.CNT_NAM ) like '%' || upper(#CNT_NAM#) || '%'
       </isNotEmpty>
 
       <isNotEmpty prepend="AND" property="TCT_AMT_FROM">
@@ -149,7 +149,7 @@
       </isNotEmpty>
 
       <isNotEmpty prepend="AND" property="CNT_LOC">
-        A.CNT_LOC like '%' || #CNT_LOC#  || '%'
+        upper(A.CNT_LOC ) like '%' || upper(#CNT_LOC#)   || '%'
       </isNotEmpty>
 
 
@@ -218,11 +218,11 @@
       , A.ATT_USR
       , A.ATT_TIM
       FROM WTT_CONS_MA A
-      LEFT JOIN INFOUSER.CD_DTL_INFO C ON C.MST_CD = (SELECT MST_CD FROM INFOUSER.CD_MST_INFO WHERE ETC = 'CNT_CDE') AND C.DTL_CD = A.CNT_CDE
-      LEFT JOIN INFOUSER.CD_DTL_INFO C2 ON C2.MST_CD = (SELECT MST_CD FROM INFOUSER.CD_MST_INFO WHERE ETC = 'CTT_CDE') AND C2.DTL_CD = A.CTT_CDE
+      LEFT JOIN INFOUSER.CD_DTL_INFO C ON C.MST_CD = '250039' AND C.DTL_CD = A.CNT_CDE
+      LEFT JOIN INFOUSER.CD_DTL_INFO C2 ON C2.MST_CD = '250038' AND C2.DTL_CD = A.CTT_CDE
 
       WHERE 1=1
-      AND A.CNT_NUM like #CNT_NUM#
+      AND upper(A.CNT_NUM ) like upper(#CNT_NUM#)
 
     </select>
 
@@ -775,7 +775,7 @@
 
       WHERE 1=1
       <isNotEmpty prepend="AND" property="CNT_NUM">
-        A.CNT_NUM like '%' || #CNT_NUM#  || '%'
+        upper(A.CNT_NUM ) like '%' || upper(#CNT_NUM#) || '%'
       </isNotEmpty>
       <isNotEmpty prepend="AND" property="HJD_CDE">
         A.HJD_CDE like #HJD_CDE# || '%'
@@ -828,7 +828,7 @@
 
       WHERE 1=1
       <isNotEmpty prepend="AND" property="CNT_NUM">
-        A.CNT_NUM like '%' || #CNT_NUM#  || '%'
+        upper(A.CNT_NUM ) like '%' || upper(#CNT_NUM#)   || '%'
       </isNotEmpty>
       <isNotEmpty prepend="AND" property="HJD_CDE">
         A.HJD_CDE like #HJD_CDE# || '%'
@@ -866,6 +866,7 @@
       SELECT
       A.CNT_NUM
       , A.HJD_CDE
+      , ( SELECT HJD_NAM FROM CMT_ADAR_MA WHERE HJD_CDE = A.HJD_CDE ) AS HJD_NAM
       , A.BEG_YMD
       , A.FNS_YMD
       , A.GVR_AMT

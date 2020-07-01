@@ -61,7 +61,7 @@ namespace GTIFramework.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("tibero")]
+        [global::System.Configuration.DefaultSettingValueAttribute("gtech")]
         public string strSID {
             get {
                 return ((string)(this["strSID"]));
@@ -73,7 +73,7 @@ namespace GTIFramework.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("TIBEROConfig")]
+        [global::System.Configuration.DefaultSettingValueAttribute("ORACLEConfig")]
         public string RES_DB_INS_DEFAULT {
             get {
                 return ((string)(this["RES_DB_INS_DEFAULT"]));
@@ -85,7 +85,7 @@ namespace GTIFramework.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("211.105.28.40")]
+        [global::System.Configuration.DefaultSettingValueAttribute("175.121.89.164")]
         public string strIP {
             get {
                 return ((string)(this["strIP"]));

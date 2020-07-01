@@ -50,10 +50,10 @@
       </isNotEmpty>
 
       <isNotEmpty prepend="AND" property="TIT_NAM">
-        A.TIT_NAM LIKE '%' || #TIT_NAM# || '%'
+        upper(A.TIT_NAM ) LIKE '%' || upper(#TIT_NAM# ) || '%'
       </isNotEmpty>
       <isNotEmpty prepend="AND" property="CKM_PEO">
-        A.CKM_PEO LIKE '%' || #CKM_PEO# || '%'
+        upper(A.CKM_PEO ) LIKE '%' || upper(#CKM_PEO# ) || '%'
       </isNotEmpty>
 
       <isNotEmpty prepend="AND" property="STA_YMD">
@@ -136,7 +136,7 @@
 
 
     <!-- 점검결과리스트-->
-    <select id="SelectChscResultList"  resultClass="Hashtable">
+    <select id="SelectChscResultList"  resultClass="GTI.WFMS.Models.Mntc.Model.ChscResultDtl">
       SELECT R.SCL_NUM
       , R.FTR_CDE, R.FTR_IDN, R.SEQ
       , VN.FTR_NAM
@@ -162,7 +162,7 @@
 
 
     <!-- 점검결과 상세 리스트 저장 -->
-    <update id="SaveChscResult" parameterClass="Hashtable">
+    <update id="SaveChscResult" parameterClass="GTI.WFMS.Models.Mntc.Model.ChscResultDtl">
       MERGE INTO FMS_CHSC_FTR_RES
       USING DUAL ON ( SCL_NUM=#SCL_NUM# AND FTR_CDE=#FTR_CDE# AND FTR_IDN=#FTR_IDN# AND SEQ = #SEQ# )
 
@@ -216,7 +216,7 @@
     
 
     <!-- 소모품 사용내역 리스트 -->
-    <select id="SelectPdhUseList"  resultClass="Hashtable">
+    <select id="SelectPdhUseList"  resultClass="GTI.WFMS.Models.Mntc.Model.PdjtHtDtl">
       SELECT H.PDH_HT_NUM, H.PDH_NUM, H.FTR_CDE, H.FTR_IDN, H.SCL_NUM, H.SEQ
       , H.PDH_CNT, H.PDH_AMT
       , P.PDT_NAM
@@ -235,19 +235,21 @@
     </select>
 
     <!-- 소모품내역 삭제 -->
-    <update id="DeletePdjtHt" parameterClass="Hashtable">
+    <update id="DeletePdjtHt" parameterClass="GTI.WFMS.Models.Mntc.Model.PdjtHtDtl">
       DELETE FROM FMS_PDJT_HT
       WHERE 1=1
       AND SCL_NUM=#SCL_NUM#
       AND FTR_CDE=#FTR_CDE#
       AND FTR_IDN=#FTR_IDN#
       AND SEQ = #SEQ#
-      AND PDH_HT_NUM = #PDH_HT_NUM#
+      <isNotEmpty property="PDH_HT_NUM">
+        AND PDH_HT_NUM = #PDH_HT_NUM#
+      </isNotEmpty>
     </update>
 
 
     <!-- 소모품/오일 저장 -->
-    <update id="SavePdjtHt" parameterClass="Hashtable">
+    <update id="SavePdjtHt" parameterClass="GTI.WFMS.Models.Mntc.Model.PdjtHtDtl">
       MERGE INTO FMS_PDJT_HT
       USING DUAL ON ( PDH_HT_NUM = #PDH_HT_NUM# AND PDH_NUM = #PDH_NUM#  AND SCL_NUM=#SCL_NUM# AND FTR_CDE=#FTR_CDE# AND FTR_IDN=#FTR_IDN# AND SEQ = #SEQ#)
 
@@ -279,7 +281,8 @@
       FROM FMS_PDJT_MA
       WHERE 1=1
       AND PDT_CAT_CDE = #PDT_CAT_CDE#
-      AND USE_YN != 'N'
+      <!--AND USE_YN != 'N'-->
+      ORDER BY PDH_NUM DESC
     </select>
 
 
@@ -327,7 +330,7 @@
 
 
       <isNotEmpty prepend="AND" property="TTL">
-        A.TTL LIKE '%' || #TTL# || '%'
+        upper(A.TTL ) LIKE '%' || upper(#TTL# ) || '%'
       </isNotEmpty>
       <isNotEmpty prepend="AND" property="FAQ_CAT_CDE">
         A.FAQ_CAT_CDE LIKE #FAQ_CAT_CDE#
@@ -339,7 +342,7 @@
         A.FTR_CDE LIKE #FTR_CDE#
       </isNotEmpty>
       <isNotEmpty prepend="AND" property="QUESTION">
-        A.QUESTION LIKE '%' || #QUESTION# || '%'
+        upper(A.QUESTION ) LIKE '%' || upper(#QUESTION# ) || '%'
       </isNotEmpty>
 
       )
@@ -347,7 +350,7 @@
 
       SELECT C.ROWCNT, X.*  FROM (
 
-      SELECT ROW_NUMBER() OVER( ORDER BY A.SEQ ) AS RN
+      SELECT ROW_NUMBER() OVER( ORDER BY A.SEQ DESC) AS RN
       , A.SEQ
       , A.FAQ_CAT_CDE
       , B.NM AS FAQ_CAT_NM
@@ -377,7 +380,7 @@
 
 
       <isNotEmpty prepend="AND" property="TTL">
-        A.TTL LIKE '%' || #TTL# || '%'
+        upper(A.TTL ) LIKE '%' || upper(#TTL#)  || '%'
       </isNotEmpty>
       <isNotEmpty prepend="AND" property="FAQ_CAT_CDE">
         A.FAQ_CAT_CDE LIKE #FAQ_CAT_CDE#
@@ -389,7 +392,7 @@
         A.FTR_CDE LIKE #FTR_CDE#
       </isNotEmpty>
       <isNotEmpty prepend="AND" property="QUESTION">
-        A.QUESTION LIKE '%' || #QUESTION# || '%'
+        upper(A.QUESTION ) LIKE '%' || upper(#QUESTION# ) || '%'
       </isNotEmpty>
       
       
@@ -417,9 +420,9 @@
       , U.USER_NM
       , A.EDT_ID
       , A.TTL
-      /*
       ,A.QUESTION
       ,A.REPL
+      /*
       , DBMS_LOB.SUBSTR(A.REPL, DBMS_LOB.GETLENGTH(A.REPL)) AS REPL
       , DBMS_LOB.SUBSTR(A.QUESTION, DBMS_LOB.GETLENGTH(A.QUESTION)) AS QUESTION
       */

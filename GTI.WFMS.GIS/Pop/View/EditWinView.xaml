@@ -6,10 +6,10 @@
        
             mc:Ignorable="d" 
             d:DesignHeight="500" d:DesignWidth="1000"
+            Title="시설물편집"
         
             xmlns:esri="http://schemas.esri.com/arcgis/runtime/2013"
             xmlns:cv="clr-namespace:GTI.WFMS.Models.Common;assembly=GTI.WFMS.Models"
-            xmlns:vm="clr-namespace:GTI.WFMS.GIS.Module.View"
             xmlns:local="clr-namespace:GTI.WFMS.GIS.Pop.ViewModel"
             xmlns:dxe="http://schemas.devexpress.com/winfx/2008/xaml/editors"
             xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
@@ -26,7 +26,18 @@
         <ResourceDictionary>
             <cv:Date3StrConverter x:Key="date3StrConverter" />
             <cv:Toggle2Converter x:Key="toggleConverter" />
+
+            <ControlTemplate x:Key="dockTemplate" TargetType="Button">
+                <DockPanel >
+                    <CheckBox Name="chkLayer" Tag="{TemplateBinding ToolTip}" VerticalAlignment="Center"
+                              Background="{DynamicResource DataMngTab2Brush}" BorderBrush="{DynamicResource TileCOLOR2Brush}"/>
+                    <TextBlock Margin="5" Foreground="#ffffff" FontSize="12" Text="{TemplateBinding Content}" VerticalAlignment="Center"/>
+                </DockPanel>
+            </ControlTemplate>
+
         </ResourceDictionary>
+        
+        
     </Window.Resources>
 
     <Window.DataContext>
@@ -55,9 +66,9 @@
 
         <!--일반정보박스영역-->
         <StackPanel Grid.Row="1" Orientation="Horizontal" HorizontalAlignment="Left" Margin="10 0 0 0" Background="{DynamicResource TileCOLOR4Brush}">
-            <Button x:Name="btnAdd" Style="{DynamicResource ResourceKey=AddPosButton}" Command="{Binding AddCmd}" />
-            <Button x:Name="btnEdit" Style="{DynamicResource ResourceKey=EditPosButton}" Command="{Binding EditCmd}" />
-            <Button x:Name="btnDel" Style="{DynamicResource ResourceKey=DelPosButton}" Command="{Binding DelCmd}" />
+            
+            <!--<Button x:Name="btnEdit" Style="{DynamicResource ResourceKey=EditPosButton}" Command="{Binding EditCmd}" />-->
+            <!--<Button x:Name="btnDel" Style="{DynamicResource ResourceKey=DelPosButton}" Command="{Binding DelCmd}" />-->
 
             <Image Source="fms_search_line.png" Margin="15 0 0 0"/>
             <Label Content="시설물선택" Style="{DynamicResource ResourceKey=CircleTitleLabel}"/>
@@ -67,12 +78,33 @@
             <dxe:TextEdit Style="{DynamicResource ResourceKey=SearchTextEdit}" Tag="관리번호" x:Name="txtFTR_IDN" Width="130" KeyDown="TxtFTR_IDN_KeyDown"/>
             <Image Source="fms_search_line.png" Margin="10 0 5 0"/>
 
+
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Margin="30 0 0 0">
+                <Button  Tag="WTL_PIPE_LM" Content="상수관로" ToolTip="SA001.png" Template="{StaticResource ResourceKey=dockTemplate}">
+                    <i:Interaction.Triggers>
+                        <i:EventTrigger EventName="Click">
+                            <i:InvokeCommandAction Command="{Binding chkCmd}"  CommandParameter="{Binding RelativeSource={RelativeSource AncestorType={x:Type Button}}}" />
+                        </i:EventTrigger>
+                    </i:Interaction.Triggers>
+                </Button>
+                <Button  Tag="WTL_SPLY_LS" Content="급수관로" ToolTip="SA002.png" Template="{StaticResource ResourceKey=dockTemplate}">
+                    <i:Interaction.Triggers>
+                        <i:EventTrigger EventName="Click">
+                            <i:InvokeCommandAction Command="{Binding chkCmd}"  CommandParameter="{Binding RelativeSource={RelativeSource AncestorType={x:Type Button}}}" />
+                        </i:EventTrigger>
+                    </i:Interaction.Triggers>
+                </Button>
+            </StackPanel>
+            
+            
             <TextBlock x:Name="txbFTR_CDE" Visibility="Collapsed" Text="{Binding FTR_CDE, UpdateSourceTrigger=PropertyChanged}"/>
             <TextBlock x:Name="txbFTR_IDN" Visibility="Collapsed" Text="{Binding FTR_IDN, UpdateSourceTrigger=PropertyChanged}"/>
         </StackPanel>
         <Border Grid.Row="1" BorderThickness="0 0 0 1" BorderBrush="{DynamicResource MainLMENUUnderBrush1}"/>
 
         <StackPanel Grid.Row="1" Orientation="Horizontal" HorizontalAlignment="Right"  >
+            <Button x:Name="btnAdd" Style="{DynamicResource ResourceKey=RegButton}"  Margin="0 0 10 0" Command="{Binding AddCmd}" />
+
             <Button x:Name="btnSearch" Style="{DynamicResource ResourceKey=SearchButton}"  Margin="0 0 10 0">
                 <i:Interaction.Triggers>
                     <i:EventTrigger EventName="Click">
@@ -102,7 +134,7 @@
                     <Image Style="{DynamicResource TitleCircle}"/>
                     <Label Content="시설물속성정보" Style="{DynamicResource ResourceKey=CircleTitleLabel}"/>
                 </StackPanel>
-                <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Margin="0 0 10 0">
+                <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Margin="0 0 10 0" Visibility="Hidden">
                     <Border BorderThickness="1" BorderBrush="Pink"  HorizontalAlignment="Center" VerticalAlignment="Center" Margin="5 0 5 0" Padding="2" Width="22" Height="22">
                         <Image Source="{Binding BitImg}" />
                     </Border>
@@ -110,11 +142,19 @@
                 </StackPanel>
 
 
-                <ContentControl Grid.Row="1" Margin="10 0 10 10" x:Name="cctl">
+                <ContentControl Grid.Row="1" Margin="10,8,10,2" x:Name="cctl" DataContext="{  x:Type local:EditWinViewModel }" ScrollViewer.VerticalScrollBarVisibility="Auto">
+                    <!--<ContentControl.DataContext>
+                        <local:EditWinViewModel/>
+                    </ContentControl.DataContext>-->
                     <!--<ContentControl.Content>
                         <vm:UC_FLOW_PS />
                     </ContentControl.Content>-->
                 </ContentControl>
+
+                <StackPanel Grid.Row="1" Grid.Column="0" VerticalAlignment="Bottom" HorizontalAlignment="Left" Margin="10 0 0 5" 
+                            Visibility="Collapsed" x:Name="divBtn" Orientation="Horizontal" >
+                    <Button Content="위치이동" Style="{DynamicResource TxtButton}" Command="{Binding EditCmd}" />
+                </StackPanel >
             </Grid>
 
 

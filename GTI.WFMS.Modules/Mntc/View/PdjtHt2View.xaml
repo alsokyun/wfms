@@ -9,8 +9,9 @@
              d:DesignHeight="300" d:DesignWidth="900"
              
              xmlns:vm="clr-namespace:GTI.WFMS.Modules.Mntc.ViewModel"
-             xmlns:cm="clr-namespace:GTIFramework.Common.Utils.Converters;assembly=GTIFramework"
+             xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
              xmlns:cv="clr-namespace:GTI.WFMS.Models.Common;assembly=GTI.WFMS.Models"
+             x:Name="pdjtHtView"
              >
 
     <UserControl.Resources>
@@ -19,9 +20,9 @@
         <cv:Date3StrConverter x:Key="date2StrConverter" />
     </UserControl.Resources>
 
-
-
-
+    <UserControl.DataContext>
+        <vm:PdjtHtViewModel/>
+    </UserControl.DataContext>
 
     <Grid>
 
@@ -32,14 +33,19 @@
 
 
         <StackPanel Grid.Row="0" Orientation="Horizontal" HorizontalAlignment="Right" Margin="0 0 5 0">
-            <Button x:Name="btnAdd" Style="{DynamicResource ResourceKey=GrdAddButton}" Click="BtnAdd_Click"  />
-            <Button x:Name="btnDel" Style="{DynamicResource ResourceKey=GrdDelButton}" Click="BtnDel_Click"  />
-            <Button x:Name="btnReg" Style="{DynamicResource ResourceKey=GrdRegButton}" Click="BtnReg_Click"  />
+            <Button x:Name="btnAdd" Style="{DynamicResource ResourceKey=GrdAddButton}" Command="{Binding AddCommand}"  />
+            <Button x:Name="btnDel" Style="{DynamicResource ResourceKey=GrdDelButton}" Command="{Binding DelCommand}"/>
+            <Button x:Name="btnReg" Style="{DynamicResource ResourceKey=GrdRegButton}" Command="{Binding SaveCommand}"/>
+            <TextBox x:Name="txtSCL_NUM" Text="{Binding SCL_NUM, UpdateSourceTrigger=PropertyChanged}" Visibility="Collapsed" />
+            <TextBox x:Name="txtFTR_CDE" Text="{Binding FTR_CDE, UpdateSourceTrigger=PropertyChanged}" Visibility="Collapsed" />
+            <TextBox x:Name="txtFTR_IDN" Text="{Binding FTR_IDN, UpdateSourceTrigger=PropertyChanged}" Visibility="Collapsed" />
+            <TextBox x:Name="txtSEQ" Text="{Binding SEQ, UpdateSourceTrigger=PropertyChanged}" Visibility="Collapsed" />
+            <TextBox x:Name="txtPDT_CAT_CDE" Text="{Binding PDT_CAT_CDE, UpdateSourceTrigger=PropertyChanged}" Visibility="Collapsed" />
         </StackPanel>
 
 
-        <dxg:GridControl Grid.Row="1" x:Name="grid" VerticalAlignment="Stretch" HorizontalAlignment="Stretch"  >
-
+        <dxg:GridControl Grid.Row="1" x:Name="grid" VerticalAlignment="Stretch" HorizontalAlignment="Stretch"  
+                         ItemsSource="{Binding GrdLst}">
             <dxg:GridControl.View>
                 <dxg:TableView x:Name="gv"
                                 NavigationStyle="Row" 
@@ -71,7 +77,8 @@
             <dxg:GridColumn Header="소모품명" Width="4*" FieldName="PDH_NUM" HorizontalHeaderContentAlignment="Center"  AllowEditing="True">
                 <dxg:GridColumn.CellTemplate>
                     <DataTemplate>
-                        <dxe:ComboBoxEdit EditValue="{Binding RowData.Row.PDH_NUM, Mode=TwoWay}" ValueMember="PDH_NUM" DisplayMember="PDT_NAM"
+                        <dxe:ComboBoxEdit EditValue="{Binding RowData.Row.PDH_NUM, Mode=TwoWay}" AllowNullInput="True"
+                                          ValueMember="PDH_NUM" DisplayMember="PDT_NAM"
                                             Loaded="PDH_NUM_Loaded"  
                                     Style="{DynamicResource ResourceKey=GridComboBox}" >
                             <dxe:ComboBoxEdit.ItemContainerStyle>
@@ -91,7 +98,7 @@
             <dxg:GridColumn Header="사용량" Width="3*" FieldName="PDH_AMT" HorizontalHeaderContentAlignment="Center"  AllowEditing="True">
                 <dxg:GridColumn.CellTemplate>
                     <DataTemplate>
-                        <dxe:TextEdit  Style="{DynamicResource ResourceKey=GridNumberEdit}" MaskType="Numeric" MaskUseAsDisplayFormat="True" 
+                        <dxe:TextEdit  Style="{DynamicResource ResourceKey=GridIntEdit}" 
                             EditValue="{Binding  RowData.Row.PDH_AMT, Mode=TwoWay }" />
                     </DataTemplate>
                 </dxg:GridColumn.CellTemplate>
@@ -103,5 +110,11 @@
 
     </Grid>
 
+    <!--뷰와 연결된 뷰모델로 Loaded 이벤트전파-->
+    <i:Interaction.Triggers>
+        <i:EventTrigger EventName="Loaded">
+            <i:InvokeCommandAction Command="{Binding LoadedCommand}" CommandParameter="{Binding ElementName=pdjtHtView}"/>
+        </i:EventTrigger>
+    </i:Interaction.Triggers>
 
 </UserControl>

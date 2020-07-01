@@ -439,7 +439,7 @@
             this.xrLabel5.StylePriority.UseTextAlignment = false;
             this.xrLabel5.Text = "xrLabel15";
             this.xrLabel5.TextAlignment = DevExpress.XtraPrinting.TextAlignment.MiddleLeft;
-            this.xrLabel5.TextFormatString = "{0:#,0.00}";
+            this.xrLabel5.TextFormatString = "{0:#,0.000}";
             // 
             // xrLabel6
             // 
@@ -653,12 +653,12 @@
             this.xrLabel83.StylePriority.UseTextAlignment = false;
             this.xrLabel83.Text = "xrLabel15";
             this.xrLabel83.TextAlignment = DevExpress.XtraPrinting.TextAlignment.MiddleLeft;
-            this.xrLabel83.TextFormatString = "{0:#,0.00}";
+            this.xrLabel83.TextFormatString = "{0:#,0.000}";
             // 
             // xrLabel82
             // 
             this.xrLabel82.ExpressionBindings.AddRange(new DevExpress.XtraReports.UI.ExpressionBinding[] {
-            new DevExpress.XtraReports.UI.ExpressionBinding("BeforePrint", "Text", "[MOP_NAM]")});
+            new DevExpress.XtraReports.UI.ExpressionBinding("BeforePrint", "Text", "[JHT_NAM]")});
             this.xrLabel82.Font = new System.Drawing.Font("Arial", 8F);
             this.xrLabel82.LocationFloat = new DevExpress.Utils.PointFloat(341.0422F, 158.125F);
             this.xrLabel82.Multiline = true;
@@ -686,7 +686,7 @@
             this.xrLabel81.StylePriority.UseTextAlignment = false;
             this.xrLabel81.Text = "xrLabel15";
             this.xrLabel81.TextAlignment = DevExpress.XtraPrinting.TextAlignment.MiddleLeft;
-            this.xrLabel81.TextFormatString = "{0:#,0.00}";
+            this.xrLabel81.TextFormatString = "{0:#,0.000}";
             // 
             // xrLabel80
             // 
@@ -731,7 +731,7 @@
             this.xrLabel78.StylePriority.UseTextAlignment = false;
             this.xrLabel78.Text = "xrLabel15";
             this.xrLabel78.TextAlignment = DevExpress.XtraPrinting.TextAlignment.MiddleLeft;
-            this.xrLabel78.TextFormatString = "{0:#,0.00}";
+            this.xrLabel78.TextFormatString = "{0:#,0.000}";
             // 
             // xrLabel77
             // 
@@ -750,7 +750,7 @@
             // xrLabel76
             // 
             this.xrLabel76.ExpressionBindings.AddRange(new DevExpress.XtraReports.UI.ExpressionBinding[] {
-            new DevExpress.XtraReports.UI.ExpressionBinding("BeforePrint", "Text", "[JHT_NAM]")});
+            new DevExpress.XtraReports.UI.ExpressionBinding("BeforePrint", "Text", "[MOP_NAM]")});
             this.xrLabel76.Font = new System.Drawing.Font("Arial", 8F);
             this.xrLabel76.LocationFloat = new DevExpress.Utils.PointFloat(608.7084F, 158.125F);
             this.xrLabel76.Multiline = true;
@@ -1032,7 +1032,7 @@
             this.xrLabel58.StylePriority.UseFont = false;
             this.xrLabel58.StylePriority.UsePadding = false;
             this.xrLabel58.StylePriority.UseTextAlignment = false;
-            this.xrLabel58.Text = "행정도";
+            this.xrLabel58.Text = "행정동";
             this.xrLabel58.TextAlignment = DevExpress.XtraPrinting.TextAlignment.MiddleLeft;
             // 
             // xrLabel50

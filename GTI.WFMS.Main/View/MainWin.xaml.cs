@@ -59,7 +59,7 @@ namespace GTI.WFMS.Main
         }
 
 
-        private void Cmnavy_Click(object sender, RoutedEventArgs e)
+        public void Cmnavy_Click(object sender, RoutedEventArgs e)
         {
             try
             {
@@ -89,7 +89,7 @@ namespace GTI.WFMS.Main
             }
         }
 
-        private void Cmblue_Click(object sender, RoutedEventArgs e)
+        public void Cmblue_Click(object sender, RoutedEventArgs e)
         {
             try
             {

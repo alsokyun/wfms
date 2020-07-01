@@ -2,20 +2,10 @@
 using GTI.WFMS.Modules.Link.View;
 using GTIFramework.Common.Utils.ViewEffect;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Threading;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
-using System.Windows.Shapes;
 using System.Windows.Threading;
 
 namespace GTI.WFMS.Modules.Acmf.View
@@ -75,6 +65,7 @@ namespace GTI.WFMS.Modules.Acmf.View
 
             DXTabItem tab04 = new DXTabItem();
             tab04.Header = "청소이력";
+            tab04.Content = new WtrTrkHtListView(FTR_CDE, FTR_IDN);
             tabSubMenu.Items.Add(tab04);
 
         }

@@ -11,6 +11,7 @@ using Prism.Commands;
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Data;
 using System.Reflection;
 using System.Windows;
@@ -18,9 +19,21 @@ using System.Windows.Controls;
 
 namespace GTI.WFMS.Modules.Pipe.ViewModel
 {
-    public class ValvFacDtlViewModel : ValvFacDtl
+    public class ValvFacDtlViewModel : INotifyPropertyChanged
     {
-        public List<LinkFmsChscFtrRes> Tab01List { get; set; }
+        /// <summary>                                                                
+        /// 인터페이스 구현부분                                                       
+        /// </summary>                                                                
+        public event PropertyChangedEventHandler PropertyChanged;
+        protected void OnPropertyChanged(string propertyName)
+        {
+            if (PropertyChanged != null)
+            {
+                PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
+            }
+        }
+
+
 
         #region ==========  Properties 정의 ==========
         /// <summary>
@@ -32,6 +45,16 @@ namespace GTI.WFMS.Modules.Pipe.ViewModel
         public DelegateCommand<object> DeleteCommand { get; set; }
         public DelegateCommand<object> BackCommand { get; set; }
 
+        private ValvFacDtl dtl = new ValvFacDtl();
+        public ValvFacDtl Dtl
+        {
+            get { return this.dtl; }
+            set
+            {
+                this.dtl = value;
+                OnPropertyChanged("Dtl");
+            }
+        }
 
         #endregion
 
@@ -53,6 +76,7 @@ namespace GTI.WFMS.Modules.Pipe.ViewModel
         Button btnDelete;
         Button btnSave;
         
+        public List<LinkFmsChscFtrRes> Tab01List { get; set; }
         #endregion
 
 
@@ -110,32 +134,11 @@ namespace GTI.WFMS.Modules.Pipe.ViewModel
                 //DataTable dt = new DataTable();
                 Hashtable param = new Hashtable();
                 param.Add("sqlId", "SelectValvFacDtl");
-                param.Add("FTR_CDE", this.FTR_CDE);
-                param.Add("FTR_IDN", this.FTR_IDN);
+                param.Add("FTR_CDE", Dtl.FTR_CDE);
+                param.Add("FTR_IDN", Dtl.FTR_IDN);
 
-                ValvFacDtl result = new ValvFacDtl();
-                result = BizUtil.SelectObject(param) as ValvFacDtl;
+                this.Dtl = BizUtil.SelectObject(param) as ValvFacDtl;
                                
-                //결과를 뷰모델멤버로 매칭
-                Type dbmodel = result.GetType();
-                Type model = this.GetType();
-
-                //모델프로퍼티 순회
-                foreach (PropertyInfo prop in model.GetProperties())
-                {
-                    string propName = prop.Name;
-                    //db프로퍼티 순회
-                    foreach (PropertyInfo dbprop in dbmodel.GetProperties())
-                    {
-                        string colName = dbprop.Name;
-                        var colValue = dbprop.GetValue(result, null);
-                        if (colName.Equals(propName))
-                        {
-                            prop.SetValue(this, Convert.ChangeType(colValue, prop.PropertyType));
-                        }
-                    }
-                    Console.WriteLine(propName + " - " + prop.GetValue(this, null));
-                }
             }
             catch (Exception e)
             {
@@ -161,7 +164,7 @@ namespace GTI.WFMS.Modules.Pipe.ViewModel
 
             try
             {
-                BizUtil.Update2(this, "updateValvFacDtl");
+                BizUtil.Update2(this.Dtl, "updateValvFacDtl");
             }
             catch (Exception )
             {
@@ -187,7 +190,7 @@ namespace GTI.WFMS.Modules.Pipe.ViewModel
             try
             {
                 //0.Datasource 생성
-                ValvFacDtlViewMdl mdl = new ValvFacDtlViewMdl(this.FTR_CDE, this.FTR_IDN);
+                ValvFacDtlViewMdl mdl = new ValvFacDtlViewMdl(Dtl.FTR_CDE, Dtl.FTR_IDN);
                 //1.Report 호출
 
                 ValvFacReport report = new ValvFacReport();
@@ -217,9 +220,9 @@ namespace GTI.WFMS.Modules.Pipe.ViewModel
             param.Add("sqlId" , "selectChscResSubList");
             param.Add("sqlId2", "SelectFileMapList");
 
-            param.Add("FTR_CDE", this.FTR_CDE);
-            param.Add("FTR_IDN", this.FTR_IDN);
-            param.Add("BIZ_ID", string.Concat(this.FTR_CDE , this.FTR_IDN) );
+            param.Add("FTR_CDE", Dtl.FTR_CDE);
+            param.Add("FTR_IDN", Dtl.FTR_IDN);
+            param.Add("BIZ_ID", string.Concat(Dtl.FTR_CDE , Dtl.FTR_IDN) );
 
             Hashtable result = BizUtil.SelectLists(param);
             DataTable dt  = new DataTable();
@@ -230,27 +233,45 @@ namespace GTI.WFMS.Modules.Pipe.ViewModel
                 dt = result["dt"] as DataTable;
                 if (dt.Rows.Count > 0)
                 {
-                    Messages.ShowErrMsgBox("유지보수내역이 존재합니다.");
+                    Messages.ShowInfoMsgBox("유지보수내역이 존재합니다.");
                     return;
                 }
             }
             catch (Exception) { }
+
+            // 1.삭제처리
+            if (Messages.ShowYesNoMsgBox("변류시설를 삭제하시겠습니까?") != MessageBoxResult.Yes) return;
+
             try
             {
                 dt2 = result["dt2"] as DataTable;
                 if (dt2.Rows.Count > 0)
                 {
-                    Messages.ShowErrMsgBox("파일첨부내역이 존재합니다.");
-                    return;
+                    //Messages.ShowInfoMsgBox("파일첨부내역이 존재합니다.");
+                    //return;
+                    //첨부파일삭제
+                    foreach (DataRow row in dt2.Rows)
+                    {
+                        //a.FIL_SEQ 첨부파일삭제
+                        BizUtil.DelFileSeq(row["FIL_SEQ"]);
+
+                        //b.FILE_MAP 업무파일매핑삭제
+                        param = new Hashtable();
+                        param.Add("sqlId", "DeleteFileMap");
+                        param.Add("BIZ_ID", Dtl.FTR_CDE + Dtl.FTR_IDN);
+                        param.Add("FIL_SEQ", row["FIL_SEQ"]);
+                        BizUtil.Update(param);
+                    }
                 }
             }
             catch (Exception) { }
-           
-            // 1.삭제처리
-            if (Messages.ShowYesNoMsgBox("변류시설를 삭제하시겠습니까?") != MessageBoxResult.Yes) return;
+
+
+
+
             try
             {
-                BizUtil.Update2(this, "deleteValvFacDtl");
+                BizUtil.Update2(Dtl, "deleteValvFacDtl");
             }
             catch (Exception )
             {
@@ -292,32 +313,32 @@ namespace GTI.WFMS.Modules.Pipe.ViewModel
                 //BizUtil.SetCombo(cbFTR_CDE, "Select_FTR_LIST", "FTR_CDE", "FTR_NAM", false);
 
                 // cbHJD_CDE 행정동
-                BizUtil.SetCombo(cbHJD_CDE, "Select_ADAR_LIST", "HJD_CDE", "HJD_NAM", "[선택하세요]");
+                BizUtil.SetCombo(cbHJD_CDE, "Select_ADAR_LIST", "HJD_CDE", "HJD_NAM", "선택");
 
                 // cbMNG_CDE 관리기관
-                BizUtil.SetCmbCode(cbMNG_CDE, "250101", "[선택하세요]");
+                BizUtil.SetCmbCode(cbMNG_CDE, "250101", "선택");
 
 
                 // cbVAL_MOF 형식
-                BizUtil.SetCmbCode(cbVAL_MOF, "250016", "[선택하세요]");
+                BizUtil.SetCmbCode(cbVAL_MOF, "250016", "선택");
 
                 // cbVAL_MOP 관재질
-                BizUtil.SetCmbCode(cbVAL_MOP, "250015", "[선택하세요]");
+                BizUtil.SetCmbCode(cbVAL_MOP, "250015", "선택");
 
                 // cbSAE_CDE    제수변회전방향
-                BizUtil.SetCmbCode(cbSAE_CDE, "250027", "[선택하세요]");
+                BizUtil.SetCmbCode(cbSAE_CDE, "250027", "선택");
 
                 // cbMTH_CDE    제수변구동방법
-                BizUtil.SetCmbCode(cbMTH_CDE, "250065", "[선택하세요]");
+                BizUtil.SetCmbCode(cbMTH_CDE, "250065", "선택");
 
                 // cbVAL_FOR    시설물형태(=구조물형태)
-                BizUtil.SetCmbCode(cbVAL_FOR, "250007", "[선택하세요]");
+                BizUtil.SetCmbCode(cbVAL_FOR, "250007", "선택");
 
                 // cbCST_CDE    이상상태
-                BizUtil.SetCmbCode(cbCST_CDE, "250062", "[선택하세요]");
+                BizUtil.SetCmbCode(cbCST_CDE, "250062", "선택");
 
                 // cbOFF_CDE    개폐여부
-                BizUtil.SetCmbCode(cbOFF_CDE, "250036", "[선택하세요]");
+                BizUtil.SetCmbCode(cbOFF_CDE, "250036", "선택");
 
             }
             catch (Exception ex)

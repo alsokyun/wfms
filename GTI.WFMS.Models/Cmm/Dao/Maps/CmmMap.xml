@@ -75,6 +75,7 @@
     <select id ="Select_ADAR_LIST" parameterClass="Hashtable" resultClass ="Hashtable">
       SELECT 	HJD_CDE, HJD_NAM, HJD_EXP
       FROM 	INFOFMS.CMT_ADAR_MA
+      WHERE NVL(USE_YN,'*') != 'N'
       ORDER BY HJD_CDE
     </select>
 
@@ -83,6 +84,7 @@
       SELECT 	HJD_CDE, HJD_NAM AS NAME, HJD_EXP
       FROM 	INFOFMS.CMT_ADAR_MA
       WHERE HJD_CDE = #CODE#
+      AND NVL(USE_YN,'*') != 'N'
       ORDER BY HJD_CDE
     </select>
 
@@ -97,6 +99,7 @@
       SELECT FTR_CDE, FTR_NAM
       FROM V_FTR_CDE
       WHERE 1=1
+        AND USE_YN = 'Y'
       ORDER BY FTR_CDE
     </select>
     
@@ -106,10 +109,48 @@
       FROM V_FTR_CDE
       WHERE 1=1
       <isNotEmpty prepend="AND" property="CODE">
-        FTR_CDE = #CODE#
+        FTR_CDE like #CODE# || '%'
       </isNotEmpty>
       ORDER BY FTR_CDE
     </select>
 
+
+    <!--시설물코드 List -->
+    <select id ="Select_FTR_LIST3" parameterClass="Hashtable" resultClass ="GTI.WFMS.Models.Cmm.Model.FctDtl">
+      SELECT FTR_CDE, FTR_NAM
+      FROM V_FTR_CDE
+      WHERE 1=1
+      <isNotEmpty prepend="AND" property="FTR_CDE">
+        FTR_CDE like #FTR_CDE# || '%'
+      </isNotEmpty>
+      ORDER BY FTR_CDE
+    </select>
+
+    <!--시설물 포인트 위치저장-->
+    <update id="updatePoint" parameterClass="Hashtable" remapResults="true">
+      UPDATE $TABLE_NM$
+      SET GEOM = ST_POINTFROMTEXT(#WKT_POINT#)
+      WHERE 1=1
+      AND FTR_CDE = #FTR_CDE#
+      AND FTR_IDN = #FTR_IDN#
+    </update>
+    
+    <!--시설물 라인 위치저장-->
+    <update id="updatePolyline" parameterClass="Hashtable" remapResults="true">
+      UPDATE $TABLE_NM$
+      SET GEOM = ST_LINEFROMTEXT(#WKT_LINE#)
+      WHERE FTR_CDE = #FTR_CDE#
+      AND FTR_IDN = #FTR_IDN#
+    </update>
+    
+    <!--시설물 폴리곤 위치저장-->
+    <update id="updatePolygon" parameterClass="Hashtable" remapResults="true">
+      UPDATE $TABLE_NM$
+      SET GEOM = ST_MPOLYFROMTEXT(#WKT_POLYGON#)
+      WHERE 1=1
+      AND FTR_CDE = #FTR_CDE#
+      AND FTR_IDN = #FTR_IDN#
+    </update>
+    
   </statements>
 </sqlMap>

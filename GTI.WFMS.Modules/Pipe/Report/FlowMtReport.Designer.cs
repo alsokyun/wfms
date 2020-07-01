@@ -269,7 +269,7 @@
             this.xrLabel5.StylePriority.UseTextAlignment = false;
             this.xrLabel5.Text = "xrLabel15";
             this.xrLabel5.TextAlignment = DevExpress.XtraPrinting.TextAlignment.MiddleLeft;
-            this.xrLabel5.TextFormatString = "{0:#,0}";
+            this.xrLabel5.TextFormatString = "{0:#,0.000}";
             // 
             // xrLabel6
             // 
@@ -379,7 +379,7 @@
             this.xrLabel89.StylePriority.UseFont = false;
             this.xrLabel89.StylePriority.UsePadding = false;
             this.xrLabel89.StylePriority.UseTextAlignment = false;
-            this.xrLabel89.Text = "관리지형지물부호";
+            this.xrLabel89.Text = "관로지형지물부호";
             this.xrLabel89.TextAlignment = DevExpress.XtraPrinting.TextAlignment.MiddleLeft;
             // 
             // xrLabel88
@@ -407,7 +407,7 @@
             this.xrLabel87.StylePriority.UseFont = false;
             this.xrLabel87.StylePriority.UsePadding = false;
             this.xrLabel87.StylePriority.UseTextAlignment = false;
-            this.xrLabel87.Text = "관리번호";
+            this.xrLabel87.Text = "관로관리번호";
             this.xrLabel87.TextAlignment = DevExpress.XtraPrinting.TextAlignment.MiddleLeft;
             // 
             // xrLabel86
@@ -575,7 +575,7 @@
             this.xrLabel76.StylePriority.UseTextAlignment = false;
             this.xrLabel76.Text = "xrLabel15";
             this.xrLabel76.TextAlignment = DevExpress.XtraPrinting.TextAlignment.MiddleLeft;
-            this.xrLabel76.TextFormatString = "{0:#,0.00}";
+            this.xrLabel76.TextFormatString = "{0:#,0.000}";
             // 
             // xrLabel75
             // 
@@ -846,7 +846,7 @@
             this.xrLabel58.StylePriority.UseFont = false;
             this.xrLabel58.StylePriority.UsePadding = false;
             this.xrLabel58.StylePriority.UseTextAlignment = false;
-            this.xrLabel58.Text = "행정도";
+            this.xrLabel58.Text = "행정동";
             this.xrLabel58.TextAlignment = DevExpress.XtraPrinting.TextAlignment.MiddleLeft;
             // 
             // xrLabel50

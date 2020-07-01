@@ -1,5 +1,6 @@
 ﻿using DevExpress.Xpf.Editors;
 using GTI.WFMS.GIS.Module.View;
+using GTI.WFMS.GIS.Pop.ViewModel;
 using GTI.WFMS.Models.Common;
 using GTI.WFMS.Models.Pipe.Model;
 using GTIFramework.Common.Log;
@@ -145,15 +146,25 @@ namespace GTI.WFMS.GIS.Module.ViewModel
 
             try
             {
+                //1.시설물정보
                 FctDtl.FTR_CDE = this.FTR_CDE;
                 FctDtl.FTR_IDN = Convert.ToInt32(this.FTR_IDN); //신규위치 및 기존위치 정보만 있을수 있으므로 shape의 관리번호를 기준으로한다.
                 BizUtil.Update2(FctDtl, "saveFlowMtDtl");
+
+                //2.위치정보 - 위치편집한 경우만
+                if (!FmsUtil.IsNull(GisCmm.WKT_POINT))
+                {
+                    GisCmm.SavePoint(FctDtl.FTR_CDE, FctDtl.FTR_IDN.ToString(),"WTL_FLOW_PS");
+                    GisCmm.WKT_POINT = "";
+                }
             }
             catch (Exception e)
             {
                 Messages.ShowErrMsgBox("저장 처리중 오류가 발생하였습니다." + e.Message);
                 return;
             }
+
+
 
             Messages.ShowOkMsgBox();
             InitModel();
@@ -184,26 +195,46 @@ namespace GTI.WFMS.GIS.Module.ViewModel
                 dt = result["dt"] as DataTable;
                 if (dt.Rows.Count > 0)
                 {
-                    Messages.ShowErrMsgBox("유지보수내역이 존재합니다.");
+                    Messages.ShowInfoMsgBox("유지보수내역이 존재합니다.");
                     return;
                 }
             }
             catch (Exception) { }
-            try
-            {
-                dt2 = result["dt2"] as DataTable;
-                if (dt2.Rows.Count > 0)
-                {
-                    Messages.ShowErrMsgBox("파일첨부내역이 존재합니다.");
-                    return;
-                }
-            }
-            catch (Exception) { }
+
 
 
 
             // 1.삭제처리
             if (Messages.ShowYesNoMsgBox("유량계시설를 삭제하시겠습니까?") != MessageBoxResult.Yes) return;
+
+
+            try
+            {
+                dt2 = result["dt2"] as DataTable;
+                if (dt2.Rows.Count > 0)
+                {
+                    //Messages.ShowInfoMsgBox("파일첨부내역이 존재합니다.");
+                    //return;
+                    //첨부파일삭제
+                    foreach (DataRow row in dt2.Rows)
+                    {
+                        //a.FIL_SEQ 첨부파일삭제
+                        BizUtil.DelFileSeq(row["FIL_SEQ"]);
+
+                        //b.FILE_MAP 업무파일매핑삭제
+                        param = new Hashtable();
+                        param.Add("sqlId", "DeleteFileMap");
+                        param.Add("BIZ_ID", FTR_CDE + FTR_IDN);
+                        param.Add("FIL_SEQ", row["FIL_SEQ"]);
+                        BizUtil.Update(param);
+                    }
+                }
+            }
+            catch (Exception) { }
+
+
+
+
             try
             {
                 BizUtil.Update2(this.FctDtl, "deleteFlowMtDtl");
@@ -213,8 +244,14 @@ namespace GTI.WFMS.GIS.Module.ViewModel
                 Messages.ShowErrMsgBox("삭제 처리중 오류가 발생하였습니다.");
                 return;
             }
-            Messages.ShowOkMsgBox();
-            InitModel();
+            // 2.위치정보 삭제처리
+            ContentControl cctl = uC_FLOW_PS.Parent as ContentControl;
+            EditWinViewModel editWinViewModel = ((((cctl.Parent as Grid).Parent as Grid).Parent as Grid).Parent as Window).DataContext as EditWinViewModel;
+            editWinViewModel.OnDelCmd(null);
+
+
+            //Messages.ShowOkMsgBox();
+            //InitModel();
         }
 
 
@@ -237,10 +274,10 @@ namespace GTI.WFMS.GIS.Module.ViewModel
             }
             else
             {
-                //신규등록이면 상세화면표시
-                if (!"Y".Equals(uC_FLOW_PS.btnDel.Tag))
+                //신규등록이면 상세화면표시 - 모든경우 신규등록으로 간주
+                if ("Y".Equals(uC_FLOW_PS.btnDel.Tag))
                 {
-                    uC_FLOW_PS.grid.Visibility = Visibility.Hidden; //DB데이터가 없으면 빈페이지표시
+                    uC_FLOW_PS.grid.Visibility = Visibility.Visible; 
                 }
             }
         }
@@ -254,16 +291,16 @@ namespace GTI.WFMS.GIS.Module.ViewModel
             try
             {
                 // cbHJD_CDE 행정동
-                BizUtil.SetCombo(uC_FLOW_PS.cbHJD_CDE, "Select_ADAR_LIST", "HJD_CDE", "HJD_NAM", "[선택하세요]");
+                BizUtil.SetCombo(uC_FLOW_PS.cbHJD_CDE, "Select_ADAR_LIST", "HJD_CDE", "HJD_NAM", "선택");
 
                 // cbMNG_CDE 관리기관
-                BizUtil.SetCmbCode(uC_FLOW_PS.cbMNG_CDE, "250101", "[선택하세요]");
+                BizUtil.SetCmbCode(uC_FLOW_PS.cbMNG_CDE, "250101", "선택");
 
                 // cbGAG_CDE 유량계종류
-                BizUtil.SetCmbCode(uC_FLOW_PS.cbGAG_CDE, "250061", "[선택하세요]");
+                BizUtil.SetCmbCode(uC_FLOW_PS.cbGAG_CDE, "250061", "선택");
 
                 // cbMOF_CDE 형식
-                BizUtil.SetCmbCode(uC_FLOW_PS.cbMOF_CDE, "250035", "[선택하세요]");
+                BizUtil.SetCmbCode(uC_FLOW_PS.cbMOF_CDE, "250035", "선택");
 
             }
             catch (Exception ex)

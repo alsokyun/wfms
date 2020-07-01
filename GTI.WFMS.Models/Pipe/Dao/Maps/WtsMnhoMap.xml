@@ -170,7 +170,7 @@
           , A.SOM_CDE	/*맨홀종류*/
           , (SELECT NM FROM INFOUSER.CD_DTL_INFO WHERE MST_CD = '250012' AND DTL_CD = A.SOM_CDE ) AS SOM_NAM
           , A.MHS_CDE	/*맨홀형태*/
-          , (SELECT NM FROM INFOUSER.CD_DTL_INFO WHERE MST_CD = '250012' AND DTL_CD = A.MHS_CDE ) AS MHS_NAM
+          , (SELECT NM FROM INFOUSER.CD_DTL_INFO WHERE MST_CD = '250049' AND DTL_CD = A.MHS_CDE ) AS MHS_NAM
           , A.CNT_NUM
           , A.SYS_CHK
           , decode(A.SYS_CHK,'1','유','무') as SYS_CHK_NAM

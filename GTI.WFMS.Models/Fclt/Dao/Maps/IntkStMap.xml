@@ -47,7 +47,7 @@
 
         <!-- 조건8. 취수장명 -->
         <isNotEmpty prepend="AND" property="GAI_NAM">
-          A.GAI_NAM LIKE '%' ||#GAI_NAM#|| '%'
+          upper(A.GAI_NAM ) LIKE '%' || upper(#GAI_NAM#) || '%'
         </isNotEmpty>
 
         <!-- 조건9. 수원구분 -->
@@ -57,7 +57,7 @@
 
         <!-- 조건10. 수계명 -->
         <isNotEmpty prepend="AND" property="WSS_NAM">
-          A.WSS_NAM LIKE '%' || #WSS_NAM# || '%'
+          upper(A.WSS_NAM ) LIKE '%' || upper(#WSS_NAM# ) || '%'
         </isNotEmpty>
 
         <!-- 조건11. 도수방법 -->
@@ -132,7 +132,7 @@
 
         <!-- 조건8. 취수장명 -->
         <isNotEmpty prepend="AND" property="GAI_NAM">
-          A.GAI_NAM LIKE '%' ||#GAI_NAM#|| '%'
+          upper(A.GAI_NAM ) LIKE '%' || upper(#GAI_NAM#) || '%'
         </isNotEmpty>
 
         <!-- 조건9. 수원구분 -->
@@ -142,7 +142,7 @@
 
         <!-- 조건10. 수계명 -->
         <isNotEmpty prepend="AND" property="WSS_NAM">
-          A.WSS_NAM LIKE '%' || #WSS_NAM# || '%'
+          upper(A.WSS_NAM ) LIKE '%' || upper(#WSS_NAM# ) || '%'
         </isNotEmpty>
 
         <!-- 조건11. 도수방법 -->

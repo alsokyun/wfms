@@ -3,20 +3,9 @@ using System.ComponentModel;
 
 namespace GTI.WFMS.Models.Dash.Model
 {
-    public class DashDtl : CmmDtl, INotifyPropertyChanged
+    public class DashDtl : CmmDtl
     {
-        /// <summary>                                                                
-        /// 인터페이스 구현부분                                                       
-        /// </summary>                                                                
-        public event PropertyChangedEventHandler PropertyChanged;
-        protected void OnPropertyChanged(string propertyName)
-        {
-            if (PropertyChanged != null)
-            {
-                PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
-            }
-        }
-
+        
 
         /// <summary>                                                                 
         /// 프로퍼티 부분                                                             
@@ -31,8 +20,8 @@ namespace GTI.WFMS.Models.Dash.Model
                 OnPropertyChanged("NAM");
             }
         }       
-        private decimal __DATA_VAL;
-        public decimal DATA_VAL
+        private decimal ?  __DATA_VAL;
+        public decimal ? DATA_VAL
         {
             get { return __DATA_VAL; }
             set
@@ -41,8 +30,8 @@ namespace GTI.WFMS.Models.Dash.Model
                 OnPropertyChanged("DATA_VAL");
             }
         }
-        private decimal __DATA_VAL2;
-        public decimal DATA_VAL2
+        private decimal ?  __DATA_VAL2;
+        public decimal ? DATA_VAL2
         {
             get { return __DATA_VAL2; }
             set

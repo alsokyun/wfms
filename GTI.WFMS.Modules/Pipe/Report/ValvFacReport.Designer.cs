@@ -403,7 +403,7 @@
             // xrLabel31
             // 
             this.xrLabel31.ExpressionBindings.AddRange(new DevExpress.XtraReports.UI.ExpressionBinding[] {
-            new DevExpress.XtraReports.UI.ExpressionBinding("BeforePrint", "Text", "[SYS_CHK_NAM]")});
+            new DevExpress.XtraReports.UI.ExpressionBinding("BeforePrint", "Text", "[Dtl].[SYS_CHK_NAM]")});
             this.xrLabel31.Font = new System.Drawing.Font("Arial", 8F);
             this.xrLabel31.LocationFloat = new DevExpress.Utils.PointFloat(341.0422F, 283.125F);
             this.xrLabel31.Multiline = true;
@@ -420,7 +420,7 @@
             // xrLabel32
             // 
             this.xrLabel32.ExpressionBindings.AddRange(new DevExpress.XtraReports.UI.ExpressionBinding[] {
-            new DevExpress.XtraReports.UI.ExpressionBinding("BeforePrint", "Text", "[ANG_DIR]")});
+            new DevExpress.XtraReports.UI.ExpressionBinding("BeforePrint", "Text", "[Dtl].[ANG_DIR]")});
             this.xrLabel32.Font = new System.Drawing.Font("Arial", 8F);
             this.xrLabel32.LocationFloat = new DevExpress.Utils.PointFloat(108.668F, 283.125F);
             this.xrLabel32.Multiline = true;
@@ -432,7 +432,7 @@
             this.xrLabel32.StylePriority.UseTextAlignment = false;
             this.xrLabel32.Text = "xrLabel15";
             this.xrLabel32.TextAlignment = DevExpress.XtraPrinting.TextAlignment.MiddleLeft;
-            this.xrLabel32.TextFormatString = "{0:0,0}";
+            this.xrLabel32.TextFormatString = "{0:#,0.000}";
             // 
             // xrLabel33
             // 
@@ -535,7 +535,7 @@
             // xrLabel23
             // 
             this.xrLabel23.ExpressionBindings.AddRange(new DevExpress.XtraReports.UI.ExpressionBinding[] {
-            new DevExpress.XtraReports.UI.ExpressionBinding("BeforePrint", "Text", "[PIP_IDN]")});
+            new DevExpress.XtraReports.UI.ExpressionBinding("BeforePrint", "Text", "[Dtl].[PIP_IDN]")});
             this.xrLabel23.Font = new System.Drawing.Font("Arial", 8F);
             this.xrLabel23.LocationFloat = new DevExpress.Utils.PointFloat(108.668F, 258.125F);
             this.xrLabel23.Multiline = true;
@@ -551,7 +551,7 @@
             // xrLabel24
             // 
             this.xrLabel24.ExpressionBindings.AddRange(new DevExpress.XtraReports.UI.ExpressionBinding[] {
-            new DevExpress.XtraReports.UI.ExpressionBinding("BeforePrint", "Text", "[CST_NAM]")});
+            new DevExpress.XtraReports.UI.ExpressionBinding("BeforePrint", "Text", "[Dtl].[CST_NAM]")});
             this.xrLabel24.Font = new System.Drawing.Font("Arial", 8F);
             this.xrLabel24.LocationFloat = new DevExpress.Utils.PointFloat(341.0422F, 258.125F);
             this.xrLabel24.Multiline = true;
@@ -581,7 +581,7 @@
             // xrLabel26
             // 
             this.xrLabel26.ExpressionBindings.AddRange(new DevExpress.XtraReports.UI.ExpressionBinding[] {
-            new DevExpress.XtraReports.UI.ExpressionBinding("BeforePrint", "Text", "[OFF_NAM]")});
+            new DevExpress.XtraReports.UI.ExpressionBinding("BeforePrint", "Text", "[Dtl].[OFF_NAM]")});
             this.xrLabel26.Font = new System.Drawing.Font("Arial", 8F);
             this.xrLabel26.LocationFloat = new DevExpress.Utils.PointFloat(608.7084F, 258.125F);
             this.xrLabel26.Multiline = true;
@@ -667,7 +667,7 @@
             // xrLabel14
             // 
             this.xrLabel14.ExpressionBindings.AddRange(new DevExpress.XtraReports.UI.ExpressionBinding[] {
-            new DevExpress.XtraReports.UI.ExpressionBinding("BeforePrint", "Text", "[VAL_SAF]")});
+            new DevExpress.XtraReports.UI.ExpressionBinding("BeforePrint", "Text", "[Dtl].[VAL_SAF]")});
             this.xrLabel14.Font = new System.Drawing.Font("Arial", 8F);
             this.xrLabel14.LocationFloat = new DevExpress.Utils.PointFloat(108.668F, 233.125F);
             this.xrLabel14.Multiline = true;
@@ -679,12 +679,12 @@
             this.xrLabel14.StylePriority.UseTextAlignment = false;
             this.xrLabel14.Text = "xrLabel15";
             this.xrLabel14.TextAlignment = DevExpress.XtraPrinting.TextAlignment.MiddleLeft;
-            this.xrLabel14.TextFormatString = "{0:#,0.00}";
+            this.xrLabel14.TextFormatString = "{0:#,0.000}";
             // 
             // xrLabel15
             // 
             this.xrLabel15.ExpressionBindings.AddRange(new DevExpress.XtraReports.UI.ExpressionBinding[] {
-            new DevExpress.XtraReports.UI.ExpressionBinding("BeforePrint", "Text", "[PRD_NAM]")});
+            new DevExpress.XtraReports.UI.ExpressionBinding("BeforePrint", "Text", "[Dtl].[PRD_NAM]")});
             this.xrLabel15.Font = new System.Drawing.Font("Arial", 8F);
             this.xrLabel15.LocationFloat = new DevExpress.Utils.PointFloat(341.0422F, 233.125F);
             this.xrLabel15.Multiline = true;
@@ -714,7 +714,7 @@
             // xrLabel17
             // 
             this.xrLabel17.ExpressionBindings.AddRange(new DevExpress.XtraReports.UI.ExpressionBinding[] {
-            new DevExpress.XtraReports.UI.ExpressionBinding("BeforePrint", "Text", "[PIP_CDE]")});
+            new DevExpress.XtraReports.UI.ExpressionBinding("BeforePrint", "Text", "[Dtl].[PIP_CDE]")});
             this.xrLabel17.Font = new System.Drawing.Font("Arial", 8F);
             this.xrLabel17.LocationFloat = new DevExpress.Utils.PointFloat(608.7084F, 233.125F);
             this.xrLabel17.Multiline = true;
@@ -758,7 +758,7 @@
             // xrLabel2
             // 
             this.xrLabel2.ExpressionBindings.AddRange(new DevExpress.XtraReports.UI.ExpressionBinding[] {
-            new DevExpress.XtraReports.UI.ExpressionBinding("BeforePrint", "Text", "[VAL_STD]")});
+            new DevExpress.XtraReports.UI.ExpressionBinding("BeforePrint", "Text", "[Dtl].[VAL_STD]")});
             this.xrLabel2.Font = new System.Drawing.Font("Arial", 8F);
             this.xrLabel2.LocationFloat = new DevExpress.Utils.PointFloat(608.7084F, 208.125F);
             this.xrLabel2.Multiline = true;
@@ -788,7 +788,7 @@
             // xrLabel4
             // 
             this.xrLabel4.ExpressionBindings.AddRange(new DevExpress.XtraReports.UI.ExpressionBinding[] {
-            new DevExpress.XtraReports.UI.ExpressionBinding("BeforePrint", "Text", "[FOR_NAM]")});
+            new DevExpress.XtraReports.UI.ExpressionBinding("BeforePrint", "Text", "[Dtl].[FOR_NAM]")});
             this.xrLabel4.Font = new System.Drawing.Font("Arial", 8F);
             this.xrLabel4.LocationFloat = new DevExpress.Utils.PointFloat(341.0422F, 208.125F);
             this.xrLabel4.Multiline = true;
@@ -804,7 +804,7 @@
             // xrLabel5
             // 
             this.xrLabel5.ExpressionBindings.AddRange(new DevExpress.XtraReports.UI.ExpressionBinding[] {
-            new DevExpress.XtraReports.UI.ExpressionBinding("BeforePrint", "Text", "[MTH_NAM]")});
+            new DevExpress.XtraReports.UI.ExpressionBinding("BeforePrint", "Text", "[Dtl].[MTH_NAM]")});
             this.xrLabel5.Font = new System.Drawing.Font("Arial", 8F);
             this.xrLabel5.LocationFloat = new DevExpress.Utils.PointFloat(108.668F, 208.125F);
             this.xrLabel5.Multiline = true;
@@ -1001,7 +1001,7 @@
             // xrLabel84
             // 
             this.xrLabel84.ExpressionBindings.AddRange(new DevExpress.XtraReports.UI.ExpressionBinding[] {
-            new DevExpress.XtraReports.UI.ExpressionBinding("BeforePrint", "Text", "[MOF_NAM]")});
+            new DevExpress.XtraReports.UI.ExpressionBinding("BeforePrint", "Text", "[Dtl].[MOF_NAM]")});
             this.xrLabel84.Font = new System.Drawing.Font("Arial", 8F);
             this.xrLabel84.LocationFloat = new DevExpress.Utils.PointFloat(108.668F, 158.125F);
             this.xrLabel84.Multiline = true;
@@ -1017,7 +1017,7 @@
             // xrLabel83
             // 
             this.xrLabel83.ExpressionBindings.AddRange(new DevExpress.XtraReports.UI.ExpressionBinding[] {
-            new DevExpress.XtraReports.UI.ExpressionBinding("BeforePrint", "Text", "[SAE_NAM]")});
+            new DevExpress.XtraReports.UI.ExpressionBinding("BeforePrint", "Text", "[Dtl].[SAE_NAM]")});
             this.xrLabel83.Font = new System.Drawing.Font("Arial", 8F);
             this.xrLabel83.LocationFloat = new DevExpress.Utils.PointFloat(108.668F, 183.125F);
             this.xrLabel83.Multiline = true;
@@ -1033,7 +1033,7 @@
             // xrLabel82
             // 
             this.xrLabel82.ExpressionBindings.AddRange(new DevExpress.XtraReports.UI.ExpressionBinding[] {
-            new DevExpress.XtraReports.UI.ExpressionBinding("BeforePrint", "Text", "[MOP_NAM]")});
+            new DevExpress.XtraReports.UI.ExpressionBinding("BeforePrint", "Text", "[Dtl].[MOP_NAM]")});
             this.xrLabel82.Font = new System.Drawing.Font("Arial", 8F);
             this.xrLabel82.LocationFloat = new DevExpress.Utils.PointFloat(341.0422F, 158.125F);
             this.xrLabel82.Multiline = true;
@@ -1049,7 +1049,7 @@
             // xrLabel81
             // 
             this.xrLabel81.ExpressionBindings.AddRange(new DevExpress.XtraReports.UI.ExpressionBinding[] {
-            new DevExpress.XtraReports.UI.ExpressionBinding("BeforePrint", "Text", "[TRO_CNT]")});
+            new DevExpress.XtraReports.UI.ExpressionBinding("BeforePrint", "Text", "[Dtl].[TRO_CNT]")});
             this.xrLabel81.Font = new System.Drawing.Font("Arial", 8F);
             this.xrLabel81.LocationFloat = new DevExpress.Utils.PointFloat(341.0422F, 183.125F);
             this.xrLabel81.Multiline = true;
@@ -1061,7 +1061,7 @@
             this.xrLabel81.StylePriority.UseTextAlignment = false;
             this.xrLabel81.Text = "xrLabel15";
             this.xrLabel81.TextAlignment = DevExpress.XtraPrinting.TextAlignment.MiddleLeft;
-            this.xrLabel81.TextFormatString = "{0:#,0.00}";
+            this.xrLabel81.TextFormatString = "{0:#,0}";
             // 
             // xrLabel80
             // 
@@ -1094,7 +1094,7 @@
             // xrLabel78
             // 
             this.xrLabel78.ExpressionBindings.AddRange(new DevExpress.XtraReports.UI.ExpressionBinding[] {
-            new DevExpress.XtraReports.UI.ExpressionBinding("BeforePrint", "Text", "[CRO_CNT]")});
+            new DevExpress.XtraReports.UI.ExpressionBinding("BeforePrint", "Text", "[Dtl].[CRO_CNT]")});
             this.xrLabel78.Font = new System.Drawing.Font("Arial", 8F);
             this.xrLabel78.LocationFloat = new DevExpress.Utils.PointFloat(608.7084F, 183.125F);
             this.xrLabel78.Multiline = true;
@@ -1106,7 +1106,7 @@
             this.xrLabel78.StylePriority.UseTextAlignment = false;
             this.xrLabel78.Text = "xrLabel15";
             this.xrLabel78.TextAlignment = DevExpress.XtraPrinting.TextAlignment.MiddleLeft;
-            this.xrLabel78.TextFormatString = "{0:#,0.00}";
+            this.xrLabel78.TextFormatString = "{0:#,0}";
             // 
             // xrLabel77
             // 
@@ -1125,7 +1125,7 @@
             // xrLabel76
             // 
             this.xrLabel76.ExpressionBindings.AddRange(new DevExpress.XtraReports.UI.ExpressionBinding[] {
-            new DevExpress.XtraReports.UI.ExpressionBinding("BeforePrint", "Text", "[VAL_DIP]")});
+            new DevExpress.XtraReports.UI.ExpressionBinding("BeforePrint", "Text", "[Dtl].[VAL_DIP]")});
             this.xrLabel76.Font = new System.Drawing.Font("Arial", 8F);
             this.xrLabel76.LocationFloat = new DevExpress.Utils.PointFloat(608.7084F, 158.125F);
             this.xrLabel76.Multiline = true;
@@ -1137,7 +1137,7 @@
             this.xrLabel76.StylePriority.UseTextAlignment = false;
             this.xrLabel76.Text = "xrLabel15";
             this.xrLabel76.TextAlignment = DevExpress.XtraPrinting.TextAlignment.MiddleLeft;
-            this.xrLabel76.TextFormatString = "{0:#,0.00}";
+            this.xrLabel76.TextFormatString = "{0:#,0.000}";
             // 
             // xrLabel75
             // 
@@ -1189,7 +1189,7 @@
             // xrLabel72
             // 
             this.xrLabel72.ExpressionBindings.AddRange(new DevExpress.XtraReports.UI.ExpressionBinding[] {
-            new DevExpress.XtraReports.UI.ExpressionBinding("BeforePrint", "Text", "[HJD_NAM]")});
+            new DevExpress.XtraReports.UI.ExpressionBinding("BeforePrint", "Text", "[Dtl].[HJD_NAM]")});
             this.xrLabel72.Font = new System.Drawing.Font("Arial", 8F);
             this.xrLabel72.LocationFloat = new DevExpress.Utils.PointFloat(608F, 32.125F);
             this.xrLabel72.Multiline = true;
@@ -1219,7 +1219,7 @@
             // xrLabel70
             // 
             this.xrLabel70.ExpressionBindings.AddRange(new DevExpress.XtraReports.UI.ExpressionBinding[] {
-            new DevExpress.XtraReports.UI.ExpressionBinding("BeforePrint", "Text", "[CNT_NUM]")});
+            new DevExpress.XtraReports.UI.ExpressionBinding("BeforePrint", "Text", "[Dtl].[CNT_NUM]")});
             this.xrLabel70.Font = new System.Drawing.Font("Arial", 8F);
             this.xrLabel70.LocationFloat = new DevExpress.Utils.PointFloat(608F, 57.125F);
             this.xrLabel70.Multiline = true;
@@ -1263,7 +1263,7 @@
             // xrLabel67
             // 
             this.xrLabel67.ExpressionBindings.AddRange(new DevExpress.XtraReports.UI.ExpressionBinding[] {
-            new DevExpress.XtraReports.UI.ExpressionBinding("BeforePrint", "Text", "[SHT_NUM]")});
+            new DevExpress.XtraReports.UI.ExpressionBinding("BeforePrint", "Text", "[Dtl].[SHT_NUM]")});
             this.xrLabel67.Font = new System.Drawing.Font("Arial", 8F);
             this.xrLabel67.LocationFloat = new DevExpress.Utils.PointFloat(340.3339F, 57.125F);
             this.xrLabel67.Multiline = true;
@@ -1279,7 +1279,7 @@
             // xrLabel66
             // 
             this.xrLabel66.ExpressionBindings.AddRange(new DevExpress.XtraReports.UI.ExpressionBinding[] {
-            new DevExpress.XtraReports.UI.ExpressionBinding("BeforePrint", "Text", "[FTR_IDN]")});
+            new DevExpress.XtraReports.UI.ExpressionBinding("BeforePrint", "Text", "[Dtl].[FTR_IDN]")});
             this.xrLabel66.Font = new System.Drawing.Font("Arial", 8F);
             this.xrLabel66.LocationFloat = new DevExpress.Utils.PointFloat(340.3339F, 32.125F);
             this.xrLabel66.Multiline = true;
@@ -1312,7 +1312,7 @@
             // xrLabel64
             // 
             this.xrLabel64.ExpressionBindings.AddRange(new DevExpress.XtraReports.UI.ExpressionBinding[] {
-            new DevExpress.XtraReports.UI.ExpressionBinding("BeforePrint", "Text", "[MNG_NAM]")});
+            new DevExpress.XtraReports.UI.ExpressionBinding("BeforePrint", "Text", "[Dtl].[MNG_NAM]")});
             this.xrLabel64.Font = new System.Drawing.Font("Arial", 8F);
             this.xrLabel64.LocationFloat = new DevExpress.Utils.PointFloat(107.9596F, 57.125F);
             this.xrLabel64.Multiline = true;
@@ -1328,7 +1328,7 @@
             // xrLabel63
             // 
             this.xrLabel63.ExpressionBindings.AddRange(new DevExpress.XtraReports.UI.ExpressionBinding[] {
-            new DevExpress.XtraReports.UI.ExpressionBinding("BeforePrint", "Text", "[FTR_NAM]")});
+            new DevExpress.XtraReports.UI.ExpressionBinding("BeforePrint", "Text", "[Dtl].[FOR_NAM]")});
             this.xrLabel63.Font = new System.Drawing.Font("Arial", 8F);
             this.xrLabel63.LocationFloat = new DevExpress.Utils.PointFloat(107.9596F, 32.125F);
             this.xrLabel63.Multiline = true;
@@ -1408,7 +1408,7 @@
             this.xrLabel58.StylePriority.UseFont = false;
             this.xrLabel58.StylePriority.UsePadding = false;
             this.xrLabel58.StylePriority.UseTextAlignment = false;
-            this.xrLabel58.Text = "행정도";
+            this.xrLabel58.Text = "행정동";
             this.xrLabel58.TextAlignment = DevExpress.XtraPrinting.TextAlignment.MiddleLeft;
             // 
             // xrLabel50

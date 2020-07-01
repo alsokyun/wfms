@@ -215,10 +215,7 @@ namespace GTI.WFMS.Modules.Mntc.ViewModel
                 conditions.Add("FTR_IDN", txtFTR_IDN.Text.Trim());
                 conditions.Add("PRS_NAM", txtPRS_NAM.Text.Trim());
                 conditions.Add("ATT_NAM", txtATT_NAM.Text.Trim());
-
-                conditions.Add("firstIndex", 0);
-                conditions.Add("lastIndex", 1000);
-
+                
                 conditions.Add("sqlId", "SelectOldMngList");
 
                 /*
@@ -393,7 +390,7 @@ namespace GTI.WFMS.Modules.Mntc.ViewModel
         {
             try {
                 // cbPDT_CAT_CDE 소모품구분
-                //BizUtil.SetCmbCode(cbPDT_CAT_CDE, "PDT_CAT_CDE", "[전체]");
+                //BizUtil.SetCmbCode(cbPDT_CAT_CDE, "PDT_CAT_CDE", "전체");
             }
             catch (Exception ex)
             {

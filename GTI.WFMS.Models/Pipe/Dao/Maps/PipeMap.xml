@@ -11,8 +11,8 @@
       FROM INFOFMS.WTL_PIPE_LM A
         LEFT JOIN INFOFMS.V_FTR_CDE F ON A.FTR_CDE = F.FTR_CDE
         LEFT JOIN INFOFMS.CMT_ADAR_MA H ON A.HJD_CDE = H.HJD_CDE
-        LEFT JOIN INFOUSER.CD_DTL_INFO C ON C.MST_CD = (SELECT MST_CD FROM INFOUSER.CD_MST_INFO WHERE ETC = 'MNG_CDE') AND C.DTL_CD = A.MNG_CDE
-        LEFT JOIN INFOUSER.CD_DTL_INFO C2 ON C2.MST_CD = (SELECT MST_CD FROM INFOUSER.CD_MST_INFO WHERE ETC = 'JHT_CDE') AND C2.DTL_CD = A.JHT_CDE
+        LEFT JOIN INFOUSER.CD_DTL_INFO C ON C.MST_CD = '250101' AND C.DTL_CD = A.MNG_CDE
+        LEFT JOIN INFOUSER.CD_DTL_INFO C2 ON C2.MST_CD = '250026' AND C2.DTL_CD = A.JHT_CDE
         LEFT JOIN INFOUSER.CD_DTL_INFO C3 ON C3.MST_CD = '250102' AND C3.DTL_CD = A.MOP_CDE
       
       WHERE 1=1
@@ -29,11 +29,11 @@
         </isNotEmpty>
 
         <isNotEmpty prepend="AND" property="CNT_NUM">
-          A.CNT_NUM like #CNT_NUM#  || '%'
+          upper(A.CNT_NUM ) like '%' || upper(#CNT_NUM# )  || '%'
         </isNotEmpty>
 
         <isNotEmpty prepend="AND" property="SHT_NUM">
-          A.SHT_NUM like #SHT_NUM#  || '%'
+          upper(A.SHT_NUM) like '%' || upper(#SHT_NUM#)  || '%'
         </isNotEmpty>
 
         <isNotEmpty prepend="AND" property="IST_YMD_FROM">
@@ -80,8 +80,8 @@
       FROM INFOFMS.WTL_PIPE_LM A
       LEFT JOIN INFOFMS.V_FTR_CDE F ON A.FTR_CDE = F.FTR_CDE
       LEFT JOIN INFOFMS.CMT_ADAR_MA H ON A.HJD_CDE = H.HJD_CDE
-      LEFT JOIN INFOUSER.CD_DTL_INFO C ON C.MST_CD = (SELECT MST_CD FROM INFOUSER.CD_MST_INFO WHERE ETC = 'MNG_CDE') AND C.DTL_CD = A.MNG_CDE
-      LEFT JOIN INFOUSER.CD_DTL_INFO C2 ON C2.MST_CD = (SELECT MST_CD FROM INFOUSER.CD_MST_INFO WHERE ETC = 'JHT_CDE') AND C2.DTL_CD = A.JHT_CDE
+      LEFT JOIN INFOUSER.CD_DTL_INFO C ON C.MST_CD = '250101' AND C.DTL_CD = A.MNG_CDE
+      LEFT JOIN INFOUSER.CD_DTL_INFO C2 ON C2.MST_CD = '250026' AND C2.DTL_CD = A.JHT_CDE
       LEFT JOIN INFOUSER.CD_DTL_INFO C3 ON C3.MST_CD = '250102' AND C3.DTL_CD = A.MOP_CDE
 
       WHERE 1=1
@@ -98,11 +98,11 @@
       </isNotEmpty>
 
       <isNotEmpty prepend="AND" property="CNT_NUM">
-        A.CNT_NUM like #CNT_NUM#  || '%'
+        upper(A.CNT_NUM ) like '%' || upper(#CNT_NUM# )  || '%'
       </isNotEmpty>
 
       <isNotEmpty prepend="AND" property="SHT_NUM">
-        A.SHT_NUM like #SHT_NUM#  || '%'
+        upper(A.SHT_NUM) like '%' || upper(#SHT_NUM#)  || '%'
       </isNotEmpty>
 
       <isNotEmpty prepend="AND" property="IST_YMD_FROM">
@@ -136,7 +136,7 @@
 
     <!--상수관로 상세-->
     <select id ="SelectWtlPipeDtl" parameterClass="Hashtable" resultClass ="Hashtable">
-      /* SelectWtlPipeList 상수관로 상세*/
+      
       SELECT A.FTR_CDE	,F.FTR_NAM
       , A.FTR_IDN
       , A.HJD_CDE,	H.HJD_NAM
@@ -156,7 +156,7 @@
       , A.PIP_LEN
       FROM INFOFMS.WTL_PIPE_LM A
       LEFT JOIN INFOFMS.V_FTR_CDE F ON A.FTR_CDE = F.FTR_CDE
-      LEFT JOIN INFOUSER.CD_DTL_INFO C ON C.DTL_CD LIKE 'MNG%' AND C.DTL_CD = A.MNG_CDE
+      LEFT JOIN INFOUSER.CD_DTL_INFO C ON C.MST_CD LIKE '250101' AND C.DTL_CD = A.MNG_CDE
       LEFT JOIN INFOFMS.CMT_ADAR_MA H ON H.HJD_CDE = A.HJD_CDE
       LEFT JOIN INFOUSER.CD_DTL_INFO C2 ON C2.DTL_CD LIKE 'SAA%' AND C2.DTL_CD = A.SAA_CDE
       LEFT JOIN INFOUSER.CD_DTL_INFO C3 ON C3.DTL_CD LIKE 'MOP%' AND C3.MST_CD = '250102' AND C3.DTL_CD = A.MOP_CDE
@@ -169,7 +169,7 @@
         
     <!--상수관로 상세 클래스-->
     <select id ="SelectWtlPipeDtl2" parameterClass="Hashtable" resultClass ="GTI.WFMS.Models.Pipe.Model.PipeDtl">
-      /* SelectWtlPipeList 상수관로 상세 클래스*/
+      
       SELECT A.FTR_CDE	,F.FTR_NAM
       , A.FTR_IDN
       , A.HJD_CDE,	H.HJD_NAM
@@ -189,7 +189,7 @@
       , A.PIP_LEN
       FROM INFOFMS.WTL_PIPE_LM A
       LEFT JOIN INFOFMS.V_FTR_CDE F ON A.FTR_CDE = F.FTR_CDE
-      LEFT JOIN INFOUSER.CD_DTL_INFO C ON C.DTL_CD LIKE 'MNG%' AND C.DTL_CD = A.MNG_CDE
+      LEFT JOIN INFOUSER.CD_DTL_INFO C ON C.MST_CD LIKE '250101' AND C.DTL_CD = A.MNG_CDE
       LEFT JOIN INFOFMS.CMT_ADAR_MA H ON H.HJD_CDE = A.HJD_CDE
       LEFT JOIN INFOUSER.CD_DTL_INFO C2 ON C2.DTL_CD LIKE 'SAA%' AND C2.DTL_CD = A.SAA_CDE
       LEFT JOIN INFOUSER.CD_DTL_INFO C3 ON C3.DTL_CD LIKE 'MOP%' AND C3.MST_CD = '250102' AND C3.DTL_CD = A.MOP_CDE

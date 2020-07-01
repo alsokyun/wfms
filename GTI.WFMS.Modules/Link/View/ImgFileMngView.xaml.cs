@@ -26,6 +26,7 @@ namespace GTI.WFMS.Modules.Link.View
         private string BIZ_ID;
         private string FIL_SEQ;
 
+
         //초기조회
         private DataTable dt = new DataTable();
 
@@ -176,29 +177,30 @@ namespace GTI.WFMS.Modules.Link.View
 
     }
 
-    public class ImageContainer : ContentControlBase
-    {
-        protected override void OnMouseLeftButtonUp(MouseButtonEventArgs e)
-        {
-            base.OnMouseLeftButtonUp(e);
-            if (Controller.IsMouseLeftButtonDown)
-            {
-                var layoutControl = Parent as FlowLayoutControl;
-                if (layoutControl != null)
-                {
-                    Controller.IsMouseEntered = false;
-                    layoutControl.MaximizedElement = layoutControl.MaximizedElement == this ? null : this;
-                }
-            }
-        }
-        protected override void OnSizeChanged(SizeChangedEventArgs e)
-        {
-            base.OnSizeChanged(e);
-            if (!double.IsNaN(Width) && !double.IsNaN(Height))
-                if (e.NewSize.Width != e.PreviousSize.Width)
-                    Height = double.NaN;
-                else
-                    Width = double.NaN;
-        }
-    }
+    //public class ImageContainer : ContentControlBase
+    //{
+    //    protected override void OnMouseLeftButtonUp(MouseButtonEventArgs e)
+    //    {
+    //        base.OnMouseLeftButtonUp(e);
+    //        if (Controller.IsMouseLeftButtonDown)
+    //        {
+    //            var layoutControl = Parent as FlowLayoutControl;
+    //            if (layoutControl != null)
+    //            {
+    //                Controller.IsMouseEntered = false;
+    //                layoutControl.MaximizedElement = layoutControl.MaximizedElement == this ? null : this;
+    //            }
+    //        }
+
+    //    }
+    //    protected override void OnSizeChanged(SizeChangedEventArgs e)
+    //    {
+    //        base.OnSizeChanged(e);
+    //        if (!double.IsNaN(Width) && !double.IsNaN(Height))
+    //            if (e.NewSize.Width != e.PreviousSize.Width)
+    //                Height = double.NaN;
+    //            else
+    //                Width = double.NaN;
+    //    }
+    //}
 }

@@ -6,6 +6,7 @@ using GTI.WFMS.Modules.Cnst.View;
 using GTIFramework.Common.MessageBox;
 using System;
 using System.Collections;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Windows;
@@ -41,7 +42,7 @@ namespace GTI.WFMS.Modules.Cnst.ViewModel
         public DelegateCommand<object> AddCommand { get; set; }
 
 
-        ObservableCollection<WttCostDt> __GrdLst;
+        private ObservableCollection<WttCostDt> __GrdLst;
         public ObservableCollection<WttCostDt> GrdLst
         {
             get { return __GrdLst; }

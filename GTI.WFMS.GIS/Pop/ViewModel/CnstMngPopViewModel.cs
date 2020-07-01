@@ -217,23 +217,27 @@ namespace GTI.WFMS.GIS.Pop.ViewModel
                     conditions.Add("FNS_YMD_TO", dtFNS_YMD_TO.EditValue == null ? null : Convert.ToDateTime(dtFNS_YMD_TO.EditValue).ToString("yyyyMMdd"));
                 }
                 catch (Exception ) { }
+
+                if (!BizUtil.ValidDateBtw(conditions["TCT_AMT_FROM"], conditions["TCT_AMT_TO"]))
+                {
+                    Messages.ShowInfoMsgBox("계약금액 범위를 확인하세요");
+                    return;
+                }
                 if (!BizUtil.ValidDateBtw(conditions["BEG_YMD_FROM"], conditions["BEG_YMD_TO"]))
                 {
-                    Messages.ShowInfoMsgBox("From/To 일자를 확인하세요");
+                    Messages.ShowInfoMsgBox("착공일자 범위를 확인하세요");
                     return;
                 }
                 if (!BizUtil.ValidDateBtw(conditions["FNS_YMD_FROM"], conditions["FNS_YMD_TO"]))
                 {
-                    Messages.ShowInfoMsgBox("From/To 일자를 확인하세요");
+                    Messages.ShowInfoMsgBox("준공일자 범위를 확인하세요");
                     return;
                 }
 
 
                 conditions.Add("CTT_CDE", cbCTT_CDE.EditValue);
                 conditions.Add("CNT_LOC", txtCNT_LOC.Text.Trim());
-
-                conditions.Add("firstIndex", 0);
-                conditions.Add("lastIndex", 1000);
+                
 
                 conditions.Add("sqlId", "SelectWttConsMaList");
 
@@ -312,9 +316,9 @@ namespace GTI.WFMS.GIS.Pop.ViewModel
         {
             try {
                 // cbCNT_CDE
-                BizUtil.SetCmbCode(cbCNT_CDE, "250039", "[선택하세요]");
+                BizUtil.SetCmbCode(cbCNT_CDE, "250039", "선택");
                 // cbCTT_CDE
-                BizUtil.SetCmbCode(cbCTT_CDE, "250038", "[선택하세요]");
+                BizUtil.SetCmbCode(cbCTT_CDE, "250038", "선택");
 
             }
             catch (Exception ex)

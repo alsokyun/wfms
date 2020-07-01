@@ -1,26 +1,10 @@
 ﻿using GTI.WFMS.Models.Cmm.Model;
-using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace GTI.WFMS.Models.Acmf.Model
 {
-    public class WtrTrkDtl : CmmDtl, INotifyPropertyChanged
+    public class WtrTrkDtl : CmmDtl
     {
-        /// <summary>                                                                
-        /// 인터페이스 구현부분                                                       
-        /// </summary>                                                                
-        public event PropertyChangedEventHandler PropertyChanged;
-        protected void OnPropertyChanged(string propertyName)
-        {
-            if (PropertyChanged != null)
-            {
-                PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
-            }
-        }
+       
 
 
 
@@ -98,7 +82,7 @@ namespace GTI.WFMS.Models.Acmf.Model
             }
         }
         private string __MNG_CDE_NAM;
-        public string MNG_CDENAM
+        public string MNG_CDE_NAM
         {
             get { return __MNG_CDE_NAM; }
             set
@@ -217,8 +201,8 @@ namespace GTI.WFMS.Models.Acmf.Model
                 OnPropertyChanged("MNG_TEL");
             }
         }
-        private decimal __BLD_ARA;
-        public decimal BLD_ARA
+        private decimal ?  __BLD_ARA;
+        public decimal ? BLD_ARA
         {
             get { return __BLD_ARA; }
             set
@@ -227,8 +211,8 @@ namespace GTI.WFMS.Models.Acmf.Model
                 OnPropertyChanged("BLD_ARA");
             }
         }
-        private decimal __TBL_ARA;
-        public decimal TBL_ARA
+        private decimal ?  __TBL_ARA;
+        public decimal ? TBL_ARA
         {
             get { return __TBL_ARA; }
             set
@@ -237,8 +221,8 @@ namespace GTI.WFMS.Models.Acmf.Model
                 OnPropertyChanged("TBL_ARA");
             }
         }
-        private decimal __FAM_CNT;
-        public decimal FAM_CNT
+        private decimal ?  __FAM_CNT;
+        public decimal ? FAM_CNT
         {
             get { return __FAM_CNT; }
             set

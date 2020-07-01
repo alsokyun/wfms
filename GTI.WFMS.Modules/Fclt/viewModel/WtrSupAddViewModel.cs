@@ -101,7 +101,7 @@ namespace GTI.WFMS.Modules.Fclt.ViewModel
                 this.FTR_IDN = result.FTR_IDN;
                 this.FTR_CDE = "SA114";
 
-                this.FNS_YMD = Convert.ToDateTime(DateTime.Today).ToString("yyyy-MM-dd");
+                //this.FNS_YMD = Convert.ToDateTime(DateTime.Today).ToString("yyyy-MM-dd");
             
                 //공통팝업창 사이즈 변경 3
                 FmsUtil.popWinView.Height = 360;
@@ -170,16 +170,16 @@ namespace GTI.WFMS.Modules.Fclt.ViewModel
                 //BizUtil.SetCombo(cbFTR_CDE, "Select_FTR_LIST", "FTR_CDE", "FTR_NAM", false);
 
                 // cbHJD_CDE 행정동
-                BizUtil.SetCombo(cbHJD_CDE, "Select_ADAR_LIST", "HJD_CDE", "HJD_NAM", "[선택하세요]");
+                BizUtil.SetCombo(cbHJD_CDE, "Select_ADAR_LIST", "HJD_CDE", "HJD_NAM", "선택");
 
                 // cbMNG_CDE 관리기관
-                BizUtil.SetCmbCode(cbMNG_CDE, "250101", "[선택하세요]");
+                BizUtil.SetCmbCode(cbMNG_CDE, "250101", "선택");
                 
                 // cbSAG_CDE 관리방법
-                BizUtil.SetCmbCode(cbSAG_CDE, "250005", "[선택하세요]");
+                BizUtil.SetCmbCode(cbSAG_CDE, "250005", "선택");
 
                 // cbSCW_CDE 배수지제어방법
-                BizUtil.SetCmbCode(cbSCW_CDE, "250052", "[선택하세요]");
+                BizUtil.SetCmbCode(cbSCW_CDE, "250052", "선택");
 
             }
             catch (Exception ex)

@@ -3,6 +3,7 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+            Title="시설물선택"
              
             xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
             xmlns:cv="clr-namespace:GTI.WFMS.Models.Common;assembly=GTI.WFMS.Models"
@@ -20,7 +21,7 @@
                
             x:Name="ftrSelView"
             DataContext="{dxmvvm:ViewModelSource Type={x:Type vd:FtrSelViewModel}}"
-        
+            KeyDown="View_KeyDown"
         
        Style="{DynamicResource PopupWindow}" 
        WindowStyle="None"  
@@ -125,7 +126,7 @@
                     </dxe:TextEdit.InputBindings>
                 </dxe:TextEdit>
                 <Label Grid.Row="2" Grid.Column="0" Content="관리번호" Style="{DynamicResource ResourceKey=GridLabel}"/>
-                <dxe:TextEdit Grid.Row="2" Grid.Column="2" x:Name="txtFTR_IDN" Style="{DynamicResource ResourceKey=SearchTextEdit}"  HorizontalAlignment="Center" >
+                <dxe:TextEdit Grid.Row="2" Grid.Column="2" x:Name="txtFTR_IDN" Style="{DynamicResource ResourceKey=SearchNumberEdit}" Mask="n0" HorizontalAlignment="Center" >
                     <dxe:TextEdit.InputBindings>
                         <KeyBinding Key="Enter" Command="{Binding SearchCommand}"/>
                     </dxe:TextEdit.InputBindings>
@@ -245,6 +246,11 @@
                 </dxg:GridColumn>
 
                 <dxg:GridColumn Header="행정동" Width="120" FieldName="HJD_NAM" HorizontalHeaderContentAlignment="Center">
+                    <dxg:GridColumn.EditSettings>
+                        <dxe:TextEditSettings HorizontalContentAlignment="Center"/>
+                    </dxg:GridColumn.EditSettings>
+                </dxg:GridColumn>
+                <dxg:GridColumn Header="시설물명" Width="150" FieldName="NAM" HorizontalHeaderContentAlignment="Center">
                     <dxg:GridColumn.EditSettings>
                         <dxe:TextEditSettings HorizontalContentAlignment="Center"/>
                     </dxg:GridColumn.EditSettings>

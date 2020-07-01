@@ -1,11 +1,19 @@
-﻿using GTI.WFMS.Models.Common;
+﻿using DevExpress.Xpf.Core;
+using DevExpress.Xpf.LayoutControl;
+using GTI.WFMS.Models.Common;
 using GTI.WFMS.Modules.Link.View;
 using GTI.WFMS.Modules.Pop.View;
+using GTIFramework.Common.Log;
 using GTIFramework.Common.MessageBox;
 using GTIFramework.Common.Utils.ViewEffect;
 using System;
+using System.Collections;
+using System.Collections.Generic;
+using System.Data;
+using System.IO;
 using System.Windows;
 using System.Windows.Input;
+using System.Windows.Media.Imaging;
 
 namespace GTI.WFMS.Modules.Cmpl.View
 {
@@ -16,7 +24,9 @@ namespace GTI.WFMS.Modules.Cmpl.View
     {
         private string _FTR_CDE;
         private string _FTR_IDN;
-        
+        //첨부사진관련
+        private string BIZ_ID;
+        private string FIL_SEQ;
 
 
         /// <summary>
@@ -40,10 +50,66 @@ namespace GTI.WFMS.Modules.Cmpl.View
             }
 
             //사진관리 Content 생성
-            this.cctrlPhoto.Content = new ImgFileMngView(FTR_CDE + FTR_IDN);
+            //this.cctrlPhoto.Content = new ImgFileMngView(FTR_CDE + FTR_IDN);
+
+            this.BIZ_ID = FTR_CDE + FTR_IDN;
+            this.FIL_SEQ = null;
+
+            //미리보기컨트롤 매핑
+            ImageContainer.grdImg = grdImg;
+            ImageContainer.imgView = imgView;
+            ImageContainer.bdImg = bdImg;
+
+            InitModel();
+
         }
 
+        //첨부사진조회
+        private void InitModel()
+        {
+            Hashtable param = new Hashtable();
+            param.Add("sqlId", "SelectBizIdFileDtl");
 
+            param.Add("BIZ_ID", this.BIZ_ID);
+            DataTable dt = BizUtil.SelectList(param);
+
+            string UriPrefix = @"" + FmsUtil.fileDir;
+            var result = new List<BitmapImage>();
+
+            this.FIL_SEQ = null;
+
+            if (dt.Rows.Count > 0)
+            {
+                for (int i = 0; i < dt.Rows.Count; i++)
+                {
+                    DataRow row = dt.Rows[i];
+                    string ImgPathName = row["UPF_NAM"].ToString();
+
+                    this.FIL_SEQ = row["FIL_SEQ"].ToString();
+
+                    FileInfo fi = new FileInfo(UriPrefix + "\\" + ImgPathName);
+                    //FileInfo.Exists로 파일 존재유무 확인 "
+                    if (fi.Exists)
+                    {
+                        BitmapImage bi = new BitmapImage();
+                        bi.BeginInit();
+                        //bi.CacheOption = BitmapCacheOption.OnDemand;
+                        //bi.CreateOptions = BitmapCreateOptions.DelayCreation;
+                        //bi.DecodePixelHeight = 125;       //원본이미지 수정
+                        //bi.DecodePixelWidth  = 125;       //원본이미지 수정됨
+                        //bi.Rotation = Rotation.Rotate90;  //회전
+                        bi.UriSource = new Uri(UriPrefix + "\\" + ImgPathName);
+                        bi.EndInit();
+
+                        result.Add(bi);
+                    }
+                }
+            }
+
+            layoutImages.ItemsSource = result;
+
+
+        }
 
         //민원선택 팝업호출
         private void BtnSel_Click(object sender, RoutedEventArgs e)
@@ -121,15 +187,28 @@ namespace GTI.WFMS.Modules.Cmpl.View
             //팝업호출지점으로 리턴
             DialogResult = true;
             Close();
-
+        }
+        //미리보기 off
+        private void BtnOff_Click(object sender, RoutedEventArgs e)
+        {
+            grdImg.Visibility = Visibility.Hidden;
+            bdImg.Visibility = Visibility.Hidden;
         }
 
-       
+
         private void LekSiteDtlView_KeyDown(object sender, KeyEventArgs e)
         {
             if (e.Key == Key.Escape)
             {
-                this.Close();
+                if (bdImg.Visibility == Visibility.Visible)
+                {
+                    grdImg.Visibility = Visibility.Hidden;
+                    bdImg.Visibility = Visibility.Hidden;
+                }
+                else
+                {
+                    this.Close();
+                }
             }
         }
 
@@ -150,5 +229,87 @@ namespace GTI.WFMS.Modules.Cmpl.View
 
 
 
+
+
+
+        //첨부사진 추가
+        private void BtnAdd_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                // 파일첨부윈도우
+                FilePopView fileMngView = new FilePopView(this.FIL_SEQ);
+                fileMngView.Owner = Window.GetWindow(this);
+
+                //FIL_SEQ 리턴
+                if (fileMngView.ShowDialog() is bool)
+                {
+                    string pFIL_SEQ = fileMngView.txtFIL_SEQ.Text;
+                    string sToDay = DateTime.Now.ToString("yyyyMMdd");
+
+                    //저장버튼으로 닫힘
+                    if (!FmsUtil.IsNull(pFIL_SEQ))
+                    {
+                        if (FmsUtil.IsNull(this.FIL_SEQ))
+                        {
+                            Hashtable param = new Hashtable();
+
+                            param.Add("sqlId", "SaveFileMap");
+                            param.Add("BIZ_ID", this.BIZ_ID);
+                            param.Add("FIL_SEQ", Convert.ToInt32(pFIL_SEQ));
+                            param.Add("GRP_TYP", "111");
+                            param.Add("TIT_NAM", "사진첨부");
+                            param.Add("UPD_YMD", sToDay);
+                            param.Add("UPD_USR", Logs.strLogin_ID);
+                            param.Add("CTNT", "");
+
+                            param.Add("CRE_YMD", sToDay);
+                            param.Add("CRE_USR", Logs.strLogin_ID);
+
+                            //저장처리
+                            try
+                            {
+                                BizUtil.Update(param);
+
+                            }
+                            catch (Exception ex)
+                            {
+                                Messages.ShowErrMsgBox("저장 처리중 오류가 발생하였습니다." + ex.ToString());
+                                return;
+                            }
+                        }
+
+                        InitModel();
+                    }
+                    //닫기버튼으로 닫힘
+                }
+
+            }
+            catch (Exception ex)
+            {
+                Messages.ShowErrMsgBox(ex.ToString());
+            }
+        }
+
+
+
+        void layoutImagesItemsSizeChanged(object sender, ValueChangedEventArgs<Size> e)
+        {
+            Size size = layoutImages.MaximizedElementOriginalSize;
+            if (!double.IsInfinity(e.NewValue.Width))
+                size.Height = double.NaN;
+            else
+                size.Width = double.NaN;
+            layoutImages.MaximizedElementOriginalSize = size;
+        }
+
     }
+
+
+
+
+
+
+
+
 }

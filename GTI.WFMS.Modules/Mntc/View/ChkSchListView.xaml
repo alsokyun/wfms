@@ -5,7 +5,7 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         mc:Ignorable="d"
-        Title="InfoFMS" Height="600" Width="1200"
+        Title="점검일정" Height="600" Width="1200"
         
         xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
         xmlns:vm="clr-namespace:GTI.WFMS.Modules.Mntc.ViewModel"

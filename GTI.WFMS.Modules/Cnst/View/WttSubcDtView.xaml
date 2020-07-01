@@ -84,7 +84,7 @@
                 <dxg:GridColumn.CellTemplate>
                     <DataTemplate>
                         <dxe:TextEdit Style="{DynamicResource ResourceKey=GridTextEdit}"   
-                            EditValue="{Binding RowData.Row.PSB_NAM,  Mode=TwoWay}"/>
+                            EditValue="{Binding RowData.Row.PSB_NAM,  UpdateSourceTrigger=LostFocus}"/>
                     </DataTemplate>
                 </dxg:GridColumn.CellTemplate>
             </dxg:GridColumn>

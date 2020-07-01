@@ -1,26 +1,14 @@
 ﻿using DevExpress.Mvvm;
 using DevExpress.Xpf.Editors;
-using DevExpress.Xpf.RichEdit;
-using GTI.WFMS.Models.Cmm.Model;
 using GTI.WFMS.Models.Common;
-using GTI.WFMS.Modules.Cnst.Model;
-using GTI.WFMS.Modules.Cnst.View;
 using GTI.WFMS.Modules.Mntc.Model;
 using GTI.WFMS.Modules.Mntc.View;
 using GTIFramework.Common.Log;
 using GTIFramework.Common.MessageBox;
-using GTIFramework.Core;
 using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Linq;
-using System.Reflection;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Documents;
 
 namespace GTI.WFMS.Modules.Mntc.ViewModel
 {
@@ -119,35 +107,17 @@ namespace GTI.WFMS.Modules.Mntc.ViewModel
 
             try
             {
-                //this.QUESTION = richQUESTION.RtfText;
-                //BizUtil.Update2(this, "SaveFaqDtl");
-
-
-                string sql = "";
-                sql += " INSERT INTO FAQ ( SEQ, FAQ_CAT_CDE, TTL, DEL_YN, REG_ID, REG_DT, EDT_ID, EDT_DT, READ_CNT, FTR_CDE, FAQ_CUZ_CDE, QUESTION, REPL)";
-                sql += " VALUES ((SELECT NVL(MAX(SEQ),0)+1 FROM FAQ)";
-                sql += " , :FAQ_CAT_CDE, :TTL, 'N', :REG_ID, SYSDATE, :EDT_ID, SYSDATE, 0, :FTR_CDE, :FAQ_CUZ_CDE, :QUESTION, :REPL); ";
-
-                Hashtable param = new Hashtable();
-                param.Add("sql", sql);
-                param.Add("FAQ_CAT_CDE", cbFAQ_CAT_CDE.EditValue);
-                param.Add("TTL", this.TTL);
-                param.Add("REG_ID", Logs.strLogin_ID);
-                param.Add("EDT_ID", Logs.strLogin_ID);
-                param.Add("FTR_CDE", cbFTR_CDE.EditValue);
-                param.Add("FAQ_CUZ_CDE", cbFAQ_CUZ_CDE.EditValue);
-                param.Add("QUESTION", this.QUESTION);
-                param.Add("REPL", this.REPL);
-                DBUtil.Insert(param);
-
-
+                //다큐먼트는 따로 처리
+                this.QUESTION = new TextRange(faqAddView.richQUESTION.Document.ContentStart, faqAddView.richQUESTION.Document.ContentEnd).Text.Trim();
+                this.REPL = new TextRange(faqAddView.richREPL.Document.ContentStart, faqAddView.richREPL.Document.ContentEnd).Text.Trim();
+                BizUtil.Update2(this, "SaveFaqDtl");
             }
             catch (Exception ex)
             {
                 Messages.ShowErrMsgBox("저장 처리중 오류가 발생하였습니다." + ex.Message);
-                btnBack.RaiseEvent(new RoutedEventArgs(Button.ClickEvent));
-                return;
             }
+
+
 
             Messages.ShowOkMsgBox();
             btnBack.RaiseEvent(new RoutedEventArgs(Button.ClickEvent));
@@ -183,10 +153,10 @@ namespace GTI.WFMS.Modules.Mntc.ViewModel
             try
             {
                 // cbFTR_CDE 시설물
-                BizUtil.SetCombo(cbFTR_CDE, "Select_FTR_LIST", "FTR_CDE", "FTR_NAM", "[선택하세요]");
+                BizUtil.SetCombo(cbFTR_CDE, "Select_FTR_LIST", "FTR_CDE", "FTR_NAM", "선택");
                 // cbFAQ_CAT_CDE 구분
-                BizUtil.SetCmbCode(cbFAQ_CAT_CDE, "250109", "[선택하세요]");
-                BizUtil.SetCmbCode(cbFAQ_CUZ_CDE, "250110", "[선택하세요]");
+                BizUtil.SetCmbCode(cbFAQ_CAT_CDE, "250109", "선택");
+                BizUtil.SetCmbCode(cbFAQ_CUZ_CDE, "250110", "선택");
             }
             catch (Exception ex)
             {

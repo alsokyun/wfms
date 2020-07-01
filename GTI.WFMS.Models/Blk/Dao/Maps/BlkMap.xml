@@ -1,0 +1,483 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<sqlMap namespace="Main" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://ibatis.apache.org/mapping">
+  <statements>
+
+    <!--대블록-->
+    <select id ="SelectBlk01List" parameterClass="Hashtable" resultClass ="Hashtable">
+
+      WITH C AS (
+      SELECT COUNT(1) AS ROWCNT
+      FROM WTL_LBLK_AS A
+        LEFT JOIN INFOUSER.CD_DTL_INFO C ON C.MST_CD = '250101' AND A.MNG_CDE = C.DTL_CD
+        LEFT JOIN V_FTR_CDE F ON A.FTR_CDE = F.FTR_CDE
+      WHERE 1=1
+      <isNotEmpty prepend="AND" property="MNG_CDE">
+        A.MNG_CDE = #MNG_CDE#
+      </isNotEmpty>
+
+      <isNotEmpty prepend="AND" property="FTR_IDN">
+        A.FTR_IDN like #FTR_IDN# || '%'
+      </isNotEmpty>
+
+      <isNotEmpty prepend="AND" property="BLK_NM">
+        upper(A.BLK_NM) LIKE '%' || upper(#BLK_NM# ) || '%'
+      </isNotEmpty>
+
+      )
+
+      SELECT C.ROWCNT, X.*  FROM (
+
+      SELECT ROW_NUMBER() OVER( ORDER BY A.FTR_IDN DESC ) AS RN
+      , A.FTR_CDE, F.FTR_NAM
+      , A.FTR_IDN
+      , A.MNG_CDE, C.NM AS MNG_NAM
+      , A.BLK_NM
+      , A.WSUPP_LINE_NM
+      , A.MAX_SUPP_QTY
+      , A.WSUPP_PEPL_CNT
+      , A.FAM_CNT
+      , A.EDT_DT
+      , A.SYS_CHK
+      , CASE WHEN ST_ISVALID(A.GEOM) = 1 THEN 'Y' ELSE 'N' END AS IS_GEOMETRY
+      FROM INFOFMS.WTL_LBLK_AS A
+      LEFT JOIN INFOUSER.CD_DTL_INFO C ON C.MST_CD = '250101' AND A.MNG_CDE = C.DTL_CD
+      LEFT JOIN V_FTR_CDE F ON A.FTR_CDE = F.FTR_CDE
+      WHERE 1=1
+        <isNotEmpty prepend="AND" property="MNG_CDE">
+            A.MNG_CDE = #MNG_CDE#
+          </isNotEmpty>
+
+          <isNotEmpty prepend="AND" property="FTR_IDN">
+            A.FTR_IDN like #FTR_IDN# || '%'
+          </isNotEmpty>
+
+          <isNotEmpty prepend="AND" property="BLK_NM">
+            upper(A.BLK_NM) LIKE '%' || upper(#BLK_NM# ) || '%'
+          </isNotEmpty>
+
+
+    ) X JOIN C ON 1=1
+    WHERE RN &lt;= ($page$+1) * $rows$
+      AND RN &gt;= ($page$) * $rows$ + 1
+
+    </select>
+
+    
+    <!--대블록상세-->    
+    <select id="SelectBlk01Dtl"  parameterClass="Hashtable" resultClass ="GTI.WFMS.Models.Blk.Model.BlkDtl">
+      SELECT
+      A.FTR_CDE, F.FTR_NAM
+      , A.FTR_IDN
+      , A.MNG_CDE, C.NM AS MNG_NAM
+      , A.BLK_NM
+      , A.WSUPP_LINE_NM
+      , A.MAX_SUPP_QTY
+      , A.WSUPP_PEPL_CNT
+      , A.FAM_CNT
+      , A.EDT_DT
+      , A.SYS_CHK
+      , decode(A.SYS_CHK,'1','유','무') as SYS_CHK_NAM
+      FROM INFOFMS.WTL_LBLK_AS A
+      LEFT JOIN INFOUSER.CD_DTL_INFO C ON C.MST_CD = '250101' AND A.MNG_CDE = C.DTL_CD
+      LEFT JOIN V_FTR_CDE F ON A.FTR_CDE = F.FTR_CDE
+      WHERE 1=1
+      AND A.FTR_CDE = #FTR_CDE#
+      AND A.FTR_IDN = #FTR_IDN#
+    </select>
+
+   
+    <!--대블럭수정-->
+    <update id="updateBlk01Dtl" parameterClass="GTI.WFMS.Models.Blk.Model.BlkDtl">
+      MERGE INTO INFOFMS.WTL_LBLK_AS
+      USING DUAL ON (FTR_CDE = #FTR_CDE# AND	FTR_IDN = #FTR_IDN#)
+
+      WHEN MATCHED THEN
+      UPDATE
+      SET
+      MNG_CDE = #MNG_CDE#
+      ,BLK_NM = #BLK_NM#
+      ,WSUPP_LINE_NM = #WSUPP_LINE_NM#
+      ,MAX_SUPP_QTY = #MAX_SUPP_QTY#
+      ,WSUPP_PEPL_CNT = #WSUPP_PEPL_CNT#
+      ,FAM_CNT = #FAM_CNT#
+      ,EDT_DT = sysdate
+      ,SYS_CHK = #SYS_CHK#
+
+      WHEN NOT MATCHED THEN
+      INSERT
+      (
+      FTR_CDE
+      ,FTR_IDN
+      ,MNG_CDE
+      ,BLK_NM
+      ,WSUPP_LINE_NM
+      ,MAX_SUPP_QTY
+      ,WSUPP_PEPL_CNT
+      ,FAM_CNT
+      ,EDT_DT
+      ,SYS_CHK
+      )
+      VALUES
+      (
+      #FTR_CDE#
+      , (SELECT NVL(MAX(FTR_IDN),0)+1 AS FTR_IDN FROM INFOFMS.WTL_LBLK_AS)
+      , #MNG_CDE#
+      , #BLK_NM#
+      , #WSUPP_LINE_NM#
+      , #MAX_SUPP_QTY#
+      , #WSUPP_PEPL_CNT#
+      , #FAM_CNT#
+      , sysdate
+      , #SYS_CHK#
+      )
+    </update>
+
+    <!--블록 상세삭제-->
+    <update id="deleteBlk01Dtl" parameterClass="Hashtable">
+      /* 블록 상세 삭제 */
+      DELETE INFOFMS.WTL_LBLK_AS
+      WHERE FTR_CDE = #FTR_CDE#
+      AND FTR_IDN = #FTR_IDN#
+    </update>
+
+    <!--블록 관리번호 채번-->
+    <select id ="SelectBlk01FTR_IDN" parameterClass="Hashtable" resultClass ="GTI.WFMS.Models.Blk.Model.BlkDtl">
+      /* 블록 관리번호 채번 */
+      SELECT NVL(MAX(FTR_IDN),0)+1 AS FTR_IDN FROM INFOFMS.WTL_LBLK_AS
+      WHERE 1=1
+    </select>
+
+
+  
+
+    <!--중블록-->
+    <select id ="SelectBlk02List" parameterClass="Hashtable" resultClass ="Hashtable">
+
+      WITH C AS (
+      SELECT COUNT(1) AS ROWCNT
+      FROM WTL_MBLK_AS A
+        LEFT JOIN INFOUSER.CD_DTL_INFO C ON C.MST_CD = '250101' AND A.MNG_CDE = C.DTL_CD
+        LEFT JOIN V_FTR_CDE F ON A.FTR_CDE = F.FTR_CDE
+      WHERE 1=1
+      <isNotEmpty prepend="AND" property="MNG_CDE">
+        A.MNG_CDE = #MNG_CDE#
+      </isNotEmpty>
+
+      <isNotEmpty prepend="AND" property="FTR_IDN">
+        A.FTR_IDN like #FTR_IDN# || '%'
+      </isNotEmpty>
+
+      <isNotEmpty prepend="AND" property="BLK_NM">
+        upper(A.BLK_NM) LIKE '%' || upper(#BLK_NM# ) || '%'
+      </isNotEmpty>
+
+      )
+
+      SELECT C.ROWCNT, X.*  FROM (
+
+      SELECT ROW_NUMBER() OVER( ORDER BY A.FTR_IDN DESC ) AS RN
+      , A.FTR_CDE, F.FTR_NAM
+      , A.FTR_IDN
+      , A.MNG_CDE, C.NM AS MNG_NAM
+      , A.BLK_NM
+      , A.WSUPP_LINE_NM
+      , A.MAX_SUPP_QTY
+      , A.WSUPP_PEPL_CNT
+      , A.FAM_CNT
+      , A.EDT_DT
+      , A.SYS_CHK
+      , CASE WHEN ST_ISVALID(A.GEOM) = 1 THEN 'Y' ELSE 'N' END AS IS_GEOMETRY
+      FROM INFOFMS.WTL_MBLK_AS A
+      LEFT JOIN INFOUSER.CD_DTL_INFO C ON C.MST_CD = '250101' AND A.MNG_CDE = C.DTL_CD
+      LEFT JOIN V_FTR_CDE F ON A.FTR_CDE = F.FTR_CDE
+      WHERE 1=1
+        <isNotEmpty prepend="AND" property="MNG_CDE">
+            A.MNG_CDE = #MNG_CDE#
+          </isNotEmpty>
+
+          <isNotEmpty prepend="AND" property="FTR_IDN">
+            A.FTR_IDN like #FTR_IDN# || '%'
+          </isNotEmpty>
+
+          <isNotEmpty prepend="AND" property="BLK_NM">
+            upper(A.BLK_NM) LIKE '%' || upper(#BLK_NM# ) || '%'
+          </isNotEmpty>
+
+
+    ) X JOIN C ON 1=1
+    WHERE RN &lt;= ($page$+1) * $rows$
+      AND RN &gt;= ($page$) * $rows$ + 1
+
+    </select>
+
+    
+    <!--중블록상세-->    
+    <select id="SelectBlk02Dtl"  parameterClass="Hashtable" resultClass ="GTI.WFMS.Models.Blk.Model.BlkDtl">
+      SELECT
+      A.FTR_CDE, F.FTR_NAM
+      , A.FTR_IDN
+      , A.MNG_CDE, C.NM AS MNG_NAM
+      , A.BLK_NM
+      , A.WSUPP_LINE_NM
+      , A.MAX_SUPP_QTY
+      , A.WSUPP_PEPL_CNT
+      , A.FAM_CNT
+      , A.EDT_DT
+      , A.SYS_CHK
+      , decode(A.SYS_CHK,'1','유','무') as SYS_CHK_NAM
+      , A.UPPER_FTR_IDN
+      , A.UPPER_FTR_CDE
+      FROM INFOFMS.WTL_MBLK_AS A
+      LEFT JOIN INFOUSER.CD_DTL_INFO C ON C.MST_CD = '250101' AND A.MNG_CDE = C.DTL_CD
+      LEFT JOIN V_FTR_CDE F ON A.FTR_CDE = F.FTR_CDE
+      WHERE 1=1
+      AND A.FTR_CDE = #FTR_CDE#
+      AND A.FTR_IDN = #FTR_IDN#
+    </select>
+
+   
+    <!--중블럭수정-->
+    <update id="updateBlk02Dtl" parameterClass="GTI.WFMS.Models.Blk.Model.BlkDtl">
+      MERGE INTO INFOFMS.WTL_MBLK_AS
+      USING DUAL ON (FTR_CDE = #FTR_CDE# AND	FTR_IDN = #FTR_IDN#)
+
+      WHEN MATCHED THEN
+      UPDATE
+      SET
+      MNG_CDE = #MNG_CDE#
+      ,BLK_NM = #BLK_NM#
+      ,WSUPP_LINE_NM = #WSUPP_LINE_NM#
+      ,MAX_SUPP_QTY = #MAX_SUPP_QTY#
+      ,WSUPP_PEPL_CNT = #WSUPP_PEPL_CNT#
+      ,FAM_CNT = #FAM_CNT#
+      ,EDT_DT = sysdate
+      ,SYS_CHK = #SYS_CHK#
+      ,UPPER_FTR_IDN= #UPPER_FTR_IDN#
+      ,UPPER_FTR_CDE= #UPPER_FTR_CDE#
+
+      WHEN NOT MATCHED THEN
+      INSERT
+      (
+      FTR_CDE
+      ,FTR_IDN
+      ,MNG_CDE
+      ,BLK_NM
+      ,WSUPP_LINE_NM
+      ,MAX_SUPP_QTY
+      ,WSUPP_PEPL_CNT
+      ,FAM_CNT
+      ,EDT_DT
+      ,SYS_CHK
+      ,UPPER_FTR_IDN
+      ,UPPER_FTR_CDE
+      )
+      VALUES
+      (
+      #FTR_CDE#
+      , (SELECT NVL(MAX(FTR_IDN),0)+1 AS FTR_IDN FROM INFOFMS.WTL_MBLK_AS)
+      , #MNG_CDE#
+      , #BLK_NM#
+      , #WSUPP_LINE_NM#
+      , #MAX_SUPP_QTY#
+      , #WSUPP_PEPL_CNT#
+      , #FAM_CNT#
+      , sysdate
+      , #SYS_CHK#
+      , #UPPER_FTR_IDN#
+      , #UPPER_FTR_CDE#
+      )
+    </update>
+
+    <!--블록 상세삭제-->
+    <update id="deleteBlk02Dtl" parameterClass="Hashtable">
+      /* 블록 상세 삭제 */
+      DELETE INFOFMS.WTL_MBLK_AS
+      WHERE FTR_CDE = #FTR_CDE#
+      AND FTR_IDN = #FTR_IDN#
+    </update>
+
+    <!--블록 관리번호 채번-->
+    <select id ="SelectBlk02FTR_IDN" parameterClass="Hashtable" resultClass ="GTI.WFMS.Models.Blk.Model.BlkDtl">
+      /* 블록 관리번호 채번 */
+      SELECT NVL(MAX(FTR_IDN),0)+1 AS FTR_IDN FROM INFOFMS.WTL_MBLK_AS
+      WHERE 1=1
+    </select>
+
+  
+  
+        <!--소블록-->
+    <select id ="SelectBlk03List" parameterClass="Hashtable" resultClass ="Hashtable">
+
+      WITH C AS (
+      SELECT COUNT(1) AS ROWCNT
+      FROM WTL_SBLK_AS A
+        LEFT JOIN INFOUSER.CD_DTL_INFO C ON C.MST_CD = '250101' AND A.MNG_CDE = C.DTL_CD
+        LEFT JOIN V_FTR_CDE F ON A.FTR_CDE = F.FTR_CDE
+      WHERE 1=1
+      <isNotEmpty prepend="AND" property="MNG_CDE">
+        A.MNG_CDE = #MNG_CDE#
+      </isNotEmpty>
+
+      <isNotEmpty prepend="AND" property="FTR_IDN">
+        A.FTR_IDN like #FTR_IDN# || '%'
+      </isNotEmpty>
+
+      <isNotEmpty prepend="AND" property="BLK_NM">
+        upper(A.BLK_NM) LIKE '%' || upper(#BLK_NM# ) || '%'
+      </isNotEmpty>
+
+      )
+
+      SELECT C.ROWCNT, X.*  FROM (
+
+      SELECT ROW_NUMBER() OVER( ORDER BY A.FTR_IDN DESC ) AS RN
+      , A.FTR_CDE, F.FTR_NAM
+      , A.FTR_IDN
+      , A.MNG_CDE, C.NM AS MNG_NAM
+      , A.BLK_NM
+      , A.WSUPP_LINE_NM
+      , A.MAX_SUPP_QTY
+      , A.WSUPP_PEPL_CNT
+      , A.FAM_CNT
+      , A.EDT_DT
+      , A.SYS_CHK
+      , CASE WHEN ST_ISVALID(A.GEOM) = 1 THEN 'Y' ELSE 'N' END AS IS_GEOMETRY
+      FROM INFOFMS.WTL_SBLK_AS A
+      LEFT JOIN INFOUSER.CD_DTL_INFO C ON C.MST_CD = '250101' AND A.MNG_CDE = C.DTL_CD
+      LEFT JOIN V_FTR_CDE F ON A.FTR_CDE = F.FTR_CDE
+      WHERE 1=1
+        <isNotEmpty prepend="AND" property="MNG_CDE">
+            A.MNG_CDE = #MNG_CDE#
+          </isNotEmpty>
+
+          <isNotEmpty prepend="AND" property="FTR_IDN">
+            A.FTR_IDN like #FTR_IDN# || '%'
+          </isNotEmpty>
+
+          <isNotEmpty prepend="AND" property="BLK_NM">
+            upper(A.BLK_NM) LIKE '%' || upper(#BLK_NM# ) || '%'
+          </isNotEmpty>
+
+
+    ) X JOIN C ON 1=1
+    WHERE RN &lt;= ($page$+1) * $rows$
+      AND RN &gt;= ($page$) * $rows$ + 1
+
+    </select>
+
+    
+    <!--소블록상세-->    
+    <select id="SelectBlk03Dtl"  parameterClass="Hashtable" resultClass ="GTI.WFMS.Models.Blk.Model.BlkDtl">
+      SELECT
+      A.FTR_CDE, F.FTR_NAM
+      , A.FTR_IDN
+      , A.MNG_CDE, C.NM AS MNG_NAM
+      , A.BLK_NM
+      , A.WSUPP_LINE_NM
+      , A.MAX_SUPP_QTY
+      , A.WSUPP_PEPL_CNT
+      , A.FAM_CNT
+      , A.EDT_DT
+      , A.SYS_CHK
+      , decode(A.SYS_CHK,'1','유','무') as SYS_CHK_NAM
+      , A.UPPER_FTR_IDN
+      , A.UPPER_FTR_CDE
+      FROM INFOFMS.WTL_SBLK_AS A
+      LEFT JOIN INFOUSER.CD_DTL_INFO C ON C.MST_CD = '250101' AND A.MNG_CDE = C.DTL_CD
+      LEFT JOIN V_FTR_CDE F ON A.FTR_CDE = F.FTR_CDE
+      WHERE 1=1
+      AND A.FTR_CDE = #FTR_CDE#
+      AND A.FTR_IDN = #FTR_IDN#
+    </select>
+
+   
+    <!--소블럭수정-->
+    <update id="updateBlk03Dtl" parameterClass="GTI.WFMS.Models.Blk.Model.BlkDtl">
+      MERGE INTO INFOFMS.WTL_SBLK_AS
+      USING DUAL ON (FTR_CDE = #FTR_CDE# AND	FTR_IDN = #FTR_IDN#)
+
+      WHEN MATCHED THEN
+      UPDATE
+      SET
+      MNG_CDE = #MNG_CDE#
+      ,BLK_NM = #BLK_NM#
+      ,WSUPP_LINE_NM = #WSUPP_LINE_NM#
+      ,MAX_SUPP_QTY = #MAX_SUPP_QTY#
+      ,WSUPP_PEPL_CNT = #WSUPP_PEPL_CNT#
+      ,FAM_CNT = #FAM_CNT#
+      ,EDT_DT = sysdate
+      ,SYS_CHK = #SYS_CHK#
+      ,UPPER_FTR_IDN= #UPPER_FTR_IDN#
+      ,UPPER_FTR_CDE= #UPPER_FTR_CDE#
+
+      WHEN NOT MATCHED THEN
+      INSERT
+      (
+      FTR_CDE
+      ,FTR_IDN
+      ,MNG_CDE
+      ,BLK_NM
+      ,WSUPP_LINE_NM
+      ,MAX_SUPP_QTY
+      ,WSUPP_PEPL_CNT
+      ,FAM_CNT
+      ,EDT_DT
+      ,SYS_CHK
+      ,UPPER_FTR_IDN
+      ,UPPER_FTR_CDE
+      )
+      VALUES
+      (
+      #FTR_CDE#
+      , (SELECT NVL(MAX(FTR_IDN),0)+1 AS FTR_IDN FROM INFOFMS.WTL_SBLK_AS)
+      , #MNG_CDE#
+      , #BLK_NM#
+      , #WSUPP_LINE_NM#
+      , #MAX_SUPP_QTY#
+      , #WSUPP_PEPL_CNT#
+      , #FAM_CNT#
+      , sysdate
+      , #SYS_CHK#
+      , #UPPER_FTR_IDN#
+      , #UPPER_FTR_CDE#
+      )
+    </update>
+
+    <!--블록 상세삭제-->
+    <update id="deleteBlk03Dtl" parameterClass="Hashtable">
+      /* 블록 상세 삭제 */
+      DELETE INFOFMS.WTL_SBLK_AS
+      WHERE FTR_CDE = #FTR_CDE#
+      AND FTR_IDN = #FTR_IDN#
+    </update>
+
+    <!--블록 관리번호 채번-->
+    <select id ="SelectBlk03FTR_IDN" parameterClass="Hashtable" resultClass ="GTI.WFMS.Models.Blk.Model.BlkDtl">
+      /* 블록 관리번호 채번 */
+      SELECT NVL(MAX(FTR_IDN),0)+1 AS FTR_IDN FROM INFOFMS.WTL_SBLK_AS
+      WHERE 1=1
+    </select>
+
+    <!--대중 상위블록 관리번호-->
+    <select id ="SelectUpBlk" parameterClass="Hashtable" resultClass ="GTI.WFMS.Models.Blk.Model.BlkDtl">
+      SELECT * FROM (
+
+      SELECT FTR_IDN, BLK_NM AS BLK_NM , FTR_CDE
+      FROM INFOFMS.WTL_LBLK_AS
+      UNION ALL
+      SELECT FTR_IDN, BLK_NM AS BLK_NM , FTR_CDE
+      FROM INFOFMS.WTL_MBLK_AS
+      WHERE 1=1
+      ) X
+      WHERE 1=1
+      <isNotEmpty prepend="AND" property="FTR_CDE">
+        X.FTR_CDE = #FTR_CDE#
+      </isNotEmpty>
+      ORDER BY X.FTR_CDE
+
+    </select>
+  
+
+  </statements>
+  
+</sqlMap>

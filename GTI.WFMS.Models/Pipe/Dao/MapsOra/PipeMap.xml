@@ -1,0 +1,325 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<sqlMap namespace="Main" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://ibatis.apache.org/mapping">
+  <statements>
+
+    <!--상수관로-->
+    <select id ="SelectWtlPipeList" parameterClass="Hashtable" resultClass ="Hashtable">
+      /* SelectWtlPipeList 상수관로 목록*/
+
+      WITH C AS (
+      SELECT COUNT(1) AS ROWCNT
+      FROM INFOFMS.WTL_PIPE_LM A
+        LEFT JOIN INFOFMS.V_FTR_CDE F ON A.FTR_CDE = F.FTR_CDE
+        LEFT JOIN INFOFMS.CMT_ADAR_MA H ON A.HJD_CDE = H.HJD_CDE
+        LEFT JOIN INFOUSER.CD_DTL_INFO C ON C.MST_CD = '250101' AND C.DTL_CD = A.MNG_CDE
+        LEFT JOIN INFOUSER.CD_DTL_INFO C2 ON C2.MST_CD = '250026' AND C2.DTL_CD = A.JHT_CDE
+        LEFT JOIN INFOUSER.CD_DTL_INFO C3 ON C3.MST_CD = '250102' AND C3.DTL_CD = A.MOP_CDE
+      
+      WHERE 1=1
+      <isNotEmpty prepend="AND" property="MNG_CDE">
+          A.MNG_CDE like #MNG_CDE# || '%'
+        </isNotEmpty>
+
+        <isNotEmpty prepend="AND" property="FTR_IDN">
+          A.FTR_IDN like #FTR_IDN# || '%'
+        </isNotEmpty>
+
+        <isNotEmpty prepend="AND" property="HJD_CDE">
+          A.HJD_CDE like #HJD_CDE# || '%'
+        </isNotEmpty>
+
+        <isNotEmpty prepend="AND" property="CNT_NUM">
+          upper(A.CNT_NUM ) like '%' || upper(#CNT_NUM# )  || '%'
+        </isNotEmpty>
+
+        <isNotEmpty prepend="AND" property="SHT_NUM">
+          upper(A.SHT_NUM) like '%' || upper(#SHT_NUM#)  || '%'
+        </isNotEmpty>
+
+        <isNotEmpty prepend="AND" property="IST_YMD_FROM">
+          A.IST_YMD <![CDATA[>=]]> #IST_YMD_FROM#
+        </isNotEmpty>
+
+        <isNotEmpty prepend="AND" property="IST_YMD_TO">
+          A.IST_YMD <![CDATA[<=]]> #IST_YMD_TO#
+        </isNotEmpty>
+
+        <isNotEmpty prepend="AND" property="MOP_CDE">
+          A.MOP_CDE like #MOP_CDE# || '%'
+        </isNotEmpty>
+
+        <isNotEmpty prepend="AND" property="JHT_CDE">
+          A.JHT_CDE like #JHT_CDE# || '%'
+        </isNotEmpty>
+
+        <isNotEmpty prepend="AND" property="PIP_DIP">
+          A.PIP_DIP like #PIP_DIP# || '%'
+        </isNotEmpty>
+      )
+
+      SELECT C.ROWCNT, X.*  FROM (
+
+      SELECT ROW_NUMBER() OVER( ORDER BY A.FTR_IDN DESC ) AS RN
+      , A.FTR_CDE	,F.FTR_NAM
+      , A.FTR_IDN
+      , A.HJD_CDE	,H.HJD_NAM
+      , A.SHT_NUM
+      , A.MNG_CDE	,C.NM AS MNG_NAM
+      , A.IST_YMD
+      , A.SAA_CDE
+      , A.MOP_CDE	,C3.NM AS MOP_NAM
+      , A.JHT_CDE	,C2.NM AS JHT_NAM
+      , A.LOW_DEP
+      , A.HGH_DEP
+      , A.CNT_NUM
+      , A.SYS_CHK
+      , A.PIP_LBL
+      , A.PIP_DIP	/*구경*/
+      , A.PIP_LEN
+      , CASE WHEN SDO_UTIL.VALIDATE_WKTGEOMETRY(SDO_UTIL.TO_WKTGEOMETRY(A.GEOM)) = 'TRUE' THEN 'Y' ELSE 'N' END AS IS_GEOMETRY 
+      FROM INFOFMS.WTL_PIPE_LM A
+      LEFT JOIN INFOFMS.V_FTR_CDE F ON A.FTR_CDE = F.FTR_CDE
+      LEFT JOIN INFOFMS.CMT_ADAR_MA H ON A.HJD_CDE = H.HJD_CDE
+      LEFT JOIN INFOUSER.CD_DTL_INFO C ON C.MST_CD = '250101' AND C.DTL_CD = A.MNG_CDE
+      LEFT JOIN INFOUSER.CD_DTL_INFO C2 ON C2.MST_CD = '250026' AND C2.DTL_CD = A.JHT_CDE
+      LEFT JOIN INFOUSER.CD_DTL_INFO C3 ON C3.MST_CD = '250102' AND C3.DTL_CD = A.MOP_CDE
+
+      WHERE 1=1
+      <isNotEmpty prepend="AND" property="MNG_CDE">
+        A.MNG_CDE like #MNG_CDE# || '%'
+      </isNotEmpty>
+
+      <isNotEmpty prepend="AND" property="FTR_IDN">
+        A.FTR_IDN like #FTR_IDN# || '%'
+      </isNotEmpty>
+
+      <isNotEmpty prepend="AND" property="HJD_CDE">
+        A.HJD_CDE like #HJD_CDE# || '%'
+      </isNotEmpty>
+
+      <isNotEmpty prepend="AND" property="CNT_NUM">
+        upper(A.CNT_NUM ) like '%' || upper(#CNT_NUM# )  || '%'
+      </isNotEmpty>
+
+      <isNotEmpty prepend="AND" property="SHT_NUM">
+        upper(A.SHT_NUM) like '%' || upper(#SHT_NUM#)  || '%'
+      </isNotEmpty>
+
+      <isNotEmpty prepend="AND" property="IST_YMD_FROM">
+        A.IST_YMD <![CDATA[>=]]> #IST_YMD_FROM#
+      </isNotEmpty>
+
+      <isNotEmpty prepend="AND" property="IST_YMD_TO">
+        A.IST_YMD <![CDATA[<=]]> #IST_YMD_TO#
+      </isNotEmpty>
+
+      <isNotEmpty prepend="AND" property="MOP_CDE">
+        A.MOP_CDE like #MOP_CDE# || '%'
+      </isNotEmpty>
+
+      <isNotEmpty prepend="AND" property="JHT_CDE">
+        A.JHT_CDE like #JHT_CDE# || '%'
+      </isNotEmpty>
+
+      <isNotEmpty prepend="AND" property="PIP_DIP">
+        A.PIP_DIP like #PIP_DIP# || '%'
+      </isNotEmpty>
+
+
+      ) X JOIN C ON 1=1
+      WHERE RN &lt;= ($page$+1) * $rows$
+      AND RN &gt;= ($page$) * $rows$ + 1
+
+    </select>
+
+
+
+    <!--상수관로 상세-->
+    <select id ="SelectWtlPipeDtl" parameterClass="Hashtable" resultClass ="Hashtable">
+      
+      SELECT A.FTR_CDE	,F.FTR_NAM
+      , A.FTR_IDN
+      , A.HJD_CDE,	H.HJD_NAM
+      , A.SHT_NUM
+      , A.MNG_CDE	,C.NM AS MNG_NAM
+      , A.IST_YMD
+      , A.SAA_CDE	,C2.NM AS SAA_NAM
+      , A.MOP_CDE	,C3.NM AS MOP_NAM
+      , A.JHT_CDE	,C4.NM AS JHT_NAM
+      , A.LOW_DEP
+      , A.HGH_DEP
+      , A.CNT_NUM
+      , A.SYS_CHK
+      , decode(SYS_CHK,'1','유','무') as SYS_CHK_NAM
+      , A.PIP_LBL
+      , A.PIP_DIP
+      , A.PIP_LEN
+      FROM INFOFMS.WTL_PIPE_LM A
+      LEFT JOIN INFOFMS.V_FTR_CDE F ON A.FTR_CDE = F.FTR_CDE
+      LEFT JOIN INFOUSER.CD_DTL_INFO C ON C.MST_CD LIKE '250101' AND C.DTL_CD = A.MNG_CDE
+      LEFT JOIN INFOFMS.CMT_ADAR_MA H ON H.HJD_CDE = A.HJD_CDE
+      LEFT JOIN INFOUSER.CD_DTL_INFO C2 ON C2.DTL_CD LIKE 'SAA%' AND C2.DTL_CD = A.SAA_CDE
+      LEFT JOIN INFOUSER.CD_DTL_INFO C3 ON C3.DTL_CD LIKE 'MOP%' AND C3.MST_CD = '250102' AND C3.DTL_CD = A.MOP_CDE
+      LEFT JOIN INFOUSER.CD_DTL_INFO C4 ON C4.DTL_CD LIKE 'JHT%' AND C4.DTL_CD = A.JHT_CDE
+      WHERE 1=1
+      AND a.FTR_CDE = #FTR_CDE#
+      AND a.FTR_IDN = #FTR_IDN#
+    </select>  
+    
+        
+    <!--상수관로 상세 클래스-->
+    <select id ="SelectWtlPipeDtl2" parameterClass="Hashtable" resultClass ="GTI.WFMS.Models.Pipe.Model.PipeDtl">
+      
+      SELECT A.FTR_CDE	,F.FTR_NAM
+      , A.FTR_IDN
+      , A.HJD_CDE,	H.HJD_NAM
+      , A.SHT_NUM
+      , A.MNG_CDE	,C.NM AS MNG_NAM
+      , A.IST_YMD
+      , A.SAA_CDE	,C2.NM AS SAA_NAM
+      , A.MOP_CDE	,C3.NM AS MOP_NAM
+      , A.JHT_CDE	,C4.NM AS JHT_NAM
+      , A.LOW_DEP
+      , A.HGH_DEP
+      , A.CNT_NUM
+      , A.SYS_CHK
+      , decode(SYS_CHK,'1','유','무') as SYS_CHK_NAM
+      , A.PIP_LBL
+      , A.PIP_DIP
+      , A.PIP_LEN
+      FROM INFOFMS.WTL_PIPE_LM A
+      LEFT JOIN INFOFMS.V_FTR_CDE F ON A.FTR_CDE = F.FTR_CDE
+      LEFT JOIN INFOUSER.CD_DTL_INFO C ON C.MST_CD LIKE '250101' AND C.DTL_CD = A.MNG_CDE
+      LEFT JOIN INFOFMS.CMT_ADAR_MA H ON H.HJD_CDE = A.HJD_CDE
+      LEFT JOIN INFOUSER.CD_DTL_INFO C2 ON C2.DTL_CD LIKE 'SAA%' AND C2.DTL_CD = A.SAA_CDE
+      LEFT JOIN INFOUSER.CD_DTL_INFO C3 ON C3.DTL_CD LIKE 'MOP%' AND C3.MST_CD = '250102' AND C3.DTL_CD = A.MOP_CDE
+      LEFT JOIN INFOUSER.CD_DTL_INFO C4 ON C4.DTL_CD LIKE 'JHT%' AND C4.DTL_CD = A.JHT_CDE
+      WHERE 1=1
+      AND a.FTR_CDE = #FTR_CDE#
+      AND a.FTR_IDN = #FTR_IDN#
+    </select>
+
+
+    <!--상수관로 상세저장-->
+    <update id="saveWtlPipeDtl" parameterClass="GTI.WFMS.Models.Pipe.Model.PipeDtl">
+      /* 상수관로 상세저장 */
+      MERGE INTO INFOFMS.WTL_PIPE_LM
+      USING DUAL ON (FTR_CDE = #FTR_CDE# AND FTR_IDN = #FTR_IDN#)
+
+      WHEN MATCHED THEN
+
+      UPDATE
+      SET HJD_CDE=#HJD_CDE#
+      , SHT_NUM=#SHT_NUM#
+      , MNG_CDE=#MNG_CDE#
+      , IST_YMD=#IST_YMD#
+      , SAA_CDE=#SAA_CDE#
+      , JHT_CDE=#JHT_CDE#
+      , MOP_CDE=#MOP_CDE#
+      , LOW_DEP=#LOW_DEP#
+      , HGH_DEP=#HGH_DEP#
+      , CNT_NUM=#CNT_NUM#
+      , SYS_CHK=#SYS_CHK#
+      , PIP_LBL=#PIP_LBL#
+      , PIP_DIP=#PIP_DIP#
+      , PIP_LEN=#PIP_LEN#
+
+      WHEN NOT MATCHED THEN
+      INSERT
+      ( FTR_CDE
+      , FTR_IDN
+      , HJD_CDE
+      , SHT_NUM
+      , MNG_CDE
+      , IST_YMD
+      , SAA_CDE
+      , MOP_CDE
+      , JHT_CDE
+      , LOW_DEP
+      , HGH_DEP
+      , CNT_NUM
+      , SYS_CHK
+      , PIP_LBL
+      , PIP_DIP
+      , PIP_LEN )
+
+      VALUES (#FTR_CDE#
+      , #FTR_IDN#
+      , #HJD_CDE#
+      , #SHT_NUM#
+      , #MNG_CDE#
+      , #IST_YMD#
+      , #SAA_CDE#
+      , #MOP_CDE#
+      , #JHT_CDE#
+      , #LOW_DEP#
+      , #HGH_DEP#
+      , #CNT_NUM#
+      , #SYS_CHK#
+      , #PIP_LBL#
+      , #PIP_DIP#
+      , #PIP_LEN# )
+
+    </update>
+
+    
+    
+    <!--상수관로 상세삭제-->
+    <update id="deleteWtlPipeDtl" parameterClass="GTI.WFMS.Models.Pipe.Model.PipeDtl">
+      /* 상수관로 상세저장 */
+      DELETE WTL_PIPE_LM
+      WHERE 	FTR_CDE = #FTR_CDE#
+      AND		FTR_IDN = #FTR_IDN#
+    </update>
+
+    <!--상수관로 관리번호 채번-->
+    <select id ="SelectWtlPipeFTR_IDN" parameterClass="Hashtable" resultClass ="GTI.WFMS.Models.Pipe.Model.PipeDtl">
+      SELECT NVL(MAX(FTR_IDN),0)+1 AS FTR_IDN FROM INFOFMS.WTL_PIPE_LM 
+       WHERE 1=1
+         AND FTR_CDE = #FTR_CDE#
+    </select>
+
+      <!--상수관로 상세추가-->
+    <update id="insertWtlPipeDtl" parameterClass="GTI.WFMS.Models.Pipe.Model.PipeDtl">
+      INSERT INTO WTL_PIPE_LM
+      ( FTR_CDE
+      , FTR_IDN
+      , HJD_CDE
+      , SHT_NUM
+      , MNG_CDE
+      , IST_YMD
+      , SAA_CDE
+      , MOP_CDE
+      , JHT_CDE
+      , LOW_DEP
+      , HGH_DEP
+      , CNT_NUM
+      , SYS_CHK
+      , PIP_LBL
+      , PIP_DIP
+      , PIP_LEN )
+
+      VALUES (#FTR_CDE#
+      , #FTR_IDN#
+      , #HJD_CDE#
+      , #SHT_NUM#
+      , #MNG_CDE#
+      , #IST_YMD#
+      , #SAA_CDE#
+      , #MOP_CDE#
+      , #JHT_CDE#
+      , #LOW_DEP#
+      , #HGH_DEP#
+      , #CNT_NUM#
+      , #SYS_CHK#
+      , #PIP_LBL#
+      , #PIP_DIP#
+      , #PIP_LEN# )
+    </update>
+
+
+
+
+  </statements>
+  
+</sqlMap>

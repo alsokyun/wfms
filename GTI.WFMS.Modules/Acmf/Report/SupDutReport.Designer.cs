@@ -433,12 +433,12 @@
             this.xrLabel83.StylePriority.UseTextAlignment = false;
             this.xrLabel83.Text = "xrLabel15";
             this.xrLabel83.TextAlignment = DevExpress.XtraPrinting.TextAlignment.MiddleLeft;
-            this.xrLabel83.TextFormatString = "{0:#,0}";
+            this.xrLabel83.TextFormatString = "{0:#,0.000}";
             // 
             // xrLabel82
             // 
             this.xrLabel82.ExpressionBindings.AddRange(new DevExpress.XtraReports.UI.ExpressionBinding[] {
-            new DevExpress.XtraReports.UI.ExpressionBinding("BeforePrint", "Text", "[HJD_NAM]")});
+            new DevExpress.XtraReports.UI.ExpressionBinding("BeforePrint", "Text", "[JHT_NAM]")});
             this.xrLabel82.Font = new System.Drawing.Font("Arial", 8F);
             this.xrLabel82.LocationFloat = new DevExpress.Utils.PointFloat(341.0422F, 158.125F);
             this.xrLabel82.Multiline = true;
@@ -750,7 +750,7 @@
             this.xrLabel58.StylePriority.UseFont = false;
             this.xrLabel58.StylePriority.UsePadding = false;
             this.xrLabel58.StylePriority.UseTextAlignment = false;
-            this.xrLabel58.Text = "행정도";
+            this.xrLabel58.Text = "행정동";
             this.xrLabel58.TextAlignment = DevExpress.XtraPrinting.TextAlignment.MiddleLeft;
             // 
             // xrLabel50
@@ -1269,7 +1269,7 @@
             this.xrTableCell21.Name = "xrTableCell21";
             this.xrTableCell21.StylePriority.UseFont = false;
             this.xrTableCell21.StylePriority.UseTextAlignment = false;
-            this.xrTableCell21.Text = "수용가행정도";
+            this.xrTableCell21.Text = "수용가행정동";
             this.xrTableCell21.TextAlignment = DevExpress.XtraPrinting.TextAlignment.MiddleCenter;
             this.xrTableCell21.Weight = 1.4745957249784709D;
             // 

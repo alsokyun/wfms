@@ -3,7 +3,7 @@
   <statements>
 
     <!--예비품/소모품 목록-->
-    <select id="SelectPdjtMaMngList" parameterClass="Hashtable" resultClass="Hashtable">
+    <select id="SelectPdjtMaMngList" parameterClass="Hashtable" resultClass="GTI.WFMS.Models.Mntc.Model.PdjtMaDtl">
       SELECT A.PDH_NUM
       , A.PDT_CAT_CDE
       , A.PDT_NAM
@@ -23,13 +23,13 @@
       WHERE 1=1
 
       <isNotEmpty prepend="AND" property="PDT_NAM">
-        PDT_NAM like '%' ||  #PDT_NAM# || '%'
+        upper(PDT_NAM ) like '%' ||  upper(#PDT_NAM# ) || '%'
       </isNotEmpty>
       <isNotEmpty prepend="AND" property="PDT_MDL_STD">
-        PDT_MDL_STD like '%' ||  #PDT_MDL_STD# || '%'
+        upper(PDT_MDL_STD ) like '%' ||  upper(#PDT_MDL_STD# ) || '%'
       </isNotEmpty>
       <isNotEmpty prepend="AND" property="PDT_MNF">
-        PDT_MNF like '%' ||  #PDT_MNF# || '%'
+        upper(PDT_MNF ) like '%' ||  upper(#PDT_MNF# ) || '%'
       </isNotEmpty>
       <isNotEmpty prepend="AND" property="PDT_CAT_CDE">
         PDT_CAT_CDE = #PDT_CAT_CDE#
@@ -46,7 +46,7 @@
 
 
     <!--소모품저장-->
-    <update id="SavePdjtMa" parameterClass="Hashtable">
+    <update id="SavePdjtMa" parameterClass="GTI.WFMS.Models.Mntc.Model.PdjtMaDtl">
       MERGE INTO FMS_PDJT_MA USING DUAL
       ON (PDH_NUM = #PDH_NUM#)
       
@@ -98,7 +98,7 @@
       , #PDT_CAT_CDE#
       , #PDT_NAM#
       , #PDE_NAM#
-      , #PDT_MDLStd#
+      , #PDT_MDL_STD#
       , #PDT_MNF#
       , #PDT_MDL#
       , #PDT_UNT#
@@ -149,10 +149,10 @@
       WHERE 1=1
 
       <isNotEmpty prepend="AND" property="PDT_NAM">
-        M.PDT_NAM like '%' || #PDT_NAM#  || '%'
+        upper(M.PDT_NAM ) like '%' || upper(#PDT_NAM#) || '%'
       </isNotEmpty>
       <isNotEmpty prepend="AND" property="PDT_MDL_STD">
-        M.PDT_MDL_STD like '%' || #PDT_MDL_STD#  || '%'
+        upper(M.PDT_MDL_STD ) like '%' || upper(#PDT_MDL_STD#)   || '%'
       </isNotEmpty>
       <isNotEmpty prepend="AND" property="PDT_CAT_CDE">
         M.PDT_CAT_CDE like #PDT_CAT_CDE# || '%'
@@ -172,7 +172,7 @@
 
       SELECT C.ROWCNT, X.*  FROM (
 
-      SELECT ROW_NUMBER() OVER( ORDER BY PDH_NUM ) AS RN
+      SELECT ROW_NUMBER() OVER( ORDER BY PDT_CAT_CDE, PDE_NAM, PDH_NUM ) AS RN
       ,PDH_NUM
       ,PDT_NAM
       ,PDT_MDL_STD
@@ -212,10 +212,10 @@
       WHERE 1=1
 
       <isNotEmpty prepend="AND" property="PDT_NAM">
-        M.PDT_NAM like '%' || #PDT_NAM#  || '%'
+        upper(M.PDT_NAM ) like '%' || upper(#PDT_NAM#)   || '%'
       </isNotEmpty>
       <isNotEmpty prepend="AND" property="PDT_MDL_STD">
-        M.PDT_MDL_STD like '%' || #PDT_MDL_STD#  || '%'
+        upper(M.PDT_MDL_STD ) like '%' || upper(#PDT_MDL_STD#)   || '%'
       </isNotEmpty>
       <isNotEmpty prepend="AND" property="PDT_CAT_CDE">
         M.PDT_CAT_CDE like #PDT_CAT_CDE# || '%'
@@ -282,7 +282,7 @@
 		     , A.FTR_IDN
 		     , AR.RPR_CAT_CDE   /*보수구분*/
 		     , B.NM AS RPR_CAT_CDE_NM
-		     , TO_CHAR(A.CRE_YMD,'YYYY-MM-DD HH24:MI:DD') AS USE_YMD /*사용일자*/
+		     , AR.RPR_YMD AS USE_YMD /*사용일자*/
 		     , CASE WHEN M.PDT_CAT_CDE = 'PDT001' THEN A.PDH_CNT 
 		            WHEN M.PDT_CAT_CDE = 'PDT002' THEN A.PDH_AMT 
 		            ELSE 0 END AS USE_CNT
@@ -341,7 +341,7 @@
       <isNotEmpty prepend="AND" property="TAG_ID">
         upper(B.TAG_ID) LIKE '%' || upper(#TAG_ID#) || '%'
       </isNotEmpty>
-							 ORDER BY M.ATTA_SEQ ,M.FTR_CDE ,M.FTR_IDN							   
+							 ORDER BY M.FTR_IDN, M.ATTA_SEQ ,M.FTR_CDE ,M.FTR_IDN							   
     </select>
 
 
@@ -424,11 +424,11 @@
 									M.FTR_IDN LIKE '%' || #FTR_IDN# || '%'
 								</isNotEmpty>
 								<isNotEmpty prepend="AND" property="PRS_NAM">
-									A.PRS_NAM LIKE '%' || #PRS_NAM# || '%'
+									upper(A.PRS_NAM) LIKE '%' || upper(#PRS_NAM#) || '%'
 								</isNotEmpty>										
 								<isNotEmpty prepend="AND" property="ATT_NAM">
-									M.ATT_NAM LIKE '%' || #ATT_NAM# || '%'
-								</isNotEmpty>
+									upper(M.ATT_NAM) LIKE '%' || upper(#ATT_NAM#) || '%'
+								</isNotEmpty>	
 
       GROUP BY M.ATTA_SEQ
       , M.FTR_CDE
@@ -447,7 +447,7 @@
 
       SELECT C.ROWCNT, X.*  FROM (
 
-      SELECT ROW_NUMBER() OVER( ORDER BY M.G2_ID DESC  , M.CHK_RESULT_YMD DESC ) AS RN
+      SELECT ROW_NUMBER() OVER( ORDER BY M.FTR_IDN, M.ATT_NAM, M.G2_ID DESC  , M.CHK_RESULT_YMD DESC ) AS RN
       , M.G2_ID
       , M.FTR_CDE
       , M.FTR_IDN
@@ -500,10 +500,10 @@
 									M.FTR_IDN LIKE '%' || #FTR_IDN# || '%'
 								</isNotEmpty>
 								<isNotEmpty prepend="AND" property="PRS_NAM">
-									A.PRS_NAM LIKE '%' || #PRS_NAM# || '%'
+									upper(A.PRS_NAM) LIKE '%' || upper(#PRS_NAM#) || '%'
 								</isNotEmpty>										
 								<isNotEmpty prepend="AND" property="ATT_NAM">
-									M.ATT_NAM LIKE '%' || #ATT_NAM# || '%'
+									upper(M.ATT_NAM) LIKE '%' || upper(#ATT_NAM#) || '%'
 								</isNotEmpty>	
 						
 							 GROUP BY M.ATTA_SEQ  
@@ -606,7 +606,7 @@
 
 
     <!--소모품입고현황 목록-->
-    <select id="SelectPdjtInHtPopList" parameterClass="Hashtable" resultClass="Hashtable">
+    <select id="SelectPdjtInHtPopList" parameterClass="Hashtable" resultClass="GTI.WFMS.Models.Mntc.Model.PdjtInDtl">
       <![CDATA[ 
 		SELECT IN_NUM
 		     , PDH_NUM
@@ -734,12 +734,12 @@
 
       <!-- 조건2. 가압장명 -->
       <isNotEmpty prepend="AND" property="PRS_NAM">
-        A.PRS_NAM LIKE '%' || #PRS_NAM# || '%'
+        upper(A.PRS_NAM ) LIKE '%' || upper(#PRS_NAM# ) || '%'
       </isNotEmpty>
 
       <!-- 조건3. 세부시설명 -->
       <isNotEmpty prepend="AND" property="ATT_NAM">
-        M.ATT_NAM LIKE '%' || #ATT_NAM# || '%'
+        upper(M.ATT_NAM ) LIKE '%' || upper(#ATT_NAM# ) || '%'
       </isNotEmpty>
 
       GROUP BY M.ATTA_SEQ
@@ -766,7 +766,7 @@
 
       SELECT C.ROWCNT, X.*  FROM (
 
-      SELECT ROW_NUMBER() OVER( ORDER BY NVL(M.CHK_RESULT_YMD,'0000') DESC	 ) AS RN
+      SELECT ROW_NUMBER() OVER( ORDER BY M.PRS_NAM, M.ATT_NAM, NVL(M.CHK_RESULT_YMD,'0000') DESC	 ) AS RN
       ,M.G2_ID
       , M.FTR_CDE
       , M.FTR_IDN
@@ -839,6 +839,21 @@
       LEFT JOIN INFOUSER.CD_DTL_INFO CD2
       ON (CD2.MST_CD = '250111' AND CD2.DTL_CD = M.IMP_CDE)
       WHERE 1=1
+
+      <!-- 조건1. 관리번호 -->
+      <isNotEmpty prepend="AND" property="FTR_IDN">
+        M.FTR_IDN LIKE '%' || #FTR_IDN# || '%'
+      </isNotEmpty>
+
+      <!-- 조건2. 가압장명 -->
+      <isNotEmpty prepend="AND" property="PRS_NAM">
+        upper(A.PRS_NAM ) LIKE '%' || upper(#PRS_NAM# ) || '%'
+      </isNotEmpty>
+
+      <!-- 조건3. 세부시설명 -->
+      <isNotEmpty prepend="AND" property="ATT_NAM">
+        upper(M.ATT_NAM ) LIKE '%' || upper(#ATT_NAM# ) || '%'
+      </isNotEmpty>
 
 
       GROUP BY M.ATTA_SEQ

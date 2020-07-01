@@ -1,11 +1,11 @@
 ﻿<Window xmlns:dxe="http://schemas.devexpress.com/winfx/2008/xaml/editors"
-        x:Class="GTI.WNMS.Main.View.Pop.PopupQuickMenuMng"
+        x:Class="GTI.WFMS.Main.View.Pop.PopupQuickMenuMng"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:dxg="http://schemas.devexpress.com/winfx/2008/xaml/grid"
-        xmlns:local="clr-namespace:GTI.WNMS.Main.View.Pop"
+        xmlns:local="clr-namespace:GTI.WFMS.Main.View.Pop"
         mc:Ignorable="d"
         Title="즐겨찾기 관리"
         Height="501" Width="800" WindowStyle="None" ResizeMode="NoResize" WindowStartupLocation="CenterScreen" Style="{DynamicResource PopupWindow}">

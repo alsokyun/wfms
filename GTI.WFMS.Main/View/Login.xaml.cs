@@ -52,7 +52,7 @@ namespace GTI.WFMS.Main.View
             //시스템코드 전역변수로 선언(Main설정값에서 가져옴)
             FmsUtil.sysCd = Properties.Settings.Default.sysCd;
             FmsUtil.fileDir = Properties.Settings.Default.fileDir;
-            FmsUtil.dbShapeDir = Properties.Settings.Default.dbShapeDir;
+            FmsUtil.mdxDir = Properties.Settings.Default.mdxDir;
             
         }
 
@@ -107,7 +107,7 @@ namespace GTI.WFMS.Main.View
                 }
 
                 //시스템 권한 체크
-                if (!dtLoginCheck.Rows[0]["SYS_CD"].ToString().Equals("1"))
+                 if (!dtLoginCheck.Rows[0]["SYS_CD"].ToString().Equals("1"))
                 {
                     Messages.ShowInfoMsgBox("해당 시스템에 권한이 없습니다.");
                     return;
@@ -142,11 +142,11 @@ namespace GTI.WFMS.Main.View
                     Logs.htPermission.Add(dr["MNU_CD"].ToString(), dr["MNU_AUTH"].ToString());
                 }
 
-                Logs.WNMSConfig.strIP = dtDBInfo.Rows[0]["IP_ADDR"].ToString();
-                Logs.WNMSConfig.strPort = dtDBInfo.Rows[0]["PORT_NO"].ToString();
-                Logs.WNMSConfig.strSID = dtDBInfo.Rows[0]["SID_NM"].ToString();
-                Logs.WNMSConfig.strID = dtDBInfo.Rows[0]["CONN_ID"].ToString();
-                Logs.WNMSConfig.strPWD = dtDBInfo.Rows[0]["CONN_PWD"].ToString();
+                Logs.WNMSConfig.strIP = GTIFramework.Properties.Settings.Default.strIP;
+                Logs.WNMSConfig.strPort = GTIFramework.Properties.Settings.Default.strPort;
+                Logs.WNMSConfig.strSID = GTIFramework.Properties.Settings.Default.strSID;
+                Logs.WNMSConfig.strID = GTIFramework.Properties.Settings.Default.strID;
+                Logs.WNMSConfig.strPWD = GTIFramework.Properties.Settings.Default.strPWD;
                 //Logs.configChange(infomanagerConfig);
 
 

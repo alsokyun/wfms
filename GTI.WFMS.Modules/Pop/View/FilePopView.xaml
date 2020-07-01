@@ -3,6 +3,7 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+            Title="첨부파일"
              
             xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
             xmlns:cf="clr-namespace:GTI.WFMS.Models.FileUtils;assembly=GTI.WFMS.Models"
@@ -149,7 +150,7 @@
                 </dxg:GridColumn>
                 <dxg:GridColumn Header="사이즈" Width="100" FieldName="FIL_SIZ" HorizontalHeaderContentAlignment="Center">
                     <dxg:GridColumn.EditSettings>
-                        <dxe:TextEditSettings HorizontalContentAlignment="Right"/>
+                        <dxe:TextEditSettings HorizontalContentAlignment="Right" MaskUseAsDisplayFormat="True" MaskType="Numeric" Mask="n0"/>
                     </dxg:GridColumn.EditSettings>
                 </dxg:GridColumn>
                 <dxg:GridColumn Header="다운로드" Width="70" FieldName="" HorizontalHeaderContentAlignment="Center">
@@ -177,8 +178,8 @@
 
         <Grid Grid.Row="3" >
             <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Margin="0 5 10 5">
-                <Button Content="파일선택" Command="{Binding FindFileCmd}" Style="{StaticResource popBtn}" Background="{DynamicResource TileCOLOR4Brush}"></Button>
-                <Button Content="저장" Command="{Binding SaveCmd}" Style="{StaticResource popBtn}" Background="{DynamicResource TileCOLOR4Brush}">
+                <Button Content="파일선택" Command="{Binding FindFileCmd}" Style="{DynamicResource TxtButton}" Background="{DynamicResource TileCOLOR4Brush}"></Button>
+                <Button Content="저장" Command="{Binding SaveCmd}" Style="{DynamicResource TxtButton}" Background="{DynamicResource TileCOLOR4Brush}">
                 </Button>
             </StackPanel>
         </Grid>

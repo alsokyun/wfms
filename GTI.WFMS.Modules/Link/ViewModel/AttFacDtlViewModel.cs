@@ -115,7 +115,7 @@ namespace GTI.WFMS.Modules.Link.ViewModel
                         var colValue = dbprop.GetValue(result, null);
                         if (colName.Equals(propName))
                         {
-                            prop.SetValue(this, Convert.ChangeType(colValue, prop.PropertyType));
+                            try { prop.SetValue(this, colValue); } catch (Exception) { }
                         }
                     }
                    Console.WriteLine(propName + " - " + prop.GetValue(this,null));
@@ -127,18 +127,39 @@ namespace GTI.WFMS.Modules.Link.ViewModel
             Paragraph p = new Paragraph();
             try
             {
-                p.Inlines.Add(this.ATT_DES.Trim());
+                p.Inlines.Add(this.ATT_DES ?? "");
                 attFacDtlView.txtATT_DES.Document.Blocks.Clear();
                 attFacDtlView.txtATT_DES.Document.Blocks.Add(p);
             }
-            catch (Exception) { }
+            catch (Exception e) { Console.WriteLine(e.Message); }
+
+            //버튼처리
+            btnDelete.Visibility = Visibility.Visible;
+
 
 
             //5.신규/수정구분처리
             if (ATTA_SEQ < 0)
             {
+                //채번
+                param = new Hashtable();
+                param.Add("FTR_CDE", FTR_CDE);
+                param.Add("FTR_IDN", FTR_IDN);
+                param.Add("sqlId", "selectATTA_SEQ");
+
+                WttAttaDt res = new WttAttaDt();
+                res = BizUtil.SelectObject(param) as WttAttaDt;
+
+                //채번결과 매칭
+                ATTA_SEQ = res.ATTA_SEQ;
+
+                //시설물명  가져오기
                 attFacDtlView.txtFTR_NAM.Text = BizUtil.GetCodeNm("Select_FTR_LIST2", FTR_CDE);
+
+                //버튼처리
+                btnDelete.Visibility = Visibility.Hidden;
             }
+
 
         }
 
@@ -161,7 +182,7 @@ namespace GTI.WFMS.Modules.Link.ViewModel
             try
             {
                 //다큐먼트는 따로 처리
-                this.ATT_DES = new TextRange(attFacDtlView.txtATT_DES.Document.ContentStart, attFacDtlView.txtATT_DES.Document.ContentEnd).Text;
+                this.ATT_DES = new TextRange(attFacDtlView.txtATT_DES.Document.ContentStart, attFacDtlView.txtATT_DES.Document.ContentEnd).Text.Trim();
                 BizUtil.Update2(this, "SaveWttAttaDt");
             }
             catch (Exception )
@@ -184,7 +205,7 @@ namespace GTI.WFMS.Modules.Link.ViewModel
         {
 
             // 1.삭제처리
-            if (Messages.ShowYesNoMsgBox("부속세부시설현황을 삭제하시겠습니까?") != MessageBoxResult.Yes) return;
+            if (Messages.ShowYesNoMsgBox("세부부속시설 현황을 삭제하시겠습니까?") != MessageBoxResult.Yes) return;
             try
             {
                 BizUtil.Update2(this, "DeleteWttAttaDt");

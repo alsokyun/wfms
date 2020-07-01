@@ -1,27 +1,9 @@
 ﻿using GTI.WFMS.Models.Cmm.Model;
-using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace GTI.WFMS.Models.Fclt.Model
 {
-    public class FiltPltDtl : CmmDtl, INotifyPropertyChanged
+    public class FiltPltDtl : CmmDtl
     {
-        /// <summary>                                                                
-        /// 인터페이스 구현부분                                                       
-        /// </summary>                                                                
-        public event PropertyChangedEventHandler PropertyChanged;
-        protected void OnPropertyChanged(string propertyName)
-        {
-            if (PropertyChanged != null)
-            {
-                PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
-            }
-        }
-
 
 
         /// <summary>                                                                 
@@ -167,8 +149,8 @@ namespace GTI.WFMS.Models.Fclt.Model
                 OnPropertyChanged("SRV_NAM");
             }
         }
-        private decimal __PUR_VOL;
-        public decimal PUR_VOL
+        private decimal ?  __PUR_VOL;
+        public decimal ? PUR_VOL
         {
             get { return __PUR_VOL; }
             set
@@ -177,8 +159,8 @@ namespace GTI.WFMS.Models.Fclt.Model
                 OnPropertyChanged("PUR_VOL");
             }
         }
-        private decimal __PWR_VOL;
-        public decimal PWR_VOL
+        private decimal ?  __PWR_VOL;
+        public decimal ? PWR_VOL
         {
             get { return __PWR_VOL; }
             set
@@ -187,8 +169,8 @@ namespace GTI.WFMS.Models.Fclt.Model
                 OnPropertyChanged("PWR_VOL");
             }
         }
-        private decimal __PUR_ARA;
-        public decimal PUR_ARA
+        private decimal ?  __PUR_ARA;
+        public decimal ? PUR_ARA
         {
             get { return __PUR_ARA; }
             set

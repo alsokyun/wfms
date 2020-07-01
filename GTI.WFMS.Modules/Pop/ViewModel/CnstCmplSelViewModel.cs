@@ -239,9 +239,7 @@ namespace GTI.WFMS.Modules.Pop.ViewModel
                 conditions.Add("PRO_YMD_FROM", cnstCmplSelView.dtPRO_YMD_FROM.EditValue == null ? "" : Convert.ToDateTime(cnstCmplSelView.dtPRO_YMD_FROM.EditValue).ToString("yyyyMMdd"));
                 conditions.Add("PRO_YMD_TO", cnstCmplSelView.dtPRO_YMD_TO.EditValue == null ? "" : Convert.ToDateTime(cnstCmplSelView.dtPRO_YMD_TO.EditValue).ToString("yyyyMMdd"));
 
-
-                conditions.Add("firstIndex", 0);
-                conditions.Add("lastIndex", 1000);
+                
 
                 conditions.Add("sqlId", "SelectCnstCmplList");
 
@@ -367,11 +365,11 @@ namespace GTI.WFMS.Modules.Pop.ViewModel
         {
             try {
                 // cbHJD_CDE 행정동
-                BizUtil.SetCombo(cbHJD_CDE, "Select_ADAR_LIST", "HJD_CDE", "HJD_NAM", "[선택하세요]");
+                BizUtil.SetCombo(cbHJD_CDE, "Select_ADAR_LIST", "HJD_CDE", "HJD_NAM", "선택");
                 // 민원구분
-                BizUtil.SetCmbCode(cbAPL_CDE, "250056", "[선택하세요]");
+                BizUtil.SetCmbCode(cbAPL_CDE, "250056", "선택");
                 // 처리상태
-                BizUtil.SetCmbCode(cbPRO_CDE, "250050", "[선택하세요]");
+                BizUtil.SetCmbCode(cbPRO_CDE, "250050", "선택");
             }
             catch (Exception ex)
             {

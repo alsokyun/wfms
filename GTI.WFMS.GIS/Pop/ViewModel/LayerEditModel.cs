@@ -9,6 +9,7 @@ using GTIFramework.Common.MessageBox;
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Threading.Tasks;
 using System.Windows;
 
 namespace GTI.WFMS.GIS.Pop.ViewModel
@@ -16,10 +17,10 @@ namespace GTI.WFMS.GIS.Pop.ViewModel
     /// <summary>
     /// MapViewModel 에서 레이어관련 항목 및 처리
     /// </summary>
-    public class LyrModel
+    public class LayerEditModel
     {
         //생성자
-        public LyrModel()
+        public LayerEditModel()
         {
             // ArcGIS LocalServer start..
             //Initialize_LocalServer();
@@ -38,42 +39,48 @@ namespace GTI.WFMS.GIS.Pop.ViewModel
 
         /* 
          * 레이어객체리스트
-        public FeatureLayer BML_GADM_AS = new FeatureLayer();//울산광역행정구역
+        public FeatureLayer BML_GADM_AS = new FeatureLayer();//광역행정구역
         public FeatureLayer WTL_FLOW_PS = new FeatureLayer();
         public FeatureLayer WTL_FIRE_PS = new FeatureLayer();
          */
 
-        public Dictionary<string, FeatureLayer> layers = new Dictionary<string, FeatureLayer>()
+        public Dictionary<string, FeatureLayer> layers;
+        public void initLayers()
         {
-            {"WTL_FLOW_PS",  new FeatureLayer()},
-            {"WTL_FIRE_PS^SA118",  new FeatureLayer()},
-            {"WTL_FIRE_PS^SA119",  new FeatureLayer()},
-            {"WTL_GAIN_PS",  new FeatureLayer()},
-            {"WTL_HEAD_PS",  new FeatureLayer()},
-            {"WTL_LEAK_PS",  new FeatureLayer()},
-            {"WTL_MANH_PS",  new FeatureLayer()},
-            {"WTL_META_PS",  new FeatureLayer()},
-            {"WTL_PRES_PS",  new FeatureLayer()},
-            {"WTL_PRGA_PS",  new FeatureLayer()},
-            {"WTL_RSRV_PS",  new FeatureLayer()},
-            {"WTL_SERV_PS",  new FeatureLayer()},
-            {"WTL_STPI_PS",  new FeatureLayer()},
-            {"WTL_VALV_PS^SA200",  new FeatureLayer()},
-            {"WTL_VALV_PS^SA201",  new FeatureLayer()},
-            {"WTL_VALV_PS^SA202",  new FeatureLayer()},
-            {"WTL_VALV_PS^SA203",  new FeatureLayer()},
-            {"WTL_VALV_PS^SA204",  new FeatureLayer()},
-            {"WTL_VALV_PS^SA205",  new FeatureLayer()},
-            {"WTL_VALV_PS^SA206",  new FeatureLayer()},
+            layers = new Dictionary<string, FeatureLayer>()
+            {
+                {"WTL_FLOW_PS",  new FeatureLayer()},
+                {"WTL_FIRE_PS^SA118",  new FeatureLayer()},
+                {"WTL_FIRE_PS^SA119",  new FeatureLayer()},
+                {"WTL_GAIN_PS",  new FeatureLayer()},
+                {"WTL_HEAD_PS",  new FeatureLayer()},
+                {"WTL_LEAK_PS",  new FeatureLayer()},
+                {"WTL_MANH_PS",  new FeatureLayer()},
+                {"WTL_META_PS",  new FeatureLayer()},
+                {"WTL_PRES_PS",  new FeatureLayer()},
+                {"WTL_PRGA_PS",  new FeatureLayer()},
+                {"WTL_RSRV_PS",  new FeatureLayer()},
+                {"WTL_SERV_PS",  new FeatureLayer()},
+                {"WTL_STPI_PS",  new FeatureLayer()},
+                {"WTL_VALV_PS^SA200",  new FeatureLayer()},
+                {"WTL_VALV_PS^SA201",  new FeatureLayer()},
+                {"WTL_VALV_PS^SA202",  new FeatureLayer()},
+                {"WTL_VALV_PS^SA203",  new FeatureLayer()},
+                {"WTL_VALV_PS^SA204",  new FeatureLayer()},
+                {"WTL_VALV_PS^SA205",  new FeatureLayer()},
+                {"WTL_VALV_PS^SA206",  new FeatureLayer()},
 
-            {"BML_GADM_AS",  new FeatureLayer()},
-            {"WTL_PURI_AS",  new FeatureLayer()},
+                {"BML_GADM_AS",  new FeatureLayer()},
+                {"WTL_PURI_AS",  new FeatureLayer()},
 
-            {"WTL_PIPE_LM",  new FeatureLayer()},
-            {"WTL_SPLY_LS",  new FeatureLayer()},
-        };
+                {"WTL_PIPE_LM",  new FeatureLayer()},
+                {"WTL_SPLY_LS",  new FeatureLayer()},
 
-
+                { "WTL_LBLK_AS",  new FeatureLayer()},
+                { "WTL_MBLK_AS",  new FeatureLayer()},
+                { "WTL_SBLK_AS",  new FeatureLayer()},
+            };
+        }
 
 
 
@@ -84,6 +91,26 @@ namespace GTI.WFMS.GIS.Pop.ViewModel
 
 
         #region =========== shape 레이어 구성부분 ==============
+        public async Task<ShapefileFeatureTable> InitLayerTable(string _layerNm)
+        {
+            string shapeNm = "";
+            try
+            {
+                string[] ary = _layerNm.Split('^');
+                shapeNm = ary[0]; //레이어테이블명
+
+
+                string shapefilePath = Path.Combine(BizUtil.GetDataFolder("shape", shapeNm + ".shp"));
+                ShapefileFeatureTable layerTable = await ShapefileFeatureTable.OpenAsync(shapefilePath);
+                return layerTable;
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+                return null;
+            }
+        }
+
 
         /// <summary>
         /// Shape 레이어 보이기/끄기 - Shape버전
@@ -112,11 +139,11 @@ namespace GTI.WFMS.GIS.Pop.ViewModel
                 {
                     if (FmsUtil.IsNull(filterExp))
                     {
-                        filterExp += "FTR_IDN = " + _FTR_IDN;
+                        filterExp += "FTR_IDN LIKE '%' || " + _FTR_IDN + " ||  '%'";
                     }
                     else
                     {
-                        filterExp += " AND FTR_IDN = " + _FTR_IDN;
+                        filterExp += " AND FTR_IDN LIKE '%' ||  " + _FTR_IDN + " ||  '%'";
                     }
                 }
 
@@ -157,7 +184,7 @@ namespace GTI.WFMS.GIS.Pop.ViewModel
                                 layers[_layerNm] = layer; /////// 딕셔너리에 자동으로 저장되지는 않을것임 /////// 
 
 
-                                layer.Renderer = GisCmm.uniqueValueRenderer.Clone(); //렌더러는 레이어 각각 할당해야하므로 렌더러복사하여 할당
+                                layer.Renderer = CmmRun.uniqueValueRenderer.Clone(); //렌더러는 레이어 각각 할당해야하므로 렌더러복사하여 할당
                                 _mapView.Map.OperationalLayers.Add(layer);
 
                             }

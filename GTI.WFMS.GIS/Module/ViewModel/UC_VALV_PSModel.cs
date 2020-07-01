@@ -1,5 +1,6 @@
 ﻿using DevExpress.Xpf.Editors;
 using GTI.WFMS.GIS.Module.View;
+using GTI.WFMS.GIS.Pop.ViewModel;
 using GTI.WFMS.Models.Common;
 using GTI.WFMS.Models.Fclt.Model;
 using GTI.WFMS.Models.Pipe.Model;
@@ -138,7 +139,6 @@ namespace GTI.WFMS.GIS.Module.ViewModel
         /// <param name="obj"></param>
         private void OnSave(object obj)
         {
-
             // 필수체크 (Tag에 필수체크 표시한 EditBox, ComboBox 대상으로 수행)
             if (!BizUtil.ValidReq(uC_VALV_PS)) return;
 
@@ -150,6 +150,14 @@ namespace GTI.WFMS.GIS.Module.ViewModel
                 FctDtl.FTR_CDE = this.FTR_CDE;
                 FctDtl.FTR_IDN = Convert.ToInt32(this.FTR_IDN); //신규위치 및 기존위치 정보만 있을수 있으므로 shape의 관리번호를 기준으로한다.
                 BizUtil.Update2(FctDtl, "SaveValvFacDtl");
+
+                //2.위치정보 - 위치편집한 경우만
+                if (!FmsUtil.IsNull(GisCmm.WKT_POINT))
+                {
+                    GisCmm.SavePoint(FctDtl.FTR_CDE, FctDtl.FTR_IDN.ToString(), "WTL_VALV_PS");
+                    GisCmm.WKT_POINT = "";
+                }
+
             }
             catch (Exception e)
             {
@@ -173,9 +181,9 @@ namespace GTI.WFMS.GIS.Module.ViewModel
             param.Add("sqlId", "selectChscResSubList");
             param.Add("sqlId2", "SelectFileMapList");
 
-            param.Add("FTR_CDE", this.FTR_CDE);
-            param.Add("FTR_IDN", this.FTR_IDN);
-            param.Add("BIZ_ID", string.Concat(this.FTR_CDE, this.FTR_IDN));
+            param.Add("FTR_CDE", FTR_CDE);
+            param.Add("FTR_IDN", FTR_IDN);
+            param.Add("BIZ_ID", string.Concat(FTR_CDE, FTR_IDN));
 
             Hashtable result = BizUtil.SelectLists(param);
             DataTable dt = new DataTable();
@@ -186,17 +194,7 @@ namespace GTI.WFMS.GIS.Module.ViewModel
                 dt = result["dt"] as DataTable;
                 if (dt.Rows.Count > 0)
                 {
-                    Messages.ShowErrMsgBox("유지보수내역이 존재합니다.");
-                    return;
-                }
-            }
-            catch (Exception) { }
-            try
-            {
-                dt2 = result["dt2"] as DataTable;
-                if (dt2.Rows.Count > 0)
-                {
-                    Messages.ShowErrMsgBox("파일첨부내역이 존재합니다.");
+                    Messages.ShowInfoMsgBox("유지보수내역이 존재합니다.");
                     return;
                 }
             }
@@ -204,6 +202,33 @@ namespace GTI.WFMS.GIS.Module.ViewModel
 
             // 1.삭제처리
             if (Messages.ShowYesNoMsgBox("변류시설를 삭제하시겠습니까?") != MessageBoxResult.Yes) return;
+
+            try
+            {
+                dt2 = result["dt2"] as DataTable;
+                if (dt2.Rows.Count > 0)
+                {
+                    //Messages.ShowInfoMsgBox("파일첨부내역이 존재합니다.");
+                    //return;
+                    //첨부파일삭제
+                    foreach (DataRow row in dt2.Rows)
+                    {
+                        //a.FIL_SEQ 첨부파일삭제
+                        BizUtil.DelFileSeq(row["FIL_SEQ"]);
+
+                        //b.FILE_MAP 업무파일매핑삭제
+                        param = new Hashtable();
+                        param.Add("sqlId", "DeleteFileMap");
+                        param.Add("BIZ_ID", FctDtl.FTR_CDE + FctDtl.FTR_IDN);
+                        param.Add("FIL_SEQ", row["FIL_SEQ"]);
+                        BizUtil.Update(param);
+                    }
+                }
+            }
+            catch (Exception) { }
+
+
+
             try
             {
                 BizUtil.Update2(this.FctDtl, "deleteValvFacDtl");
@@ -213,9 +238,14 @@ namespace GTI.WFMS.GIS.Module.ViewModel
                 Messages.ShowErrMsgBox("삭제 처리중 오류가 발생하였습니다.");
                 return;
             }
-            Messages.ShowOkMsgBox();
+            // 2.위치정보 삭제처리
+            ContentControl cctl = uC_VALV_PS.Parent as ContentControl;
+            EditWinViewModel editWinViewModel = ((((cctl.Parent as Grid).Parent as Grid).Parent as Grid).Parent as Window).DataContext as EditWinViewModel;
+            editWinViewModel.OnDelCmd(null);
 
-            InitModel();
+
+            //Messages.ShowOkMsgBox();
+            //InitModel();
 
         }
         #endregion
@@ -238,9 +268,9 @@ namespace GTI.WFMS.GIS.Module.ViewModel
             else
             {
                 //신규등록이면 상세화면표시
-                if (!"Y".Equals(uC_VALV_PS.btnDel.Tag))
+                if ("Y".Equals(uC_VALV_PS.btnDel.Tag))
                 {
-                    uC_VALV_PS.grid.Visibility = Visibility.Hidden; //DB데이터가 없으면 빈페이지표시
+                    uC_VALV_PS.grid.Visibility = Visibility.Visible; //DB데이터가 없으면 빈페이지표시
                 }
             }
         }
@@ -254,30 +284,30 @@ namespace GTI.WFMS.GIS.Module.ViewModel
             try
             {
                 // cbHJD_CDE 행정동
-                BizUtil.SetCombo(uC_VALV_PS.cbHJD_CDE, "Select_ADAR_LIST", "HJD_CDE", "HJD_NAM", "[선택하세요]");
+                BizUtil.SetCombo(uC_VALV_PS.cbHJD_CDE, "Select_ADAR_LIST", "HJD_CDE", "HJD_NAM", "선택");
 
                 // cbMNG_CDE 관리기관
-                BizUtil.SetCmbCode(uC_VALV_PS.cbMNG_CDE, "250101", "[선택하세요]");
+                BizUtil.SetCmbCode(uC_VALV_PS.cbMNG_CDE, "250101", "선택");
                 // cbVAL_MOF 형식
-                BizUtil.SetCmbCode(uC_VALV_PS.cbVAL_MOF, "250016", "[선택하세요]");
+                BizUtil.SetCmbCode(uC_VALV_PS.cbVAL_MOF, "250016", "선택");
 
                 // cbVAL_MOP 관재질
-                BizUtil.SetCmbCode(uC_VALV_PS.cbVAL_MOP, "250015", "[선택하세요]");
+                BizUtil.SetCmbCode(uC_VALV_PS.cbVAL_MOP, "250015", "선택");
 
                 // cbSAE_CDE    제수변회전방향
-                BizUtil.SetCmbCode(uC_VALV_PS.cbSAE_CDE, "250027", "[선택하세요]");
+                BizUtil.SetCmbCode(uC_VALV_PS.cbSAE_CDE, "250027", "선택");
 
                 // cbMTH_CDE    제수변구동방법
-                BizUtil.SetCmbCode(uC_VALV_PS.cbMTH_CDE, "250065", "[선택하세요]");
+                BizUtil.SetCmbCode(uC_VALV_PS.cbMTH_CDE, "250065", "선택");
 
                 // cbVAL_FOR    시설물형태(=구조물형태)
-                BizUtil.SetCmbCode(uC_VALV_PS.cbVAL_FOR, "250007", "[선택하세요]");
+                BizUtil.SetCmbCode(uC_VALV_PS.cbVAL_FOR, "250007", "선택");
 
                 // cbCST_CDE    이상상태
-                BizUtil.SetCmbCode(uC_VALV_PS.cbCST_CDE, "250062", "[선택하세요]");
+                BizUtil.SetCmbCode(uC_VALV_PS.cbCST_CDE, "250062", "선택");
 
                 // cbOFF_CDE    개폐여부
-                BizUtil.SetCmbCode(uC_VALV_PS.cbOFF_CDE, "250036", "[선택하세요]");
+                BizUtil.SetCmbCode(uC_VALV_PS.cbOFF_CDE, "250036", "선택");
             }
             catch (Exception ex)
             {

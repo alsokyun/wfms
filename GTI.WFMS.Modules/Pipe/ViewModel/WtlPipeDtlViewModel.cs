@@ -163,7 +163,7 @@ namespace GTI.WFMS.Modules.Pipe.ViewModel
                     var colValue = dbprop.GetValue(result, null);
                     if (colName.Equals(propName))
                     {
-                        prop.SetValue(this, Convert.ChangeType(colValue, prop.PropertyType));
+                        try { prop.SetValue(this, colValue); } catch (Exception) { }
                     }
                 }
                 Console.WriteLine(propName + " - " + prop.GetValue(this, null));
@@ -259,27 +259,18 @@ namespace GTI.WFMS.Modules.Pipe.ViewModel
                 dt = result["dt"] as DataTable;
                 if (dt.Rows.Count > 0)
                 {
-                    Messages.ShowErrMsgBox("유지보수내역이 존재합니다.");
+                    Messages.ShowInfoMsgBox("유지보수내역이 존재합니다.");
                     return;
                 }
             }
             catch (Exception) { }
-            try
-            {
-                dt2 = result["dt2"] as DataTable;
-                if (dt2.Rows.Count > 0)
-                {
-                    Messages.ShowErrMsgBox("파일첨부내역이 존재합니다.");
-                    return;
-                }
-            }
-            catch (Exception) { }
+
             try
             {                
                 dt3 = result["dt3"] as DataTable;
                 if (dt3.Rows.Count > 0)
                 {
-                    Messages.ShowErrMsgBox("누수지점 및 복구내역이 존재합니다.");
+                    Messages.ShowInfoMsgBox("누수지점 및 복구내역이 존재합니다.");
                     return;
                 }             
             }
@@ -289,6 +280,36 @@ namespace GTI.WFMS.Modules.Pipe.ViewModel
 
             // 1.삭제처리
             if (Messages.ShowYesNoMsgBox("상수관로를 삭제하시겠습니까?") != MessageBoxResult.Yes) return;
+
+
+            try
+            {
+                dt2 = result["dt2"] as DataTable;
+                if (dt2.Rows.Count > 0)
+                {
+                    //Messages.ShowInfoMsgBox("파일첨부내역이 존재합니다.");
+                    //return;
+
+                    //첨부파일삭제
+                    foreach (DataRow row in dt2.Rows)
+                    {
+                        //a.FIL_SEQ 첨부파일삭제
+                        BizUtil.DelFileSeq(row["FIL_SEQ"]);
+
+                        //b.FILE_MAP 업무파일매핑삭제
+                        param = new Hashtable();
+                        param.Add("sqlId", "DeleteFileMap");
+                        param.Add("BIZ_ID", FTR_CDE + FTR_IDN);
+                        param.Add("FIL_SEQ", row["FIL_SEQ"]);
+                        BizUtil.Update(param);
+                    }
+
+                }
+            }
+            catch (Exception) { }
+
+
+
             try
             {
                 BizUtil.Update2(this, "deleteWtlPipeDtl");
@@ -334,19 +355,19 @@ namespace GTI.WFMS.Modules.Pipe.ViewModel
             try
             {
                 // cbMNG_CDE
-                BizUtil.SetCmbCode(cbMNG_CDE, "250101", "[선택하세요]");
+                BizUtil.SetCmbCode(cbMNG_CDE, "250101", "선택");
 
                 // cbHJD_CDE 행정동
-                BizUtil.SetCombo(cbHJD_CDE, "Select_ADAR_LIST", "HJD_CDE", "HJD_NAM", "[선택하세요]");
+                BizUtil.SetCombo(cbHJD_CDE, "Select_ADAR_LIST", "HJD_CDE", "HJD_NAM", "선택");
 
                 // cbMOP_CDE
-                BizUtil.SetCmbCode(cbMOP_CDE, "250102", "[선택하세요]");
+                BizUtil.SetCmbCode(cbMOP_CDE, "250102", "선택");
 
                 // cbJHT_CDE
-                BizUtil.SetCmbCode(cbJHT_CDE, "250026", "[선택하세요]");
+                BizUtil.SetCmbCode(cbJHT_CDE, "250026", "선택");
 
                 // cbSAA_CDE
-                BizUtil.SetCmbCode(cbSAA_CDE, "250018", "[선택하세요]");
+                BizUtil.SetCmbCode(cbSAA_CDE, "250018", "선택");
                 
             }
             catch (Exception ex)

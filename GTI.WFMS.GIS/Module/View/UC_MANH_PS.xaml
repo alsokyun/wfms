@@ -86,7 +86,7 @@
 
             <Label Grid.Row="2" Grid.Column="0" Content="공사번호" Style="{DynamicResource ResourceKey=GridLabel}"/>
             <dxe:TextEdit Grid.Row="2" Grid.Column="1" Style="{DynamicResource ResourceKey=GridTextEdit}" 
-                          x:Name="txtCNT_NUM" EditValue="{Binding FctDtl.CNT_NUM}" Width="110" HorizontalAlignment="Left"/>
+                          x:Name="txtCNT_NUM" IsEnabled="False"  EditValue="{Binding FctDtl.CNT_NUM}" Width="110" HorizontalAlignment="Left"/>
             <Button Grid.Row="2" Grid.Column="1"  x:Name="btnSel" Style="{DynamicResource ResourceKey=GdAddButton}" HorizontalAlignment="Right" Margin="0 0 10 0" Click="BtnSel_Click"/>
 
             <Label Grid.Row="3" Grid.Column="0" Content="관리기관" Style="{DynamicResource ResourceKey=GridLabel}"/>
@@ -124,10 +124,10 @@
         </Grid>
 
         <Grid Grid.Row="1">
-            <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
-                <Button x:Name="btnDel" Style="{DynamicResource ResourceKey=DelButton}" Margin="0 0 10 0" Tag="N"
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
+                <Button x:Name="btnDel" Style="{DynamicResource ResourceKey=TxtButton}" Content=" 삭제 " Margin="0 0 5 0" Tag="N" 
                         Command="{Binding DelCommand}" />
-                <Button x:Name="btnSave" Style="{DynamicResource ResourceKey=SaveButton}" Margin="0 0 10 0"
+                <Button x:Name="btnSave" Style="{DynamicResource ResourceKey=TxtButton}" Content=" 저장 " Margin="0 0 0 0"
                         Command="{Binding SaveCommand}" />
             </StackPanel>
         </Grid>

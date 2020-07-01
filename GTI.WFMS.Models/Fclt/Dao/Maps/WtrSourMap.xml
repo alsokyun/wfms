@@ -47,7 +47,7 @@
 
         <!-- 조건8. 수원지종류 -->
         <isNotEmpty prepend="AND" property="HEA_NAM">
-          A.HEA_NAM LIKE '%' || #HEA_NAM# || '%'
+          upper(A.HEA_NAM ) LIKE '%' || upper(#HEA_NAM# ) || '%'
         </isNotEmpty>
 
         <!-- 조건9. 수원구분 -->
@@ -57,7 +57,7 @@
 
         <!-- 조건10. 하천명 -->
         <isNotEmpty prepend="AND" property="IRV_NAM">
-          A.IRV_NAM LIKE '%' || #IRV_NAM# || '%'
+          upper(A.IRV_NAM ) LIKE '%' || upper(#IRV_NAM# ) || '%'
         </isNotEmpty>
 
         <!-- 조건11. 유효저수량 -->
@@ -68,36 +68,36 @@
 
       SELECT C.ROWCNT, X.*  FROM (
 
-       SELECT ROW_NUMBER() OVER( ORDER BY A.FTR_IDN DESC ) AS RN
-            , A.FTR_CDE
-            , (SELECT FTR_NAM FROM INFOFMS.V_FTR_CDE WHERE FTR_CDE = A.FTR_CDE) AS FTR_NAM
-            , A.FTR_IDN
-            , A.HJD_CDE
-            , (SELECT HJD_NAM FROM INFOFMS.CMT_ADAR_MA WHERE HJD_CDE = A.HJD_CDE) AS HJD_NAM
-            , A.SHT_NUM
-            , A.MNG_CDE
-            , (SELECT NM FROM INFOUSER.CD_DTL_INFO WHERE MST_CD = '250101' AND DTL_CD = A.MNG_CDE ) AS MNG_NAM
-            , A.FNS_YMD
-            , A.HEA_NAM
-            , A.WSR_CDE
-            , (SELECT NM FROM INFOUSER.CD_DTL_INFO WHERE MST_CD = '250058' AND DTL_CD = A.WSR_CDE ) AS WSR_NAM
-            , A.IRV_NAM
-            , A.RSV_VOL
-            , A.RSV_ARA
-            , A.FUL_ARA
-            , A.THR_WAL
-            , A.HTH_WAL
-            , A.AVG_WAL
-            , A.DRA_WAL
-            , A.HDR_WAL
-            , A.KEE_WAL
-            , A.GUA_ARA
-            , A.GUA_POP
-            , A.CNT_NUM
-            , A.SYS_CHK
-            , CASE WHEN ST_ISVALID(A.GEOM) = 1 THEN 'Y' ELSE 'N' END AS IS_GEOMETRY
-         FROM INFOFMS.WTL_HEAD_PS A
-        WHERE 1=1
+      SELECT ROW_NUMBER() OVER( ORDER BY A.FTR_IDN DESC ) AS RN
+      , A.FTR_CDE
+      , (SELECT FTR_NAM FROM INFOFMS.V_FTR_CDE WHERE FTR_CDE = A.FTR_CDE) AS FTR_NAM
+      , A.FTR_IDN
+      , A.HJD_CDE
+      , (SELECT HJD_NAM FROM INFOFMS.CMT_ADAR_MA WHERE HJD_CDE = A.HJD_CDE) AS HJD_NAM
+      , A.SHT_NUM
+      , A.MNG_CDE
+      , (SELECT NM FROM INFOUSER.CD_DTL_INFO WHERE MST_CD = '250101' AND DTL_CD = A.MNG_CDE ) AS MNG_NAM
+      , A.FNS_YMD
+      , A.HEA_NAM
+      , A.WSR_CDE
+      , (SELECT NM FROM INFOUSER.CD_DTL_INFO WHERE MST_CD = '250058' AND DTL_CD = A.WSR_CDE ) AS WSR_NAM
+      , A.IRV_NAM
+      , A.RSV_VOL
+      , A.RSV_ARA
+      , A.FUL_ARA
+      , A.THR_WAL
+      , A.HTH_WAL
+      , A.AVG_WAL
+      , A.DRA_WAL
+      , A.HDR_WAL
+      , A.KEE_WAL
+      , A.GUA_ARA
+      , A.GUA_POP
+      , A.CNT_NUM
+      , A.SYS_CHK
+      , CASE WHEN ST_ISVALID(A.GEOM) = 1 THEN 'Y' ELSE 'N' END AS IS_GEOMETRY
+      FROM INFOFMS.WTL_HEAD_PS A
+      WHERE 1=1
       <!-- 조건1. 관리기관 -->
         <isNotEmpty prepend="AND" property="MNG_CDE">
           A.MNG_CDE = #MNG_CDE#
@@ -135,7 +135,7 @@
 
         <!-- 조건8. 수원지종류 -->
         <isNotEmpty prepend="AND" property="HEA_NAM">
-          A.HEA_NAM LIKE '%' || #HEA_NAM# || '%'
+          upper(A.HEA_NAM ) LIKE '%' || upper(#HEA_NAM# ) || '%'
         </isNotEmpty>
 
         <!-- 조건9. 수원구분 -->
@@ -145,7 +145,7 @@
 
         <!-- 조건10. 하천명 -->
         <isNotEmpty prepend="AND" property="IRV_NAM">
-          A.IRV_NAM LIKE '%' || #IRV_NAM# || '%'
+          upper(A.IRV_NAM ) LIKE '%' || upper(#IRV_NAM# ) || '%'
         </isNotEmpty>
 
         <!-- 조건11. 유효저수량 -->

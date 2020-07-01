@@ -148,6 +148,42 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
+    <Page Include="Blk\View\Blk03AddView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Blk\View\Blk02AddView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Blk\View\Blk01AddView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Blk\View\Blk03DtlView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Blk\View\Blk02DtlView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Blk\View\Blk03ListView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Blk\View\Blk02ListView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Blk\View\Blk01ListView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Blk\View\Blk01DtlView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
     <Page Include="Cmpl\View\LekSiteAddView.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -320,7 +356,27 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
+    <Page Include="Link\View\WtlLeakSubListView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Link\View\WtrTrkHtDtlView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Link\View\MetrChgDtlView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
     <Page Include="Link\View\AttFacDtlView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Link\View\WtrTrkHtListView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Link\View\MetrChgListView.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
@@ -348,7 +404,15 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
+    <Page Include="Mntc\View\FaqDetaillView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
     <Page Include="Pop\View\CnstCmplSelView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Pop\View\SplyMngPopView.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
@@ -615,6 +679,43 @@
     <Compile Include="Acmf\view\HydtMetrListView.xaml.cs">
       <DependentUpon>HydtMetrListView.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Blk\ViewModel\Blk03AddViewModel.cs" />
+    <Compile Include="Blk\ViewModel\Blk02AddViewModel.cs" />
+    <Compile Include="Blk\ViewModel\Blk01AddViewModel.cs" />
+    <Compile Include="Blk\ViewModel\Blk03DtlViewModel.cs" />
+    <Compile Include="Blk\ViewModel\Blk02DtlViewModel.cs" />
+    <Compile Include="Blk\ViewModel\Blk03ListViewModel.cs" />
+    <Compile Include="Blk\ViewModel\Blk02ListViewModel.cs" />
+    <Compile Include="Blk\ViewModel\Blk01ListViewModel.cs" />
+    <Compile Include="Blk\ViewModel\Blk01DtlViewModel.cs" />
+    <Compile Include="Blk\View\Blk03AddView.xaml.cs">
+      <DependentUpon>Blk03AddView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Blk\View\Blk02AddView.xaml.cs">
+      <DependentUpon>Blk02AddView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Blk\View\Blk01AddView.xaml.cs">
+      <DependentUpon>Blk01AddView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Blk\View\Blk03DtlView.xaml.cs">
+      <DependentUpon>Blk03DtlView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Blk\View\Blk02DtlView.xaml.cs">
+      <DependentUpon>Blk02DtlView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Blk\View\Blk03ListView.xaml.cs">
+      <DependentUpon>Blk03ListView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Blk\View\Blk02ListView.xaml.cs">
+      <DependentUpon>Blk02ListView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Blk\View\Blk01ListView.xaml.cs">
+      <DependentUpon>Blk01ListView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Blk\View\Blk01DtlView.xaml.cs">
+      <DependentUpon>Blk01DtlView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Cmpl\View\ImageContainer.cs" />
     <Compile Include="Cmpl\ViewModel\LekSiteAddViewModel.cs" />
     <Compile Include="Cmpl\ViewModel\LekSiteDtlViewModel.cs" />
     <Compile Include="Cmpl\ViewModel\LekSiteListViewModel.cs" />
@@ -657,7 +758,14 @@
     <Compile Include="Cnst\Report\CnstMngReport.Designer.cs">
       <DependentUpon>CnstMngReport.cs</DependentUpon>
     </Compile>
+    <Compile Include="Cnst\Report\SplyMngReport.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Cnst\Report\SplyMngReport.Designer.cs">
+      <DependentUpon>SplyMngReport.cs</DependentUpon>
+    </Compile>
     <Compile Include="Cnst\ViewModel\CnstMngAddViewModel.cs" />
+    <Compile Include="Cnst\ViewModel\SplyDtlViewMdl.cs" />
     <Compile Include="Cnst\ViewModel\SplyAddViewModel.cs" />
     <Compile Include="Cnst\ViewModel\SplyMngListViewModel.cs" />
     <Compile Include="Cnst\ViewModel\CnstMngListViewModel.cs" />
@@ -830,9 +938,27 @@
     <Compile Include="Fclt\view\WtrSourListView.xaml.cs">
       <DependentUpon>WtrSourListView.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Link\ViewModel\HydtMetrSubListViewModel.cs" />
+    <Compile Include="Link\ViewModel\WtrTrkHtDtlViewModel.cs" />
+    <Compile Include="Link\ViewModel\MetrChgDtlViewModel.cs" />
     <Compile Include="Link\ViewModel\AttFacDtlViewModel.cs" />
+    <Compile Include="Link\View\WtlLeakSubListView.xaml.cs">
+      <DependentUpon>WtlLeakSubListView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Link\View\WtrTrkHtDtlView.xaml.cs">
+      <DependentUpon>WtrTrkHtDtlView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Link\View\MetrChgDtlView.xaml.cs">
+      <DependentUpon>MetrChgDtlView.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Link\View\AttFacDtlView.xaml.cs">
       <DependentUpon>AttFacDtlView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Link\View\WtrTrkHtListView.xaml.cs">
+      <DependentUpon>WtrTrkHtListView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Link\View\MetrChgListView.xaml.cs">
+      <DependentUpon>MetrChgListView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Link\View\HydtMetrSubListView.xaml.cs">
       <DependentUpon>HydtMetrSubListView.xaml</DependentUpon>
@@ -848,15 +974,27 @@
     </Compile>
     <Compile Include="Mntc\ViewModel\FaqDocViewModel.cs" />
     <Compile Include="Mntc\ViewModel\FaqAddViewModel.cs" />
+    <Compile Include="Mntc\ViewModel\FaqDetaillViewModel.cs" />
+    <Compile Include="Mntc\ViewModel\PdjtMngListViewModel.cs" />
+    <Compile Include="Mntc\ViewModel\PdjtStockViewModel.cs" />
+    <Compile Include="Mntc\ViewModel\PdjtHtViewModel.cs" />
     <Compile Include="Mntc\View\FaqDocView.xaml.cs">
       <DependentUpon>FaqDocView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Mntc\View\FaqAddView.xaml.cs">
       <DependentUpon>FaqAddView.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Link\View\ImageContainer.cs" />
+    <Compile Include="Mntc\View\FaqDetaillView.xaml.cs">
+      <DependentUpon>FaqDetaillView.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Pop\ViewModel\CnstCmplSelViewModel.cs" />
+    <Compile Include="Pop\ViewModel\SplyMngPopViewModel.cs" />
     <Compile Include="Pop\View\CnstCmplSelView.xaml.cs">
       <DependentUpon>CnstCmplSelView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Pop\View\SplyMngPopView.xaml.cs">
+      <DependentUpon>SplyMngPopView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Pop\View\CnstMngPopView.xaml.cs">
       <DependentUpon>CnstMngPopView.xaml</DependentUpon>
@@ -876,7 +1014,6 @@
     <Compile Include="Main\PopMain.xaml.cs">
       <DependentUpon>PopMain.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Main\ViewModel\PopWinViewModel.cs" />
     <Compile Include="Main\View\PopWinView.xaml.cs">
       <DependentUpon>PopWinView.xaml</DependentUpon>
     </Compile>
@@ -1129,6 +1266,9 @@
     <EmbeddedResource Include="Cnst\Report\CnstMngReport.resx">
       <DependentUpon>CnstMngReport.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Cnst\Report\SplyMngReport.resx">
+      <DependentUpon>SplyMngReport.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Fclt\Report\FiltPltReport.resx">
       <DependentUpon>FiltPltReport.cs</DependentUpon>
     </EmbeddedResource>
@@ -1167,11 +1307,14 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Licenses.licx" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Folder Include="Main\ViewModel\" />
+  </ItemGroup>
   <ItemGroup>
     <WCFMetadata Include="Connected Services\" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Cmpl\View\2020020620052218.jpg" />
     <Content Include="Pop\View\2020020620052218.jpg" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

@@ -47,7 +47,7 @@
 
         <!-- 조건8. 정수장명 -->
         <isNotEmpty prepend="AND" property="PUR_NAM">
-          A.PUR_NAM LIKE '%' ||#PUR_NAM#|| '%'
+          upper(A.PUR_NAM ) LIKE '%' || upper(#PUR_NAM#) || '%'
         </isNotEmpty>
 
         <!-- 조건9. 수원구분 -->
@@ -57,12 +57,12 @@
 
         <!-- 조건10. 취수장명 -->
         <isNotEmpty prepend="AND" property="GAI_NAM">
-          A.GAI_NAM LIKE '%' ||#GAI_NAM#|| '%'
+          upper(A.GAI_NAM ) LIKE '%' || upper(#GAI_NAM#) || '%'
         </isNotEmpty>
 
         <!-- 조건11. 배수지명 -->
         <isNotEmpty prepend="AND" property="SRV_NAM">
-          A.SRV_NAM LIKE '%' ||#SRV_NAM#|| '%'
+          upper(A.SRV_NAM ) LIKE '%' || upper(#SRV_NAM#) || '%'
         </isNotEmpty>
       )
 
@@ -130,7 +130,7 @@
 
         <!-- 조건8. 정수장명 -->
         <isNotEmpty prepend="AND" property="PUR_NAM">
-          A.PUR_NAM LIKE '%' ||#PUR_NAM#|| '%'
+          upper(A.PUR_NAM ) LIKE '%' || upper(#PUR_NAM#) || '%'
         </isNotEmpty>
 
         <!-- 조건9. 수원구분 -->
@@ -140,12 +140,12 @@
 
         <!-- 조건10. 취수장명 -->
         <isNotEmpty prepend="AND" property="GAI_NAM">
-          A.GAI_NAM LIKE '%' ||#GAI_NAM#|| '%'
+          upper(A.GAI_NAM ) LIKE '%' || upper(#GAI_NAM#) || '%'
         </isNotEmpty>
 
         <!-- 조건11. 배수지명 -->
         <isNotEmpty prepend="AND" property="SRV_NAM">
-          A.SRV_NAM LIKE '%' ||#SRV_NAM#|| '%'
+          upper(A.SRV_NAM ) LIKE '%' || upper(#SRV_NAM#) || '%'
         </isNotEmpty>
 
         ORDER BY FTR_IDN DESC

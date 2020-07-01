@@ -24,7 +24,7 @@ namespace GTI.WFMS.GIS
         public LocalServerModel()
         {
             // ArcGIS LocalServer start..
-            Initialize_LocalServer();
+            //Initialize_LocalServer();
         }
 
 
@@ -236,7 +236,7 @@ namespace GTI.WFMS.GIS
 
 
                                 //렌더러는 레이어 각각 할당해야하므로 렌더러복사하여 할당
-                                myFeatureLayer.Renderer = GisCmm.uniqueValueRenderer.Clone();
+                                myFeatureLayer.Renderer = CmmRun.uniqueValueRenderer.Clone();
 
                                 // Add the layer to the map
                                 _mapView.Map.OperationalLayers.Add(myFeatureLayer);
@@ -304,7 +304,7 @@ namespace GTI.WFMS.GIS
         #region ============ LocalServer (start) 관련부분 ==============
         // Hold a reference to the local feature service; the ServiceFeatureTable will be loaded from this service
         public LocalFeatureService _localFeatureService;
-
+        
         public async void Initialize_LocalServer()
         {
 
@@ -368,7 +368,7 @@ namespace GTI.WFMS.GIS
             // Load the map from the service once ready
             if (e.Status == LocalServerStatus.Started)
             {
-                // 울산행정구역 표시
+                // 행정구역 표시
                 ShowLocalServerLayer(mapView, "BML_GADM_AS", true );
                 /*
                         // Get the path to the first layer - the local feature service url + layer ID

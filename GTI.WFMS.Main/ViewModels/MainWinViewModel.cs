@@ -7,7 +7,7 @@ using GTI.WFMS.Models.Main.Work;
 using GTI.WFMS.Modules.Dash.View;
 using GTI.WFMS.Modules.Main;
 using GTI.WFMS.Modules.Main.View;
-using GTI.WNMS.Main.View.Pop;
+using GTI.WFMS.Main.View.Pop;
 using GTIFramework.Common.Log;
 using GTIFramework.Common.MessageBox;
 using GTIFramework.Common.Utils.ViewEffect;
@@ -25,6 +25,7 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Animation;
 using System.Windows.Media.Imaging;
+using GTI.WFMS.Main.View.Popup;
 
 namespace GTI.WFMS.Main
 {
@@ -124,9 +125,13 @@ namespace GTI.WFMS.Main
             QuickShowHidenCommand = new DelegateCommand<object>(QuickShowHidenAction);
             QuickMngCommand = new DelegateCommand<object>(QuickMngAction);
 
-
+            //사용자정보
             UserInfoMngCommand = new RelayCommand<object>(delegate (object obj) {
-
+                PopupUserInfoMng popupUserInfoMng = new PopupUserInfoMng(mainwin);
+                if (popupUserInfoMng.ShowDialog() is bool)
+                {
+                    //재조회
+                }
             });
             //상황판
             InterestBlkCommand = new RelayCommand<object>(delegate (object obj) {
@@ -192,13 +197,15 @@ namespace GTI.WFMS.Main
                 //regionManager.RequestNavigate("ContentRegion", new Uri("Map3View", UriKind.Relative));
                 //regionManager.RequestNavigate("ContentRegion", new Uri("Map2View", UriKind.Relative));
                 //regionManager.RequestNavigate("ContentRegion", new Uri("MapMainView", UriKind.Relative));
-                regionManager.RequestNavigate("ContentRegion", new Uri("MapArcObjView", UriKind.Relative));
+
+                //메인화면 렌더링후 수행 ContentRendered
+                //regionManager.RequestNavigate("ContentRegion", new Uri("MapArcObjView", UriKind.Relative)); 
 
                 //regionManager.RequestNavigate("ContentRegion", new Uri("MainWindow", UriKind.Relative));
 
 
 
-                Messages.NotificationBox("InfoFMS", "InfoFMS에 접속하셨습니다.", "InfoFMS에 접속하셨습니다.");
+                //Messages.NotificationBox("InfoFMS", "InfoFMS에 접속하셨습니다.", "InfoFMS에 접속하셨습니다.");
             }
             catch (Exception ex)
             {
@@ -392,6 +399,9 @@ namespace GTI.WFMS.Main
             {
                 Messages.ShowErrMsgBoxLog(ex);
             }
+
+            //부트스트랩 맵컨텐트 요청시작 
+            regionManager.RequestNavigate("ContentRegion", new Uri("MapArcObjView", UriKind.Relative));
         }
 
 
@@ -491,6 +501,7 @@ namespace GTI.WFMS.Main
                                     FmsUtil.popWinView = new PopWinView(dr[0]["MNU_PATH"].ToString());
                                     Label lbTitle = FmsUtil.popWinView.FindName("lbTitle") as Label;//화면타이틀
                                     lbTitle.Content = dr[0]["MNU_NM"].ToString();
+                                    FmsUtil.popWinView.Title = dr[0]["MNU_NM"].ToString();
 
                                     //팝업결과리턴
                                     if (FmsUtil.popWinView.ShowDialog() is bool)

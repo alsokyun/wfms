@@ -1,26 +1,73 @@
 ﻿using ESRI.ArcGIS.Carto;
 using ESRI.ArcGIS.Display;
+using GTI.WFMS.GIS.Ext;
 using GTI.WFMS.Models.Common;
+using System.Collections.Generic;
 
 namespace GTI.WFMS.GIS
 {
     /// <summary>
-    /// GIS 전역변수 - ArcObject 버전
+    /// GIS 전역함수변수 - ArcObject 버전
     /// </summary>
-    public class GisCm
+    public class CmmObj
     {
+
+        public static Dictionary<string, FmsFeature> layers;
+        public static void initLayers()
+        {
+            layers = new Dictionary<string, FmsFeature>()
+            {
+                {"WTL_FLOW_PS",  new FmsFeature()},
+                {"WTL_FIRE_PS^SA118",  new FmsFeature()},
+                {"WTL_FIRE_PS^SA119",  new FmsFeature()},
+                {"WTL_GAIN_PS",  new FmsFeature()},
+                {"WTL_HEAD_PS",  new FmsFeature()},
+                {"WTL_LEAK_PS",  new FmsFeature()},
+                {"WTL_MANH_PS",  new FmsFeature()},
+                {"WTL_META_PS",  new FmsFeature()},
+                {"WTL_PRES_PS",  new FmsFeature()},
+                {"WTL_PRGA_PS",  new FmsFeature()},
+                {"WTL_RSRV_PS",  new FmsFeature()},
+                {"WTL_SERV_PS",  new FmsFeature()},
+                {"WTL_STPI_PS",  new FmsFeature()},
+                {"WTL_VALV_PS^SA200",  new FmsFeature()},
+                {"WTL_VALV_PS^SA201",  new FmsFeature()},
+                {"WTL_VALV_PS^SA202",  new FmsFeature()},
+                {"WTL_VALV_PS^SA203",  new FmsFeature()},
+                {"WTL_VALV_PS^SA204",  new FmsFeature()},
+                {"WTL_VALV_PS^SA205",  new FmsFeature()},
+                {"WTL_VALV_PS^SA206",  new FmsFeature()},
+
+
+                {"BML_GADM_AS",  new FmsFeature()},
+                {"WTL_PURI_AS",  new FmsFeature()},
+                {"WTL_LBLK_AS",  new FmsFeature()},
+                {"WTL_MBLK_AS",  new FmsFeature()},
+                {"WTL_SBLK_AS",  new FmsFeature()},
+
+                {"WTL_PIPE_LM",  new FmsFeature()},
+                {"WTL_SPLY_LS",  new FmsFeature()},
+                {"WTL_PIPE_LX",  new FmsFeature()},
+                {"WTL_SPLY_LX",  new FmsFeature()},
+                {"WTL_PIPE_LY",  new FmsFeature()},
+            };
+
+        }
+
+
+
 
 
 
         // 레이어 심볼 Renderer - ArcObject 버전
-        public static ESRI.ArcGIS.Carto.UniqueValueRenderer uniqueValueRenderer;
+        public static ESRI.ArcGIS.Carto.UniqueValueRenderer uniqueValueRendererObj;
 
         // 레이어 심볼 Renderer 구성 초기화 - ArcObject
-        public static void InitUniqueValueRenderer()
+        public static void InitUniqueValueRendererObj()
         {
-            uniqueValueRenderer = new UniqueValueRenderer();
-            uniqueValueRenderer.FieldCount = 1;
-            uniqueValueRenderer.set_Field(0, "FTR_CDE");
+            uniqueValueRendererObj = new UniqueValueRenderer();
+            uniqueValueRendererObj.FieldCount = 1;
+            uniqueValueRendererObj.set_Field(0, "FTR_CDE");
 
 
             /* PictureMarkerSymbol 정의 */
@@ -159,10 +206,12 @@ namespace GTI.WFMS.GIS
             //상수관로
             ISimpleLineSymbol lineSymbolSA001 = new SimpleLineSymbol();
             lineSymbolSA001.Color = new RgbColor() { Red = 0, Green = 102, Blue = 255 };
+            lineSymbolSA001.Width = 1.5;
             //급수관로
             ISimpleLineSymbol lineSymbolSA002 = new SimpleLineSymbol();
             lineSymbolSA002.Color = new RgbColor() { Red = 0, Green = 204, Blue = 153 };
-            //울산행정구역
+            lineSymbolSA002.Width = 1.3;
+            //행정구역
             //ISimpleLineSymbol lineSymbolEA305 = new SimpleLineSymbol();
             //lineSymbolEA305.Color = new RgbColor() { Red = 255, Green = 0, Blue = 0 };
 
@@ -178,8 +227,32 @@ namespace GTI.WFMS.GIS
 
             //라인심볼
             pSLS = new SimpleLineSymbol();
+            pSLS.Color = new RgbColor() { Red = 51, Green = 0, Blue = 204 };
+            //대블록
+            ISimpleFillSymbol fillSymbolBZ001 = new SimpleFillSymbol();
+            fillSymbolBZ001.Color = new RgbColor() { Red = 153, Green = 51, Blue = 255, Transparency = 50 };
+            fillSymbolBZ001.Outline = pSLS;  //외각선은 라인심볼로 지정
+
+            //라인심볼
+            pSLS = new SimpleLineSymbol();
+            pSLS.Color = new RgbColor() { Red = 0, Green = 204, Blue = 51 };
+            //중블록
+            ISimpleFillSymbol fillSymbolBZ002 = new SimpleFillSymbol();
+            fillSymbolBZ002.Color = new RgbColor() { Red = 51, Green = 255, Blue = 153, Transparency = 50 };
+            fillSymbolBZ002.Outline = pSLS;  //외각선은 라인심볼로 지정
+
+            //라인심볼
+            pSLS = new SimpleLineSymbol();
+            pSLS.Color = new RgbColor() { Red = 0, Green = 51, Blue = 204 };
+            //소블록
+            ISimpleFillSymbol fillSymbolBZ003 = new SimpleFillSymbol();
+            fillSymbolBZ003.Color = new RgbColor() { Red = 51, Green = 153, Blue = 255, Transparency = 50 };
+            fillSymbolBZ003.Outline = pSLS;  //외각선은 라인심볼로 지정
+
+            //라인심볼
+            pSLS = new SimpleLineSymbol();
             pSLS.Color = new RgbColor() { Red = 255, Green = 0, Blue = 0 };
-            //울산행정구역
+            //행정구역
             ISimpleFillSymbol fillSymbolEA305 = new SimpleFillSymbol();
             fillSymbolEA305.Color = new RgbColor() { Red = 51, Green = 153, Blue = 255 };
             fillSymbolEA305.Outline = pSLS;  //외각선은 라인심볼로 지정
@@ -187,51 +260,57 @@ namespace GTI.WFMS.GIS
 
 
             /* uniqueValue 에따른 심볼적용 */
-            uniqueValueRenderer.AddValue("SA003", "Name", pictureSymbolSA003 as ISymbol);
-            uniqueValueRenderer.set_Symbol("SA003", pictureSymbolSA003 as ISymbol);
-            uniqueValueRenderer.AddValue("SA100", "Name", pictureSymbolSA100 as ISymbol);
-            uniqueValueRenderer.set_Symbol("SA100", pictureSymbolSA100 as ISymbol);
-            uniqueValueRenderer.AddValue("SA110", "Name", pictureSymbolSA110 as ISymbol);
-            uniqueValueRenderer.set_Symbol("SA110", pictureSymbolSA110 as ISymbol);
-            uniqueValueRenderer.AddValue("SA112", "Name", pictureSymbolSA112 as ISymbol);
-            uniqueValueRenderer.set_Symbol("SA112", pictureSymbolSA112 as ISymbol);
-            uniqueValueRenderer.AddValue("SA114", "Name", pictureSymbolSA114 as ISymbol);
-            uniqueValueRenderer.set_Symbol("SA114", pictureSymbolSA114 as ISymbol);
-            uniqueValueRenderer.AddValue("SA117", "Name", pictureSymbolSA117 as ISymbol);
-            uniqueValueRenderer.set_Symbol("SA117", pictureSymbolSA117 as ISymbol);
-            uniqueValueRenderer.AddValue("SA118", "Name", pictureSymbolSA118 as ISymbol);
-            uniqueValueRenderer.set_Symbol("SA118", pictureSymbolSA118 as ISymbol);
-            uniqueValueRenderer.AddValue("SA119", "Name", pictureSymbolSA119 as ISymbol);
-            uniqueValueRenderer.set_Symbol("SA119", pictureSymbolSA119 as ISymbol);
-            uniqueValueRenderer.AddValue("SA120", "Name", pictureSymbolSA120 as ISymbol);
-            uniqueValueRenderer.set_Symbol("SA120", pictureSymbolSA120 as ISymbol);
-            uniqueValueRenderer.AddValue("SA121", "Name", pictureSymbolSA121 as ISymbol);
-            uniqueValueRenderer.set_Symbol("SA121", pictureSymbolSA121 as ISymbol);
-            uniqueValueRenderer.AddValue("SA122", "Name", pictureSymbolSA122 as ISymbol);
-            uniqueValueRenderer.set_Symbol("SA122", pictureSymbolSA122 as ISymbol);
-            uniqueValueRenderer.AddValue("SA200", "Name", pictureSymbolSA200 as ISymbol);
-            uniqueValueRenderer.set_Symbol("SA200", pictureSymbolSA200 as ISymbol);
-            uniqueValueRenderer.AddValue("SA201", "Name", pictureSymbolSA201 as ISymbol);
-            uniqueValueRenderer.set_Symbol("SA201", pictureSymbolSA201 as ISymbol);
-            uniqueValueRenderer.AddValue("SA202", "Name", pictureSymbolSA202 as ISymbol);
-            uniqueValueRenderer.set_Symbol("SA202", pictureSymbolSA202 as ISymbol);
-            uniqueValueRenderer.AddValue("SA203", "Name", pictureSymbolSA203 as ISymbol);
-            uniqueValueRenderer.set_Symbol("SA203", pictureSymbolSA203 as ISymbol);
-            uniqueValueRenderer.AddValue("SA204", "Name", pictureSymbolSA204 as ISymbol);
-            uniqueValueRenderer.set_Symbol("SA204", pictureSymbolSA204 as ISymbol);
-            uniqueValueRenderer.AddValue("SA205", "Name", pictureSymbolSA205 as ISymbol);
-            uniqueValueRenderer.set_Symbol("SA205", pictureSymbolSA205 as ISymbol);
+            uniqueValueRendererObj.AddValue("SA003", "Name", pictureSymbolSA003 as ISymbol);
+            uniqueValueRendererObj.set_Symbol("SA003", pictureSymbolSA003 as ISymbol);
+            uniqueValueRendererObj.AddValue("SA100", "Name", pictureSymbolSA100 as ISymbol);
+            uniqueValueRendererObj.set_Symbol("SA100", pictureSymbolSA100 as ISymbol);
+            uniqueValueRendererObj.AddValue("SA110", "Name", pictureSymbolSA110 as ISymbol);
+            uniqueValueRendererObj.set_Symbol("SA110", pictureSymbolSA110 as ISymbol);
+            uniqueValueRendererObj.AddValue("SA112", "Name", pictureSymbolSA112 as ISymbol);
+            uniqueValueRendererObj.set_Symbol("SA112", pictureSymbolSA112 as ISymbol);
+            uniqueValueRendererObj.AddValue("SA114", "Name", pictureSymbolSA114 as ISymbol);
+            uniqueValueRendererObj.set_Symbol("SA114", pictureSymbolSA114 as ISymbol);
+            uniqueValueRendererObj.AddValue("SA117", "Name", pictureSymbolSA117 as ISymbol);
+            uniqueValueRendererObj.set_Symbol("SA117", pictureSymbolSA117 as ISymbol);
+            uniqueValueRendererObj.AddValue("SA118", "Name", pictureSymbolSA118 as ISymbol);
+            uniqueValueRendererObj.set_Symbol("SA118", pictureSymbolSA118 as ISymbol);
+            uniqueValueRendererObj.AddValue("SA119", "Name", pictureSymbolSA119 as ISymbol);
+            uniqueValueRendererObj.set_Symbol("SA119", pictureSymbolSA119 as ISymbol);
+            uniqueValueRendererObj.AddValue("SA120", "Name", pictureSymbolSA120 as ISymbol);
+            uniqueValueRendererObj.set_Symbol("SA120", pictureSymbolSA120 as ISymbol);
+            uniqueValueRendererObj.AddValue("SA121", "Name", pictureSymbolSA121 as ISymbol);
+            uniqueValueRendererObj.set_Symbol("SA121", pictureSymbolSA121 as ISymbol);
+            uniqueValueRendererObj.AddValue("SA122", "Name", pictureSymbolSA122 as ISymbol);
+            uniqueValueRendererObj.set_Symbol("SA122", pictureSymbolSA122 as ISymbol);
+            uniqueValueRendererObj.AddValue("SA200", "Name", pictureSymbolSA200 as ISymbol);
+            uniqueValueRendererObj.set_Symbol("SA200", pictureSymbolSA200 as ISymbol);
+            uniqueValueRendererObj.AddValue("SA201", "Name", pictureSymbolSA201 as ISymbol);
+            uniqueValueRendererObj.set_Symbol("SA201", pictureSymbolSA201 as ISymbol);
+            uniqueValueRendererObj.AddValue("SA202", "Name", pictureSymbolSA202 as ISymbol);
+            uniqueValueRendererObj.set_Symbol("SA202", pictureSymbolSA202 as ISymbol);
+            uniqueValueRendererObj.AddValue("SA203", "Name", pictureSymbolSA203 as ISymbol);
+            uniqueValueRendererObj.set_Symbol("SA203", pictureSymbolSA203 as ISymbol);
+            uniqueValueRendererObj.AddValue("SA204", "Name", pictureSymbolSA204 as ISymbol);
+            uniqueValueRendererObj.set_Symbol("SA204", pictureSymbolSA204 as ISymbol);
+            uniqueValueRendererObj.AddValue("SA205", "Name", pictureSymbolSA205 as ISymbol);
+            uniqueValueRendererObj.set_Symbol("SA205", pictureSymbolSA205 as ISymbol);
 
-            uniqueValueRenderer.AddValue("SA001", "Name", lineSymbolSA001 as ISymbol);
-            uniqueValueRenderer.set_Symbol("SA001", lineSymbolSA001 as ISymbol);
-            uniqueValueRenderer.AddValue("SA002", "Name", lineSymbolSA002 as ISymbol);
-            uniqueValueRenderer.set_Symbol("SA002", lineSymbolSA002 as ISymbol);
+            uniqueValueRendererObj.AddValue("SA001", "Name", lineSymbolSA001 as ISymbol);
+            uniqueValueRendererObj.set_Symbol("SA001", lineSymbolSA001 as ISymbol);
+            uniqueValueRendererObj.AddValue("SA002", "Name", lineSymbolSA002 as ISymbol);
+            uniqueValueRendererObj.set_Symbol("SA002", lineSymbolSA002 as ISymbol);
 
-            uniqueValueRenderer.AddValue("EA305", "Name", fillSymbolEA305 as ISymbol);
-            uniqueValueRenderer.set_Symbol("EA305", fillSymbolEA305 as ISymbol);
+            uniqueValueRendererObj.AddValue("EA305", "Name", fillSymbolEA305 as ISymbol);
+            uniqueValueRendererObj.set_Symbol("EA305", fillSymbolEA305 as ISymbol);
 
-            uniqueValueRenderer.AddValue("SA113", "Name", fillSymbolSA113 as ISymbol);
-            uniqueValueRenderer.set_Symbol("SA113", fillSymbolSA113 as ISymbol);
+            uniqueValueRendererObj.AddValue("SA113", "Name", fillSymbolSA113 as ISymbol);
+            uniqueValueRendererObj.set_Symbol("SA113", fillSymbolSA113 as ISymbol);
+            uniqueValueRendererObj.AddValue("BZ001", "Name", fillSymbolBZ001 as ISymbol);
+            uniqueValueRendererObj.set_Symbol("BZ001", fillSymbolBZ001 as ISymbol);
+            uniqueValueRendererObj.AddValue("BZ002", "Name", fillSymbolBZ002 as ISymbol);
+            uniqueValueRendererObj.set_Symbol("BZ002", fillSymbolBZ002 as ISymbol);
+            uniqueValueRendererObj.AddValue("BZ003", "Name", fillSymbolBZ003 as ISymbol);
+            uniqueValueRendererObj.set_Symbol("BZ003", fillSymbolBZ003 as ISymbol);
 
         }
 
@@ -311,7 +390,7 @@ namespace GTI.WFMS.GIS
                     break;
 
                 case "BML_GADM_AS":
-                    korNm = "울산행정구역";
+                    korNm = "행정구역";
                     break;
 
                 case "WTL_PIPE_LX":
@@ -323,11 +402,22 @@ namespace GTI.WFMS.GIS
                 case "WTL_PIPE_LY":
                     korNm = "예천파이프";
                     break;
+                case "WTL_LBLK_AS":
+                    korNm = "대블록";
+                    break;
+                case "WTL_MBLK_AS":
+                    korNm = "중블록";
+                    break;
+                case "WTL_SBLK_AS":
+                    korNm = "소블록";
+                    break;
                 default:
                     break;
             }
             return korNm;
         }
+
+
 
 
 

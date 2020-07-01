@@ -8,6 +8,8 @@ namespace GTI.WFMS.Models.Pipe.Dao
 {
     class PipeDao
     {
+        DBManager dBManager = new DBManager();
+
         /// <summary>
         /// 상수관로조회
         /// </summary>
@@ -15,7 +17,7 @@ namespace GTI.WFMS.Models.Pipe.Dao
         /// <returns></returns>
         public DataTable SelectWtlPipeList(Hashtable conditions)
         {
-            return DBManager.QueryForTable("SelectWtlPipeList", conditions);
+            return dBManager.QueryForTable("SelectWtlPipeList", conditions);
         }
 
         /// <summary>
@@ -25,7 +27,7 @@ namespace GTI.WFMS.Models.Pipe.Dao
         /// <returns></returns>
         public DataTable SelectValvFacList(Hashtable conditions)
         {
-            return DBManager.QueryForTable("SelectValvFacList", conditions);
+            return dBManager.QueryForTable("SelectValvFacList", conditions);
         }
 
         /// <summary>
@@ -35,7 +37,7 @@ namespace GTI.WFMS.Models.Pipe.Dao
         /// <returns></returns>
         public DataTable SelectFireFacList(Hashtable conditions)
         {
-            return DBManager.QueryForTable("SelectFireFacList", conditions);
+            return dBManager.QueryForTable("SelectFireFacList", conditions);
         }
     }
 }

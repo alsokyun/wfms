@@ -2,6 +2,7 @@
 using GTI.WFMS.Models.Common;
 using GTI.WFMS.Modules.Cnst.Model;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Windows;
 using System.Windows.Controls;
 
@@ -31,7 +32,7 @@ namespace GTI.WFMS.Modules.Cnst.View
         private void PTY_CDE_Loaded(object sender, RoutedEventArgs e)
         {
             ComboBoxEdit obj = sender as ComboBoxEdit;
-            obj.ItemsSource = BizUtil.GetCmbCode("PTY_CDE", false);
+            obj.ItemsSource = BizUtil.GetCmbCode("250066", false);
         }
 
         
@@ -44,16 +45,16 @@ namespace GTI.WFMS.Modules.Cnst.View
         {
             //CheckEdit ce = sender as CheckEdit;
             //bool chk = ce.IsChecked is bool;
-            foreach (WttCostDt dr in ((List<WttCostDt>)grid.ItemsSource))
+            foreach (WttCostDt dr in ((ObservableCollection<WttCostDt>)grid.ItemsSource))
             {
                 dr.CHK = "Y";
             }
         }
         private void AllChk_Unchecked(object sender, RoutedEventArgs e)
         {
-            foreach (WttCostDt dr in ((List<WttCostDt>)grid.ItemsSource))
+            foreach (WttCostDt dr in ((ObservableCollection<WttCostDt>)grid.ItemsSource))
             {
-                dr.CHK = "Y";
+                dr.CHK = "N";
             }
         }
 

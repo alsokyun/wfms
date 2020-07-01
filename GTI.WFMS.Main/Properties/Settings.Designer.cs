@@ -73,7 +73,7 @@ namespace GTI.WFMS.Main.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("D:\\GTI\\FILE")]
+        [global::System.Configuration.DefaultSettingValueAttribute("C:\\GTI\\FILE")]
         public string fileDir {
             get {
                 return ((string)(this["fileDir"]));
@@ -85,13 +85,13 @@ namespace GTI.WFMS.Main.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("D:\\shape")]
-        public string dbShapeDir {
+        [global::System.Configuration.DefaultSettingValueAttribute("C:\\GTI")]
+        public string mdxDir {
             get {
-                return ((string)(this["dbShapeDir"]));
+                return ((string)(this["mdxDir"]));
             }
             set {
-                this["dbShapeDir"] = value;
+                this["mdxDir"] = value;
             }
         }
     }

@@ -66,7 +66,7 @@ namespace GTI.WFMS.Modules.Link.View
             try
             {
                 // 파일첨부윈도우
-                AttFacDtlView attFacDtlView = new AttFacDtlView(FTR_CDE, FTR_IDN, -1);
+                AttFacDtlView attFacDtlView = new AttFacDtlView(FTR_CDE, FTR_IDN.ToString(), "-1");
                 attFacDtlView.Owner = Window.GetWindow(this) ;
 
                 
@@ -108,7 +108,7 @@ namespace GTI.WFMS.Modules.Link.View
                 string FTR_CDE = tv.Grid.GetCellValue(e.HitInfo.RowHandle, "FTR_CDE").ToString();
                 string FTR_IDN = tv.Grid.GetCellValue(e.HitInfo.RowHandle, "FTR_IDN").ToString();
                 // 부속세부시설윈도우
-                AttFacDtlView attFacDtlView = new AttFacDtlView(FTR_CDE, Convert.ToInt32(FTR_IDN), Convert.ToInt32(ATTA_SEQ));
+                AttFacDtlView attFacDtlView = new AttFacDtlView(FTR_CDE, FTR_IDN, ATTA_SEQ);
                 attFacDtlView.Owner = Window.GetWindow(this);
 
 

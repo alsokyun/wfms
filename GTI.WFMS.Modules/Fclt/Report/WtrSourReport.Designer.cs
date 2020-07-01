@@ -461,7 +461,7 @@
             this.xrLabel76.StylePriority.UseTextAlignment = false;
             this.xrLabel76.Text = "xrLabel15";
             this.xrLabel76.TextAlignment = DevExpress.XtraPrinting.TextAlignment.MiddleLeft;
-            this.xrLabel76.TextFormatString = "{0:#,0.00}";
+            this.xrLabel76.TextFormatString = "{0:#,0.000}";
             // 
             // xrLabel77
             // 
@@ -492,7 +492,7 @@
             this.xrLabel78.StylePriority.UseTextAlignment = false;
             this.xrLabel78.Text = "xrLabel15";
             this.xrLabel78.TextAlignment = DevExpress.XtraPrinting.TextAlignment.MiddleLeft;
-            this.xrLabel78.TextFormatString = "{0:#,0.00}";
+            this.xrLabel78.TextFormatString = "{0:#,0.000}";
             // 
             // xrLabel79
             // 
@@ -537,7 +537,7 @@
             this.xrLabel81.StylePriority.UseTextAlignment = false;
             this.xrLabel81.Text = "xrLabel15";
             this.xrLabel81.TextAlignment = DevExpress.XtraPrinting.TextAlignment.MiddleLeft;
-            this.xrLabel81.TextFormatString = "{0:#,0.00}";
+            this.xrLabel81.TextFormatString = "{0:#,0.000}";
             // 
             // xrLabel82
             // 
@@ -554,7 +554,7 @@
             this.xrLabel82.StylePriority.UseTextAlignment = false;
             this.xrLabel82.Text = "xrLabel15";
             this.xrLabel82.TextAlignment = DevExpress.XtraPrinting.TextAlignment.MiddleLeft;
-            this.xrLabel82.TextFormatString = "{0:#,0.00}";
+            this.xrLabel82.TextFormatString = "{0:#,0.000}";
             // 
             // xrLabel83
             // 
@@ -571,7 +571,7 @@
             this.xrLabel83.StylePriority.UseTextAlignment = false;
             this.xrLabel83.Text = "xrLabel15";
             this.xrLabel83.TextAlignment = DevExpress.XtraPrinting.TextAlignment.MiddleLeft;
-            this.xrLabel83.TextFormatString = "{0:#,0}";
+            this.xrLabel83.TextFormatString = "{0:#,0.000}";
             // 
             // xrLabel84
             // 
@@ -828,7 +828,7 @@
             this.xrLabel11.StylePriority.UseTextAlignment = false;
             this.xrLabel11.Text = "xrLabel15";
             this.xrLabel11.TextAlignment = DevExpress.XtraPrinting.TextAlignment.MiddleLeft;
-            this.xrLabel11.TextFormatString = "{0:#,0.00}";
+            this.xrLabel11.TextFormatString = "{0:#,0.000}";
             // 
             // xrLabel10
             // 
@@ -845,7 +845,7 @@
             this.xrLabel10.StylePriority.UseTextAlignment = false;
             this.xrLabel10.Text = "xrLabel15";
             this.xrLabel10.TextAlignment = DevExpress.XtraPrinting.TextAlignment.MiddleLeft;
-            this.xrLabel10.TextFormatString = "{0:#,0.00}";
+            this.xrLabel10.TextFormatString = "{0:#,0.000}";
             // 
             // xrLabel9
             // 
@@ -862,12 +862,12 @@
             this.xrLabel9.StylePriority.UseTextAlignment = false;
             this.xrLabel9.Text = "xrLabel15";
             this.xrLabel9.TextAlignment = DevExpress.XtraPrinting.TextAlignment.MiddleLeft;
-            this.xrLabel9.TextFormatString = "{0:#,0.00}";
+            this.xrLabel9.TextFormatString = "{0:#,0.000}";
             // 
             // xrLabel8
             // 
             this.xrLabel8.ExpressionBindings.AddRange(new DevExpress.XtraReports.UI.ExpressionBinding[] {
-            new DevExpress.XtraReports.UI.ExpressionBinding("BeforePrint", "Text", "[HTH_WAL]")});
+            new DevExpress.XtraReports.UI.ExpressionBinding("BeforePrint", "Text", "[HDR_WAL]")});
             this.xrLabel8.Font = new System.Drawing.Font("Arial", 8F);
             this.xrLabel8.LocationFloat = new DevExpress.Utils.PointFloat(341.0422F, 233.125F);
             this.xrLabel8.Multiline = true;
@@ -879,7 +879,7 @@
             this.xrLabel8.StylePriority.UseTextAlignment = false;
             this.xrLabel8.Text = "xrLabel15";
             this.xrLabel8.TextAlignment = DevExpress.XtraPrinting.TextAlignment.MiddleLeft;
-            this.xrLabel8.TextFormatString = "{0:#,0.00}";
+            this.xrLabel8.TextFormatString = "{0:#,0.000}";
             // 
             // xrLabel7
             // 
@@ -924,7 +924,7 @@
             this.xrLabel5.StylePriority.UseTextAlignment = false;
             this.xrLabel5.Text = "xrLabel15";
             this.xrLabel5.TextAlignment = DevExpress.XtraPrinting.TextAlignment.MiddleLeft;
-            this.xrLabel5.TextFormatString = "{0:#,0.00}";
+            this.xrLabel5.TextFormatString = "{0:#,0.000}";
             // 
             // xrLabel4
             // 
@@ -955,7 +955,7 @@
             this.xrLabel3.StylePriority.UseTextAlignment = false;
             this.xrLabel3.Text = "xrLabel15";
             this.xrLabel3.TextAlignment = DevExpress.XtraPrinting.TextAlignment.MiddleLeft;
-            this.xrLabel3.TextFormatString = "{0:#,0.00}";
+            this.xrLabel3.TextFormatString = "{0:#,0.000}";
             // 
             // xrLabel2
             // 
@@ -1030,7 +1030,7 @@
             this.xrLabel25.StylePriority.UseTextAlignment = false;
             this.xrLabel25.Text = "xrLabel15";
             this.xrLabel25.TextAlignment = DevExpress.XtraPrinting.TextAlignment.MiddleLeft;
-            this.xrLabel25.TextFormatString = "{0:#,0.00}";
+            this.xrLabel25.TextFormatString = "{0:#,0.000}";
             // 
             // xrLabel24
             // 
@@ -1047,7 +1047,7 @@
             this.xrLabel24.StylePriority.UseTextAlignment = false;
             this.xrLabel24.Text = "xrLabel15";
             this.xrLabel24.TextAlignment = DevExpress.XtraPrinting.TextAlignment.MiddleLeft;
-            this.xrLabel24.TextFormatString = "{0:#,0.00}";
+            this.xrLabel24.TextFormatString = "{0:#,0.000}";
             // 
             // xrLabel23
             // 
@@ -1079,7 +1079,7 @@
             // 
             // xrLabel21
             // 
-            this.xrLabel21.Font = new System.Drawing.Font("Arial", 7F);
+            this.xrLabel21.Font = new System.Drawing.Font("Arial", 8F);
             this.xrLabel21.LocationFloat = new DevExpress.Utils.PointFloat(233.0826F, 258.9167F);
             this.xrLabel21.Multiline = true;
             this.xrLabel21.Name = "xrLabel21";
@@ -1088,12 +1088,12 @@
             this.xrLabel21.StylePriority.UseFont = false;
             this.xrLabel21.StylePriority.UsePadding = false;
             this.xrLabel21.StylePriority.UseTextAlignment = false;
-            this.xrLabel21.Text = "상수원\r\n보호구역인구";
+            this.xrLabel21.Text = "보호구역인구";
             this.xrLabel21.TextAlignment = DevExpress.XtraPrinting.TextAlignment.MiddleLeft;
             // 
             // xrLabel20
             // 
-            this.xrLabel20.Font = new System.Drawing.Font("Arial", 7F);
+            this.xrLabel20.Font = new System.Drawing.Font("Arial", 8F);
             this.xrLabel20.LocationFloat = new DevExpress.Utils.PointFloat(0.7083492F, 258.9167F);
             this.xrLabel20.Multiline = true;
             this.xrLabel20.Name = "xrLabel20";
@@ -1102,7 +1102,7 @@
             this.xrLabel20.StylePriority.UseFont = false;
             this.xrLabel20.StylePriority.UsePadding = false;
             this.xrLabel20.StylePriority.UseTextAlignment = false;
-            this.xrLabel20.Text = "상수원보호구역(㎡)";
+            this.xrLabel20.Text = "보호구역(㎡)";
             this.xrLabel20.TextAlignment = DevExpress.XtraPrinting.TextAlignment.MiddleLeft;
             // 
             // xrLabel73
@@ -1228,7 +1228,7 @@
             // xrLabel65
             // 
             this.xrLabel65.ExpressionBindings.AddRange(new DevExpress.XtraReports.UI.ExpressionBinding[] {
-            new DevExpress.XtraReports.UI.ExpressionBinding("BeforePrint", "Text", "[IST_YMD]")});
+            new DevExpress.XtraReports.UI.ExpressionBinding("BeforePrint", "Text", "[FNS_YMD]")});
             this.xrLabel65.Font = new System.Drawing.Font("Arial", 8F);
             this.xrLabel65.LocationFloat = new DevExpress.Utils.PointFloat(107.9596F, 82.125F);
             this.xrLabel65.Multiline = true;
@@ -1341,7 +1341,7 @@
             this.xrLabel58.StylePriority.UseFont = false;
             this.xrLabel58.StylePriority.UsePadding = false;
             this.xrLabel58.StylePriority.UseTextAlignment = false;
-            this.xrLabel58.Text = "행정도";
+            this.xrLabel58.Text = "행정동";
             this.xrLabel58.TextAlignment = DevExpress.XtraPrinting.TextAlignment.MiddleLeft;
             // 
             // xrLabel50

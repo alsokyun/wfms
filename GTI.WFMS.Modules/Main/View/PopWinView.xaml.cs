@@ -37,9 +37,6 @@ namespace GTI.WFMS.Modules.Main.View
 
 
 
-            /* 이벤트등록 */
-            //닫기버튼
-            btnXSignClose.Click += BtnClose_Click;
 
         }
 
@@ -73,7 +70,7 @@ namespace GTI.WFMS.Modules.Main.View
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void BdTitle_PreviewMouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        private void Grid_PreviewMouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
             if (Mouse.LeftButton == MouseButtonState.Pressed)
             {
@@ -88,7 +85,7 @@ namespace GTI.WFMS.Modules.Main.View
             }
         }
 
-        private void FilePhotoView_KeyDown(object sender, KeyEventArgs e)
+        private void View_KeyDown(object sender, KeyEventArgs e)
         {
             if (e.Key == Key.Escape)
             {
@@ -96,5 +93,6 @@ namespace GTI.WFMS.Modules.Main.View
             }
 
         }
+
     }
 }

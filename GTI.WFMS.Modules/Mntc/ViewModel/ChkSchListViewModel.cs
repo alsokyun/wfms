@@ -260,11 +260,11 @@ namespace GTI.WFMS.Modules.Mntc.ViewModel
             try
             {
                 // cbMNG_CDE
-                BizUtil.SetCmbCode(cbMNG_CDE, "250101", "[전체]");
+                BizUtil.SetCmbCode(cbMNG_CDE, "250101", "전체");
                 // cbSCL_CDE
-                BizUtil.SetCmbCode(cbSCL_CDE, "250105", "[전체]");
+                BizUtil.SetCmbCode(cbSCL_CDE, "250105", "전체");
                 // cbSCL_STAT_CDE
-                BizUtil.SetCmbCode(cbSCL_STAT_CDE, "250107", "[전체]");
+                BizUtil.SetCmbCode(cbSCL_STAT_CDE, "250107", "전체");
                 
             }
             catch (Exception e)

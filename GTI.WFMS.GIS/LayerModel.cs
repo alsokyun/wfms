@@ -131,7 +131,7 @@ namespace GTI.WFMS.GIS
                                 layer = new FeatureLayer(layerTable); /////// 신규레이어 생성 /////// 
                                 layers[_layerNm] = layer; /////// 딕셔너리에 자동으로 저장되지는 않을것임 /////// 
 
-                                layer.Renderer = GisCmm.uniqueValueRenderer.Clone(); //렌더러는 레이어 각각 할당해야하므로 렌더러복사하여 할당
+                                layer.Renderer = CmmRun.uniqueValueRenderer.Clone(); //렌더러는 레이어 각각 할당해야하므로 렌더러복사하여 할당
                                 _mapView.Map.OperationalLayers.Add(layer);
 
 
@@ -476,7 +476,7 @@ namespace GTI.WFMS.GIS
         //    // Load the map from the service once ready
         //    if (e.Status == LocalServerStatus.Started)
         //    {
-        //        // 울산행정구역 표시
+        //        // 행정구역 표시
         //        //ShowLocalServerLayer(mapView, "BML_GADM_AS",  true);
         //        ShowShapeLayer(mapView, "BML_GADM_AS", true );
         //        /*

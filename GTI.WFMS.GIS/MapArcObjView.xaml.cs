@@ -1,8 +1,11 @@
 ﻿using ESRI.ArcGIS.Carto;
 using ESRI.ArcGIS.Controls;
+using ESRI.ArcGIS.esriSystem;
+using ESRI.ArcGIS.Framework;
 using ESRI.ArcGIS.Geodatabase;
 using GTI.WFMS.GIS.Pop.View;
 using GTI.WFMS.Models.Common;
+using System;
 using System.Drawing;
 using System.IO;
 using System.Windows;
@@ -52,7 +55,7 @@ namespace GTI.WFMS.GIS
 
         private void LoadMap()
         {
-            GisCmm.InitUniqueValueRenderer();//렌더러초기생성작업
+            CmmRun.InitUniqueValueRenderer();//렌더러초기생성작업
 
 
             //Buddy up controls
@@ -68,15 +71,16 @@ namespace GTI.WFMS.GIS
             toolbarControl.AddItem("esriControls.ControlsMapMeasureTool");
             toolbarControl.AddItem("esriControls.ControlsMapZoomToolControl");
             toolbarControl.AddItem("esriControls.ControlsMapGoToCommand");
-            
 
+            //Pan모드 선택처리
+            
+            //FindCommandAndExecute((IApplication)mapControl.Parent, "esriControls.ControlsMapPanTool");
 
             //set controls' properties
             toolbarControl.BackColor = Color.FromArgb(245, 245, 220);
 
             //wire up events
             mapControl.OnMouseMove += new IMapControlEvents2_Ax_OnMouseMoveEventHandler(mapControl_OnMouseMove);
-
 
 
 
@@ -93,6 +97,21 @@ namespace GTI.WFMS.GIS
             //레이어명 적용
             //tocControl.Update();
         }
+
+
+        //Pan모드 선택처리
+        public void FindCommandAndExecute(IApplication application)
+        {
+            ESRI.ArcGIS.Framework.ICommandBars commandBars = application.Document.CommandBars;
+            ESRI.ArcGIS.esriSystem.UID uid = new ESRI.ArcGIS.esriSystem.UID();
+            uid.Value = "esriControls.ControlsMapPanTool"; 
+            ESRI.ArcGIS.Framework.ICommandItem commandItem = commandBars.Find(uid, false, false);
+
+            if (commandItem != null)
+                commandItem.Execute();
+        }
+
+
 
 
 
@@ -116,7 +135,7 @@ namespace GTI.WFMS.GIS
                 mapControl.Refresh();
 
                 //심볼초기화
-                GisCm.InitUniqueValueRenderer();
+                CmmObj.InitUniqueValueRendererObj();
             }
         }
     }

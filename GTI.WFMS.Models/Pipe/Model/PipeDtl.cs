@@ -1,26 +1,9 @@
 ﻿using GTI.WFMS.Models.Cmm.Model;
-using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace GTI.WFMS.Models.Pipe.Model
 {
-    public class PipeDtl : CmmDtl, INotifyPropertyChanged
+    public class PipeDtl : CmmDtl
     {
-        /// <summary>
-        /// 인터페이스 구현부분
-        /// </summary>
-        public event PropertyChangedEventHandler PropertyChanged;
-        protected void OnPropertyChanged(string propertyName)
-        {
-            if (PropertyChanged != null)
-            {
-                PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
-            }
-        }
 
 
 
@@ -180,8 +163,8 @@ namespace GTI.WFMS.Models.Pipe.Model
                 OnPropertyChanged("JHT_NAM");
             }
         }
-        private int __LOW_DEP;
-        public int LOW_DEP
+        private decimal ?  __LOW_DEP;
+        public decimal ? LOW_DEP
         {
             get { return __LOW_DEP; }
             set
@@ -190,8 +173,8 @@ namespace GTI.WFMS.Models.Pipe.Model
                 OnPropertyChanged("LOW_DEP");
             }
         }
-        private int __HGH_DEP;
-        public int HGH_DEP
+        private decimal ?  __HGH_DEP;
+        public decimal ? HGH_DEP
         {
             get { return __HGH_DEP; }
             set
@@ -240,8 +223,8 @@ namespace GTI.WFMS.Models.Pipe.Model
                 OnPropertyChanged("PIP_LBL");
             }
         }
-        private int __PIP_DIP;
-        public int PIP_DIP
+        private decimal ?  __PIP_DIP;
+        public decimal ? PIP_DIP
         {
             get { return __PIP_DIP; }
             set
@@ -250,8 +233,8 @@ namespace GTI.WFMS.Models.Pipe.Model
                 OnPropertyChanged("PIP_DIP");
             }
         }
-        private int __PIP_LEN;
-        public int PIP_LEN
+        private decimal ?  __PIP_LEN;
+        public decimal ? PIP_LEN
         {
             get { return __PIP_LEN; }
             set

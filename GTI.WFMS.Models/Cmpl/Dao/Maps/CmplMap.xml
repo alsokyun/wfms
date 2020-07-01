@@ -16,7 +16,7 @@
       WHERE 1=1
 
       <isNotEmpty prepend="AND" property="RCV_NUM">
-        RCV_NUM = #RCV_NUM#
+        upper(RCV_NUM) like '%' || upper(#RCV_NUM# ) || '%'
       </isNotEmpty>
       <isNotEmpty prepend="AND" property="APL_HJD">
         APL_HJD = #APL_HJD#
@@ -61,7 +61,7 @@
       , A.PRO_CDE, C2.NM AS PRO_NAM
       , A.PRO_EXP
       , A.PRO_YMD
-      , A.PRO_NAM
+      
       , A.CNT_NUM
       , NULL AS CHK
       FROM WTT_WSER_MA A
@@ -72,7 +72,7 @@
       WHERE 1=1
 
       <isNotEmpty prepend="AND" property="RCV_NUM">
-        RCV_NUM = #RCV_NUM#
+        upper(RCV_NUM ) like '%' || upper(#RCV_NUM#) || '%'
       </isNotEmpty>
       <isNotEmpty prepend="AND" property="APL_HJD">
         APL_HJD = #APL_HJD#
@@ -253,7 +253,7 @@
 
 
 
-    <!--상수공사민원목록-->
+    <!--급수공사민원목록-->
     <select id ="SelectSplyCmplList" parameterClass="Hashtable" resultClass ="Hashtable">
 
       WITH C AS (
@@ -267,29 +267,30 @@
       WHERE 1=1
 
       <isNotEmpty prepend="AND" property="RCV_NUM">
-        RCV_NUM = #RCV_NUM#
+        upper(A.RCV_NUM ) LIKE '%' ||  upper(#RCV_NUM# ) || '%'
       </isNotEmpty>
       <isNotEmpty prepend="AND" property="APL_HJD">
-        APL_HJD = #APL_HJD#
+        A.APL_HJD = #APL_HJD#
       </isNotEmpty>
       <isNotEmpty prepend="AND" property="APL_CDE">
-        APL_CDE = #APL_CDE#
+        A.APL_CDE = #APL_CDE#
       </isNotEmpty>
       <isNotEmpty prepend="AND" property="RCV_YMD_FROM">
-        RCV_YMD <![CDATA[>=]]> #RCV_YMD_FROM#
+        A.RCV_YMD <![CDATA[>=]]> #RCV_YMD_FROM#
       </isNotEmpty>
       <isNotEmpty prepend="AND" property="RCV_YMD_TO">
-        RCV_YMD <![CDATA[<=]]> #RCV_YMD_TO#
+        A.RCV_YMD <![CDATA[<=]]> #RCV_YMD_TO#
       </isNotEmpty>
       <isNotEmpty prepend="AND" property="PRO_YMD_FROM">
-        PRO_YMD <![CDATA[>=]]> #PRO_YMD_FROM#
+        A.PRO_YMD <![CDATA[>=]]> #PRO_YMD_FROM#
       </isNotEmpty>
       <isNotEmpty prepend="AND" property="PRO_YMD_TO">
-        PRO_YMD <![CDATA[<=]]> #PRO_YMD_TO#
+        A.PRO_YMD <![CDATA[<=]]> #PRO_YMD_TO#
       </isNotEmpty>
       <isNotEmpty prepend="AND" property="PRO_CDE">
-        PRO_CDE = #PRO_CDE#
+        A.PRO_CDE = #PRO_CDE#
       </isNotEmpty>
+
 
       )
 
@@ -312,7 +313,7 @@
       , A.PRO_CDE, C2.NM AS PRO_NAM
       , A.PRO_EXP
       , A.PRO_YMD
-      , A.PRO_NAM
+      
       , A.CNT_NUM
       FROM WTT_WSER_MA A
       LEFT JOIN INFOUSER.CD_DTL_INFO C ON C.DTL_CD = A.APL_CDE AND C.MST_CD = '250056'
@@ -322,28 +323,28 @@
       WHERE 1=1
 
       <isNotEmpty prepend="AND" property="RCV_NUM">
-        RCV_NUM = #RCV_NUM#
+        upper(A.RCV_NUM ) LIKE '%' ||  upper(#RCV_NUM# ) || '%'
       </isNotEmpty>
       <isNotEmpty prepend="AND" property="APL_HJD">
-        APL_HJD = #APL_HJD#
+        A.APL_HJD = #APL_HJD#
       </isNotEmpty>
       <isNotEmpty prepend="AND" property="APL_CDE">
-        APL_CDE = #APL_CDE#
+        A.APL_CDE = #APL_CDE#
       </isNotEmpty>
       <isNotEmpty prepend="AND" property="RCV_YMD_FROM">
-        RCV_YMD <![CDATA[>=]]> #RCV_YMD_FROM#
+        A.RCV_YMD <![CDATA[>=]]> #RCV_YMD_FROM#
       </isNotEmpty>
       <isNotEmpty prepend="AND" property="RCV_YMD_TO">
-        RCV_YMD <![CDATA[<=]]> #RCV_YMD_TO#
+        A.RCV_YMD <![CDATA[<=]]> #RCV_YMD_TO#
       </isNotEmpty>
       <isNotEmpty prepend="AND" property="PRO_YMD_FROM">
-        PRO_YMD <![CDATA[>=]]> #PRO_YMD_FROM#
+        A.PRO_YMD <![CDATA[>=]]> #PRO_YMD_FROM#
       </isNotEmpty>
       <isNotEmpty prepend="AND" property="PRO_YMD_TO">
-        PRO_YMD <![CDATA[<=]]> #PRO_YMD_TO#
+        A.PRO_YMD <![CDATA[<=]]> #PRO_YMD_TO#
       </isNotEmpty>
       <isNotEmpty prepend="AND" property="PRO_CDE">
-        PRO_CDE = #PRO_CDE#
+        A.PRO_CDE = #PRO_CDE#
       </isNotEmpty>
 
 
@@ -375,7 +376,7 @@
         A.FTR_IDN like '%' || #FTR_IDN# || '%'
       </isNotEmpty>
       <isNotEmpty prepend="AND" property="SHT_NUM">
-        A.SHT_NUM like '%' ||  #SHT_NUM# || '%'
+        upper(A.SHT_NUM) like '%' ||  upper(#SHT_NUM#) || '%'
       </isNotEmpty>
       <isNotEmpty prepend="AND" property="HJD_CDE">
         A.HJD_CDE = #HJD_CDE#
@@ -402,7 +403,7 @@
         A.LRS_CDE = #LRS_CDE#
       </isNotEmpty>
       <isNotEmpty prepend="AND" property="RCV_NUM">
-        A.RCV_NUM like '%' ||  #RCV_NUM# || '%'
+        upper(A.RCV_NUM) like '%' ||  upper(#RCV_NUM#) || '%'
       </isNotEmpty>
 
       )
@@ -444,7 +445,7 @@
         A.FTR_IDN like '%' || #FTR_IDN# || '%'
       </isNotEmpty>
       <isNotEmpty prepend="AND" property="SHT_NUM">
-        A.SHT_NUM like '%' ||  #SHT_NUM# || '%'
+        upper(A.SHT_NUM) like '%' ||  upper(#SHT_NUM#) || '%'
       </isNotEmpty>
       <isNotEmpty prepend="AND" property="HJD_CDE">
         A.HJD_CDE = #HJD_CDE#
@@ -471,7 +472,7 @@
         A.LRS_CDE = #LRS_CDE#
       </isNotEmpty>
       <isNotEmpty prepend="AND" property="RCV_NUM">
-        A.RCV_NUM like '%' ||  #RCV_NUM# || '%'
+        upper(A.RCV_NUM) like '%' ||  upper(#RCV_NUM#) || '%'
       </isNotEmpty>
 
       ) X JOIN C ON 1=1
@@ -512,9 +513,59 @@
     </select>
 
 
+    <!-- 누수지점 관리번호채번 -->
+    <select id="SelectLeakNewIdn" resultClass="GTI.WFMS.Models.Cmpl.Model.LeakDtl">
+      SELECT NVL(MAX(FTR_IDN),0)+1 AS FTR_IDN FROM INFOFMS.WTL_LEAK_PS
+    </select>
+
+      <!--누수지점 등록-->
+    <update id="InsertWtlLeakDtl" parameterClass="GTI.WFMS.Models.Cmpl.Model.LeakDtl">
+      INSERT INTO INFOFMS.WTL_LEAK_PS
+      ( FTR_CDE
+      , FTR_IDN
+      , HJD_CDE
+      , SHT_NUM
+      , RCV_NUM
+      , LEK_YMD
+      , LEK_LOC
+      , PIP_CDE
+      , PIP_IDN
+      , MOP_CDE
+      , LRS_CDE
+      , LEP_CDE
+      , REP_YMD
+      , REP_EXP
+      , MAT_DES
+      , REP_NAM
+      , SYS_CHK
+      , PIP_DIP
+      , LEK_EXP )
+      VALUES ( #FTR_CDE#
+      , #FTR_IDN#
+      , #HJD_CDE#
+      , #SHT_NUM#
+      , #RCV_NUM#
+      , #LEK_YMD#
+      , #LEK_LOC#
+      , #PIP_CDE#
+      , #PIP_IDN#
+      , #MOP_CDE#
+      , #LRS_CDE#
+      , #LEP_CDE#
+      , #REP_YMD#
+      , #REP_EXP#
+      , #MAT_DES#
+      , #REP_NAM#
+      , #SYS_CHK#
+      , #PIP_DIP#
+      , #LEK_EXP# )
+
+    </update>
+
+
     <!--누수지점 등록수정-->
     <update id="SaveWtlLeakDtl" parameterClass="GTI.WFMS.Models.Cmpl.Model.LeakDtl">
-      MERGE INTO WTL_LEAK_PS
+      MERGE INTO INFOFMS.WTL_LEAK_PS
       USING DUAL ON (FTR_CDE=#FTR_CDE# AND FTR_IDN = #FTR_IDN#)
 
       WHEN MATCHED THEN

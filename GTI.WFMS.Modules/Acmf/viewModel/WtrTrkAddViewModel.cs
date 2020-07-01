@@ -33,10 +33,9 @@ namespace GTI.WFMS.Modules.Acmf.ViewModel
         #region ==========  Member 정의 ==========
         WtrTrkAddView wtrTrkAddView;
 
-        ComboBoxEdit cbFTR_CDE; DataTable dtFTR_CDE = new DataTable();	    //지형지물
-        ComboBoxEdit cbHJD_CDE; DataTable dtHJD_CDE = new DataTable();		//행정동
-        ComboBoxEdit cbMNG_CDE; DataTable dtMNG_CDE = new DataTable();      //관리기관
-        ComboBoxEdit cbBLS_CDE; DataTable dtBLS_CDE = new DataTable();      //건물유형
+        ComboBoxEdit cbHJD_CDE; 
+        ComboBoxEdit cbMNG_CDE; 
+        ComboBoxEdit cbBLS_CDE; 
         
 
         Button btnBack;
@@ -75,7 +74,6 @@ namespace GTI.WFMS.Modules.Acmf.ViewModel
                 var values = (object[])obj;
 
                 wtrTrkAddView = values[0] as WtrTrkAddView;
-                cbFTR_CDE = wtrTrkAddView.cbFTR_CDE;       //지형지물
                 cbHJD_CDE = wtrTrkAddView.cbHJD_CDE;       //행정동
                 cbMNG_CDE = wtrTrkAddView.cbMNG_CDE;       //관리기관
                 cbBLS_CDE = wtrTrkAddView.cbBLS_CDE;       //건물유형
@@ -101,8 +99,9 @@ namespace GTI.WFMS.Modules.Acmf.ViewModel
                 //채번결과 매칭
                 this.FTR_IDN = result.FTR_IDN;
                 this.FTR_CDE = "SA120";
+                //시설물명  가져오기
+                wtrTrkAddView.txtFTR_NAM.Text = BizUtil.GetCodeNm("Select_FTR_LIST2", FTR_CDE);
 
-                this.FNS_YMD = Convert.ToDateTime(DateTime.Today).ToString("yyyy-MM-dd");
 
                 //공통팝업창 사이즈 변경 4
                 FmsUtil.popWinView.Height = 400;
@@ -167,17 +166,16 @@ namespace GTI.WFMS.Modules.Acmf.ViewModel
         {
             try
             {
-                // cbFTR_CDE 지형지물
-                BizUtil.SetCombo(cbFTR_CDE, "Select_FTR_LIST", "FTR_CDE", "FTR_NAM");
-
+                
                 // cbHJD_CDE 행정동
-                BizUtil.SetCombo(cbHJD_CDE, "Select_ADAR_LIST", "HJD_CDE", "HJD_NAM", "[선택하세요]");
+                BizUtil.SetCombo(cbHJD_CDE, "Select_ADAR_LIST", "HJD_CDE", "HJD_NAM", "선택");
 
                 // cbMNG_CDE 관리기관
-                BizUtil.SetCmbCode(cbMNG_CDE, "250101", "[선택하세요]");
+                BizUtil.SetCmbCode(cbMNG_CDE, "250101", "선택");
                 
                 // cbBLS_CDE 건물유형
-                BizUtil.SetCmbCode(cbBLS_CDE, "250037", "[선택하세요]");
+                BizUtil.SetCmbCode(cbBLS_CDE, "250037", "선택");
+
 
             }
             catch (Exception ex)

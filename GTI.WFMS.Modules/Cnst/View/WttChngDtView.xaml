@@ -68,7 +68,7 @@
                 </dxg:GridColumn.HeaderTemplate>
                 <dxg:GridColumn.CellTemplate>
                     <DataTemplate>
-                        <dxe:CheckEdit EditValue="{Binding RowData.Row.CHK, Mode=TwoWay, Converter={StaticResource toggleConverter}}" HorizontalAlignment="Center" />
+                        <dxe:CheckEdit EditValue="{Binding RowData.Row.CHK, Converter={StaticResource toggleConverter}}" HorizontalAlignment="Center" />
                     </DataTemplate>
                 </dxg:GridColumn.CellTemplate>
             </dxg:GridColumn>
@@ -76,31 +76,31 @@
                 <dxg:GridColumn.CellTemplate>
                     <DataTemplate>
                         <dxe:DateEdit Style="{DynamicResource ResourceKey=GridDateEdit}" 
-                            EditValue="{Binding RowData.Row.CHG_YMD, Mode=TwoWay, Converter={StaticResource date2StrConverter}}"  />
+                            EditValue="{Binding RowData.Row.CHG_YMD, Converter={StaticResource date2StrConverter}}"  />
                     </DataTemplate>
                 </dxg:GridColumn.CellTemplate>
             </dxg:GridColumn>
             <dxg:GridColumn Header="증감금액" Width="4*" FieldName="INC_AMT" HorizontalHeaderContentAlignment="Center" AllowEditing="True">
                 <dxg:GridColumn.CellTemplate>
                     <DataTemplate>
-                        <dxe:TextEdit Style="{DynamicResource ResourceKey=GridNumberEdit}"   
-                            EditValue="{Binding  RowData.Row.INC_AMT, Mode=TwoWay}" Mask="n0"/>
+                        <dxe:TextEdit Style="{DynamicResource ResourceKey=GridIntEdit}"   
+                            EditValue="{Binding  RowData.Row.INC_AMT}" />
                     </DataTemplate>
                 </dxg:GridColumn.CellTemplate>
             </dxg:GridColumn>
             <dxg:GridColumn Header="증감관급금액" Width="4*" FieldName="IGV_AMT" HorizontalHeaderContentAlignment="Center" AllowEditing="True">
                 <dxg:GridColumn.CellTemplate>
                     <DataTemplate>
-                        <dxe:TextEdit Style="{DynamicResource ResourceKey=GridNumberEdit}"   
-                            EditValue="{Binding  RowData.Row.IGV_AMT, Mode=TwoWay}" Mask="n0"/>
+                        <dxe:TextEdit Style="{DynamicResource ResourceKey=GridIntEdit}"   
+                            EditValue="{Binding  RowData.Row.IGV_AMT}" />
                     </DataTemplate>
                 </dxg:GridColumn.CellTemplate>
             </dxg:GridColumn>
             <dxg:GridColumn Header="변경공사금액" Width="4*" FieldName="CHG_AMT" HorizontalHeaderContentAlignment="Center" AllowEditing="True">
                 <dxg:GridColumn.CellTemplate>
                     <DataTemplate>
-                        <dxe:TextEdit Style="{DynamicResource ResourceKey=GridNumberEdit}"   
-                            EditValue="{Binding  RowData.Row.CHG_AMT, Mode=TwoWay}" Mask="n0"/>
+                        <dxe:TextEdit Style="{DynamicResource ResourceKey=GridIntEdit}"   
+                            EditValue="{Binding  RowData.Row.CHG_AMT}" />
                     </DataTemplate>
                 </dxg:GridColumn.CellTemplate>
             </dxg:GridColumn>
@@ -108,7 +108,7 @@
                 <dxg:GridColumn.CellTemplate>
                     <DataTemplate>
                         <dxe:DateEdit Style="{DynamicResource ResourceKey=GridDateEdit}" 
-                            EditValue="{Binding RowData.Row.ATT_TIM, Mode=TwoWay, Converter={StaticResource date2StrConverter}}"  />
+                            EditValue="{Binding RowData.Row.ATT_TIM, Converter={StaticResource date2StrConverter}}"  />
                     </DataTemplate>
                 </dxg:GridColumn.CellTemplate>
             </dxg:GridColumn>
@@ -116,7 +116,7 @@
                 <dxg:GridColumn.CellTemplate>
                     <DataTemplate>
                         <dxe:TextEdit Style="{DynamicResource ResourceKey=GridTextEdit}"   
-                            EditValue="{Binding  RowData.Row.CGV_DES, Mode=TwoWay}"/>
+                            EditValue="{Binding  RowData.Row.CGV_DES}"/>
                     </DataTemplate>
                 </dxg:GridColumn.CellTemplate>
             </dxg:GridColumn>

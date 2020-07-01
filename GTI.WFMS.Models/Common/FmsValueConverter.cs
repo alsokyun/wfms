@@ -212,4 +212,26 @@ namespace GTI.WFMS.Models.Common
 
 
 
+    /// <summary>
+    /// ToStrConverter 컨버터 - alsokyun
+    /// </summary>
+    public class ToStrConverter : IValueConverter
+    {
+        public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
+        {
+            string ret = "";
+            try
+            {
+                ret = value.ToString();
+            }
+            catch (Exception) {}
+            return ret;
+        }
+
+        public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
+        {
+            return value;
+        }
+    }
+
 }

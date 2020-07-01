@@ -227,7 +227,7 @@ namespace GTI.WFMS.Modules.Pop.ViewModel
 
 
             //4.초기조회
-            SearchAction(null);
+            //SearchAction(null);
         }
 
 
@@ -248,6 +248,7 @@ namespace GTI.WFMS.Modules.Pop.ViewModel
                 conditions.Add("FTR_NAM", FmsUtil.Trim(txtFTR_NAM.EditValue));                
                 conditions.Add("CNT_NUM", txtCNT_NUM.Text.Trim());
                 conditions.Add("CNT_NAM", txtCNT_NAM.Text.Trim());
+                //conditions.Add("USE_YB", "Y");
                 
                 conditions.Add("sqlId", "SelectFtrAllList");
 
@@ -272,10 +273,11 @@ namespace GTI.WFMS.Modules.Pop.ViewModel
                         this.TotalCnt = Convert.ToInt32(dt.Rows[0]["ROWCNT"]);
                         this.ItemCnt = (int)Math.Ceiling((double)this.TotalCnt / FmsUtil.PageSize);
                     }
-                    catch (Exception )
+                    catch (Exception ex)
                     {
                         this.TotalCnt = 0;
                         this.ItemCnt = 0;
+                        Console.WriteLine(ex.Message);
                     }
 
                     this.PagedCollection.Clear();
@@ -376,9 +378,9 @@ namespace GTI.WFMS.Modules.Pop.ViewModel
             try
             {
                 // cbHJD_CDE 행정동
-                BizUtil.SetCombo(cbHJD_CDE, "Select_ADAR_LIST", "HJD_CDE", "HJD_NAM", "[선택하세요]");
+                BizUtil.SetCombo(cbHJD_CDE, "Select_ADAR_LIST", "HJD_CDE", "HJD_NAM", "선택");
                 // cbFTR_CDE 시설물구분
-                BizUtil.SetCombo(cbFTR_CDE, "Select_FTR_LIST", "FTR_CDE", "FTR_NAM", "[선택하세요]");
+                BizUtil.SetCombo(cbFTR_CDE, "Select_FTR_LIST", "FTR_CDE", "FTR_NAM", "선택");
                 
             }
             catch (Exception ex)

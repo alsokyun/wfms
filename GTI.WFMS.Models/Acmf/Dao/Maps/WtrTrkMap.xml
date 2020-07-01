@@ -42,27 +42,27 @@
       
         <!-- 조건7. 허가일자[이하] -->
         <isNotEmpty prepend="AND" property="PMS_YMD">
-          A.PMS_YMD <![CDATA[<=]]> #PMS_YMD#
+          A.PMS_YMD <![CDATA[=]]> #PMS_YMD#
         </isNotEmpty>
 
         <!-- 조건8. 저수조명 -->
         <isNotEmpty prepend="AND" property="RSR_NAM">
-          A.RSR_NAM LIKE '%' || #RSR_NAM# || '%'
+          upper(A.RSR_NAM ) LIKE '%' || upper(#RSR_NAM# ) || '%'
         </isNotEmpty>
 
         <!-- 조건9. 관리자 -->
         <isNotEmpty prepend="AND" property="MNG_NAM">
-          A.MNG_NAM LIKE '%' || #MNG_NAM# || '%'
+          upper(A.MNG_NAM ) LIKE '%' || upper(#MNG_NAM# ) || '%'
         </isNotEmpty>
 
         <!-- 조건10. 건물주소 -->
         <isNotEmpty prepend="AND" property="BLD_ADR">
-          A.BLD_ADR LIKE '%' || #BLD_ADR# || '%'
+          upper(A.BLD_ADR ) LIKE '%' || upper(#BLD_ADR# ) || '%'
         </isNotEmpty>
 
         <!-- 조건11. 소유자성명 -->
         <isNotEmpty prepend="AND" property="OWN_NAM">
-          A.OWN_NAM LIKE '%' || #OWN_NAM# || '%'
+          upper(A.OWN_NAM ) LIKE '%' || upper(#OWN_NAM# ) || '%'
         </isNotEmpty>
       )
 
@@ -128,27 +128,27 @@
 
           <!-- 조건7. 허가일자[이하] -->
           <isNotEmpty prepend="AND" property="PMS_YMD">
-            A.PMS_YMD <![CDATA[<=]]> #PMS_YMD#
+            A.PMS_YMD <![CDATA[=]]> #PMS_YMD#
           </isNotEmpty>
 
           <!-- 조건8. 저수조명 -->
           <isNotEmpty prepend="AND" property="RSR_NAM">
-            A.RSR_NAM LIKE '%' || #RSR_NAM# || '%'
+            upper(A.RSR_NAM ) LIKE '%' || upper(#RSR_NAM# ) || '%'
           </isNotEmpty>
 
           <!-- 조건9. 관리자 -->
           <isNotEmpty prepend="AND" property="MNG_NAM">
-            A.MNG_NAM LIKE '%' || #MNG_NAM# || '%'
+            upper(A.MNG_NAM ) LIKE '%' || upper(#MNG_NAM# ) || '%'
           </isNotEmpty>
 
           <!-- 조건10. 건물주소 -->
           <isNotEmpty prepend="AND" property="BLD_ADR">
-            A.BLD_ADR LIKE '%' || #BLD_ADR# || '%'
+            upper(A.BLD_ADR ) LIKE '%' || upper(#BLD_ADR# ) || '%'
           </isNotEmpty>
 
           <!-- 조건11. 소유자성명 -->
           <isNotEmpty prepend="AND" property="OWN_NAM">
-            A.OWN_NAM LIKE '%' || #OWN_NAM# || '%'
+            upper(A.OWN_NAM ) LIKE '%' || upper(#OWN_NAM# ) || '%'
           </isNotEmpty>
 
         ORDER BY FTR_IDN DESC
@@ -355,6 +355,77 @@
       SELECT NVL(MAX(FTR_IDN),0)+1 AS FTR_IDN FROM INFOFMS.WTL_RSRV_PS
       WHERE 1=1
     </select>
+
+  
+  	<!-- 저수조 청소이력	 -->
+	  <select id="selectWttRsrvHt"  resultClass="GTI.WFMS.Models.Acmf.Model.WttRsrvHtDtl">
+      SELECT
+      A.FTR_CDE
+      ,(SELECT FTR_NAM FROM V_FTR_CDE F WHERE F.FTR_CDE = A.FTR_CDE ) AS FTR_NAM
+      , A.FTR_IDN
+      , A.SEQ
+      , A.CLN_NUM
+      , A.CLN_YMD
+      , A.CLN_EXP
+      , A.CLN_NAM
+      FROM INFOFMS.WTT_RSRV_HT A
+      WHERE 1=1
+      AND A.FTR_CDE=#FTR_CDE#
+      AND A.FTR_IDN=#FTR_IDN#
+      <isNotEmpty property="SEQ">
+        AND A.SEQ = #SEQ#
+      </isNotEmpty>
+      ORDER BY A.CLN_NUM DESC
+    </select>	
+    
+    <!-- 청소이력 채번 -->
+    <select id="selectCLN_SEQ" parameterClass="Hashtable" resultClass="GTI.WFMS.Models.Acmf.Model.WttRsrvHtDtl">
+      SELECT
+      nvl(max(SEQ),0)+1 as SEQ
+      FROM INFOFMS.WTT_RSRV_HT
+    </select>
+
+    <!--저수조 청소이력추가-->
+    <update id="insertWttRsrvHt" parameterClass="GTI.WFMS.Models.Acmf.Model.WttRsrvHtDtl">
+      MERGE INTO INFOFMS.WTT_RSRV_HT
+      USING DUAL ON (FTR_CDE = #FTR_CDE# AND FTR_IDN = #FTR_IDN# AND SEQ = #SEQ#)
+
+      WHEN MATCHED THEN
+      UPDATE SET
+      CLN_NUM =#CLN_NUM#
+      , CLN_YMD =#CLN_YMD#
+      , CLN_EXP =#CLN_EXP#
+      , CLN_NAM =#CLN_NAM#
+
+      WHEN NOT MATCHED THEN
+      INSERT
+      (FTR_CDE
+      , FTR_IDN
+      , SEQ
+      , CLN_NUM
+      , CLN_YMD
+      , CLN_EXP
+      , CLN_NAM)
+      VALUES
+      ( #FTR_CDE#
+      , #FTR_IDN#
+      , #SEQ#
+      , #CLN_NUM#
+      , #CLN_YMD#
+      , #CLN_EXP#
+      , #CLN_NAM#)
+    </update>
+
+    <!--저수조청소 상세삭제-->
+    <update id="deleteWttRsrvHt" parameterClass="GTI.WFMS.Models.Acmf.Model.WttRsrvHtDtl">
+      DELETE INFOFMS.WTT_RSRV_HT
+      WHERE FTR_CDE = #FTR_CDE#
+      AND FTR_IDN = #FTR_IDN#
+      <isNotEmpty property="SEQ">
+        AND SEQ = #SEQ#
+      </isNotEmpty>
+    </update>
+
 
   </statements>
   

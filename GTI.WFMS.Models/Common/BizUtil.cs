@@ -1,4 +1,5 @@
 ﻿using DevExpress.Xpf.Editors;
+using GTI.WFMS.Models.Blk.Model;
 using GTI.WFMS.Models.Cmm.Dao;
 using GTI.WFMS.Models.Cmm.Model;
 using GTIFramework.Common.Log;
@@ -155,7 +156,7 @@ namespace GTI.WFMS.Models.Common
             {
                 if (!FmsUtil.IsNull(te.Tag))
                 {
-                    if (FmsUtil.IsNull(te.Text))
+                    if (FmsUtil.IsNull(te.EditValue))
                     {
                         Messages.ShowInfoMsgBox(string.Format("{0}은 필수입력 항목입니다.", te.Tag.ToString()));
                         return false;
@@ -276,14 +277,13 @@ namespace GTI.WFMS.Models.Common
         /// </summary>
         /// <param name="MST_CD"></param>
         /// <param name="NV 널항목추가"></param>
-        public static DataTable GetCmbCode(string ETC, bool NV, string MST_CD)
+        public static DataTable GetCmbCode(string MST_CD, bool NV )
         {
             Hashtable conditions = new Hashtable();
             DataTable dt = new DataTable(MST_CD);
 
 
             conditions.Add("MST_CD", MST_CD);
-            conditions.Add("ETC", ETC);
             dt = cmmDao.Select_CODE_LIST(conditions);
 
             /* 전체추가 */
@@ -297,13 +297,9 @@ namespace GTI.WFMS.Models.Common
 
             return dt;
         }
-        public static DataTable GetCmbCode(string ETC)
+        public static DataTable GetCmbCode(string MST_CD)
         {
-            return GetCmbCode(ETC, false, null);
-        }
-        public static DataTable GetCmbCode(string ETC, bool ALL)
-        {
-            return GetCmbCode(ETC, ALL, null);
+            return GetCmbCode(MST_CD, false);
         }
 
 
@@ -325,8 +321,16 @@ namespace GTI.WFMS.Models.Common
 
 
             conditions.Add("sqlId", sqlId);
-            dt = dao.SelectLIST(conditions).AsEnumerable().Where(filter).CopyToDataTable(); //필터식적용
-            
+            DataTable _dt = new DataTable();
+            _dt = dao.SelectLIST(conditions);
+
+            //필터식적용
+            //foreach (DataRow row in _dt.AsEnumerable().Where(filter))
+            //{
+            //    dt.ImportRow(row);
+            //}
+            dt = _dt.AsEnumerable().Where(filter).CopyToDataTable();
+
 
             /* 전체추가 */
             if (!FmsUtil.IsNull(ALL))
@@ -343,6 +347,12 @@ namespace GTI.WFMS.Models.Common
             cmb.DisplayMember = DisplayMember;
             cmb.ValueMember = ValueMember;
             cmb.ItemsSource = dt;
+
+            try
+            {
+                cmb.SelectedIndex = 0;
+            }
+            catch (Exception){}
         }
         //필터없는형태
         public static void SetCombo(ComboBoxEdit cmb, string sqlId, string ValueMember, string DisplayMember, string ALL)
@@ -419,7 +429,45 @@ namespace GTI.WFMS.Models.Common
 
 
 
+        #region 첨부파일관련
 
+        // 파일마스터키 FIL_SEQ에 해당하는 물리파일 삭제, 첨부테이블삭제
+        public static void DelFileSeq(object filSeq)
+        {
+            //1.물리파일삭제
+            //0.첨부 디테일파일정보가져오기
+            Hashtable param = new Hashtable();
+            param.Add("sqlId", "SelectFileDtl2");
+            param.Add("FIL_SEQ", filSeq);
+
+            List<FileDtl> lst = new List<FileDtl>(BizUtil.SelectListObj<FileDtl>(param));
+            foreach (FileDtl dtl in lst)
+            {
+                string del_file_path = System.IO.Path.Combine(FmsUtil.fileDir, dtl.UPF_NAM);
+                try
+                {
+                    FileInfo fi = new FileInfo(del_file_path);
+                    fi.Delete();
+                }
+                catch (Exception) { }
+            }
+
+
+            //2.첨부테이블삭제
+            //a.디테일
+            param = new Hashtable();
+            param.Add("sqlId", "DeleteFileSeq");
+            param.Add("FIL_SEQ", filSeq);
+            BizUtil.Update(param);
+            //b.마스터
+            param = new Hashtable();
+            param.Add("sqlId", "DeleteFileMst");
+            param.Add("FIL_SEQ", filSeq);
+            BizUtil.Update(param);
+        }
+
+
+        #endregion
 
 
 
@@ -463,6 +511,25 @@ namespace GTI.WFMS.Models.Common
         {
             return Path.Combine(GetDataFolder(itemId), Path.Combine(pathParts));
         }
+
+
+
+        //블럭관리번호 콤보생성
+        public static void SetFTR_IDN(string uPPER_FTR_CDE, ComboBoxEdit cmb)
+        {
+            if (FmsUtil.IsNull(uPPER_FTR_CDE)) return;//상위코드없으면 콤보채우지 않는다
+
+            Hashtable param = new Hashtable();
+            param.Add("sqlId", "SelectUpBlk");
+            param.Add("FTR_CDE", uPPER_FTR_CDE);
+            List<BlkDtl> lst = (List<BlkDtl>)BizUtil.SelectListObj<BlkDtl>(param);
+
+            cmb.DisplayMember = "BLK_NM";
+            cmb.ValueMember = "FTR_IDN";
+            cmb.ItemsSource = lst;
+        }
+
+
 
 
 

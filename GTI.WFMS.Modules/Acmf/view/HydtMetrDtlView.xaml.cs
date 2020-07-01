@@ -4,20 +4,10 @@ using GTI.WFMS.Modules.Pop.View;
 using GTIFramework.Common.MessageBox;
 using GTIFramework.Common.Utils.ViewEffect;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Threading;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
-using System.Windows.Shapes;
 using System.Windows.Threading;
 
 namespace GTI.WFMS.Modules.Acmf.View
@@ -77,6 +67,7 @@ namespace GTI.WFMS.Modules.Acmf.View
             tabSubMenu.Items.Add(tab03);
 
             DXTabItem tab04 = new DXTabItem();
+            tab04.Content = new MetrChgListView(FTR_CDE,FTR_IDN);
             tab04.Header = "계량기교체이력";
             tabSubMenu.Items.Add(tab04);
 

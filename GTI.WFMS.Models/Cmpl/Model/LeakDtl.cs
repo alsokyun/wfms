@@ -3,20 +3,9 @@ using System.ComponentModel;
 
 namespace GTI.WFMS.Models.Cmpl.Model
 {
-    public class LeakDtl : CmmDtl, INotifyPropertyChanged
+    public class LeakDtl : CmmDtl
     {
-        /// <summary>
-        /// 인터페이스 구현부분
-        /// </summary>
-        public event PropertyChangedEventHandler PropertyChanged;
-        protected void OnPropertyChanged(string propertyName)
-        {
-            if (PropertyChanged != null)
-            {
-                PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
-            }
-        }
-
+       
 
 
         /// <summary>
@@ -42,8 +31,8 @@ namespace GTI.WFMS.Models.Cmpl.Model
                 OnPropertyChanged("FTR_NAM");
             }
         }
-        private decimal __FTR_IDN;
-        public decimal FTR_IDN
+        private decimal ?  __FTR_IDN;
+        public decimal ?  FTR_IDN
         {
             get { return __FTR_IDN; }
             set
@@ -133,8 +122,8 @@ namespace GTI.WFMS.Models.Cmpl.Model
             }
         }
 
-        private decimal __PIP_IDN;
-        public decimal PIP_IDN
+        private decimal ?  __PIP_IDN;
+        public decimal?  PIP_IDN
         {
             get { return __PIP_IDN; }
             set
@@ -233,8 +222,8 @@ namespace GTI.WFMS.Models.Cmpl.Model
                 OnPropertyChanged("SYS_CHK");
             }
         }
-        private decimal __PIP_DIP;
-        public decimal PIP_DIP
+        private decimal ?  __PIP_DIP;
+        public decimal ? PIP_DIP
         {
             get { return __PIP_DIP; }
             set

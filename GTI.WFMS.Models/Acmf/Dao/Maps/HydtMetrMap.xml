@@ -9,9 +9,10 @@
       WITH C AS (
       SELECT COUNT(1) AS ROWCNT
       FROM INFOFMS.WTL_META_PS A
-      WHERE 1=1 
-       
-        <!-- 조건1. 관리번호 -->
+      LEFT JOIN INFOUSER.CD_DTL_INFO C ON A.MET_MOF = C.DTL_CD AND C.MST_CD = '250004'
+      WHERE 1=1
+
+      <!-- 조건1. 관리번호 -->
         <isNotEmpty prepend="AND" property="FTR_IDN">
           A.FTR_IDN like #FTR_IDN# || '%'
         </isNotEmpty>
@@ -43,56 +44,55 @@
 
         <!-- 조건7. 수용가번호 -->
         <isNotEmpty prepend="AND" property="HOM_NUM">
-          A.HOM_NUM LIKE '%' ||#HOM_NUM#|| '%'
+          upper(A.HOM_NUM ) LIKE '%' || upper(#HOM_NUM#) || '%'
         </isNotEmpty>
 
         <!-- 조건8. 수용가성명 -->
         <isNotEmpty prepend="AND" property="HOM_NAM">
-          A.HOM_NAM LIKE '%' || #HOM_NAM# || '%'
+          upper(A.HOM_NAM ) LIKE '%' || upper(#HOM_NAM# ) || '%'
         </isNotEmpty>
 
         <!-- 조건9. 수용가행정읍면동 -->
-        <isNotEmpty prepend="AND" property="HOM_CDE">
-          A.HOM_CDE = #HOM_CDE#
+        <isNotEmpty prepend="AND" property="HOM_HJD">
+          A.HOM_HJD = #HOM_HJD#
         </isNotEmpty>
 
         <!-- 조건10. 형식 -->
-        <isNotEmpty prepend="AND" property="MOF_CDE">
-          A.MOF_CDE = #MOF_CDE#
+        <isNotEmpty prepend="AND" property="MET_MOF">
+          A.MET_MOF = #MET_MOF#
         </isNotEmpty>
       )
 
       SELECT C.ROWCNT, X.*  FROM (
 
-       SELECT ROW_NUMBER() OVER( ORDER BY A.FTR_IDN DESC ) AS RN
-            , A.FTR_CDE
-            , (SELECT FTR_NAM FROM INFOFMS.V_FTR_CDE WHERE FTR_CDE = A.FTR_CDE) AS FTR_NAM
-            , A.FTR_IDN
-            , A.HJD_CDE
-            , (SELECT HJD_NAM FROM INFOFMS.CMT_ADAR_MA WHERE HJD_CDE = A.HJD_CDE) AS HJD_NAM
-            , A.SHT_NUM
-            , A.IST_YMD
-            , A.HOM_NUM
-            , A.HOM_NAM
-            , A.HOM_CDE
-            , (SELECT HJD_NAM FROM INFOFMS.CMT_ADAR_MA WHERE HJD_CDE = A.HOM_CDE) AS HOM_CDE_NAM
-            , A.HOM_ADR
-            , A.HOM_CNT
-            , A.SBI_CDE
-            , (SELECT NM FROM INFOUSER.CD_DTL_INFO WHERE MST_CD = '250020' AND DTL_CD = A.SBI_CDE ) AS SBI_NAM
-            , A.MET_DIP
-            , A.MOF_CDE
-            , A.PRD_NUM
-            , A.PIP_CDE
-            , A.PIP_IDN
-            , A.CNT_NUM
-            , A.SYS_CHK
-            , A.MET_NUM
-            , A.MET_MOF
-            , A.HOM_HJD
-            , CASE WHEN ST_ISVALID(A.GEOM) = 1 THEN 'Y' ELSE 'N' END AS IS_GEOMETRY
-         FROM INFOFMS.WTL_META_PS A
-        WHERE 1=1
+      SELECT ROW_NUMBER() OVER( ORDER BY A.FTR_IDN DESC ) AS RN
+      , A.FTR_CDE
+      , (SELECT FTR_NAM FROM INFOFMS.V_FTR_CDE WHERE FTR_CDE = A.FTR_CDE) AS FTR_NAM
+      , A.FTR_IDN
+      , A.HJD_CDE
+      , (SELECT HJD_NAM FROM INFOFMS.CMT_ADAR_MA WHERE HJD_CDE = A.HJD_CDE) AS HJD_NAM
+      , A.SHT_NUM
+      , A.IST_YMD
+      , A.HOM_NUM
+      , A.HOM_NAM
+      , A.HOM_HJD
+      , (SELECT HJD_NAM FROM INFOFMS.CMT_ADAR_MA WHERE HJD_CDE = A.HOM_HJD) AS HOM_HJD_NAM
+      , A.HOM_ADR
+      , A.HOM_CNT
+      , A.SBI_CDE
+      , (SELECT NM FROM INFOUSER.CD_DTL_INFO WHERE MST_CD = '250020' AND DTL_CD = A.SBI_CDE ) AS SBI_NAM
+      , A.MET_DIP
+      , A.MET_MOF, C.NM AS MOF_NAM
+      , A.PRD_NUM
+      , A.PIP_CDE
+      , A.PIP_IDN
+      , A.CNT_NUM
+      , A.SYS_CHK
+      , A.MET_NUM
+      , CASE WHEN ST_ISVALID(A.GEOM) = 1 THEN 'Y' ELSE 'N' END AS IS_GEOMETRY
+      FROM INFOFMS.WTL_META_PS A
+      LEFT JOIN INFOUSER.CD_DTL_INFO C ON A.MET_MOF = C.DTL_CD AND C.MST_CD = '250004'
+      WHERE 1=1
       <!-- 조건1. 관리번호 -->
         <isNotEmpty prepend="AND" property="FTR_IDN">
           A.FTR_IDN like #FTR_IDN# || '%'
@@ -125,22 +125,22 @@
 
         <!-- 조건7. 수용가번호 -->
         <isNotEmpty prepend="AND" property="HOM_NUM">
-          A.HOM_NUM LIKE '%' ||#HOM_NUM#|| '%'
+          upper(A.HOM_NUM ) LIKE '%' || upper(#HOM_NUM#) || '%'
         </isNotEmpty>
 
         <!-- 조건8. 수용가성명 -->
         <isNotEmpty prepend="AND" property="HOM_NAM">
-          A.HOM_NAM LIKE '%' || #HOM_NAM# || '%'
+          upper(A.HOM_NAM ) LIKE '%' || upper(#HOM_NAM#)  || '%'
         </isNotEmpty>
 
         <!-- 조건9. 수용가행정읍면동 -->
-        <isNotEmpty prepend="AND" property="HOM_CDE">
-          A.HOM_CDE = #HOM_CDE#
+        <isNotEmpty prepend="AND" property="HOM_HJD">
+          A.HOM_HJD = #HOM_HJD#
         </isNotEmpty>
 
         <!-- 조건10. 형식 -->
-        <isNotEmpty prepend="AND" property="MOF_CDE">
-          A.MOF_CDE = #MOF_CDE#
+        <isNotEmpty prepend="AND" property="MET_MOF">
+          A.MET_MOF = #MET_MOF#
         </isNotEmpty>
 
         ORDER BY FTR_IDN DESC
@@ -166,22 +166,21 @@
                       , a.IST_YMD
                       , A.HOM_NUM
                       , A.HOM_NAM
-                      , A.HOM_CDE
-                      , (SELECT HJD_NAM FROM INFOFMS.CMT_ADAR_MA WHERE HJD_CDE = A.HOM_CDE) AS HOM_CDE_NAM
+                      , A.HOM_HJD
+                      , (SELECT HJD_NAM FROM INFOFMS.CMT_ADAR_MA WHERE HJD_CDE = A.HOM_HJD) AS HOM_HJD_NAM
                       , A.HOM_ADR
                       , A.HOM_CNT
                       , A.SBI_CDE
                       , (SELECT NM FROM INFOUSER.CD_DTL_INFO WHERE MST_CD = '250020' AND DTL_CD = A.SBI_CDE ) AS SBI_NAM
                       , A.MET_DIP
-                      , A.MOF_CDE
+                      , A.MET_MOF
+                      , (SELECT NM FROM INFOUSER.CD_DTL_INFO WHERE MST_CD = '250004' AND DTL_CD = A.MET_MOF ) AS MOF_NAM
                       , A.PRD_NUM
                       , A.PIP_CDE
                       , A.PIP_IDN
                       , A.CNT_NUM
                       , A.SYS_CHK
                       , A.MET_NUM
-                      , A.MET_MOF
-                      , A.HOM_HJD
                       , decode(A.SYS_CHK,'1','유','무') as SYS_CHK_NAM
                    FROM INFOFMS.WTL_META_PS A 
 			            WHERE 1=1
@@ -201,20 +200,18 @@
       , IST_YMD
       , HOM_NUM
       , HOM_NAM
-      , HOM_CDE
+      , HOM_HJD
       , HOM_ADR
       , HOM_CNT
       , SBI_CDE
       , MET_DIP
-      , MOF_CDE
+      , MET_MOF
       , PRD_NUM
       , PIP_CDE
       , PIP_IDN
       , CNT_NUM
       , SYS_CHK
       , MET_NUM
-      , MET_MOF
-      , HOM_HJD
       )
       VALUES
       (   #FTR_CDE#
@@ -224,20 +221,18 @@
       , #IST_YMD#
       , #HOM_NUM#
       , #HOM_NAM#
-      , #HOM_CDE#
+      , #HOM_HJD#
       , #HOM_ADR#
       , #HOM_CNT#
       , #SBI_CDE#
       , #MET_DIP#
-      , #MOF_CDE#
+      , #MET_MOF#
       , #PRD_NUM#
       , #PIP_CDE#
       , #PIP_IDN#
       , #CNT_NUM#
       , #SYS_CHK#
       , #MET_NUM#
-      , #MET_MOF#
-      , #HOM_HJD#
       )
     </update>
 
@@ -250,20 +245,18 @@
       , IST_YMD = #IST_YMD#
       , HOM_NUM = #HOM_NUM#
       , HOM_NAM = #HOM_NAM#
-      , HOM_CDE = #HOM_CDE#
+      , HOM_HJD = #HOM_HJD#
       , HOM_ADR = #HOM_ADR#
       , HOM_CNT = #HOM_CNT#
       , SBI_CDE = #SBI_CDE#
       , MET_DIP = #MET_DIP#
-      , MOF_CDE = #MOF_CDE#
+      , MET_MOF = #MET_MOF#
       , PRD_NUM = #PRD_NUM#
       , PIP_CDE = #PIP_CDE#
       , PIP_IDN = #PIP_IDN#
       , CNT_NUM = #CNT_NUM#
       , SYS_CHK = #SYS_CHK#
       , MET_NUM = #MET_NUM#
-      , MET_MOF = #MET_MOF#
-      , HOM_HJD = #HOM_HJD#
       WHERE FTR_CDE = #FTR_CDE#
       AND	FTR_IDN = #FTR_IDN#
     </update>
@@ -279,20 +272,18 @@
       , IST_YMD = #IST_YMD#
       , HOM_NUM = #HOM_NUM#
       , HOM_NAM = #HOM_NAM#
-      , HOM_CDE = #HOM_CDE#
+      , HOM_HJD = #HOM_HJD#
       , HOM_ADR = #HOM_ADR#
       , HOM_CNT = #HOM_CNT#
       , SBI_CDE = #SBI_CDE#
       , MET_DIP = #MET_DIP#
-      , MOF_CDE = #MOF_CDE#
+      , MET_MOF = #MET_MOF#
       , PRD_NUM = #PRD_NUM#
       , PIP_CDE = #PIP_CDE#
       , PIP_IDN = #PIP_IDN#
       , CNT_NUM = #CNT_NUM#
       , SYS_CHK = #SYS_CHK#
       , MET_NUM = #MET_NUM#
-      , MET_MOF = #MET_MOF#
-      , HOM_HJD = #HOM_HJD#
 
 
       WHEN NOT MATCHED THEN
@@ -304,20 +295,18 @@
       , IST_YMD
       , HOM_NUM
       , HOM_NAM
-      , HOM_CDE
+      , HOM_HJD
       , HOM_ADR
       , HOM_CNT
       , SBI_CDE
       , MET_DIP
-      , MOF_CDE
+      , MET_MOF
       , PRD_NUM
       , PIP_CDE
       , PIP_IDN
       , CNT_NUM
       , SYS_CHK
       , MET_NUM
-      , MET_MOF
-      , HOM_HJD
       )
       VALUES
       (   #FTR_CDE#
@@ -327,20 +316,18 @@
       , #IST_YMD#
       , #HOM_NUM#
       , #HOM_NAM#
-      , #HOM_CDE#
+      , #HOM_HJD#
       , #HOM_ADR#
       , #HOM_CNT#
       , #SBI_CDE#
       , #MET_DIP#
-      , #MOF_CDE#
+      , #MET_MOF#
       , #PRD_NUM#
       , #PIP_CDE#
       , #PIP_IDN#
       , #CNT_NUM#
       , #SYS_CHK#
       , #MET_NUM#
-      , #MET_MOF#
-      , #HOM_HJD#
       )
     </update>
 
@@ -370,17 +357,122 @@
       , A.IST_YMD
       , A.HOM_NUM
       , A.HOM_NAM
-      , A.HOM_CDE, H2.HJD_NAM AS HOM_CDE_NAM
+      , A.HOM_HJD, H2.HJD_NAM AS HOM_HJD_NAM
       , A.PIP_CDE
       , A.PIP_IDN
       FROM WTL_META_PS A
       LEFT JOIN INFOFMS.CMT_ADAR_MA H ON  H.HJD_CDE = A.HJD_CDE
-      LEFT JOIN INFOFMS.CMT_ADAR_MA H2 ON  H2.HJD_CDE = A.HOM_CDE
+      LEFT JOIN INFOFMS.CMT_ADAR_MA H2 ON  H2.HJD_CDE = A.HOM_HJD
       WHERE      1=1
-      AND A.PIP_CDE=#FTR_CDE#
-      AND A.PIP_IDN=#FTR_IDN#
+      AND A.PIP_CDE = #FTR_CDE#
+      AND A.PIP_IDN = #FTR_IDN#
     </select>
+
     
+    
+
+    <!-- 계량기 교체이력 목록 -->
+    <select id="selectWttMetaHtList" parameterClass="Hashtable" resultClass="GTI.WFMS.Models.Acmf.Model.WttMetaHt">
+      SELECT
+      A.CHG_NUM
+      , A.FTR_CDE
+      ,(SELECT FTR_NAM FROM V_FTR_CDE F WHERE F.FTR_CDE = A.FTR_CDE ) AS FTR_NAM
+      , A.FTR_IDN
+      , A.META_SEQ
+      , A.CHG_YMD
+      , A.GCW_CDE, (SELECT NM FROM INFOUSER.CD_DTL_INFO WHERE MST_CD = '250041' AND DTL_CD = A.GCW_CDE) AS GCW_NAM
+      , A.OME_NUM
+      , A.OME_DIP
+      , A.OME_CNT
+      , A.OME_NAM
+      , A.CHG_NAM
+      , A.OME_MOF
+      , (SELECT NM FROM INFOUSER.CD_DTL_INFO WHERE MST_CD = '250004' AND DTL_CD = A.OME_MOF) AS OME_MOF_NAM
+
+      FROM WTT_META_HT A
+      WHERE 1=1
+      AND A.FTR_CDE=#FTR_CDE#
+      AND A.FTR_IDN=#FTR_IDN#
+      <isNotEmpty property="META_SEQ">
+        AND A.META_SEQ = #META_SEQ#
+      </isNotEmpty>
+      ORDER BY CHG_NUM DESC
+
+    </select>
+
+    <!-- 계량기 교체이력 채번 -->
+    <select id="selectMETA_SEQ" parameterClass="Hashtable" resultClass="GTI.WFMS.Models.Acmf.Model.WttMetaHt">
+      SELECT
+      nvl(max(META_SEQ),0)+1 as META_SEQ
+      FROM WTT_META_HT
+    </select>
+
+
+    <!--계량기교체이력 삭제-->
+    <update id="DeleteWttMetaHt" parameterClass="GTI.WFMS.Models.Acmf.Model.WttMetaHt">
+      DELETE INFOFMS.WTT_META_HT
+      WHERE FTR_CDE = #FTR_CDE#
+      AND FTR_IDN = #FTR_IDN#
+      <isNotEmpty property="META_SEQ">
+        AND META_SEQ = #META_SEQ#
+      </isNotEmpty>
+    </update>
+
+
+    <!-- 계량기 교체이력 등록 -->
+    <update id="SaveWttMetaHt" parameterClass="GTI.WFMS.Models.Acmf.Model.WttMetaHt">
+      MERGE INTO WTT_META_HT
+      USING DUAL ON (FTR_CDE = #FTR_CDE# AND	FTR_IDN = #FTR_IDN# AND META_SEQ = #META_SEQ#)
+
+      WHEN MATCHED THEN
+      UPDATE
+      SET
+      CHG_YMD =#CHG_YMD#
+      , GCW_CDE =#GCW_CDE#
+      , OME_NUM =#OME_NUM#
+      , OME_DIP =#OME_DIP#
+      , OME_CNT =#OME_CNT#
+      , OME_NAM =#OME_NAM#
+      , CHG_NAM =#CHG_NAM#
+      , OME_MOF =#OME_MOF#
+      , ATT_USR =#ID#
+      , ATT_TIM =TO_CHAR(SYSDATE,'yyyyMMddhh24miss')
+
+      WHEN NOT MATCHED THEN
+      INSERT
+      (
+      CHG_NUM
+      , FTR_CDE
+      , FTR_IDN
+      , META_SEQ
+      , CHG_YMD
+      , GCW_CDE
+      , OME_NUM
+      , OME_DIP
+      , OME_CNT
+      , OME_NAM
+      , CHG_NAM
+      , OME_MOF
+      , ATT_USR
+      , ATT_TIM
+      )
+      VALUES (
+      #CHG_NUM#
+      , #FTR_CDE#
+      , #FTR_IDN#
+      , #META_SEQ#
+      , #CHG_YMD#
+      , #GCW_CDE#
+      , #OME_NUM#
+      , #OME_DIP#
+      , #OME_CNT#
+      , #OME_NAM#
+      , #CHG_NAM#
+      , #OME_MOF#
+      , #ID#
+      , TO_CHAR(SYSDATE,'yyyyMMddhh24miss')
+      )
+    </update>
   </statements>
   
 </sqlMap>

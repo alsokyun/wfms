@@ -192,7 +192,7 @@
         </StackPanel>
 
         <StackPanel Grid.Row="0" Grid.Column="2" Orientation="Horizontal" HorizontalAlignment="Right" Margin="0 0 10 0">
-            <Button x:Name="btnAdd" Style="{DynamicResource ResourceKey=AddButton}" Click="BtnAdd_Click" />
+            <Button x:Name="btnAdd" Style="{DynamicResource ResourceKey=AddButton}" Click="BtnAdd_Click" Visibility="Collapsed"  />
             <Button x:Name="btnExcel" Style="{DynamicResource ResourceKey=ExcelDownButton}" Command="{Binding ExcelCmd}" />
         </StackPanel>
 

@@ -1,28 +1,9 @@
-﻿using DevExpress.DataAccess;
-using GTI.WFMS.Models.Cmm.Model;
-using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using GTI.WFMS.Models.Cmm.Model;
 
 namespace GTI.WFMS.Models.Pipe.Model
 {
-    public class FireFacDtl : CmmDtl, INotifyPropertyChanged
+    public class FireFacDtl : CmmDtl
     {
-        /// <summary>                                                                
-        /// 인터페이스 구현부분                                                       
-        /// </summary>                                                                
-        public event PropertyChangedEventHandler PropertyChanged;
-        protected void OnPropertyChanged(string propertyName)
-        {
-            if (PropertyChanged != null)
-            {
-                PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
-            }
-        }
-
 
         /// <summary>                                                                 
         /// 프로퍼티 부분                                                             
@@ -147,8 +128,8 @@ namespace GTI.WFMS.Models.Pipe.Model
                 OnPropertyChanged("MOF_NAM");
             }
         }
-        private decimal __FIR_DIP;
-        public decimal FIR_DIP
+        private decimal ?  __FIR_DIP;
+        public decimal ? FIR_DIP
         {
             get { return __FIR_DIP; }
             set
@@ -157,8 +138,8 @@ namespace GTI.WFMS.Models.Pipe.Model
                 OnPropertyChanged("FIR_DIP");
             }
         }
-        private decimal __PIP_DIP;
-        public decimal PIP_DIP
+        private decimal ?  __PIP_DIP;
+        public decimal ? PIP_DIP
         {
             get { return __PIP_DIP; }
             set
@@ -167,8 +148,8 @@ namespace GTI.WFMS.Models.Pipe.Model
                 OnPropertyChanged("PIP_DIP");
             }
         }
-        private decimal __SUP_HIT;
-        public decimal SUP_HIT
+        private decimal ?  __SUP_HIT;
+        public decimal ? SUP_HIT
         {
             get { return __SUP_HIT; }
             set
@@ -207,8 +188,8 @@ namespace GTI.WFMS.Models.Pipe.Model
                 OnPropertyChanged("SYS_CHK_NAM");
             }
         }
-        private decimal __ANG_DIR;
-        public decimal ANG_DIR
+        private decimal ?  __ANG_DIR;
+        public decimal ? ANG_DIR
         {
             get { return __ANG_DIR; }
             set

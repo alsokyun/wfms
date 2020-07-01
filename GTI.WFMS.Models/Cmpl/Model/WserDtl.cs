@@ -3,20 +3,9 @@ using System.ComponentModel;
 
 namespace GTI.WFMS.Models.Cmpl.Model
 {
-    public class WserDtl : CmmDtl, INotifyPropertyChanged
+    public class WserDtl : CmmDtl
     {
-        /// <summary>
-        /// 인터페이스 구현부분
-        /// </summary>
-        public event PropertyChangedEventHandler PropertyChanged;
-        protected void OnPropertyChanged(string propertyName)
-        {
-            if (PropertyChanged != null)
-            {
-                PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
-            }
-        }
-
+       
 
 
         /// <summary>
@@ -32,8 +21,8 @@ namespace GTI.WFMS.Models.Cmpl.Model
                 OnPropertyChanged("RCV_NUM");
             }
         }
-        private decimal __WSER_SEQ;
-        public decimal WSER_SEQ
+        private decimal ?  __WSER_SEQ;
+        public decimal ? WSER_SEQ
         {
             get { return __WSER_SEQ; }
             set
@@ -145,7 +134,7 @@ namespace GTI.WFMS.Models.Cmpl.Model
         private string __PRO_CDE;
         public string PRO_CDE
         {
-            get { return __PRO_CDE ?? ""; }
+            get { return __PRO_CDE ??  ""; }
             set
             {
                 this.__PRO_CDE = value;

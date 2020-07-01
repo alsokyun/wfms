@@ -1,26 +1,16 @@
 ﻿using DevExpress.Mvvm;
 using DevExpress.Xpf.Editors;
-using DevExpress.Xpf.RichEdit;
-using GTI.WFMS.Models.Cmm.Model;
 using GTI.WFMS.Models.Common;
-using GTI.WFMS.Modules.Cnst.Model;
-using GTI.WFMS.Modules.Cnst.View;
 using GTI.WFMS.Modules.Mntc.Model;
 using GTI.WFMS.Modules.Mntc.View;
 using GTIFramework.Common.Log;
 using GTIFramework.Common.MessageBox;
-using GTIFramework.Core;
 using System;
 using System.Collections;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Linq;
 using System.Reflection;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Documents;
 
 namespace GTI.WFMS.Modules.Mntc.ViewModel
 {
@@ -130,32 +120,31 @@ namespace GTI.WFMS.Modules.Mntc.ViewModel
                     var colValue = dbprop.GetValue(result, null);
                     if (colName.Equals(propName))
                     {
-                        prop.SetValue(this, Convert.ChangeType(colValue, prop.PropertyType));
+                        try { prop.SetValue(this, colValue); } catch (Exception) { }
                     }
                 }
                 //Console.WriteLine(propName + " - " + prop.GetValue(this,null));
             }
 
 
-            // CLOB 데이터는 OleDbConnection으로 따로 조회
+            // 다큐먼트는 따로 조회
+            Paragraph p = new Paragraph();
             try
             {
-                string sql = "";
-                sql += " SELECT QUESTION, REPL FROM FAQ  WHERE SEQ = :SEQ ;";
-
-                param = new Hashtable();
-                param.Add("sql", sql);
-                param.Add("SEQ", this.SEQ);
-
-                DataTable dt = DBUtil.Select(param);
-
-                this.QUESTION = dt.Rows[0]["QUESTION"].ToString();
-                this.REPL = dt.Rows[0]["REPL"].ToString();
+                p.Inlines.Add(this.QUESTION ?? "");
+                faqDocView.richQUESTION.Document.Blocks.Clear();
+                faqDocView.richQUESTION.Document.Blocks.Add(p);
             }
-            catch (Exception ex)
+            catch (Exception) { }
+
+            p = new Paragraph();
+            try
             {
-                Console.WriteLine(ex.Message);
+                p.Inlines.Add(this.REPL ?? "");
+                faqDocView.richREPL.Document.Blocks.Clear();
+                faqDocView.richREPL.Document.Blocks.Add(p);
             }
+            catch (Exception) { }
 
         }
 
@@ -190,10 +179,10 @@ namespace GTI.WFMS.Modules.Mntc.ViewModel
             try
             {
                 // cbFTR_CDE 시설물
-                BizUtil.SetCombo(cbFTR_CDE, "Select_FTR_LIST", "FTR_CDE", "FTR_NAM", "[선택하세요]");
+                BizUtil.SetCombo(cbFTR_CDE, "Select_FTR_LIST", "FTR_CDE", "FTR_NAM", "선택");
                 // cbFAQ_CAT_CDE 구분
-                BizUtil.SetCmbCode(cbFAQ_CAT_CDE, "250109", "[선택하세요]");
-                BizUtil.SetCmbCode(cbFAQ_CUZ_CDE, "250110", "[선택하세요]");
+                BizUtil.SetCmbCode(cbFAQ_CAT_CDE, "250109", "선택");
+                BizUtil.SetCmbCode(cbFAQ_CUZ_CDE, "250110", "선택");
             }
             catch (Exception ex)
             {

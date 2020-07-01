@@ -17,16 +17,9 @@ namespace GTI.WFMS.Modules.Link.View
         {
             InitializeComponent();
 
-            //초기조회
-            DataTable dt = new DataTable();
-
-            Hashtable param = new Hashtable();
-            param.Add("sqlId", "selectHydtMetrSubList");
-            param.Add("FTR_CDE", FTR_CDE);
-            param.Add("FTR_IDN", FTR_IDN);
-
-            dt = BizUtil.SelectList(param);
-            grid.ItemsSource = dt;
+            //뷰모델로 키전달
+            txtFTR_CDE.Text = FTR_CDE;
+            txtFTR_IDN.Text = FTR_IDN.ToString();
 
         }
     }

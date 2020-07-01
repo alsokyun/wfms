@@ -10,6 +10,8 @@ namespace GTI.WFMS.Models.Cmm.Dao
 {
     public class CommonDao
     {
+        DBManager dBManager = new DBManager();
+
         /// <summary>
         /// 데이터 조회
         /// </summary>
@@ -18,7 +20,7 @@ namespace GTI.WFMS.Models.Cmm.Dao
         public DataTable SelectLIST(Hashtable conditions)
         {
             string sqlId = conditions["sqlId"].ToString();
-            return DBManager.QueryForTable(sqlId, conditions);
+            return dBManager.QueryForTable(sqlId, conditions);
         }
 
         /// <summary>
@@ -33,35 +35,35 @@ namespace GTI.WFMS.Models.Cmm.Dao
             try
             {
                 string sqlId = conditions["sqlId"].ToString();
-                ret = DBManager.QueryForTable(sqlId, conditions);
+                ret = dBManager.QueryForTable(sqlId, conditions);
                 result.Add("dt", ret);
             }
             catch (Exception e) { Console.WriteLine(e.Message);}
             try
             {
                 string sqlId = conditions["sqlId2"].ToString();
-                ret = DBManager.QueryForTable(sqlId, conditions);
+                ret = dBManager.QueryForTable(sqlId, conditions);
                 result.Add("dt2", ret);
             }
             catch (Exception e) { Console.WriteLine(e.Message); }
             try
             {
                 string sqlId = conditions["sqlId3"].ToString();
-                ret = DBManager.QueryForTable(sqlId, conditions);
+                ret = dBManager.QueryForTable(sqlId, conditions);
                 result.Add("dt3", ret);
             }
             catch (Exception e) { Console.WriteLine(e.Message); }
             try
             {
                 string sqlId = conditions["sqlId4"].ToString();
-                ret = DBManager.QueryForTable(sqlId, conditions);
+                ret = dBManager.QueryForTable(sqlId, conditions);
                 result.Add("dt4", ret);
             }
             catch (Exception e) { Console.WriteLine(e.Message);}
             try
             {
                 string sqlId = conditions["sqlId5"].ToString();
-                ret = DBManager.QueryForTable(sqlId, conditions);
+                ret = dBManager.QueryForTable(sqlId, conditions);
                 result.Add("dt5", ret);
             }
             catch (Exception e) { Console.WriteLine(e.Message);}
@@ -77,7 +79,7 @@ namespace GTI.WFMS.Models.Cmm.Dao
         public IList<T> SelectLISTObj<T>(Hashtable conditions)
         {
             string sqlId = conditions["sqlId"].ToString();
-            return DBManager.QueryForListObj<T>(sqlId, conditions);
+            return dBManager.QueryForListObj<T>(sqlId, conditions);
         }
 
         /// <summary>
@@ -88,7 +90,7 @@ namespace GTI.WFMS.Models.Cmm.Dao
         public object SelectObject(Hashtable conditions)
         {
             string sqlId = conditions["sqlId"].ToString();
-            return DBManager.QueryForObject(sqlId, conditions);
+            return dBManager.QueryForObject(sqlId, conditions);
         }
 
         /// <summary>
@@ -98,7 +100,7 @@ namespace GTI.WFMS.Models.Cmm.Dao
         public void Update(Hashtable conditions)
         {
             string sqlId = conditions["sqlId"].ToString();
-            DBManager.QueryForUpdate(sqlId, conditions);
+            dBManager.QueryForUpdate(sqlId, conditions);
         }
         /// <summary>
         /// 데이터 업데이트 단건 - 리턴
@@ -107,7 +109,7 @@ namespace GTI.WFMS.Models.Cmm.Dao
         public object InsertR(Hashtable conditions)
         {
             string sqlId = conditions["sqlId"].ToString();
-            return DBManager.QueryForInsert(sqlId, conditions);
+            return dBManager.QueryForInsert(sqlId, conditions);
         }
 
         /// <summary>
@@ -116,7 +118,7 @@ namespace GTI.WFMS.Models.Cmm.Dao
         /// <param name="obj"></param>
         internal void Update2(object obj, string sqlId)
         {
-            DBManager.QueryForUpdate(sqlId, obj);
+            dBManager.QueryForUpdate(sqlId, obj);
         }
 
         /// <summary>
@@ -125,7 +127,7 @@ namespace GTI.WFMS.Models.Cmm.Dao
         /// <param name="obj"></param>
         internal void Insert2(object obj, string sqlId)
         {
-            DBManager.QueryForInsert(sqlId, obj);
+            dBManager.QueryForInsert(sqlId, obj);
         }
     }
 }

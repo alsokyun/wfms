@@ -83,8 +83,8 @@
             <Grid.RowDefinitions>
                 <RowDefinition Height="40" />
                 <RowDefinition Height="40" />
-                <RowDefinition Height="200" />
-                <RowDefinition Height="200" />
+                <RowDefinition Height="220" />
+                <RowDefinition Height="220" />
             </Grid.RowDefinitions>
 
 
@@ -109,37 +109,32 @@
 
 
 
-            <Label Grid.Row="0" Grid.Column="0" Content="FAQ구분" Style="{DynamicResource ResourceKey=GridLabelReq}"/>
+            <Label Grid.Row="0" Grid.Column="0" Content="구분" Style="{DynamicResource ResourceKey=GridLabelReq}"/>
             <dxe:ComboBoxEdit Grid.Row="0" Grid.Column="1" Style="{DynamicResource ResourceKey=GridComboBox}" Tag="FAQ구분"
-                              x:Name="cbFAQ_CAT_CDE" EditValue="{Binding FAQ_CAT_CDE,Mode=TwoWay}" />
+                              x:Name="cbFAQ_CAT_CDE" EditValue="{Binding FAQ_CAT_CDE}" />
             <dxe:TextEdit Grid.Row="0" Grid.Column="1" Visibility="Collapsed" x:Name="txtSEQ" EditValue="{Binding SEQ, UpdateSourceTrigger=PropertyChanged}"/>
 
             <Label Grid.Row="0" Grid.Column="2" Content="원인구분" Style="{DynamicResource ResourceKey=GridLabelReq}"/>
-            <dxe:ComboBoxEdit Grid.Row="0" Grid.Column="3" Style="{DynamicResource ResourceKey=GridComboBox}" Tag="제목"
-                              x:Name="cbFAQ_CUZ_CDE" EditValue="{Binding FAQ_CUZ_CDE,Mode=TwoWay}" />
+            <dxe:ComboBoxEdit Grid.Row="0" Grid.Column="3" Style="{DynamicResource ResourceKey=GridComboBox}" Tag="원인구분"
+                              x:Name="cbFAQ_CUZ_CDE" EditValue="{Binding FAQ_CUZ_CDE}" />
 
-            <Label Grid.Row="1" Grid.Column="0" Content="제목" Style="{DynamicResource ResourceKey=GridLabel}" />
-            <dxe:TextEdit Grid.Row="1" Grid.Column="1" Style="{DynamicResource ResourceKey=GridTextEdit}"  
+            <Label Grid.Row="1" Grid.Column="0" Content="제목" Style="{DynamicResource ResourceKey=GridLabelReq}" />
+            <dxe:TextEdit Grid.Row="1" Grid.Column="1" Style="{DynamicResource ResourceKey=GridTextEdit}"  Tag="제목"
                           x:Name="txtTTL" EditValue="{Binding TTL}"/>
 
             <Label Grid.Row="1" Grid.Column="2" Content="지형지물" Style="{DynamicResource ResourceKey=GridLabel}" />
             <dxe:ComboBoxEdit Grid.Row="1" Grid.Column="3" Style="{DynamicResource ResourceKey=GridComboBox}" 
-                              x:Name="cbFTR_CDE" EditValue="{Binding FTR_CDE,Mode=TwoWay}" />
+                              x:Name="cbFTR_CDE" EditValue="{Binding FTR_CDE}" />
 
             <Label Grid.Row="2" Grid.Column="0" Content="내용" Style="{DynamicResource ResourceKey=GridLabel}" />
-            <dxre:RichEditControl Grid.Row="2" Grid.Column="1" Grid.ColumnSpan="3" Height="Auto" Width="Auto" Margin="10  5 10 5" 
-                            ActiveViewType="Simple"
-                            x:Name="richQUESTION" 
-                            Content="{Binding QUESTION, Converter={StaticResource rtfToContentConverter}, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" 
-                                  />
+            <RichTextBox Grid.Row="2" Grid.Column="1" Grid.ColumnSpan="3" Style="{DynamicResource GridRichTextBox}" Margin="10 5 10 5"
+                         x:Name="richQUESTION" />
             
             <Label Grid.Row="3" Grid.Column="0" Content="답변" Style="{DynamicResource ResourceKey=GridLabel}" />
             <!--<TextBox x:Name="tbRtf" Text="{Binding QUESTION}" Grid.Row="3" Grid.Column="1" Grid.ColumnSpan="3" 
                         TextWrapping="Wrap" AcceptsReturn="True" AcceptsTab="True" />-->
-            <dxre:RichEditControl Grid.Row="3" Grid.Column="1" Grid.ColumnSpan="3" Height="Auto" Width="Auto" Margin="10  5 10 5" 
-                            ActiveViewType="Simple"
-                            x:Name="richREPL" Content="{Binding REPL, Converter={StaticResource rtfToContentConverter}, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" 
-                                  />
+            <RichTextBox Grid.Row="3" Grid.Column="1" Grid.ColumnSpan="3" Style="{DynamicResource GridRichTextBox}" Margin="10 5 10 5"
+                         x:Name="richREPL" />
 
 
         </Grid>

@@ -1,45 +1,11 @@
 ﻿using GTI.WFMS.Models.Cmm.Model;
-using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace GTI.WFMS.Modules.Cnst.Model
 {
-    public class WttChngDt : CmmDtl, INotifyPropertyChanged
+    public class WttChngDt : CmmDtl
     {
-        /// <summary>
-        /// 인터페이스 구현부분
-        /// </summary>
-        public event PropertyChangedEventHandler PropertyChanged;
-        protected void OnPropertyChanged(string propertyName)
-        {
-            if (PropertyChanged != null)
-            {
-                PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
-            }
-            //컬럼변경시 체크박스 
-            if (propertyName != "CHK")
-            {
-                this.CHK = "Y";
-            }
-        }
-
-        /// <summary>
-        /// 프로퍼티 부분
-        /// </summary>
-        private string __CHK;
-        public string CHK
-        {
-            get { return __CHK; }
-            set
-            {
-                this.__CHK = value;
-                OnPropertyChanged("CHK");
-            }
-        }
+       
+  
         private int __RNO;
         public int RNO
         {
@@ -50,8 +16,8 @@ namespace GTI.WFMS.Modules.Cnst.Model
                 OnPropertyChanged("RNO");
             }
         }
-        private decimal __CHNG_SEQ;
-        public decimal CHNG_SEQ
+        private decimal? __CHNG_SEQ;
+        public decimal? CHNG_SEQ
         {
             get { return __CHNG_SEQ; }
             set
@@ -100,8 +66,8 @@ namespace GTI.WFMS.Modules.Cnst.Model
                 OnPropertyChanged("CHG_YMD_FMT");
             }
         }
-        private int __INC_AMT;
-        public int INC_AMT
+        private int? __INC_AMT;
+        public int? INC_AMT
         {
             get { return __INC_AMT; }
             set
@@ -110,8 +76,8 @@ namespace GTI.WFMS.Modules.Cnst.Model
                 OnPropertyChanged("INC_AMT");
             }
         }
-        private int __IGV_AMT;
-        public int IGV_AMT
+        private int? __IGV_AMT;
+        public int? IGV_AMT
         {
             get { return __IGV_AMT; }
             set
@@ -120,8 +86,8 @@ namespace GTI.WFMS.Modules.Cnst.Model
                 OnPropertyChanged("IGV_AMT");
             }
         }
-        private int __CHG_AMT;
-        public int CHG_AMT
+        private int? __CHG_AMT;
+        public int? CHG_AMT
         {
             get { return __CHG_AMT; }
             set

@@ -23,7 +23,7 @@ namespace GTI.WFMS.GIS.Pop.View
             InitializeComponent();
 
             // 테마일괄적용...
-            //ThemeApply.Themeapply(this);
+            ThemeApply.Themeapply(this);
 
             
 

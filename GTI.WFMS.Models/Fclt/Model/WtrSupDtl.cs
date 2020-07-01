@@ -1,28 +1,10 @@
 ﻿using GTI.WFMS.Models.Cmm.Model;
-using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace GTI.WFMS.Models.Fclt.Model
 {
-    public class WtrSupDtl : CmmDtl, INotifyPropertyChanged
+    public class WtrSupDtl : CmmDtl
     {
-        /// <summary>                                                                
-        /// 인터페이스 구현부분                                                       
-        /// </summary>                                                                
-        public event PropertyChangedEventHandler PropertyChanged;
-        protected void OnPropertyChanged(string propertyName)
-        {
-            if (PropertyChanged != null)
-            {
-                PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
-            }
-        }
-
-
+       
 
         /// <summary>                                                                 
         /// 프로퍼티 부분                                                             
@@ -157,8 +139,8 @@ namespace GTI.WFMS.Models.Fclt.Model
                 OnPropertyChanged("SAG_NAM");
             }
         }
-        private decimal __SRV_VOL;
-        public decimal SRV_VOL
+        private decimal ?  __SRV_VOL;
+        public decimal ? SRV_VOL
         {
             get { return __SRV_VOL; }
             set
@@ -167,8 +149,8 @@ namespace GTI.WFMS.Models.Fclt.Model
                 OnPropertyChanged("SRV_VOL");
             }
         }
-        private decimal __HGH_WAL;
-        public decimal HGH_WAL
+        private decimal ?  __HGH_WAL;
+        public decimal ? HGH_WAL
         {
             get { return __HGH_WAL; }
             set
@@ -177,8 +159,8 @@ namespace GTI.WFMS.Models.Fclt.Model
                 OnPropertyChanged("HGH_WAL");
             }
         }
-        private decimal __LOW_WAL;
-        public decimal LOW_WAL
+        private decimal ?  __LOW_WAL;
+        public decimal ? LOW_WAL
         {
             get { return __LOW_WAL; }
             set
@@ -187,8 +169,8 @@ namespace GTI.WFMS.Models.Fclt.Model
                 OnPropertyChanged("LOW_WAL");
             }
         }
-        private decimal __ISR_VOL;
-        public decimal ISR_VOL
+        private decimal ?  __ISR_VOL;
+        public decimal ? ISR_VOL
         {
             get { return __ISR_VOL; }
             set
@@ -208,8 +190,8 @@ namespace GTI.WFMS.Models.Fclt.Model
             }
         }
 
-        private decimal __SUP_POP;
-        public decimal SUP_POP
+        private int ?  __SUP_POP;
+        public int ? SUP_POP
         {
             get { return __SUP_POP; }
             set
@@ -268,8 +250,8 @@ namespace GTI.WFMS.Models.Fclt.Model
                 OnPropertyChanged("SYS_CHK_NAM");
             }
         }
-        private decimal __SRV_ARA;
-        public decimal SRV_ARA
+        private decimal ?  __SRV_ARA;
+        public decimal ? SRV_ARA
         {
             get { return __SRV_ARA; }
             set

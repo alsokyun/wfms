@@ -82,7 +82,7 @@
                         <!-- 범례 설정 - 체크Box로 표현   
                             <dxc:Legend HorizontalPosition="Center" VerticalPosition="BottomOutside" MarkerMode="CheckBox" Orientation="Horizontal" Visibility="Visible" ItemVisibilityMode="Default" />
                             -->
-                        <dxc:Legend HorizontalPosition="Center" VerticalPosition="BottomOutside" MarkerMode="CheckBox" Orientation="Horizontal" Visibility="Visible" ItemVisibilityMode="Default" Margin="0,0,0,15"/>
+                        <dxc:Legend HorizontalPosition="Center" VerticalPosition="BottomOutside" MarkerMode="CheckBox" Orientation="Horizontal" Visibility="Visible" ItemVisibilityMode="Default" Margin="0,-20,10,-10"/>
                     </dxc:ChartControl.Legends>
                     <dxc:ChartControl.Diagram>
                         <!--
@@ -96,6 +96,15 @@
                             <dxc:XYDiagram2D.NavigationOptions>
                                 <dxc:NavigationOptions/>
                             </dxc:XYDiagram2D.NavigationOptions>
+
+                            <dxc:XYDiagram2D.AxisY>
+                                <dxc:AxisY2D Interlaced="False" >
+                                    <dxc:AxisY2D.Label >
+                                        <dxc:AxisLabel Angle="0" TextPattern="{}{V:N0}"/>
+                                    </dxc:AxisY2D.Label>
+                                </dxc:AxisY2D>
+                            </dxc:XYDiagram2D.AxisY>
+
                             <dxc:XYDiagram2D.AxisX>
                                 <!-- GridLinesVisible="True"->테두리라인 Range="SideMarginsEnabled=False" Visible="True" MinorCount="1"  TickmarksVisible="True" -->
                                 <dxc:AxisX2D x:Name="axTIT_X" GridLinesVisible="True" MinorCount="1" TickmarksVisible="True" TickmarksMinorLength="5" >

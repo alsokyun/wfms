@@ -189,6 +189,9 @@
     <Compile Include="View\Pop\PopupQuickMenuMng.xaml.cs">
       <DependentUpon>PopupQuickMenuMng.xaml</DependentUpon>
     </Compile>
+    <Compile Include="View\Pop\PopupUserInfoMng.xaml.cs">
+      <DependentUpon>PopupUserInfoMng.xaml</DependentUpon>
+    </Compile>
     <Page Include="Styles\Blue\Buttons.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -250,6 +253,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="View\Pop\PopupQuickMenuMng.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="View\Pop\PopupUserInfoMng.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
@@ -627,6 +634,12 @@
     <Resource Include="Resources\Blue\Images\MNUImage\MNU_L_07.png" />
     <Resource Include="Resources\Blue\Images\Image\btn_modi.png" />
     <Resource Include="Resources\Blue\Images\Image\btn_modi_on.png" />
+    <Resource Include="Resources\Navy\Images\MNUImage\MNU_L_09.png" />
+    <Resource Include="Resources\Blue\Images\MNUImage\MNU_L_09.png" />
+    <Resource Include="Resources\Navy\Images\Image\btn_reg.png" />
+    <Resource Include="Resources\Navy\Images\Image\btn_reg_on.png" />
+    <Resource Include="Resources\Blue\Images\Image\btn_reg.png" />
+    <Resource Include="Resources\Blue\Images\Image\btn_reg_on.png" />
     <Content Include="Styles\Fonts\malgun.ttf">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>

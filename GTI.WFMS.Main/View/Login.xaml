@@ -10,7 +10,7 @@
         >
 
 
-    <Grid Style="{DynamicResource LoginGridBackground}" Margin="3,0,-3,0"> 
+    <Grid Style="{DynamicResource LoginGridBackground}" > 
         <Grid.RowDefinitions>
             <RowDefinition Height="25"/>
             <RowDefinition Height="40"/>

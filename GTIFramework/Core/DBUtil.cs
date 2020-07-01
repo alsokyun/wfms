@@ -18,7 +18,7 @@ namespace GTIFramework.Core
         /// - param에 등록된 변수가 SQL 에 등록된 변수와 순서가 맞아야하는 이슈가 있어서, 현재는 하드코딩으로 변수매핑했음... 차후에 자동 매핑으로 변경해야함..
         /// </summary>
         /// <param name="param"></param>
-        public static void Update(Hashtable param)
+        public static void UpdateFAQ(Hashtable param)
         {
             string cmdtxt = "";
             try
@@ -81,6 +81,15 @@ namespace GTIFramework.Core
                 oda.UpdateCommand.Parameters["REPL"].Value = param["REPL"];
                 oda.UpdateCommand.Parameters.Add(new OleDbParameter("TTL", OleDbType.VarChar));
                 oda.UpdateCommand.Parameters["TTL"].Value = param["TTL"];
+                oda.UpdateCommand.Parameters.Add(new OleDbParameter("FAQ_CAT_CDE", OleDbType.VarChar));
+                oda.UpdateCommand.Parameters["FAQ_CAT_CDE"].Value = param["FAQ_CAT_CDE"];
+                oda.UpdateCommand.Parameters.Add(new OleDbParameter("FAQ_CUZ_CDE", OleDbType.VarChar));
+                oda.UpdateCommand.Parameters["FAQ_CUZ_CDE"].Value = param["FAQ_CUZ_CDE"];
+                oda.UpdateCommand.Parameters.Add(new OleDbParameter("FTR_CDE", OleDbType.VarChar));
+                oda.UpdateCommand.Parameters["FTR_CDE"].Value = param["FTR_CDE"];
+                oda.UpdateCommand.Parameters.Add(new OleDbParameter("EDT_ID", OleDbType.VarChar));
+                oda.UpdateCommand.Parameters["EDT_ID"].Value = param["EDT_ID"];
+
                 oda.UpdateCommand.Parameters.Add(new OleDbParameter("SEQ", OleDbType.Numeric));
                 oda.UpdateCommand.Parameters["SEQ"].Value = Convert.ToInt16(param["SEQ"]);
 

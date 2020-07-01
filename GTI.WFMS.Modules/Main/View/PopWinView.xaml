@@ -1,5 +1,4 @@
-﻿<Window xmlns:dxg="http://schemas.devexpress.com/winfx/2008/xaml/grid"  xmlns:dxe="http://schemas.devexpress.com/winfx/2008/xaml/editors"  
-        x:Class="GTI.WFMS.Modules.Main.View.PopWinView"
+﻿<Window x:Class="GTI.WFMS.Modules.Main.View.PopWinView"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
@@ -8,16 +7,9 @@
         Title="InfoFMS" 
         Height="631" Width="1101"
         
-        xmlns:dxmvvm="http://schemas.devexpress.com/winfx/2008/xaml/mvvm" 
-        xmlns:vd="clr-namespace:GTI.WFMS.Modules.Main.ViewModel"
-        xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
-
-        DataContext="{dxmvvm:ViewModelSource Type={x:Type vd:PopWinViewModel}}"
-        KeyDown="FilePhotoView_KeyDown"
-        
+        KeyDown="View_KeyDown"
         WindowStyle="None" WindowStartupLocation="CenterScreen"
         Style="{DynamicResource PopupWindow}"
-        x:Name="popWinView"
         >
 
 
@@ -37,31 +29,22 @@
 
         <!--헤더 백그라운드 border-->
 
-
-        <Grid Grid.Row="1" Grid.Column="1" Background="{DynamicResource PopupCOLOR1Brush }" >
-            <Grid.InputBindings>
-                <MouseBinding MouseAction="LeftClick" Command="{Binding WindowMoveCommand}" 
-                              CommandParameter="{Binding RelativeSource={RelativeSource AncestorType={x:Type Window}, Mode=FindAncestor}}"/>
-            </Grid.InputBindings>
+        <Grid Grid.Row="1" Grid.Column="1" Background="{DynamicResource TileCOLOR2Brush }" PreviewMouseLeftButtonDown="Grid_PreviewMouseLeftButtonDown" >
             <Label Grid.Row="1" Grid.Column="1" Content="화면타이틀" FontSize="18" FontWeight="Bold" Foreground="White" 
                HorizontalAlignment="Left" VerticalAlignment="Center" Padding="10 0 0 0"
                x:Name="lbTitle"
                />
         </Grid>
 
-        <Button x:Name="btnXSignClose" Grid.Row="1" Grid.Column="1" Style="{StaticResource XSignCloseButton}" 
-                Margin="0 15 15 0"/>
+        <Button Grid.Row="1" Grid.Column="1" Style="{DynamicResource XSignCloseButton}" Margin="0,10,10,0" 
+                x:Name="btnClose" Click="BtnClose_Click" />
+
 
         <Frame Grid.Row="2" Grid.Column="1" NavigationUIVisibility="Hidden" x:Name="srcFrm"></Frame>
     </Grid>
 
 
-    <!--뷰와 연결된 뷰모델로 Loaded 이벤트전파-->
-    <i:Interaction.Triggers>
-        <i:EventTrigger EventName="Loaded">
-            <i:InvokeCommandAction Command="{Binding LoadedCommand}" CommandParameter="{Binding ElementName=popWinView}" />
-        </i:EventTrigger>
-    </i:Interaction.Triggers>
+   
 
 
 </Window>

@@ -3,6 +3,7 @@ using DevExpress.Xpf.Editors;
 using DevExpress.XtraReports.UI;
 using GTI.WFMS.Models.Common;
 using GTI.WFMS.Models.Fclt.Model;
+using GTI.WFMS.Models.Fctl.Model;
 using GTI.WFMS.Modules.Fclt.Report;
 using GTI.WFMS.Modules.Fclt.View;
 using GTIFramework.Common.Log;
@@ -119,7 +120,7 @@ namespace GTI.WFMS.Modules.Fclt.ViewModel
                         var colValue = dbprop.GetValue(result, null);
                         if (colName.Equals(propName))
                         {
-                            prop.SetValue(this, Convert.ChangeType(colValue, prop.PropertyType));
+                            try { prop.SetValue(this, colValue); } catch (Exception) { }
                         }
                     }
                     Console.WriteLine(propName + " - " + prop.GetValue(this, null));
@@ -199,7 +200,7 @@ namespace GTI.WFMS.Modules.Fclt.ViewModel
             Hashtable param = new Hashtable();
             param.Add("sqlId" , "selectChscResSubList");
             param.Add("sqlId2", "SelectFileMapList");
-            param.Add("sqlId3", "selectWtlLeakSubList");
+            param.Add("sqlId3", "SelectCmmWttAttaDt");
 
             param.Add("FTR_CDE", this.FTR_CDE);
             param.Add("FTR_IDN", this.FTR_IDN);
@@ -215,27 +216,7 @@ namespace GTI.WFMS.Modules.Fclt.ViewModel
                 dt = result["dt"] as DataTable;
                 if (dt.Rows.Count > 0)
                 {
-                    Messages.ShowErrMsgBox("유지보수내역이 존재합니다.");
-                    return;
-                }
-            }
-            catch (Exception) { }
-            try
-            {
-                dt2 = result["dt2"] as DataTable;
-                if (dt2.Rows.Count > 0)
-                {
-                    Messages.ShowErrMsgBox("파일첨부내역이 존재합니다.");
-                    return;
-                }
-            }
-            catch (Exception) { }
-            try
-            {
-                dt3 = result["dt3"] as DataTable;
-                if (dt3.Rows.Count > 0)
-                {
-                    Messages.ShowErrMsgBox("누수지점내역이 존재합니다.");
+                    Messages.ShowInfoMsgBox("유지보수내역이 존재합니다.");
                     return;
                 }
             }
@@ -244,7 +225,51 @@ namespace GTI.WFMS.Modules.Fclt.ViewModel
 
 
             // 1.삭제처리
-            if (Messages.ShowYesNoMsgBox("변로를 삭제하시겠습니까?") != MessageBoxResult.Yes) return;
+            if (Messages.ShowYesNoMsgBox("수원지를 삭제하시겠습니까?") != MessageBoxResult.Yes) return;
+
+
+            try
+            {
+                dt2 = result["dt2"] as DataTable;
+                if (dt2.Rows.Count > 0)
+                {
+                    //Messages.ShowInfoMsgBox("파일첨부내역이 존재합니다.");
+                    //return;
+                    //첨부파일삭제
+                    foreach (DataRow row in dt2.Rows)
+                    {
+                        //a.FIL_SEQ 첨부파일삭제
+                        BizUtil.DelFileSeq(row["FIL_SEQ"]);
+
+                        //b.FILE_MAP 업무파일매핑삭제
+                        param = new Hashtable();
+                        param.Add("sqlId", "DeleteFileMap");
+                        param.Add("BIZ_ID", FTR_CDE + FTR_IDN);
+                        param.Add("FIL_SEQ", row["FIL_SEQ"]);
+                        BizUtil.Update(param);
+                    }
+                }
+            }
+            catch (Exception) { }
+            try
+            {
+                dt3 = result["dt3"] as DataTable;
+                if (dt3.Rows.Count > 0)
+                {
+                    //Messages.ShowInfoMsgBox("부속시설 세부현황이 존재합니다.");
+                    //return;
+                    WttAttaDt dtl = new WttAttaDt();
+                    dtl.FTR_CDE = FTR_CDE;
+                    dtl.FTR_IDN = FTR_IDN;
+                    BizUtil.Update2(dtl, "DeleteWttAttaDt");
+                }
+            }
+            catch (Exception) { }
+
+
+
+
+
             try
             {
                 BizUtil.Update2(this, "deleteWtrSourDtl");
@@ -289,13 +314,13 @@ namespace GTI.WFMS.Modules.Fclt.ViewModel
                 //BizUtil.SetCombo(cbFTR_CDE, "Select_FTR_LIST", "FTR_CDE", "FTR_NAM", false);
 
                 // cbHJD_CDE 행정동
-                BizUtil.SetCombo(cbHJD_CDE, "Select_ADAR_LIST", "HJD_CDE", "HJD_NAM", "[선택하세요]");
+                BizUtil.SetCombo(cbHJD_CDE, "Select_ADAR_LIST", "HJD_CDE", "HJD_NAM", "선택");
 
                 // cbMNG_CDE 관리기관
-                BizUtil.SetCmbCode(cbMNG_CDE, "250101", "[선택하세요]");
+                BizUtil.SetCmbCode(cbMNG_CDE, "250101", "선택");
 
                 // cbWSR_CDE 수원구분
-                BizUtil.SetCmbCode(cbWSR_CDE, "250058", "[선택하세요]");
+                BizUtil.SetCmbCode(cbWSR_CDE, "250058", "선택");
             }
             catch (Exception ex)
             {

@@ -2,20 +2,9 @@
 
 namespace GTI.WFMS.Models.Cmm.Model
 {
-    public class LinkFmsChscFtrRes : CmmDtl, INotifyPropertyChanged
+    public class LinkFmsChscFtrRes : CmmDtl
     {
-        /// <summary>                                                                
-        /// 인터페이스 구현부분                                                       
-        /// </summary>                                                                
-        public event PropertyChangedEventHandler PropertyChanged;
-        protected void OnPropertyChanged(string propertyName)
-        {
-            if (PropertyChanged != null)
-            {
-                PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
-            }
-        }
-
+        
 
 
         /// <summary>                                                                 
@@ -211,8 +200,8 @@ namespace GTI.WFMS.Models.Cmm.Model
                 OnPropertyChanged("RPR_YN");
             }
         }
-        private int __SEQ;
-        public int SEQ
+        private int ?__SEQ;
+        public int? SEQ
         {
             get { return __SEQ; }
             set

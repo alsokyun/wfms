@@ -1,26 +1,10 @@
 ﻿using GTI.WFMS.Models.Cmm.Model;
-using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace GTI.WFMS.Models.Pipe.Model
 {
-    public class ValvFacDtl : CmmDtl, INotifyPropertyChanged
+    public class ValvFacDtl : CmmDtl
     {
-        /// <summary>                                                                
-        /// 인터페이스 구현부분                                                       
-        /// </summary>                                                                
-        public event PropertyChangedEventHandler PropertyChanged;
-        protected void OnPropertyChanged(string propertyName)
-        {
-            if (PropertyChanged != null)
-            {
-                PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
-            }
-        }
+      
 
 
 
@@ -158,8 +142,8 @@ namespace GTI.WFMS.Models.Pipe.Model
                 OnPropertyChanged("MOP_NAM");
             }
         }
-        private decimal __VAL_DIP;
-        public decimal VAL_DIP
+        private decimal ?  __VAL_DIP;
+        public decimal ? VAL_DIP
         {
             get { return __VAL_DIP; }
             set
@@ -188,8 +172,8 @@ namespace GTI.WFMS.Models.Pipe.Model
                 OnPropertyChanged("SAE_NAM");
             }
         }
-        private decimal __TRO_CNT;
-        public decimal TRO_CNT
+        private decimal ?  __TRO_CNT;
+        public decimal ? TRO_CNT
         {
             get { return __TRO_CNT; }
             set
@@ -198,8 +182,8 @@ namespace GTI.WFMS.Models.Pipe.Model
                 OnPropertyChanged("TRO_CNT");
             }
         }
-        private decimal __CRO_CNT;
-        public decimal CRO_CNT
+        private decimal ?  __CRO_CNT;
+        public decimal ? CRO_CNT
         {
             get { return __CRO_CNT; }
             set
@@ -258,8 +242,8 @@ namespace GTI.WFMS.Models.Pipe.Model
                 OnPropertyChanged("VAL_STD");
             }
         }
-        private decimal __VAL_SAF;
-        public decimal VAL_SAF
+        private decimal ?  __VAL_SAF;
+        public decimal ? VAL_SAF
         {
             get { return __VAL_SAF; }
             set
@@ -298,8 +282,8 @@ namespace GTI.WFMS.Models.Pipe.Model
                 OnPropertyChanged("PIP_NAM");
             }
         }
-        private decimal __PIP_IDN;
-        public decimal PIP_IDN
+        private decimal?  __PIP_IDN;
+        public decimal?  PIP_IDN
         {
             get { return __PIP_IDN; }
             set
@@ -378,8 +362,8 @@ namespace GTI.WFMS.Models.Pipe.Model
                 OnPropertyChanged("SYS_CHK_NAM");
             }
         }
-        private decimal __ANG_DIR;
-        public decimal ANG_DIR
+        private decimal ?  __ANG_DIR;
+        public decimal?   ANG_DIR
         {
             get { return __ANG_DIR; }
             set

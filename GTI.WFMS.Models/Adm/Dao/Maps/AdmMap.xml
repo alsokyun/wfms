@@ -111,7 +111,7 @@
       (#USER_ID#, #DEPT_CD#, #USER_NM#, #USER_TEL#, #USER_PWD#, #POS_CD#, #ETC#, #USE_YN#, 'N', #EDT_ID#, SYSDATE)
     </insert>
 
-    <!--사용자수정-->
+    <!--사용자수정
     <update id ="Update_SYS_USER_INFO" parameterClass="Hashtable" resultClass ="Hashtable">
       UPDATE INFOUSER.SYS_USER_INFO
       SET DEPT_CD = #DEPT_CD#
@@ -127,6 +127,7 @@
       ,EDT_DT = SYSDATE
       WHERE USER_ID = #USER_ID#
     </update>
+    -->
 
 
 

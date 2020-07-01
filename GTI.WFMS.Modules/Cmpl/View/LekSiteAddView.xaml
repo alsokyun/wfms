@@ -4,6 +4,7 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+            Title="누수지점등록"
        
             mc:Ignorable="d" 
             d:DesignHeight="200" d:DesignWidth="450"
@@ -61,7 +62,7 @@
         </StackPanel>
 
         <StackPanel Grid.Row="1" Orientation="Horizontal" HorizontalAlignment="Right" Margin="0 0 10 0">
-            <Button x:Name="btnSave" Style="{DynamicResource ResourceKey=GrdRegButton}" Command="{Binding SaveCommand}" />
+            <Button x:Name="btnSave" Style="{DynamicResource ResourceKey=SaveButton}" Command="{Binding SaveCommand}" />
         </StackPanel>
 
         <Grid Grid.Row="2" Margin="10 0 10 10" >
@@ -144,8 +145,8 @@
             <!--히든 키-->
             <TextBlock x:Name="txtFTR_CDE" Text="{Binding Dtl.FTR_CDE}" Visibility="Collapsed"/> 
             <Label Grid.Row="0" Grid.Column="2" Content="지형지물" Style="{DynamicResource ResourceKey=GridLabelReq}" />
-            <dxe:ComboBoxEdit Grid.Row="0" Grid.Column="3" Style="{DynamicResource ResourceKey=GridComboBox}" Tag="지형지물"
-                              x:Name="cbFTR_CDE" EditValue="{Binding Dtl.FTR_CDE, UpdateSourceTrigger=PropertyChanged}"  />
+            <dxe:TextEdit Grid.Row="0" Grid.Column="3" Style="{DynamicResource ResourceKey=GridTextEdit}"  IsEnabled="False" 
+                          x:Name="txtFTR_NAM" EditValue="{Binding FTR_NAM}"/>
             <Label Grid.Row="0" Grid.Column="4" Content="행정동" Style="{DynamicResource ResourceKey=GridLabelReq}"  />
             <dxe:ComboBoxEdit Grid.Row="0" Grid.Column="5" Style="{DynamicResource ResourceKey=GridComboBox}" Tag="행정동"
                               x:Name="cbHJD_CDE" EditValue="{Binding Dtl.HJD_CDE}"  />
@@ -159,7 +160,7 @@
             <dxe:TextEdit Grid.Row="1" Grid.Column="1" Style="{DynamicResource ResourceKey=GridTextEdit}" Tag="관리번호" Width="100" HorizontalAlignment="Left"
                           EditValue="{Binding Dtl.PIP_IDN, UpdateSourceTrigger=PropertyChanged}" IsEnabled="False"
                           x:Name="txtPIP_IDN" />
-            <TextBlock x:Name="txtPIP_CDE" Text="{Binding Dtl.PIP_CDE, UpdateSourceTrigger=PropertyChanged}" Visibility="Collapsed" /> <!--관로시설물코드-->
+            <TextBox x:Name="txtPIP_CDE" Text="{Binding Dtl.PIP_CDE, UpdateSourceTrigger=PropertyChanged}" Visibility="Collapsed" /> <!--관로시설물코드-->
             <Button Grid.Row="1" Grid.Column="1" 
                     x:Name="btnFtrSel" Style="{DynamicResource ResourceKey=GdAddButton}" HorizontalAlignment="Right" Margin="0 0 5 0" Click="BtnFtrSel_Click"/>
             <Label Grid.Row="1" Grid.Column="2" Content="관로지형지물" Style="{DynamicResource ResourceKey=GridLabel}"  />

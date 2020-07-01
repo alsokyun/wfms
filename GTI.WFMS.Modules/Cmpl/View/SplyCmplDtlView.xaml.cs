@@ -1,4 +1,7 @@
-﻿using GTIFramework.Common.Utils.ViewEffect;
+﻿using GTI.WFMS.Modules.Pop.View;
+using GTIFramework.Common.MessageBox;
+using GTIFramework.Common.Utils.ViewEffect;
+using System;
 using System.Windows;
 using System.Windows.Input;
 
@@ -66,7 +69,40 @@ namespace GTI.WFMS.Modules.Cmpl.View
             }
         }
 
+        //급수공사 선택팝업
+        private void BtnSel_Click(object sender, RoutedEventArgs e)
+        {
+            String inCNT_NUM = this.txtCNT_NUM.Text; ;
+            String outCNT_NUM = "";
 
+            if (inCNT_NUM != null && inCNT_NUM != "")
+            {
+                if (Messages.ShowYesNoMsgBox("공사번호를 변경하시겠습니까?") != MessageBoxResult.Yes) return;
+            }
 
+            try
+            {
+                // 급수공대장 윈도우
+                SplyMngPopView splyMngPopView = new SplyMngPopView("");
+                splyMngPopView.Owner = Window.GetWindow(this);
+
+                //공사번호 리턴
+                if (splyMngPopView.ShowDialog() is bool)
+                {
+                    outCNT_NUM = splyMngPopView.txtRET_CNT_NAM.Text;
+                    if (outCNT_NUM != null && outCNT_NUM != "" && inCNT_NUM != outCNT_NUM)
+                    {
+                        this.txtCNT_NUM.Text = outCNT_NUM;
+                    }
+
+                    this.txtCNT_NUM.SelectAll();
+                    this.txtCNT_NUM.Focus();
+                }
+            }
+            catch (Exception ex)
+            {
+                Messages.ShowErrMsgBox(ex.ToString());
+            }
+        }
     }
 }

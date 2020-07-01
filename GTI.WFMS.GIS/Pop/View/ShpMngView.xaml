@@ -6,6 +6,7 @@
        
             mc:Ignorable="d" 
             d:DesignHeight="200" d:DesignWidth="450"
+            Title="Shape 파일관리"
         
             xmlns:vm="clr-namespace:GTI.WFMS.GIS.Pop.ViewModel"
             xmlns:cv="clr-namespace:GTI.WFMS.Models.Common;assembly=GTI.WFMS.Models"
@@ -62,15 +63,17 @@
             <!--일반정보박스영역-->
             <StackPanel Grid.Row="1" Orientation="Horizontal" HorizontalAlignment="Left" Margin="10 0 0 0">
                 <Image Style="{DynamicResource TitleCircle}"/>
-                <Label Content="DB 서버정보" Style="{DynamicResource ResourceKey=CircleTitleLabel}"/>
+                <Label Content="Shape 파일 임포트" Style="{DynamicResource ResourceKey=CircleTitleLabel}"/>
             </StackPanel>
 
             <StackPanel Grid.Row="1" Orientation="Horizontal" HorizontalAlignment="Right" Margin="0 0 10 0">
-                <Button Content="Import Shape" Style="{DynamicResource TxtButton}" Margin="0 2 10 2" Height="30" Width="Auto" 
-                     Command="{Binding ImportCmd}"/>
             </StackPanel>
 
-            <Grid Grid.Row="2" Margin="10 0 10 10" >
+
+            <Button Grid.Row="2" Content="Shape파일 선택 및 Import" Style="{DynamicResource TxtButton}" Margin="0"  
+                    Height="50" Width="300" Command="{Binding ImportCmd}"/>
+
+            <Grid Grid.Row="2" Margin="10 0 10 10" Visibility="Hidden">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="100"/>
                     <ColumnDefinition Width="180*"/>
@@ -96,16 +99,16 @@
 
 
                 <Label Grid.Row="0" Grid.Column="0" Content="서버 IP" Style="{DynamicResource ResourceKey=GridLabelReq}" />
-                <dxe:TextEdit Grid.Row="0" Grid.Column="1" Style="{DynamicResource ResourceKey=GridTextEdit}"  Tag="서버IP" 
+                <dxe:TextEdit Grid.Row="0" Grid.Column="1" Style="{DynamicResource ResourceKey=GridTextEdit}"  
                           Text="{Binding IP}"  />
                 <Label Grid.Row="0" Grid.Column="2" Content="SHP타겟경로" Style="{DynamicResource ResourceKey=GridLabelReq}" />
-                <dxe:TextEdit Grid.Row="0" Grid.Column="3" Style="{DynamicResource ResourceKey=GridTextEdit}"  Tag="SHP타겟경로" 
+                <dxe:TextEdit Grid.Row="0" Grid.Column="3" Style="{DynamicResource ResourceKey=GridTextEdit}" 
                           Text="{Binding SHP}"  />
                 <Label Grid.Row="1" Grid.Column="0" Content="서버계정" Style="{DynamicResource ResourceKey=GridLabelReq}" />
-                <dxe:TextEdit Grid.Row="1" Grid.Column="1" Style="{DynamicResource ResourceKey=GridTextEdit}" Tag="서버계정" 
+                <dxe:TextEdit Grid.Row="1" Grid.Column="1" Style="{DynamicResource ResourceKey=GridTextEdit}" 
                               Text="{Binding User}" />
                 <Label Grid.Row="1" Grid.Column="2" Content="서버PW" Style="{DynamicResource ResourceKey=GridLabelReq}" />
-                <dxe:TextEdit Grid.Row="1" Grid.Column="3" Style="{DynamicResource ResourceKey=GridTextEdit}"    Tag="서버PW" 
+                <dxe:TextEdit Grid.Row="1" Grid.Column="3" Style="{DynamicResource ResourceKey=GridTextEdit}"    
                           Text="{Binding PW}"  />
             </Grid>
 

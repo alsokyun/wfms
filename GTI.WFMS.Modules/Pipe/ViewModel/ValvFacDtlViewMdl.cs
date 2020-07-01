@@ -8,9 +8,12 @@ using System.Reflection;
 
 namespace GTI.WFMS.Modules.Pipe.ViewModel
 {
-    public class ValvFacDtlViewMdl : ValvFacDtl
+    public class ValvFacDtlViewMdl 
     {
         public List<LinkFmsChscFtrRes> Tab01List { get; set; }
+
+        public ValvFacDtl Dtl { get; set; }
+
 
         /// 생성자
         public ValvFacDtlViewMdl(string FTR_CDE, int FTR_IDN)
@@ -23,28 +26,7 @@ namespace GTI.WFMS.Modules.Pipe.ViewModel
                 param.Add("FTR_CDE", FTR_CDE);
                 param.Add("FTR_IDN", FTR_IDN);
 
-                ValvFacDtl result = new ValvFacDtl();
-                result = BizUtil.SelectObject(param) as ValvFacDtl;
-                //결과를 뷰모델멤버로 매칭
-                Type dbmodel = result.GetType();
-                Type model = this.GetType();
-
-                //모델프로퍼티 순회
-                foreach (PropertyInfo prop in model.GetProperties())
-                {
-                    string propName = prop.Name;
-                    //db프로퍼티 순회
-                    foreach (PropertyInfo dbprop in dbmodel.GetProperties())
-                    {
-                        string colName = dbprop.Name;
-                        var colValue = dbprop.GetValue(result, null);
-                        if (colName.Equals(propName))
-                        {
-                            prop.SetValue(this, Convert.ChangeType(colValue, prop.PropertyType));
-                        }
-                    }
-                    Console.WriteLine(propName + " - " + prop.GetValue(this, null));
-                }
+                Dtl = BizUtil.SelectObject(param) as ValvFacDtl;
 
 
 

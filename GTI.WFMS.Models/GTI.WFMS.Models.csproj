@@ -44,6 +44,7 @@
     <Reference Include="DevExpress.Pdf.v19.1.Core, Version=19.1.6.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL" />
     <Reference Include="DevExpress.Printing.v19.1.Core, Version=19.1.6.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL" />
     <Reference Include="DevExpress.Xpf.Core.v19.1, Version=19.1.6.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL" />
+    <Reference Include="DevExpress.Xpf.LayoutControl.v19.1, Version=19.1.6.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL" />
     <Reference Include="Interop.SHDocVw, Version=1.1.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <EmbedInteropTypes>True</EmbedInteropTypes>
@@ -77,6 +78,26 @@
     <Reference Include="WindowsBase" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Acmf\Dao\MapsOra\HydtMetrMap.xml">
+      <SubType>Designer</SubType>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Acmf\Dao\MapsOra\SupDutMap.xml">
+      <SubType>Designer</SubType>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Acmf\Dao\MapsOra\WtrTrkMap.xml">
+      <SubType>Designer</SubType>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Blk\Dao\MapsOra\BlkMap.xml">
+      <SubType>Designer</SubType>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Blk\Dao\Maps\BlkMap.xml">
+      <SubType>Designer</SubType>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Content Include="Acmf\Dao\Maps\WtrTrkMap.xml">
       <SubType>Designer</SubType>
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
@@ -117,6 +138,23 @@
       <SubType>Designer</SubType>
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <Content Include="Fclt\Dao\MapsOra\FiltPltMap.xml">
+      <SubType>Designer</SubType>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Fclt\Dao\MapsOra\IntkStMap.xml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Fclt\Dao\MapsOra\PrsPmpMap.xml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Fclt\Dao\MapsOra\WtrSourMap.xml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Fclt\Dao\MapsOra\WtrSupMap.xml">
+      <SubType>Designer</SubType>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Content Include="Lib\Interop.SHDocVw.dll" />
     <Content Include="Main\Dao\Maps\MainMap.xml">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
@@ -128,6 +166,32 @@
     <Content Include="Mntc\Dao\Maps\MntcMap.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
       <SubType>Designer</SubType>
+    </Content>
+    <Content Include="Pipe\Dao\MapsOra\FireFacMap.xml">
+      <SubType>Designer</SubType>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Pipe\Dao\MapsOra\FlowMtMap.xml">
+      <SubType>Designer</SubType>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Pipe\Dao\MapsOra\PipeMap.xml">
+      <SubType>Designer</SubType>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Pipe\Dao\MapsOra\StndPiMap.xml">
+      <SubType>Designer</SubType>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Pipe\Dao\MapsOra\ValvFacMap.xml">
+      <SubType>Designer</SubType>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Pipe\Dao\MapsOra\WtprMtMap.xml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Pipe\Dao\MapsOra\WtsMnhoMap.xml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="Pipe\Dao\Maps\FireFacMap.xml">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
@@ -181,7 +245,10 @@
     <Compile Include="Acmf\Model\WtrTrkDtl.cs" />
     <Compile Include="Acmf\Model\SupDutDtl.cs" />
     <Compile Include="Acmf\Model\HydtMetrDtl.cs" />
+    <Compile Include="Acmf\Model\WttMetaHt.cs" />
+    <Compile Include="Acmf\Model\WttRsrvHtDtl.cs" />
     <Compile Include="Adm\Dao\AdmDao.cs" />
+    <Compile Include="Blk\Model\BlkDtl.cs" />
     <Compile Include="Cmm\Dao\CommonDao.cs" />
     <Compile Include="Cmm\Dao\CmmDao.cs" />
     <Compile Include="Cmm\Model\CmmDtl.cs" />
@@ -218,7 +285,11 @@
     <Compile Include="Main\Work\MainWork.cs" />
     <Compile Include="Mntc\Model\ChscMaDtl.cs" />
     <Compile Include="Cmm\Model\LinkFmsChscFtrRes.cs" />
+    <Compile Include="Mntc\Model\ChscResultDtl.cs" />
     <Compile Include="Mntc\Model\FaqDtl.cs" />
+    <Compile Include="Mntc\Model\PdjtHtDtl.cs" />
+    <Compile Include="Mntc\Model\PdjtInDtl.cs" />
+    <Compile Include="Mntc\Model\PdjtMaDtl.cs" />
     <Compile Include="Mntc\Model\ResSrc.cs" />
     <Compile Include="Pipe\Dao\PipeDao.cs" />
     <Compile Include="Pipe\Model\FireFacDtl.cs" />
@@ -248,6 +319,7 @@
     </None>
     <None Include="DBConfig\TIBEROConfig.config">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <SubType>Designer</SubType>
     </None>
     <None Include="packages.config" />
   </ItemGroup>

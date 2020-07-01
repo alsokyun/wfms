@@ -31,7 +31,7 @@ namespace GTI.WFMS.Models.Common
         /// </summary>
         public static string sysCd;     //시스템코드
         public static string fileDir;   //파일저장경로
-        public static string dbShapeDir;   //db서버에 복사되는 shp 저장위치
+        public static string mdxDir;   //db서버에 복사되는 shp 저장위치
 
 
 
@@ -98,7 +98,7 @@ namespace GTI.WFMS.Models.Common
 
             try
             {
-                str = obj as string;
+                str = obj.ToString();
 
                 str = str.Trim();
             }

@@ -1,28 +1,10 @@
 ﻿using GTI.WFMS.Models.Cmm.Model;
-using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace GTI.WFMS.Models.Fclt.Model
 {
-    public class PrsPmpDtl : CmmDtl, INotifyPropertyChanged
+    public class PrsPmpDtl : CmmDtl
     {
-        /// <summary>                                                                
-        /// 인터페이스 구현부분                                                       
-        /// </summary>                                                                
-        public event PropertyChangedEventHandler PropertyChanged;
-        protected void OnPropertyChanged(string propertyName)
-        {
-            if (PropertyChanged != null)
-            {
-                PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
-            }
-        }
-
-
+        
 
         /// <summary>                                                                 
         /// 프로퍼티 부분                                                             
@@ -127,8 +109,8 @@ namespace GTI.WFMS.Models.Fclt.Model
                 OnPropertyChanged("PRS_NAM");
             }
         }
-        private decimal __PRS_ARA;
-        public decimal PRS_ARA
+        private decimal ?  __PRS_ARA;
+        public decimal ? PRS_ARA
         {
             get { return __PRS_ARA; }
             set
@@ -157,8 +139,8 @@ namespace GTI.WFMS.Models.Fclt.Model
                 OnPropertyChanged("SAG_NAM");
             }
         }
-        private decimal __PRS_ALT;
-        public decimal PRS_ALT
+        private decimal ?  __PRS_ALT;
+        public decimal ? PRS_ALT
         {
             get { return __PRS_ALT; }
             set
@@ -167,8 +149,8 @@ namespace GTI.WFMS.Models.Fclt.Model
                 OnPropertyChanged("PRS_ALT");
             }
         }
-        private decimal __PRS_VOL;
-        public decimal PRS_VOL
+        private decimal ?  __PRS_VOL;
+        public decimal ? PRS_VOL
         {
             get { return __PRS_VOL; }
             set
@@ -187,8 +169,8 @@ namespace GTI.WFMS.Models.Fclt.Model
                 OnPropertyChanged("PRS_ARE");
             }
         }
-        private decimal __PRS_SAH;
-        public decimal PRS_SAH
+        private decimal ?  __PRS_SAH;
+        public decimal ? PRS_SAH
         {
             get { return __PRS_SAH; }
             set

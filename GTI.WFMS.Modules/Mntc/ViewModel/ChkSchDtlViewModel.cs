@@ -3,16 +3,14 @@ using DevExpress.Xpf.Editors;
 using GTI.WFMS.Models.Common;
 using GTI.WFMS.Models.Mntc.Model;
 using GTI.WFMS.Modules.Mntc.View;
+using GTI.WFMS.Modules.Pop.View;
 using GTIFramework.Common.Log;
 using GTIFramework.Common.MessageBox;
 using System;
 using System.Collections;
-using System.Collections.Generic;
+using System.Collections.ObjectModel;
+using System.ComponentModel;
 using System.Data;
-using System.Linq;
-using System.Reflection;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Documents;
@@ -21,8 +19,20 @@ namespace GTI.WFMS.Modules.Mntc.ViewModel
 {
 
 
-    public class ChkSchDtlViewModel : ChscMaDtl
+    public class ChkSchDtlViewModel : INotifyPropertyChanged
     {
+        /// <summary>
+        /// 인터페이스 구현부분
+        /// </summary>
+        public event PropertyChangedEventHandler PropertyChanged;
+        protected void OnPropertyChanged(string propertyName)
+        {
+            if (PropertyChanged != null)
+            {
+                PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
+            }
+        }
+
 
 
         #region ==========  Properties 정의 ==========
@@ -33,7 +43,37 @@ namespace GTI.WFMS.Modules.Mntc.ViewModel
         public DelegateCommand<object> SaveCommand { get; set; }
         public DelegateCommand<object> DeleteCommand { get; set; }
         public DelegateCommand<object> ApprCmd { get; set; }
-        
+
+        public RelayCommand<object> AddFtrSelCmd { get; set; }
+        public RelayCommand<object> GrdDelCmd { get; set; }
+        public RelayCommand<object> GrdSaveCmd { get; set; }
+
+
+
+        //점검마스터
+        private ChscMaDtl dtl = new ChscMaDtl();
+        public ChscMaDtl Dtl
+        {
+            get { return dtl; }
+            set
+            {
+                dtl = value;
+                OnPropertyChanged("Dtl");
+            }
+        }
+        //점검결과
+        private ObservableCollection<ChscResultDtl> __GrdLst;
+        public ObservableCollection<ChscResultDtl> GrdLst
+        {
+            get { return __GrdLst; }
+            set
+            {
+                if (value == __GrdLst) return;
+                __GrdLst = value;
+                OnPropertyChanged("GrdLst");
+            }
+        }
+
 
         #endregion
 
@@ -69,8 +109,8 @@ namespace GTI.WFMS.Modules.Mntc.ViewModel
                 btnDelete = chkSchDtlView.btnDelete;
                 btnSave = chkSchDtlView.btnSave;
                 btnClose = chkSchDtlView.btnClose;
-                
 
+                GrdLst = new ObservableCollection<ChscResultDtl>();
 
                 //2.화면데이터객체 초기화
                 InitDataBinding();
@@ -80,50 +120,11 @@ namespace GTI.WFMS.Modules.Mntc.ViewModel
                 permissionApply();
 
 
+                //4.초기조히
+                initModel();
 
 
-                // 4.초기조회
-                //DataTable dt = new DataTable();
-                Hashtable param = new Hashtable();
-                param.Add("sqlId", "SelectChscMaList");
-                param.Add("SCL_NUM", this.SCL_NUM);
 
-                ChscMaDtl result = new ChscMaDtl();
-                result = BizUtil.SelectObject(param) as ChscMaDtl;
-
-                //점검결과 다큐먼트 수동세팅
-                chkSchDtlView.richBox.Document.Blocks.Clear();
-                Paragraph paragraph = new Paragraph();
-                paragraph.Inlines.Add(result.CHK_CTNT.Trim());
-                chkSchDtlView.richBox.Document.Blocks.Add(paragraph);
-
-                //결과를 뷰모델멤버로 매칭
-                Type dbmodel = result.GetType();
-                Type model = this.GetType();
-
-                //모델프로퍼티 순회
-                foreach (PropertyInfo prop in model.GetProperties())
-                {
-                    string propName = prop.Name;
-                    //db프로퍼티 순회
-                    foreach (PropertyInfo dbprop in dbmodel.GetProperties())
-                    {
-                        string colName = dbprop.Name;
-                        var colValue = dbprop.GetValue(result, null);
-                        if (colName.Equals(propName))
-                        {
-                            try
-                            {
-                                prop.SetValue(this, Convert.ChangeType(colValue, prop.PropertyType));
-                            }
-                            catch (Exception)
-                            {
-                                //형변환오류는 세팅하지 않는다..
-                            }
-                        }
-                    }
-                    Console.WriteLine(propName + " - " + prop.GetValue(this, null));
-                }
             });
 
             //점검저장
@@ -138,8 +139,8 @@ namespace GTI.WFMS.Modules.Mntc.ViewModel
                 try
                 {
                     //다큐먼트 별로로 세팅
-                    this.CHK_CTNT = new TextRange(chkSchDtlView.richBox.Document.ContentStart, chkSchDtlView.richBox.Document.ContentEnd).Text;
-                    BizUtil.Update2(this, "SaveChscMaDtl");
+                    Dtl.CHK_CTNT = new TextRange(chkSchDtlView.richBox.Document.ContentStart, chkSchDtlView.richBox.Document.ContentEnd).Text.Trim();
+                    BizUtil.Update2(Dtl, "SaveChscMaDtl");
                 }
                 catch (Exception )
                 {
@@ -158,7 +159,7 @@ namespace GTI.WFMS.Modules.Mntc.ViewModel
                 //0.삭제전 체크
                 Hashtable param = new Hashtable();
                 param.Add("sqlId", "SelectChscResultList");
-                param.Add("SCL_NUM", this.SCL_NUM);
+                param.Add("SCL_NUM", Dtl.SCL_NUM);
 
                 Hashtable result = BizUtil.SelectLists(param);
                 DataTable dt = new DataTable();
@@ -168,8 +169,39 @@ namespace GTI.WFMS.Modules.Mntc.ViewModel
                     dt = result["dt"] as DataTable;
                     if (dt.Rows.Count > 0)
                     {
-                        Messages.ShowErrMsgBox("점검시설물이 존재합니다.");
-                        return;
+                        //Messages.ShowErrMsgBox("점검시설물이 존재합니다.");
+                        //return;
+                        foreach (DataRow row in dt.Rows)
+                        {
+                            //0.점검사진삭제
+                            //a.FIL_SEQ 첨부파일삭제
+                            BizUtil.DelFileSeq(row["FIL_SEQ"]);
+
+                            //b.FILE_MAP 업무파일매핑삭제
+                            param = new Hashtable();
+                            param.Add("sqlId", "DeleteFileMap");
+                            param.Add("BIZ_ID", row["FTR_CDE"].ToString() + row["FTR_IDN"].ToString());
+                            param.Add("FIL_SEQ", row["FIL_SEQ"]);
+                            BizUtil.Update(param);
+
+                            //0.소모품삭제
+                            PdjtHtDtl dtl = new PdjtHtDtl();
+                            dtl.SCL_NUM = Convert.ToInt32(row["SCL_NUM"]) ;
+                            dtl.FTR_CDE = row["FTR_CDE"].ToString();
+                            dtl.FTR_IDN = Convert.ToInt32(row["FTR_IDN"]); 
+                            dtl.SEQ = Convert.ToInt32(row["SEQ"]);
+                            BizUtil.Update2(dtl, "DeletePdjtHt");
+
+                            //1.데이터삭제
+                            param.Clear();
+                            param.Add("SCL_NUM", row["SCL_NUM"]);
+                            param.Add("FTR_CDE", row["FTR_CDE"]);
+                            param.Add("FTR_IDN", Convert.ToInt32(row["FTR_IDN"]));
+                            param.Add("sqlId", "DeleteChscResult");
+                            param.Add("SEQ", Convert.ToInt32(row["SEQ"]));
+                            BizUtil.Update(param);
+
+                        }
                     }
                 }
                 catch (Exception) { }
@@ -178,7 +210,7 @@ namespace GTI.WFMS.Modules.Mntc.ViewModel
                 if (Messages.ShowYesNoMsgBox("점검일정을 삭제하시겠습니까?") != MessageBoxResult.Yes) return;
                 try
                 {
-                    BizUtil.Update2(this, "DeleteChscMaDtl");
+                    BizUtil.Update2(Dtl, "DeleteChscMaDtl");
                 }
                 catch (Exception ex)
                 {
@@ -202,7 +234,7 @@ namespace GTI.WFMS.Modules.Mntc.ViewModel
 
                 try
                 {
-                    BizUtil.Update2(this, "UpdateChscMaAppr");
+                    BizUtil.Update2(Dtl, "UpdateChscMaAppr");
                 }
                 catch (Exception )
                 {
@@ -215,6 +247,186 @@ namespace GTI.WFMS.Modules.Mntc.ViewModel
                 btnClose.RaiseEvent(new RoutedEventArgs(Button.ClickEvent));
             });
 
+
+            //행추가(시설물선택팝업)            
+            this.AddFtrSelCmd = new RelayCommand<object>(delegate (object obj) {
+
+                try
+                {
+                    // 지형지물팝업 윈도우
+                    FtrSelView ftrSelView = new FtrSelView(null);
+                    ftrSelView.Owner = Window.GetWindow(chkSchDtlView);
+
+
+                    //FTR_IDN 리턴
+                    if (ftrSelView.ShowDialog() is bool)
+                    {
+                        string FTR_IDN = ftrSelView.txtFTR_IDN.Text;
+                        string FTR_CDE = ftrSelView.txtFTR_CDE.Text;
+                        string FTR_NAM = ftrSelView.txtFTR_NAM.Text;
+                        string HJD_NAM = ftrSelView.txtHJD_NAM.Text;
+
+
+                        //저장버튼으로 닫힘
+                        if (!FmsUtil.IsNull(FTR_IDN))
+                        {
+                            AddFtrRow(FTR_IDN, FTR_CDE, FTR_NAM, HJD_NAM); //시설물 한건추가
+                        }
+                        //닫기버튼으로 닫힘
+                    }
+
+                }
+                catch (Exception ex)
+                {
+                    Messages.ShowErrMsgBox(ex.ToString());
+                }
+            });
+
+
+            // 그리드저장 
+            this.GrdSaveCmd = new RelayCommand<object>(delegate (object obj) {
+
+                bool isChecked = false;
+                foreach (ChscResultDtl row in GrdLst)
+                {
+                    if ("Y".Equals(row.CHK))
+                    {
+                        isChecked = true;
+                        break;
+                    }
+                }
+                if (!isChecked)
+                {
+                    Messages.ShowInfoMsgBox("선택된 항목이 없습니다.");
+                    return;
+                }
+
+                if (Messages.ShowYesNoMsgBox("저장하시겠습니까?") != MessageBoxResult.Yes) return;
+
+                Hashtable param = new Hashtable();
+
+                //1.그리드 저장
+                foreach (ChscResultDtl row in GrdLst)
+                {
+                    if (row.CHK != "Y") continue;
+
+                    try
+                    {
+                        row.SCL_NUM = Dtl.SCL_NUM;
+                        BizUtil.Update2(row, "SaveChscResult");
+                    }
+                    catch (Exception)
+                    {
+                        Messages.ShowErrMsgBox("저장 처리중 오류가 발생하였습니다.");
+                        return;
+                    }
+                }
+
+                //2.점검마스터상태 변경
+                Hashtable pa = new Hashtable();
+                pa.Add("sqlId", "UpdateChscMaRes");
+                pa.Add("SCL_NUM", Dtl.SCL_NUM);
+                BizUtil.Update(pa);
+
+
+
+                //저장처리성공
+                Messages.ShowOkMsgBox();
+
+                //재조회
+                initModel();
+            });
+
+
+            // 행삭제 GrdDelCmd 
+            this.GrdDelCmd = new RelayCommand<object>(delegate (object obj) {
+
+                //데이터 직접삭제처리
+                try
+                {
+                    bool isChecked = false;
+                    foreach (ChscResultDtl row in GrdLst)
+                    {
+                        if ("Y".Equals(row.CHK))
+                        {
+                            isChecked = true;
+                            break;
+                        }
+                    }
+                    if (!isChecked)
+                    {
+                        Messages.ShowInfoMsgBox("선택된 항목이 없습니다.");
+                        return;
+                    }
+
+                    if (Messages.ShowYesNoMsgBox("선택 항목을 삭제 하시겠습니까?") == MessageBoxResult.Yes)
+                    {
+                        foreach (ChscResultDtl row in GrdLst)
+                        {
+                            Hashtable param = new Hashtable();
+                            try
+                            {
+                                if ("Y".Equals(row.CHK))
+                                {
+                                    if (row.SEQ == 0)
+                                    {
+                                        //그리드행만 삭제
+                                        GrdLst.RemoveAt(GrdLst.IndexOf(row));
+                                        return;
+                                    }
+                                    else
+                                    {
+                                        //0.점검사진삭제
+                                        //a.FIL_SEQ 첨부파일삭제
+                                        BizUtil.DelFileSeq(row.FIL_SEQ);
+
+                                        //b.FILE_MAP 업무파일매핑삭제
+                                        param = new Hashtable();
+                                        param.Add("sqlId", "DeleteFileMap");
+                                        param.Add("BIZ_ID", row.FTR_CDE + row.FTR_IDN);
+                                        param.Add("FIL_SEQ", row.FIL_SEQ);
+                                        BizUtil.Update(param);
+
+                                        //0.소모품삭제
+                                        PdjtHtDtl dtl = new PdjtHtDtl();
+                                        dtl.SCL_NUM = row.SCL_NUM;
+                                        dtl.FTR_CDE = row.FTR_CDE;
+                                        dtl.FTR_IDN = row.FTR_IDN;
+                                        dtl.SEQ = row.SEQ;
+                                        BizUtil.Update2(dtl, "DeletePdjtHt");
+
+                                        //1.데이터삭제
+                                        param.Clear();
+                                        param.Add("SCL_NUM", row.SCL_NUM);
+                                        param.Add("FTR_CDE", row.FTR_CDE);
+                                        param.Add("FTR_IDN", row.FTR_IDN);
+                                        param.Add("SEQ", row.SEQ);
+                                        param.Add("sqlId", "DeleteChscResult");
+                                        param.Add("SEQ", Convert.ToInt32(row.SEQ));
+                                        BizUtil.Update(param);
+                                    }
+                                }
+                            }
+                            catch (Exception)
+                            {
+                                Messages.ShowErrMsgBox("삭제 처리중 오류가 발생하였습니다.");
+                                return;
+                            }
+                        }
+
+                        Messages.ShowOkMsgBox();
+
+                        //재조회
+                        initModel();
+                    }
+                }
+                catch (Exception ex)
+                {
+                    Messages.ShowErrMsgBoxLog(ex);
+                }
+            });
+
+
         }
 
 
@@ -222,6 +434,47 @@ namespace GTI.WFMS.Modules.Mntc.ViewModel
 
 
         #region ============= 메소드정의 ================
+
+        /// <summary>
+        /// 조회작업
+        /// </summary>        
+        private void initModel()
+        {
+            // 4.초기조회
+            //a.마스터
+            //DataTable dt = new DataTable();
+            Hashtable param = new Hashtable();
+            param.Add("sqlId", "SelectChscMaList");
+            param.Add("SCL_NUM", Dtl.SCL_NUM);
+
+            Dtl = BizUtil.SelectObject(param) as ChscMaDtl;
+
+            //점검결과 다큐먼트 수동세팅
+            try
+            {
+                chkSchDtlView.richBox.Document.Blocks.Clear();
+                Paragraph paragraph = new Paragraph();
+                paragraph.Inlines.Add(Dtl.CHK_CTNT.Trim());
+                chkSchDtlView.richBox.Document.Blocks.Add(paragraph);
+            }
+            catch (Exception){}
+
+
+            //b.점검결과
+            param = new Hashtable();
+            param.Add("sqlId", "SelectChscResultList");
+            param.Add("SCL_NUM", Dtl.SCL_NUM);
+
+            GrdLst = new ObservableCollection<ChscResultDtl>(BizUtil.SelectListObj<ChscResultDtl>(param));
+
+            // 1.1 점검결과 첫행선택
+            if (GrdLst.Count > 0)
+            {
+                //SEL_FTR_CDE = GrdLst[0].FTR_CDE.ToString();
+                //SEL_FTR_IDN = dt.Rows[0]["FTR_IDN"].ToString();
+                //SEL_SEQ = dt.Rows[0]["SEQ"].ToString();
+            }
+        }
 
 
         /// <summary>
@@ -232,9 +485,9 @@ namespace GTI.WFMS.Modules.Mntc.ViewModel
             try
             {
                 //관리기관
-                BizUtil.SetCmbCode(cbMNG_CDE, "250101", "[선택하세요]");
+                BizUtil.SetCmbCode(cbMNG_CDE, "250101", "선택");
                 //점검구분
-                BizUtil.SetCmbCode(cbSCL_CDE, "250105", "[선택하세요]");
+                BizUtil.SetCmbCode(cbSCL_CDE, "250105", "선택");
                 
 
             }
@@ -272,6 +525,30 @@ namespace GTI.WFMS.Modules.Mntc.ViewModel
             }
 
         }
+
+
+
+        //시설물 한건 row 추가
+        private void AddFtrRow(string fTR_IDN, string fTR_CDE, string fTR_NAM, string hJD_NAM)
+        {
+            if (FmsUtil.IsNull(fTR_IDN))
+            {
+                Messages.ShowInfoMsgBox("관리번호가 없습니다.");
+                return;
+            }
+
+            ChscResultDtl drNew = new ChscResultDtl();
+            drNew.FTR_IDN = Convert.ToInt32(fTR_IDN) ;
+            drNew.FTR_CDE = fTR_CDE;
+            drNew.HJD_NAM = hJD_NAM;
+            drNew.FTR_NAM = fTR_NAM;
+            drNew.RPR_YMD = Convert.ToDateTime(DateTime.Today).ToString("yyyyMMdd");
+
+            drNew.CHK = "Y";
+            GrdLst.Add(drNew);
+
+        }
+
 
         #endregion
 

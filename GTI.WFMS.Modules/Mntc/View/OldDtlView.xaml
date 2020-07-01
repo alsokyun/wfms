@@ -3,6 +3,7 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+            Title="시설물 노후도"
        
             mc:Ignorable="d" 
             d:DesignHeight="200" d:DesignWidth="450"
@@ -109,7 +110,7 @@
             <dxe:TextEdit Grid.Row="1" Grid.Column="3" Style="{DynamicResource ResourceKey=GridTextEdit}"  IsEnabled="False"  
                           x:Name="txtHJD_NAM" />
             <Label Grid.Row="2" Grid.Column="0" Content="내구연한" Style="{DynamicResource ResourceKey=GridLabel}" />
-            <dxe:TextEdit Grid.Row="2" Grid.Column="1" Style="{DynamicResource ResourceKey=GridNumberEdit}" IsEnabled="False" Mask="n0"
+            <dxe:TextEdit Grid.Row="2" Grid.Column="1" Style="{DynamicResource ResourceKey=GridIntEdit}" IsEnabled="False" 
                           x:Name="txtLMT_YEAR"  />
             <Label Grid.Row="2" Grid.Column="2" Content="설치연도" Style="{DynamicResource ResourceKey=GridLabel}" />
             <dxe:TextEdit Grid.Row="2" Grid.Column="3" Style="{DynamicResource ResourceKey=GridTextEdit}" IsEnabled="False" 

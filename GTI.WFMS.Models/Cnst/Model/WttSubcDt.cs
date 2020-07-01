@@ -4,39 +4,10 @@ using System.ComponentModel;
 
 namespace GTI.WFMS.Modules.Cnst.Model
 {
-    public class WttSubcDt : CmmDtl, INotifyPropertyChanged
+    public class WttSubcDt : CmmDtl
     {
-        /// <summary>
-        /// 인터페이스 구현부분
-        /// </summary>
-        public event PropertyChangedEventHandler PropertyChanged;
-        protected void OnPropertyChanged(string propertyName)
-        {
-            if (PropertyChanged != null)
-            {
-                PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
-
-                //컬럼변경시 체크박스 
-                if (propertyName != "CHK")
-                {
-                    this.CHK = "Y";
-                }
-            }
-        }
-                
-        /// <summary>
-        /// 프로퍼티 부분
-        /// </summary>
-        private string __CHK;
-        public string CHK
-        {
-            get { return __CHK; }
-            set
-            {
-                this.__CHK = value;
-                OnPropertyChanged("CHK");
-            }
-        }
+       
+        
         private int __RNO;
         public int RNO
         {
@@ -57,8 +28,8 @@ namespace GTI.WFMS.Modules.Cnst.Model
                 OnPropertyChanged("CNT_NUM");
             }
         }
-        private decimal __SUBC_SEQ;
-        public decimal SUBC_SEQ
+        private decimal? __SUBC_SEQ;
+        public decimal? SUBC_SEQ
         {
             get { return __SUBC_SEQ; }
             set

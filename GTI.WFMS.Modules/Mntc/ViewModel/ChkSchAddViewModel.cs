@@ -110,13 +110,19 @@ namespace GTI.WFMS.Modules.Mntc.ViewModel
                 // 필수체크 (Tag에 필수체크 표시한 EditBox, ComboBox 대상으로 수행)
                 if (!BizUtil.ValidReq(chkSchAddView)) return;
 
+                //날짜체크
+                if(!BizUtil.ValidDateBtw(Dtl.STA_YMD, Dtl.END_YMD))
+                {
+                    Messages.ShowInfoMsgBox("점검일자 범위를 확인하세요");
+                    return;
+                }
 
                 if (Messages.ShowYesNoMsgBox("저장하시겠습니까?") != MessageBoxResult.Yes) return;
 
                 try
                 {
                     //다큐먼트는 따로 처리
-                    this.Dtl.CHK_CTNT = new TextRange(chkSchAddView.richBox.Document.ContentStart, chkSchAddView.richBox.Document.ContentEnd).Text;
+                    this.Dtl.CHK_CTNT = new TextRange(chkSchAddView.richBox.Document.ContentStart, chkSchAddView.richBox.Document.ContentEnd).Text.Trim();
                     BizUtil.Update2(this.Dtl, "SaveChscMaDtl");
                 }
                 catch (Exception ex)
@@ -143,7 +149,7 @@ namespace GTI.WFMS.Modules.Mntc.ViewModel
         public string GetContent(RichTextBox box)
         {
             TextRange range = new TextRange(box.Document.ContentStart, box.Document.ContentEnd);
-            return range.Text;
+            return range.Text.Trim();
         }
 
 
@@ -156,9 +162,9 @@ namespace GTI.WFMS.Modules.Mntc.ViewModel
             try
             {
                 //관리기관
-                BizUtil.SetCmbCode(cbMNG_CDE, "250101", "[선택하세요]");
+                BizUtil.SetCmbCode(cbMNG_CDE, "250101", "선택");
                 //점검구분
-                BizUtil.SetCmbCode(cbSCL_CDE, "250105", "[선택하세요]");
+                BizUtil.SetCmbCode(cbSCL_CDE, "250105", "선택");
                 
 
             }

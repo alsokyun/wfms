@@ -16,7 +16,7 @@
     
         Title="InfoFMS" WindowStyle="None" WindowStartupLocation="CenterScreen" ResizeMode="CanResize" 
         Width="1900" Height="1049" MinWidth="1280" MinHeight="720" 
-        Style="{DynamicResource MAINWindow}" Background="{DynamicResource MainWindowColorBrush1}"
+        Style="{DynamicResource MAINWindow}" Background="{DynamicResource MainWindowColorBrush1}" 
     
         x:Name="mainWin">
 

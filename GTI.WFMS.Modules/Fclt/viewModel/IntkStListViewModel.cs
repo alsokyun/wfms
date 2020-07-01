@@ -152,7 +152,6 @@ namespace GTI.WFMS.Modules.Fclt.ViewModel
             SearchCommand = new DelegateCommand<object>(SearchAction);
             ResetCommand = new DelegateCommand<object>(ResetAction);
 
-            btnCmd = new DelegateCommand<object>(btnMethod);
             ExcelCmd = new DelegateCommand<object>(ExcelDownAction);
 
             // 시설물 지도상 위치찾아가기
@@ -286,12 +285,10 @@ namespace GTI.WFMS.Modules.Fclt.ViewModel
                 catch (Exception ) { }
                 if (!BizUtil.ValidDateBtw(conditions["FNS_YMD_FROM"], conditions["FNS_YMD_TO"]))
                 {
-                    Messages.ShowInfoMsgBox("From/To 일자를 확인하세요");
+                    Messages.ShowInfoMsgBox("준공일자 범위를 확인하세요");
                     return;
                 }
-
-                conditions.Add("firstIndex", 0);
-                conditions.Add("lastIndex", 1000);
+                
 
                 conditions.Add("sqlId", "SelectIntkStList");
     
@@ -388,7 +385,7 @@ namespace GTI.WFMS.Modules.Fclt.ViewModel
                 catch (Exception ) { }
                 if (!BizUtil.ValidDateBtw(conditions["FNS_YMD_FROM"], conditions["FNS_YMD_TO"]))
                 {
-                    Messages.ShowInfoMsgBox("From/To 일자를 확인하세요");
+                    Messages.ShowInfoMsgBox("준공일자 범위를 확인하세요");
                     return;
                 }
 
@@ -508,16 +505,16 @@ namespace GTI.WFMS.Modules.Fclt.ViewModel
                 dtFNS_YMD_TO.DisplayFormatString = "yyyy-MM-dd";
 
                 // cbMNG_CDE    0.관리기관
-                BizUtil.SetCmbCode(cbMNG_CDE, "250101", "[전체]");
+                BizUtil.SetCmbCode(cbMNG_CDE, "250101", "전체");
 
                 // cbHJD_CDE    2.행정동
-                BizUtil.SetCombo(cbHJD_CDE, "Select_ADAR_LIST", "HJD_CDE", "HJD_NAM", "[전체]");
+                BizUtil.SetCombo(cbHJD_CDE, "Select_ADAR_LIST", "HJD_CDE", "HJD_NAM", "전체");
 
                 // cbWSR_CDE    8.수원구분
-                BizUtil.SetCmbCode(cbWSR_CDE, "250058", "[전체]");
+                BizUtil.SetCmbCode(cbWSR_CDE, "250058", "전체");
 
                 // cbWSR_CDE    10.수원구분
-                BizUtil.SetCmbCode(cbWRW_CDE, "250046", "[전체]");
+                BizUtil.SetCmbCode(cbWRW_CDE, "250046", "전체");
 
             }
             catch (Exception ex)
@@ -560,104 +557,7 @@ namespace GTI.WFMS.Modules.Fclt.ViewModel
 
 
 
-        /// <summary>
-        /// SQL DataRow -> 모델클래스 생성기
-        /// </summary>
-        /// <param name="obj"></param>
-        private void btnMethod(object obj)
-        {
-
-
-            string name_space = "GTI.WFMS.Modules.Fclt.Model";
-            string class_name = "IntkStDtl";
-
-            Hashtable param = new Hashtable();
-            param.Add("sqlId", "SelectIntkStList");
-            param.Add("FTR_CDE", "SA112");
-            param.Add("FTR_IDN", "1");
-            DataTable dt = BizUtil.SelectList(param);
-            DataRow dr = dt.Rows[0];
-
-            String sb = "";
-            sb += "namespace " + name_space + "\r\n";
-            sb += "{ " + "\r\n";
-            sb += " public class " + class_name + ": CmmDtl, INotifyPropertyChanged" + "\r\n";
-            sb += " { " + "\r\n";
-            sb += "     /// <summary>" + "\r\n";
-            sb += "     /// 인터페이스 구현부분" + "\r\n";
-            sb += "     /// </summary>" + "\r\n";
-            sb += "     public event PropertyChangedEventHandler PropertyChanged;" + "\r\n";
-            sb += "     protected void OnPropertyChanged(string propertyName)" + "\r\n";
-            sb += "         { " + "\r\n";
-            sb += "             if (PropertyChanged != null)" + "\r\n";
-            sb += "             { " + "\r\n";
-            sb += "                 PropertyChanged(this, new PropertyChangedEventArgs(propertyName));" + "\r\n";
-            sb += "             } " + "\r\n";
-            sb += "         } " + "\r\n";
-
-            sb += "\r\n";
-            sb += "\r\n";
-            sb += "\r\n";
-
-            sb += "     /// <summary>" + "\r\n";
-            sb += "     /// 프로퍼티 부분" + "\r\n";
-            sb += "     /// </summary>" + "\r\n";
-            foreach (DataColumn col in dt.Columns)
-            {
-                string value = dr[col].ToString();
-
-                //type 결정
-                string type_name = "string";
-                if (col.ColumnName.Contains("_AMT") || col.ColumnName.Contains("_DIP") || col.ColumnName.Contains("_DIR") )
-                {
-                    type_name = "decimal";
-                }
-                else
-                {
-                    switch (dr[col].GetType().Name.ToLower())
-                    {
-                        case "string":
-                            type_name = "string";
-                            break;
-                        case "int":
-                            type_name = "int";
-                            break;
-                        case "decimal":
-                            type_name = "decimal";
-                            break;
-                        case "double":
-                            type_name = "double";
-                            break;
-                        default:
-                            break;
-                    }
-                }
-
-
-                sb += "     private " + type_name + " __" + col + ";" + "\r\n";
-                sb += "     public " + type_name + " " + col + "\r\n";
-                sb += "     { " + "\r\n";
-                sb += "         get { return __" + col + "; }" + "\r\n";
-                sb += "         set " + "\r\n";
-                sb += "         { " + "\r\n";
-                sb += "         this.__" + col + " = value;" + "\r\n";
-                sb += "         OnPropertyChanged(\"" + col + "\"); " + "\r\n";
-                sb += "         } " + "\r\n";
-                sb += "     } " + "\r\n";
-            }
-
-            sb += " } " + "\r\n";
-            sb += "} " + "\r\n";
-
-
-            Console.WriteLine("=========class string===========");
-            Console.Write(sb);
-            Console.WriteLine("=========class string===========");
-
-
-            MessageBox.Show("모델생성 -> Console 확인");
-
-        }
+      
         #endregion
 
     }

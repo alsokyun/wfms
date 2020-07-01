@@ -1,27 +1,10 @@
 ﻿using GTI.WFMS.Models.Cmm.Model;
-using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace GTI.WFMS.Models.Acmf.Model
 {
-    public class HydtMetrDtl : CmmDtl, INotifyPropertyChanged
+    public class HydtMetrDtl : CmmDtl
     {
-        /// <summary>                                                                
-        /// 인터페이스 구현부분                                                       
-        /// </summary>                                                                
-        public event PropertyChangedEventHandler PropertyChanged;
-        protected void OnPropertyChanged(string propertyName)
-        {
-            if (PropertyChanged != null)
-            {
-                PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
-            }
-        }
-
+        
 
 
         /// <summary>                                                                 
@@ -127,24 +110,14 @@ namespace GTI.WFMS.Models.Acmf.Model
                 OnPropertyChanged("HOM_NAM");
             }
         }
-        private string __HOM_CDE;
-        public string HOM_CDE
+        private string __HOM_HJD_NAM;
+        public string HOM_HJD_NAM
         {
-            get { return __HOM_CDE; }
+            get { return __HOM_HJD_NAM; }
             set
             {
-                this.__HOM_CDE = value;
-                OnPropertyChanged("HOM_CDE");
-            }
-        }
-        private string __HOM_CDE_NAM;
-        public string HOM_CDE_NAM
-        {
-            get { return __HOM_CDE_NAM; }
-            set
-            {
-                this.__HOM_CDE_NAM = value;
-                OnPropertyChanged("HOM_CDE_NAM");
+                this.__HOM_HJD_NAM = value;
+                OnPropertyChanged("HOM_HJD_NAM");
             }
         }
         private string __HOM_ADR;
@@ -157,8 +130,8 @@ namespace GTI.WFMS.Models.Acmf.Model
                 OnPropertyChanged("HOM_ADR");
             }
         }
-        private decimal __HOM_CNT;
-        public decimal HOM_CNT
+        private decimal ?  __HOM_CNT;
+        public decimal ? HOM_CNT
         {
             get { return __HOM_CNT; }
             set
@@ -187,24 +160,14 @@ namespace GTI.WFMS.Models.Acmf.Model
                 OnPropertyChanged("SBI_NAM");
             }
         }
-        private decimal __MET_DIP;
-        public decimal MET_DIP
+        private decimal ?  __MET_DIP;
+        public decimal ? MET_DIP
         {
             get { return __MET_DIP; }
             set
             {
                 this.__MET_DIP = value;
                 OnPropertyChanged("MET_DIP");
-            }
-        }
-        private string __MOF_CDE;
-        public string MOF_CDE
-        {
-            get { return __MOF_CDE; }
-            set
-            {
-                this.__MOF_CDE = value;
-                OnPropertyChanged("MOF_CDE");
             }
         }
         private string __MOF_NAM;
@@ -247,8 +210,8 @@ namespace GTI.WFMS.Models.Acmf.Model
                 OnPropertyChanged("PIP_NAM");
             }
         }
-        private decimal __PIP_IDN;
-        public decimal PIP_IDN
+        private decimal ?  __PIP_IDN;
+        public decimal?  PIP_IDN
         {
             get { return __PIP_IDN; }
             set

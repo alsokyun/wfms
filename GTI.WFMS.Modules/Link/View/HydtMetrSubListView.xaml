@@ -4,20 +4,28 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
              mc:Ignorable="d" 
              d:DesignHeight="300" d:DesignWidth="900"
              
              xmlns:cv="clr-namespace:GTI.WFMS.Models.Common;assembly=GTI.WFMS.Models"
+             xmlns:vm="clr-namespace:GTI.WFMS.Modules.Link.ViewModel"
+             x:Name="hydtMetrSubListView"
              >
 
     <UserControl.Resources>
         <cv:RownumConverter x:Key="rownumConverter" />
         <cv:Date3StrConverter x:Key="date3StrConverter"/>
-        
     </UserControl.Resources>
-    
-    <Grid>
 
+    <UserControl.DataContext>
+        <vm:HydtMetrSubListViewModel/>
+    </UserControl.DataContext>
+    <Grid>
+        <StackPanel>
+            <TextBox x:Name="txtFTR_CDE" Text="{Binding FTR_CDE, UpdateSourceTrigger=PropertyChanged}"  Visibility="Collapsed"/>
+            <TextBox x:Name="txtFTR_IDN" Text="{Binding FTR_IDN, UpdateSourceTrigger=PropertyChanged}" Visibility="Collapsed"/>
+        </StackPanel>
         <dxg:GridControl x:Name="grid" VerticalAlignment="Stretch" HorizontalAlignment="Stretch">
 
             <dxg:GridControl.View>
@@ -65,7 +73,7 @@
                     <dxe:TextEditSettings HorizontalContentAlignment="Center"/>
                 </dxg:GridColumn.EditSettings>
             </dxg:GridColumn>
-            <dxg:GridColumn Header="수용가행정동" Width="3*" FieldName="HOM_CDE_NAM" HorizontalHeaderContentAlignment="Center">
+            <dxg:GridColumn Header="수용가행정동" Width="3*" FieldName="HOM_HJD_NAM" HorizontalHeaderContentAlignment="Center">
                 <dxg:GridColumn.EditSettings>
                     <dxe:TextEditSettings HorizontalContentAlignment="Center"/>
                 </dxg:GridColumn.EditSettings>
@@ -74,4 +82,15 @@
         </dxg:GridControl>
 
     </Grid>
+
+
+
+    <!--뷰와 연결된 뷰모델로 Loaded 이벤트전파-->
+    <i:Interaction.Triggers>
+        <i:EventTrigger EventName="Loaded">
+            <i:InvokeCommandAction Command="{Binding LoadedCommand}" CommandParameter="{Binding ElementName=hydtMetrSubListView}"/>
+        </i:EventTrigger>
+    </i:Interaction.Triggers>
+
+
 </UserControl>

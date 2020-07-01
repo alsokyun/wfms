@@ -56,5 +56,13 @@ namespace GTI.WFMS.Modules.Pop.View
                 throw ex;
             }
         }
+
+        private void View_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.Key == Key.Escape)
+            {
+                this.Close();
+            }
+        }
     }
 }

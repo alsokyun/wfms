@@ -1,27 +1,10 @@
 ﻿using GTI.WFMS.Models.Cmm.Model;
-using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace GTI.WFMS.Models.Acmf.Model
 {
-    public class SupDutDtl : CmmDtl, INotifyPropertyChanged
+    public class SupDutDtl : CmmDtl
     {
-        /// <summary>                                                                
-        /// 인터페이스 구현부분                                                       
-        /// </summary>                                                                
-        public event PropertyChangedEventHandler PropertyChanged;
-        protected void OnPropertyChanged(string propertyName)
-        {
-            if (PropertyChanged != null)
-            {
-                PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
-            }
-        }
-
+      
 
 
         /// <summary>                                                                 
@@ -197,8 +180,8 @@ namespace GTI.WFMS.Models.Acmf.Model
                 OnPropertyChanged("PIP_LBL");
             }
         }
-        private decimal __PIP_DIP;
-        public decimal PIP_DIP
+        private decimal ?  __PIP_DIP;
+        public decimal ? PIP_DIP
         {
             get { return __PIP_DIP; }
             set
@@ -227,8 +210,8 @@ namespace GTI.WFMS.Models.Acmf.Model
                 OnPropertyChanged("MOP_NAM");
             }
         }
-        private decimal __PIP_LEN;
-        public decimal PIP_LEN
+        private decimal ?  __PIP_LEN;
+        public decimal ? PIP_LEN
         {
             get { return __PIP_LEN; }
             set
@@ -237,8 +220,8 @@ namespace GTI.WFMS.Models.Acmf.Model
                 OnPropertyChanged("PIP_LEN");
             }
         }
-        private decimal __LOW_DEP;
-        public decimal LOW_DEP
+        private decimal ?  __LOW_DEP;
+        public decimal ? LOW_DEP
         {
             get { return __LOW_DEP; }
             set
@@ -247,8 +230,8 @@ namespace GTI.WFMS.Models.Acmf.Model
                 OnPropertyChanged("LOW_DEP");
             }
         }
-        private decimal __HGH_DEP;
-        public decimal HGH_DEP
+        private decimal ?  __HGH_DEP;
+        public decimal ? HGH_DEP
         {
             get { return __HGH_DEP; }
             set

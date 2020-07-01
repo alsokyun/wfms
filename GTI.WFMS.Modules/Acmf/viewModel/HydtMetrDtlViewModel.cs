@@ -40,9 +40,9 @@ namespace GTI.WFMS.Modules.Acmf.ViewModel
       
         //ComboBoxEdit cbFTR_CDE; DataTable dtFTR_CDE = new DataTable();	//지형지물
         ComboBoxEdit cbHJD_CDE; DataTable dtHJD_CDE = new DataTable();	    //행정동
-        ComboBoxEdit cbHOM_CDE; DataTable dtHOM_CDE = new DataTable();      //수용가행정동
+        ComboBoxEdit cbHOM_HJD; DataTable dtHOM_HJD = new DataTable();      //수용가행정동
         ComboBoxEdit cbSBI_CDE; DataTable dtSBI_CDE = new DataTable();      //업종
-        ComboBoxEdit cbMOF_CDE; DataTable dtMOF_CDE = new DataTable();      //형식
+        ComboBoxEdit cbMET_MOF; DataTable dtMET_MOF = new DataTable();      //형식
 
         Button btnBack;
         Button btnDelete;
@@ -81,9 +81,9 @@ namespace GTI.WFMS.Modules.Acmf.ViewModel
                 hydtMetrDtlView = values[0] as HydtMetrDtlView;
                 //cbFTR_CDE = hydtMetrDtlView.cbFTR_CDE;     //지형지물
                 cbHJD_CDE = hydtMetrDtlView.cbHJD_CDE;      //행정동
-                cbHOM_CDE = hydtMetrDtlView.cbHOM_CDE;       //수용가행정동
+                cbHOM_HJD = hydtMetrDtlView.cbHOM_HJD;       //수용가행정동
                 cbSBI_CDE = hydtMetrDtlView.cbSBI_CDE;       //업종
-                cbMOF_CDE = hydtMetrDtlView.cbMOF_CDE;       //형식
+                cbMET_MOF = hydtMetrDtlView.cbMET_MOF;       //형식
 
                 btnBack = hydtMetrDtlView.btnBack;
                 btnDelete = hydtMetrDtlView.btnDelete;
@@ -121,7 +121,7 @@ namespace GTI.WFMS.Modules.Acmf.ViewModel
                         var colValue = dbprop.GetValue(result, null);
                         if (colName.Equals(propName))
                         {
-                            prop.SetValue(this, Convert.ChangeType(colValue, prop.PropertyType));
+                            try { prop.SetValue(this, colValue); } catch (Exception) { }
                         }
                     }
                     Console.WriteLine(propName + " - " + prop.GetValue(this, null));
@@ -204,7 +204,7 @@ namespace GTI.WFMS.Modules.Acmf.ViewModel
             Hashtable param = new Hashtable();
             param.Add("sqlId" , "selectChscResSubList");
             param.Add("sqlId2", "SelectFileMapList");
-            param.Add("sqlId3", "selectWtlLeakSubList");
+            param.Add("sqlId3", "selectWttMetaHtList");
 
             param.Add("FTR_CDE", this.FTR_CDE);
             param.Add("FTR_IDN", this.FTR_IDN);
@@ -220,18 +220,36 @@ namespace GTI.WFMS.Modules.Acmf.ViewModel
                 dt = result["dt"] as DataTable;
                 if (dt.Rows.Count > 0)
                 {
-                    Messages.ShowErrMsgBox("유지보수내역이 존재합니다.");
+                    Messages.ShowInfoMsgBox("유지보수내역이 존재합니다.");
                     return;
                 }
             }
             catch (Exception) { }
+
+
+            // 1.삭제처리
+            if (Messages.ShowYesNoMsgBox("급수전 계량기를 삭제하시겠습니까?") != MessageBoxResult.Yes) return;
+
+
             try
             {
                 dt2 = result["dt2"] as DataTable;
                 if (dt2.Rows.Count > 0)
                 {
-                    Messages.ShowErrMsgBox("파일첨부내역이 존재합니다.");
-                    return;
+                    //Messages.ShowInfoMsgBox("파일첨부내역이 존재합니다.");
+                    //return;
+                    foreach (DataRow row in dt2.Rows)
+                    {
+                        //a.FIL_SEQ 첨부파일삭제
+                        BizUtil.DelFileSeq(row["FIL_SEQ"]);
+
+                        //b.FILE_MAP 업무파일매핑삭제
+                        param = new Hashtable();
+                        param.Add("sqlId", "DeleteFileMap");
+                        param.Add("BIZ_ID", FTR_CDE + FTR_IDN);
+                        param.Add("FIL_SEQ", row["FIL_SEQ"]);
+                        BizUtil.Update(param);
+                    }
                 }
             }
             catch (Exception) { }
@@ -240,16 +258,17 @@ namespace GTI.WFMS.Modules.Acmf.ViewModel
                 dt3 = result["dt3"] as DataTable;
                 if (dt3.Rows.Count > 0)
                 {
-                    Messages.ShowErrMsgBox("누수지점내역이 존재합니다.");
-                    return;
+                    //Messages.ShowInfoMsgBox("계량기교체이력이 존재합니다.");
+                    //return;
+                    WttMetaHt dtl = new WttMetaHt();
+                    dtl.FTR_CDE = FTR_CDE;
+                    dtl.FTR_IDN = FTR_IDN;
+                    BizUtil.Update2(dtl, "DeleteWttMetaHt");
                 }
             }
             catch (Exception) { }
 
 
-
-            // 1.삭제처리
-            if (Messages.ShowYesNoMsgBox("변로를 삭제하시겠습니까?") != MessageBoxResult.Yes) return;
             try
             {
                 BizUtil.Update2(this, "deleteHydtMetrDtl");
@@ -294,16 +313,16 @@ namespace GTI.WFMS.Modules.Acmf.ViewModel
                 //BizUtil.SetCombo(cbFTR_CDE, "Select_FTR_LIST", "FTR_CDE", "FTR_NAM", false);
 
                 // cbHJD_CDE 행정동
-                BizUtil.SetCombo(cbHJD_CDE, "Select_ADAR_LIST", "HJD_CDE", "HJD_NAM", "[선택하세요]");
+                BizUtil.SetCombo(cbHJD_CDE, "Select_ADAR_LIST", "HJD_CDE", "HJD_NAM", "선택");
 
-                // cbHOM_CDE 수용가행정동
-                BizUtil.SetCombo(cbHOM_CDE, "Select_ADAR_LIST", "HJD_CDE", "HJD_NAM", "[선택하세요]");
+                // cbHOM_HJD 수용가행정동
+                BizUtil.SetCombo(cbHOM_HJD, "Select_ADAR_LIST", "HJD_CDE", "HJD_NAM", "선택");
 
                 // cbSBI_CDE 업종
-                BizUtil.SetCmbCode(cbSBI_CDE, "250020", "[선택하세요]");
+                BizUtil.SetCmbCode(cbSBI_CDE, "250020", "선택");
 
-                // cbMOF_CDE 형식
-                BizUtil.SetCmbCode(cbMOF_CDE, "250035", "[선택하세요]");
+                // cbMET_MOF 형식
+                BizUtil.SetCmbCode(cbMET_MOF, "250004", "선택");
             }
             catch (Exception ex)
             {

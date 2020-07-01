@@ -2,19 +2,9 @@
 
 namespace GTI.WFMS.Models.Cmm.Model
 {
-    public class LinkWttMetaHt : CmmDtl, INotifyPropertyChanged
+    public class LinkWttMetaHt : CmmDtl
     {
-        /// <summary>                                                                
-        /// 인터페이스 구현부분                                                       
-        /// </summary>                                                                
-        public event PropertyChangedEventHandler PropertyChanged;
-        protected void OnPropertyChanged(string propertyName)
-        {
-            if (PropertyChanged != null)
-            {
-                PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
-            }
-        }
+      
         
 
         /// <summary>                                                                 
@@ -30,8 +20,8 @@ namespace GTI.WFMS.Models.Cmm.Model
                 OnPropertyChanged("RNO");
             }
         }
-        private decimal __META_SEQ;
-        public decimal META_SEQ
+        private decimal? __META_SEQ;
+        public decimal? META_SEQ
         {
             get { return __META_SEQ; }
             set
@@ -210,8 +200,8 @@ namespace GTI.WFMS.Models.Cmm.Model
                 OnPropertyChanged("OME_NAM");
             }
         }
-        private int __OME_DIP;
-        public int OME_DIP
+        private decimal? __OME_DIP;
+        public decimal? OME_DIP
         {
             get { return __OME_DIP; }
             set
@@ -280,8 +270,8 @@ namespace GTI.WFMS.Models.Cmm.Model
                 OnPropertyChanged("OME_VAL");
             }
         }
-        private int __OME_CNT;
-        public int OME_CNT
+        private int? __OME_CNT;
+        public int? OME_CNT
         {
             get { return __OME_CNT; }
             set
@@ -300,8 +290,8 @@ namespace GTI.WFMS.Models.Cmm.Model
                 OnPropertyChanged("IME_NAM");
             }
         }
-        private int __IME_DIP;
-        public int IME_DIP
+        private decimal? __IME_DIP;
+        public decimal? IME_DIP
         {
             get { return __IME_DIP; }
             set

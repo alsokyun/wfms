@@ -7,11 +7,13 @@ using Microsoft.Win32;
 using System;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Management.Automation;
 using System.Management.Automation.Runspaces;
 using System.Security;
+using System.Text;
 using System.Threading;
 using System.Windows;
 using System.Windows.Threading;
@@ -138,17 +140,35 @@ namespace GTI.WFMS.GIS.Pop.ViewModel
                 {
                     FileInfo[] files = openFileDialog.FileNames.Select(f => new FileInfo(f)).ToArray();  //파일인포
 
+                    int cnt = 0;//전체파일수
+                    int chk = 0;//shp,dat파일수
                     foreach (FileInfo fi in files)
                     {
                         try
                         {
                             //파일객체
                             ItemsFile.Add(fi);
+                            if (fi.Extension.Contains("shp") || fi.Extension.Contains("dbf"))
+                            {
+                                chk++;
+                            }
+                            cnt++;
                         }
                         catch (Exception e)
                         {
                             Console.WriteLine(e.Message);
                         }
+                    }
+
+                    if(chk < 2)
+                    {
+                        MessageBox.Show("shp, dbf 파일 두개를 선택해야합니다.");
+                        return;
+                    }
+                    if (cnt > 2)
+                    {
+                        MessageBox.Show("한번에 한종류의 shp파일만 업로드할수 있습니다.");
+                        return;
                     }
 
                     //파일업로드시작
@@ -215,11 +235,11 @@ namespace GTI.WFMS.GIS.Pop.ViewModel
         private void InitModel()
         {
             ItemsSelect.Clear();
+            ItemsFile.Clear();
 
             //저장된 shp파일 목록
             DirectoryInfo di = new DirectoryInfo(BizUtil.GetDataFolder("shape"));
-
-            foreach (FileInfo fi in di.GetFiles("*.shp"))
+            foreach (FileInfo fi in di.GetFiles().Where(f=> f.Extension.Contains("shp") || f.Extension.Contains("dbf") || f.Extension.Contains("prj") || f.Extension.Contains("shx")))
             {
                 try
                 {
@@ -273,11 +293,11 @@ namespace GTI.WFMS.GIS.Pop.ViewModel
                    new Action((delegate ()
                    {
                        //db 원격파워셀스크립트 수행 - 티베로 gisLoader, tbloader 
-                       ExPs_GisTbloader();
+                       ExCmd_GisTbloader();
 
 
                        (shpMngView.FindName("waitindicator") as WaitIndicator).DeferedVisibility = false;
-                       Messages.ShowOkMsgBox();
+                       //Messages.ShowOkMsgBox();
                        InitModel();
                        //팝업닫기
                        //btnClose.RaiseEvent(new RoutedEventArgs(Button.ClickEvent));
@@ -314,18 +334,11 @@ namespace GTI.WFMS.GIS.Pop.ViewModel
             foreach (FileInfo fi in ItemsFile)
             {
                 string shp_file_path = Path.Combine(BizUtil.GetDataFolder("shape"), fi.Name);
-                string db_shp_file_path = Path.Combine(SHP, fi.Name);
 
                 try
                 {
                     // 1.shp파일 프로그램 위치에 저장
                     fi.CopyTo(shp_file_path, true);
-
-                    // 2.shp파일 db서버 위치에 원격복사
-                    ExPs_CopyShape(shp_file_path, db_shp_file_path);
-
-
-
 
                 }
                 catch (Exception ex)
@@ -344,154 +357,114 @@ namespace GTI.WFMS.GIS.Pop.ViewModel
 
 
 
-        /// <summary>
-        /// 원격파일 복사
-        /// </summary>
-        private void ExPs_CopyShape(string path, string destination)
-        {
-            // Username and Password for the remote machine.
-            var userName = User;
-            string pw = PW;
-
-            // Creates a secure string for the password
-            SecureString securePassword = new SecureString();
-            foreach (char c in pw)
-            {
-                securePassword.AppendChar(c);
-            }
-            securePassword.MakeReadOnly();
-
-            // Creates a PSCredential object
-            PSCredential creds = new PSCredential(userName, securePassword);
-
-
-
-
-            // Creates the runspace for PowerShell
-            Runspace runspace = RunspaceFactory.CreateRunspace();
-
-            // Create the PSSession connection to the remote machine.
-            //ComputerName
-            string computerName = IP;
-
-            PowerShell powershell = PowerShell.Create();
-            PSCommand command = new PSCommand();
-            command.AddCommand("New-PSSession");
-            command.AddParameter("ComputerName", computerName);
-            command.AddParameter("Credential", creds);
-            powershell.Commands = command;
-            runspace.Open();
-            powershell.Runspace = runspace;
-            Collection<PSObject> result = powershell.Invoke();
-
-
-
-            // Takes the PSSession object and places it into a PowerShell variable
-            powershell = PowerShell.Create();
-            command = new PSCommand();
-            command.AddCommand("Set-Variable");
-            command.AddParameter("Name", "session");
-            command.AddParameter("Value", result[0]);
-            powershell.Commands = command;
-            powershell.Runspace = runspace;
-            powershell.Invoke();
-
-
-
-            // Calls the Copy-Item cmdlet as a script and passes the PSSession, Path and destination parameters to it
-            powershell = PowerShell.Create();
-            command = new PSCommand();
-            command.AddScript("Copy-Item -Path " + path + " -Destination " + destination + " -ToSession $session");
-            powershell.Commands = command;
-            powershell.Runspace = runspace;
-            powershell.Invoke();
-
-            // 세션종료
-            powershell = PowerShell.Create();
-            powershell.Runspace = runspace;
-            powershell.AddScript("Remove-PSSession $session");
-            powershell.Invoke();
-        }
-
-
 
         /// <summary>
-        /// 원격서버스크립트수행
+        /// cmd.exe 실행 및 command 수행
         /// </summary>
-        private void ExPs_GisTbloader()
+        private void ExCmd_GisTbloader()
         {
-            // Username and Password for the remote machine.
-            var userName = User;
-            string pw = PW;
+            //0. Cmd.exe 호출
+            ProcessStartInfo psi = new ProcessStartInfo();
+            psi.FileName = @"cmd";
+            psi.WindowStyle = ProcessWindowStyle.Hidden;             // cmd창이 숨겨지도록 하기
+            psi.CreateNoWindow = true;                               // cmd창을 띄우지 안도록 하기
 
-            // Creates a secure string for the password
-            SecureString securePassword = new SecureString();
-            foreach (char c in pw)
+            psi.UseShellExecute = false;
+            psi.RedirectStandardOutput = true;        // cmd창에서 데이터를 가져오기
+            psi.RedirectStandardInput = true;          // cmd창으로 데이터 보내기
+            psi.RedirectStandardError = true;          // cmd창에서 오류 내용 가져오기
+
+
+            Process process = new Process();
+            process.EnableRaisingEvents = false;
+            process.StartInfo = psi;
+            process.Start();
+
+            //shp 저장소 경로이동
+            string cdcmd = "c: ";
+            process.StandardInput.Write(cdcmd + Environment.NewLine); 
+            cdcmd = "cd " + Path.Combine(BizUtil.GetDataFolder("shape"));
+            process.StandardInput.Write(cdcmd + Environment.NewLine); 
+
+            foreach (FileInfo fi in ItemsFile)
             {
-                securePassword.AppendChar(c);
+                if (!fi.Extension.Contains("shp")) continue; //shp파일에 대해서만 수행
+
+                //1.gisLoader 수행해서 clt 파일생성
+                string gisLoadercmd = "gisLoader " + fi.Name + " infofms." + fi.Name.Replace(".shp","");
+
+                process.StandardInput.Write(gisLoadercmd + Environment.NewLine); // 명령어를 보낼때는 꼭 마무리를 해줘야 한다
+                process.StandardInput.Close(); //StandardOutput 읽기위해서는 input을 닫아줘야함
+
+                string result = process.StandardOutput.ReadToEnd();
+                StringBuilder sb = new StringBuilder();
+                sb.Append("[Control파일 생성] \r\n");
+                sb.Append(result);
+                sb.Append("\r\n");
+
+                if (!result.Contains("complete"))
+                {
+                    MessageBox.Show("gisLoader Control파일 생성에 실패하였습니다.");
+                    return;
+                }
+
+                process.StandardInput.Close();
+
+                process.WaitForExit();
+                process.Close();
+                break; //한파일에대해서만 수행함
             }
-            securePassword.MakeReadOnly();
-
-            // Creates a PSCredential object
-            PSCredential creds = new PSCredential(userName, securePassword);
 
 
 
 
-            // Creates the runspace for PowerShell
-            Runspace runspace = RunspaceFactory.CreateRunspace();
+            //2.tbloader 수행
+            process.Start();
 
-            // Create the PSSession connection to the remote machine.
-            //ComputerName
-            string computerName = IP;
-
-            PowerShell powershell = PowerShell.Create();
-            PSCommand command = new PSCommand();
-            command.AddCommand("New-PSSession");
-            command.AddParameter("ComputerName", computerName);
-            command.AddParameter("Credential", creds);
-            powershell.Commands = command;
-            runspace.Open();
-            powershell.Runspace = runspace;
-            Collection<PSObject> result = powershell.Invoke();
+            //shp 저장소 경로이동
+            cdcmd = "c: ";
+            process.StandardInput.Write(cdcmd + Environment.NewLine);
+            cdcmd = "cd " + Path.Combine(BizUtil.GetDataFolder("shape"));
+            process.StandardInput.Write(cdcmd + Environment.NewLine);
 
 
-
-            // Takes the PSSession object and places it into a PowerShell variable
-            powershell = PowerShell.Create();
-            command = new PSCommand();
-            command.AddCommand("Set-Variable");
-            command.AddParameter("Name", "session");
-            command.AddParameter("Value", result[0]);
-            powershell.Commands = command;
-            powershell.Runspace = runspace;
-            powershell.Invoke();
+            foreach (FileInfo fi in ItemsFile)
+            {
+                if (!fi.Extension.Contains("shp")) continue; //shp파일에 대해서만 수행
 
 
+                string ctl = fi.Name.Replace(".shp", "") + ".ctl";
+                FileInfo ctl_fi = new FileInfo(Path.Combine(BizUtil.GetDataFolder("shape"), ctl));
+                if (!ctl_fi.Exists)
+                {
+                    MessageBox.Show("Control파일이 없습니다.");
+                    return;
+                }
 
-            // Calls the Copy-Item cmdlet as a script and passes the PSSession, Path and destination parameters to it
+                string tbloadercmd = "tbloader userid=infofms/infofms@tibero control=" + ctl;
+                process.StandardInput.Write(tbloadercmd + Environment.NewLine); // 명령어를 보낼때는 꼭 마무리를 해줘야 한다
+                process.StandardInput.Close(); //StandardOutput 읽기위해서는 input을 닫아줘야함
 
-            // 1.gisLoader 실행
-            powershell = PowerShell.Create();
-            command = new PSCommand();
-            command.AddScript(@"Invoke-Command -Session $session  -ScriptBlock {Invoke-Expression -Command:'cmd /c gisLoader d:\shape\WTL_SPLY_LS.shp infofms.WTL_SPLY_LS' }");
-            powershell.Commands = command;
-            powershell.Runspace = runspace;
-            powershell.Invoke();
+                string result2 = process.StandardOutput.ReadToEnd();
+                StringBuilder sb2 = new StringBuilder();
+                sb2.Append("[Import 수행] \r\n");
+                sb2.Append(result2);
+                sb2.Append("\r\n");
 
-            // 2.tbloader 실행
-            powershell = PowerShell.Create();
-            command = new PSCommand();
-            command.AddScript(@"Invoke-Command  -Session $session -ScriptBlock {Invoke-Expression -Command:'cmd /c tbloader userid=infouser/infouser control=d:\shape\WTL_SPLY_LS.ctl' } ");
-            powershell.Commands = command;
-            powershell.Runspace = runspace;
-            powershell.Invoke();
+                if (!result2.Contains("success"))
+                {
+                    MessageBox.Show("tbloader 임포트에 실패하였습니다.");
+                    return;
+                }
 
-            // 세션종료
-            powershell = PowerShell.Create();
-            powershell.Runspace = runspace;
-            powershell.AddScript("Remove-PSSession $session");
-            powershell.Invoke();
+                MessageBox.Show("정상적으로 처리되었습니다.");
+
+                process.WaitForExit();
+                process.Close();
+                break; //한파일에대해서만 수행함
+            }
+
+
         }
 
 

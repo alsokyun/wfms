@@ -260,6 +260,12 @@
     
     
     
+    <!-- 파일마스터 삭제 -->
+    <update id="DeleteFileMst" parameterClass="Hashtable">
+      DELETE FROM FMS_FILE_MST WHERE 1=1
+      AND FIL_SEQ = #FIL_SEQ#
+    </update>
+
     <!-- 파일디테일 일괄삭제 -->
     <update id="DeleteFileSeq" parameterClass="Hashtable">
       DELETE FROM FMS_FILE_DTL WHERE 1=1

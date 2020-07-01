@@ -2,20 +2,9 @@
 
 namespace GTI.WFMS.Models.Cmm.Model
 {
-    public class LinkWtlLeakPs : CmmDtl, INotifyPropertyChanged
+    public class LinkWtlLeakPs : CmmDtl
     {
-        /// <summary>                                                                
-        /// 인터페이스 구현부분                                                       
-        /// </summary>                                                                
-        public event PropertyChangedEventHandler PropertyChanged;
-        protected void OnPropertyChanged(string propertyName)
-        {
-            if (PropertyChanged != null)
-            {
-                PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
-            }
-        }
-
+       
 
 
         /// <summary>                                                                 
@@ -171,8 +160,8 @@ namespace GTI.WFMS.Models.Cmm.Model
                 OnPropertyChanged("MOP_NAM");
             }
         }
-        private int __PIP_DIP;
-        public int PIP_DIP
+        private decimal? __PIP_DIP;
+        public decimal? PIP_DIP
         {
             get { return __PIP_DIP; }
             set

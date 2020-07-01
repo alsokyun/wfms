@@ -446,7 +446,7 @@
             this.xrLabel6.StylePriority.UseTextAlignment = false;
             this.xrLabel6.Text = "xrLabel15";
             this.xrLabel6.TextAlignment = DevExpress.XtraPrinting.TextAlignment.MiddleLeft;
-            this.xrLabel6.TextFormatString = "{0:#,0.00}";
+            this.xrLabel6.TextFormatString = "{0:#,0.000}";
             // 
             // xrLabel7
             // 
@@ -679,7 +679,7 @@
             this.xrLabel81.StylePriority.UseTextAlignment = false;
             this.xrLabel81.Text = "xrLabel15";
             this.xrLabel81.TextAlignment = DevExpress.XtraPrinting.TextAlignment.MiddleLeft;
-            this.xrLabel81.TextFormatString = "{0:#,0}";
+            this.xrLabel81.TextFormatString = "{0:#,0.000}";
             // 
             // xrLabel80
             // 
@@ -724,7 +724,7 @@
             this.xrLabel78.StylePriority.UseTextAlignment = false;
             this.xrLabel78.Text = "xrLabel15";
             this.xrLabel78.TextAlignment = DevExpress.XtraPrinting.TextAlignment.MiddleLeft;
-            this.xrLabel78.TextFormatString = "{0:#,0.00}";
+            this.xrLabel78.TextFormatString = "{0:#,0.000}";
             // 
             // xrLabel77
             // 
@@ -1025,7 +1025,7 @@
             this.xrLabel58.StylePriority.UseFont = false;
             this.xrLabel58.StylePriority.UsePadding = false;
             this.xrLabel58.StylePriority.UseTextAlignment = false;
-            this.xrLabel58.Text = "행정도";
+            this.xrLabel58.Text = "행정동";
             this.xrLabel58.TextAlignment = DevExpress.XtraPrinting.TextAlignment.MiddleLeft;
             // 
             // xrLabel50
