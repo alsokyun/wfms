@@ -436,10 +436,6 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="Main\PopMain.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
     <Page Include="Main\View\PopWinView.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -1011,9 +1007,6 @@
     <Compile Include="Link\View\RefFileMngView.xaml.cs">
       <DependentUpon>RefFileMngView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Main\PopMain.xaml.cs">
-      <DependentUpon>PopMain.xaml</DependentUpon>
-    </Compile>
     <Compile Include="Main\View\PopWinView.xaml.cs">
       <DependentUpon>PopWinView.xaml</DependentUpon>
     </Compile>
@@ -1307,9 +1300,7 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Licenses.licx" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Main\ViewModel\" />
-  </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
     <WCFMetadata Include="Connected Services\" />
   </ItemGroup>

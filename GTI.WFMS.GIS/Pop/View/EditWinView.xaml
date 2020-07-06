@@ -94,9 +94,12 @@
                         </i:EventTrigger>
                     </i:Interaction.Triggers>
                 </Button>
+
             </StackPanel>
-            
-            
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Margin="300 0 0 0">
+                <Button x:Name="btnReset" Content="Reset" Style="{DynamicResource TxtButton}" Command="{Binding ResetCmd}" CommandParameter="{Binding ElementName=btnReset}"/>
+            </StackPanel>
+
             <TextBlock x:Name="txbFTR_CDE" Visibility="Collapsed" Text="{Binding FTR_CDE, UpdateSourceTrigger=PropertyChanged}"/>
             <TextBlock x:Name="txbFTR_IDN" Visibility="Collapsed" Text="{Binding FTR_IDN, UpdateSourceTrigger=PropertyChanged}"/>
         </StackPanel>

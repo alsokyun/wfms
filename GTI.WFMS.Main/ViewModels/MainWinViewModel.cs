@@ -35,7 +35,7 @@ namespace GTI.WFMS.Main
         MainWork work = new MainWork();
         Hashtable htconditions = new Hashtable();
         MainWin mainwin;
-        PopMain pmain = new PopMain();
+
         Border borderTop = new Border();
         //public static Window popWinView;
         //Assembly assembly = Assembly.GetExecutingAssembly();

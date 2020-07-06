@@ -1,4 +1,5 @@
 ﻿using DevExpress.Xpf.Core;
+using GTI.WFMS.Models.Common;
 using GTI.WFMS.Modules.Link.View;
 using GTI.WFMS.Modules.Pop.View;
 using GTIFramework.Common.MessageBox;
@@ -27,15 +28,19 @@ namespace GTI.WFMS.Modules.Pipe.View
         {
             InitializeComponent();
 
-            _FTR_CDE = FTR_CDE;
-            _FTR_IDN = FTR_IDN;
-
             // 테마일괄적용...
             ThemeApply.Themeapply(this);
 
-            this.txtFTR_CDE.EditValue = FTR_CDE;
-            this.txtFTR_IDN.EditValue = FTR_IDN;
-          
+            this.txtFTR_CDE.EditValue = BizUtil.FTR_CDE;
+            this.txtFTR_IDN.EditValue = Convert.ToInt32(BizUtil.FTR_IDN);
+
+            _FTR_CDE = BizUtil.FTR_CDE;
+            _FTR_IDN = Convert.ToInt32(BizUtil.FTR_IDN);
+
+            //전역변수 리셋
+            BizUtil.FTR_CDE = "";
+            BizUtil.FTR_IDN = "";
+
             //정상적인 버튼클릭 이벤트
             btnBack.Click += _backCmd;
 

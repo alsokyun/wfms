@@ -3,6 +3,7 @@ using ESRI.ArcGIS.Controls;
 using ESRI.ArcGIS.esriSystem;
 using ESRI.ArcGIS.Framework;
 using ESRI.ArcGIS.Geodatabase;
+using ESRI.ArcGIS.SystemUI;
 using GTI.WFMS.GIS.Pop.View;
 using GTI.WFMS.Models.Common;
 using System;
@@ -71,10 +72,23 @@ namespace GTI.WFMS.GIS
             toolbarControl.AddItem("esriControls.ControlsMapMeasureTool");
             toolbarControl.AddItem("esriControls.ControlsMapZoomToolControl");
             toolbarControl.AddItem("esriControls.ControlsMapGoToCommand");
+            toolbarControl.AddItem("esriControls.ControlsGraphicElementToolbar");
+            //toolbarControl.AddItem("esriControls.ControlsFeatureSelectionToolbar");//피처선택모드
 
             //Pan모드 선택처리
-            
             //FindCommandAndExecute((IApplication)mapControl.Parent, "esriControls.ControlsMapPanTool");
+            ICommand cmd = new ControlsMapPanTool();
+            cmd.OnCreate(mapControl.Object);
+            if(cmd.Enabled)
+            {
+                mapControl.CurrentTool = (ITool) cmd;
+            }
+
+
+
+
+
+
 
             //set controls' properties
             toolbarControl.BackColor = Color.FromArgb(245, 245, 220);

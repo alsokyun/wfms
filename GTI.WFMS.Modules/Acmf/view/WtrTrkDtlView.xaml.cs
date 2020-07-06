@@ -1,4 +1,5 @@
 ﻿using DevExpress.Xpf.Core;
+using GTI.WFMS.Models.Common;
 using GTI.WFMS.Modules.Link.View;
 using GTIFramework.Common.Utils.ViewEffect;
 using System;
@@ -33,6 +34,32 @@ namespace GTI.WFMS.Modules.Acmf.View
 
             this.txtFTR_CDE.EditValue = FTR_CDE;
             this.txtFTR_IDN.EditValue = FTR_IDN;
+
+            //정상적인 버튼클릭 이벤트
+            btnBack.Click += _backCmd;
+
+            //탭항목 동적추가
+            waitindicator.DeferedVisibility = true;
+            thread = new Thread(new ThreadStart(LoadFx));
+            thread.Start();
+        }
+
+        public WtrTrkDtlView()
+        {
+            InitializeComponent();
+
+            // 테마일괄적용...
+            ThemeApply.Themeapply(this);
+
+            this.txtFTR_CDE.EditValue = BizUtil.FTR_CDE;
+            this.txtFTR_IDN.EditValue = Convert.ToInt32(BizUtil.FTR_IDN);
+
+            _FTR_CDE = BizUtil.FTR_CDE;
+            _FTR_IDN = Convert.ToInt32(BizUtil.FTR_IDN);
+
+            //전역변수 리셋
+            BizUtil.FTR_CDE = "";
+            BizUtil.FTR_IDN = "";
 
             //정상적인 버튼클릭 이벤트
             btnBack.Click += _backCmd;

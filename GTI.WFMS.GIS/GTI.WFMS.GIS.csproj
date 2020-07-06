@@ -99,6 +99,9 @@
       <EmbedInteropTypes>True</EmbedInteropTypes>
       <HintPath>C:\Program Files (x86)\ArcGIS\DeveloperKit10.8\DotNet\ESRI.ArcGIS.System.dll</HintPath>
     </Reference>
+    <Reference Include="ESRI.ArcGIS.SystemUI, Version=10.8.0.0, Culture=neutral, PublicKeyToken=8fc3cc631e44ad86, processorArchitecture=MSIL">
+      <EmbedInteropTypes>True</EmbedInteropTypes>
+    </Reference>
     <Reference Include="ESRI.ArcGIS.Version, Version=10.8.0.0, Culture=neutral, PublicKeyToken=8fc3cc631e44ad86, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>C:\Program Files (x86)\ArcGIS\DeveloperKit10.8\DotNet\ESRI.ArcGIS.Version.dll</HintPath>
@@ -135,9 +138,7 @@
     <Reference Include="WindowsFormsIntegration" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="CmmObjHs.cs" />
     <Compile Include="CmmObj.cs" />
-    <Compile Include="CmmRunHs.cs" />
     <Compile Include="CmmRun.cs" />
     <Compile Include="Ext\FmsFeature.cs" />
     <Compile Include="GisCmm.cs" />
@@ -234,6 +235,9 @@
     <Compile Include="Pop\ViewModel\CnstMngPopViewModel.cs" />
     <Compile Include="Pop\View\FtrPopView.xaml.cs">
       <DependentUpon>FtrPopView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Pop\View\PopWinView.xaml.cs">
+      <DependentUpon>PopWinView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Pop\View\ShpPsView.xaml.cs">
       <DependentUpon>ShpPsView.xaml</DependentUpon>
@@ -335,6 +339,10 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Include="Pop\View\FtrPopView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Pop\View\PopWinView.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
