@@ -120,7 +120,7 @@
                               x:Name="cbMOF_CDE" EditValue="{Binding FctDtl.MOF_CDE}" />
 
             <Label Grid.Row="8" Grid.Column="0" Content="구경" Style="{DynamicResource ResourceKey=GridLabel}"/>
-            <dxe:TextEdit Grid.Row="8" Grid.Column="1" Style="{DynamicResource ResourceKey=GridNumberEdit}"   
+            <dxe:TextEdit Grid.Row="8" Grid.Column="1" Style="{DynamicResource ResourceKey=GridNumberEdit}" 
                           EditValue="{Binding FctDtl.FLO_DIP}"/>
 
             <Label Grid.Row="9" Grid.Column="0" Content="제작회사명" Style="{DynamicResource ResourceKey=GridLabel}"/>

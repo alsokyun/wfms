@@ -239,7 +239,8 @@ namespace GTI.WFMS.GIS.Pop.ViewModel
 
             //저장된 shp파일 목록
             DirectoryInfo di = new DirectoryInfo(BizUtil.GetDataFolder("shape"));
-            foreach (FileInfo fi in di.GetFiles().Where(f=> f.Extension.Contains("shp") || f.Extension.Contains("dbf") || f.Extension.Contains("prj") || f.Extension.Contains("shx")))
+            //foreach (FileInfo fi in di.GetFiles().Where(f=> f.Extension.Contains("shp") || f.Extension.Contains("dbf") || f.Extension.Contains("prj") || f.Extension.Contains("shx")))
+            foreach (FileInfo fi in di.GetFiles().Where(f=> f.Extension.Contains("shp") ))
             {
                 try
                 {
@@ -519,7 +520,26 @@ namespace GTI.WFMS.GIS.Pop.ViewModel
                 //다운로드시작...
                 try
                 {
+                    //shp파일
                     System.IO.File.Copy(source_file_path, target_file_path, true);
+                    try
+                    {
+                        //dbf파일
+                        System.IO.File.Copy(source_file_path.Replace(".shp", ".dbf"), target_file_path.Replace(".shp", ".dbf"), true);
+                    }
+                    catch (Exception){}
+                    try
+                    {
+                        //prj파일
+                        System.IO.File.Copy(source_file_path.Replace(".shp", ".prj"), target_file_path.Replace(".shp", ".prj"), true);
+                    }
+                    catch (Exception){}
+                    try
+                    {
+                        //shx파일
+                        System.IO.File.Copy(source_file_path.Replace(".shp", ".shx"), target_file_path.Replace(".shp", ".shx"), true);
+                    }
+                    catch (Exception){}
                 }
                 catch (Exception)
                 {

@@ -203,7 +203,7 @@ namespace GTI.WFMS.GIS.Pop.ViewModel
                 }
 
                 //기존항목 초기화
-                InitModel();
+                ResetLayer();
 
                 //기존페이지 초기화
                 InitPage(cbFTR_CDE.EditValue.ToString(), null, null);
@@ -423,6 +423,10 @@ namespace GTI.WFMS.GIS.Pop.ViewModel
 
                 //레이어표시 - FTR_IDN 조건 필터링없음
                 ShowShapeLayerFilter(mapView, doc.Tag.ToString(), chk, null);
+
+                //조회된 피처 자동선택
+                string ftr_cde = doc.Tag.ToString() == "WTL_PIPE_LM" ? "SA001" : "SA002";
+                SelectFct(ftr_cde, "", layers[doc.Tag.ToString()]);
             });
 
 
@@ -509,24 +513,35 @@ namespace GTI.WFMS.GIS.Pop.ViewModel
         // 시설물코드 변경
         private void cbFTR_CDEHandler(object sender, EditValueChangedEventArgs e)
         {
+
             // 0.편집화면초기화
-            InitModel();
+            ResetLayer();
+
             editWinView.txtFTR_IDN.EditValue = "";
+
+            //시설물레이어 초기화
+            _selectedLayerNm = "";
+            _selectedLayerNms.Clear();
+
+
+
+            // 0,상수관로,급수관로 체크되어있으면 다시시표시
             foreach (Button btn in FmsUtil.FindVisualChildren<Button>(editWinView))
             {
                 try
                 {
                     CheckBox chkbox = btn.Template.FindName("chkLayer", btn) as CheckBox;
-                    chkbox.IsChecked = false;
+                    if (chkbox.IsChecked is true)
+                    {
+                        ShowShapeLayerFilter(mapView, btn.Tag.ToString(), true, "");
+                    }
                 }
                 catch (Exception) { }
             }
 
 
 
-            //시설물레이어 초기화
-            _selectedLayerNm = "";
-            _selectedLayerNms.Clear();
+
 
             // 1.새로운 레이어 시작
             string ftr_cde = e.NewValue.ToString();
@@ -561,7 +576,7 @@ namespace GTI.WFMS.GIS.Pop.ViewModel
 
 
         // 화면리셋
-        private void InitModel()
+        private void ResetLayer()
         {
             // 화면초기화
             BitImg = new BitmapImage();

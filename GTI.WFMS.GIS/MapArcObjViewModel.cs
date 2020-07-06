@@ -22,6 +22,8 @@ using GTI.WFMS.GIS.Pop.View;
 using System.Threading.Tasks;
 using ESRI.ArcGIS.Geometry;
 using GTI.WFMS.GIS.Ext;
+using DevExpress.Xpf.Editors;
+using GTI.WFMS.GIS.Module.View;
 
 namespace GTI.WFMS.GIS
 {
@@ -78,7 +80,6 @@ namespace GTI.WFMS.GIS
 
 
         #region ==========  Properties 정의 ==========
-        public virtual ObservableCollection<FileInfo> ItemsFile { get; set; } //파일객체
 
 
         public RelayCommand<object> loadedCmd { get; set; } //Loaded이벤트에서 ICommand 사용하여 뷰객체 전달받음
@@ -97,29 +98,6 @@ namespace GTI.WFMS.GIS
                 this.fctDtl = value;
                 OnPropertyChanged("FctDtl");
             }
-        }
-        //시설물미리보기 소스이미지
-        private BitmapImage bitImg;
-        public BitmapImage BitImg
-        {
-            get { return bitImg; }
-            set
-            {
-                this.bitImg = value;
-                OnPropertyChanged("BitImg");
-            }
-        }
-        //체크박스 데이터
-        private bool chkSA117;
-        public bool ChkSA117
-        {
-            get { return chkSA117; }
-            set
-            {
-                this.chkSA117 = value;
-                OnPropertyChanged("ChkSA117");
-            }
-
         }
 
         #endregion
@@ -158,12 +136,6 @@ namespace GTI.WFMS.GIS
                 //3.행정구역경계표시
                 ShowShapeLayer("BML_GADM_AS", true );
 
-
-                // 파일인포리스트
-                ItemsFile = new ObservableCollection<FileInfo>();
-
-                //비트맵초기화(시설물상세DIV 아이콘)
-                BitImg = new BitmapImage();
 
                 //맵마우스클릭 이벤트설정
                 mapControl.OnMouseUp += OnMouseClick;
@@ -242,8 +214,8 @@ namespace GTI.WFMS.GIS
             int PxTol = 6; // 6 pixels to select by
             IPoint pNextPoint = mapControl.ActiveView.ScreenDisplay.DisplayTransformation.ToMapPoint(e.x + PxTol, e.y);
             double pSrchDist = pNextPoint.X - pQueryPoint.X; // measure the distance between points PxTol apart
-            IGeometry buffer = (pQueryPoint as ITopologicalOperator).Buffer(99);
-            //IGeometry buffer = (pQueryPoint as ITopologicalOperator).Buffer(pSrchDist);
+            //IGeometry buffer = (pQueryPoint as ITopologicalOperator).Buffer(99);
+            IGeometry buffer = (pQueryPoint as ITopologicalOperator).Buffer(pSrchDist);
 
             var XMax = buffer.Envelope.XMax;
             var XMin = buffer.Envelope.XMin;
@@ -256,13 +228,18 @@ namespace GTI.WFMS.GIS
 
             /// 활성화된 레이어에 대해서, 해당 클릭 영역에 존재하는 피쳐팝업을 띄운다
             //FeatureLayer layer = CmmObj.layers[GisCmm.GetLayerNm("SA117")].FL;
+
             foreach (KeyValuePair<string, FmsFeature> item in CmmObj.layers)
             {
                 if (item.Key == "BML_GADM_AS") continue; //행정구역레이어는 제외
 
-                if (item.Value.chk)
+                if (item.Value.chk )
                 {
-                    findFtrByRegion(item.Value.FL, buffer);
+                    //최종선택 레이어에 대해서만 팝업띄우자..
+                    if (sts.Peak().ToString() == item.Key)
+                    {
+                        findFtrByRegion(item.Value.FL, buffer);                    
+                    }
                 }
             }
 
@@ -341,6 +318,7 @@ namespace GTI.WFMS.GIS
                     FtrPopView ftrPopView = new FtrPopView(ftr_cde, ftr_idn);
                     try
                     {
+                        //타이틀
                         ftrPopView.lbTitle.Content = BizUtil.GetCodeNm("Select_FTR_LIST2", ftr_cde);
                     }
                     catch (Exception)
@@ -455,7 +433,7 @@ namespace GTI.WFMS.GIS
                 //0.layers 체크동기화
                 CmmObj.layers[_layerNm].chk = chk;
 
-
+                
                 // 1.레이어 ON
                 if (chk)
                 {
@@ -468,7 +446,7 @@ namespace GTI.WFMS.GIS
                     else
                     {
                         mapControl.AddShapeFile(BizUtil.GetDataFolder("shape"), shapeNm + ".shp");
-
+                        
                         //레이어객체 저장
                         CmmObj.layers[_layerNm].FL = mapControl.get_Layer(0) as FeatureLayer; //스택형이므로 인덱스는 0 
                         CmmObj.layers[_layerNm].FL.Name = CmmObj.getLayerKorNm(_layerNm);
@@ -609,6 +587,11 @@ namespace GTI.WFMS.GIS
             //2.피처객체 필터링
             IFeatureCursor cursor = layer.Search(qfltr, true);
             IFeature feature = cursor.NextFeature();
+            if (feature is null)
+            {
+                MessageBox.Show("해당시설물 위치가 없습니다.");
+                return;
+            }
 
             ESRI.ArcGIS.Geometry.IPoint point = mapControl.ToMapPoint(Convert.ToInt32(GisCmm._hsCoords.X), Convert.ToInt32(GisCmm._hsCoords.Y));
 
@@ -702,20 +685,6 @@ namespace GTI.WFMS.GIS
 
 
 
-        // 시설물정보팝업 보이기
-        private void ShowFtrPop(string fTR_CDE, string fTR_IDN, GeoViewInputEventArgs e)
-        {
-            //팝업열기 & 위치
-            popFct.IsOpen = false;
-
-            popFct = new FTR_POP(fTR_CDE, fTR_IDN);
-
-            //double y0 = e.Position.Y - 700; //위쪽으로 표시함
-            //if (y0 < 100) y0 = 100;
-            popFct.PlacementRectangle = new Rect(e.Position.X + 550, e.Position.Y - 300, 10, 10);
-            popFct.IsOpen = true;
-        }
-
 
 
 
@@ -751,10 +720,24 @@ namespace GTI.WFMS.GIS
                 else
                     return default(T);
             }
+
+            public T Peak()
+            {
+                if (items.Count > 0)
+                {
+                    T temp = items[items.Count - 1];
+                    return temp;
+                }
+                else
+                    return default(T);
+            }
+
             public void Remove(int itemAtPosition)
             {
                 items.RemoveAt(itemAtPosition);
             }
+
+
 
 
             //스택형 인덱스 가져오기
@@ -775,7 +758,6 @@ namespace GTI.WFMS.GIS
             {
                 items.Clear();
             }
-
 
         }
 

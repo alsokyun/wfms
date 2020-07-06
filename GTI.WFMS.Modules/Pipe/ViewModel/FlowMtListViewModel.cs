@@ -539,7 +539,7 @@ namespace GTI.WFMS.Modules.Pipe.ViewModel
         {
             try
             {
-                string strPermission = Logs.htPermission[Logs.strFocusMNU_CD].ToString();
+                string strPermission = ""; try { strPermission = Logs.htPermission[Logs.strFocusMNU_CD].ToString(); } catch (Exception) { };
                 switch (strPermission)
                 {
                     case "W":

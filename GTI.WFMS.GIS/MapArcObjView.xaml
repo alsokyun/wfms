@@ -68,7 +68,6 @@
 
 
             <Grid Grid.Column="2">
-                <!--울산
                 <StackPanel x:Name="spLayer" Background="{DynamicResource DivBack1Brush1}">
                     <Border Width="Auto" Height="1" Background="Green" BorderBrush="Green" HorizontalAlignment="Center"></Border>
 
@@ -178,53 +177,6 @@
                             </i:Interaction.Triggers>
                         </Button>
 
-                        <TreeViewItem Header="변류시설" IsExpanded="True" Foreground="Wheat">
-                            <TreeViewItem.Items>
-                                <Button  Tag="WTL_VALV_PS^SA200" Content="제수변" ToolTip="SA200.png" Template="{StaticResource ResourceKey=dockTemplate}">
-                                    <i:Interaction.Triggers>
-                                        <i:EventTrigger EventName="Click">
-                                            <i:InvokeCommandAction Command="{Binding chkCmd}"  CommandParameter="{Binding RelativeSource={RelativeSource AncestorType={x:Type Button}}}" />
-                                        </i:EventTrigger>
-                                    </i:Interaction.Triggers>
-                                </Button>
-                                <Button  Tag="WTL_VALV_PS^SA201" Content="역지변" ToolTip="SA201.png" Template="{StaticResource ResourceKey=dockTemplate}">
-                                    <i:Interaction.Triggers>
-                                        <i:EventTrigger EventName="Click">
-                                            <i:InvokeCommandAction Command="{Binding chkCmd}"  CommandParameter="{Binding RelativeSource={RelativeSource AncestorType={x:Type Button}}}" />
-                                        </i:EventTrigger>
-                                    </i:Interaction.Triggers>
-                                </Button>
-                                <Button  Tag="WTL_VALV_PS^SA202" Content="이토변" ToolTip="SA202.png" Template="{StaticResource ResourceKey=dockTemplate}">
-                                    <i:Interaction.Triggers>
-                                        <i:EventTrigger EventName="Click">
-                                            <i:InvokeCommandAction Command="{Binding chkCmd}"  CommandParameter="{Binding RelativeSource={RelativeSource AncestorType={x:Type Button}}}" />
-                                        </i:EventTrigger>
-                                    </i:Interaction.Triggers>
-                                </Button>
-                                <Button  Tag="WTL_VALV_PS^SA203" Content="배기변" ToolTip="SA203.png" Template="{StaticResource ResourceKey=dockTemplate}">
-                                    <i:Interaction.Triggers>
-                                        <i:EventTrigger EventName="Click">
-                                            <i:InvokeCommandAction Command="{Binding chkCmd}"  CommandParameter="{Binding RelativeSource={RelativeSource AncestorType={x:Type Button}}}" />
-                                        </i:EventTrigger>
-                                    </i:Interaction.Triggers>
-                                </Button>
-                                <Button  Tag="WTL_VALV_PS^SA204" Content="감압변" ToolTip="SA204.png" Template="{StaticResource ResourceKey=dockTemplate}">
-                                    <i:Interaction.Triggers>
-                                        <i:EventTrigger EventName="Click">
-                                            <i:InvokeCommandAction Command="{Binding chkCmd}"  CommandParameter="{Binding RelativeSource={RelativeSource AncestorType={x:Type Button}}}" />
-                                        </i:EventTrigger>
-                                    </i:Interaction.Triggers>
-                                </Button>
-                                <Button  Tag="WTL_VALV_PS^SA205" Content="안전변" ToolTip="SA205.png" Template="{StaticResource ResourceKey=dockTemplate}">
-                                    <i:Interaction.Triggers>
-                                        <i:EventTrigger EventName="Click">
-                                            <i:InvokeCommandAction Command="{Binding chkCmd}"  CommandParameter="{Binding RelativeSource={RelativeSource AncestorType={x:Type Button}}}" />
-                                        </i:EventTrigger>
-                                    </i:Interaction.Triggers>
-                                </Button>
-                            </TreeViewItem.Items>
-                        </TreeViewItem>
-
                         <Button  Tag="WTL_PRES_PS" Content="가압장" ToolTip="SA206.png" Template="{StaticResource ResourceKey=dockTemplate}">
                             <i:Interaction.Triggers>
                                 <i:EventTrigger EventName="Click">
@@ -233,90 +185,6 @@
                             </i:Interaction.Triggers>
                         </Button>
 
-
-                    </TreeView>
-
-
-
-                    <Button  Tag="WTL_PIPE_LX" Content="송산파이프" ToolTip="SA901.png" Template="{StaticResource ResourceKey=dockTemplate}">
-                        <i:Interaction.Triggers>
-                            <i:EventTrigger EventName="Click">
-                                <i:InvokeCommandAction Command="{Binding chkCmd}"  CommandParameter="{Binding RelativeSource={RelativeSource AncestorType={x:Type Button}}}" />
-                            </i:EventTrigger>
-                        </i:Interaction.Triggers>
-                    </Button>
-                    <Button  Tag="WTL_SPLY_LX" Content="송산급수관" ToolTip="SA902.png" Template="{StaticResource ResourceKey=dockTemplate}">
-                        <i:Interaction.Triggers>
-                            <i:EventTrigger EventName="Click">
-                                <i:InvokeCommandAction Command="{Binding chkCmd}"  CommandParameter="{Binding RelativeSource={RelativeSource AncestorType={x:Type Button}}}" />
-                            </i:EventTrigger>
-                        </i:Interaction.Triggers>
-                    </Button>
-                    <Button  Tag="WTL_PIPE_LY" Content="예천파이프" ToolTip="SA903.png" Template="{StaticResource ResourceKey=dockTemplate}">
-                        <i:Interaction.Triggers>
-                            <i:EventTrigger EventName="Click">
-                                <i:InvokeCommandAction Command="{Binding chkCmd}"  CommandParameter="{Binding RelativeSource={RelativeSource AncestorType={x:Type Button}}}" />
-                            </i:EventTrigger>
-                        </i:Interaction.Triggers>
-                    </Button>
-
-                </StackPanel>
-                -->
-
-                <!--횡성 -->
-                <StackPanel x:Name="spLayer" Background="{DynamicResource DivBack1Brush1}">
-                    <Border Width="Auto" Height="1" Background="Green" BorderBrush="Green" HorizontalAlignment="Center"></Border>
-
-                    <TreeView x:Name="treeLayer" Background="{DynamicResource DivBack1Brush1}">
-                        <Button Tag="WTL_PIPE_LM" Content="상수관로" ToolTip="SA001.png" Template="{StaticResource ResourceKey=dockTemplate}">
-                            <i:Interaction.Triggers>
-                                <i:EventTrigger EventName="Click">
-                                    <i:InvokeCommandAction Command="{Binding chkCmd}"  CommandParameter="{Binding RelativeSource={RelativeSource AncestorType={x:Type Button}}}" />
-                                </i:EventTrigger>
-                            </i:Interaction.Triggers>
-                        </Button>
-                        <Button  Tag="WTL_SPLY_LS" Content="급수관로" ToolTip="SA002.png" Template="{StaticResource ResourceKey=dockTemplate}">
-                            <i:Interaction.Triggers>
-                                <i:EventTrigger EventName="Click">
-                                    <i:InvokeCommandAction Command="{Binding chkCmd}"  CommandParameter="{Binding RelativeSource={RelativeSource AncestorType={x:Type Button}}}" />
-                                </i:EventTrigger>
-                            </i:Interaction.Triggers>
-                        </Button>
-                        <Button  Tag="WTL_FLOW_PS" Content="유량계" ToolTip="SA117.png" Template="{StaticResource ResourceKey=dockTemplate}">
-                            <i:Interaction.Triggers>
-                                <i:EventTrigger EventName="Click">
-                                    <i:InvokeCommandAction Command="{Binding chkCmd}"  CommandParameter="{Binding RelativeSource={RelativeSource AncestorType={x:Type Button}}}" />
-                                </i:EventTrigger>
-                            </i:Interaction.Triggers>
-                        </Button>
-                        <TreeViewItem Header="소방시설" IsExpanded="True" Foreground="Wheat" >
-                            <TreeViewItem.Items>
-                                <Button  Tag="WTL_FIRE_PS^SA118" Content="급수탑" ToolTip="SA118.png" Template="{StaticResource ResourceKey=dockTemplate}">
-                                    <i:Interaction.Triggers>
-                                        <i:EventTrigger EventName="Click">
-                                            <i:InvokeCommandAction Command="{Binding chkCmd}"  CommandParameter="{Binding RelativeSource={RelativeSource AncestorType={x:Type Button}}}" />
-                                        </i:EventTrigger>
-                                    </i:Interaction.Triggers>
-                                </Button>
-
-                                <Button  Tag="WTL_FIRE_PS^SA119" Content="소화전" ToolTip="SA119.png" Template="{StaticResource ResourceKey=dockTemplate}">
-                                    <i:Interaction.Triggers>
-                                        <i:EventTrigger EventName="Click">
-                                            <i:InvokeCommandAction Command="{Binding chkCmd}"  CommandParameter="{Binding RelativeSource={RelativeSource AncestorType={x:Type Button}}}" />
-                                        </i:EventTrigger>
-                                    </i:Interaction.Triggers>
-                                </Button>
-                            </TreeViewItem.Items>
-                        </TreeViewItem>
-
-                        <Button  Tag="WTL_META_PS" Content="급수전계량기" ToolTip="SA122.png" Template="{StaticResource ResourceKey=dockTemplate}">
-                            <i:Interaction.Triggers>
-                                <i:EventTrigger EventName="Click">
-                                    <i:InvokeCommandAction Command="{Binding chkCmd}"  CommandParameter="{Binding RelativeSource={RelativeSource AncestorType={x:Type Button}}}" />
-                                </i:EventTrigger>
-                            </i:Interaction.Triggers>
-                        </Button>
-
                         <TreeViewItem Header="변류시설" IsExpanded="True" Foreground="Wheat">
                             <TreeViewItem.Items>
                                 <Button  Tag="WTL_VALV_PS^SA200" Content="제수변" ToolTip="SA200.png" Template="{StaticResource ResourceKey=dockTemplate}">
@@ -363,6 +231,7 @@
                                 </Button>
                             </TreeViewItem.Items>
                         </TreeViewItem>
+
 
                         <Button  Tag="WTL_LBLK_AS" Content="대블록" ToolTip="SA113.png" Template="{StaticResource ResourceKey=dockTemplate}">
                             <i:Interaction.Triggers>
@@ -386,14 +255,11 @@
                             </i:Interaction.Triggers>
                         </Button>
 
-
                     </TreeView>
 
 
-
-
-
                 </StackPanel>
+
                 
             </Grid>
             

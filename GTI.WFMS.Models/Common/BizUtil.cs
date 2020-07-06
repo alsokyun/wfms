@@ -15,8 +15,14 @@ namespace GTI.WFMS.Models.Common
 {
     public class BizUtil
     {
-        static CommonDao dao = new CommonDao();
-        static CmmDao cmmDao = new CmmDao();
+        //프로젝트간 시설물 키 전달을 위한 전역파라미터
+        public static string FTR_CDE = "";
+        public static string FTR_IDN = "";
+
+
+
+        private static CommonDao dao = new CommonDao();
+        private static CmmDao cmmDao = new CmmDao();
 
 
         #region =========== 조회함수 =========== 
