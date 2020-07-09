@@ -173,7 +173,7 @@ namespace GTI.WFMS.GIS.Pop.ViewModel
                 InitMap();
 
                 //레이어초기화
-                CmmRun.initLayers();
+                initLayers();
 
                 //렌더러초기생성작업
                 CmmRun.InitUniqueValueRenderer();
@@ -261,8 +261,8 @@ namespace GTI.WFMS.GIS.Pop.ViewModel
                             //2.레이어의 렌더러 재세팅
                             foreach (string sel in _selectedLayerNms)
                             {
-                                CmmRun.layers[sel].Renderer = CmmRun.uniqueValueRenderer.Clone();
-                                CmmRun.layers[sel].RetryLoadAsync();
+                                layers[sel].Renderer = CmmRun.uniqueValueRenderer.Clone();
+                                layers[sel].RetryLoadAsync();
                             }
 
                             //3.팝업이미지소스 업데이트
@@ -337,7 +337,7 @@ namespace GTI.WFMS.GIS.Pop.ViewModel
                         _selectedFeature = null;
                         try
                         {
-                            CmmRun.layers[_selectedLayerNm].ClearSelection();
+                            layers[_selectedLayerNm].ClearSelection();
                         }
                         catch (Exception) { }
 
@@ -374,7 +374,7 @@ namespace GTI.WFMS.GIS.Pop.ViewModel
                     _selectedFeature = null;
                     try
                     {
-                        CmmRun.layers[_selectedLayerNm].ClearSelection();
+                        layers[_selectedLayerNm].ClearSelection();
                     }
                     catch (Exception) { }
 
@@ -426,7 +426,7 @@ namespace GTI.WFMS.GIS.Pop.ViewModel
 
                 //조회된 피처 자동선택
                 string ftr_cde = doc.Tag.ToString() == "WTL_PIPE_LM" ? "SA001" : "SA002";
-                SelectFct(ftr_cde, "", CmmRun.layers[doc.Tag.ToString()]);
+                SelectFct(ftr_cde, "", layers[doc.Tag.ToString()]);
             });
 
 
@@ -593,7 +593,7 @@ namespace GTI.WFMS.GIS.Pop.ViewModel
             _selectedFeature = null;
             try
             {
-                CmmRun.layers[_selectedLayerNm].ClearSelection();
+                layers[_selectedLayerNm].ClearSelection();
             }
             catch (Exception) { }
 
@@ -926,7 +926,7 @@ namespace GTI.WFMS.GIS.Pop.ViewModel
             ShowShapeLayerFilter(mapView, GisCmm.GetLayerNm(FTR_CDE), true, ftr_idn);
 
             //조회된 피처 자동선택
-            SelectFct(FTR_CDE,  ftr_idn, CmmRun.layers[_selectedLayerNm]);
+            SelectFct(FTR_CDE,  ftr_idn, layers[_selectedLayerNm]);
 
         }
 
@@ -1022,7 +1022,7 @@ namespace GTI.WFMS.GIS.Pop.ViewModel
                     try
                     {
                         // Reset the selection.
-                        CmmRun.layers[_selectedLayerNm].ClearSelection();
+                        layers[_selectedLayerNm].ClearSelection();
                         _selectedFeature = null;
                     }
                     catch (Exception) { }
@@ -1053,7 +1053,7 @@ namespace GTI.WFMS.GIS.Pop.ViewModel
                 else
                 {
                     //시설물선택활성화 처리
-                    CmmRun.layers[_selectedLayerNm].SelectFeature(identifiedFeature);
+                    layers[_selectedLayerNm].SelectFeature(identifiedFeature);
                     //해당피처로 이동
                     await mapView.SetViewpointCenterAsync(identifiedFeature.Geometry.Extent.GetCenter(), 40000);
 
@@ -1147,7 +1147,7 @@ namespace GTI.WFMS.GIS.Pop.ViewModel
         /// <param name="geometry"></param>
         private async void AddFeatureToLayer(Geometry geometry)
         {
-            FeatureTable layerTable = CmmRun.layers[_selectedLayerNm].FeatureTable;
+            FeatureTable layerTable = layers[_selectedLayerNm].FeatureTable;
             if (layerTable is null)
             {
                 layerTable = await InitLayerTable(_selectedLayerNm); 
@@ -1338,7 +1338,7 @@ namespace GTI.WFMS.GIS.Pop.ViewModel
             {
                 // 위치에해당하는 피처찾은 결과
                 // Perform the identify operation.
-                IdentifyLayerResult IR_SEL = await mapView.IdentifyLayerAsync(CmmRun.layers[_selectedLayerNm], e.Position, 5, false);
+                IdentifyLayerResult IR_SEL = await mapView.IdentifyLayerAsync(layers[_selectedLayerNm], e.Position, 5, false);
 
                 // 이벤트 타겟피처
                 Feature identifiedFeature;
@@ -1361,7 +1361,7 @@ namespace GTI.WFMS.GIS.Pop.ViewModel
                     try
                     {
                         // Reset the selection.
-                        CmmRun.layers[_selectedLayerNm].ClearSelection();
+                        layers[_selectedLayerNm].ClearSelection();
                         _selectedFeature = null;
                     }
                     catch (Exception) { }
@@ -1392,7 +1392,7 @@ namespace GTI.WFMS.GIS.Pop.ViewModel
                 else
                 {
                     //시설물선택활성화 처리
-                    CmmRun.layers[_selectedLayerNm].SelectFeature(identifiedFeature); 
+                    layers[_selectedLayerNm].SelectFeature(identifiedFeature); 
                     //this.FTR_CDE = _FTR_CDE;
                     this.FTR_IDN = _FTR_IDN;
                 }

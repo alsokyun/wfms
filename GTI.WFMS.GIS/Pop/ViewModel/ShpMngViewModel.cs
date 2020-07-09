@@ -134,7 +134,7 @@ namespace GTI.WFMS.GIS.Pop.ViewModel
 
                 OpenFileDialog openFileDialog = new OpenFileDialog();
                 openFileDialog.Multiselect = true;
-                openFileDialog.Filter = "Shape files |*.shp;*.dbf";
+                openFileDialog.Filter = "Shape files |*.shp;*.shx;*.dbf;*.prj";
                 openFileDialog.InitialDirectory = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
                 if (openFileDialog.ShowDialog() == true)
                 {
@@ -148,7 +148,7 @@ namespace GTI.WFMS.GIS.Pop.ViewModel
                         {
                             //파일객체
                             ItemsFile.Add(fi);
-                            if (fi.Extension.Contains("shp") || fi.Extension.Contains("dbf"))
+                            if (fi.Extension.Contains("shp") || fi.Extension.Contains("shx") || fi.Extension.Contains("dbf") || fi.Extension.Contains("prj"))
                             {
                                 chk++;
                             }
@@ -160,20 +160,23 @@ namespace GTI.WFMS.GIS.Pop.ViewModel
                         }
                     }
 
-                    if(chk < 2)
+                    if(chk < 4)
                     {
-                        MessageBox.Show("shp, dbf 파일 두개를 선택해야합니다.");
+                        MessageBox.Show("shp, shx, dbf, prj 파일 4개를 선택해야합니다.");
                         return;
                     }
-                    if (cnt > 2)
+                    if (cnt > 4)
                     {
                         MessageBox.Show("한번에 한종류의 shp파일만 업로드할수 있습니다.");
                         return;
                     }
 
+
+
                     //파일업로드시작
                     upload_thread = new Thread(new ThreadStart(UploadFileListFX));
                     upload_thread.Start();
+
                 }
 
             });
@@ -282,20 +285,21 @@ namespace GTI.WFMS.GIS.Pop.ViewModel
                     new Action((delegate ()
                     {
                         (shpMngView.FindName("waitindicator") as WaitIndicator).DeferedVisibility = true;
+
                     })));
 
 
-                //업로드시작...
+                //1.업로드시작...
                 UploadFileList();
 
+
+                //2.db 원격파워셀스크립트 수행 - 티베로 gisLoader, tbloader 
+                ExCmd_GisTbloader();
 
 
                 shpMngView.Dispatcher.Invoke(DispatcherPriority.ApplicationIdle,
                    new Action((delegate ()
                    {
-                       //db 원격파워셀스크립트 수행 - 티베로 gisLoader, tbloader 
-                       ExCmd_GisTbloader();
-
 
                        (shpMngView.FindName("waitindicator") as WaitIndicator).DeferedVisibility = false;
                        //Messages.ShowOkMsgBox();
@@ -441,6 +445,35 @@ namespace GTI.WFMS.GIS.Pop.ViewModel
                     MessageBox.Show("Control파일이 없습니다.");
                     return;
                 }
+
+                // ctl파일에 인코딩 utf8 추가
+                string new_file = ""; //추가수정파일내용
+                try
+                {
+                    using (StreamReader r = File.OpenText(Path.Combine(BizUtil.GetDataFolder("shape"), ctl)))
+                    {
+                        string line = "";
+                        while ((line = r.ReadLine()) != null)
+                        {
+                            new_file += line + "\n";
+                            if (line.Contains("LOAD DATA"))
+                            {
+                                new_file += "CHARACTERSET UTF8" + "\n";
+                            }
+                        }
+                    }
+
+                    //using (StreamWriter w = File.AppendText(Path.Combine(BizUtil.GetDataFolder("shape"), ctl)))
+                    //{
+                    //    w.WriteLine("CHARACTERSET UTF8");
+                    //}
+
+                    //ctl파일 재생성
+                    File.WriteAllText(Path.Combine(BizUtil.GetDataFolder("shape"), ctl), new_file);
+
+                }
+                catch (Exception){}
+
 
                 string tbloadercmd = "tbloader userid=infofms/infofms@tibero control=" + ctl;
                 process.StandardInput.Write(tbloadercmd + Environment.NewLine); // 명령어를 보낼때는 꼭 마무리를 해줘야 한다

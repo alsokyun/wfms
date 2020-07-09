@@ -200,6 +200,14 @@ namespace GTI.WFMS.GIS
             pictureSymbolSA205.XOffset = 0;
             pictureSymbolSA205.YOffset = 0;
 
+            //가압장
+            IPictureMarkerSymbol pictureSymbolSA206 = new PictureMarkerSymbol();
+            pictureSymbolSA206.CreateMarkerSymbolFromFile(esriIPictureType.esriIPictureGIF, BizUtil.GetDataFolder("style_img", "SA206"));
+            pictureSymbolSA206.Angle = 0;
+            pictureSymbolSA206.BitmapTransparencyColor = rgbColorCls;
+            pictureSymbolSA206.XOffset = 0;
+            pictureSymbolSA206.YOffset = 0;
+
 
 
             /* 라인심볼정의 */
@@ -294,6 +302,9 @@ namespace GTI.WFMS.GIS
             uniqueValueRendererObj.set_Symbol("SA204", pictureSymbolSA204 as ISymbol);
             uniqueValueRendererObj.AddValue("SA205", "Name", pictureSymbolSA205 as ISymbol);
             uniqueValueRendererObj.set_Symbol("SA205", pictureSymbolSA205 as ISymbol);
+
+            uniqueValueRendererObj.AddValue("SA206", "Name", pictureSymbolSA206 as ISymbol);
+            uniqueValueRendererObj.set_Symbol("SA206", pictureSymbolSA206 as ISymbol);
 
             uniqueValueRendererObj.AddValue("SA001", "Name", lineSymbolSA001 as ISymbol);
             uniqueValueRendererObj.set_Symbol("SA001", lineSymbolSA001 as ISymbol);

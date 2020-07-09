@@ -151,7 +151,7 @@ namespace GTI.WFMS.GIS.Module
         {
             try
             {
-                foreach (var v in ((MapMainViewModel)this.DataContext).layers)
+                foreach (var v in CmmRun.layers)
                 {
                     v.Value.ClearSelection();
                 }
