@@ -39,36 +39,6 @@ namespace GTI.WFMS.GIS
 
 
 
-        public Dictionary<string, FeatureLayer> layers = new Dictionary<string, FeatureLayer>()
-        {
-            {"WTL_FLOW_PS",  new FeatureLayer()},
-            {"WTL_FIRE_PS^SA118",  new FeatureLayer()},
-            {"WTL_FIRE_PS^SA119",  new FeatureLayer()},
-            {"WTL_GAIN_PS",  new FeatureLayer()},
-            {"WTL_HEAD_PS",  new FeatureLayer()},
-            {"WTL_LEAK_PS",  new FeatureLayer()},
-            {"WTL_MANH_PS",  new FeatureLayer()},
-            {"WTL_META_PS",  new FeatureLayer()},
-            {"WTL_PRES_PS",  new FeatureLayer()},
-            {"WTL_PRGA_PS",  new FeatureLayer()},
-            {"WTL_RSRV_PS",  new FeatureLayer()},
-            {"WTL_SERV_PS",  new FeatureLayer()},
-            {"WTL_STPI_PS",  new FeatureLayer()},
-            {"WTL_VALV_PS^SA200",  new FeatureLayer()},
-            {"WTL_VALV_PS^SA201",  new FeatureLayer()},
-            {"WTL_VALV_PS^SA202",  new FeatureLayer()},
-            {"WTL_VALV_PS^SA203",  new FeatureLayer()},
-            {"WTL_VALV_PS^SA204",  new FeatureLayer()},
-            {"WTL_VALV_PS^SA205",  new FeatureLayer()},
-            {"WTL_VALV_PS^SA206",  new FeatureLayer()},
-
-
-            {"BML_GADM_AS",  new FeatureLayer()},
-            {"WTL_PURI_AS",  new FeatureLayer()},
-
-            {"WTL_PIPE_LM",  new FeatureLayer()},
-            {"WTL_SPLY_LS",  new FeatureLayer()},
-        };
 
 
 
@@ -185,7 +155,7 @@ namespace GTI.WFMS.GIS
                 }
                 catch (Exception) { }
 
-                FeatureLayer layer = layers[_layerNm];
+                FeatureLayer layer = CmmRun.layers[_layerNm];
                 //Type memberType = this.GetType();
 
 
@@ -226,7 +196,7 @@ namespace GTI.WFMS.GIS
 
                                 // Create the Feature Layer from the table
                                 FeatureLayer myFeatureLayer = new FeatureLayer(myFeatureTable);
-                                layers[_layerNm] = myFeatureLayer; //생성한레이어를 딕셔너리에 저장
+                                CmmRun.layers[_layerNm] = myFeatureLayer; //생성한레이어를 딕셔너리에 저장
 
                                 // 필터링 인수있으면 하위시설물으로 필터
                                 if (!FmsUtil.IsNull(filterExp))

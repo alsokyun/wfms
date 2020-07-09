@@ -262,7 +262,7 @@ namespace GTI.WFMS.GIS
                 _selectedFeature = null;
                 try
                 {
-                    layers[_selectedLayerNm].ClearSelection();
+                    CmmRun.layers[_selectedLayerNm].ClearSelection();
                 }
                 catch (Exception) { }
                 _selectedLayerNms.Clear();
@@ -359,7 +359,7 @@ namespace GTI.WFMS.GIS
             ///ShowShapeLayer(mapView, GisCmm.GetLayerNm(FTR_CDE), true);
 
             //1.해당레이어 가져오기
-            FeatureLayer layer = layers[GisCmm.GetLayerNm(FTR_CDE)];
+            FeatureLayer layer = CmmRun.layers[GisCmm.GetLayerNm(FTR_CDE)];
 
 
 
@@ -564,7 +564,7 @@ namespace GTI.WFMS.GIS
 
                 // 위치에해당하는 피처찾은 결과
                 // Perform the identify operation.
-                IdentifyLayerResult IR_SEL = await mapView.IdentifyLayerAsync(layers[_selectedLayerNm], e.Position, 5, false);
+                IdentifyLayerResult IR_SEL = await mapView.IdentifyLayerAsync(CmmRun.layers[_selectedLayerNm], e.Position, 5, false);
 
                 // 이벤트 타겟피처
                 Feature identifiedFeature; 
@@ -587,14 +587,14 @@ namespace GTI.WFMS.GIS
                     try
                     {
                         // Reset the selection.
-                        layers[_selectedLayerNm].ClearSelection();
+                        CmmRun.layers[_selectedLayerNm].ClearSelection();
                         _selectedFeature = null;
                     }
                     catch (Exception) { }
                 }
 
                 // 선택처리
-                layers[_selectedLayerNm].SelectFeature(identifiedFeature); //시설물선택활성화 처리
+                CmmRun.layers[_selectedLayerNm].SelectFeature(identifiedFeature); //시설물선택활성화 처리
                 //_selectedFeature = (ArcGISFeature)identifiedFeature; //선택피처 ArcGISFeature 변환저장
                 _selectedFeature = (Feature)identifiedFeature; //선택피처 ArcGISFeature 변환저장
 
