@@ -179,6 +179,8 @@ namespace GTI.WFMS.GIS
             PictureMarkerSymbol SA300Symbol = new PictureMarkerSymbol(SA300Uri);
             UniqueValue SA300Value = new UniqueValue("SA300", "SA300", SA300Symbol, "SA300"); //string description, string label, Symbol symbol, object value
 
+
+            //uniqueValueRenderer의 기준필드
             CmmRun.uniqueValueRenderer.FieldNames.Add("FTR_CDE");
 
             CmmRun.uniqueValueRenderer.UniqueValues.Add(SA003Value);

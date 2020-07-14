@@ -482,7 +482,7 @@ namespace GTI.WFMS.GIS
         private async void InitMap()
         {
             //지도위치 및 스케일 초기화
-            await mapView.SetViewpointCenterAsync(GisCmm._ulsanCoords, GisCmm._ulsanScale);
+            await mapView.SetViewpointCenterAsync(GisCmm.fmsCoords, GisCmm.fmsScale);
 
             //Base맵 초기화
             Console.WriteLine("this._map.SpatialReference - " + this._map.SpatialReference);

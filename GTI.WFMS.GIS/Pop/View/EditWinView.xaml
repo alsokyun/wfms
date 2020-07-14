@@ -123,6 +123,7 @@
                 <ColumnDefinition Width="300"/>
             </Grid.ColumnDefinitions>
 
+            <!--맵뷰-->
             <esri:MapView Map="{Binding Map}" x:Name="mapView"/>
 
             <Border Grid.Column="0" BorderThickness="0 0 1 0" BorderBrush="{DynamicResource MainLMENUUnderBrush1}"/>

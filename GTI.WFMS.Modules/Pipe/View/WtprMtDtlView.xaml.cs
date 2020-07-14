@@ -34,8 +34,6 @@ namespace GTI.WFMS.Modules.Pipe.View
             // 테마일괄적용...
             ThemeApply.Themeapply(this);
 
-            this.txtFTR_CDE.EditValue = FTR_CDE;
-            this.txtFTR_IDN.EditValue = FTR_IDN;
             
             //정상적인 버튼클릭 이벤트
             btnBack.Click += _backCmd;
