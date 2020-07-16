@@ -1323,7 +1323,7 @@ namespace GTI.WFMS.GIS.Pop.ViewModel
                     }
                     else
                     {
-                        await _selectedFeature.FeatureTable.UpdateFeatureAsync(back_selectedFeature);
+                        //await _selectedFeature.FeatureTable.UpdateFeatureAsync(back_selectedFeature);
                         _selectedFeature.Refresh();
                     }
 

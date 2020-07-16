@@ -15,7 +15,7 @@ namespace GTI.WFMS.Modules.Stat.ViewModel
     class FcltStatListViewModel : INotifyPropertyChanged
     {
 
-        #region ==========  페이징관련 INotifyPropertyChanged  ==========
+        #region ========== INotifyPropertyChanged  ==========
 
         public event PropertyChangedEventHandler PropertyChanged;
 
@@ -39,6 +39,21 @@ namespace GTI.WFMS.Modules.Stat.ViewModel
         /// Loaded Event
         /// </summary>
         public DelegateCommand<object> LoadedCommand { get; set; }
+
+        private DateTime srcDate;
+        public DateTime SrcDate
+        {
+            get
+            {
+                return this.srcDate;
+            }
+            set
+            {
+                this.srcDate = value;
+                OnPropertyChanged("SrcDate");
+                SearchAction(null);
+            }
+        }
 
         #endregion
 
@@ -97,12 +112,13 @@ namespace GTI.WFMS.Modules.Stat.ViewModel
             {
                 Hashtable param = new Hashtable();
 
-                string sDate = Convert.ToDateTime(DateTime.Today).ToString("yyyyMMdd");
-                string sSchDate = Convert.ToDateTime(DateTime.Today).ToString("yyyy-MM-dd");
-                int nYear = Int32.Parse(Convert.ToDateTime(DateTime.Today).ToString("yyyy"));
+                string sDate = Convert.ToDateTime(SrcDate).ToString("yyyyMMdd");
+                string sSchDate = Convert.ToDateTime(SrcDate).ToString("yyyy-MM-dd");
+                int nYear = Int32.Parse(Convert.ToDateTime(SrcDate).ToString("yyyy"));
                 
                 param.Add("sqlId", "SelectFcltStatList");
                 param.Add("searchKeyword", sDate);
+
 
                 DataTable dt = BizUtil.SelectList(param);
 

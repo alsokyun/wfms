@@ -166,7 +166,7 @@
     <select id ="Select_CD_DTL_INFO_List" parameterClass="Hashtable" resultClass ="Hashtable">
       SELECT MST.MST_CD, MST.NM MST_NM, MST.ETC MST_ETC, DTL.DTL_CD, DTL.NM DTL_NM, DTL.ETC DTL_ETC
       FROM infouser.CD_MST_INFO MST
-      ,CD_DTL_INFO DTL
+      ,infouser.CD_DTL_INFO DTL
       WHERE MST.MST_CD = #MST_CD#
       AND MST.DEL_YN = 'N'
       AND MST.USE_YN = 'Y'

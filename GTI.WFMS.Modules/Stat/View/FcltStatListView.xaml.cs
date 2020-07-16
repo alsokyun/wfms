@@ -22,9 +22,6 @@ namespace GTI.WFMS.Modules.Stat.View
             ThemeApply.Themeapply(this);
         }
 
-        private void DtSEARCH_EditValueChanged(object sender, DevExpress.Xpf.Editors.EditValueChangedEventArgs e)
-        {
-
-        }
+        
     }
 }
