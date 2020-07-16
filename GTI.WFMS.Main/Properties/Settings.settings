@@ -20,5 +20,8 @@
     <Setting Name="mdxDir" Type="System.String" Scope="User">
       <Value Profile="(Default)">C:\GTI</Value>
     </Setting>
+    <Setting Name="site" Type="System.String" Scope="User">
+      <Value Profile="(Default)">hgs</Value>
+    </Setting>
   </Settings>
 </SettingsFile>

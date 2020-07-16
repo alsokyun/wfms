@@ -12,16 +12,21 @@ namespace GTI.WFMS.GIS
     public class GisCmm
     {
 
-        // Coordinates for Ulsan
-        public static MapPoint _ulsanCoords = new MapPoint(14389882.070911, 4239809.084922, SpatialReferences.WebMercator); //3857
-        public static MapPoint _hsCoords = new MapPoint(14246315, 4507081, SpatialReferences.WebMercator); //3857
+        //맵초기위치
+        // Coordinates for Korea //3857
+        public static MapPoint fmsCoords =
+            FmsUtil.site == "hgs" ? new MapPoint(14246315, 4507081, SpatialReferences.WebMercator) :    //횡성
+            (FmsUtil.site == "uls" ? new MapPoint(14389882.070911, 4239809.084922, SpatialReferences.WebMercator) : //울산
+                new MapPoint(14246315, 4507081, SpatialReferences.WebMercator)) ;
+
+        //public static MapPoint _hsCoords = new MapPoint(14246315, 4507081, SpatialReferences.WebMercator); //3857
         //private MapPoint _londonCoords = new MapPoint(-13881.7678417696, 6710726.57374296, SpatialReferences.WebMercator);
         //private MapPoint _ulsanCoords = new MapPoint(394216.933974, 223474.303376, SpatialReferences.WebMercator); //5181
 
+        //맵스케일
+        public static double fmsScale = 500000;
         //private double _ulsanScale = 8762.7156655228955;
-        //private double _ulsanScale = 150000;
-        public static double _ulsanScale = 500000;
-        public static double _ulsanScale2 = 150000;
+        //public static double _ulsanScale2 = 150000;
 
         //한반도영역
         public static double XMin = 13850000.0;

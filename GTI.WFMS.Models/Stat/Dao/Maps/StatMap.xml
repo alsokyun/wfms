@@ -30,137 +30,137 @@
 	      SELECT M.CDE, M.NAM, M.CNT, M.CNT1, M.CNT2, M.CNT3, M.CNT4, M.CNT5
           FROM ( SELECT 'F001' CDE, '상수관로' NAM
                       , (SELECT COUNT(*) FROM INFOFMS.WTL_PIPE_LM WHERE IST_YMD LIKE #searchKeyword#||'%') CNT
-                      , (SELECT COUNT(*) FROM INFOFMS.WTL_PIPE_LM WHERE IST_YMD LIKE TO_CHAR(ADD_MONTHS(substr(#searchKeyword#,0,6)||'01',0),'YYYYMM')  || '%') CNT1
-                      , (SELECT COUNT(*) FROM INFOFMS.WTL_PIPE_LM WHERE IST_YMD LIKE TO_CHAR(ADD_MONTHS(substr(#searchKeyword#,0,6)||'01',-1),'YYYYMM') || '%') CNT2
-                      , (SELECT COUNT(*) FROM INFOFMS.WTL_PIPE_LM WHERE IST_YMD LIKE TO_CHAR(ADD_MONTHS(substr(#searchKeyword#,0,6)||'01',-2),'YYYYMM') || '%') CNT3
-                      , (SELECT COUNT(*) FROM INFOFMS.WTL_PIPE_LM WHERE IST_YMD LIKE TO_CHAR(ADD_MONTHS(substr(#searchKeyword#,0,6)||'01',-3),'YYYYMM') || '%') CNT4
-                      , (SELECT COUNT(*) FROM INFOFMS.WTL_PIPE_LM WHERE IST_YMD LIKE TO_CHAR(ADD_MONTHS(substr(#searchKeyword#,0,6)||'01',-4),'YYYYMM') || '%') CNT5    
+                      , (SELECT COUNT(*) FROM INFOFMS.WTL_PIPE_LM WHERE IST_YMD LIKE TO_CHAR(ADD_MONTHS(substr(#searchKeyword#,0,6)||'01',0),'YYYY')  || '%') CNT1
+                      , (SELECT COUNT(*) FROM INFOFMS.WTL_PIPE_LM WHERE IST_YMD LIKE TO_CHAR(ADD_MONTHS(substr(#searchKeyword#,0,6)||'01',-1*12),'YYYY') || '%') CNT2
+                      , (SELECT COUNT(*) FROM INFOFMS.WTL_PIPE_LM WHERE IST_YMD LIKE TO_CHAR(ADD_MONTHS(substr(#searchKeyword#,0,6)||'01',-2*12),'YYYY') || '%') CNT3
+                      , (SELECT COUNT(*) FROM INFOFMS.WTL_PIPE_LM WHERE IST_YMD LIKE TO_CHAR(ADD_MONTHS(substr(#searchKeyword#,0,6)||'01',-3*12),'YYYY') || '%') CNT4
+                      , (SELECT COUNT(*) FROM INFOFMS.WTL_PIPE_LM WHERE IST_YMD LIKE TO_CHAR(ADD_MONTHS(substr(#searchKeyword#,0,6)||'01',-4*12),'YYYY') || '%') CNT5    
                     FROM DUAL
                   UNION ALL
                   SELECT 'F002' CDE, '변류시설' NAM
                       , (SELECT COUNT(*) FROM INFOFMS.WTL_VALV_PS WHERE IST_YMD LIKE #searchKeyword#||'%') CNT
-                      , (SELECT COUNT(*) FROM INFOFMS.WTL_VALV_PS WHERE IST_YMD LIKE TO_CHAR(ADD_MONTHS(substr(#searchKeyword#,0,6)||'01',0),'YYYYMM')  || '%') CNT1
-                      , (SELECT COUNT(*) FROM INFOFMS.WTL_VALV_PS WHERE IST_YMD LIKE TO_CHAR(ADD_MONTHS(substr(#searchKeyword#,0,6)||'01',-1),'YYYYMM') || '%') CNT2
-                      , (SELECT COUNT(*) FROM INFOFMS.WTL_VALV_PS WHERE IST_YMD LIKE TO_CHAR(ADD_MONTHS(substr(#searchKeyword#,0,6)||'01',-2),'YYYYMM') || '%') CNT3
-                      , (SELECT COUNT(*) FROM INFOFMS.WTL_VALV_PS WHERE IST_YMD LIKE TO_CHAR(ADD_MONTHS(substr(#searchKeyword#,0,6)||'01',-3),'YYYYMM') || '%') CNT4
-                      , (SELECT COUNT(*) FROM INFOFMS.WTL_VALV_PS WHERE IST_YMD LIKE TO_CHAR(ADD_MONTHS(substr(#searchKeyword#,0,6)||'01',-4),'YYYYMM') || '%') CNT5    
+                      , (SELECT COUNT(*) FROM INFOFMS.WTL_VALV_PS WHERE IST_YMD LIKE TO_CHAR(ADD_MONTHS(substr(#searchKeyword#,0,6)||'01',0),'YYYY')  || '%') CNT1
+                      , (SELECT COUNT(*) FROM INFOFMS.WTL_VALV_PS WHERE IST_YMD LIKE TO_CHAR(ADD_MONTHS(substr(#searchKeyword#,0,6)||'01',-1*12),'YYYY') || '%') CNT2
+                      , (SELECT COUNT(*) FROM INFOFMS.WTL_VALV_PS WHERE IST_YMD LIKE TO_CHAR(ADD_MONTHS(substr(#searchKeyword#,0,6)||'01',-2*12),'YYYY') || '%') CNT3
+                      , (SELECT COUNT(*) FROM INFOFMS.WTL_VALV_PS WHERE IST_YMD LIKE TO_CHAR(ADD_MONTHS(substr(#searchKeyword#,0,6)||'01',-3*12),'YYYY') || '%') CNT4
+                      , (SELECT COUNT(*) FROM INFOFMS.WTL_VALV_PS WHERE IST_YMD LIKE TO_CHAR(ADD_MONTHS(substr(#searchKeyword#,0,6)||'01',-4*12),'YYYY') || '%') CNT5    
                     FROM DUAL
                   UNION ALL
                   SELECT 'F003' CDE, '소방시설' NAM
                       , (SELECT COUNT(*) FROM INFOFMS.WTL_FIRE_PS WHERE IST_YMD LIKE #searchKeyword#||'%') CNT
-                      , (SELECT COUNT(*) FROM INFOFMS.WTL_FIRE_PS WHERE IST_YMD LIKE TO_CHAR(ADD_MONTHS(substr(#searchKeyword#,0,6)||'01',0),'YYYYMM')  || '%') CNT1
-                      , (SELECT COUNT(*) FROM INFOFMS.WTL_FIRE_PS WHERE IST_YMD LIKE TO_CHAR(ADD_MONTHS(substr(#searchKeyword#,0,6)||'01',-1),'YYYYMM') || '%') CNT2
-                      , (SELECT COUNT(*) FROM INFOFMS.WTL_FIRE_PS WHERE IST_YMD LIKE TO_CHAR(ADD_MONTHS(substr(#searchKeyword#,0,6)||'01',-2),'YYYYMM') || '%') CNT3
-                      , (SELECT COUNT(*) FROM INFOFMS.WTL_FIRE_PS WHERE IST_YMD LIKE TO_CHAR(ADD_MONTHS(substr(#searchKeyword#,0,6)||'01',-3),'YYYYMM') || '%') CNT4
-                      , (SELECT COUNT(*) FROM INFOFMS.WTL_FIRE_PS WHERE IST_YMD LIKE TO_CHAR(ADD_MONTHS(substr(#searchKeyword#,0,6)||'01',-4),'YYYYMM') || '%') CNT5    
+                      , (SELECT COUNT(*) FROM INFOFMS.WTL_FIRE_PS WHERE IST_YMD LIKE TO_CHAR(ADD_MONTHS(substr(#searchKeyword#,0,6)||'01',0),'YYYY')  || '%') CNT1
+                      , (SELECT COUNT(*) FROM INFOFMS.WTL_FIRE_PS WHERE IST_YMD LIKE TO_CHAR(ADD_MONTHS(substr(#searchKeyword#,0,6)||'01',-1*12),'YYYY') || '%') CNT2
+                      , (SELECT COUNT(*) FROM INFOFMS.WTL_FIRE_PS WHERE IST_YMD LIKE TO_CHAR(ADD_MONTHS(substr(#searchKeyword#,0,6)||'01',-2*12),'YYYY') || '%') CNT3
+                      , (SELECT COUNT(*) FROM INFOFMS.WTL_FIRE_PS WHERE IST_YMD LIKE TO_CHAR(ADD_MONTHS(substr(#searchKeyword#,0,6)||'01',-3*12),'YYYY') || '%') CNT4
+                      , (SELECT COUNT(*) FROM INFOFMS.WTL_FIRE_PS WHERE IST_YMD LIKE TO_CHAR(ADD_MONTHS(substr(#searchKeyword#,0,6)||'01',-4*12),'YYYY') || '%') CNT5    
                     FROM DUAL
                   UNION ALL
                   SELECT 'F004' CDE, '상수맨홀' NAM
                       , (SELECT COUNT(*) FROM INFOFMS.WTL_MANH_PS WHERE IST_YMD LIKE #searchKeyword#||'%') CNT
-                      , (SELECT COUNT(*) FROM INFOFMS.WTL_MANH_PS WHERE IST_YMD LIKE TO_CHAR(ADD_MONTHS(substr(#searchKeyword#,0,6)||'01',0),'YYYYMM')  || '%') CNT1
-                      , (SELECT COUNT(*) FROM INFOFMS.WTL_MANH_PS WHERE IST_YMD LIKE TO_CHAR(ADD_MONTHS(substr(#searchKeyword#,0,6)||'01',-1),'YYYYMM') || '%') CNT2
-                      , (SELECT COUNT(*) FROM INFOFMS.WTL_MANH_PS WHERE IST_YMD LIKE TO_CHAR(ADD_MONTHS(substr(#searchKeyword#,0,6)||'01',-2),'YYYYMM') || '%') CNT3
-                      , (SELECT COUNT(*) FROM INFOFMS.WTL_MANH_PS WHERE IST_YMD LIKE TO_CHAR(ADD_MONTHS(substr(#searchKeyword#,0,6)||'01',-3),'YYYYMM') || '%') CNT4
-                      , (SELECT COUNT(*) FROM INFOFMS.WTL_MANH_PS WHERE IST_YMD LIKE TO_CHAR(ADD_MONTHS(substr(#searchKeyword#,0,6)||'01',-4),'YYYYMM') || '%') CNT5    
+                      , (SELECT COUNT(*) FROM INFOFMS.WTL_MANH_PS WHERE IST_YMD LIKE TO_CHAR(ADD_MONTHS(substr(#searchKeyword#,0,6)||'01',0),'YYYY')  || '%') CNT1
+                      , (SELECT COUNT(*) FROM INFOFMS.WTL_MANH_PS WHERE IST_YMD LIKE TO_CHAR(ADD_MONTHS(substr(#searchKeyword#,0,6)||'01',-1*12),'YYYY') || '%') CNT2
+                      , (SELECT COUNT(*) FROM INFOFMS.WTL_MANH_PS WHERE IST_YMD LIKE TO_CHAR(ADD_MONTHS(substr(#searchKeyword#,0,6)||'01',-2*12),'YYYY') || '%') CNT3
+                      , (SELECT COUNT(*) FROM INFOFMS.WTL_MANH_PS WHERE IST_YMD LIKE TO_CHAR(ADD_MONTHS(substr(#searchKeyword#,0,6)||'01',-3*12),'YYYY') || '%') CNT4
+                      , (SELECT COUNT(*) FROM INFOFMS.WTL_MANH_PS WHERE IST_YMD LIKE TO_CHAR(ADD_MONTHS(substr(#searchKeyword#,0,6)||'01',-4*12),'YYYY') || '%') CNT5    
                     FROM DUAL
                   UNION ALL
                   SELECT 'F005' CDE, '유량계' NAM
                       , (SELECT COUNT(*) FROM INFOFMS.WTL_FLOW_PS WHERE IST_YMD LIKE #searchKeyword#||'%') CNT
-                      , (SELECT COUNT(*) FROM INFOFMS.WTL_FLOW_PS WHERE IST_YMD LIKE TO_CHAR(ADD_MONTHS(substr(#searchKeyword#,0,6)||'01',0),'YYYYMM')  || '%') CNT1
-                      , (SELECT COUNT(*) FROM INFOFMS.WTL_FLOW_PS WHERE IST_YMD LIKE TO_CHAR(ADD_MONTHS(substr(#searchKeyword#,0,6)||'01',-1),'YYYYMM') || '%') CNT2
-                      , (SELECT COUNT(*) FROM INFOFMS.WTL_FLOW_PS WHERE IST_YMD LIKE TO_CHAR(ADD_MONTHS(substr(#searchKeyword#,0,6)||'01',-2),'YYYYMM') || '%') CNT3
-                      , (SELECT COUNT(*) FROM INFOFMS.WTL_FLOW_PS WHERE IST_YMD LIKE TO_CHAR(ADD_MONTHS(substr(#searchKeyword#,0,6)||'01',-3),'YYYYMM') || '%') CNT4
-                      , (SELECT COUNT(*) FROM INFOFMS.WTL_FLOW_PS WHERE IST_YMD LIKE TO_CHAR(ADD_MONTHS(substr(#searchKeyword#,0,6)||'01',-4),'YYYYMM') || '%') CNT5    
+                      , (SELECT COUNT(*) FROM INFOFMS.WTL_FLOW_PS WHERE IST_YMD LIKE TO_CHAR(ADD_MONTHS(substr(#searchKeyword#,0,6)||'01',0),'YYYY')  || '%') CNT1
+                      , (SELECT COUNT(*) FROM INFOFMS.WTL_FLOW_PS WHERE IST_YMD LIKE TO_CHAR(ADD_MONTHS(substr(#searchKeyword#,0,6)||'01',-1*12),'YYYY') || '%') CNT2
+                      , (SELECT COUNT(*) FROM INFOFMS.WTL_FLOW_PS WHERE IST_YMD LIKE TO_CHAR(ADD_MONTHS(substr(#searchKeyword#,0,6)||'01',-2*12),'YYYY') || '%') CNT3
+                      , (SELECT COUNT(*) FROM INFOFMS.WTL_FLOW_PS WHERE IST_YMD LIKE TO_CHAR(ADD_MONTHS(substr(#searchKeyword#,0,6)||'01',-3*12),'YYYY') || '%') CNT4
+                      , (SELECT COUNT(*) FROM INFOFMS.WTL_FLOW_PS WHERE IST_YMD LIKE TO_CHAR(ADD_MONTHS(substr(#searchKeyword#,0,6)||'01',-4*12),'YYYY') || '%') CNT5    
                     FROM DUAL
                   UNION ALL
                   SELECT 'F006' CDE, '스탠드파이프' NAM
                       , (SELECT COUNT(*) FROM INFOFMS.WTL_STPI_PS WHERE IST_YMD LIKE #searchKeyword#||'%') CNT
-                      , (SELECT COUNT(*) FROM INFOFMS.WTL_STPI_PS WHERE IST_YMD LIKE TO_CHAR(ADD_MONTHS(substr(#searchKeyword#,0,6)||'01',0),'YYYYMM')  || '%') CNT1
-                      , (SELECT COUNT(*) FROM INFOFMS.WTL_STPI_PS WHERE IST_YMD LIKE TO_CHAR(ADD_MONTHS(substr(#searchKeyword#,0,6)||'01',-1),'YYYYMM') || '%') CNT2
-                      , (SELECT COUNT(*) FROM INFOFMS.WTL_STPI_PS WHERE IST_YMD LIKE TO_CHAR(ADD_MONTHS(substr(#searchKeyword#,0,6)||'01',-2),'YYYYMM') || '%') CNT3
-                      , (SELECT COUNT(*) FROM INFOFMS.WTL_STPI_PS WHERE IST_YMD LIKE TO_CHAR(ADD_MONTHS(substr(#searchKeyword#,0,6)||'01',-3),'YYYYMM') || '%') CNT4
-                      , (SELECT COUNT(*) FROM INFOFMS.WTL_STPI_PS WHERE IST_YMD LIKE TO_CHAR(ADD_MONTHS(substr(#searchKeyword#,0,6)||'01',-4),'YYYYMM') || '%') CNT5    
+                      , (SELECT COUNT(*) FROM INFOFMS.WTL_STPI_PS WHERE IST_YMD LIKE TO_CHAR(ADD_MONTHS(substr(#searchKeyword#,0,6)||'01',0),'YYYY')  || '%') CNT1
+                      , (SELECT COUNT(*) FROM INFOFMS.WTL_STPI_PS WHERE IST_YMD LIKE TO_CHAR(ADD_MONTHS(substr(#searchKeyword#,0,6)||'01',-1*12),'YYYY') || '%') CNT2
+                      , (SELECT COUNT(*) FROM INFOFMS.WTL_STPI_PS WHERE IST_YMD LIKE TO_CHAR(ADD_MONTHS(substr(#searchKeyword#,0,6)||'01',-2*12),'YYYY') || '%') CNT3
+                      , (SELECT COUNT(*) FROM INFOFMS.WTL_STPI_PS WHERE IST_YMD LIKE TO_CHAR(ADD_MONTHS(substr(#searchKeyword#,0,6)||'01',-3*12),'YYYY') || '%') CNT4
+                      , (SELECT COUNT(*) FROM INFOFMS.WTL_STPI_PS WHERE IST_YMD LIKE TO_CHAR(ADD_MONTHS(substr(#searchKeyword#,0,6)||'01',-4*12),'YYYY') || '%') CNT5    
                     FROM DUAL
                   UNION ALL
                   SELECT 'F007' CDE, '수압계' NAM
                       , (SELECT COUNT(*) FROM INFOFMS.WTL_PRGA_PS WHERE IST_YMD LIKE #searchKeyword#||'%') CNT
-                      , (SELECT COUNT(*) FROM INFOFMS.WTL_PRGA_PS WHERE IST_YMD LIKE TO_CHAR(ADD_MONTHS(substr(#searchKeyword#,0,6)||'01',0),'YYYYMM')  || '%') CNT1
-                      , (SELECT COUNT(*) FROM INFOFMS.WTL_PRGA_PS WHERE IST_YMD LIKE TO_CHAR(ADD_MONTHS(substr(#searchKeyword#,0,6)||'01',-1),'YYYYMM') || '%') CNT2
-                      , (SELECT COUNT(*) FROM INFOFMS.WTL_PRGA_PS WHERE IST_YMD LIKE TO_CHAR(ADD_MONTHS(substr(#searchKeyword#,0,6)||'01',-2),'YYYYMM') || '%') CNT3
-                      , (SELECT COUNT(*) FROM INFOFMS.WTL_PRGA_PS WHERE IST_YMD LIKE TO_CHAR(ADD_MONTHS(substr(#searchKeyword#,0,6)||'01',-3),'YYYYMM') || '%') CNT4
-                      , (SELECT COUNT(*) FROM INFOFMS.WTL_PRGA_PS WHERE IST_YMD LIKE TO_CHAR(ADD_MONTHS(substr(#searchKeyword#,0,6)||'01',-4),'YYYYMM') || '%') CNT5    
+                      , (SELECT COUNT(*) FROM INFOFMS.WTL_PRGA_PS WHERE IST_YMD LIKE TO_CHAR(ADD_MONTHS(substr(#searchKeyword#,0,6)||'01',0),'YYYY')  || '%') CNT1
+                      , (SELECT COUNT(*) FROM INFOFMS.WTL_PRGA_PS WHERE IST_YMD LIKE TO_CHAR(ADD_MONTHS(substr(#searchKeyword#,0,6)||'01',-1*12),'YYYY') || '%') CNT2
+                      , (SELECT COUNT(*) FROM INFOFMS.WTL_PRGA_PS WHERE IST_YMD LIKE TO_CHAR(ADD_MONTHS(substr(#searchKeyword#,0,6)||'01',-2*12),'YYYY') || '%') CNT3
+                      , (SELECT COUNT(*) FROM INFOFMS.WTL_PRGA_PS WHERE IST_YMD LIKE TO_CHAR(ADD_MONTHS(substr(#searchKeyword#,0,6)||'01',-3*12),'YYYY') || '%') CNT4
+                      , (SELECT COUNT(*) FROM INFOFMS.WTL_PRGA_PS WHERE IST_YMD LIKE TO_CHAR(ADD_MONTHS(substr(#searchKeyword#,0,6)||'01',-4*12),'YYYY') || '%') CNT5    
                     FROM DUAL
                   UNION ALL
                   SELECT 'F008' CDE, '수원지' NAM
                       , (SELECT COUNT(*) FROM INFOFMS.WTL_HEAD_PS WHERE FNS_YMD LIKE #searchKeyword#||'%') CNT
-                      , (SELECT COUNT(*) FROM INFOFMS.WTL_HEAD_PS WHERE FNS_YMD LIKE TO_CHAR(ADD_MONTHS(substr(#searchKeyword#,0,6)||'01',0),'YYYYMM')  || '%') CNT1
-                      , (SELECT COUNT(*) FROM INFOFMS.WTL_HEAD_PS WHERE FNS_YMD LIKE TO_CHAR(ADD_MONTHS(substr(#searchKeyword#,0,6)||'01',-1),'YYYYMM') || '%') CNT2
-                      , (SELECT COUNT(*) FROM INFOFMS.WTL_HEAD_PS WHERE FNS_YMD LIKE TO_CHAR(ADD_MONTHS(substr(#searchKeyword#,0,6)||'01',-2),'YYYYMM') || '%') CNT3
-                      , (SELECT COUNT(*) FROM INFOFMS.WTL_HEAD_PS WHERE FNS_YMD LIKE TO_CHAR(ADD_MONTHS(substr(#searchKeyword#,0,6)||'01',-3),'YYYYMM') || '%') CNT4
-                      , (SELECT COUNT(*) FROM INFOFMS.WTL_HEAD_PS WHERE FNS_YMD LIKE TO_CHAR(ADD_MONTHS(substr(#searchKeyword#,0,6)||'01',-4),'YYYYMM') || '%') CNT5    
+                      , (SELECT COUNT(*) FROM INFOFMS.WTL_HEAD_PS WHERE FNS_YMD LIKE TO_CHAR(ADD_MONTHS(substr(#searchKeyword#,0,6)||'01',0),'YYYY')  || '%') CNT1
+                      , (SELECT COUNT(*) FROM INFOFMS.WTL_HEAD_PS WHERE FNS_YMD LIKE TO_CHAR(ADD_MONTHS(substr(#searchKeyword#,0,6)||'01',-1*12),'YYYY') || '%') CNT2
+                      , (SELECT COUNT(*) FROM INFOFMS.WTL_HEAD_PS WHERE FNS_YMD LIKE TO_CHAR(ADD_MONTHS(substr(#searchKeyword#,0,6)||'01',-2*12),'YYYY') || '%') CNT3
+                      , (SELECT COUNT(*) FROM INFOFMS.WTL_HEAD_PS WHERE FNS_YMD LIKE TO_CHAR(ADD_MONTHS(substr(#searchKeyword#,0,6)||'01',-3*12),'YYYY') || '%') CNT4
+                      , (SELECT COUNT(*) FROM INFOFMS.WTL_HEAD_PS WHERE FNS_YMD LIKE TO_CHAR(ADD_MONTHS(substr(#searchKeyword#,0,6)||'01',-4*12),'YYYY') || '%') CNT5    
                     FROM DUAL
                   UNION ALL
                   SELECT 'F009' CDE, '취수장' NAM
                       , (SELECT COUNT(*) FROM INFOFMS.WTL_GAIN_PS WHERE FNS_YMD LIKE #searchKeyword#||'%') CNT
-                      , (SELECT COUNT(*) FROM INFOFMS.WTL_GAIN_PS WHERE FNS_YMD LIKE TO_CHAR(ADD_MONTHS(substr(#searchKeyword#,0,6)||'01',0),'YYYYMM')  || '%') CNT1
-                      , (SELECT COUNT(*) FROM INFOFMS.WTL_GAIN_PS WHERE FNS_YMD LIKE TO_CHAR(ADD_MONTHS(substr(#searchKeyword#,0,6)||'01',-1),'YYYYMM') || '%') CNT2
-                      , (SELECT COUNT(*) FROM INFOFMS.WTL_GAIN_PS WHERE FNS_YMD LIKE TO_CHAR(ADD_MONTHS(substr(#searchKeyword#,0,6)||'01',-2),'YYYYMM') || '%') CNT3
-                      , (SELECT COUNT(*) FROM INFOFMS.WTL_GAIN_PS WHERE FNS_YMD LIKE TO_CHAR(ADD_MONTHS(substr(#searchKeyword#,0,6)||'01',-3),'YYYYMM') || '%') CNT4
-                      , (SELECT COUNT(*) FROM INFOFMS.WTL_GAIN_PS WHERE FNS_YMD LIKE TO_CHAR(ADD_MONTHS(substr(#searchKeyword#,0,6)||'01',-4),'YYYYMM') || '%') CNT5    
+                      , (SELECT COUNT(*) FROM INFOFMS.WTL_GAIN_PS WHERE FNS_YMD LIKE TO_CHAR(ADD_MONTHS(substr(#searchKeyword#,0,6)||'01',0),'YYYY')  || '%') CNT1
+                      , (SELECT COUNT(*) FROM INFOFMS.WTL_GAIN_PS WHERE FNS_YMD LIKE TO_CHAR(ADD_MONTHS(substr(#searchKeyword#,0,6)||'01',-1*12),'YYYY') || '%') CNT2
+                      , (SELECT COUNT(*) FROM INFOFMS.WTL_GAIN_PS WHERE FNS_YMD LIKE TO_CHAR(ADD_MONTHS(substr(#searchKeyword#,0,6)||'01',-2*12),'YYYY') || '%') CNT3
+                      , (SELECT COUNT(*) FROM INFOFMS.WTL_GAIN_PS WHERE FNS_YMD LIKE TO_CHAR(ADD_MONTHS(substr(#searchKeyword#,0,6)||'01',-3*12),'YYYY') || '%') CNT4
+                      , (SELECT COUNT(*) FROM INFOFMS.WTL_GAIN_PS WHERE FNS_YMD LIKE TO_CHAR(ADD_MONTHS(substr(#searchKeyword#,0,6)||'01',-4*12),'YYYY') || '%') CNT5    
                     FROM DUAL
                   UNION ALL
                   SELECT 'F010' CDE, '배수지' NAM
                       , (SELECT COUNT(*) FROM INFOFMS.WTL_SERV_PS WHERE FNS_YMD LIKE #searchKeyword#||'%') CNT
-                      , (SELECT COUNT(*) FROM INFOFMS.WTL_SERV_PS WHERE FNS_YMD LIKE TO_CHAR(ADD_MONTHS(substr(#searchKeyword#,0,6)||'01',0),'YYYYMM')  || '%') CNT1
-                      , (SELECT COUNT(*) FROM INFOFMS.WTL_SERV_PS WHERE FNS_YMD LIKE TO_CHAR(ADD_MONTHS(substr(#searchKeyword#,0,6)||'01',-1),'YYYYMM') || '%') CNT2
-                      , (SELECT COUNT(*) FROM INFOFMS.WTL_SERV_PS WHERE FNS_YMD LIKE TO_CHAR(ADD_MONTHS(substr(#searchKeyword#,0,6)||'01',-2),'YYYYMM') || '%') CNT3
-                      , (SELECT COUNT(*) FROM INFOFMS.WTL_SERV_PS WHERE FNS_YMD LIKE TO_CHAR(ADD_MONTHS(substr(#searchKeyword#,0,6)||'01',-3),'YYYYMM') || '%') CNT4
-                      , (SELECT COUNT(*) FROM INFOFMS.WTL_SERV_PS WHERE FNS_YMD LIKE TO_CHAR(ADD_MONTHS(substr(#searchKeyword#,0,6)||'01',-4),'YYYYMM') || '%') CNT5    
+                      , (SELECT COUNT(*) FROM INFOFMS.WTL_SERV_PS WHERE FNS_YMD LIKE TO_CHAR(ADD_MONTHS(substr(#searchKeyword#,0,6)||'01',0),'YYYY')  || '%') CNT1
+                      , (SELECT COUNT(*) FROM INFOFMS.WTL_SERV_PS WHERE FNS_YMD LIKE TO_CHAR(ADD_MONTHS(substr(#searchKeyword#,0,6)||'01',-1*12),'YYYY') || '%') CNT2
+                      , (SELECT COUNT(*) FROM INFOFMS.WTL_SERV_PS WHERE FNS_YMD LIKE TO_CHAR(ADD_MONTHS(substr(#searchKeyword#,0,6)||'01',-2*12),'YYYY') || '%') CNT3
+                      , (SELECT COUNT(*) FROM INFOFMS.WTL_SERV_PS WHERE FNS_YMD LIKE TO_CHAR(ADD_MONTHS(substr(#searchKeyword#,0,6)||'01',-3*12),'YYYY') || '%') CNT4
+                      , (SELECT COUNT(*) FROM INFOFMS.WTL_SERV_PS WHERE FNS_YMD LIKE TO_CHAR(ADD_MONTHS(substr(#searchKeyword#,0,6)||'01',-4*12),'YYYY') || '%') CNT5    
                     FROM DUAL
                   UNION ALL
                   SELECT 'F011' CDE, '정수장' NAM
                       , (SELECT COUNT(*) FROM INFOFMS.WTL_PURI_AS WHERE FNS_YMD LIKE #searchKeyword#||'%') CNT
-                      , (SELECT COUNT(*) FROM INFOFMS.WTL_PURI_AS WHERE FNS_YMD LIKE TO_CHAR(ADD_MONTHS(substr(#searchKeyword#,0,6)||'01',0),'YYYYMM')  || '%') CNT1
-                      , (SELECT COUNT(*) FROM INFOFMS.WTL_PURI_AS WHERE FNS_YMD LIKE TO_CHAR(ADD_MONTHS(substr(#searchKeyword#,0,6)||'01',-1),'YYYYMM') || '%') CNT2
-                      , (SELECT COUNT(*) FROM INFOFMS.WTL_PURI_AS WHERE FNS_YMD LIKE TO_CHAR(ADD_MONTHS(substr(#searchKeyword#,0,6)||'01',-2),'YYYYMM') || '%') CNT3
-                      , (SELECT COUNT(*) FROM INFOFMS.WTL_PURI_AS WHERE FNS_YMD LIKE TO_CHAR(ADD_MONTHS(substr(#searchKeyword#,0,6)||'01',-3),'YYYYMM') || '%') CNT4
-                      , (SELECT COUNT(*) FROM INFOFMS.WTL_PURI_AS WHERE FNS_YMD LIKE TO_CHAR(ADD_MONTHS(substr(#searchKeyword#,0,6)||'01',-4),'YYYYMM') || '%') CNT5    
+                      , (SELECT COUNT(*) FROM INFOFMS.WTL_PURI_AS WHERE FNS_YMD LIKE TO_CHAR(ADD_MONTHS(substr(#searchKeyword#,0,6)||'01',0),'YYYY')  || '%') CNT1
+                      , (SELECT COUNT(*) FROM INFOFMS.WTL_PURI_AS WHERE FNS_YMD LIKE TO_CHAR(ADD_MONTHS(substr(#searchKeyword#,0,6)||'01',-1*12),'YYYY') || '%') CNT2
+                      , (SELECT COUNT(*) FROM INFOFMS.WTL_PURI_AS WHERE FNS_YMD LIKE TO_CHAR(ADD_MONTHS(substr(#searchKeyword#,0,6)||'01',-2*12),'YYYY') || '%') CNT3
+                      , (SELECT COUNT(*) FROM INFOFMS.WTL_PURI_AS WHERE FNS_YMD LIKE TO_CHAR(ADD_MONTHS(substr(#searchKeyword#,0,6)||'01',-3*12),'YYYY') || '%') CNT4
+                      , (SELECT COUNT(*) FROM INFOFMS.WTL_PURI_AS WHERE FNS_YMD LIKE TO_CHAR(ADD_MONTHS(substr(#searchKeyword#,0,6)||'01',-4*12),'YYYY') || '%') CNT5    
                     FROM DUAL
                   UNION ALL
                   SELECT 'F012' CDE, '가압펌프장' NAM
                       , (SELECT COUNT(*) FROM INFOFMS.WTL_PRES_PS WHERE FNS_YMD LIKE #searchKeyword#||'%') CNT
-                      , (SELECT COUNT(*) FROM INFOFMS.WTL_PRES_PS WHERE FNS_YMD LIKE TO_CHAR(ADD_MONTHS(substr(#searchKeyword#,0,6)||'01',0),'YYYYMM')  || '%') CNT1
-                      , (SELECT COUNT(*) FROM INFOFMS.WTL_PRES_PS WHERE FNS_YMD LIKE TO_CHAR(ADD_MONTHS(substr(#searchKeyword#,0,6)||'01',-1),'YYYYMM') || '%') CNT2
-                      , (SELECT COUNT(*) FROM INFOFMS.WTL_PRES_PS WHERE FNS_YMD LIKE TO_CHAR(ADD_MONTHS(substr(#searchKeyword#,0,6)||'01',-2),'YYYYMM') || '%') CNT3
-                      , (SELECT COUNT(*) FROM INFOFMS.WTL_PRES_PS WHERE FNS_YMD LIKE TO_CHAR(ADD_MONTHS(substr(#searchKeyword#,0,6)||'01',-3),'YYYYMM') || '%') CNT4
-                      , (SELECT COUNT(*) FROM INFOFMS.WTL_PRES_PS WHERE FNS_YMD LIKE TO_CHAR(ADD_MONTHS(substr(#searchKeyword#,0,6)||'01',-4),'YYYYMM') || '%') CNT5    
+                      , (SELECT COUNT(*) FROM INFOFMS.WTL_PRES_PS WHERE FNS_YMD LIKE TO_CHAR(ADD_MONTHS(substr(#searchKeyword#,0,6)||'01',0),'YYYY')  || '%') CNT1
+                      , (SELECT COUNT(*) FROM INFOFMS.WTL_PRES_PS WHERE FNS_YMD LIKE TO_CHAR(ADD_MONTHS(substr(#searchKeyword#,0,6)||'01',-1*12),'YYYY') || '%') CNT2
+                      , (SELECT COUNT(*) FROM INFOFMS.WTL_PRES_PS WHERE FNS_YMD LIKE TO_CHAR(ADD_MONTHS(substr(#searchKeyword#,0,6)||'01',-2*12),'YYYY') || '%') CNT3
+                      , (SELECT COUNT(*) FROM INFOFMS.WTL_PRES_PS WHERE FNS_YMD LIKE TO_CHAR(ADD_MONTHS(substr(#searchKeyword#,0,6)||'01',-3*12),'YYYY') || '%') CNT4
+                      , (SELECT COUNT(*) FROM INFOFMS.WTL_PRES_PS WHERE FNS_YMD LIKE TO_CHAR(ADD_MONTHS(substr(#searchKeyword#,0,6)||'01',-4*12),'YYYY') || '%') CNT5    
                     FROM DUAL
                   UNION ALL
                   SELECT 'F013' CDE, '급수관로' NAM
                       , (SELECT COUNT(*) FROM INFOFMS.WTL_SPLY_LS WHERE IST_YMD LIKE #searchKeyword#||'%') CNT
-                      , (SELECT COUNT(*) FROM INFOFMS.WTL_SPLY_LS WHERE IST_YMD LIKE TO_CHAR(ADD_MONTHS(substr(#searchKeyword#,0,6)||'01',0),'YYYYMM')  || '%') CNT1
-                      , (SELECT COUNT(*) FROM INFOFMS.WTL_SPLY_LS WHERE IST_YMD LIKE TO_CHAR(ADD_MONTHS(substr(#searchKeyword#,0,6)||'01',-1),'YYYYMM') || '%') CNT2
-                      , (SELECT COUNT(*) FROM INFOFMS.WTL_SPLY_LS WHERE IST_YMD LIKE TO_CHAR(ADD_MONTHS(substr(#searchKeyword#,0,6)||'01',-2),'YYYYMM') || '%') CNT3
-                      , (SELECT COUNT(*) FROM INFOFMS.WTL_SPLY_LS WHERE IST_YMD LIKE TO_CHAR(ADD_MONTHS(substr(#searchKeyword#,0,6)||'01',-3),'YYYYMM') || '%') CNT4
-                      , (SELECT COUNT(*) FROM INFOFMS.WTL_SPLY_LS WHERE IST_YMD LIKE TO_CHAR(ADD_MONTHS(substr(#searchKeyword#,0,6)||'01',-4),'YYYYMM') || '%') CNT5    
+                      , (SELECT COUNT(*) FROM INFOFMS.WTL_SPLY_LS WHERE IST_YMD LIKE TO_CHAR(ADD_MONTHS(substr(#searchKeyword#,0,6)||'01',0),'YYYY')  || '%') CNT1
+                      , (SELECT COUNT(*) FROM INFOFMS.WTL_SPLY_LS WHERE IST_YMD LIKE TO_CHAR(ADD_MONTHS(substr(#searchKeyword#,0,6)||'01',-1*12),'YYYY') || '%') CNT2
+                      , (SELECT COUNT(*) FROM INFOFMS.WTL_SPLY_LS WHERE IST_YMD LIKE TO_CHAR(ADD_MONTHS(substr(#searchKeyword#,0,6)||'01',-2*12),'YYYY') || '%') CNT3
+                      , (SELECT COUNT(*) FROM INFOFMS.WTL_SPLY_LS WHERE IST_YMD LIKE TO_CHAR(ADD_MONTHS(substr(#searchKeyword#,0,6)||'01',-3*12),'YYYY') || '%') CNT4
+                      , (SELECT COUNT(*) FROM INFOFMS.WTL_SPLY_LS WHERE IST_YMD LIKE TO_CHAR(ADD_MONTHS(substr(#searchKeyword#,0,6)||'01',-4*12),'YYYY') || '%') CNT5    
                     FROM DUAL
                   UNION ALL
                   SELECT 'F014' CDE, '급수전계량기' NAM
                       , (SELECT COUNT(*) FROM INFOFMS.WTL_META_PS WHERE IST_YMD LIKE #searchKeyword#||'%') CNT
-                      , (SELECT COUNT(*) FROM INFOFMS.WTL_META_PS WHERE IST_YMD LIKE TO_CHAR(ADD_MONTHS(substr(#searchKeyword#,0,6)||'01',0),'YYYYMM')  || '%') CNT1
-                      , (SELECT COUNT(*) FROM INFOFMS.WTL_META_PS WHERE IST_YMD LIKE TO_CHAR(ADD_MONTHS(substr(#searchKeyword#,0,6)||'01',-1),'YYYYMM') || '%') CNT2
-                      , (SELECT COUNT(*) FROM INFOFMS.WTL_META_PS WHERE IST_YMD LIKE TO_CHAR(ADD_MONTHS(substr(#searchKeyword#,0,6)||'01',-2),'YYYYMM') || '%') CNT3
-                      , (SELECT COUNT(*) FROM INFOFMS.WTL_META_PS WHERE IST_YMD LIKE TO_CHAR(ADD_MONTHS(substr(#searchKeyword#,0,6)||'01',-3),'YYYYMM') || '%') CNT4
-                      , (SELECT COUNT(*) FROM INFOFMS.WTL_META_PS WHERE IST_YMD LIKE TO_CHAR(ADD_MONTHS(substr(#searchKeyword#,0,6)||'01',-4),'YYYYMM') || '%') CNT5    
+                      , (SELECT COUNT(*) FROM INFOFMS.WTL_META_PS WHERE IST_YMD LIKE TO_CHAR(ADD_MONTHS(substr(#searchKeyword#,0,6)||'01',0),'YYYY')  || '%') CNT1
+                      , (SELECT COUNT(*) FROM INFOFMS.WTL_META_PS WHERE IST_YMD LIKE TO_CHAR(ADD_MONTHS(substr(#searchKeyword#,0,6)||'01',-1*12),'YYYY') || '%') CNT2
+                      , (SELECT COUNT(*) FROM INFOFMS.WTL_META_PS WHERE IST_YMD LIKE TO_CHAR(ADD_MONTHS(substr(#searchKeyword#,0,6)||'01',-2*12),'YYYY') || '%') CNT3
+                      , (SELECT COUNT(*) FROM INFOFMS.WTL_META_PS WHERE IST_YMD LIKE TO_CHAR(ADD_MONTHS(substr(#searchKeyword#,0,6)||'01',-3*12),'YYYY') || '%') CNT4
+                      , (SELECT COUNT(*) FROM INFOFMS.WTL_META_PS WHERE IST_YMD LIKE TO_CHAR(ADD_MONTHS(substr(#searchKeyword#,0,6)||'01',-4*12),'YYYY') || '%') CNT5    
                     FROM DUAL
                   UNION ALL
                   SELECT 'F015' CDE, '저수조' NAM
                       , (SELECT COUNT(*) FROM INFOFMS.WTL_RSRV_PS WHERE FNS_YMD LIKE #searchKeyword#||'%') CNT
-                      , (SELECT COUNT(*) FROM INFOFMS.WTL_RSRV_PS WHERE FNS_YMD LIKE TO_CHAR(ADD_MONTHS(substr(#searchKeyword#,0,6)||'01',0),'YYYYMM')  || '%') CNT1
-                      , (SELECT COUNT(*) FROM INFOFMS.WTL_RSRV_PS WHERE FNS_YMD LIKE TO_CHAR(ADD_MONTHS(substr(#searchKeyword#,0,6)||'01',-1),'YYYYMM') || '%') CNT2
-                      , (SELECT COUNT(*) FROM INFOFMS.WTL_RSRV_PS WHERE FNS_YMD LIKE TO_CHAR(ADD_MONTHS(substr(#searchKeyword#,0,6)||'01',-2),'YYYYMM') || '%') CNT3
-                      , (SELECT COUNT(*) FROM INFOFMS.WTL_RSRV_PS WHERE FNS_YMD LIKE TO_CHAR(ADD_MONTHS(substr(#searchKeyword#,0,6)||'01',-3),'YYYYMM') || '%') CNT4
-                      , (SELECT COUNT(*) FROM INFOFMS.WTL_RSRV_PS WHERE FNS_YMD LIKE TO_CHAR(ADD_MONTHS(substr(#searchKeyword#,0,6)||'01',-4),'YYYYMM') || '%') CNT5    
+                      , (SELECT COUNT(*) FROM INFOFMS.WTL_RSRV_PS WHERE FNS_YMD LIKE TO_CHAR(ADD_MONTHS(substr(#searchKeyword#,0,6)||'01',0),'YYYY')  || '%') CNT1
+                      , (SELECT COUNT(*) FROM INFOFMS.WTL_RSRV_PS WHERE FNS_YMD LIKE TO_CHAR(ADD_MONTHS(substr(#searchKeyword#,0,6)||'01',-1*12),'YYYY') || '%') CNT2
+                      , (SELECT COUNT(*) FROM INFOFMS.WTL_RSRV_PS WHERE FNS_YMD LIKE TO_CHAR(ADD_MONTHS(substr(#searchKeyword#,0,6)||'01',-2*12),'YYYY') || '%') CNT3
+                      , (SELECT COUNT(*) FROM INFOFMS.WTL_RSRV_PS WHERE FNS_YMD LIKE TO_CHAR(ADD_MONTHS(substr(#searchKeyword#,0,6)||'01',-3*12),'YYYY') || '%') CNT4
+                      , (SELECT COUNT(*) FROM INFOFMS.WTL_RSRV_PS WHERE FNS_YMD LIKE TO_CHAR(ADD_MONTHS(substr(#searchKeyword#,0,6)||'01',-4*12),'YYYY') || '%') CNT5    
                     FROM DUAL
 	             ) M
           ORDER BY M.CDE

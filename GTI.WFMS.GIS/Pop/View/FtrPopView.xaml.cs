@@ -1,6 +1,7 @@
 ﻿using DevExpress.Xpf.Editors;
 using GTI.WFMS.GIS.Module.View;
 using GTI.WFMS.Models.Common;
+using GTIFramework.Common.Log;
 using GTIFramework.Common.Utils.ViewEffect;
 using System;
 using System.Windows;
@@ -677,7 +678,94 @@ namespace GTI.WFMS.GIS.Pop.View
         //시설물대장
         private void Button_Click(object sender, RoutedEventArgs e)
         {
-            PopWinView p = new PopWinView("Pipe/View/FlowMtDtlView.xaml", ftrCde, ftrIdn);
+            PopWinView p;
+            switch (ftrCde)
+            {
+                case "SA001": //상수관로
+                    p = new PopWinView("Pipe/View/WtlPipeDtlView.xaml", ftrCde, ftrIdn);
+                    break;
+
+                case "SA002": //급수관로
+                    p = new PopWinView("Acmf/View/SupDutDtlView.xaml", ftrCde, ftrIdn);
+                    break;
+
+                case "SA003": //스탠파이프
+                    p = new PopWinView("Pipe/View/StndPiDtlView.xaml", ftrCde, ftrIdn);
+                    break;
+
+                case "SA100": //상수맨홀
+                    p = new PopWinView("Pipe/View/WtsMnhoDtlView.xaml", ftrCde, ftrIdn);
+                    break;
+
+                case "SA110": //수원지
+                    p = new PopWinView("Fclt/View/WtrSourDtlView.xaml", ftrCde, ftrIdn);
+                    break;
+
+                case "SA112": //취수장
+                    p = new PopWinView("Fclt/View/WtrSupDtlView.xaml", ftrCde, ftrIdn);
+                    break;
+
+                case "SA113": //정수장
+                    p = new PopWinView("Fclt/View/FiltPltDtlView.xaml", ftrCde, ftrIdn);
+                    break;
+
+                case "SA114": //배수지
+                    p = new PopWinView("Fclt/View/IntkStDtlView.xaml", ftrCde, ftrIdn);
+                    break;
+
+                case "SA117": //유량계
+                    p = new PopWinView("Pipe/View/FlowMtDtlView.xaml", ftrCde, ftrIdn);
+                    break;
+
+                case "SA118":
+                case "SA119": //급수탑,소화전
+                    p = new PopWinView("Pipe/View/FireFacDtlView.xaml", ftrCde, ftrIdn);
+                    break;
+
+                case "SA120": //저수조
+                    p = new PopWinView("Acmf/View/WtrTrkDtlView.xaml", ftrCde, ftrIdn);
+                    break;
+
+                case "SA121": //수압계
+                    p = new PopWinView("Pipe/View/WtprMtDtlView.xaml", ftrCde, ftrIdn);
+                    break;
+
+                case "SA122": //급수전계량기
+                    p = new PopWinView("Acmf/View/HydtMetrDtlView.xaml", ftrCde, ftrIdn);
+                    break;
+
+                case "SA200":
+                case "SA201":
+                case "SA202":
+                case "SA203":
+                case "SA204":
+                case "SA205":
+                    p = new PopWinView("Pipe/View/ValvFacDtlView.xaml", ftrCde, ftrIdn);
+                    break;
+
+                case "SA206": //가압펌프장
+                    p = new PopWinView("Fclt/View/PrsPmpDtlView.xaml", ftrCde, ftrIdn);
+                    break;
+
+                case "BZ001": //대블록
+                    p = new PopWinView("Blk/View/Blk01DtlView.xaml", ftrCde, ftrIdn);
+                    break;
+                case "BZ002": //중블록
+                    p = new PopWinView("Blk/View/Blk02DtlView.xaml", ftrCde, ftrIdn);
+                    break;
+                case "BZ003": //소블록
+                    p = new PopWinView("Blk/View/Blk03DtlView.xaml", ftrCde, ftrIdn);
+                    break;
+
+
+                default:
+                    p = new PopWinView("Pipe/View/WtlPipeDtlView.xaml", ftrCde, ftrIdn);
+                    break;
+            }
+
+
+            Logs.strFocusMNU_CD = "0001";//선택메뉴임시저장
+
             this.Close();
             if (p.ShowDialog() is bool)
             {

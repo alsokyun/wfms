@@ -593,7 +593,7 @@ namespace GTI.WFMS.GIS
                 return;
             }
 
-            ESRI.ArcGIS.Geometry.IPoint point = mapControl.ToMapPoint(Convert.ToInt32(GisCmm._hsCoords.X), Convert.ToInt32(GisCmm._hsCoords.Y));
+            ESRI.ArcGIS.Geometry.IPoint point = mapControl.ToMapPoint(Convert.ToInt32(GisCmm.fmsCoords.X), Convert.ToInt32(GisCmm.fmsCoords.Y));
 
 
             if (FTR_CDE == "SA001" || FTR_CDE == "SA002") //상수관로,급수관로

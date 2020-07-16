@@ -53,6 +53,7 @@ namespace GTI.WFMS.Main.View
             FmsUtil.sysCd = Properties.Settings.Default.sysCd;
             FmsUtil.fileDir = Properties.Settings.Default.fileDir;
             FmsUtil.mdxDir = Properties.Settings.Default.mdxDir;
+            FmsUtil.site = Properties.Settings.Default.site;
             
         }
 

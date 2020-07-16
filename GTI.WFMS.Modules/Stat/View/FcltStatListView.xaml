@@ -48,7 +48,8 @@
         <!--그리드영역-->
         <StackPanel Grid.Row="0" Grid.Column="1" Orientation="Horizontal" HorizontalAlignment="Right" Margin="0 0 0 0">
             <Label Content="검색일자 : " Style="{DynamicResource CircleTitleLabel}"/>
-            <dxe:DateEdit Style="{DynamicResource ResourceKey=HeaderDateEdit}" x:Name="dtSEARCH" Height="30" EditValueChanged="DtSEARCH_EditValueChanged" />
+            <dxe:DateEdit Style="{DynamicResource ResourceKey=HeaderDateEdit}" x:Name="dtSEARCH" Height="30"
+                          EditValue="{Binding SrcDate, UpdateSourceTrigger=PropertyChanged}"/>
         </StackPanel>        
         
         <Border  Grid.Row="1" Grid.Column="1"  BorderBrush="{DynamicResource TileCOLOR4Brush}" BorderThickness="1"/>

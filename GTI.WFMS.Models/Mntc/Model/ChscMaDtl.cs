@@ -223,28 +223,12 @@ namespace GTI.WFMS.Models.Mntc.Model
         private string __CHK_APR_YMD;
         public string CHK_APR_YMD
         {
-            get
-            {
-                try
-                {
-                    return date3StrConverter.Convert(__CHK_APR_YMD, null, null, null) as string ; //yyyy-MM-dd 형태변환
-                }
-                catch (Exception)
-                {
-                    return __CHK_APR_YMD;
-                }
-            }
+            get { return __CHK_APR_YMD; }
             set
             {
-                try
-                {
-                    this.__CHK_APR_YMD = date3StrConverter.ConvertBack(value, null, null, null) as string; //yyyyMMdd 형태변환
-                }
-                catch (Exception)
-                {
-                    this.__CHK_APR_YMD = value;
-                }
+                this.__CHK_APR_YMD = value;
                 RaisePropertyChanged("CHK_APR_YMD");
+
             }
         }
         private string __CHK_APR_USR;
@@ -260,55 +244,23 @@ namespace GTI.WFMS.Models.Mntc.Model
         private string __CHK_CMP_YMD;
         public string CHK_CMP_YMD
         {
-            get
-            {
-                try
-                {
-                    return date3StrConverter.Convert(__CHK_CMP_YMD, null, null, null) as string; //yyyy-MM-dd 형태변환
-                }
-                catch (Exception)
-                {
-                    return __CHK_CMP_YMD;
-                }
-            }
+            get { return __CHK_CMP_YMD; }
             set
             {
-                try
-                {
-                    this.__CHK_CMP_YMD = date3StrConverter.ConvertBack(value, null, null, null) as string; //yyyyMMdd 형태변환
-                }
-                catch (Exception)
-                {
-                    this.__CHK_CMP_YMD = value;
-                }
+                this.__CHK_CMP_YMD = value;
                 RaisePropertyChanged("CHK_CMP_YMD");
+
             }
         }
         private string __CHK_RESULT_YMD;
         public string CHK_RESULT_YMD
         {
-            get
-            {
-                try
-                {
-                    return date3StrConverter.Convert(__CHK_RESULT_YMD, null, null, null) as string; //yyyy-MM-dd 형태변환
-                }
-                catch (Exception)
-                {
-                    return __CHK_RESULT_YMD;
-                }
-            }
+            get { return __CHK_RESULT_YMD; }
             set
             {
-                try
-                {
-                    this.__CHK_RESULT_YMD = date3StrConverter.ConvertBack(value, null, null, null) as string; //yyyyMMdd 형태변환
-                }
-                catch (Exception)
-                {
-                    this.__CHK_RESULT_YMD = value;
-                }
+                this.__CHK_RESULT_YMD = value;
                 RaisePropertyChanged("CHK_RESULT_YMD");
+
             }
         }
         private string __USER_NM;

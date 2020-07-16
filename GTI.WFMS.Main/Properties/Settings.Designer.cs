@@ -94,5 +94,17 @@ namespace GTI.WFMS.Main.Properties {
                 this["mdxDir"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("hgs")]
+        public string site {
+            get {
+                return ((string)(this["site"]));
+            }
+            set {
+                this["site"] = value;
+            }
+        }
     }
 }
